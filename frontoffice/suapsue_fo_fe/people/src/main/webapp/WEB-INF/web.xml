@@ -1,0 +1,1117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  	
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+	<display-name>People</display-name>
+	<distributable/>
+
+	<context-param>
+		<param-name>myPage</param-name>
+		<param-value>true</param-value>
+	</context-param>	
+	<context-param>
+		<param-name>remoteAttachFile</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>UrlRemoteAttachFile</param-name>
+			<param-value>${people.UrlRemoteAttachFile}</param-value> 
+			<!-- http://localhost:9080/ws_accr121/services/IAccreditamentoWS -->
+	<!--	<param-value>http://fossg.egov.ba.it/AllegatiService/services/allegatiService</param-value>  -->
+	</context-param>
+	<!-- CONTEXT-PARAM SIRAC 2.0.2 -->
+	<context-param>
+		<param-name>people.sirac.webservice.accreditamento.address</param-name>
+		<param-value>${people.sirac.webservice.accreditamento.address}</param-value>
+		<!-- http://localhost:9080/ws_accr121/services/IAccreditamentoWS -->
+	</context-param>
+	<context-param>
+		<param-name>people.sirac.webservice.accreditamentiManagement.address</param-name>
+		<param-value>${people.sirac.webservice.accreditamentiManagement.address}</param-value>
+		<!-- <param-value>http://localhost:9080/ws_accr121/services/IAccreditamentiManagementWS</param-value> -->
+	</context-param>	
+	<context-param>
+		<param-name>people.sirac.error.page</param-name>
+		<param-value>/SiracError.jsp</param-value>
+	</context-param>
+	<context-param>
+		<param-name>showDetailInErrorPage</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>people.sirac.error.returnURL</param-name>
+		<param-value>${people.sirac.error.returnURL}</param-value>
+		<!-- <param-value>http://localhost:8080/people</param-value> -->
+	<!--	<param-value>http://fossg.egov.ba.it/people</param-value> -->
+	</context-param>
+	<context-param>
+		<param-name>authenticationResponseReceiverServiceTransferMode</param-name>
+		<!--  Indicare FORWARD o POST -->
+		<param-value>POST</param-value>
+	</context-param>
+	<context-param>
+		<param-name>encryptAuthResponse</param-name>
+		<!--  Indicare true o false -->
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>encryptAuthResponseKeyFile</param-name>
+		<!--  path relativo alla webapp -->
+		<param-value>/keystore/encryptAuthResponse_Rijndael_256_PBEWithSHAAnd128BitRC4_100.key</param-value>
+	</context-param>
+	<context-param>
+		<param-name>encryptAuthResponseKeyFilePassPhrase</param-name>
+		<param-value>testpassphrase</param-value>
+	</context-param>
+	<context-param>
+		<param-name>authResponseExpirationTime</param-name>
+		<!--  expiration time in msec (usato solo nel caso di TransferMode=POST)-->
+		<param-value>300000</param-value>
+	</context-param>
+	<context-param>
+		<param-name>authResponseExpirationDateTimeFormat</param-name>
+		<param-value>yyyyMMdd'T'HH:mm:ss.SSSz</param-value>
+	</context-param>
+	<context-param>
+		<param-name>ignoreAuthResponseExpirationTime</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>assertionIntendedRecipientURL</param-name>
+		<param-value>${people.assertionIntendedRecipientURL}</param-value>
+		<!-- <param-value>http://localhost:8080/people/AssertionConsumerService</param-value> -->
+		<!--<param-value>http://fossg.egov.ba.it/people/AssertionConsumerService</param-value>-->
+	</context-param>
+	<!-- Utilizzato dal Sirac e dal filtro di selezione del comune -->
+	<context-param>
+		<param-name>peopleFSLHostURL</param-name>
+		<param-value>${people.peopleFSLHostURL}</param-value>
+		<!-- <param-value>http://localhost:8080</param-value> -->
+	<!--	<param-value>http://fossg.egov.ba.it</param-value>-->
+	</context-param>	
+	<context-param>
+		<param-name>weakSignEnabled</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>remoteSignEnabled</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>remoteSignMode</param-name>
+		<param-value>p7m</param-value>
+	</context-param>
+	<context-param>
+		<param-name>remoteSign_pathPrefix</param-name>
+		<param-value>${people.remoteSign_pathPrefix}</param-value>
+		<!-- <param-value>http://localhost:9080/sirac/remotesign</param-value> -->
+	</context-param>
+	<!-- FINE CONTEXT-PARAM SIRAC 2.0.2 -->
+	
+	<context-param>
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</context-param>
+	<!-- CONTEXT-PARAM PROXY -->
+	<context-param>
+		<param-name>proxyHost</param-name>
+		<param-value>${people.proxyHost}</param-value>
+	</context-param>
+	<context-param>
+		<param-name>proxyPort</param-name>
+		<param-value>${people.proxyPort}</param-value>
+	</context-param>
+	<context-param>
+		<param-name>proxyUser</param-name>
+		<param-value>${people.proxyUser}</param-value>
+	</context-param>
+	<context-param>
+		<param-name>proxyPassword</param-name>
+		<param-value>${people.proxyPassword}</param-value>
+	</context-param>
+	<context-param>
+		<param-name>nonProxyHosts</param-name>
+		<param-value>${people.nonProxyHosts}</param-value>
+	</context-param>
+	
+	<!-- CONTEXT-PARAM INTEGRAZIONE CROSS -->
+	<context-param>
+		<param-name>crossEndpoint</param-name>
+		<param-value>${integrationCross.crossEndpoint}</param-value>
+	</context-param>
+	
+	<!-- Filtro IDP Reg. Puglia -->
+  <!--  <filter>
+	     <filter-name>shibbolet</filter-name>
+	     <filter-class>it.people.wego.shibbolet.filter.PeopleShibboletFilter</filter-class>
+	</filter>-->
+	<!-- Filtro SPID + IDP Reg. Puglia-->
+	
+	<!--<filter>
+		<filter-name>avbari-auth</filter-name>
+		<filter-class>it.exprivia.avtmtb.people.filter.PeopleAuthFilter</filter-class>
+		<init-param>
+			<param-name>urlRedirectLogin</param-name>
+			<param-value>https://authidp.rupar.puglia.it/idp/Authn/UserPassword</param-value>
+		</init-param>
+	</filter>-->
+	
+
+	<filter>
+		<filter-name>avbari-spid-security</filter-name>
+		<filter-class>it.exprivia.avtmtb.people.filter.PeopleSpidFilter</filter-class>
+		<init-param>
+			<param-name>urlRedirectLogin</param-name>
+			<param-value>${people.urlRedirectLogin}</param-value>
+			<!-- <param-value>https://authidp.rupar.puglia.it/idp/Authn/UserPassword</param-value> -->
+		</init-param>
+	</filter>
+
+
+	<filter>
+		<filter-name>avbari-auth</filter-name>
+		<filter-class>it.exprivia.avtmtb.people.filter.PeopleAuthFilter</filter-class>
+		<init-param>
+			<param-name>exclude</param-name>
+			<param-value>/people/errorPage.html;/people/erroreSpid.html</param-value>
+		</init-param>
+	</filter> 
+	
+	<!-- Filter per impostare la codifica UTF-8 su tutte le request-->
+	<filter>
+		<filter-name>encoding_handler</filter-name>
+		<filter-class>it.people.util.EncodingHandler</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<!--Filter per impostare l'MDC di log4j su tutte le request-->
+    <filter>
+    	<filter-name>log4jMDCFilter</filter-name>
+	    <filter-class>it.people.filters.Log4JMDCFilter</filter-class>
+    </filter>
+	
+	<!--*********************************************************************-->
+	<!-- Filtro di selezione del Comune                                      -->
+	<!--*********************************************************************-->
+	<filter>
+		<filter-name>CommuneSelectFilter</filter-name>
+		<filter-class>it.people.filters.CommuneFilter</filter-class>
+		<init-param>
+			<param-name>selectCommunePageURL</param-name>
+			<param-value>/framework/selectCommune.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>excludeMapping0</param-name>
+			<param-value>/framework/payment/notification.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>excludeExtensionMapping</param-name>
+			<param-value>css jpg gif png js html</param-value>
+		</init-param>
+	</filter> 	
+	<!--*********************************************************************-->
+	<!-- SIRAC - Filtro di caricamento del service Profile                   -->
+	<!--*********************************************************************-->
+	<filter>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<filter-class>it.people.sirac.filters.SiracServiceProfileLoaderFilter</filter-class>
+		<init-param>
+			<param-name>defaultserviceprofile</param-name>
+			<param-value>/it/people/fsl/servizi/defaultserviceprofile.xml</param-value>
+		</init-param>
+	</filter>
+	
+	<!--*********************************************************************-->
+	<!-- SIRAC - Filtro di Autenticazione                                    -->
+	<!--*********************************************************************-->
+	<filter>
+		<filter-name>SIRAC Authentication Filter</filter-name>
+		<filter-class>it.people.sirac.filters.SiracAuthenticationFilter</filter-class>
+		<init-param>
+			<param-name>SIRACGatewayRedirectURL</param-name>
+			<param-value>${people.SIRACGatewayRedirectURL}</param-value>
+			<!-- <param-value>http://localhost:9080/sirac/AuthGatewayServlet</param-value> -->
+		<!--	<param-value>http://fossg.egov.ba.it/sirac/AuthGatewayServlet</param-value>-->
+		</init-param>
+		<init-param>
+			<param-name>assertionConsumerURL</param-name>
+			<param-value>${people.assertionConsumerURL}</param-value>
+			<!-- <param-value>http://localhost:8080/people/AssertionConsumerService</param-value> -->
+		<!--	<param-value>http://fossg.egov.ba.it/people/AssertionConsumerService</param-value>-->
+		</init-param>
+		<init-param>
+			<param-name>postAuthRequestPage</param-name>
+			<param-value>/PostAuthRequest.jsp</param-value>
+		</init-param>
+	</filter>
+	
+	<!--*********************************************************************-->
+	<!-- SIRAC - Filtro di Autorizzazione                                            -->
+	<!--*********************************************************************-->
+	<filter>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<filter-class>it.people.sirac.filters.SiracAuthorizationFilter</filter-class>
+		<init-param>
+			<param-name>authorizationStrategySet</param-name>							
+			<param-value>it.people.sirac.authz.strategy.or.PeopleUserAuthzStrategy,it.people.sirac.authz.strategy.or.PeopleIntermediaryWithProxyOperatorsAuthzStrategy</param-value>
+		</init-param>
+		<init-param>
+			<param-name>strategyEnforcementPolicy</param-name>
+			<param-value>ANY</param-value>
+		</init-param>
+		<init-param>
+			<param-name>controlloDelegheInAccesso</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+
+
+	<!--*********************************************************************-->
+	<!-- SIRAC - filtro per l profilazione (INIT)                            -->
+	<!--*********************************************************************-->
+	<filter>
+		<filter-name>FILTRO select profile</filter-name>
+		<filter-class>it.people.sirac.filters.SelectProfile</filter-class>
+		<init-param>
+			<param-name>profileUpdatePage</param-name>
+			<param-value>/servizi/admin/sirac/accreditamento/view/default/html/sceltaAccreditamento.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>updatedProfileActivationServiceURL</param-name>
+			<param-value>/people/ProfileSelectService</param-value>
+		</init-param>
+	</filter>
+
+	<!--*********************************************************************-->
+	<!--  Filtro di aggiornamento del profilo				-->
+	<!--*********************************************************************-->
+	<filter>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<filter-class>it.people.sirac.filters.SiracProfileUpdateFilter</filter-class>
+		<init-param>
+			<param-name>profileUpdatePage</param-name>
+			<param-value>/servizi/admin/sirac/accreditamento/view/default/html/ProfileUpdate.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>updatedProfileActivationServiceURL</param-name>
+			<param-value>/people/ProfileUpdateService</param-value>
+		</init-param>
+	</filter>
+	
+
+	<!--*********************************************************************-->
+	<!--  Filtri di amministratore Concessione e Autorizzazione              -->
+	<!--*********************************************************************-->
+	<filter>
+		<filter-name>Admin Filter</filter-name>
+		<filter-class>it.people.sirac.filters.AdminAuthenticationFilter</filter-class>
+		<init-param>
+			<param-name>errorPageUrl</param-name>
+			<param-value>/framework/genericErrors/AdminError.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>adminConfigReaderClass</param-name>
+			<param-value>it.people.filters.AdminAuthentication.XmlConfigReader</param-value>
+		</init-param>
+		<init-param>
+			<param-name>xmlConfigReaderFileName</param-name>
+			<param-value>${people.xmlConfigReaderFileName}</param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name>peopleConsoleAdminConfig</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+        <!--**************************************************************************-->
+        <!-- filtro accesso legacy   -->
+        <!--**************************************************************************-->
+<!--
+    <filter>
+        <filter-name>LegacyAccessFilter</filter-name>
+        <filter-class>it.people.user.filter.LegacyAccessFilter</filter-class>
+        <init-param>
+            <param-name>nameService</param-name>
+            <param-value>it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico</param-value>
+        </init-param>
+    </filter>
+-->
+
+	<!--**************************************************************************-->	
+	<!-- Mapping del filtro autenticazione                                        -->
+	<!--**************************************************************************-->
+  <!--   <filter-mapping>
+		<filter-name>shibbolet</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+
+	
+	<filter-mapping>
+		<filter-name>avbari-spid-security</filter-name>
+		<url-pattern>/peopleL1/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>avbari-spid-security</filter-name>
+		<url-pattern>/peopleL2/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>avbari-spid-security</filter-name>
+		<url-pattern>/peopleL3/*</url-pattern>
+	</filter-mapping> 
+	
+	<filter-mapping>
+		<filter-name>avbari-auth</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!--**************************************************************************-->	
+	<!-- Mapping del filtro per impostare la codifica UTF-8 su tutte le request   -->
+	<!--**************************************************************************-->
+	<filter-mapping>
+    	<filter-name>encoding_handler</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	
+	<!--**************************************************************************-->	
+	<!-- Mapping del filtro per impostare l'MDC di log4j su tutte le request   -->
+	<!--**************************************************************************-->
+	<filter-mapping>
+    	<filter-name>log4jMDCFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	
+	<!--*********************************************************************-->	
+	<!-- Mapping del filtro per la selezione del comune                      -->
+	<!-- questo filtro e' utilizzato anche per l'utente Admin di Concessione -->
+	<!-- e Autorizzazione                                                    -->
+	<!--*********************************************************************-->
+	<filter-mapping>
+		<filter-name>CommuneSelectFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!--*********************************************************************-->	
+	<!-- Mapping dei filtri per concessione e autorizzazione                 -->
+	<!--*********************************************************************-->
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/initProcess.action</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Admin Filter</filter-name>
+		<url-pattern>/initProcess.action</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authentication Filter</filter-name>
+		<url-pattern>/initProcess.action</url-pattern>
+	</filter-mapping>
+
+
+	<!-- Mapping per il filtro di test  -->
+	<filter-mapping>
+		<filter-name>FILTRO select profile</filter-name>
+		<url-pattern>/initProcess.do</url-pattern>
+	</filter-mapping>
+	<!--  fine mapping di test -->	
+
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/initProcess.action</url-pattern>
+	</filter-mapping>
+
+	<!--*********************************************************************-->	
+	<!-- Per il Caricamento del Service Profile e' necessario specificare    -->
+	<!-- solo le action collegate allo svolgimento di un servizio            -->
+	<!-- es. la action di eliminazione della pratica non deve essere         -->
+	<!-- collegata al caricamento del service profile.                       -->
+	<!--*********************************************************************-->
+		
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/lookupDispatchProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/initProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/postLoadProcess.do</url-pattern>
+	</filter-mapping>	
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/saveProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/viewProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/nextStepProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/prevStepProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/goActivityProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/addNewObject.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/loopBack.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/loopBackValidate.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/removeObject.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/notifyPipeline.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/sendProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/saveUploadedFile.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/startSignProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/endSignProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/signStepBegin.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/signStepComplete.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/signProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/nextStepSignProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/signPrintProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/executeDelegate.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/executePraticheOnLineComuni.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/abortSign.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/startPayment.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/abortPayment.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/returnFromPayment.do</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/exitToLogin.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/exitToLogoff.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/exitToMyProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/exitToHome.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Service Profile Loader Filter</filter-name>
+		<url-pattern>/exitToService.do</url-pattern>
+	</filter-mapping>
+	
+	<!--*********************************************************************-->	
+	<!-- Mapping del filtro di Autenticazione                                -->
+	<!--*********************************************************************-->	
+	<filter-mapping>
+		<filter-name>SIRAC Authentication Filter</filter-name>
+		<url-pattern>/framework/protected/*</url-pattern>
+	</filter-mapping>
+    <filter-mapping>
+        <filter-name>SIRAC Authentication Filter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+	
+	
+	<!--*********************************************************************-->	
+	<!-- Per l'Autorizzazione e' necessario specificare solo -->
+	<!-- le action collegate allo svolgimento di un servizio -->
+	<!--*********************************************************************-->	
+
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/lookupDispatchProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/initProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/saveProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/viewProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/nextStepProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/prevStepProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/goActivityProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/addNewObject.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/loopBack.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/loopBackValidate.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/removeObject.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/notifyPipeline.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/sendProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/saveUploadedFile.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/startSignProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/endSignProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/signStepBegin.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/signStepComplete.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/signProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/nextStepSignProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/signPrintProcess.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/executeDelegate.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/executePraticheOnLineComuni.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/abortSign.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/startPayment.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/abortPayment.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SIRAC Authorization Filter</filter-name>
+		<url-pattern>/returnFromPayment.do</url-pattern>
+	</filter-mapping>	
+
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/lookupDispatchProcess.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/initProcess.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/postLoadProcess.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/saveProcess.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/sendProcess.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/startSignProcess.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/signProcess.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/abortSign.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/startPayment.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/returnFromPayment.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/confirmMyProcess.do</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>SIRAC Profile Update Filter</filter-name>
+		<url-pattern>/exitToMyProcess.do</url-pattern>
+	</filter-mapping>	
+
+    <!--**************************************************************************-->
+	<!-- filtro mapping  accesso legacy   -->
+	<!--**************************************************************************-->
+<!--
+    <filter-mapping>
+        <filter-name>LegacyAccessFilter</filter-name>
+        <url-pattern>/framework/protected/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LegacyAccessFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+-->	
+	<!--********************************************-->
+	<!--* Definizione delle Servlet                *-->
+	<!--********************************************-->
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>it.people.action.PeopleActionServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>9</param-value>
+		</init-param>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/struts-config.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>validate</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>detail</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>SendToPaymentSys</servlet-name>
+		<servlet-class>it.people.process.pagamento.SendToPaymentSys</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ReturnFromPaymentSys</servlet-name>
+		<servlet-class>it.people.process.pagamento.ReturnFromPaymentSys</servlet-class>
+	</servlet>
+	
+	<!--  SIRAC AssertionConsumerService -->
+	<servlet>
+		<servlet-name>AssertionConsumerService</servlet-name>
+		<display-name>Sirac Assertion Consumer Service</display-name>
+		<description>Sirac Assertion Consumer Service</description>
+		<servlet-class>it.people.sirac.web.AssertionConsumerServlet</servlet-class>
+		<init-param>
+			<param-name>keystorePath</param-name>
+			<!--  path relativo alla webapp -->
+			<param-value>/keystore/test.jks</param-value>
+		</init-param>
+		<init-param>
+			<param-name>certificateAlias</param-name>
+			<param-value>mykey</param-value>
+		</init-param>
+		<init-param>
+			<param-name>keystorePassword</param-name>
+			<param-value>opensaml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>
+				authenticationResponseReceiverServiceForwardURL</param-name>
+			<param-value>/AuthResponseReceiverService</param-value>
+		</init-param>
+		<init-param>
+			<param-name>authenticationResponseReceiverServicePOSTURL</param-name>
+			<param-value>${people.authenticationResponseReceiverServicePOSTURL}</param-value>
+			<!-- <param-value>http://localhost:8080/people/AuthResponseReceiverService</param-value> -->
+		<!--	<param-value>http://fossg.egov.ba.it/people/AuthResponseReceiverService</param-value>-->
+		</init-param>
+		<init-param>
+			<param-name>postResponsePage</param-name>
+			<param-value>/PostAuthResponse.jsp</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>AuthResponseReceiverService</servlet-name>
+		<display-name>Authentication Response Receiver Service</display-name>
+		<description>Authentication Response Receiver Service</description>
+		<servlet-class>
+			it.people.sirac.web.AuthenticationResponseReceiverServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthResponseReceiverService</servlet-name>
+		<url-pattern>/AuthResponseReceiverService</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AssertionConsumerService</servlet-name>
+		<url-pattern>/AssertionConsumerService</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ProfileSelectService</servlet-name>
+		<display-name>SIRAC Profile Select Service</display-name>
+		<description>SIRAC Profile Select Service</description>
+		<servlet-class>it.people.sirac.web.ProfileSelectServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ProfileUpdateService</servlet-name>
+		<display-name>SIRAC Profile Update Service</display-name>
+		<description>SIRAC Profile Update Service</description>
+		<servlet-class>it.people.sirac.web.ProfileUpdateServlet</servlet-class>
+	</servlet>
+
+	<!--  PDF Generator Service -->
+	<servlet>
+		<servlet-name>PDFGeneratorService</servlet-name>
+		<display-name>PDF Generator Service</display-name>
+		<description>PDF Generator Service</description>
+		<servlet-class>it.people.visurepdf.web.servlet.PDFGeneratorServlet</servlet-class>
+		<init-param>
+			<param-name>it.people.visurepdf.web.servlet.FIXED_URL_PATTERN</param-name>
+			<param-value>pdfgs</param-value>
+		</init-param>
+		<init-param>
+			<param-name>it.people.visurepdf.web.servlet.ATTACHMENTS_SERVICE_URL</param-name>
+			<param-value>${people.it.people.visurepdf.web.servlet.ATTACHMENTS_SERVICE_URL}</param-value>
+			<!-- <param-value>http://localhost:8080/AllegatiService/services/allegatiService</param-value> -->
+		<!--	<param-value>http://fossg.egov.ba.it/AllegatiService/services/allegatiService</param-value>-->
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<!--  Off line sign Service -->
+	<servlet>
+		<servlet-name>OffLineSignFileDownloadService</servlet-name>
+		<display-name>Off Line Sign File Download Service</display-name>
+		<description>Off Line Sign File Download Service</description>
+		<servlet-class>it.people.offlinesignservice.web.servlet.OffLineSignFileDownloadServlet</servlet-class>
+		<init-param>
+			<param-name>it.people.offlinesignservice.web.servlet.FIXED_URL_PATTERN</param-name>
+			<param-value>olsfds</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>RequiredUserDataVerifierServlet</servlet-name>
+		<display-name>Required User Data Verifier Servlet</display-name>
+		<description>Required User Data Verifier Servlet</description>
+		<servlet-class>it.people.util.servlet.RequiredUserDataVerifierServlet</servlet-class>
+		<init-param>
+			<param-name>askForRequiredUserDataPage</param-name>
+			<param-value>/framework/protected/askForRequiredUserData.jsp</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>PDFGeneratorService</servlet-name>
+		<url-pattern>/pdfgs/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>OffLineSignFileDownloadService</servlet-name>
+		<url-pattern>/olsfds/*</url-pattern>
+	</servlet-mapping>
+
+
+		
+	<servlet-mapping>
+		<servlet-name>ProfileSelectService</servlet-name>
+		<url-pattern>/ProfileSelectService</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ProfileUpdateService</servlet-name>
+		<url-pattern>/ProfileUpdateService</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>RequiredUserDataVerifierServlet</servlet-name>
+		<url-pattern>/RequiredUserDataVerifierServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<!-- *************************************************** -->
+	<!-- Impostazioni Generali                               -->
+	<!-- *************************************************** -->
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>/framework/index.jsp</welcome-file>
+	</welcome-file-list>
+
+
+	<!-- *************************************************** -->
+	<!-- Gestione Eccezioni                               -->
+	<!-- *************************************************** -->
+	<error-page>
+		<exception-type>it.people.sirac.error.SiracException</exception-type>
+		<location>/SiracError.jsp</location>
+	</error-page>
+  
+	<error-page>
+		<exception-type>java.lang.RuntimeException</exception-type>
+		<location>/SiracError.jsp</location>
+	</error-page>
+	
+	<!-- *************************************************** -->
+	<!-- Tag Libraries                                       -->
+	<!-- *************************************************** -->
+	<taglib>
+  		<taglib-uri>/WEB-INF/pager-taglib.tld</taglib-uri>
+        <taglib-location>/WEB-INF/pager-taglib.tld</taglib-location>
+    </taglib>
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/core</taglib-uri>
+		<taglib-location>/WEB-INF/c.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/core_rt</taglib-uri>
+		<taglib-location>/WEB-INF/c-rt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/xml</taglib-uri>
+		<taglib-location>/WEB-INF/x.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/xml_rt</taglib-uri>
+		<taglib-location>/WEB-INF/x-rt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/fmt</taglib-uri>
+		<taglib-location>/WEB-INF/fmt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/fmt_rt</taglib-uri>
+		<taglib-location>/WEB-INF/fmt-rt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/sql</taglib-uri>
+		<taglib-location>/WEB-INF/sql.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/sql_rt</taglib-uri>
+		<taglib-location>/WEB-INF/sql-rt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/tags/struts-bean</taglib-uri>
+		<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/tags/struts-html</taglib-uri>
+		<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/tags/struts-logic</taglib-uri>
+		<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/tags/struts-nested</taglib-uri>
+		<taglib-location>/WEB-INF/struts-nested.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/tags/struts-tiles</taglib-uri>
+		<taglib-location>/WEB-INF/struts-tiles.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>/WEB-INF/people.tld</taglib-uri>
+		<taglib-location>/WEB-INF/people.tld</taglib-location>
+	</taglib>
+	
+	<!-- *************************************************** -->
+	<!-- Security                                            -->
+	<!-- *************************************************** -->	
+	<!--security-constraint>
+		<display-name>Utente Amministratore</display-name>
+		<web-resource-collection>
+			<web-resource-name>Accesso ai servizi concessione e
+				autorizzazione</web-resource-name>
+			<url-pattern>/initProcess.action</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Constraint per utenti con ruolo administrator</description>
+			<role-name>peopleAdmin</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>MemoryRealm</realm-name>
+	</login-config>
+	<security-role>
+		<description>Amministratore People</description>
+		<role-name>peopleAdmin</role-name>
+	</security-role-->
+	
+	<resource-ref>
+  		<res-ref-name>jdbc/LegacyDB</res-ref-name>
+ 	 	<res-type>javax.sql.DataSource</res-type>
+ 	 	<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	<resource-ref>
+  		<res-ref-name>jdbc/FEDB</res-ref-name>
+ 	 	<res-type>javax.sql.DataSource</res-type>
+ 	 	<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	<resource-ref>
+  		<res-ref-name>jdbc/puDS</res-ref-name>
+ 	 	<res-type>javax.sql.DataSource</res-type>
+ 	 	<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	<resource-ref>
+  		<res-ref-name>jdbc/puDSEdilizia</res-ref-name>
+ 	 	<res-type>javax.sql.DataSource</res-type>
+ 	 	<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	<resource-ref>
+  		<res-ref-name>jdbc/OJBLegacyDB</res-ref-name>
+ 	 	<res-type>javax.sql.DataSource</res-type>
+ 	 	<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+</web-app>

@@ -1,0 +1,40 @@
+<%--
+Copyright (c) 2011, Regione Emilia-Romagna, Italy
+ 
+Licensed under the EUPL, Version 1.1 or - as soon they
+will be approved by the European Commission - subsequent
+versions of the EUPL (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+
+For convenience a plain text copy of the English version
+of the Licence can be found in the file LICENCE.txt in
+the top-level directory of this software distribution.
+
+You may obtain a copy of the Licence in any of 22 European
+Languages at:
+
+http://joinup.ec.europa.eu/software/page/eupl
+
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+
+This product includes software developed by Yale University
+
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div class="menu">
+	<ul>
+		<li><a title="Registrazione servizi dispiegati"
+			href="/PeopleConsole/ServiziFe/registrazioneServiziDispiegatiNodo.do">
+			Registrazione servizi dispiegati </a></li>
+		<li><a title="Copia da nodo a nodo"
+			href="/PeopleConsole/ServiziFe/copiaDaNodoANodo.do">
+			Copia da nodo a nodo </a></li>
+	</ul>
+</div>

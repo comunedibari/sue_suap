@@ -1,0 +1,20 @@
+---Upgrade della versione Master Copy V.0.2.2 alla V.0.2.3
+---Si ricorda che le il passaggio alla versione V.0.2.3 prevede di
+   avere il software alla versione V.0.2
+
+bug-fix:
+
+- correzioni su segnalazioni di Ravenna su procedura guidata
+- correzione sulla gestione immagini templates
+
+miglioramenti:
+
+- migliramento nell'utilizzo delle connessioni al db su segnalazioni di Lepida
+
+passi:
+1) salvare il file web.xml presente nella cartella <tomcat>/webapps/Dbm/WEB-INF
+2) salvare il file log4j.properties presente nella cartella <tomcat>/webapps/Dbm/WEB-INF/classes
+3) effettuare il deploy del software (Dbm.war)
+4) ripristinare il file web.xml salvato inprecedenza
+5) ripristinare il file log4j.properties salvato in precedenza
+6) riavviare tomcat

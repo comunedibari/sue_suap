@@ -1,0 +1,36 @@
+subtitle {
+	font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size:120%;
+	font-weight:bold;
+	margin:0;
+	color:#005094;
+	background-color:#fff;
+}
+tr.buttonForm td {
+    padding-top: 30px;
+    width: 50%;
+}
+tr.buttonForm {
+    text-align: right;
+}
+
+h1 {
+    text-align: center;
+}
+
+td.dimensione15{
+	width:15%;
+}
+
+td.dimensione35{
+		width:35%;
+}
+td.altezza32{
+		height:32px;
+}
+td.altezza20{
+		height:20px;
+}
+td.dimensione85{
+		width:85%;
+}

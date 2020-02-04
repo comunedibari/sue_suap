@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+  
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://www.osor.eu/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<PROCESS>
+  <PROCESS-CONFIG>  
+    <default>
+      <SUMMARY-ENABLED>false</SUMMARY-ENABLED>
+      <SIGN-ENABLED>false</SIGN-ENABLED>
+      <PAYMENT-OBSERVER>PaymentObserver</PAYMENT-OBSERVER>
+    </default>
+    <PROCESS-VIEW>
+      <default>
+        <SAVE-BAR-ENABLED>true</SAVE-BAR-ENABLED>
+        <NAVIGATION-BAR-ENABLED>true</NAVIGATION-BAR-ENABLED>
+      </default>
+    </PROCESS-VIEW>
+  </PROCESS-CONFIG>
+  <VIEW id="1">
+    <default>
+      <name>ProcedimentoUnicoView</name>
+      <activity-order>0,1,2,3</activity-order>
+    </default>
+    <ACTIVITIES>
+       <ACTIVITY id="0">
+        <default>
+          <name>Generazione iter</name>
+          <step-order>0,1,2,3,4,5,6,7,8,9</step-order>
+        </default>
+        <STEPS>
+          <STEP id="0">
+            <default>
+              <name>Informazioni sul servizio</name>
+              <view>default_main.jsp</view>
+              <classname>SettingsStep</classname>
+            </default>
+          </STEP>
+         <STEP id="1">
+            <default>
+              <name>Scelta Comune</name>
+              <view>sceltaComune.jsp</view>
+              <classname>SceltaComuneStep</classname>
+            </default>
+          </STEP>
+          <STEP id="2">
+            <default>
+              <name>Scelta settore</name>
+              <view>sceltaSettore.jsp</view>
+              <classname>SceltaSettoreStep</classname>
+            </default>
+          </STEP>   
+          <STEP id="3">
+            <default>
+              <name>Scelta operazioni</name>
+              <view>sceltaOperazioni.jsp</view>
+              <classname>SceltaOperazioniStep</classname>
+            </default>
+          </STEP>
+          <STEP id="4">
+            <default>
+              <name>Scelta interventi facoltativi</name>
+              <view>interventiFacoltativi.jsp</view>
+              <classname>InterventiFacoltativiStep</classname>
+            </default>
+          </STEP>  
+          <STEP id="5">
+            <default>
+              <name>Scelta allegati facoltativi</name>
+              <view>allegatiFacoltativi.jsp</view>
+              <classname>AllegatiFacoltativiStep</classname>
+            </default>
+          </STEP>
+          <STEP id="6">
+            <default>
+              <name>Attivazione Calcolo Oneri</name>
+              <view>attivazioneOneri.jsp</view>             
+              <classname>AttivazioneOneriStep</classname>
+            </default>
+          </STEP> 
+          
+          
+		  <STEP id="7">
+            <default>
+              <name>Individuazione Oneri</name>
+              <view>sceltaOneri.jsp</view>             
+              <classname>SceltaOneriStep</classname>
+            </default>
+          </STEP>    
+          <STEP id="8">
+            <default>
+              <name>Calcolo Oneri</name>
+              <view>oneri.jsp</view>
+              <classname>CalcoloOneriShowStep</classname>
+            </default>
+          </STEP>
+          <STEP id="9">
+            <default>
+              <name>Riepilogo Oneri</name>
+              <view>oneriRiepilogo.jsp</view>
+              <classname>CalcoloOneriSummaryStep</classname>
+            </default>
+          </STEP>      
+        </STEPS>
+      </ACTIVITY>
+      
+      <ACTIVITY id="1">
+        <default>
+          <name>Modello unico</name>
+          <step-order>0,1</step-order>
+        </default>
+        <STEPS>
+          <STEP id="0">
+            <default>
+              <name>Modello Unico</name>
+              <view>modelloUnico.jsp</view>
+              <classname>ModelloUnicoStep</classname>
+            </default>
+          </STEP>
+          <STEP id="1">
+            <default>
+              <name>Upload file</name>
+              <view>uploadFile.jsp</view>
+              <classname>UploadFileStep</classname>
+            </default>
+          </STEP> 
+       	</STEPS>
+      </ACTIVITY>  
+         
+      
+      <ACTIVITY id="2">
+        <default>
+          <name>Pagamenti</name>
+          <step-order>RIMP,EPAG</step-order>
+          <state>inactive</state>
+        </default>
+        <STEPS>
+          <STEP id="RIMP">
+            <default>
+              <name>Riepilogo Importi</name>
+              <view>riepilogoImporti.jsp</view>
+              <classname>RiepilogoImportiStep</classname>
+              <!-- <controller>PagamentiController</controller>
+               <state>active</state>-->
+            </default>
+          </STEP>          
+          <STEP id="EPAG">
+            <default>
+              <name>Esito Pagamento</name>
+              <view>esitoPagamento.jsp</view>
+              <classname>EsitoPagamentoStep</classname>
+              <!-- <controller>PagamentiController</controller>
+               <state>active</state>-->
+            </default>
+          </STEP>          
+        </STEPS>
+      </ACTIVITY>  
+
+      <ACTIVITY id="3">
+        <default>
+          <name>Riepilogo ed invio</name>
+          <step-order>3,0,1,2</step-order>
+        </default>
+        <STEPS>
+          <STEP id="3">
+            <default>
+              <name>Privacy Titolare</name>
+              <view>privacyTitolare.jsp</view>
+              <classname>PrivacyTitolareStep</classname>
+            </default>
+          </STEP>         
+          <STEP id="0">
+            <default>
+              <name>Riepilogo</name>
+              <view>firmaMultipla.jsp</view>
+              <classname>FirmaMultiplaStep</classname>
+            </default>
+          </STEP>         
+          <STEP id="1">
+            <default>
+              <name>Invio</name>
+              <view>invio.jsp</view>
+              <classname>InvioMultiploStep</classname>
+            </default>
+          </STEP> 
+          <STEP id="2"> 
+            <default>
+              <name>Conferma Invio</name>
+              <view>fineInvio.jsp</view>
+              <classname>BaseStep</classname>
+            </default>
+          </STEP>  
+         </STEPS>
+        </ACTIVITY> 
+    </ACTIVITIES>
+  </VIEW>
+</PROCESS>
+      

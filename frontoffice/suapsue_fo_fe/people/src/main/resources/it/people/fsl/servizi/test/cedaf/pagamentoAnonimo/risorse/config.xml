@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<servizio>
+	<nome>Pagamento Anonimo</nome>
+	<attivita>esempi</attivita>
+	<sottoattivita>tutorial</sottoattivita>
+	<process>it.people.process.GenericProcess</process>	
+	<package>it.people.fsl.servizi.test.cedaf.pagamentoAnonimo</package>
+</servizio>

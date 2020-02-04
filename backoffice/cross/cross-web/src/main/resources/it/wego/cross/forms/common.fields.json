@@ -1,0 +1,1861 @@
+[
+    {
+        "id": "FormNotFoundFieldSet",
+        "type": "#base.Fieldset",
+        "label": "Form non trovato",
+        "components": [
+            {
+                "id": "FormNotFoundDescriptionField",
+                "type": "#base.Label",
+                "label": "Impossibile trovare il form ."
+            }
+        ]
+    },
+    {
+        "type": "#base.FtlField",
+        "id": "SummaryBlock"
+    },
+    {
+        "type": "#base.FtlField",
+        "id": "Grid"
+    },
+    {
+        "type": "Grid",
+        "id": "ConsoleGrid",
+        "attributes": {
+            "config": {
+                "title": "Log Errori",
+                "loadData": {
+                    "url": "/console/index/ajax.htm"
+                },
+                "sort": {
+                    "column": "data",
+                    "order": "desc"
+                },
+                "gridActions": [
+                    [
+                        {
+                            "name": "search",
+                            "action": {
+                                "type": "form",
+                                "form": "it.wego.cross.forms.common.RicercaPraticheNewWrapper",
+                                "title": "Cerca pratica",
+                                "otherParameters": {
+                                    "tableId": "%%grid-selector%%"
+                                }
+                            }
+                        },
+                        {
+                            "name": "refresh"
+                        }
+                    ], [
+                        {
+                            "name": "add"
+                        },
+                        {
+                            "name": "delete",
+                            "action": {
+                                "type": "submit",
+                                "requireConfirm": "true",
+                                "form": "it.wego.xxxx",
+                                "url": "/url.htm",
+                                "rowParameters": [
+                                    "idErrore",
+                                    "data"
+                                ],
+                                "otherParameters": {
+                                    "nome": "gabriele",
+                                    "cognome": "muscas"
+                                }
+                            }
+                        }
+                    ], [
+                        {
+                            "name": "more",
+                            "legend": "Azioni...",
+                            "items": [
+                                {
+                                    "name": "menuinterno",
+                                    "class": "fa-bars",
+                                    "color": "purple",
+                                    "legend": "Invia pratiche a Conferenza dei servizixxx",
+                                    "action": {
+                                        "type": "submit",
+                                        "requireConfirm": "true",
+                                        "form": "it.wego.xxxx",
+                                        "url": "/url.htm",
+                                        "rowParameters": [
+                                            "idErrore",
+                                            "data"
+                                        ],
+                                        "otherParameters": {
+                                            "nome": "gabriele",
+                                            "cognome": "muscas"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                ],
+                "rowActions": [
+                    {
+                        "name": "view",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.xxxx",
+                            "title": "form title",
+                            "rowParameters": [
+                                "idErrore",
+                                "data"
+                            ],
+                            "otherParameters": {
+                                "nome": "gabriele"
+                            }
+                        }
+                    },
+                    {
+                        "name": "edit",
+                        "action": {
+                            "type": "redirect",
+                            "url": "/console/dettaglio.htm",
+                            "rowParameters": [
+                                "idErrore"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "delete",
+                        "action": {
+                            "type": "submit",
+                            "requireConfirm": "true",
+                            "form": "it.wego.xxxx",
+                            "url": "/url.htm",
+                            "rowParameters": [
+                                "idErrore"
+                            ],
+                            "otherParameters": {
+                                "nome": "gabriele",
+                                "cognome": "muscas"
+                            }
+                        }
+                    }
+                ],
+                "columnModel": [
+                    {
+                        "name": "idErrore",
+                        "label": "ID",
+                        "key": "true",
+                        "hidden": "true",
+                        "width": 60
+                    },
+                    {
+                        "name": "data",
+                        "label": "Data",
+                        "width": 37
+                    },
+                    {
+                        "name": "descrizione",
+                        "label": "Descrizione pippo",
+                        "width": 150
+                    },
+                    {
+                        "name": "trace",
+                        "label": "Trace",
+                        "width": 300,
+                        "formatter": {
+                            "function": "substring",
+                            "options": {
+                                "delimiter": "\\n"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "type": "Grid",
+        "id": "PraticheGrid",
+        "attributes": {
+            "config": {
+                "title": "Elenco Pratiche",
+                "loadData": {
+                    "url": "/pratiche/gestisci/ajax.htm"
+                },
+                "sort": {
+                    "column": "dataRicezione",
+                    "order": "desc"
+                },
+                "gridActions": [
+                    [
+                        {
+                            "name": "search",
+                            "action": {
+                                "type": "form",
+                                "form": "it.wego.cross.forms.common.RicercaPraticheNewWrapper",
+                                "title": "Cerca pratica",
+                                "otherParameters": {
+                                    "tableId": "%%grid-selector%%"
+                                }
+                            }
+                        },
+                        {
+                            "name": "refresh"
+                        }
+                    ]
+                ],
+                "rowActions": [
+                    {
+                        "name": "delete",
+                        "action": {
+                            "type": "submit",
+                            "requireConfirm": "true",
+                            "url": "/url.htm",
+                            "rowParameters": [
+                                "idPratica"
+                            ]
+                        }
+                    }
+                ],
+                "columnModel": [
+                    {
+                        "name": "idPratica",
+                        "label": "ID",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idStatoPratica",
+                        "label": "Stato pratica",
+                        "width": 37
+                    },
+                    {
+                        "name": "oggettoPratica",
+                        "label": "OggettoPratica",
+                        "width": 150
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "type": "#base.FtlField",
+        "id": "RicercaPraticheNewWrapper"
+    },
+    {
+        "type": "#base.FtlField",
+        "id": "PraticheCollegateGrid"
+    },
+    {
+        "type": "SummaryBlock",
+        "id": "SummaryBlockPraticheCollegate",
+        "attributes": {
+            "config": {
+                "label": "pratica",
+                "prefix": "praticacollegata",
+                "cssClass": "pratica-collegata",
+                "source": "data.pratica.praticheAssociate",
+                "id": "idPratica",
+                "rows": [
+                    {
+                        "value": "oggettoPratica",
+                        "type": "text",
+                        "description": "Pratica",
+                        "templateDataValue": "oggettoPraticaCollegata"
+                    },
+                    {
+                        "value": "protocollo.segnatura",
+                        "type": "string",
+                        "description": "Protocollo",
+                        "emptypattern": "//",
+                        "templateDataValue": "protocolloPraticaCollegata"
+                    },
+                    {
+                        "value": "dataRicezione",
+                        "type": "date",
+                        "description": "Data ricezione",
+                        "templateDataValue": "dataRicezionePraticaCollegata"
+                    },
+                    {
+                        "value": "idStatoPratica.descrizione",
+                        "type": "string",
+                        "description": "Stato",
+                        "templateDataValue": "statoPraticaCollegata"
+                    }
+                ],
+                "handlers": {
+                    "add": "addPraticaCollegata",
+                    "detail": "detailPraticaCollegata",
+                    "remove": "deletePraticaCollegata"
+                }
+            }
+        }
+    },
+    {
+        "id": "TestFieldSet",
+        "type": "#base.Fieldset",
+        "label": "Custom Fields",
+        "description": "Test form registrazione",
+        "components": [
+            {
+                "id": "IntroDescriptionField",
+                "description": "Descrizione iniziale",
+                "type": "#base.Label",
+                "label": "Di seguito l'email che non è stato possibile inviare."
+            },
+            {
+                "id": "TestField2",
+                "description": "aaaaNuovo destinatario della mail",
+                "type": "#base.TextField",
+                "label": "Destinatario xxxxx",
+                "name": "destinatario_xxxx"
+            },
+            {
+                "id": "TestField",
+                "description": "Id pratica originale",
+                "type": "#base.TextField",
+                "label": "Pratica",
+                "name": "idPratica"
+            },
+            {
+                "id": "TestField3",
+                "description": "Id Pratica Collegata",
+                "type": "#base.TextField",
+                "label": "Pratica collegata",
+                "name": "idPraticaCollegata"
+            }
+        ]
+    },
+    {
+        "type": "Grid",
+        "id": "GestioneOrganiCollegialiGrid",
+        "attributes": {
+            "config": {
+                "title": "Gestione organi collegiali",
+                "loadData": {
+                    "url": "/cds/organicollegiali/index/ajax.htm"
+                },
+                "sort": {
+                    "column": "desOrganoCollegiale",
+                    "order": "desc"
+                },
+                "gridActions": [
+                    [
+                        {
+                            "name": "refresh"
+                        }, {
+                            "name": "add",
+                            "action": {
+                                "type": "form",
+                                "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiInsert",
+                                "title": "Inserisci organi collegiali"
+                            }
+                        }
+                    ]
+                ],
+                "rowActions": [
+                    {
+                        "name": "edit",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegiali",
+                            "title": "Modifica ordini collegiali",
+                            "rowParameters": [
+                                "idOrganiCollegiali",
+                                "desOrganoCollegiale"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "commissione",
+                        "class": "fa-users",
+                        "color": "orange",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiCommissioneGrid",
+                            "title": "",
+                            "rowParameters": [
+                                "idOrganiCollegiali"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "delete",
+                        "action": {
+                            "type": "submit",
+                            "requireConfirm": "true",
+                            "url": "/cds/organicollegiali/delete.htm",
+                            "rowParameters": [
+                                "idOrganiCollegiali"
+                            ]
+                        }
+                    }
+                ],
+                "columnModel": [
+                    {
+                        "name": "idOrganiCollegiali",
+                        "label": "ID",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "desOrganoCollegiale",
+                        "label": "Descrizione",
+                        "width": 150
+                    },
+                    {
+                        "name": "desEnte",
+                        "label": "Ente",
+                        "width": 150
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "GestioneOrganiCollegiali",
+        "type": "#base.Form",
+        "description": "Modifica organo collegiale",
+        "components": [
+            {
+                "type": "#base.HiddenField",
+                "label": "idOrganiCollegiali",
+                "name": "idOrganiCollegiali",
+                "ordering": 1
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Descrizione",
+                "name": "desOrganoCollegiale",
+                "ordering": 2,
+                "required": true
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Ente",
+                "name": "idEnte",
+                "ordering": 3,
+                "hidden": true
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Descrizione ente",
+                "name": "desEnte",
+                "ordering": 4
+            },
+            {
+                "type": "#base.FileUpload",
+                "label": "Template OdG",
+                "name": "odg",
+                "ordering": 5,
+                "required": true
+            },
+            {
+                "type": "#base.FileUpload",
+                "label": "Template Verbale",
+                "name": "verbale",
+                "ordering": 6,
+                "required": true
+            },
+            {
+                "type": "#base.FileUpload",
+                "label": "Template Convocazione",
+                "name": "convocazione",
+                "ordering": 7,
+                "required": true
+            }
+        ]
+    },
+    {
+        "id": "GestioneOrganiCollegialiInsert",
+        "type": "#base.Form",
+        "description": "Inserimento organi collegiali",
+        "components": [
+            {
+                "type": "#base.TextField",
+                "label": "Descrizione",
+                "name": "desOrganoCollegiale",
+                "ordering": 1,
+                "required": true
+            },
+            {
+                "type": "#base.Select",
+                "name": "enti",
+                "label": "Ente",
+                "ordering": 2,
+                "required": true
+            },
+            {
+                "type": "#base.FileUpload",
+                "label": "Template OdG",
+                "name": "odg",
+                "ordering": 3,
+                "required": true
+            },
+            {
+                "type": "#base.FileUpload",
+                "label": "Template Verbale",
+                "name": "verbale",
+                "ordering": 4,
+                "required": true
+            },
+            {
+                "type": "#base.FileUpload",
+                "label": "Template Convocazione",
+                "name": "convocazione",
+                "ordering": 5,
+                "required": true
+            }
+        ]
+    },
+    {
+        "type": "#base.FtlField",
+        "id": "RicercaProcedimenti"
+    },
+    {
+        "type": "#base.FtlField",
+        "id": "UtentiEntiProcedimentiGrid"
+    },
+    {
+        "type": "Grid",
+        "id": "GestioneOrganiCollegialiSeduteGrid",
+        "attributes": {
+            "config": {
+                "title": "Gestione sedute organi collegiali",
+                "loadData": {
+                    "url": "/cds/organicollegiali/sedute/index/ajax.htm"
+                },
+                "sort": {
+                    "column": "desOrganoCollegiale",
+                    "order": "desc"
+                },
+                "gridActions": [
+                    [
+                        {
+                            "name": "refresh"
+                        }, {
+                            "name": "add",
+                            "action": {
+                                "type": "form",
+                                "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiSeduteInsert",
+                                "title": "Inserisci Nuova Seduta"
+                            }
+                        }
+                    ]
+                ],
+                "rowActions": [
+                    {
+                        "name": "edit",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiSedute",
+                            "title": "Modifica seduta",
+                            "rowParameters": [
+                                "idSeduta"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "commissione",
+                        "class": "fa-users",
+                        "color": "orange",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiSeduteCommissioneBaseGrid",
+                            "title": "",
+                            "rowParameters": [
+                                "idSeduta"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "pratiche",
+                        "class": "fa-folder",
+                        "color": "green",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiSedutePraticheGrid",
+                            "title": "",
+                            "rowParameters": [
+                                "idSeduta"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "delete",
+                        "action": {
+                            "type": "submit",
+                            "requireConfirm": "true",
+                            "url": "/cds/organicollegiali/sedute/delete.htm",
+                            "rowParameters": [
+                                "idSeduta"
+                            ]
+                        }
+                    }
+                ],
+                "columnModel": [
+                    {
+                        "name": "idSeduta",
+                        "label": "ID",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "desEnte",
+                        "label": "Ente",
+                        "width": 150
+                    },
+                    {
+                        "name": "desOrganoCollegiale",
+                        "label": "Descrizione",
+                        "width": 150
+                    },
+                    {
+                        "name": "dataPrevista",
+                        "label": "Data prevista",
+                        "width": 150,
+                        "formatter": {
+                            "function": "substring",
+                            "options": {
+                                "length": "10"
+                            }
+                        }
+                    },
+                    {
+                        "name": "dataConvocazioneGrid",
+                        "label": "Data Convocazione",
+                        "width": 150
+                    },
+                    {
+                        "name": "dataInizioGrid",
+                        "label": "Data Inizio Seduta",
+                        "width": 150
+                    },
+                    {
+                        "name": "dataConclusioneGrid",
+                        "label": "Data Fine Seduta",
+                        "width": 150
+                    },
+                    {
+                        "name": "desStatoSeduta",
+                        "label": "Stato",
+                        "width": 150
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "GestioneOrganiCollegialiSeduteInsert",
+        "type": "#base.Form",
+        "description": "Inserimento Sedute",
+        "components": [
+            {
+                "type": "#base.Select",
+                "label": "Organi collegiali",
+                "name": "organiCollegiali",
+                "ordering": 1,
+                "required": true
+            },
+            {
+                "type": "#base.DateField",
+                "name": "dataPrevista",
+                "label": "Data prevista",
+                "format": "dd/MM/yyyy",
+                "ordering": 2,
+                "required": true
+            }
+        ]
+    },
+    {
+        "id": "GestioneOrganiCollegialiSedute",
+        "type": "#base.Form",
+        "description": "Modifica Seduta",
+        "components": [
+            {
+                "type": "#base.HiddenField",
+                "label": "idSeduta",
+                "name": "idSeduta",
+                "ordering": 1
+            },
+            {
+                "type": "#base.HiddenField",
+                "label": "Organi collegiali",
+                "name": "idOrganiCollegiali",
+                "ordering": 2
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Organi collegiali",
+                "name": "desOrganoCollegiale",
+                "ordering": 3,
+                "disabled": true
+            },
+            {
+                "type": "#base.DateField",
+                "name": "dataPrevista",
+                "label": "Data prevista",
+                "format": "dd/MM/yyyy",
+                "ordering": 4,
+                "required": true
+            },
+            {
+                "type": "#base.DateField",
+                "name": "dataConvocazione",
+                "label": "Data convocazione",
+                "format": "dd/MM/yyyy",
+                "ordering": 5,
+                "required": false
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Ora convocazione",
+                "name": "oraConvocazione",
+                "ordering": 6
+            },
+            {
+                "type": "#base.DateField",
+                "name": "dataInizio",
+                "label": "Data inizio seduta",
+                "format": "dd/MM/yyyy",
+                "ordering": 7,
+                "required": false
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Ora inizio seduta",
+                "name": "oraInizio",
+                "ordering": 8
+            },
+            {
+                "type": "#base.DateField",
+                "name": "dataConclusione",
+                "label": "Data conclusione seduta",
+                "format": "dd/MM/yyyy",
+                "ordering": 9,
+                "required": false
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Ora conclusione seduta",
+                "name": "oraConclusione",
+                "ordering": 10
+            },
+            {
+                "type": "#base.Select",
+                "label": "Stato seduta",
+                "name": "statoSeduta",
+                "ordering": 11
+            },
+            {
+                "id": "Convocazione",
+                "parentId": "#base.FtlField",
+                "name": "",
+                "description": "Stampa convocazione",
+                "value": "",
+                "templateData": "[#ftl]<div class=\"row\">&nbsp;</div><div class=\"row\">&nbsp;&nbsp;<a href=\"${data.path}\/cds/organicollegiali/sedute/stampadocumenti.htm?type=CONVOCAZIONE&idSeduta=${data.idSeduta}\">Scarica convocazione</a></div>",
+                "ordering": 13
+            },
+            {
+                "id": "Odg",
+                "parentId": "#base.FtlField",
+                "name": "",
+                "description": "Stampa ordine del giorno",
+                "value": "",
+                "templateData": "[#ftl]<div class=\"row\">&nbsp;</div><div class=\"row\">&nbsp;&nbsp;<a href=\"${data.path}\/cds/organicollegiali/sedute/stampadocumenti.htm?type=ODG&idSeduta=${data.idSeduta}\">Scarica OdG</a></div>",
+                "ordering": 14
+            },
+            {
+                "id": "Verbale",
+                "parentId": "#base.FtlField",
+                "name": "",
+                "description": "Stampa verbale",
+                "value": "",
+                "templateData": "[#ftl]<div class=\"row\">&nbsp;</div><div class=\"row\">&nbsp;&nbsp;<a href=\"${data.path}\/cds/organicollegiali/sedute/stampadocumenti.htm?type=VERBALE&idSeduta=${data.idSeduta}\">Scarica verbale</a></div>",
+                "ordering": 15
+            }
+        ]
+    },
+    {
+        "type": "Grid",
+        "id": "GestioneOrganiCollegialiCommissioneGrid",
+        "attributes": {
+            "config": {
+                "title": "Gestione commissione organi collegiali",
+                "loadData": {
+                    "url": "/cds/organicollegiali/commissione/index/ajax.htm",
+                    "requestParameters": [
+                        "idOrganiCollegiali"
+                    ]
+                },
+                "sort": {
+                    "column": "desOrganoCollegiale",
+                    "order": "desc"
+                },
+                "gridActions": [
+                    [
+                        {
+                            "name": "refresh"
+                        }, {
+                            "name": "add",
+                            "action": {
+                                "type": "form",
+                                "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiCommissioneInsert",
+                                "title": "Inserisci nuova anagrafica",
+                                "requestParameters": [
+                                    "idOrganiCollegiali"
+                                ]
+                            }
+                        }
+                    ]
+                ],
+                "rowActions": [
+                    {
+                        "name": "edit",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiCommissione",
+                            "title": "Modifica componenti",
+                            "rowParameters": [
+                                "idOrganiCollegiali",
+                                "idAnagrafica"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "delete",
+                        "action": {
+                            "type": "submit",
+                            "requireConfirm": "true",
+                            "url": "/cds/organicollegiali/commissione/delete.htm",
+                            "rowParameters": [
+                                "idOrganiCollegiali",
+                                "idAnagrafica"
+                            ]
+                        }
+                    }
+                ],
+                "columnModel": [
+                    {
+                        "name": "idAnagrafica",
+                        "label": "idAnagrafica",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idOrganiCollegiali",
+                        "label": "idOrganiCollegiali",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "desOrganoCollegiale",
+                        "label": "Organo",
+                        "width": 40
+                    },
+                    {
+                        "name": "idEnte",
+                        "label": "idEnte",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "desEnte",
+                        "label": "Ente",
+                        "width": 40
+                    },
+                    {
+                        "name": "cognome",
+                        "label": "Cognome",
+                        "width": 40
+                    },
+                    {
+                        "name": "nome",
+                        "label": "Nome",
+                        "width": 40
+                    },
+                    {
+                        "name": "idRuoloCommissione",
+                        "label": "idRuoloCommissione",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "desRuoloCommissione",
+                        "label": "Ruolo",
+                        "width": 30
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "GestioneOrganiCollegialiCommissioneInsert",
+        "type": "#base.Form",
+        "description": "Inserimento Componenti Commissione",
+        "components": [
+            {
+                "name": "idAnagrafica",
+                "referenceName": "idAnagrafica",
+                "label": "Anagrafica",
+                "type": "#base.Select2",
+                "ordering": 1,
+                "required": true
+            },
+            {
+                "type": "#base.Select",
+                "label": "Ruolo",
+                "name": "ruoli",
+                "ordering": 2,
+                "required": true
+            },
+            {
+                "type": "#base.HiddenField",
+                "name": "idOC",
+                "label": "idOrganiCollegiali",
+                "ordering": 3
+            }
+        ]
+    },
+    {
+        "id": "GestioneOrganiCollegialiCommissione",
+        "type": "#base.Form",
+        "description": "Modifica Componenti Commissione",
+        "components": [
+            {
+                "type": "#base.HiddenField",
+                "label": "idOrganiCollegiali",
+                "name": "idOrganiCollegiali",
+                "ordering": 1
+            },
+            {
+                "type": "#base.HiddenField",
+                "label": "idAnagrafica",
+                "name": "idAnagrafica",
+                "ordering": 2
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Cognome",
+                "name": "cognome",
+                "ordering": 3,
+                "disabled": true
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Nome",
+                "name": "nome",
+                "ordering": 4,
+                "disabled": true
+            },
+            {
+                "type": "#base.Select",
+                "label": "Ruolo",
+                "name": "ruoli",
+                "ordering": 5,
+                "required": true
+            }
+        ]
+    },
+    {
+        "type": "Grid",
+        "id": "GestioneOrganiCollegialiSeduteCommissioneBaseGrid",
+        "attributes": {
+            "config": {
+                "title": "Gestione commissione seduta",
+                "loadData": {
+                    "url": "/cds/organicollegiali/sedute/commissionebase/index/ajax.htm",
+                    "requestParameters": [
+                        "idSeduta"
+                    ]
+                },
+                "sort": {
+                    "column": "cognome",
+                    "order": "asc"
+                },
+                "gridActions": [
+                    [
+                        {
+                            "name": "refresh"
+                        }, {
+                            "name": "add",
+                            "action": {
+                                "type": "form",
+                                "form": "it.wego.cross.forms.common.OrganiCollegialiSedutaBaseComponentiInsert",
+                                "title": "Inserisci nuova anagrafica",
+                                "requestParameters": [
+                                    "idSeduta",
+                                    "idSedutaPratica",
+                                    "idPraticaOrganiCollegiali"
+                                ],
+                                "otherParameters": {
+                                    "commissioneBase": "si"
+                                }
+                            }
+                        }
+                    ]
+                ],
+                "rowActions": [
+                    {
+                        "name": "edit",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiSedutePratiche",
+                            "title": "Modifica componente seduta",
+                            "rowParameters": [
+                                "idSeduta",
+                                "idSedutaPratica",
+                                "idAnagrafica",
+                                "idPraticaOrganiCollegiali"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "delete",
+                        "action": {
+                            "type": "submit",
+                            "requireConfirm": "true",
+                            "url": "/cds/organicollegiali/sedute/commissione/delete.htm",
+                            "rowParameters": [
+                                "idSeduta",
+                                "idSedutaPratica",
+                                "idAnagrafica",
+                                "idPraticaOrganiCollegiali"
+                            ]
+                        }
+                    }
+                ],
+                "columnModel": [
+                    {
+                        "name": "idAnagrafica",
+                        "label": "idAnagrafica",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idSeduta",
+                        "label": "idSeduta",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idSedutaPratica",
+                        "label": "idSedutaPratica",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idPraticaOrganiCollegiali",
+                        "label": "idPraticaOrganiCollegiali",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "cognome",
+                        "label": "Cognome",
+                        "width": 150
+                    },
+                    {
+                        "name": "nome",
+                        "label": "Nome",
+                        "width": 150
+                    },
+                    {
+                        "name": "desRuoloCommissione",
+                        "label": "Ruolo",
+                        "width": 150
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "OrganiCollegialiSedutaBaseComponentiInsert",
+        "type": "#base.Form",
+        "description": "Inserimento Componente Commissione",
+        "components": [
+            {
+                "name": "idAnagrafica",
+                "referenceName": "idAnagrafica",
+                "label": "Anagrafica",
+                "type": "#base.Select2",
+                "ordering": 1,
+                "required": true
+            },
+            {
+                "type": "#base.Select",
+                "label": "Ruolo",
+                "name": "ruoli",
+                "ordering": 2,
+                "required": true
+            },
+            {
+                "type": "#base.HiddenField",
+                "name": "idSeduta",
+                "label": "idSeduta",
+                "ordering": 3,
+                "required": true
+            },
+            {
+                "type": "#base.HiddenField",
+                "name": "idSedutaPratica",
+                "label": "idSedutaPratica",
+                "ordering": 4
+            },
+            {
+                "type": "#base.HiddenField",
+                "name": "idPraticaOrganiCollegiali",
+                "label": "idPraticaOrganiCollegiali",
+                "ordering": 5
+            },
+            {
+                "type": "#base.HiddenField",
+                "name": "commissioneBase",
+                "label": "commissioneBase",
+                "ordering": 5
+            }
+        ]
+    },
+    {
+        "id": "GestioneOrganiCollegialiSedutePratiche",
+        "type": "#base.Form",
+        "description": "Modifica Ruolo Componente Commissione",
+        "components": [
+            {
+                "type": "#base.HiddenField",
+                "label": "idSeduta",
+                "name": "idSeduta",
+                "ordering": 1
+            },
+            {
+                "type": "#base.HiddenField",
+                "label": "idSedutaPratica",
+                "name": "idSedutaPratica",
+                "ordering": 2
+            },
+            {
+                "type": "#base.HiddenField",
+                "label": "idAnagrafica",
+                "name": "idAnagrafica",
+                "ordering": 3
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Cognome",
+                "name": "cognome",
+                "ordering": 4,
+                "disabled": true
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Nome",
+                "name": "nome",
+                "ordering": 5,
+                "disabled": true
+            },
+            {
+                "type": "#base.Select",
+                "label": "Ruolo",
+                "name": "ruoli",
+                "ordering": 6,
+                "required": true
+            }
+        ]
+    },
+    {
+        "type": "Grid",
+        "id": "GestioneOrganiCollegialiSedutePraticheGrid",
+        "attributes": {
+            "config": {
+                "title": "Gestione pratiche commissione",
+                "loadData": {
+                    "url": "/cds/organicollegiali/commissione/pratiche/index/ajax.htm",
+                    "requestParameters": [
+                        "idSeduta"
+                    ]
+                },
+                "sort": {
+                    "column": "desOrganoCollegiale",
+                    "order": "desc"
+                },
+                "gridActions": [
+                    [
+                        {
+                            "name": "refresh"
+                        }
+                    ]
+                ],
+                "rowActions": [
+                    {
+                        "name": "edit",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiCommissioneOrdinamento",
+                            "title": "Assegna sequenza pratiche",
+                            "rowParameters": [
+                                "idSeduta",
+                                "idSedutaPratica",
+                                "idPraticaOrganiCollegiali"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "Commissione",
+                        "class": "fa-users",
+                        "color": "orange",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiCommissionePraticaGrid",
+                            "title": "Gestisci commissione pratica",
+                            "rowParameters": [
+                                "idSeduta",
+                                "idSedutaPratica",
+                                "idPraticaOrganiCollegiali"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "Dettaglio",
+                        "class": "fa-folder",
+                        "color": "green",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiPraticaDettaglio",
+                            "title": "Dettaglio pratica",
+                            "rowParameters": [
+                                "idSeduta",                                
+                                "idPraticaOrganiCollegiali"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "delete",
+                        "action": {
+                            "type": "submit",
+                            "requireConfirm": "true",
+                            "url": "/cds/organicollegiali/commissione/pratiche/delete.htm",
+                            "rowParameters": [
+                                "idSeduta",
+                                "idPraticaOrganiCollegiali",
+                                "idSedutaPratica"
+                            ]
+                        }
+                    }
+                ],
+                "columnModel": [
+                    {
+                        "name": "idKey",
+                        "label": "idKey",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idSeduta",
+                        "label": "idSeduta",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idEnte",
+                        "label": "idEnte",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idSedutaPratica",
+                        "label": "idSedutaPratica",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "desEnte",
+                        "label": "Ente",
+                        "width": 40
+                    },
+                    {
+                        "name": "idOrganoCollegiale",
+                        "label": "idOrganoCollegiale",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "desOrganoCollegiale",
+                        "label": "Organo collegiale",
+                        "width": 40
+                    },
+                    {
+                        "name": "idPraticaOrganiCollegiali",
+                        "label": "idPraticaOrganiCollegiali",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "protocollo",
+                        "label": "Protocollo",
+                        "width": 20
+                    },
+                    {
+                        "name": "oggetto",
+                        "label": "Oggetto pratica",
+                        "width": 70
+                    },
+                    {
+                        "name": "dataRicezione",
+                        "label": "Data ricezione <br /> pratica",
+                        "width": 40,
+                        "formatter": {
+                            "function": "substring",
+                            "options": {
+                                "length": "10"
+                            }
+                        }
+                    },
+                    {
+                        "name": "dataRichiestaCommissione",
+                        "label": "Data richiesta <br /> commissione",
+                        "width": 30,
+                        "formatter": {
+                            "function": "substring",
+                            "options": {
+                                "length": "10"
+                            }
+                        }
+                    },
+                    {
+                        "name": "sequenza",
+                        "label": "Ordinamento",
+                        "width": 20
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "GestioneOrganiCollegialiCommissioneOrdinamento",
+        "type": "#base.Form",
+        "description": "Inserimento/modifica ordinamento",
+        "components": [
+            {
+                "type": "#base.HiddenField",
+                "label": "idSeduta",
+                "name": "idSeduta",
+                "ordering": 1
+            },
+            {
+                "type": "#base.HiddenField",
+                "label": "idSedutaPratica",
+                "name": "idSedutaPratica",
+                "ordering": 2
+            },
+            {
+                "type": "#base.HiddenField",
+                "label": "idPraticaOrganoCollegiale",
+                "name": "idPraticaOrganoCollegiale",
+                "ordering": 3
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Protocollo",
+                "name": "protocollo",
+                "ordering": 4,
+                "disabled": true
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Oggetto pratica",
+                "name": "oggetto",
+                "ordering": 5,
+                "disabled": true
+            },
+            {
+                "type": "#base.NumberField",
+                "label": "Sequenza",
+                "name": "sequenza",
+                "ordering": 6,
+                "required": true
+            },
+            {
+                "type": "#base.Textarea",
+                "label": "Note",
+                "name": "note",
+                "ordering": 7
+            }
+        ]
+    },
+    {
+        "type": "Grid",
+        "id": "GestioneOrganiCollegialiCommissionePraticaGrid",
+        "attributes": {
+            "config": {
+                "title": "",
+                "loadData": {
+                    "url": "/cds/organicollegiali/sedute/commissionepratica/index/ajax.htm",
+                    "requestParameters": [
+                        "idSeduta",
+                        "idSedutaPratica"
+                    ]
+                },
+                "sort": {
+                    "column": "cognome",
+                    "order": "asc"
+                },
+                "gridActions": [
+                    [
+                        {
+                            "name": "refresh"
+                        }, {
+                            "name": "add",
+                            "action": {
+                                "type": "form",
+                                "form": "it.wego.cross.forms.common.OrganiCollegialiSedutaComponentiInsert",
+                                "title": "Inserisci nuova anagrafica",
+                                "requestParameters": [
+                                    "idSeduta",
+                                    "idSedutaPratica"
+                                ]
+                            }
+                        }
+                    ]
+                ],
+                "rowActions": [
+                    {
+                        "name": "edit",
+                        "action": {
+                            "type": "form",
+                            "form": "it.wego.cross.forms.common.GestioneOrganiCollegialiSedutePratiche",
+                            "title": "Modifica componente seduta",
+                            "rowParameters": [
+                                "idSeduta",
+                                "idSedutaPratica",
+                                "idAnagrafica"
+                            ]
+                        }
+
+                    },
+                    {
+                        "name": "delete",
+                        "action": {
+                            "type": "submit",
+                            "requireConfirm": "true",
+                            "url": "/cds/organicollegiali/sedute/commissione/delete.htm",
+                            "rowParameters": [
+                                "idSeduta",
+                                "idSedutaPratica",
+                                "idAnagrafica"
+                            ]
+                        }
+                    }
+                ],
+                "columnModel": [
+                    {
+                        "name": "idKey",
+                        "label": "idKey",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idSeduta",
+                        "label": "idSeduta",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idSedutaPratica",
+                        "label": "idSedutaPratica",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "idAnagrafica",
+                        "label": "idAnagrafica",
+                        "key": "true",
+                        "hidden": "true"
+                    },
+                    {
+                        "name": "cognome",
+                        "label": "Cognome",
+                        "width": 150
+                    },
+                    {
+                        "name": "nome",
+                        "label": "Nome",
+                        "width": 150
+                    },
+                    {
+                        "name": "desRuoloCommissione",
+                        "label": "Ruolo",
+                        "width": 150
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "OrganiCollegialiSedutaComponentiInsert",
+        "type": "#base.Form",
+        "description": "Inserimento Componente Commissione Pratica",
+        "components": [
+            {
+                "name": "idAnagrafica",
+                "referenceName": "idAnagrafica",
+                "label": "Anagrafica",
+                "type": "#base.Select2",
+                "ordering": 1,
+                "required": true
+            },
+            {
+                "type": "#base.Select",
+                "label": "Ruolo",
+                "name": "ruoli",
+                "ordering": 2,
+                "required": true
+            },
+            {
+                "type": "#base.HiddenField",
+                "name": "idSeduta",
+                "label": "idSeduta",
+                "ordering": 3,
+                "required": true
+            },
+            {
+                "type": "#base.HiddenField",
+                "name": "idSedutaPratica",
+                "label": "idSedutaPratica",
+                "ordering": 4
+            },
+            {
+                "type": "#base.HiddenField",
+                "name": "idPraticaOrganiCollegiali",
+                "label": "idPraticaOrganiCollegiali",
+                "ordering": 5
+            }
+        ]
+    },
+    {
+        "id": "GestioneOrganiCollegialiPraticaDettaglio",
+        "type": "#base.Form",
+        "description": "Dettaglio pratica",
+        "components": [
+            {
+                "type": "#base.TextField",
+                "label": "Oggetto",
+                "name": "oggetto",
+                "ordering": 1,
+                "disabled": true
+            },
+            {
+                "type": "#base.TextField",
+                "name": "protocollo",
+                "label": "Protocollo",
+                "ordering": 2,
+                "disabled": true
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Procedimento",
+                "name": "procedimento",
+                "ordering": 3,
+                "disabled": true
+            },
+            {
+                "type": "#base.TextField",
+                "label": "Ente",
+                "name": "ente",
+                "ordering": 4,
+                "disabled": true
+            },
+            {
+                "id": "endoProcedimenti",
+                "parentId": "#base.FtlField",
+                "name": "endoProcedimenti",
+                "description": "Endoprocedimenti",
+                "value": "",
+                "templateData": "[#ftl]${data.endoProcedimenti}",
+                "ordering": 5
+            },
+            {
+                "id": "richiedenti",
+                "parentId": "#base.FtlField",
+                "name": "richiedenti",
+                "description": "richiedenti",
+                "value": "",
+                "templateData": "[#ftl]${data.richiedenti}",
+                "ordering": 6
+            },
+            {
+                "id": "allegati",
+                "parentId": "#base.FtlField",
+                "name": "allegati",
+                "description": "Documenti",
+                "value": "",
+                "templateData": "[#ftl]${data.allegati}",
+                "ordering": 7
+            }
+        ]
+    },
+    {
+        "id": "GestioneDirittiSegreteria",
+        "type": "#base.Form",
+        "description": "Gestione Diritti Segreteria",
+        "components": [
+            {
+                "type": "#base.TabPanel",
+                "components": [
+                    {
+                        "type": "#base.Container",
+                        "label": "Oneri di urbanizzazione",
+                        "ordering": 1,
+                        "components": [
+                            {
+                                "type": "#base.Fieldset",
+                                "label": "Generali",
+                                "ordering": 1,
+                                "components": [
+                                    {
+                                        "type": "#base.HiddenField",
+                                        "name": "id_pratica"
+                                    },
+                                    {
+                                        "type": "#base.BooleanCheckbox",
+                                        "label": "Pagamento in unica soluzione",
+                                        "name": "urb_pagamento_unica_soluzione"
+                                    },
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Totale",
+                                        "name": "urb_totale"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "#base.Fieldset",
+                                "label": "Garanzie",
+                                "ordering": 2,
+                                "components": [
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Banca",
+                                        "name": "urb_banca"
+                                    },
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Data",
+                                        "name": "urb_data"
+                                    },
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Importo",
+                                        "name": "urb_importo"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "#base.Fieldset",
+                                "label": "Rata 1",
+                                "ordering": 3,
+                                "components": [
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Importo",
+                                        "name": "urb_ratauno_importo",
+                                        "ordering": 1
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento previsto",
+                                        "name": "urb_ratauno_data_prevista",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 2
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento",
+                                        "name": "urb_ratauno_data",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 3
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "#base.Fieldset",
+                                "label": "Rata 2",
+                                "ordering": 4,
+                                "components": [
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Importo",
+                                        "name": "urb_ratadue_importo",
+                                        "ordering": 1
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento previsto",
+                                        "name": "urb_ratadue_data_prevista",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 2
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento",
+                                        "name": "urb_ratadue_data",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 3
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "#base.Fieldset",
+                                "label": "Rata 3",
+                                "ordering": 5,
+                                "components": [
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Importo",
+                                        "name": "urb_ratatre_importo",
+                                        "ordering": 1
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento previsto",
+                                        "name": "urb_ratatre_data_prevista",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 2
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento",
+                                        "name": "urb_ratatre_data",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 2
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "#base.Container",
+                        "label": "Contributo sul costo",
+                        "ordering": 2,
+                        "components": [
+                            {
+                                "type": "#base.Fieldset",
+                                "label": "Generali",
+                                "ordering": 1,
+                                "components": [
+                                    {
+                                        "type": "#base.BooleanCheckbox",
+                                        "label": "Pagamento in unica soluzione",
+                                        "name": "con_pagamento_unica_soluzione"
+                                    },
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Totale",
+                                        "name": "con_totale"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "#base.Fieldset",
+                                "label": "Garanzie",
+                                "ordering": 2,
+                                "components": [
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Banca",
+                                        "name": "con_banca"
+                                    },
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Data",
+                                        "name": "con_data"
+                                    },
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Importo",
+                                        "name": "con_importo"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "#base.Fieldset",
+                                "label": "Rata 1",
+                                "ordering": 3,
+                                "components": [
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Importo",
+                                        "name": "con_ratauno_importo",
+                                        "ordering": 1
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento previsto",
+                                        "name": "con_ratauno_data_prevista",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 2
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento",
+                                        "name": "con_ratauno_data",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 3
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "#base.Fieldset",
+                                "label": "Rata 2",
+                                "ordering": 4,
+                                "components": [
+                                    {
+                                        "type": "#base.TextField",
+                                        "label": "Importo",
+                                        "name": "con_ratadue_importo",
+                                        "ordering": 1
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento previsto",
+                                        "name": "con_ratadue_data_prevista",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 2
+                                    },
+                                    {
+                                        "type": "#base.DateField",
+                                        "label": "Data pagamento",
+                                        "name": "con_ratadue_data",
+                                        "format": "dd/MM/yyyy",
+                                        "ordering": 3
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "#base.Container",
+                        "label": "Diritti di Segreteria",
+                        "ordering": 3,
+                        "components": [
+                            {
+                                "type": "#base.TextField",
+                                "label": "Importo dovuto",
+                                "name": "tar_importo_dovuto"
+                            },
+                            {
+                                "type": "#base.TextField",
+                                "label": "Importo pagato",
+                                "name": "tar_importo_pagato"
+                            },
+                            {
+                                "type": "#base.TextField",
+                                "label": "Importo da conguagliare",
+                                "name": "tar_importo_conguaglio"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

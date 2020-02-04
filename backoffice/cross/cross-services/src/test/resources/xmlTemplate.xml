@@ -1,0 +1,462 @@
+<?xml version="1.0"?>
+<xsl:stylesheet 
+    xmlns:mand="http://www.insiel.it/gestioneDocumentale/FEG/common/managedData"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:ist="http://www.insiel.it/masterdata/mdap/istanze"
+    xmlns:mdap="http://www.insiel.it/masterdata/mdap"
+    xmlns:mdas="http://www.insiel.it/masterdata/mdas"  
+    xmlns:mdet="http://www.insiel.it/masterdata/mdet" 
+    xmlns:mdete="http://www.insiel.it/masterdata/mdet-ext"
+    version="1.0">
+    
+    <xsl:template match="/">      
+        
+        <pratica xmlns="http://www.wego.it/cross"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.wego.it/cross http://dev.wego.it/svn/WegoRepository/Maven/cross2/trunk/cross-plugins/cross-xml/src/main/resources/cross.xsd">
+            <id_procedimento_suap>1001</id_procedimento_suap>
+            <identificativo_pratica></identificativo_pratica>
+            <oggetto>
+                <xsl:value-of select="/mand:managedData/mand:datoReferenziabile/ist:parteGenerale/ist:note/ist:nota/ist:Contenuto"/>
+            </oggetto> <!-- TODO check this -->
+            <responsabile_procedimento></responsabile_procedimento>
+            <istruttore></istruttore>
+            <cod_catastale_comune></cod_catastale_comune>
+            <des_comune></des_comune>
+            <id_ente></id_ente>
+            <cod_ente></cod_ente>
+            <des_ente></des_ente>
+            <des_comune_ente></des_comune_ente>
+            <indirizzo_ente></indirizzo_ente>
+            <cap_ente></cap_ente>
+            <fax_ente></fax_ente>
+            <email_ente></email_ente>
+            <pec_ente></pec_ente>
+            <telefono_ente></telefono_ente>
+            <registro></registro>
+            <protocollo></protocollo>
+            <fascicolo></fascicolo>
+            <anno></anno>
+                <xsl:for-each select="/mand:managedData/mand:datoReferenziabile/ist:parteGenerale/ist:listaSoggettiInteressati/ist:interessato">
+                        <xsl:for-each select="./ist:richiedenteFormaGiuridica">
+            <anagrafiche>
+                    <anagrafica>
+                            <counter></counter>
+                            <confermata></confermata>
+                            <daRubrica></daRubrica>
+                            <id_anagrafica></id_anagrafica>
+                            <tipo_anagrafica></tipo_anagrafica>
+                            <variante_anagrafica></variante_anagrafica>
+                            <cognome></cognome>
+                            <denominazione>
+                                <xsl:value-of select="./mdas:figuraGiuridicaBase/mdas:denominazione"/>
+                            </denominazione>
+                            <nome></nome>
+                            <codice_fiscale>
+                                <xsl:value-of select="./mdas:figuraGiuridicaBase/mdas:codiceFiscale"/>
+                            </codice_fiscale>
+                            <flg_individuale></flg_individuale>
+                            <data_nascita></data_nascita>
+                            <id_cittadinanza></id_cittadinanza>
+                            <cod_cittadinanza></cod_cittadinanza>
+                            <des_cittadinanza></des_cittadinanza>
+                            <id_nazionalita></id_nazionalita>
+                            <cod_nazionalita></cod_nazionalita>
+                            <des_nazionalita></des_nazionalita>
+                            <id_comune_nascita></id_comune_nascita>
+                            <des_comune_nascita></des_comune_nascita>
+                            <id_provincia_nascita></id_provincia_nascita>
+                            <des_provincia_nascita></des_provincia_nascita>
+                            <id_stato_nascita></id_stato_nascita>
+                            <des_stato_nascita></des_stato_nascita>
+                            <localita_nascita></localita_nascita>
+                            <sesso></sesso>
+                            <des_tipo_collegio></des_tipo_collegio>
+                            <numero_iscrizione></numero_iscrizione>
+                            <des_provincia_iscrizione></des_provincia_iscrizione>
+                            <cod_provincia_cciaa></cod_provincia_cciaa>
+                            <des_provincia_cciaa></des_provincia_cciaa>
+                            <flg_attesa_iscrizione_ri></flg_attesa_iscrizione_ri>
+                            <flg_obbligo_iscrizione_ri></flg_obbligo_iscrizione_ri>
+                            <n_iscrizione_ri><xsl:value-of select="./mdas:iscrizioneRI/mdas:numeroRI"/></n_iscrizione_ri>
+                            <flg_attesa_iscrizione_rea></flg_attesa_iscrizione_rea>
+                            <n_iscrizione_rea></n_iscrizione_rea>
+                            <des_forma_giuridica>
+                                <xsl:value-of select="./mdas:figuraGiuridicaBase/mdas:tipoFiguraGiuridica"/>
+                            </des_forma_giuridica><!-- TODO check this -->
+                            <recapiti>
+                                <xsl:for-each select="./mdas:sedeLegale">
+                                    <!--
+                                    
+                                     <tipologia>Sede principale</tipologia>
+              <indirizzo>
+                <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">VIA</tipoIndirizzo>
+                <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">Pontebbana</indirizzo>
+                <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">103</numeroCivico>
+                <cap xmlns="http://www.insiel.it/masterdata/mdet">33031</cap>
+                <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+                  <comuneItaliano>
+                    <id>5562</id>
+                    <denominazioneComune>Basiliano</denominazioneComune>
+                    <provincia>
+                      <denominazioneProvincia>Udine</denominazioneProvincia>
+                      <siglaProvincia>UD</siglaProvincia>
+                    </provincia>
+                  </comuneItaliano>
+                </luogo>
+              </indirizzo>
+              <listaRiferimenti>
+                <riferimento>
+                  <tipoRiferimento>PEC</tipoRiferimento>
+                  <valoreRiferimento>federico.godeassi@pec.it</valoreRiferimento>
+                </riferimento>
+                <riferimento>
+                  <tipoRiferimento>Telefono principale</tipoRiferimento>
+                  <valoreRiferimento>3351097669</valoreRiferimento>
+                </riferimento>
+              </listaRiferimenti>
+                                    
+                                    -->
+                                    <recapito>
+                                        <id_recapito></id_recapito>
+                                        <id_comune>
+                                            <xsl:value-of select="./mdas:indirizzo/mdet:luogo/mdet:comuneItaliano/mdet:id"/>
+                                        </id_comune>
+                                        <des_comune>
+                                            <xsl:value-of select="./mdas:indirizzo/mdet:luogo/mdet:comuneItaliano/mdet:denominazioneComune"/>
+                                        </des_comune>
+                                        <id_provincia></id_provincia>
+                                        <des_provincia>
+                                            <xsl:value-of select="./mdas:indirizzo/mdet:luogo/mdet:comuneItaliano/mdet:provincia/mdet:denominazioneProvincia"/>
+                                        </des_provincia>
+                                        <id_stato>1</id_stato>
+                                        <des_stato>ITALIA</des_stato>
+                                        <indirizzo>
+                                            <xsl:value-of select="./mdas:indirizzo/mdet:tipoIndirizzo"/>
+                                            <xsl:text> </xsl:text>
+                                            <xsl:value-of select="./mdas:indirizzo/mdet:indirizzo"/>
+                                        </indirizzo>
+                                        <codice_via></codice_via>
+                                        <n_civico>
+                                            <xsl:value-of select="./mdas:indirizzo/mdet:numeroCivico"/>
+                                        </n_civico>
+                                        <codice_civico></codice_civico>
+                                        <interno_numero></interno_numero>
+                                        <interno_lettera></interno_lettera>
+                                        <interno_scala></interno_scala>
+                                        <lettera></lettera>
+                                        <colore></colore>
+                                        <cap>
+                                            <xsl:value-of select="./mdas:indirizzo/mdet:cap"/>
+                                        </cap>
+                                        <altre_info_indirizzo></altre_info_indirizzo>
+                                        <telefono>
+                                            <xsl:value-of select="./mdas:listaRiferimenti/mdas:riferimento[mdas:tipoRiferimento='Telefono principale']/mdas:valoreRiferimento"/>
+                                        </telefono>
+                                        <cellulare></cellulare>
+                                        <email></email>
+                                        <pec>
+                                            <xsl:value-of select="./mdas:listaRiferimenti/mdas:riferimento[mdas:tipoRiferimento='PEC']/mdas:valoreRiferimento"/>
+                                        </pec>
+                                        <id_tipo_indirizzo></id_tipo_indirizzo>
+                                    </recapito>
+                                </xsl:for-each>
+                            </recapiti>
+                        </anagrafica>
+                        <id_tipo_ruolo></id_tipo_ruolo>
+                        <cod_tipo_ruolo></cod_tipo_ruolo>
+                        <des_tipo_ruolo></des_tipo_ruolo>
+                        <des_tipo_qualifica></des_tipo_qualifica>
+                        <descrizione_titolarita></descrizione_titolarita>
+                        <pec></pec>
+                    </anagrafiche>
+                </xsl:for-each>
+                        
+                <xsl:for-each select="./ist:richiedenteFormaGiuridica/mdas:listaCaricaPersona/mdas:caricaPersona/mdas:personaFisica">            
+                    <anagrafiche>
+                        <anagrafica>
+                            <counter></counter>
+                            <confermata></confermata>
+                            <daRubrica></daRubrica>
+                            <id_anagrafica></id_anagrafica>
+                            <tipo_anagrafica></tipo_anagrafica>
+                            <variante_anagrafica></variante_anagrafica>
+                            <cognome>
+                                <xsl:value-of select="./mdas:personaFisicaBase/mdas:cognome"/>
+                            </cognome>
+                            <denominazione></denominazione>
+                            <nome>
+                                <xsl:value-of select="./mdas:personaFisicaBase/mdas:nome"/>
+                            </nome>
+                            <codice_fiscale>
+                                <xsl:value-of select="./mdas:personaFisicaBase/mdas:codiceFiscale"/>
+                            </codice_fiscale>
+                            <flg_individuale></flg_individuale>
+                            
+                            <data_nascita> 
+                                <xsl:value-of select="./mdas:dataNascita"/>
+                            </data_nascita>
+                            <!--                            
+                  <cittadinanza>
+                    <id xmlns="http://www.insiel.it/masterdata/mdet">1</id>
+                    <denominazione xmlns="http://www.insiel.it/masterdata/mdet">Italia</denominazione>
+                  </cittadinanza>
+                            -->
+                            <id_cittadinanza><xsl:value-of select="./mdas:cittadinanza/mdet:id"/></id_cittadinanza>
+                            <cod_cittadinanza><xsl:value-of select="./mdas:cittadinanza/mdet:id"/></cod_cittadinanza>
+                            <des_cittadinanza><xsl:value-of select="./mdas:cittadinanza/mdet:denominazione"/></des_cittadinanza>
+                            <id_nazionalita></id_nazionalita>
+                            <cod_nazionalita></cod_nazionalita>
+                            <des_nazionalita></des_nazionalita>
+                            
+                            <id_comune_nascita>
+                                <xsl:value-of select="./mdas:luogoNascita/mdet:comuneItaliano/mdet:id"/>
+                            </id_comune_nascita>
+                            <des_comune_nascita>
+                                <xsl:value-of select="./mdas:luogoNascita/mdet:comuneItaliano/mdet:denominazioneComune"/>
+                            </des_comune_nascita>
+                            <id_provincia_nascita></id_provincia_nascita>
+                            <des_provincia_nascita> 
+                                <xsl:value-of select="./mdas:luogoNascita/mdet:comuneItaliano/mdet:provincia/mdet:denominazioneProvincia"/>
+                            </des_provincia_nascita>
+                            <id_stato_nascita>1</id_stato_nascita>
+                            <des_stato_nascita>ITALIA</des_stato_nascita>
+                            <localita_nascita></localita_nascita>
+                            
+                            <sesso>
+                                <xsl:value-of select="./mdas:sesso"/>
+                            </sesso>
+                            <des_tipo_collegio></des_tipo_collegio>
+                            <numero_iscrizione></numero_iscrizione>
+                            <des_provincia_iscrizione></des_provincia_iscrizione>
+                            <cod_provincia_cciaa></cod_provincia_cciaa>
+                            <des_provincia_cciaa></des_provincia_cciaa>
+                            <flg_attesa_iscrizione_ri></flg_attesa_iscrizione_ri>
+                            <flg_obbligo_iscrizione_ri></flg_obbligo_iscrizione_ri>
+                            <n_iscrizione_ri></n_iscrizione_ri>
+                            <flg_attesa_iscrizione_rea></flg_attesa_iscrizione_rea>
+                            <n_iscrizione_rea></n_iscrizione_rea>
+                            <des_forma_giuridica></des_forma_giuridica>
+                            <recapiti>
+                                <xsl:for-each select="./mdas:residenza">     
+                                    <!--
+                                     <residenza>
+                    <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">ANDRONA</tipoIndirizzo>
+                    <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">Valentinis</indirizzo>
+                    <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">1</numeroCivico>
+                    <cap xmlns="http://www.insiel.it/masterdata/mdet">33050</cap>
+                    <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+                      <comuneItaliano>
+                        <id>10932</id>
+                        <denominazioneComune>Ronchis</denominazioneComune>
+                        <provincia>
+                          <denominazioneProvincia>Udine</denominazioneProvincia>
+                          <siglaProvincia>UD</siglaProvincia>
+                        </provincia>
+                      </comuneItaliano>
+                    </luogo>
+                  </residenza>
+                                       
+                                    -->   
+                                    <recapito>
+                                        <id_recapito></id_recapito>
+                                        <id_comune>
+                                            <xsl:value-of select="./mdet:luogo/mdet:comuneItaliano/mdet:id"/>
+                                        </id_comune>
+                                        <des_comune>
+                                            <xsl:value-of select="./mdet:luogo/mdet:comuneItaliano/mdet:denominazioneComune"/>
+                                        </des_comune>
+                                        <id_provincia></id_provincia>
+                                        <des_provincia>
+                                            <xsl:value-of select="./mdet:luogo/mdet:comuneItaliano/mdet:provincia/mdet:denominazioneProvincia"/>
+                                        </des_provincia>
+                                        <id_stato>1</id_stato>
+                                        <des_stato>ITALIA</des_stato>
+                                        <indirizzo>
+                                            <xsl:value-of select="./mdet:tipoIndirizzo"/>
+                                            <xsl:text> </xsl:text>
+                                            <xsl:value-of select="./mdet:indirizzo"/>
+                                        </indirizzo>
+                                        <codice_via></codice_via>
+                                        <n_civico>
+                                            <xsl:value-of select="./mdet:numeroCivico"/>
+                                        </n_civico>
+                                        <codice_civico></codice_civico>
+                                        <interno_numero></interno_numero>
+                                        <interno_lettera></interno_lettera>
+                                        <interno_scala></interno_scala>
+                                        <lettera></lettera>
+                                        <colore></colore>
+                                        <cap>
+                                            <xsl:value-of select="./mdet:cap"/>
+                                        </cap>
+                                        <altre_info_indirizzo></altre_info_indirizzo>
+                                        <telefono></telefono>
+                                        <cellulare></cellulare>
+                                        <email></email>
+                                        <pec></pec>
+                                        <id_tipo_indirizzo></id_tipo_indirizzo>
+                                    </recapito>
+                                </xsl:for-each>
+                            </recapiti>
+                        </anagrafica>
+                        <id_tipo_ruolo></id_tipo_ruolo>
+                        <cod_tipo_ruolo></cod_tipo_ruolo>
+                        <des_tipo_ruolo></des_tipo_ruolo>
+                        <des_tipo_qualifica></des_tipo_qualifica>
+                        <descrizione_titolarita></descrizione_titolarita>
+                        <pec></pec>
+                    </anagrafiche>
+                </xsl:for-each>
+                        
+            </xsl:for-each>
+<!--
+  <estremiCatastali xmlns="http://www.insiel.it/masterdata/mdet-ext" xmlns:atrb="http://www.insiel.it/masterdata/mdet" atrb:tipoCatasto="catasto fabbricati (N.C.E.U.)">
+            <catastoFabbricati xmlns="http://www.insiel.it/masterdata/mdet">
+              <comuneCatastale>
+                <id>10932</id>
+                <denominazioneComune>Ronchis</denominazioneComune>
+                <provincia>
+                  <denominazioneProvincia>Udine</denominazioneProvincia>
+                  <siglaProvincia>UD</siglaProvincia>
+                </provincia>
+              </comuneCatastale>
+              <foglio>1</foglio>
+              <particella>1</particella>
+            </catastoFabbricati>
+          </estremiCatastali>
+-->
+            
+            <dati_catastali>
+                <xsl:for-each select="/mand:managedData/mand:datoReferenziabile/ist:parteGenerale/ist:localizzazioneIntervento/ist:localizzazioneTerritoriale/mdete:estremiCatastali/mdet:catastoFabbricati">
+                    <immobile>
+                        <counter></counter>
+                        <id_immobile></id_immobile>
+                        <id_tipo_sistema_catastale>2</id_tipo_sistema_catastale>
+                        <des_tipo_sistema_catastale></des_tipo_sistema_catastale>
+                        <sezione></sezione>
+                        <id_tipo_unita></id_tipo_unita>
+                        <des_tipo_unita></des_tipo_unita>
+                        <foglio>
+                            <xsl:value-of select="./mdet:foglio"/>
+                        </foglio>
+                        <mappale></mappale>
+                        <id_tipo_particella>2</id_tipo_particella><!-- (1 per terreni e 2 per fabbricati) -->
+                        <des_tipo_particella>
+                            <xsl:value-of select="./mdet:particella"/>
+                        </des_tipo_particella>
+                        <estensione_particella></estensione_particella>
+                        <subalterno></subalterno>
+                        <latitudine></latitudine>
+                        <longitudine></longitudine>
+                        <id_comune>
+                            <xsl:value-of select="./mdet:comuneCatastale/mdet:id"/>
+                        </id_comune>
+                        <des_comune>
+                            <xsl:value-of select="./mdet:comuneCatastale/mdet:denominazioneComune"/>
+                        </des_comune>
+                        <id_provincia></id_provincia>
+                        <des_provincia>
+                            <xsl:value-of select="./mdet:comuneCatastale/mdet:provincia/mdet:denominazioneProvincia"/>
+                        </des_provincia>
+                    </immobile>
+                </xsl:for-each>
+            </dati_catastali>
+            <!--
+            
+             <indirizzo xmlns="http://www.insiel.it/masterdata/mdet-ext">
+            <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">ANDRONA</tipoIndirizzo>
+            <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">Valentinis</indirizzo>
+            <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">11</numeroCivico>
+            <cap xmlns="http://www.insiel.it/masterdata/mdet">33050</cap>
+            <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+              <comuneItaliano>
+                <id>10932</id>
+                <denominazioneComune>Ronchis</denominazioneComune>
+                <provincia>
+                  <denominazioneProvincia>Udine</denominazioneProvincia>
+                  <siglaProvincia>UD</siglaProvincia>
+                </provincia>
+              </comuneItaliano>
+            </luogo>
+          </indirizzo>
+            -->
+                <indirizzi_intervento>
+                    <xsl:for-each select="/mand:managedData/mand:datoReferenziabile/ist:parteGenerale/ist:localizzazioneIntervento/ist:localizzazioneTerritoriale/mdete:indirizzo">
+                        <indirizzo_intervento>
+                            <counter></counter>
+                            <indirizzo> 
+                                <xsl:value-of select="./mdet:tipoIndirizzo"/>
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="./mdet:indirizzo"/>
+                            </indirizzo>
+                            <civico>
+                                <xsl:value-of select="./mdet:numeroCivico"/>
+                            </civico>
+                            <cap>
+                                <xsl:value-of select="./mdet:cap"/>
+                            </cap>
+                            <codice_via></codice_via>
+                            <codice_civico></codice_civico>
+                            <interno_numero></interno_numero>
+                            <lettera></lettera>
+                            <colore></colore>
+                            <confermato></confermato>
+                        </indirizzo_intervento>
+                    </xsl:for-each>
+                </indirizzi_intervento>
+            
+            
+            <!--
+            
+            <procedimento>
+        <procedimentoBase xmlns="http://www.insiel.it/masterdata/mdap">
+          <id>10148</id>
+          <titolo>Somministrazione di alimenti e bevande (tipologia a) - Ampliamento / Riduzione</titolo>
+        </procedimentoBase>
+      </procedimento>
+      <procedimento>
+        <procedimentoBase xmlns="http://www.insiel.it/masterdata/mdap">
+          <id>43545</id>
+          <titolo>SCIA Edilizia - Presentazione</titolo>
+        </procedimentoBase>
+      </procedimento>
+            
+            -->
+            <procedimenti>
+                <xsl:for-each select="/mand:managedData/mand:datoReferenziabile/ist:parteGenerale/ist:procedimento">
+                    <procedimento>
+                        <id_procedimento>
+                            <xsl:value-of select="./mdap:procedimentoBase/mdap:id"/>
+                        </id_procedimento>
+                        <cod_procedimento></cod_procedimento>
+                        <termini></termini>
+                        <des_procedimento>
+                            <xsl:value-of select="./mdap:procedimentoBase/mdap:titolo"/>
+                        </des_procedimento>
+                        <cod_lang></cod_lang>
+                        <cod_ente_destinatario></cod_ente_destinatario>
+                        <des_ente_destinatario></des_ente_destinatario>
+                    </procedimento>
+                </xsl:for-each>
+            </procedimenti>
+            <allegati>
+                <!--                <allegato>
+                    <riepilogoPratica>S</riepilogoPratica>
+                    <descrizione>riepilogo.pdf.p7m</descrizione>
+                    <nome_file>1000_riepilogo.pdf.p7m</nome_file>
+                    <tipo_file>application/pkcs7-signature</tipo_file>
+                    <path_file>cross_attachment/GSPMRC83A12G888J-002552-3724303//1000_riepilogo.pdf.p7m</path_file>
+                </allegato>
+                <allegato>
+                    <riepilogoPratica>N</riepilogoPratica>
+                    <descrizione>Pratica di Concessioni e Autorizzazioni</descrizione>
+                    <nome_file>CeA.xml</nome_file>
+                    <tipo_file>application/xml</tipo_file>
+                    <path_file>cross_attachment/GSPMRC83A12G888J-002552-3724303//CeA.xml</path_file>
+                </allegato>-->
+            </allegati>
+            <eventi/>
+        </pratica>
+        
+    </xsl:template>
+    
+</xsl:stylesheet>

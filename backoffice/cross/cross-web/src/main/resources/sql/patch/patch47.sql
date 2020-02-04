@@ -1,0 +1,1 @@
+INSERT INTO `dizionario_errori` (`cod_errore`, `descrizione`) values ('PDOP', 'Pratica già presente in banca dati');

@@ -1,0 +1,66 @@
+{
+    "type": "Grid",
+    "id": "ConsoleGrid",
+    "attributes": {
+        "config": {
+            "loadData": {
+                "url": "<URL per chiamata AJAX> (senza il $path)",
+                "parameters <OPZIONALE>": {
+                    "<KEY>":"<VALUE>"
+                }
+            },
+            "sort": {
+                "column": "data",
+                "order <OPZIONALE DEFAULT ASC>": "desc"
+            },
+            "pageSize <OPZIONALE DEFAULT 10,20,30":[50,100],
+            "gridActions": {
+            },
+            "rowActions <ACTION DI DEFAULT SE PREVISTE [view,edit,delete]": [
+                {
+                    "name": "view",
+                    "action":{
+                        "type":"submit/form/redirect",
+                        "requireConfirm":"true",
+                        "form":"it.wego.xxxx",
+                        "url":"/url.htm",
+                        "rowParameters":[
+
+                        ],
+                        "otherParameters":{
+                            "nome":"gabriele"
+                        }
+                    }
+                },
+                {
+                    "name": "edit",
+                    "action":{
+                        "type":"submit/form/redirect"
+                    }
+                },
+                {
+                    "name": "beer",
+                    "class" : "fa-beer",
+                    "color" : "orange",
+                    "legend": "BEER!"
+                }
+            ],
+            "columnModel": [
+                {
+                    "name": "idErrore",
+                    "label": "ID",
+                    "key <OPZIONALE>": "true",
+                    "hidden <OPZIONALE>": "true",
+                    "width": 60,
+                    "formatter <OPZIONALE>": {
+                        "function": "substring|[CUSTOM]",
+                        "options": {
+                            "length <OPZIONALE>": 5,
+                            "delimiter <OPZIONALE>": "\\n"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,21 @@
+---Upgrade dalla versione Master Copy di settembre 2010 a Master Copy di dicembre 2010
+   (V.0.0)
+
+1) effettuare una copia di backup del db di A&C
+2) eseguire lo script sql from-MC092010-to-V_0_0.sql
+    vengono aggiunte alcune tabelle
+    vengono modificate alcune tabella
+    vengono cancellate alcune tabelle non più usate; in particolare la tabella
+        oneri_procedimenti viene sostituita dalla tabella onei_interventi, viene
+        eseguita una query automatica di popolamento della nuova tabella partendo
+        dai contenuti della tabella origine (oneri_procedimenti)
+3) eseguire lo script sql people_cea_templates_vari.sql per il popolamento con un
+    template di default per la Procura Speciale
+4) veriricare se la tabella oneri_interventi è stata popolata, se sì
+    effettuare il drop della tabella oneri_procedimenti con il comando
+    drop table oneri_procedimenti;
+5) effettuare l'aggiornamento del software (Dbm.war)
+
+NB: lo script sql oneriProcedimenti-to-Interventi.sql effettua il popolamento della
+    tabella oneri_interventi partendo dalla tabella oneri_procedimenti, tale script è
+    già presente nello script globale from-MC092010-to-V_0_0.sql

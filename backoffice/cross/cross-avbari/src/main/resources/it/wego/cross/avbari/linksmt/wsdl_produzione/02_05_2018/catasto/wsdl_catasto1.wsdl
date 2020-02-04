@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://webservice.backend.people.it/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://webservice.backend.people.it/">
+   <wsdl:types>
+      <xsd:schema targetNamespace="http://webservice.backend.people.it/Imports">
+         <xsd:import schemaLocation="./catasto_xsd0.xsd" namespace="http://webservice.backend.people.it/" />
+         <xsd:import schemaLocation="./catasto_xsd1.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="ICatasto_process_InputMessage">
+      <wsdl:part name="parameters" element="tns:process" />
+   </wsdl:message>
+   <wsdl:message name="ICatasto_process_OutputMessage">
+      <wsdl:part name="parameters" element="tns:processResponse" />
+   </wsdl:message>
+   <wsdl:portType name="ICatasto">
+      <wsdl:operation name="process">
+         <wsdl:input wsaw:Action="process" message="tns:ICatasto_process_InputMessage" />
+         <wsdl:output wsaw:Action="http://webservice.backend.people.it/ICatasto/processResponse" message="tns:ICatasto_process_OutputMessage" />
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

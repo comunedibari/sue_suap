@@ -1,0 +1,28 @@
+<Context path="/cross" debug="0" privileged="true" reloadbale="true">
+    <!--         docBase="E:/radar-web/src/main/webapp"-->
+    
+    
+    <Resource name="jdbc/CrossDS" auth="Container"
+                              type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
+                              url="jdbc:mysql://genova.ud.wego.it:3306/cross?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"
+                              username="people_demo" password="people_demo" maxActive="20" maxIdle="10"
+                              validationQuery="SELECT 1" validationQueryTimeout="-1"
+                              testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
+                              maxWait="-1"/>
+        
+    <Resource name="jdbc/ActivitiDS" auth="Container"
+                  type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
+                  url="jdbc:mysql://localhost:3306/activiti"
+                  username="root" password="548470" maxActive="20" maxIdle="10"
+                  maxWait="-1"/>
+
+<!--    <Realm className="org.apache.catalina.realm.DataSourceRealm"
+           userTable="userinfo"
+           userNameCol="user_name"
+           userCredCol="password"
+           userRoleTable="userinfo_roles"
+           roleNameCol="role_name"
+           localDataSource="true"
+           dataSourceName="jdbc/myds"/>-->
+           
+</Context>

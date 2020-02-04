@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<form-validation>
+	<formset>		
+		<form name="testcedaf:validaElencoSemplice">
+			<field property="codiceFiscale" depends="fiscalCode">
+				<arg0 key="label.validaElenco.codiceFiscale" resource="false"/>
+			</field>
+			
+			<field property="partitaIVA" depends="partitaIva">
+				<arg0 key="label.validaElenco.partitaIVA" resource="false"/>
+			</field>
+			
+			<field property="dataDaValidare" depends="date">
+				<arg0 key="label.validaElenco.data" resource="false"/>
+			</field>
+			
+			<field property="nome" indexedListProperty="utenti" depends="required, mask">
+				<arg0 key="label.validaElenco.nome" resource="false"/>
+				<msg name="mask" key="error.mask.nomeCognomeUtente"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z]*$</var-value>
+				</var>				
+			</field>									
+			<field property="cognome" indexedListProperty="utenti" depends="required, mask">
+				<arg0 key="label.validaElenco.cognome" resource="false"/>
+				<msg name="mask" key="error.mask.nomeCognomeUtente"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z]*$</var-value>
+				</var>				
+			</field>
+		</form>
+		<form name="testcedaf:validaElenco">
+			<field property="utenti[].nome" indexedListProperty="gruppi" depends="required, mask">
+				<msg name="mask" key="error.mask.nomeCognomeUtente"/>
+				<arg0 key="label.validaElenco.nome" resource="false"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z]*$</var-value>
+				</var>				
+			</field>
+			<field property="utenti[].cognome" indexedListProperty="gruppi" depends="required, mask">
+				<msg name="mask" key="error.mask.nomeCognomeUtente"/>
+				<arg0 key="label.validaElenco.cognome" resource="false"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z]*$</var-value>
+				</var>				
+			</field>
+		</form>
+		<form name="testcedaf:loopback">
+			<field property="prova" depends="required">
+				<arg0 key="label.loopback.prova" resource="false"></arg0>
+			</field>
+		</form>
+		<form name="testcedaf:validazione">
+			<field property="valore1" depends="required">
+				<arg0 key="label.validazione.valore1" resource="false"></arg0>
+			</field>
+			<field property="valore2" depends="required">
+				<arg0 key="label.validazione.valore2" resource="false"></arg0>
+			</field>
+			<field property="valore3" depends="required">
+				<arg0 key="label.validazione.valore3" resource="false"></arg0>
+			</field>
+			<field property="valore4" depends="required">
+				<arg0 key="label.validazione.valore4" resource="false"></arg0>
+			</field>
+			<field property="valore5" depends="required">
+				<arg0 key="label.validazione.valore5" resource="false"></arg0>
+			</field>
+			<field property="valore6" depends="required">
+				<arg0 key="label.validazione.valore6" resource="false"></arg0>
+			</field>
+			<field property="valore7" depends="required">
+				<arg0 key="label.validazione.valore7" resource="false"></arg0>
+			</field>
+			<field property="valore8" depends="required">
+				<arg0 key="label.validazione.valore8" resource="false"></arg0>
+			</field>
+			<field property="valore9" depends="required">
+				<arg0 key="label.validazione.valore9" resource="false"></arg0>
+			</field>
+			<field property="valore10" depends="required">
+				<arg0 key="label.validazione.valore10" resource="false"></arg0>
+			</field>
+		</form>
+	</formset>
+</form-validation>

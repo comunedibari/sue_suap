@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    xmlns="http://www.insiel.it/masterdata/mdap/istanze">
+    <xs:import namespace="http://www.insiel.it/masterdata/mdap" schemaLocation="mdap.xsd"/>
+    <xs:import namespace="http://www.insiel.it/masterdata/mdap/istanze" schemaLocation="atrb.xsd"/>
+    <xs:import namespace="http://www.insiel.it/masterdata/mdas" schemaLocation="ns1.xsd"/>
+    <xs:import namespace="http://www.insiel.it/masterdata/mdet-ext" schemaLocation="mdet-ext.xsd"/>
+    
+    <xs:element name="parteGenerale">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="listaSoggettiInteressati"/>
+                <xs:element ref="localizzazioneIntervento"/>
+                <xs:element ref="procedimento"/>
+                <xs:element ref="note"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT PROCESS (PROCESS-CONFIG?, VIEW ) >
+	<!ELEMENT PROCESS-CONFIG ( default, comune?, PROCESS-VIEW?,  PROCESS-SIGN?, PROCESS-PRINT?, PROCESS-CLASS? ) >
+		<!ELEMENT PROCESS-VIEW ( default, comune? ) >
+		<!ELEMENT PROCESS-SIGN ( default, comune? ) >
+		<!ELEMENT PROCESS-PRINT ( default, comune? ) >
+		<!ELEMENT PROCESS-CLASS ( default, comune? ) >
+	<!ELEMENT VIEW ( default, comune?, ACTIVITIES ) >
+		<!ELEMENT ACTIVITIES ( ACTIVITY+ ) >
+			<!ELEMENT ACTIVITY ( default, comune?, STEPS ) >
+				<!ELEMENT STEPS ( STEP+ ) >
+					<!ELEMENT STEP ( default, comune? ) >
+	
+	<!ELEMENT default (
+		SUMMARY-ENABLED?,
+		SIGN-ENABLED?, 
+		REDEFINED-CLASS?, 
+		REDEFINED-SIGN-JSP?, 
+		REDEFINED-SIGN-PRINT-JSP?, 
+		name?, 
+		activity-order?,
+		home?,
+		state?,
+		checkmark?,
+		step-order?,
+		view?,
+		help?,
+		controller?,
+		classname?,
+		dto? ) 
+	>
+	<!ELEMENT comune (
+		SUMMARY-ENABLED?,
+		SIGN-ENABLED?, 
+		REDEFINED-CLASS?, 
+		REDEFINED-SIGN-JSP?, 
+		REDEFINED-SIGN-PRINT-JSP?, 
+		name?, 
+		activity-order?,
+		home?,
+		state?,
+		checkmark?,
+		step-order?,
+		view?,
+		help?,
+		controller?,
+		classname?,
+		dto? ) 
+	>
+	
+	<!ELEMENT SUMMARY-ENABLED (#PCDATA)>	
+	<!ELEMENT SIGN-ENABLED (#PCDATA)>
+	<!ELEMENT REDEFINED-CLASS (#PCDATA)>
+	<!ELEMENT REDEFINED-SIGN-JSP (#PCDATA)>
+	<!ELEMENT REDEFINED-SIGN-PRINT-JSP (#PCDATA)>
+	<!ELEMENT name (#PCDATA)>
+	<!ELEMENT activity-order (#PCDATA)>
+	<!ELEMENT home (#PCDATA)>
+	<!ELEMENT state (#PCDATA)>
+	<!ELEMENT checkmark (#PCDATA)>
+	<!ELEMENT step-order (#PCDATA)>
+	<!ELEMENT view (#PCDATA)>
+	<!ELEMENT help (#PCDATA)>
+	<!ELEMENT controller (#PCDATA)>
+	<!ELEMENT classname (#PCDATA)>
+	<!ELEMENT dto (#PCDATA)>
+
+	<!ATTLIST comune 
+		id CDATA #REQUIRED
+	>
+	<!ATTLIST VIEW
+		id CDATA #REQUIRED
+	>
+	<!ATTLIST ACTIVITY
+		id CDATA #REQUIRED
+	>
+	<!ATTLIST STEP
+		id CDATA #REQUIRED
+	>
+

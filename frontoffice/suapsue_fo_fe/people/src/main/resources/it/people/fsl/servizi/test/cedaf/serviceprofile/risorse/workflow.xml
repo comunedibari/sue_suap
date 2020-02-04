@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<PROCESS>
+	<PROCESS-CONFIG>
+		<default>
+			<SUMMARY-ENABLED>false</SUMMARY-ENABLED>
+		</default>
+	</PROCESS-CONFIG>
+	<VIEW id="1">
+		<default>
+			<name>GestioneServiceProfile</name>
+			<activity-order>1, 2, 3</activity-order>
+		</default>
+		<ACTIVITIES>
+			<ACTIVITY id="1">
+				<default>
+					<name>Crea Service Profile</name>
+					<step-order>crea</step-order>
+				</default>
+				<STEPS>
+					<STEP id="crea">
+						<default>
+							<name>Crea</name>
+							<view>creaServiceProfile.jsp</view>
+							<classname>CreaServiceProfileStep</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="2">
+				<default>
+					<name>Elimina Service Profile</name>
+					<step-order>0</step-order>
+				</default>
+				<STEPS>
+					<STEP id="0">
+						<default>
+							<name>Elimina</name>
+							<view>eliminaServiceProfile.jsp</view>
+							<classname>EliminaServiceProfileStep</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="3">
+				<default>
+					<name>Carica Service Profile</name>
+					<step-order>0</step-order>
+				</default>
+				<STEPS>
+					<STEP id="0">
+						<default>
+							<name>Carica</name>
+							<view>caricaServiceProfile.jsp</view>
+							<classname>CaricaServiceProfileStep</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+		</ACTIVITIES>
+	</VIEW>
+</PROCESS>

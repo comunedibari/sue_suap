@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    
+    <definition name="lista_pratiche_protocollo_custom" extends=".main">
+        <put-attribute name="title"         value="Pratiche da protocollo" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/lista_pratiche_protocollo.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Pratiche da protocollo" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/WEB-INF/classes/it/wego/cross/events/default/pratiche/caricamento/custom/ricerca.jsp"/>
+    </definition>
+    
+    <definition name="lista_documenti_protocollo_custom" extends=".main">
+        <put-attribute name="title"         value="Documenti da protocollo" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/lista_documenti_protocollo.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Documenti da protocollo" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/WEB-INF/classes/it/wego/cross/events/default/pratiche/caricamento/custom/ricerca.jsp"/>
+    </definition>
+    
+</tiles-definitions>

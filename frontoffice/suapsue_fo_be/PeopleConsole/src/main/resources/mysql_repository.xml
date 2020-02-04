@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE descriptor-repository PUBLIC
+       "-//Apache Software Foundation//DTD OJB Repository//EN"
+       "repository.dtd"
+[
+
+<!ENTITY internal SYSTEM "repository_internal.xml">
+]>
+
+<descriptor-repository version="1.0" isolation-level="read-uncommitted">  
+	<jdbc-connection-descriptor  
+			jcd-alias="PEOPLE_DB" 
+			default-connection="true" 
+			platform="MySQL"
+			jdbc-level="3.0"
+			jndi-datasource-name="java:/comp/env/jdbc/PeopleDB" 
+			useAutoCommit="1">
+	<!--jdbc-connection-descriptor  
+			jcd-alias="PEOPLE_DB" 
+			default-connection="true" 
+			platform="MySQL"
+			jdbc-level="3.0" 
+			driver="org.gjt.mm.mysql.Driver" 
+			protocol="jdbc" 
+			subprotocol="mysql"
+			dbalias="//localhost:3307/peopledb?autoReconnect=true"
+			username="people_demo" 
+			password="people_demo" 
+			useAutoCommit="1">
+	   <connection-pool maxActive="1000" maxIdle="10" maxWait="2000" minEvictableIdleTimeMillis="900000" 
+	   		numTestsPerEvictionRun="21" testWhileIdle="true" testOnBorrow="true" testOnReturn="true" 
+	   		validationQuery="SELECT 1" timeBetweenEvictionRunsMillis="900000" removeAbandoned="true" 
+	   		removeAbandonedTimeout="900000" whenExhaustedAction="2" /-->
+	   <sequence-manager 
+			className="it.people.console.persistence.utils.sequences.SequenceManagerMySQLImpl" />
+	</jdbc-connection-descriptor>
+
+	<class-descriptor class="it.people.console.domain.FENode" table="fenode">
+		<field-descriptor id="1" name="id" column="id" jdbc-type="BIGINT" 
+			primarykey="true" 
+			conversion="it.people.console.persistence.converters.sql.LongConverter" autoincrement="true"/>
+		<field-descriptor id="2" name="name" column="nodofe" jdbc-type="VARCHAR"/>
+		<field-descriptor id="3" name="feServiceURL" column="reference" jdbc-type="VARCHAR"/>
+		<field-descriptor id="4" name="municipality" column="comune" jdbc-type="VARCHAR"/>
+		<field-descriptor id="5" name="municipalityCode" column="codicecomune" jdbc-type="VARCHAR"/>
+		<field-descriptor id="6" name="delegationControlEnabled" column="controllodelegheattivo" jdbc-type="INTEGER" conversion="it.people.console.persistence.converters.sql.BooleanConverter"/>
+		<field-descriptor id="7" name="delegationControlServiceURL" column="controllodelegheurl" jdbc-type="VARCHAR"/>
+		<field-descriptor id="8" name="aooPrefix" column="aooprefix" jdbc-type="VARCHAR"/>
+		<field-descriptor id="9" name="announcementMessage" column="announcementMessage" jdbc-type="VARCHAR"/>
+		<field-descriptor id="10" name="showAnnouncement" column="showAnnouncement" jdbc-type="INTEGER" conversion="it.people.console.persistence.converters.sql.BooleanConverter"/>
+		<field-descriptor id="11" name="onlineSign" column="firmaOnLine" jdbc-type="INTEGER" conversion="it.people.console.persistence.converters.sql.BooleanConverter"/>
+		<field-descriptor id="12" name="offlineSign" column="firmaOffLine" jdbc-type="INTEGER" conversion="it.people.console.persistence.converters.sql.BooleanConverter"/>
+		
+	</class-descriptor>
+
+	<class-descriptor class="it.people.console.domain.FENodeQuery" table="fenode">
+		<field-descriptor id="1" name="id" column="id" jdbc-type="BIGINT" 
+			primarykey="true" 
+			conversion="it.people.console.persistence.converters.sql.LongConverter" autoincrement="true"/>
+		<field-descriptor id="2" name="name" column="nodofe" jdbc-type="VARCHAR"/>
+		<field-descriptor id="3" name="feServiceURL" column="reference" jdbc-type="VARCHAR"/>
+		<field-descriptor id="4" name="municipality" column="comune" jdbc-type="VARCHAR"/>
+		<field-descriptor id="5" name="municipalityCode" column="codicecomune" jdbc-type="VARCHAR"/>
+		<field-descriptor id="6" name="delegationControlEnabled" column="controllodelegheattivo" jdbc-type="INTEGER" conversion="it.people.console.persistence.converters.sql.BooleanConverter"/>
+		<field-descriptor id="7" name="delegationControlServiceURL" column="controllodelegheurl" jdbc-type="VARCHAR"/>
+		<field-descriptor id="8" name="aooPrefix" column="aooprefix" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+
+	<class-descriptor class="it.people.console.domain.FEService" table="service">
+		<field-descriptor id="1" name="id" column="id" jdbc-type="BIGINT" 
+			primarykey="true" 
+			conversion="it.people.console.persistence.converters.sql.LongConverter" autoincrement="true"/>
+		<field-descriptor id="2" name="serviceName" column="nome" jdbc-type="VARCHAR"/>
+		<field-descriptor id="3" name="_package" column="package" jdbc-type="VARCHAR"/>
+		<field-descriptor id="4" name="logLevel" column="loglevel" jdbc-type="INTEGER"/>
+		<field-descriptor id="5" name="serviceStatus" column="stato" jdbc-type="INTEGER"/>
+		<field-descriptor id="6" name="nodeId" column="nodeid" jdbc-type="BIGINT"/>
+		<field-descriptor id="7" name="area" column="attivita" jdbc-type="VARCHAR"/>
+		<field-descriptor id="8" name="subArea" column="sottoattivita" jdbc-type="VARCHAR"/>
+		<field-descriptor id="9" name="process" column="process" jdbc-type="VARCHAR"/>
+		<field-descriptor id="10" name="attachmentsInCitizenReceipt" column="receiptmailattachment" jdbc-type="INTEGER"/>
+		<field-descriptor id="11" name="processSignEnabled" column="signenabled" jdbc-type="INTEGER"/>
+		<field-descriptor id="12" name="sendmailtoowner" column="sendmailtoowner" jdbc-type="INTEGER"/>
+		<field-descriptor id="13" name="embedAttachmentInXml" column="embedattachmentinxml" jdbc-type="INTEGER"/>
+		<field-descriptor id="14" name="showPrivacyDisclaimer" column="showprivacydisclaimer" jdbc-type="INTEGER"
+			conversion="it.people.console.persistence.converters.sql.BooleanConverter"/>
+		<field-descriptor id="15" name="privacyDisclaimerRequireAcceptance" column="privacydisclaimerrequireacceptance" jdbc-type="INTEGER"
+			conversion="it.people.console.persistence.converters.sql.BooleanConverter"/>
+		<field-descriptor id="16" name="onlineSign" column="firmaOnLine" jdbc-type="INTEGER"
+			conversion="it.people.console.persistence.converters.sql.BooleanConverter"/>
+		<field-descriptor id="17" name="offlineSign" column="firmaOffLine" jdbc-type="INTEGER"
+			conversion="it.people.console.persistence.converters.sql.BooleanConverter"/>
+	</class-descriptor>
+</descriptor-repository>

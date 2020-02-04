@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<certificate-descriptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="certificate-descriptions.xsd">
+
+  <format-java-detector class="it.ictechnology.certificate.parser.impl.CNSDetector"/>
+  <format-java-detector class="it.ictechnology.certificate.parser.impl.FirmaQualificataDetector"/>
+  
+  
+  <format-alias issuer-match="C=IT,O=Poste Italiane S.p.A.,2.5.4.97=VATIT-01114601006,CN=Poste Italiane EU Qualified Certificates CA" format-name="Poste_Italiane_EU_Qualified_Certificates_CA"/>
+  <format-alias issuer-match="InfoCert Firma Qualificata 2" format-name="infocert_firma_qualificata_2"/>
+  <format-alias issuer-match="C=IT,O=ArubaPEC S.p.A.,OU=Certification AuthorityC,CN=ArubaPEC S.p.A. NG CA 3" format-name="new_aruba"/>
+  <format-alias issuer-match="Comune di Livorno" format-name="bnl"/>
+  <format-alias issuer-match="SUBCA-EMISSIONE1-MI" format-name="cie"/>
+  <format-alias issuer-match="InfoCert Firma Qualificata" format-name="infocert"/>
+  <format-alias issuer-match="InfoCamere" format-name="infocamere"/>
+  <format-alias issuer-match="InfoCert" format-name="infocamere"/>
+  <format-alias issuer-match="Postecom CA2" format-name="postecomAuth"/>
+  <format-alias issuer-match="Postecom" format-name="egov"/>
+  <format-alias issuer-match="CT RUPA" format-name="egov"/>
+  <format-alias issuer-match="CNIPA" format-name="egov"/>
+  <format-alias issuer-match="IZSAM" format-name="izs"/>
+  <format-alias issuer-match="Actalis Qualified Certificates CA G1" format-name="actalis3"/>
+  <format-alias issuer-match="Actalis Qualified Certificates CA" format-name="actalis2"/>
+  <format-alias issuer-match="Actalis" format-name="actalis"/>
+  <format-alias issuer-match="ArubaPEC" format-name="aruba"/>
+  <format-alias issuer-match="Metaware" format-name="infocamere"/>
+  <format-alias issuer-match="Namirial CA Autenticazione" format-name="namirial"/>
+  
+  <format name="Poste_Italiane_EU_Qualified_Certificates_CA">
+    <codiceFiscale attribute="subject.SERIALNUMBER" matcher="^(TINIT)-(.+)$" group="2"/>
+    <cognome attribute="subject.SURNAME"/>
+    <nome attribute="subject.GIVENNAME"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+  
+  <format name="cns">
+    <!-- 
+      Caso in cui il CNSDetector riconosce il certificato:
+      DEVE avere almeno il keyusage di digitalSignature
+      DEVE 
+        avere l'estensione 1.3.76.14.1.1.11 
+        OPPURE 
+        avere il CN del SubjectDN che è verificato da questa regexp: ^\"?[A-Z0-9]{16}/[A-Z0-9]+\\.[^=]+=\"?$
+        (sarebbe a dire in un formato tipo: codice fiscale / ID_Carta . hashDatiPersonali)
+    -->
+  	<nome attribute="subject.GIVENNAME"/>
+  	<cognome attribute="subject.SURNAME"/>
+  	<email attribute="subject.EMAILADDRESS"/>
+  	<email attribute="subject.EMAIL"/>
+  	<codiceFiscale attribute="subject.CN" matcher=".(.{16})" group="1"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+
+  <format name="firmaQualificata">
+    <!-- 
+      Caso in cui il FirmaQualificataDetector riconosce il certificato:
+      DEVE avere il keyusage di digitalSignature OPPURE di nonRepudiation
+      DEVE contenere SERIALNUMBER= dentro il SubjectDN e questo deve essere nella forma: ^(IT|PE):(.{16}|[0-9]{11})$
+          (quindi ad esempio SERIALNUMBER=IT:MRNDNL76D14L840I)
+    -->
+    <codiceFiscale attribute="subject.SERIALNUMBER" matcher="^(IT|PE):(.+)$" group="2"/>
+    <cognome attribute="subject.SURNAME"/>
+    <nome attribute="subject.GIVENNAME"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+  
+  <format name="bnl">
+  	<nome attribute="subject.CN" matcher="[^:]*:[^:]*:([^0-9]+)" group="1"/>
+  	<email attribute="subject.EMAILADDRESS"/>
+  	<codiceFiscale attribute="subject.CN" matcher="(.{16})" group="1"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+
+  <format name="cie">
+  	<nome attribute="subject.CN" matcher=".(.{0})" group="1"/>
+  	<cognome attribute="subject.CN" matcher=".(.{0})" group="1"/>
+  	<email attribute="subject.CN" matcher=".(.{0})" group="1"/>
+  	<codiceFiscale attribute="subject.CN" matcher=".(.{0})" group="1"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+
+  <format name="infocert">
+    <!-- 
+      Caso particolare di firma infocert in cui il CF sta o nel SERIALNUMBER o nell'SN.
+      Per il resto il formato e' simile a firmaQualificata
+    -->
+    <codiceFiscale attribute="subject.SN" matcher="^(IT|PE):(.+)$" group="2"/>
+    <codiceFiscale attribute="subject.SERIALNUMBER" matcher="^(IT|PE):(.+)$" group="2"/>
+    <cognome attribute="subject.SURNAME"/>
+    <nome attribute="subject.GIVENNAME"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+  <format name="infocert_firma_qualificata_2">
+    <codiceFiscale attribute="subject.SERIALNUMBER" matcher="^(TINIT)-(.+)$" group="2"/>
+    <cognome attribute="subject.SURNAME"/>
+    <nome attribute="subject.GIVENNAME"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+  <format name="infocamere">
+  	<nome attribute="subject.GIVENNAME"/>
+  	<cognome attribute="subject.SURNAME"/>
+  	<email attribute="subject.EMAILADDRESS"/>
+  	<email attribute="subject.EMAIL"/>
+  	<codiceFiscale attribute="subject.SERIALNUMBER"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+
+  <format name="egov">
+  	<nome attribute="subject.CN" matcher="([^/]+)/" group="1"/>
+  	<cognome attribute="subject.CN" matcher="[^/]+/([^/]+)/" group="1"/>
+  	<email attribute="subject.EMAILADDRESS"/>
+  	<codiceFiscale attribute="subject.CN" matcher="[^/]+/[^/]+/([^/]+)/" group="1"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+
+  <format name="izs">
+  	<nome attribute="subject.CN" matcher="[^:]:[0-9]+:([^0-9]+)" group="1"/>
+  	<email attribute="subject.EMAILADDRESS"/>
+  	<email attribute="subject.EMAIL"/>
+  	<codiceFiscale attribute="subject.CN" matcher="[^:]+" group="0"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+
+  <format name="actalis">
+  	<codiceFiscale attribute="subject.CN" matcher="^&quot;?([^/]+)" group="1"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+
+  <format name="actalis2">
+    <codiceFiscale attribute="subject.CN" matcher="[^/]+/[^/]+/([^/]+)/" group="1"/>
+    <cognome attribute="subject.CN" matcher="([^/]+)/[^/]+/[^/]+/" group="1"/>
+    <nome attribute="subject.CN" matcher="[^/]+/([^/]+)/([^/]+)/" group="1"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+
+  <format name="actalis3">
+    <codiceFiscale attribute="subject.SERIALNUMBER" matcher="^(..):(.+)$" group="2"/>
+    <cognome attribute="subject.SURNAME"/>
+    <nome attribute="subject.GIVENNAME"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+  
+  <!--  
+  SubjectDN: C=IT,O=non presente,CN=GIATTI MARIO,SN=IT:GTTMRA51H04D548R,GIVENNAME=MARIO,SURNAME=GIATTI,2.5.4.46=11720722
+  -->
+  <format name="aruba">
+    <codiceFiscale attribute="subject.SN" matcher="^(IT|PE):(.+)$" group="2"/>
+    <codiceFiscale attribute="subject.SERIALNUMBER" matcher="^(IT|PE):(.+)$" group="2"/>
+  	<cognome attribute="subject.SURNAME"/>
+  	<nome attribute="subject.GIVENNAME"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+  <format name="new_aruba">
+    <codiceFiscale attribute="subject.SERIALNUMBER" matcher="^(TINIT)-(.+)$" group="2"/>
+    <cognome attribute="subject.SURNAME"/>
+    <nome attribute="subject.GIVENNAME"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+  <format name="postecomAuth">
+    <codiceFiscale attribute="subject.CN" matcher="[^/]+/[^/]+/([^/]+)/" group="1"/>
+    <cognome attribute="subject.SURNAME"/>
+  	<nome attribute="subject.GIVENNAME"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+
+  <format name="namirial">
+    <codiceFiscale attribute="subject.CN" matcher=".(.{16})" group="1"/>
+    <certificato.stato attribute="subject.C"/>
+    <certificato.unitaOrganizzativa attribute="subject.UO"/>
+    <certificato.organizzazione attribute="subject.O"/>
+    <certificato.enteCertificatore attribute="issuer.CN"/>
+  </format>
+</certificate-descriptions>

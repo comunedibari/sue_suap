@@ -1,0 +1,339 @@
+#Label per gestione degli errori
+errors.header=<span class="errHeaderFont">Si sono verificati i seguenti errori:</span><ul class="errHeader">
+errors.footer=</ul>
+errors.prefix=<li class="errItemFont"> 
+errors.suffix=</li>
+
+#Altre label per gestione degli errori
+errors.boolean={0} non &egrave; un boolean valido. 
+errors.byte={0} deve essere un byte.
+errors.creditcard={0} non &egrave; un numero di carta di credito valido.
+errors.date={0} non &egrave; una data valida.
+errors.double={0} deve essere un numero decimale.
+errors.email={0} non &egrave; un inidirizzo email valido.
+errors.fiscalcode={0} non &egrave; un codice fiscale valido.
+errors.partitaiva={0} non &egrave; una partita iva valida.
+errors.float={0} deve essere un numero decimale.
+errors.integer={0} deve essere un numero intero.
+errors.invalid={0} ha un formato errato.
+errors.long={0} deve essere un numero.
+errors.maxlength={0} non pu&ograve; essere maggiore di {1} caratteri.
+errors.minlength={0} non pu&ograve; essere minore di {1} caratteri.
+errors.range={0} non &egrave; compreso tra {1} e {2}.
+errors.required={0} &egrave; obbligatorio
+errors.short={0} deve essere un numero short.
+
+errors.uploadExceedMaxLength=Impossibile inserire l&rsquo;allegato in quanto eccede la dimensione massima consentita.
+errors.attachmentListExceedMaxLength=Impossibile inserire l&rsquo;allegato in quanto la dimensione totale degli allegati inseriti eccede il massimo consentito.
+errors.CallServiceError = Errore nel collegamento con il servizio di back-end. Riprovare in un secondo momento.
+
+# Label per la pagina di autenticazione del amministratore
+admin.error.communeAuthorizationDenied = Utente non abilitato per accedere al comune selezionato.
+admin.error.communeCodeNull = Impossibile leggere il codice comune dalla sessione.
+admin.error.userCreationError = Errore nella creazione dell'utente amministratore.
+
+# Etichette di Intestazione
+alt.headerSX=Tu sei Genova - Il portale al servizio del cittadino
+alt.headerDX=Comune di Genova
+label.windowTitle=Progetto PEOPLE
+
+# Etichette varie
+alt.puntoDiElenco=punto di elenco
+
+# Etichette Menu
+label.menu.elencoAttivita=Attivit&agrave; previste:
+label.menu.elencoContesto=L&rsquo;operazione che stai esplorando &egrave; iscritta nel seguente contesto:
+label.menu.nessunContesto=Nessun contesto associato.
+label.menu.nessunServizioConnesso=Nessun servizio connesso
+label.menu.elencoServiziConnessi=Servizi Connessi:
+label.menu.benvenuto=Benvenuto
+label.menu.tipoQualifica=Tipo Qualifica:
+label.menu.descrizioneQualifica=Descr. Qualifica:
+label.menu.codiceFiscale=Cod. Fiscale:
+label.menu.partitaIva=P. IVA:
+
+#Etichette pagina conferma eliminazione
+label.deleteProcess.message = Si vuole eliminare la pratica?
+label.deleteProcess.delete = Elimina
+label.deleteProcess.cancel = Annulla
+
+# Etichette per la confirma dell'uscita dal procedimento
+label.exitProcess.message = Uscendo dal procedimento si perderanno tutte le informazioni non salvate. <br /> Si desidera uscire ugualmente?
+label.exitProcess.messageNoWarn = Il procedimento &egrave; stato completato. <br />Si desidera uscire?
+label.exitProcess.ok = Esci
+label.exitProcess.cancel = Annulla
+header.button.login = Login
+header.button.logoff = Logoff
+header.button.myProcess = Le mie pratiche
+header.button.service = Servizi
+header.button.home = Home
+
+#Etichette pagine di errore
+label.defaultError.message=Si &egrave; verificato un errore inatteso, ci scusiamo per il disagio.
+
+# Etichette e Messaggi per il processo di Firma
+sign.message.noScriptNoFirma = Attenzione! Funzione di firma del documento di riepilogo &egrave; possibile solo con gli script abilitati.
+label.sign.weakSignDisclaimer = Attenzione! Non si dispone nel proprio store personale di certificati adibiti alla firma forte, oppure si è scelto di annullare l''operazione.\\nIn base alla normativa vigente, la firma forte è l''unica firma che attribuisce al documento informatico una valenza probatoria.\\nLa firma forte è regolamentata dal DPR 513 che, per il processo di firma, prevede la presenza di una Certification Authority iscritta all''albo dell''AIPA e l''utilizzo di un dispositivo di firma sicuro, come per esempio una smart card.\\nProcedendo è possibile abilitare l''operazione di firma debole.\\nUna firma debole è una firma che non possiede i requisiti della firma forte. \\nIn pratica, è una firma che consente l''identificazione e l''autenticazione in rete, ma non di chi fisicamente sottoscrive il documento (quindi non consente il non ripudio).\\nLa valenza probatoria del documento firmato, in questo caso, è a discrezione del giudice.\\n\\nSi intende procedere con la firma debole?
+label.sign.remoteSignDisclaimer = Attenzione! Non si dispone nel proprio store personale di certificati adibiti alla firma digitale, oppure si è scelto di annullare l''operazione.\\nE'' possibile procedere con un''operazione di firma remota, in cui il certificato risiede sull''Autorità di Certificazione dell''ente.\\nQuesta è una forma di firma debole, che consente l''identificazione e l''autenticazione in rete, ma non di chi fisicamente sottoscrive il documento (quindi non consente il non ripudio).\\nIn questo caso la valenza probatoria del documento firmato è a discrezione del giudice.\\n\\nProcedere con la firma remota?
+
+
+label.sign.menu.AttivitaFirma=Riepilogo
+label.sign.menu.StepFirma=Riepilogo &amp; Firma
+label.paginaInvio.titolo=Pagina di Conferma
+label.paginaInvio.messaggio=La pratica &egrave; pronta per essere inviata
+label.paginaInvio.messaggioConDelegato=dall'utente richiedente o da un suo delegato
+button.paginaInvio.invio=&nbsp;&nbsp;INVIA&nbsp;&nbsp;
+label.firmaCompletata.titolo=Pagina di Conferma
+label.firmaCompletata.Conferma=La pratica &egrave; stata presa in carico da People. Il codice per indentificare la pratica &egrave; il seguente: {1}
+label.firmaCompletata.NuovePratiche=Per creare delle nuove pratiche cliccare
+label.firmaCompletata.Link=qui
+
+# Etichette dei pulsanti di navigazione
+navigation.button.next=Continua &gt;&gt;
+navigation.button.sign=Firma Digitale
+navigation.button.saveAndSend=Salva e Invia
+navigation.button.nextModule=Modulo Successivo &gt;&gt;
+navigation.button.startPayment=Pagamento
+navigation.button.previous=&lt;&lt; Schermata Precedente
+navigation.button.previousModule=&lt;&lt; Modulo Precedente
+navigation.button.save=Salva
+
+# Etichette pagina Servizi (framework\index.jsp)
+label.areeServizi = Categorie Servizi
+label.serviziInstallati = Categoria
+label.nessunServizioInstallato = Nessun servizio installato
+
+# Etichette pagina selezione Ente (\framework\view\selectCommune.jsp)
+label.selectCommune.descrizione = Selezionare un Ente:
+label.selectCommune.nessunEnteConfigurato = Nessun ente configurato.
+
+#label OperatoreComune
+label.BE.OperatoreComune =Gestione Pratiche Ricevute
+label.modulionlinecomune.AllProcess = Tutti i procedimenti in corso
+label.modulionlinecomune.Process = I procedimenti in corso
+label.modulionlinecomune.PraticheGiaCreate = I procedimenti salvati
+label.modulionlinecomune.RicercaTitolo = Risultato della ricerca
+label.modulionlinecomune.NessunaPratica = Nessun procedimento trovato
+
+#label del BackEnd
+label.BE.indexTitle =Pagina d'amministrazione comuni (Backend)
+label.BE.erroreAdmin =L'utente non risulta essere Amministratore di nessun Comune.
+label.BE.BackEndHome =Accedi al Backend
+label.BE.Label =Backend
+label.BE.ListaOperazioni =Operazioni possibili Backend del comune di {0}
+label.AccediModulistica =Modulistica On-Line del comune di {0}
+label.BE.Accedi =Accedi al Backend del comune di {0}
+label.BE.CreazioneCategorie =Gestione Categorie/Eventi della vita
+label.BE.BrowseCategory.Header =Naviga le categorie del comune di: {0}
+label.BE.BrowseCategory.CurrentCategoryIs =Path completo della categoria corrente:
+label.BE.BrowseCategory.listaSottoCategorie =lista delle sottocategorie
+label.BE.BrowseCategory.listaModuli =lista dei moduli on-line
+label.BE.BrowseCategory.noSottoCategorie =la categoria {0} non ha sottocategorie
+label.BE.BrowseCategory.noModuli =la categoria {0} non ha moduli on-line
+
+label.BE.BrowseCategory.linkUscita =Torna alla homepage di {0}
+label.BE.BrowseCategory.EditCategory =[edit cat]
+label.BE.BrowseCategory.AddNewCategory =[add new cat]
+label.BE.BrowseCategory.RemoveCategory =[remove cat]
+
+label.BE.BrowseCategory.EditModulo =[edit modulo]
+label.BE.BrowseCategory.AddNewModulo =[add new modulo]
+label.BE.BrowseCategory.RemoveModulo =[remove modulo]
+
+label.BE.AddNewCategory.categoryName =nome categoria
+label.BE.AddNewCategory.categoryLabel =label categoria
+
+label.BE.RemoveCategory.message =La categoria sta per essere rimossa
+label.BE.RemoveCategory.categoryName =nome categoria
+label.BE.RemoveCategory.categoryLabel =label categoria
+
+label.BE.AddNewModule.moduleKey =Chiave contenuto
+label.BE.AddNewModule.moduleName =Nome contenuto
+label.BE.AddNewModule.moduleProcessClass =Classe contenuto
+label.BE.AddNewModule.moduleProcessName= Package Classi del Procedimento
+
+label.BE.RemoveModule.message =Il contenuto sta per essere rimosso
+label.BE.RemoveModule.moduleKey =Chiave contenuto
+label.BE.RemoveModule.moduleName =Nome contenuto
+label.BE.RemoveModule.moduleProcessClass =Classe contenuto
+
+# label per moduli OnLine salvati
+label.modulionlinecomune.gestioneProcessi = Aggiornamento procedimento {0}
+label.modulionline.AllMyDelegate = Tutti i miei delegati
+label.modulionline.AllMyProcess = Tutti i miei procedimenti in corso
+label.modulionline.MyProcess = Le mie pratiche
+label.modulionline.Service=Servizi People
+label.modulionline.MyDelegate = I miei delegati
+label.modulionline.PratichePendenti = I miei procedimenti pendenti
+label.modulionline.PraticheInviate = I miei procedimenti inviati
+label.modulionline.NessunaPraticaPendente = Nessuna pratica pendente
+label.modulionline.NessunPraticaInviata = Nessun pratica inviata
+label.modulionline.PresoInCarico = &raquo; Procedimento preso in carico da People
+label.modulionline.InviatoAEnte =  &raquo; Procedimento inviato all&rsquo;ente
+label.modulionline.CreatoIl = Procedimento creato il
+label.modulionline.InFaseDiFirma = Procedimento in fase di firma. Per modificare i dati cliccare sul link seguente
+label.modulionline.InFaseDiModifica = Procedimento in fase di modifica.
+label.modulionline.AnnullaFirma = Annulla Firma
+label.modulionline.ElimaProcedimento = Elimina Procedimento
+label.modulionline.Richiedente = Richiedente:
+
+
+
+# label per gestioneDelegati
+label.gestioneDelegati.titolo=I miei delegati
+label.gestioneDelegati.NessunDelegato=Non sono presenti delegati
+label.gestioneDelegati.AggiungiDelegato=Aggiungi un delegato
+label.editDelegato.titolo=Inserimento Delegato
+label.editDelegato.label=Inserimento delegato
+label.insertDelegato.titolo=Inserimento Delegato
+label.updateDelegato.titolo=Modifica/Cancellazione Delegato
+label.insertDelegato.label=Inserimento Delegato
+label.updateDelegato.label=Modifica/Cancellazione Delegato
+label.editDelegato.errori=Sono presenti errori nei campi inseriti.
+label.viewDelegato.titolo=Visualizza Delegato
+label.viewDelegato.label=Visualizza Delegato
+
+# label per Stato submitted process
+SubmittedProcessState.Initializing = Procedimento preso in carico da People
+SubmittedProcessState.Submitted = Procedimento inviato al comune
+SubmittedProcessState.Received = Procedimento ricevuto dal comune
+#SubmittedProcessState.Readed = Procedimento letto
+SubmittedProcessState.Protocolled = Procedimento protocollato
+SubmittedProcessState.Rejected = Procedimento rifiutato
+SubmittedProcessState.Completed = Procedimento completato
+SubmittedProcessState.PaymentPending = In attesa di pagamento
+SubmittedProcessState.PaymentDone = Pagamento Completato
+
+# label per il pagamento in attesa di autorizzazione
+# da parte del sistema di pagamento
+label.pendingPayment.title = Pagamento in corso
+label.pendingPayment.message = Attendere, il pagamento della pratica <strong>{0}</strong> &egrave; in corso di autorizzazione.<br />In alcuni casi l&rsquo;autorizzazione pu&ograve; richiedere molto tempo, se non si desidera attendere &egrave; possibile ricaricare la pratica in un secondo momento dalla pagina le mie pratiche.<br />Il sistema provveder&agrave; ad avvisare dell&rsquo;avvenuta autorizzazione attraverso un l&rsquo;invio di un e-mail.<br />
+label.pendingPayment.noScriptMessage = Gli script non sono abilitati, per verificare lo stato del pagamento seguire il link sotto.
+label.pendingPayment.Link = Ricarica la pratica
+
+# label per il ritorno dal pagamento anonimo
+label.anonymousPaymentResult.title = Risultato pagamento
+label.anonymousPaymentResult.message = Il risultato di un pagamento, effettuato in modalità anonima, è comunicato direttamente dal sistema di pagamento, inoltrando un e-mail all'indirizzo specificato.
+
+# messaggi introdotti per supporto all'accesso da parte di operatori di sportello
+label.profiloPersonaFisica.nome=Nome
+label.profiloPersonaFisica.cognome=Cognome
+label.profiloPersonaFisica.codiceFiscale=Codice fiscale
+label.profiloPersonaFisica.dataNascita=Data di nascita
+label.profiloPersonaFisica.luogoNascita=Comune di nascita
+label.profiloPersonaFisica.provinciaNascita=Provincia di nascita
+label.profiloPersonaFisica.sesso=Sesso
+label.profiloPersonaFisica.indirizzoResidenza=Indirizzo di residenza
+
+label.profiloPersonaGiuridica.denominazione=Denominazione o ragione sociale
+label.profiloPersonaGiuridica.partitaIva=Partita IVA
+label.profiloPersonaGiuridica.codiceFiscale=Codice fiscale P.G.
+label.profiloPersonaGiuridica.sedeLegale=Sede Legale
+label.profiloPersonaGiuridica.descrizione=Descrizione
+label.profiloPersonaGiuridica.domicilioElettronico=Domicilio elettronico
+
+label.aggiornamentoProfilo.titolo=Aggiornamento del profilo di accreditamento
+label.richiedente=RICHIEDENTE
+label.titolare1=TITOLARE
+label.titolare2=(compilare solo nel caso di richiedente rappresentante di persona giuridica)
+label.titoloDomicilioElettronico=DOMICILIO ELETTRONICO PER L''INVIO DI COMUNICAZIONI CORRELATE AL SERVIZIO RICHIESTO
+
+# selectPage labels
+label.selectPage.title=Pagina di creazione del  processo
+label.selectPage.messaggio=E' possibile scegliere se creare un nuovo processo come Richiedente oppure crearne uno come Delegato.
+label.selectPage.titoloDeleganti=Elenco dei Deleganti dell'utente:
+label.selectPage.linkCreateProcess=Crea il processo come Richiedente
+label.selectPage.linkCreateDelegateProcess=Crea il processo come Delegato di {0}
+
+# Form Labels
+label.Yes=S\u00EC
+label.No=No
+label.Generalita=Quali sono le sue generalit\u00E0?
+label.Residenza=Dati sulla sua residenza
+label.DomandePreliminari =Risponda per favore alle seguenti domande preliminari:
+label.InformazioniPreliminari =Inserisca per favore le seguenti informazioni preliminari sulla conduzione dei lavori:
+label.FirstName=Nome {0}
+label.SecondName=Secondo nome {0}
+label.LastName=Cognome {0}
+label.Gender=Sesso {0}
+label.Gender.Male=M
+label.Gender.Female=F
+label.PlaceOfBirth=Luogo di nascita {0}
+label.DateOfBirth=Data di nascita {0}
+label.Cittadinanza=Cittadinanza {0}
+label.CodiceIndividuale=Codice Fiscale {0}
+label.Place=Frazione {0}
+label.Comune=Comune {0}
+label.Zip=Codice Postale {0}
+label.AltriRiferimenti=Altri riferimenti {0}
+label.Help=Help Page
+label.Relationship= Grado di parentela {0}
+
+label.Address=Indirizzo {0}
+label.Number=N. civico {0}
+label.Interno=Interno {0}
+label.Localita=Frazione {0}
+label.CAP=CAP {0}
+label.LicenceNumber=N\u00B0 patente
+label.VehiclePlateNumber=Targa autoveicolo {0}
+label.TelefonoFisso=Telefono {0}
+label.Fax=Fax {0}
+label.Email=Email {0}
+label.Anno=anno {0}
+label.Numero=numero {0}
+label.DenominazioneImpresa =denominazione impresa {0}
+label.PartitaIva =partita IVA {0}
+
+# label GENERICHE
+label.Generic.Generalita=Inserisca le proprie generalit\u00E0
+label.Generic.GeneralitaDichiarante=Inserisca le generalit\u00E0 del dichiarante
+label.Generic.Text=Inserisca il testo che desidera inviare
+label.Generic.AllegaFileFirmato =scegli e carica il file firmato
+
+#-----------------------------------------------------------------#
+# Email di ricevuta per il cittadino
+# messaggi utilizzati per il mail di ricevuta inviato al cittadino
+#
+# PlaceHolder utilizzabili:
+# {0} Identificativo della Pratica
+
+mail.cittadino.subject = Ricevuta Pratica People: {0}
+mail.funzionario.subject = Inviata Pratica People: {0}
+
+#-----------------------------------------------------------------#
+# Email Pagamento
+# messaggi utilizzati per il mail:  oggetto e contenuto
+#
+# PlaceHolder utilizzabili:
+# {0} PeopleId 
+# {1} Circuito Autorizzativo 
+# {2} Circuito Selezionato
+# {3} Data Ordine
+# {4} Descrizione Circuito Autorizzativo
+# {5} Descrizione Circuito Selezionato
+# {6} Descrizione Esito
+# {7} Descrizione Sistema Pagamento
+# {8} Esito
+# {9} Identificativo Ordine
+# {10} Identificativo Transazione
+# {11} Importo Commissioni
+# {12} Importo Pagato
+# {13} Numero Autorizzazione
+# {14} Numero Operazione
+# {15} Sistema Pagamento 
+
+# email per l'utente autenticato (esito positivo)
+payment.auth.mail.ok.object = Pagamento pratica People {0}
+payment.auth.mail.ok.content = Si &egrave; concluso il pagamento per la pratica People {0}. Ora &egrave; possibile ripristinare la pratica per continuare la compilazione.
+
+# email per l'utente autenticato (esito negativo)
+payment.auth.mail.ko.object = Pagamento pratica People {0}
+payment.auth.mail.ko.content = Si &egrave; concluso il pagamento per la pratica People {0} con esito negativo. Iniziare una nuova pratica per ritentare il pagamento.
+
+# email per l'utente anonimo (esito positivo)
+payment.anon.mail.ok.object = Pagamento pratica People
+payment.anon.mail.ok.content = Si &egrave; concluso il pagamento per la pratica People con identificativo ordine {9}.
+
+# email per l'utente anonimo (esito negativo)
+payment.anon.mail.ko.object = Pagamento pratica People
+payment.anon.mail.ko.content = Si &egrave; concluso il pagamento per la pratica People con identificativo ordine {9} con esito negativo. Iniziare una nuova pratica per ritentare il pagamento.

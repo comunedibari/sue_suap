@@ -1,0 +1,220 @@
+@CHARSET "ISO-8859-1";
+
+div.informativa
+{
+    height:250px;
+    overflow:auto;
+    background:white;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid #7F9DB9;
+    text-align: left;
+    width: 70%;
+    margin:0px auto;
+}
+.button_AeC {
+        font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+        font-size:70%;
+        text-align:center;
+        font-weight:bold;
+        margin:0;
+        background-color:#f7f7f7;
+        color:#444444;
+        border:1px solid #666666;
+        cursor:pointer;
+}
+
+.button_AeC_operazioni {
+        font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+        font-size:80%;
+        text-align:center;
+        font-weight:bold;
+        margin:0;
+        background-color:#f7f7f7;
+        color:#444444;
+        border:1px solid #666666;
+        cursor:pointer;
+}
+.labelOperazioni {
+        font-size:80%;
+        text-align:left;
+        vertical-align: middle;
+}
+.button_AeC_modulobianco {
+        font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+        font-size:80%;
+        text-align:center;
+        font-weight:bold;
+        margin:0;
+        background-color:#f7f7f7;
+        color:red;
+        border-style:solid;
+        border-color:#5AA1DE;
+        border-width:2px 2px 2px 2px;
+        cursor:pointer;
+}
+.button_AeC_pagFirma {
+	font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	text-align:center;
+	font-weight:bold;
+	margin:0;
+	background-color:#f7f7f7;
+	color:#ff7525;
+	border-style:solid;
+	border-color:#666666;
+	border-width:1px 1px 1px 1px;
+	cursor:pointer;
+	text-decoration: none;
+}
+
+.pulsanteFirma
+{
+	background:white;
+	border:1px solid #666666;;
+    text-decoration: none;
+    font-size:120%;
+    color:#FF7525;
+    padding: 2px;
+}
+
+input.pulsanteFirma {
+	font-weight:bold;
+	font-size:120%;
+	background:white;
+    border:1px solid #666666;;
+    text-decoration: none;
+    color:#444444;
+    cursor:pointer;
+    padding: 1px;
+    padding: 6px\9;
+}
+
+input.pulsanteFirma:hover {
+	font-weight:bold;
+	background:white;
+    border:1px solid #666666;;
+    text-decoration: none;
+    color:#FF7525;
+    cursor:pointer;
+   
+}
+
+
+
+
+input.offLineSignHide
+	{
+    left: -165px;
+    width: 165px;
+  position:relative;
+  -moz-opacity:0;
+  filter:alpha(opacity: 0);
+  opacity: 0;
+  z-index: 2;
+	font-weight:bold;
+	background:white;
+    color:#FF7525;
+    cursor:pointer;
+}
+
+
+<!--[if IE]>
+	input.offLineSignHide
+  {
+    left: -165px;
+    width: 165px;
+  position:relative;
+	  -moz-opacity:0;
+	  filter:alpha(opacity: 0);
+	  opacity: 0;
+	  z-index: 2;
+	  width:0px;
+	  border-width:0px;
+	font-weight:bold;
+	background:white;
+    color:#FF7525;
+    cursor:pointer;
+}
+<![endif]-->
+
+
+
+.pulsanteFirma2
+{
+    font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    background:white;
+    border: 1px solid #7F9DB9;
+    border-color:#5AA1DE;
+    text-decoration: none;
+    font-size:100%;
+    font-weight:bold;
+    color:red;
+}
+
+.titoloErrore
+{
+        font-size:160%;
+        font-weight:bold;
+}
+
+.desc1Errore
+{
+        font-size:100%;
+        font-weight:bold;
+}
+
+.desc2Errore
+{
+        font-size:120%;
+        font-weight:bold;
+}
+.radioAccessibileSel{
+  background-image:url('/people/servizi/concessioniedautorizzazioni/servizicondivisi/procedimentounico/img/radio_selezionato.png');
+  background-repeat:no-repeat;
+        font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+        font-size:90%;
+        text-align:center;
+        font-weight:bold;
+        margin:0;
+        background-color:#f7f7f7;
+        color:red;
+        border-style:solid;
+        border-color:#5AA1DE;
+        border-width:1px 1px 1px 1px;
+        cursor:pointer;
+}
+.radioAccessibileDesel{
+  background-image:url('/people/servizi/concessioniedautorizzazioni/servizicondivisi/procedimentounico/img/radio_deselezionato.png');
+  background-repeat:no-repeat;
+        font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+        font-size:90%;
+        text-align:center;
+        font-weight:bold;
+        margin:0;
+        background-color:#f7f7f7;
+        color:red;
+        border-style:solid;
+        border-color:#5AA1DE;
+        border-width:1px 1px 1px 1px;
+        cursor:pointer;
+}
+
+.intestazioneTabBandi{
+	background-color:#FF7525;
+	font-weight:bold;
+	font-size:120%;
+}
+.intestazioneTabBandi_eventiVita{
+	color:#FF7525;
+	background-color:#EAEAEA;
+	font-weight:bold;
+	font-size:100%;
+}
+
+.allegatoObbligatorio {
+	background-color:#F8D3BE;
+}
+
+.allegatoNonObbligatorio {
+	background-color:transparent;
+}

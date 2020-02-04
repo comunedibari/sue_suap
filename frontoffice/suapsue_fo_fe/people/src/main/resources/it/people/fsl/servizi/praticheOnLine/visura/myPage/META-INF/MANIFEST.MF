@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Implementation-Vendor: CCD
+Implementation-Title: Le mie pratiche
+Implementation-Version: 2.9
+
+Name: it/people/framework
+Implementation-Title: Framework People - minimum version required
+Implementation-Version: 2.0.2a

@@ -1,0 +1,214 @@
+<project name="webservice.build" basedir="." default="echo.properties">
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+	<!-- set global properties -->
+	<!-- =============================================================   -->
+	<!--   Properties generali										     -->
+	<!-- =============================================================   -->
+	
+	<!-- <property file="build.properties"/> -->
+	
+	<property name="axis.lib.dir" value="../../../sirac_lib/lib/axis-1.2.1" />
+	<property name="jaf.lib.dir" value="../../../sirac_lib/lib/JAF-1.0.2" />
+
+	<property name="prj.path" value="${basedir}/../.." />
+	<property name="prj.src.path" value="${prj.path}/src" />
+		
+	<property name="build.dir.axis" value="${prj.path}/ant/axisAutoSource"/>
+	
+	<!-- nome dell'interfaccia del web service -->
+	<property name="interface.name" value="IAccreditamentoWS" />
+	
+	<!-- nome dell'interfaccia java del web service -->
+	<property name="interface.java.name" value="IAccreditamentoWS" />
+	
+	<!-- nome della classe java che implementa l'interfaccia del web service -->
+	<property name="implementation.java.name" value="IAccreditamentoWSImpl" />
+
+	<property name="source.package.structure" 
+		   	  description="Package structure where the java web service interface reside"
+			  value="it.people.sirac.accr"/>
+
+	
+	<!-- nome del file con la descrizione dell'interfaccia wsdl -->
+	<property name="wsdl.name" value="${build.dir.axis}/${interface.name}.wsdl" />
+		
+	<!-- namespace associato al web service (associato a targetnamespace in wsdl) -->
+	<property name="service.namespace" 
+			  value="urn:it:people:sirac:accr" />
+	
+	<property name="generated.package.structure" 
+		description="Package structure containing the AXIS generated files."		
+		value="it.people.sirac.services.accr.client"/>
+
+	<property name="generated.classes.dir.suffix" 
+		value="it/people/sirac/services/accr/client"/>
+
+	<property name="generated.classes.dir" 
+		value="${build.dir.axis}/${generated.classes.dir.suffix}"/>
+
+	<property name="hostname" value="localhost" />
+	<property name="port" value="8080" />
+
+	<path id="axis.classpath">
+		<fileset dir="${axis.lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${jaf.lib.dir}">
+			<include name="activation.jar" />
+		</fileset>
+	</path>
+
+	<taskdef resource="axis-tasks.properties" classpathref="axis.classpath" />
+
+	<!-- per java2wdsl -->
+	<path id="compiled.classpath">
+		<pathelement path="${basedir}/../../sirac_lib/dist/sirac_lib.jar"/>
+		<pathelement path="${prj.path}/web/WEB-INF/classes"/>
+	</path>
+
+	<!-- =============================================================   -->
+	<!--            Ant targets 										 -->
+	<!-- =============================================================   -->
+
+	<target name="echo.properties" depends="">
+		<echo message="basedir: ${basedir}" />
+		<echo message="prj.path: ${prj.path}" />
+		<echo message="prj.src.path: ${prj.src.path}" />
+		<echo message="build.dir.axis: ${build.dir.axis}"/>
+		<echo message="axis.home: ${axis.home}" />
+		<echo message="hostname: ${hostname}" />
+		<echo message="port: ${port}" />
+	</target>
+
+	<target name="cleangenerateddir" >
+  		<delete failonerror="false">
+  			<fileset dir="${generated.classes.dir}"/>
+  			<fileset file="${wsdl.name}"/>
+  		</delete>
+		<mkdir dir="${build.dir.axis}"/>
+	</target>
+	
+	<target name="generate-wsdl" depends="cleangenerateddir">
+		<delete file="${wsdl.name}" 
+			failonerror="false" verbose="true" />
+
+		<!-- genera wsdl a partire dall'interfaccia -->
+		<axis-java2wsdl 
+			output="${wsdl.name}"
+    	    location="http://${hostname}:${port}/ws_accr121/services/${interface.name}"
+	        classname="${source.package.structure}.${interface.name}"
+            implclass="${source.package.structure}.${interface.name}Impl"
+			style="wrapped" use="literal"	
+	        namespace="${service.namespace}"  
+		    bindingname="${interface.name}"
+			soapaction="OPERATION">
+
+			<mapping 
+				package="${source.package.structure}" 
+				namespace="${service.namespace}" />
+			<mapping 
+				package="${source.package.structure}.beans" 
+				namespace="${service.namespace}:beans" />
+			<mapping 
+				package="it.people.sirac.core" 
+				namespace="urn:it:people:sirac:core" />
+			<classpath refid="axis.classpath"/>
+			<classpath refid="compiled.classpath"/>
+			
+		</axis-java2wsdl>
+		
+    	<!-- fix service per stile document literal -->
+    	<!--
+		<echo message="Applying patch regexps to ${interface.name}.wsdl ..."/>
+		<replaceregexp 	file="${build.dir.axis}/${interface.name}.wsdl"
+						match="style=?rpc?"
+						replace="it.people.sirac.services.accr.AccrService" />
+		-->
+
+	</target>
+	
+  	<target name="generate-wsdd" 
+  		description="Generate deployment descriptor for the webservice" 
+  		depends="generate-wsdl">
+	    <axis-wsdl2java 
+	    	output="${build.dir.axis}"
+	    	verbose="true"
+	        url="${wsdl.name}"
+	        serverside="true" 
+	    	testcase="true" 
+	    	helpergen="true" 
+	    	skeletondeploy="false"
+	        debug="false">
+	      	
+	    	<mapping namespace="${service.namespace}" 
+	    		     package="${generated.package.structure}"/>
+	    	<mapping namespace="${service.namespace}:beans" 
+	    		     package="${source.package.structure}.beans"/>
+	    </axis-wsdl2java>
+  		
+  		<!-- Deploy generated classes -->
+  		<copy todir="${prj.src.path}/${generated.classes.dir.suffix}">
+  			<fileset dir="${generated.classes.dir}">
+  				<!--
+  				<include name="${interface.name}Service.java"/>
+  				<include name="${interface.name}ServiceLocator.java"/>
+				<include name="${interface.name}ServiceTestCase.java"/>
+				<include name="${interface.name}Stub.java"/>
+				<include name="*.wsdd"/>
+				-->
+  				<include name="*.*"/>
+  			</fileset>
+  		</copy>
+  		<copy file="${build.dir.axis}/${interface.name}.wsdl" todir="${prj.src.path}"/>
+	</target>
+	
+	<!-- deploy del servizio su Axis -->
+	<target name="deploy-wsdd" depends="">
+		<axis-admin
+        port="8080"
+        hostname="localhost"
+        failonerror="true"
+        servletpath="${app.name}/services/AdminService"
+        debug="true"
+        xmlfile="${prj.src.path}/${generated.classes.dir.suffix}/deploy.wsdd"/>
+	</target>
+
+	<target name="undeploy-wsdd" depends="">
+		<axis-admin
+        port="8080"
+        hostname="localhost"
+        failonerror="true"
+        servletpath="${app.name}/services/AdminService"
+        debug="true"
+        xmlfile="${prj.src.path}/${generated.classes.dir.suffix}/undeploy.wsdd"/>
+	</target>
+
+</project>

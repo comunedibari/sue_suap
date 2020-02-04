@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config>
+	<managed-bean>
+		<managed-bean-name>tableManager</managed-bean-name>
+		<managed-bean-class>it.idp.people.admin.faces.Manager</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>comuniFilterBean</managed-bean-name>
+		<managed-bean-class>it.idp.people.admin.sqlmap.capeople.comuni.ComuniFilterBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>userdataFilterBean</managed-bean-name>
+		<managed-bean-class>it.idp.people.admin.sqlmap.capeople.userdata.UserdataFilterBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>accreditamentiFilterBean</managed-bean-name>
+		<managed-bean-class>it.idp.people.admin.sqlmap.sirac.accreditamenti.AccreditamentiFilterBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>qualificheFilterBean</managed-bean-name>
+		<managed-bean-class>it.idp.people.admin.sqlmap.sirac.qualifiche.QualificheFilterBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>portalConfig</managed-bean-name>
+		<managed-bean-class>it.idp.people.admin.faces.PortalConfig</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<navigation-rule>
+		<from-view-id>/index.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>list</from-outcome>
+			<to-view-id>/pages/index.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pages/list.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{tableManager.select}</from-action>
+			<from-outcome>selected</from-outcome>
+			<to-view-id>/pages/details.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>insert</from-outcome>
+			<to-view-id>/pages/details.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>reset</from-outcome>
+			<to-view-id>/pages/list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pages/comuni/details.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{tableManager.buttonAction}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/pages/list.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/pages/list.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pages/userdata/details.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{tableManager.buttonAction}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/pages/list.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/pages/list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pages/qualifiche/details.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{tableManager.buttonAction}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/pages/list.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/pages/list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pages/accreditamenti/details.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{tableManager.buttonAction}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/pages/list.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/pages/list.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>pages/accreditamenti/details</display-name>
+		<from-view-id>/pages/accreditamenti/details.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{tableManager.buttonAction}</from-action>
+			<from-outcome>failed</from-outcome>
+			<to-view-id>/pages/accreditamenti/details.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>pages/qualifiche/details</display-name>
+		<from-view-id>/pages/qualifiche/details.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{tableManager.buttonAction}</from-action>
+			<from-outcome>failed</from-outcome>
+			<to-view-id>/pages/qualifiche/details.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>pages/comuni/details</display-name>
+		<from-view-id>/pages/comuni/details.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{tableManager.buttonAction}</from-action>
+			<from-outcome>failed</from-outcome>
+			<to-view-id>/pages/comuni/details.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>pages/userdata/details</display-name>
+		<from-view-id>/pages/userdata/details.jsp</from-view-id>
+		<navigation-case>
+			<from-action>#{tableManager.buttonAction}</from-action>
+			<from-outcome>failed</from-outcome>
+			<to-view-id>/pages/userdata/details.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>pages/index</display-name>
+		<from-view-id>/pages/index.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>config</from-outcome>
+			<to-view-id>/pages/config.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>pages/config</display-name>
+		<from-view-id>/pages/config.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/pages/index.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+</faces-config>

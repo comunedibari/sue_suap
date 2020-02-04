@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<info primitiveTypes="element">
+	<element name="IdentificatoreUnivoco">
+		<element name="codiceProgetto" property="codiceProgetto"/>
+		<element name="codiceSistema" property="codiceSistema"/>
+		<element name="dataRegistrazione" property="dataRegistrazione"/>
+
+		<element name="marshallingNomeServer" property="marshallingNomeServer"/>
+		<element name="marshallingCodiceAmministrazione" property="marshallingCodiceAmministrazione"/>
+		<element name="marshallingCodiceIdentificativoOperazione" property="marshallingCodiceIdentificativoOperazione"/>
+	</element>
+</info>

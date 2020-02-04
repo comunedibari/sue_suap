@@ -1,0 +1,12 @@
+viewCount=1
+idcomune=010025
+username.suffix=@idp-people.it
+
+name1=Utenti
+modelClassName1=it.idp.people.admin.sqlmap.capeople.userdata.Userdata
+daoClassName1=it.idp.people.admin.sqlmap.capeople.userdata.UserdataDAO
+details1=/pages/userdata/details.jsp
+filter1=/pages/userdata/filter.jsp
+
+selectImage=/css/classic/gifs/magnifier.gif
+deleteImage=/css/classic/img/bin.jpg

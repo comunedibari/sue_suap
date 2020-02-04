@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:x="http://www.mozquito.org/xhtml-fml">
+    <head>
+        <script type="text/javascript">
+            function addFirmaSempliceObject() {
+
+               //document.getElementById('provadiv').innerHTML = "ciao ho scritto dentro";
+               //alert("aohhhhhhh");
+
+            var protocol = window.location.protocol;
+            var hostname = window.location.hostname;
+            var port = window.location.port;
+            //var hostname = '172.26.3.144';
+            //var time = document.getTime().getSeconds();
+
+            //var d = new Date();
+            //var curr_seconds = d.getSeconds();
+
+            //alert (curr_seconds);
+            var newdiv = document.createElement('div');
+            var object = '<object  height="50" width="300" classid = "clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" codebase = "." codetype="application/java">\
+                            <param name = "height" value = "50" />\
+                            <param name = "width" value = "300" />\
+                            <param name = "code" value = "pdfconverterandsigner/ConverterAndSignerMain.class" />\
+                            <param name = "archive" value = "SignedpdfConverterAndSignerApplet.jar" />\
+                            <param name = "AppletMode" value = "normale" />\
+                            <param name = "DisableExternalProgerssBar" value = "false" />\
+                            <param name = "downloadFilesServiceURL" value = "' + protocol + '//' + hostname +  '/firmasemplice/DownloadRequiredFiles" />\
+                            <param name = "TrustAllCertificate" value = "true" />\
+                            <param name = "TestFirma" value = "false" />\
+                            <param name = "InputFile" value = "" />\
+                            <param name = "InputType" value = "" />\
+                            <param name = "OutputFileType" value = "p7m" />\
+                            <param name = "CodFisc" value = "" />\
+                            <param name = "JSFunctionToRunAfterInitialization" value = "resetFirma();" />\
+                            <param name = "InputIDToStoreResult" value = "" />\
+                            <param name = "SubmitActionToPerform" value = "" />\
+                            <param name = "FormIDToSubmit" value = "" />\
+                            <param name = "type" value = "application/x-java-applet" />\
+                            <param name = "scriptable" value = "false" />\
+                            <param name = "legacy_lifecycle" value = "true" />\
+                            <embed type = "application/x-java-applet"\
+                               height = "50" \
+                               width  = "300" \
+                               code = "pdfconverterandsigner/ConverterAndSignerMain.class"\
+                               archive = "SignedpdfConverterAndSignerApplet.jar"\
+                               AppletMode = "normale"\
+                               DisableExternalProgerssBar = "false"\
+                               downloadFilesServiceURL = "' + protocol + '//' + hostname +  '/firmasemplice/DownloadRequiredFiles"\
+                               TrustAllCertificate = "true"\
+                               TestFirma = "false"\
+                               InputFile = ""\
+                               InputType = ""\
+                               CodFisc = ""\
+                               OutputFileType = "p7m"\
+                               JSFunctionToRunAfterInitialization = "resetFirma();"\
+                               InputIDToStoreResult = ""\
+                               SubmitActionToPerform = ""\
+                               FormIDToSubmit = ""\
+                               scriptable = "false"\
+                               legacy_lifecycle = "true"\
+                               pluginspage = "http://java.com/products/plugin/index.html#download"\
+                            />\
+                          </object>';
+
+                newdiv.innerHTML = object;
+
+                document.getElementById('startFirma').removeAttribute('href');
+                document.getElementById('startFirma').innerHTML='attendi...';
+                var wait_gif = document.createElement('img');
+                wait_gif.setAttribute('src', 'http://monument-marketing.com/home/images/wait.gif');
+                wait_gif.setAttribute('id', 'wait_gif');
+                document.getElementById('firmaSempliceH2').appendChild(wait_gif);
+                document.body.appendChild(newdiv);
+            }
+
+            function addConvertiPDFObject() {
+
+            var protocol = window.location.protocol;
+            var hostname = window.location.hostname;
+            var port = window.location.port;
+ 
+            var newdiv = document.createElement('div');
+            var object = '<object height = "50" width = "300" classid = "clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" codebase = ".">\
+                            <param name = "height" value = "50" />\
+                            <param name = "width" value = "300" />\
+                            <param name = "code" value = "pdfconverterandsigner/ConverterAndSignerMain" />\
+                            <param name = "archive" value = "SignedpdfConverterAndSignerApplet.jar" />\
+                            <param name = "AppletMode" value = "converti" />\
+                            <param name = "downloadFilesServiceURL" value = "' + protocol + '//' + hostname + ':' + port + '/firmasemplice/DownloadRequiredFiles" />\
+                            <param name = "TrustAllCertificate" value = "true" />\
+                            <param name = "InputFile" value = "" />\
+                            <param name = "InputType" value = "" />\
+                            <param name = "JSFunctionToRunAfterInitialization" value = "resetConverti();" />\
+                            <param name = "InputIDToStoreResult" value = "provadiv" />\
+                            <param name = "SubmitActionToPerform" value = "" />\
+                            <param name = "FormIDToSubmit" value = "" />\
+                            <param name = "type" value = "application/x-java-applet" />\
+                            <param name = "scriptable" value = "false" />\
+                            <embed type = "application/x-java-applet"\
+                               height = "50" \
+                               width  = "300" \
+                               code = "pdfconverterandsigner/ConverterAndSignerMain"\
+                               archive = "SignedpdfConverterAndSignerApplet.jar"\
+                               AppletMode = "converti"\
+                               downloadFilesServiceURL = "' + protocol + '//' + hostname + ':' + port + '/firmasemplice/DownloadRequiredFiles"\
+                               TrustAllCertificate = "true"\
+                               InputFile = ""\
+                               InputType = ""\
+                               CodFisc = ""\
+                               JSFunctionToRunAfterInitialization = "resetConverti();"\
+                               InputIDToStoreResult = "provadiv"\
+                               SubmitActionToPerform = ""\
+                               FormIDToSubmit = ""\
+                               scriptable = "false"\
+                               pluginspage = "http://java.sun.com/products/plugin/index.html#download"\
+                            />\
+                          </object>';
+
+                newdiv.innerHTML = object;
+
+                document.getElementById('startConverti').removeAttribute('href');
+                document.getElementById('startConverti').innerHTML='attendi...';
+                var wait_gif = document.createElement('img');
+                wait_gif.setAttribute('src', 'http://monument-marketing.com/home/images/wait.gif');
+                wait_gif.setAttribute('id', 'wait_gif');
+                document.getElementById('convertiH2').appendChild(wait_gif);
+                document.body.appendChild(newdiv);
+        }
+
+        function resetFirma() {
+            document.getElementById('startFirma').setAttribute('href', "#");
+            document.getElementById('startFirma').innerHTML='Avvia Applicazione';
+            document.getElementById('firmaSempliceH2').removeChild(document.getElementById('wait_gif'));
+        }
+
+        function resetConverti() {
+            document.getElementById('startConverti').setAttribute('href', "#");
+            document.getElementById('startConverti').innerHTML='Avvia Applicazione';
+            document.getElementById('convertiH2').removeChild(document.getElementById('wait_gif'));
+        }
+
+        function getResult() {
+            while (value == "") {
+                document.setTimeout("stringa", 1000);
+            }
+
+            var value = document.getElementById("signedData").getAttribute("value");
+            if (value != "")
+                alert(value);
+
+        }
+
+        function executeSubmit(newAction) {
+            if (newAction != "") {
+                //document.getElementById("signForm").action = newAction;
+            }
+            document.getElementById("signForm").submit();
+        }
+
+
+
+
+        </script>
+        <title>Download Firma Semplice</title>
+    </head>
+    <body>
+        <div>
+            <h1 align="center">Download Firma Semplice</h1>
+        </div>
+        <h2>Ultima versione trovata: program_version</h2>
+        <br/>
+        <h2>Scarica il programma: <a href="program_link">program_name</a></h2>
+        <br/>
+        <h2>Manuale: <a href="manual_link">manual_name</a></h2>
+        <br/>
+        <div id="provadiv"></div>
+        <!--
+        <h2>Firma Semplice OnLine: <a onclick ="window.open('launchFirmaSempliceApplet.html', null, 'menubar=no,location=no,resizable=no,scrollbars=no,status=no'); ">Avvia Applicazione</a></h2>
+        <br/>
+        <h2>Converti un documento in PDF/A: <a onclick="window.open('launchPdfConvertApplet.html', null, 'menubar=no,location=no,resizable=no,scrollbars=no,status=no'); ">Avvia Appliacazione</a></h2>
+        -->
+        <form id="formFine" action="http://192.168.2.154:8082/firmasemplice/">
+        </form>
+
+        <h2 id="firmaSempliceH2">Firma Semplice OnLine: <a href="#" id="startFirma" style="color: blue;" onclick ="addFirmaSempliceObject(); return false;">Avvia Applicazione</a></h2>
+        <br/>
+        <h2 id="convertiH2">Converti un documento in PDF/A: <a href="#" id="startConverti" style="color: blue;" onclick="addConvertiPDFObject();">Avvia Applicazione</a></h2>
+    </body>
+</html>

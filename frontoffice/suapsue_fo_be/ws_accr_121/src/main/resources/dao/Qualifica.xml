@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Qualifica">
+
+    <!-- 
+    <cacheModel id="qCache" type="LRU">
+        <flushInterval hours="24" />
+    -->
+        <!--        
+        <flushOnExecute statement="updateQualifica"/>
+        <flushOnExecute statement="deleteQualifica"/>
+        <flushOnExecute statement="insertQualifica"/>
+        -->
+    <!-- 
+        <property name="size" value="20"/>
+    </cacheModel>
+    -->
+
+	<typeAlias alias="qualifica" type="it.people.sirac.accr.beans.Qualifica" />
+    <typeAlias alias="qualifica2persona" type="it.people.sirac.accr.beans.Qualifica2Persona" />
+    
+    <typeAlias alias="boolToCharHandler2"
+		type="it.people.sirac.dao.util.BooleanToCharHandler" />
+		
+    <resultMap id="qualificaResult" class="qualifica">
+		<result property="idQualifica" column="id_qualifica" />
+		<result property="descrizione" column="descrizione" />
+		<result property="tipoQualifica" column="tipo_qualifica" />
+		<result property="hasRappresentanteLegale" column="has_rappresentante_legale" typeHandler="boolToCharHandler2"/>
+	</resultMap>
+	
+	<resultMap id="qualifica2personaMap" class="qualifica2persona">
+        <result property="tipoQualifica" column="tipo_qualifica" />
+        <result property="richiedente" column="richiedente" />
+        <result property="titolare" column="titolare" />
+    </resultMap>
+
+	<!--  Seleziona _tutte_ le qualifiche -->
+	<select id="getQualifiche" resultMap="qualificaResult" cacheModel="qCache">
+		SELECT * FROM qualifiche 
+		ORDER BY descrizione ASC
+	</select>
+	
+    <!--  Seleziona _tutte_ le qualifiche autocertificabili -->
+	<select id="getQualificheAutoCertificabili" resultMap="qualificaResult">
+		SELECT * FROM qualifiche 
+		WHERE auto_certificabile = '1'
+		ORDER BY descrizione ASC
+	</select>
+
+    <!--  Seleziona _tutte_ le qualifiche autocertificabili per cui sia stata impostata la visibilità -->
+	<select id="getQualificheAutoCertificabiliVisibili" resultMap="qualificaResult" 
+            parameterClass="java.util.Map">
+		SELECT q.id_qualifica, q.descrizione, q.tipo_qualifica, q.auto_certificabile, q.has_rappresentante_legale FROM qualifiche q 
+		JOIN visibilita_qualifiche vq ON vq.id_qualifica = q.id_qualifica 
+		WHERE q.auto_certificabile = '1' AND vq.visibile = 1 AND vq.codicecomune = UPPER(#idComune#) 
+		UNION
+		SELECT q.id_qualifica, q.descrizione, q.tipo_qualifica, q.auto_certificabile, q.has_rappresentante_legale FROM qualifiche q 
+		WHERE q.auto_certificabile = '1' AND q.id_qualifica NOT IN(SELECT vq.id_qualifica FROM visibilita_qualifiche vq WHERE vq.codicecomune = UPPER(#idComune#))
+		ORDER BY 2 ASC
+	</select>
+	
+	<!-- 
+        Seleziona gli id delle qualifiche non più accreditabili per una data persona.
+        Gli accreditamenti in sospeso (non attivi) non vengono 
+    -->
+    <select id="getQualificheNonAccreditabili" resultClass="java.lang.String" 
+            parameterClass="java.util.Map">
+        SELECT DISTINCT q.id_qualifica
+        FROM accreditamenti a
+        INNER JOIN qualifiche q ON q.id_qualifica = a.id_qualifica        
+        WHERE UPPER(a.codice_fiscale) = UPPER(#codiceFiscale#)
+        AND UPPER(a.id_comune) = UPPER(#idComune#)
+        AND a.deleted = '0' AND q.tipo_qualifica = 'Professionista'
+		ORDER BY q.id_qualifica ASC
+	</select>
+	
+	
+    <!--  Seleziona _tutte_ le qualifiche di un determinato tipo -->
+	<select id="getQualificheByType" resultMap="qualificaResult" cacheModel="qCache">
+		SELECT * FROM qualifiche WHERE tipo_qualificha = #VALUE#
+		ORDER BY descrizione ASC
+	</select>
+	
+	<!--  Seleziona una specifica qualifica dato l'id -->
+	<select id="getQualifica" parameterClass="java.lang.String"
+            resultMap="qualificaResult" cacheModel="qCache">
+		SELECT * FROM qualifiche WHERE id_qualifica = #VALUE#
+	</select>
+	
+
+	<!--  seleziona le qualifiche abilitate per un dato utente -->
+    <select id="getQualificheAbilitate" resultMap="qualificaResult" 
+            parameterClass="java.util.Map">
+        SELECT q.id_qualifica, q.tipo_qualifica, q.descrizione, q.has_rappresentante_legale
+        FROM qualifiche q INNER JOIN accreditamenti a 
+        ON a.id_qualifica = q.id_qualifica
+
+        WHERE UPPER(a.codice_fiscale) = UPPER(#codiceFiscale#)
+        AND UPPER(a.id_comune) = UPPER(#idComune#) 
+        AND a.attivo = '1' AND a.deleted = '0'
+        ORDER BY q.descrizione ASC
+	</select>
+	
+	<select id="getQualifiche2Persona" resultMap="qualifica2personaMap" 
+            parameterClass="java.lang.String" cacheModel="qCache">
+        SELECT  tipo_qualifica, richiedente, titolare
+        FROM qualifica_to_persona 
+        WHERE UPPER(tipo_qualifica) = UPPER(#tipoQualifica#)
+	</select>
+	
+	<!-- 
+          * Richiede mysql 4.1 perchè la 4.0 non supporta le subselect 
+          * La versione attuale di Sirac non chiama questa query ma ottiene
+          * le qualifiche accreditabili eseguendo in logica di programma:
+          * "getQualificheAutoCertificabili" - "getQualificheNonAccreditabili"
+
+          Seleziona le qualifiche per le quali un utente può creare un nuovo accreditamento
+          per sè stesso, cioè tutte le qualifiche con l'eccezione di:
+          - qualifiche di tipo 'Professionista' già accreditate
+          - qualifiche non autocertificabili
+    -->
+    <!-- 
+    <select id="getQualificheAccreditabili" resultMap="qualificaResult" 
+            parameterClass="java.util.Map">
+        SELECT id_qualifica, tipo_qualifica, descrizione 
+        FROM qualifiche
+        WHERE auto_certificabile = '1'
+        AND id_qualifica NOT IN
+        (SELECT q.id_qualifica FROM accreditamenti a
+        INNER JOIN qualifiche q ON q.id_qualifica = a.id_qualifica
+        WHERE q.tipo_qualifica = 'Professionista' AND
+        UPPER(a.codice_fiscale) = UPPER(#codiceFiscale#)
+        AND UPPER(a.id_comune) = UPPER(#idComune#)
+        AND a.attivo = '1' AND a.deleted = '0')
+        ORDER BY descrizione ASC
+	</select>	
+	-->
+	
+    <!-- Use '$parm$' to bypass PreparedStatement -->	
+	
+</sqlMap>

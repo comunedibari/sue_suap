@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost/ws_reg/services/Registration" xmlns:tns3="http://beans.idp.sirac.people.it" xmlns:impl="http://localhost/ws_reg/services/Registration" xmlns:intf="http://localhost/ws_reg/services/Registration" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://beans.idp.sirac.people.it">
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="RegBean">
+    <sequence>
+     <element name="coda" nillable="true" type="xsd:string"/>
+     <element name="emailaddress" nillable="true" type="xsd:string"/>
+     <element name="givenName" nillable="true" type="xsd:string"/>
+     <element name="idComuneRegistrazione" nillable="true" type="xsd:string"/>
+     <element name="isOm" nillable="true" type="xsd:string"/>
+     <element name="localityName" nillable="true" type="xsd:string"/>
+     <element name="piCap" nillable="true" type="xsd:string"/>
+     <element name="piCitta" nillable="true" type="xsd:string"/>
+     <element name="piCodiceFiscale" nillable="true" type="xsd:string"/>
+     <element name="piDataNascita" nillable="true" type="xsd:string"/>
+     <element name="piIpRegistrazione" nillable="true" type="xsd:string"/>
+     <element name="piLavoro" nillable="true" type="xsd:string"/>
+     <element name="piLuogoNascita" nillable="true" type="xsd:string"/>
+     <element name="piPostalAddress" nillable="true" type="xsd:string"/>
+     <element name="piPrivacy" nillable="true" type="xsd:string"/>
+     <element name="piPrivacyComunicazione" nillable="true" type="xsd:string"/>
+     <element name="piPrivacyPromozioni" nillable="true" type="xsd:string"/>
+     <element name="piProvincia" nillable="true" type="xsd:string"/>
+     <element name="piProvinciaNascita" nillable="true" type="xsd:string"/>
+     <element name="piResidenza" nillable="true" type="xsd:string"/>
+     <element name="piSesso" nillable="true" type="xsd:string"/>
+     <element name="piStato" nillable="true" type="xsd:string"/>
+     <element name="piStatoPos" nillable="true" type="xsd:string"/>
+     <element name="piTelefono" nillable="true" type="xsd:string"/>
+     <element name="piTitolo" nillable="true" type="xsd:string"/>
+     <element name="postalCode" nillable="true" type="xsd:string"/>
+     <element name="schemaName" nillable="true" type="xsd:string"/>
+     <element name="sn" nillable="true" type="xsd:string"/>
+     <element name="stateProvinceName" nillable="true" type="xsd:string"/>
+     <element name="userPIN" nillable="true" type="xsd:string"/>
+     <element name="userPassword" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ResRegBean">
+    <sequence>
+     <element name="coda" nillable="true" type="xsd:string"/>
+     <element name="codiceFiscale" nillable="true" type="xsd:string"/>
+     <element name="errorCode" nillable="true" type="xsd:string"/>
+     <element name="esito" nillable="true" type="xsd:string"/>
+     <element name="isOm" nillable="true" type="xsd:string"/>
+     <element name="messaggio" nillable="true" type="xsd:string"/>
+     <element name="timestamp" nillable="true" type="xsd:string"/>
+     <element name="userId" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="executeRegistrationResponse">
+
+      <wsdl:part name="executeRegistrationReturn" type="tns3:ResRegBean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="executeRegistrationRequest">
+
+      <wsdl:part name="in0" type="tns3:RegBean"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="RegistrationInterface">
+
+      <wsdl:operation name="executeRegistration" parameterOrder="in0">
+
+         <wsdl:input name="executeRegistrationRequest" message="impl:executeRegistrationRequest"/>
+
+         <wsdl:output name="executeRegistrationResponse" message="impl:executeRegistrationResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="RegistrationInterfaceSoapBinding" type="impl:RegistrationInterface">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="executeRegistration">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="executeRegistrationRequest">
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/ws_reg/services/Registration"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="executeRegistrationResponse">
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost/ws_reg/services/Registration"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="RegistrationInterfaceService">
+
+      <wsdl:port name="RegistrationInterface" binding="impl:RegistrationInterfaceSoapBinding">
+
+         <wsdlsoap:address location="http://localhost:80/ws_reg/services/RegistrationInterface"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

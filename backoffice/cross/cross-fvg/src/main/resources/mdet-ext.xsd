@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.insiel.it/masterdata/mdet-ext" xmlns:mdap="http://www.insiel.it/masterdata/mdap" xmlns:ns1="http://www.insiel.it/masterdata/mdas" xmlns:atrb="http://www.insiel.it/masterdata/mdap/istanze" xmlns:mdet-ext="http://www.insiel.it/masterdata/mdet-ext" xmlns:ns2="http://www.insiel.it/masterdata/mdet">
+    <xs:import namespace="http://www.insiel.it/masterdata/mdap" schemaLocation="mdap.xsd"/>
+    <xs:import namespace="http://www.insiel.it/masterdata/mdap/istanze" schemaLocation="atrb.xsd"/>
+    <xs:import namespace="http://www.insiel.it/masterdata/mdas" schemaLocation="ns1.xsd"/>
+    <xs:import namespace="http://www.insiel.it/masterdata/mdet" schemaLocation="mdet.xsd"/>
+    <xs:complexType name="Indirizzo">
+        <xs:sequence>
+            <xs:element ref="ns2:tipoIndirizzo"/>
+            <xs:element ref="ns2:indirizzo"/>
+            <xs:element ref="ns2:numeroCivico"/>
+            <xs:element ref="ns2:cap"/>
+            <xs:element ref="ns2:luogo"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="indirizzo" type="Indirizzo" />
+    <xs:element name="estremiCatastali">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ns2:catastoFabbricati"/>
+            </xs:sequence>
+            <xs:attribute ref="ns2:tipoCatasto" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="destinazioneUso">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="mdet-ext:descrizioneDestinazioneUso"/>
+            </xs:sequence>
+            <xs:attribute name="codiceDestinazioneUso" use="required" form="qualified" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="descrizioneDestinazioneUso" type="xs:string"/>
+    <xs:element name="estremiProprieta">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="mdet-ext:soggettoProprietario"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="soggettoProprietario">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="mdet-ext:proprietarioFormaGiuridica"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="proprietarioFormaGiuridica">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ns1:figuraGiuridicaBase"/>
+                <xs:element ref="ns1:sedeLegale"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

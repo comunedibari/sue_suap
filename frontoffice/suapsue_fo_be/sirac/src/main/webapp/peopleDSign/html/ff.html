@@ -1,0 +1,116 @@
+<html>
+	<head>
+		<title>Introduzione - Guida alla firma Digitale</title>
+		<link rel="stylesheet" type="text/css" href="../css/help.css" />
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td class="stepMenu">
+					<ul class="stepUL">
+						<li>
+							Introduzione
+							<ul class="stepUL">
+								<li><a href="intro.html">Introduzione</a></li>
+							</ul>
+						</li>
+						<li>
+							Configurazione&nbsp;PC
+							<ul  class="stepUL">
+								<li><a href="cPcIntro.html">Introduzione</a></li>
+								<li><a href="actalis.html">Actalis</a></li>
+								<li><a href="infocamere.html">Infocamere</a></li>
+								<li><a href="postecom.html">Postecom</a></li>
+								<li><a href="otherCA.html">Altre CA</a></li>
+							</ul>
+						</li>
+						<li>
+							Configurazione Browser
+							<ul class="stepUL">
+								<li><a href="cBrIntro.html">Introduzione</a></li>
+								<li><a href="certificati.html">Certificati</a></li>
+								<li><a href="ie.html">Internet&nbsp;Explorer</a></li>
+								<li><a class="lnkselected" href="ff.html">Mozilla&nbsp;Firefox</a></li>
+								<li><a href="op.html">Opera</a></li>
+							</ul>
+						</li>
+						<li>
+							Test
+							<ul class="stepUL">
+								<li><a href="instActiveX.html">Installazione&nbsp;ActiveX</a></li>
+								<li><a href="test.html">Test</a></li>
+							</ul>
+						</li>
+					</ul>
+				</td>
+				<td class="contentArea">
+					<div class="box2" style="border-bottom: medium none;">
+						<div class="maintitle">
+							<div class="maintitle-right">
+								<div class="maintitle-left">
+									<div class="maintitle-title">
+										<b>
+											<span title="guida alla firma digitale:introduzione">Configurazione Browser - Mozilla Firefox</span>
+										</b>
+									</div>
+									<div class="maintitle-subtitle">
+										<span class="postername">Guida alla configurazione della firma digitale sul portale P.E.O.P.L.E.</span> 					
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="maincontent">
+							Dopo aver configurato le politiche di sicurezza sul download e installazione degli ActiveX, per poter
+							firmare con Mozilla Firefox &egrave; necessario seguire questa procedura:
+							<ul class="stepUL">
+								<li>
+									installare sul PC client un componente aggiuntivo, scaricabile
+									gratuitamente da questo <a id="ffActiveXSite" href="http://www.iol.ie/~locka/mozilla/mozilla.htm" target="_blank"><b>sito</b></a>.
+									Per accedere direttamente alla pagina di download &egrave; possibile seguire questo <a id="ffActiveXDwnld" href="http://www.iol.ie/~locka/mozilla/plugin.htm" target="_blank"><b>link</b></a>
+								</li>
+								<li>
+									modificare il file activex.js nella cartella &lt;root_installazione_Firefox&gt;\default\pref 
+									(e.g. c:\programmi\Mozilla Firefox\default\pref\activex.js) aggiungendo le seguenti righe
+									<br /><br />
+									pref("capability.policy.default.ClassID.CIDA996E48C-D3DC-4244-89F7-AFA33EC60679","AllAccess");
+									pref("capability.policy.default.ClassID.CIDF0A8EC0B-68F2-4819-B2CC-40AEBF2D6296","AllAccess");
+								</li>
+							</ul>
+							<br /><br />
+							&Egrave; possibile avere informazioni pi&ugrave; dettagliate sulla configurazione degli ActiveX su Firefox,
+							seguendo questo <a id="ffActiveXExtended" href="http://kb.mozillazine.org/ActiveX" target="_blank"><b>link</b></a>
+							<br /><br />
+							<b>Alcuni link utili:</b>
+							<ul class="stepUL">
+								<li><a id="ffActiveXSite2" href="http://www.iol.ie/~locka/mozilla/mozilla.htm" target="_blank">Home page ActiveX plugin</a></li>
+								<li><a id="ffActiveXDwnld2" href="http://www.iol.ie/~locka/mozilla/plugin.htm" target="_blank">Download ActiveX plugin</a></li>
+								<li><a id="ffActiveXExtended2" href="http://kb.mozillazine.org/ActiveX" target="_blank">Approfondimenti plugin ActiveX</a></li>
+								<li><a id="ffActiveXJs" href="http://lxr.mozilla.org/seamonkey/source/embedding/browser/activex/src/plugin/activex.js" target="_blank">Reference file activex.js</a></li>
+							</ul>
+							<br />
+							<div class="footer-content">
+							  <!--
+								&nbsp;
+								<a href="intro.html" title="Home page"><b>Home Page</b></a>
+								-->
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<div>
+						<div class="divleft">
+							<input id="prevBtn" type="button" value="<< Schermata Precedente" class="btn" onclick="window.location='ie.html';" />
+						</div>
+						<div class="divright">
+							<input id="nextBtn" type="button" value="Continua >>" class="btn" onclick="window.location='op.html';" />
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

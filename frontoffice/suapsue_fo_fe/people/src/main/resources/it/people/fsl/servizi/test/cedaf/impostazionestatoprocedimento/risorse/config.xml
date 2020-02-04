@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<servizio>
+    <nome>Servizio Test Impostazione Stato Procedimento</nome>
+    <attivita>test</attivita>
+    <sottoattivita>cedaf</sottoattivita>
+    <process>it.people.process.PipelineLessProcess</process>
+    <package>it.people.fsl.servizi.test.cedaf.impostazionestatoprocedimento</package>
+    <references name="SUBMIT_PROCESS" value="BEService" shortflag="0" address="UNDEFINED" />
+    <context-element name="Test Funzionalità" />
+</servizio>

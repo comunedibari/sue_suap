@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<project name="xbean_Envelope-b003-versioned" default="dist" basedir=".">
+
+	<!-- file con properties comuni ai diversi progetti al framework -->
+	<property file="../../../build_conf/framework_build.properties"/>
+	
+	<property name="xmlbeans.lib.home" value="${basedir}/../../../sirac_lib/lib/xmlbeans-1.0.3"/>
+	<!--<property name="xmlbeans.lib.home" value="C:/Javalib/XMLBeans/xmlbeans-1.0.4/lib"/>-->
+	<!--<property name="xmlbeans.lib.home" value="C:/Javalib/XMLBeans/xmlbeans-2.1.0/lib"/>-->
+
+	<property name="jar.manifest.folder" value="xsd/Invio-build116-esteso-b002.03.005/META-INF"/>
+
+	<property name="lib.dir" value="../../dist"/>
+	<property name="schema.dir" value="."/>
+	<property name="typesystemname" value="servizicondivisi_envelope_b002_03_005"/>
+	<property name="gen.rootdir" value="C:/Temp"/>
+	<property name="scomp_includefiles" value="**/*.xsd **/envelope.xsdconfig" />
+	<property name="spec.version" value="2.5.0" />
+	<property name="impl.version" value="2.5.0" />
+	
+	<property name="gen.dir" value="${gen.rootdir}/${typesystemname}"/>
+	<property name="destfile.jar" value="${lib.dir}/xmlbeans_${typesystemname}.jar"/>
+
+	<property file="../../../build_conf/build.num"/>
+	
+	<include file="../../../build_conf/build.xml" />
+	<import file="../../../build_conf/common_manifest.xml" as="commonManifest" />
+
+	<propertyfile file="./build.number" comment="Build Number">
+		<entry key="local.build.number" type="int" operation="+" default="0001" pattern="0000"/>
+	</propertyfile>
+
+	<property file="./build.number"/>
+	
+	<path id="xmlbeans.classpath">
+	    <fileset dir="${xmlbeans.lib.home}">
+	        <include name="*.jar"/>
+	    </fileset>
+    </path>
+
+	<taskdef 
+		name="xmlbean" 
+		classname="org.apache.xmlbeans.impl.tool.XMLBean" 
+		classpath="${xmlbeans.lib.home}/xbeans.jar"
+		classpathref="xmlbeans.classpath"
+	/>
+
+	<target name="dist">
+		<antcall target="buildjar" />
+		<antcall target="updateXmlBeanJarManifest" />
+	</target>
+	
+	<target name="updateXmlBeanJarManifest">
+		<unzip src="${destfile.jar}" dest="${lib.dir}/temp" />
+		<delete file="${destfile.jar}" />
+		<antcall target="commonManifest.updateManifest">
+			<param name="meta_inf" value="${lib.dir}/temp/META-INF"/>			
+			<param name="dist.file.name" value="${typesystemname}"/>			
+		</antcall>
+		<copy file="../../../build_conf/LICENCE.txt" todir="${lib.dir}/temp/META-INF" />
+	      <jar jarfile="${destfile.jar}" manifest="${lib.dir}/temp/META-INF/MANIFEST.MF">
+	         <fileset dir="${lib.dir}/temp">
+	            <include name="**/*"/>
+	<!--         	<exclude name="**/configuration.properties"/>-->
+	         </fileset>
+	      </jar>
+		<delete includeEmptyDirs="true">
+			<fileset dir="${lib.dir}/temp"/>
+		</delete>
+	</target>
+	
+	<target name="buildjar">
+		
+		<path id="referenced.jars">
+		    <fileset dir="${lib.dir}">
+		        <!--<include name="xmlbeans_fiscali_commons_v17_b145.jar"/>-->
+		    </fileset>
+	    </path>
+
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset file="${destfile.jar}" />
+			<fileset dir="${gen.dir}/src" />
+			<fileset dir="${gen.dir}/classes" />
+		</delete>
+
+		<xmlbean 
+			destfile="${destfile.jar}"
+			verbose="true" debug="true"  
+			srcgendir="${gen.dir}/src" classgendir="${gen.dir}/classes"
+			typesystemname="${typesystemname}">
+			
+			  <fileset 
+			  	dir="${schema.dir}" 
+			  	includes="${scomp_includefiles}"/>
+            <classpath>
+                <!--<pathelement location="${lib.dir}/xmlbeans_fiscali_commons_v17_b145.jar"/>-->
+            	<path refid="referenced.jars" />
+                <path refid="xmlbeans.classpath" />
+            </classpath>
+		</xmlbean>
+		<copy file="${destfile.jar}" todir="../../../BEService/web/WEB-INF/lib" verbose="true"/>
+		<copy file="${destfile.jar}" todir="../../../bsl-tributi-demo/web/WEB-INF/lib" verbose="true"/>
+		<copy file="${destfile.jar}" todir="../../../connects/web/WEB-INF/lib" verbose="true"/>
+		<copy file="${destfile.jar}" todir="../../../connects-gui/defaultroot/WEB-INF/lib" verbose="true"/>
+		<copy file="${destfile.jar}" todir="../../../dati-utente-non-ca-demo/web/WEB-INF/lib" verbose="true"/>
+		<copy file="${destfile.jar}" todir="../../../PeopleService/web/WEB-INF/lib" verbose="true"/>
+		<copy file="${destfile.jar}" todir="../../../people/web/WEB-INF/lib" verbose="true"/>
+		<!--copy file="${destfile.jar}" todir="../../../DynamicOdtServiceWego/web/WEB-INF/lib" verbose="true"/-->
+	</target>
+</project>
+

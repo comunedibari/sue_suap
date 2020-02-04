@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://gruppoinit.it/b1/ConcessioniEAutorizzazioni/precompilazione" xmlns:tns="http://gruppoinit.it/b1/ConcessioniEAutorizzazioni/precompilazione">																  
+	<element name="PrecompilazioneBean">
+		<complexType>
+			<sequence maxOccurs="1" minOccurs="0">
+				<element name="Input">
+					<complexType>
+						<sequence>
+							<element name="CampoPrecompilazioneBean" type="tns:CampoPrecompilazioneBean" maxOccurs="unbounded" minOccurs="0"></element>
+						</sequence>
+					</complexType>
+				</element>
+				<element name="Output">
+					<complexType>
+						<sequence>
+							<element name="CampoPrecompilazioneBean"
+								type="tns:CampoPrecompilazioneBean" maxOccurs="unbounded" minOccurs="0">
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+				<element name="CodEnte" type="string" maxOccurs="1" minOccurs="1"></element>
+				<element name="DescrizioneErrore" type="string" maxOccurs="1" minOccurs="0"></element>
+			</sequence>
+		</complexType>
+	</element>
+	<complexType name="CampoPrecompilazioneBean">
+        <annotation>
+        	<documentation>E' l'oggetto descrittivo di ciascun campo oggetto della precompilazione.
+In fase di input (chiamata al WS) sono relativi solo ai campi chiave, in fase di output (risposta del WS) sono relativi sia ai campi chiave che quelli descrizione.
+In output possono esserci anche altri campi non mappati nella colonna &quot;campo_dati&quot; della tabella &quot;href_campi&quot; che vengono comunque ignorati dal servizio.</documentation>
+        </annotation>
+        <sequence>
+			<element name="Codice" type="string">
+				<annotation>
+					<documentation>Nome del campo nel web service: nella base dati del servizio è la colonna &quot;campo_dati&quot; della tabella &quot;href_campi&quot;.</documentation>
+				</annotation>
+			</element>
+			<element minOccurs="1" maxOccurs="unbounded" name="Descrizione" type="string">
+                <annotation>
+                	<documentation>In fase di input (invio della richiesta la WS) contiene una sola stringa (la descrizione del campo fornita dall'utente).
+In fase di output (risposta del WS) contiene 0..* descrizioni.</documentation>
+                </annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+</schema>

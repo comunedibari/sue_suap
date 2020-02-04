@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rea:comunicazione-rea xmlns:rea="http://www.impresainungiorno.gov.it/schema/suap/rea"
+ xmlns:ps="http://www.impresainungiorno.gov.it/schema/suap/pratica"
+ xmlns:pi="http://www.impresainungiorno.gov.it/schema/base"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.impresainungiorno.gov.it/schema/suap/rea file:/C:/Users/giuseppe/Projects/backend/cross/src/main/resources/wsdl/registroimprese/allegati/suap-rea-1.0.0.xsd" lingua="AA">
+    <info-schema versione="0a0" data="2006-05-04"/>
+    <protocollo-suap codice-amministrazione="-" codice-aoo="codice-aoo0" data-registrazione="2006-05-04" numero-registrazione="0000000">
+        <riferimento codice-amministrazione="-" codice-aoo="codice-aoo1" data-registrazione="2006-05-04" numero-registrazione="0000000"/>
+        <riferimento codice-amministrazione="-" codice-aoo="codice-aoo2" data-registrazione="2006-05-04" numero-registrazione="0000000"/>
+    </protocollo-suap>
+    <suap-mittente id-suap="50">suap-mittente0</suap-mittente>
+    <estremi-pratica-suap codice-pratica="codice-pratica0">
+        <protocollo-suap codice-amministrazione="-" codice-aoo="codice-aoo3" data-registrazione="2006-05-04" numero-registrazione="0000000">
+            <riferimento codice-amministrazione="-" codice-aoo="codice-aoo4" data-registrazione="2006-05-04" numero-registrazione="0000000"/>
+            <riferimento codice-amministrazione="-" codice-aoo="codice-aoo5" data-registrazione="2006-05-04" numero-registrazione="0000000"/>
+        </protocollo-suap>
+        <protocollo-ri ufficio-ri="AA" anno="2006" numero-protocollo-ri="500000000" sotto-numero-protocollo-ri="5000" data-protocollo-ri="2006-05-04"/>
+        <impresa>
+            <denominazione>denominazione0</denominazione>
+            <codice-fiscale>00000000000</codice-fiscale>
+            <provincia-cciaa-competente>AA</provincia-cciaa-competente>
+            <indirizzo>
+                <stato codice="0" codice-istat="000" codice-catastale="A000" iso="AAA">stato0</stato>
+                <provincia sigla="AA" codice-istat="000">provincia0</provincia>
+                <comune codice-catastale="A000" codice-istat="000000">comune0</comune>
+                <cap>00000</cap>
+                <toponimo>toponimo0</toponimo>
+                <denominazione-stradale>denominazione-stradale0</denominazione-stradale>
+                <numero-civico>numero-civico0</numero-civico>
+                <frazione>frazione0</frazione>
+            </indirizzo>
+        </impresa>
+        <oggetto tipo-procedimento="SCIA" tipo-intervento="apertura">oggetto0</oggetto>
+    </estremi-pratica-suap>
+    <stato-pratica>istruttoria</stato-pratica>
+    <comunicazione-scia>
+        <allegato descrittore="SUAP-ZIP" nome-file="nome-file0">
+            <descrizione>descrizione0</descrizione>
+            <nome-file-originale>nome-file-originale0</nome-file-originale>
+            <mime>mime0</mime>
+            <mime-base>mime-base0</mime-base>
+            <dimensione>50</dimensione>
+        </allegato>
+        <allegato descrittore="SUAP-ZIP" nome-file="nome-file1">
+            <descrizione>descrizione1</descrizione>
+            <nome-file-originale>nome-file-originale1</nome-file-originale>
+            <mime>mime1</mime>
+            <mime-base>mime-base1</mime-base>
+            <dimensione>50</dimensione>
+        </allegato>
+    </comunicazione-scia>
+</rea:comunicazione-rea>

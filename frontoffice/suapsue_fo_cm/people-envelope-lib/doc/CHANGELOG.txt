@@ -1,0 +1,72 @@
+16-11-2007 - Build 002.03.004
+
+- Aggiunto elemento forceSkipCheckDeleghe in InformazioniperVerificaDelega allo scopo di consentire
+  di evitare il controllo deleghe durante l'invocazione del back-end. Questo consente di abilitare
+  scenari in cui un rapp.legale di PG può operare sui servizi senza che venga fatto il controllo 
+  deleghe durante l'invocazione del BE, cosa che non ha ovviamente senso
+
+03-08-2007 - Build 002.03.003
+
+- Copiata classe ProfiliDelegaHelper da sirac_lib (duplicata) per rendere indipendenti i due progetti
+
+19-06-2007 - Build 002.03.002
+
+- Aggiunto messaggio di log dopo la creazione della busta in EnvelopeFactory_modellazioneb116_envelopeb002
+
+04-06-2007 - Build 002.03.001
+
+- Introdotto in RichiestaInvio elemento EstremiSoggettoDelegato. Modificati di conseguenza le interfacce
+  e i parser e le classi di libreria prodotte da xmlbeans
+- Introdotto supporto per il nuovo elemento aggiunto EstremiSoggettoDelegato nelle classi DelegheHelper e EnvelopeHelper
+
+16-02-2007 - Build 002.02.009
+
+- Modificata classe ContenutoBusta per consentire la creazione di buste con contenuto XML
+  corrispondete a stringa vuota ("") o nulla (null)
+
+05-12-2006 - Build 002.02.008
+
+- Corretto metodo per controllo deleghe. 
+  La creazione della busta avveniva impostando 
+  
+  cfDelegato = cfTitolare
+  cfDelegante = cfRichiedente
+  
+  invece che
+  
+  cfDelegato = cfRichiedente
+  cfDelegante = cfTitolare
+
+20-09-2006 Build 002.02.005
+
+- Aggiunta classe it.people.envelope.util.DelegheHelper
+- Modificata classe it.people.envelope.util.EnvelopeHelper
+  Aggiunto metodo createEnvelopeFromPplProcessAndSession()
+- BUF FIX: Aggiornato metodo createNotaXmlObj() in EnvelopeXmlFragmentFactory_modellazioneb116_envelopeb002 per 
+  supportare correttamente l'associazione di descrizione, allegati e uri docbook ad una nota
+- Modificata IEnvelopeFactory
+  Aggiunte classi it.people.envelope.exceptions.InvalidEnvelopeException e 
+  it.people.envelope.exceptions.InvalidEnvelopeException.
+  Modificata clausola throws metodo IEnvelope createEnvelopeBean(String envelopeXmlText): 
+  throws InvalidEnvelopeException, NotAnEnvelopeException, Exception 
+- Modificata EnvelopeFactory_modellazioneb116_envelopeb002
+  Modificato metodo createEnvelopeBean(String envelopeXmlText) in modo da sollevare le nuove eccezioni introdotte
+  NotAnEnvelopeException viene sollevata se l'xml non è una busta
+  InvalidEnvelopeException viene sollevata se durante il parsing da xml a envelopebean si verifica una eccezione 
+  
+31-08-2006 - Build 002.02.001
+
+- Aggiunta possibilità di trasportare un contenuto vuoto (no xml e no eccezione) 
+  in una busta di richiesta o di risposta. 
+  Al momento della creazione del contenuto dell'envelope bean basta specificare null come contenuto xml.
+  Il bean con un contenuto null può essere parsato ottenendo come risultato una busta con elemento Contenuto vuoto.
+  L'xml creato non valida rispetto allo schema della busta, ma può essere parsato ottenendo un bean IEnvelope completo di tutte le altre parti
+  Per aggiungere un contenuto basta crearlo, aggiungerlo al bean e ricreare l'xml.
+  - Aggiornata definizione classe it.people.envelope.bean.ContenutoBusta e parser Java<-->XmlBean 
+    per supportare la creazione di bean e di tracciati della busta con contenuti vuoti.
+  
+- Rivisto script ant build.xml e criteri di generazione del build number e inclusione nei file jar della libreria
+
+- Aggiornati commenti in classe ContenutoBusta
+
+- Aggiornata classe it.people.envelope.samples.EnvelopeSample con l'aggiunta di codice che mostra come gestire contenuti busta null.

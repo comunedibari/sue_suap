@@ -1,0 +1,1 @@
+ALTER TABLE `templates_immagini_immagini` ADD COLUMN `tipo_file` VARCHAR(45) NULL  AFTER `nome_file` ;

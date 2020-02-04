@@ -1,0 +1,97 @@
+/* ---------- Wrapper ---------- */
+
+.portlet-layout {
+    border-collapse: collapse;
+    clear: both;
+    display: table;
+    border-spacing: 0;
+    table-layout: auto;
+    width: 100%;
+    margin-top: 5px;
+}
+ 
+.ie6 div.portlet-layout, .ie7 div.portlet-layout {
+    height: 1%;
+}
+
+.portlet-column {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.ie6 div.portlet-column, .ie7 div.portlet-column {
+    float: left;
+    overflow: hidden;
+    width: 100%;
+}
+/*#column-1, #column-2, #column-3, #column-4  {
+    float : left;
+    overflow: hidden;
+    	width: 260px;
+    margin-left: 5px;
+}
+#column-2, #column-3 {
+    	width: 255px;
+}
+#column-4  {
+    	width: 200px;
+}*/
+#column-1{
+    /*    width: 195px;*/
+    float: left;
+    margin-left: -100%;
+    width: 200px;
+    /*        fload:left;*/
+}
+#column-2{
+    float:left;
+    width: 100%;
+    /*^^AGGIUNTA CS*/
+     min-height: 300px;
+	 margin-bottom:50px;
+    /*    margin-right:5px;*/
+}
+
+#layout-column_column-2{
+/*    margin-left: 203px; */
+}
+.column_bis {
+    width: 348px;
+}
+
+.ie6 div.aui-column-last, .ie7 div.aui-column-last {
+    margin-right: -1px;
+}
+
+.portlet-column-content {
+    padding: 2px;
+}
+
+.ie6 .portlet-column-content, .ie7 .portlet-column-content {
+    zoom: 1;
+}
+
+.portlet-column-content-only, .ltr .portlet-column-content-first, .rtl .portlet-column-content-last {
+    padding-left: 0;
+}
+
+.portlet-column-content-only, .ltr .portlet-column-content-last, .rtl .portlet-column-content-first {
+    padding-right: 0;
+}
+
+/* ---------- Column widths ---------- */
+
+.portlet-column-content.empty {
+    padding: 50px;
+}
+
+#main-content.dragging .portlet-column {
+    border: 3px double #828F95;
+    height: 100px;
+    min-height: 100px;
+}
+
+.inputAndButton {
+    width: 65%;
+    float: left;
+}

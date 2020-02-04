@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+    <groupId>it.eng.tz.area.vasta.suap-sue</groupId>
+    <artifactId>SuapSue</artifactId>
+    <version>1.0</version>
+  	<packaging>pom</packaging>
+  	<name>SuapSue</name>
+	<description>
+		SUAP SUE
+  	</description>
+  <modules>
+  	<module>frontoffice</module>
+  	<module>portale_egov</module>
+  	<module>backoffice/cross/cross</module>
+	<module>backoffice/reporter</module>
+  	<module>download-manualistica</module>
+  </modules>
+</project>

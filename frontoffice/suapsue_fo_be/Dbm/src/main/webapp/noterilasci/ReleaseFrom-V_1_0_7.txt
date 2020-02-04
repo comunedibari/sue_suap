@@ -1,0 +1,37 @@
+---Upgrade della versione Master Copy alla V.1.0.7
+---Si ricorda che le il passaggio alla versione V.1.0.7 prevede di
+   avere il software alla versione V.1.0.6
+
+bug-fix:
+
+
+
+miglioramenti:
+
+- inserita la gestione territoriale dei contenuti
+
+passi:
+1) effettuare una copia del db
+2) eseguire lo script sql release_1_ver_7.sql
+3) salvare il file web.xml presente nella cartella <tomcat>/webapps/Dbm/WEB-INF
+4) salvare il file log4j.properties presente nella cartella <tomcat>/webapps/Dbm/WEB-INF/classes
+5) effettuare il deploy del software (Dbm.war)
+6) ripristinare il file web.xml salvato inprecedenza
+7) ripristinare il file log4j.properties salvato in precedenza
+8) riavviare tomcat
+9) la funzionalità di gestione territoriale si applica sulle entità:
+- interventi
+- procedimenti
+- oneri
+- href
+- gerarchia oneri
+- oneri documenti
+- oneri formula
+- oneri campi
+- testo condizioni
+- normative
+- documenti
+la territorialità si attiva valorizzando il campo "tipo aggregazione" nella tabella utenti
+nel momento che viene attivato questo valore, l'utente ha la visibilità esclusivamente sulle entità aventi nel relativo campo
+di banca dati corrispondente.
+

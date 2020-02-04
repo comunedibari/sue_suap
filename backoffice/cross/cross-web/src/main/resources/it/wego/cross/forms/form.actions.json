@@ -1,0 +1,278 @@
+{
+    "it.wego.cross.forms.common.GestioneOrganiCollegiali": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initModificaOrganiCollegiali"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "salvaOrganoCollegiale"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.GestioneDirittiSegreteria": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.DirittiSegreteriaService",
+                "method": "initDirittiSegreteria"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.DirittiSegreteriaService",
+                "method": "salvaDirittiSegreteria"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.GestioneOrganiCollegialiInsert": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initModificaOrganiCollegiali"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "insertOrganoCollegiale"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.GestioneOrganiCollegialiSedute": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initModificaOrganiCollegialiSedute"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "salvaOrganoCollegialeSedute"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.GestioneOrganiCollegialiSeduteInsert": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initInsertOrganiCollegialiSedute"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "insertOrganoCollegialeSedute"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.RicercaPraticheNewWrapper": {
+        "actions": {
+            "init": {
+                "type": "groovy",
+                "script": "pratiche-collegate-grid-init.groovy"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.UtentiEntiProcedimentiGrid": {
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.UtentiService",
+                "method": "initRicercaProcedimentiRuoli"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.PraticheCollegateGrid": {
+        "actions": {
+            "init": {
+                "type": "groovy",
+                "script": "pratiche-collegate-grid-init.groovy"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.GestioneOrganiCollegialiCommissioneInsert": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initInsertOrganiCollegialiCommissione"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "insertOrganoCollegialeCommissione"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.GestioneOrganiCollegialiCommissione": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initModificaOrganiCollegialiCommissione"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "salvaOrganoCollegialeCommissione"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.OrganiCollegialiSedutaBaseComponentiInsert": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initInsertOrganiCollegialiSedutePraticheCommissione"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "insertOrganoCollegialeSedutePraticheCommissione"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.GestioneOrganiCollegialiSedutePratiche": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initModificaOrganiCollegialiSedutePratiche"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "salvaOrganoCollegialeSedutePratiche"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.GestioneOrganiCollegialiCommissioneOrdinamento": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initGestioneOrdinamentoPratiche"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "salvaGestioneOrdinamentoPratiche"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.OrganiCollegialiSedutaComponentiInsert": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initInsertOrganiCollegialiSedutePraticheCommissione"
+            },
+            "submit": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "insertOrganoCollegialeSedutePraticheCommissione"
+            }
+        },
+        "buttons": {
+            "salva": {
+                "label": "Salva",
+                "action": "submit",
+                "trigger": "reloadGrid"
+            }
+        }
+    },
+    "it.wego.cross.forms.common.GestioneOrganiCollegialiPraticaDettaglio": {
+        "submitTrigger": "reloadGrid",
+        "actions": {
+            "init": {
+                "type": "java",
+                "class": "it.wego.cross.service.OrganiCollegialiService",
+                "method": "initDettaglioPratica"
+            }
+        }
+    }
+}

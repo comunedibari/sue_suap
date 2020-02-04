@@ -1,0 +1,19 @@
+<jxb:bindings version="2.1"
+              xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+              xmlns:xs="http://www.w3.org/2001/XMLSchema"
+              xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+              xmlns:mdet="http://www.insiel.it/masterdata/mdet"
+              xmlns:mdete="http://www.insiel.it/masterdata/mdet-ext"
+              jxb:extensionBindingPrefixes="xjc">  
+    <jxb:globalBindings>
+        <xjc:simple/>   
+    </jxb:globalBindings>   
+    <!--  <jxb:bindings schemaLocation="mdet-ext.xsd">
+      <jxb:schemaBindings>
+          <jxb:package name="it.wego.cross.suapfvg2" />
+      </jxb:schemaBindings>
+    </jxb:bindings>  -->
+    <jxb:bindings scd="mdete:Indirizzo" >
+        <jxb:property name="Indirizzo2" />
+    </jxb:bindings>
+</jxb:bindings>

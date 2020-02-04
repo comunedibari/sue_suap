@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE sqlMap PUBLIC
+"-//iBATIS.com//DTD SQL Map 2.0//EN"
+     "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="it.idp.people.admin.sqlmap.sirac.accreditamenti">
+
+	<typeAlias alias="Accreditamenti" type="it.idp.people.admin.sqlmap.sirac.accreditamenti.Accreditamenti"/>
+	<typeAlias alias="Qualifiche" type="it.idp.people.admin.sqlmap.sirac.qualifiche.Qualifiche"/>
+
+	<cacheModel id="cache" type="LRU">
+		<flushInterval hours="24"/>
+	</cacheModel>
+	
+	<resultMap id="rsAccreditamenti" class="Accreditamenti" >
+	    <result column="codice_fiscale" property="codiceFiscale" />
+	    <result column="id_accreditamento" property="idAccreditamento" jdbcType="INTEGER" />
+	    <result column="id_comune" property="idComune" />
+	    <result column="id_qualifica" property="idQualifica" jdbcType="CHAR" />
+	    <result column="domicilio_elettronico" property="domicilioElettronico" />
+	    <result column="codicefiscale_intermediario" property="codicefiscaleIntermediario" />
+	    <result column="partitaiva_intermediario" property="partitaivaIntermediario" />
+	    <result column="descrizione" property="descrizione" />
+	    <result column="timestamp_certificazione" property="timestampCertificazione" />
+	    <result column="sede_legale" property="sedeLegale" />
+	    <result column="denominazione" property="denominazione" />
+	    <result column="attivo" property="attivo" jdbcType="CHAR" javaType="Boolean" />
+	    <result column="deleted" property="deleted" jdbcType="CHAR" javaType="Boolean" />
+	    <result column="auto_certificazione_filename" property="autoCertificazioneFilename" />
+	    <result column="auto_certificazione" property="autoCertificazione" jdbcType="LONGVARBINARY" />
+	</resultMap>
+	
+	<resultMap id="rsQualifiche" class="Qualifiche" >
+		<result column="id_qualifica" property="idQualifica" jdbcType="CHAR" />
+		<result column="descrizione" property="descrizione" />
+	</resultMap>	
+	<select id="getAllQualificheMap" resultMap="rsQualifiche">
+		SELECT id_qualifica, descrizione FROM qualifiche		
+	</select>
+	
+	<select id="getAccreditamentiCount" resultClass="Integer">
+		SELECT count(*) as COUNT FROM accreditamenti
+		<isPropertyAvailable property="whereClause">
+			WHERE $whereClause$
+		</isPropertyAvailable>
+	</select>
+	<select id="getAccreditamentiList" resultMap="rsAccreditamenti" parameterClass="java.util.Map">
+		select * 
+		  from ( select a.*, ROWNUM rnum 
+		      from ( SELECT * FROM accreditamenti
+				<isPropertyAvailable property="whereClause">
+					WHERE $whereClause$
+				</isPropertyAvailable>
+				<isPropertyAvailable property="column">
+					ORDER BY $column$ $ascending$
+			    </isPropertyAvailable>
+			 		) a
+		      where ROWNUM <![CDATA[ <= ]]> $exclude$ + $max$ ) 
+		  where rnum <![CDATA[ > ]]> $exclude$
+	</select>
+	<select id="isIntermediario" resultClass="String" parameterClass="java.util.Map">
+		SELECT tipo_qualifica FROM qualifiche
+		WHERE $whereClause$
+	</select>	
+	<insert id="insertAccreditamenti" parameterClass="Accreditamenti">
+		INSERT INTO accreditamenti 
+		(
+			codice_fiscale,  
+			id_comune, 
+			id_qualifica, 
+			domicilio_elettronico,
+			codicefiscale_intermediario,
+			partitaiva_intermediario,
+			descrizione,
+			timestamp_certificazione,
+			sede_legale,
+			denominazione,
+			attivo,
+			deleted,
+			auto_certificazione_filename,
+			auto_certificazione
+		)
+		VALUES 
+		(
+			#codiceFiscale#,
+			#idComune#, 
+			#idQualifica#, 
+			#domicilioElettronico#,
+			#codicefiscaleIntermediario#,
+			#partitaivaIntermediario#,
+			#descrizione#,
+			#timestampCertificazione#,
+			#sedeLegale#,
+			#denominazione#,
+			#attivo#,
+			#deleted#,
+			#autoCertificazioneFilename#,
+			#autoCertificazione#
+		)
+	</insert>
+	<update id="updateAccreditamenti" parameterClass="Accreditamenti">
+	     UPDATE accreditamenti
+	     SET	codice_fiscale = #codiceFiscale#, 
+				id_comune = #idComune#,  
+				id_qualifica = #idQualifica#, 
+				domicilio_elettronico = #domicilioElettronico#,
+				codicefiscale_intermediario = #codicefiscaleIntermediario#,
+				partitaiva_intermediario = #partitaivaIntermediario#,
+				descrizione = #descrizione#,
+				timestamp_certificazione = #timestampCertificazione#,
+				sede_legale = #sedeLegale#,
+				denominazione = #denominazione#,
+				attivo = #attivo#,
+				deleted = #deleted#,
+				auto_certificazione_filename = #autoCertificazioneFilename#,
+				auto_certificazione = #autoCertificazione#
+	     WHERE id_accreditamento = #idAccreditamento#
+	</update>
+	<delete id="deleteAccreditamenti" parameterClass="Accreditamenti">
+	     DELETE 
+	     FROM accreditamenti
+	     WHERE id_accreditamento = #idAccreditamento#
+	</delete>	
+</sqlMap>

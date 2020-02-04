@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>
+	</comment>
+	<entry key="valueTableNodeId.query">
+		select tableValues.id, tableValues._value from  dat_tables datTables 
+		join dat_tables_values tableValues on tableValues.tableRef = datTables.id 
+		where datTables.processName = ? and datTables.name = ? and datTables.nodeId = ? 
+		and datTables.active = ? and tableValues.active = ?
+	</entry>
+	<entry key="valueTable.query">
+		select tableValues.id, tableValues._value from  dat_tables datTables 
+		join dat_tables_values tableValues on tableValues.tableRef = datTables.id 
+		where datTables.processName = ? and datTables.name = ? and datTables.nodeId is null 
+		and datTables.active = ? and tableValues.active = ?
+	</entry>
+	<entry key="labelsTableNodeId.query">
+		select tableLabels.id, tableLabels._label from  dat_tables datTables 
+		join dat_tables_values tableValues on tableValues.tableRef = datTables.id 
+		join dat_tables_labels tableLabels on tableLabels.valueRef = tableValues.id 
+		where datTables.processName = ? and datTables.name = ? and datTables.nodeId = ? 
+		and datTables.active = ? and tableValues.active = ?	
+	</entry>
+	<entry key="labelsTable.query">
+		select tableLabels.id, tableLabels._label from  dat_tables datTables 
+		join dat_tables_values tableValues on tableValues.tableRef = datTables.id 
+		join dat_tables_labels tableLabels on tableLabels.valueRef = tableValues.id 
+		where datTables.processName = ? and datTables.name = ? and datTables.nodeId = ? 
+		and datTables.active = ? and tableValues.active = ?	
+	</entry>
+</properties>

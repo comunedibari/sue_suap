@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.wego.cross</groupId>
+		<artifactId>cross</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../cross</relativePath>
+	</parent>
+
+	<artifactId>cross-web</artifactId>
+	<packaging>war</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<war.name>cross</war.name>
+		<tomcat.version>7.0.26</tomcat.version>
+		<!--<jackson.version>1.9.10</jackson.version> -->
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cross-plugins</artifactId>
+			<version>${project.version}</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cross-entities</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cross-dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cross-services</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>it.wego.cross</groupId>
+			<artifactId>cross-filters</artifactId>
+			<version>1.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>log4j-over-slf4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>it.wego.utils.cas</groupId>
+			<artifactId>wego-cas-filter</artifactId>
+			<version>1.1-SNAPSHOT</version>
+		</dependency>
+
+
+		<!-- Jackson JSON Mapper -->
+		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-mapper-asl</artifactId> 
+			<version>${jackson.version}</version> </dependency> -->
+
+
+		<!--EMBEDDED TOMCAT -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>${tomcat.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-logging-juli</artifactId>
+			<version>${tomcat.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>${tomcat.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+			<version>5.1.26</version> <scope>test</scope> </dependency> -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-dbcp</artifactId>
+			<version>${tomcat.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jasper</artifactId>
+			<version>${tomcat.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jasper-el</artifactId>
+			<version>${tomcat.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jsp-api</artifactId>
+			<version>${tomcat.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!--END EMBEDDED TOMCAT -->
+
+	</dependencies>
+
+	<build>
+		<finalName>${war.name}</finalName>
+		<filters>
+			<filter>../../filters/${build.profile.id}/configuration.properties</filter>
+		</filters>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-war-plugin</artifactId> 
+				<version>2.3</version> <configuration> <attachClasses>true</attachClasses> 
+				<classesClassifier>classes</classesClassifier> <warName>${war.name}</warName> 
+				</configuration> </plugin> -->
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.0</version>
+				<!-- <configuration> <attachClasses>true</attachClasses> <classesClassifier>classes</classesClassifier> 
+					<warName>${war.name}</warName> </configuration> -->
+					<configuration>
+						<webResources>
+							<webResource>
+								<directory>src/main/webapp</directory>
+								<filtering>true</filtering>
+								<includes>
+									<include>**/WEB-INF/web.xml</include>
+								</includes>
+							</webResource>
+						</webResources>
+					</configuration>
+			</plugin>
+<!-- APPUNTO: CONTROLLARE SE UTILE O MENO -->
+ 			<!-- <plugin>
+				<groupId>it.wego.utils</groupId>
+				<artifactId>wego-deploy-maven-plugin</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<configuration></configuration>
+				<executions>
+					<execution>
+						<id>process-config</id>
+						<goals>
+							<goal>process-config</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>deploy-war</id>
+						<goals>
+							<goal>deploy-war</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
+		</plugins>
+
+	</build>
+	<profiles>
+		<profile>
+			<id>sviluppo</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>sviluppo</build.profile.id>
+			</properties>
+		</profile>
+		<profile>
+			<id>test_torre</id>
+			<properties>
+				<build.profile.id>test_torre</build.profile.id>
+			</properties>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<directory>artefatto_test_torre</directory>
+			</build>
+		</profile>
+		<profile>
+			<id>collaudo</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>collaudo</build.profile.id>
+			</properties>
+			<build>
+				<directory>artefatto_collaudo</directory>
+			</build>
+		</profile>
+		<profile>
+			<id>produzione</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>produzione</build.profile.id>
+			</properties>
+			<build>
+				<directory>artefatto_produzione_bari</directory>
+			</build>
+		</profile>
+	</profiles>
+</project>

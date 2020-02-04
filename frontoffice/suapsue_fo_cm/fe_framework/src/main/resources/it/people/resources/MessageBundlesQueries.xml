@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>
+	</comment>
+	<entry key="getBundleLocales.query">
+		select distinct(_locale) from bundles where bundle = ? and active = ? and _locale is not null
+	</entry>
+	<entry key="getBundleNodesIds.query">
+		select distinct(nodeId) from bundles where bundle = ? and active = ? and nodeId is not null
+	</entry>
+	<entry key="bundleNodeIdLocale.query">
+		select bundle_properties._key, bundle_properties._value from bundles bundle
+		join bundles_properties bundle_properties on bundle_properties.bundleRef = bundle.id 
+		where bundle.bundle = ? and bundle.nodeId = ? and bundle._locale = ? 
+		and bundle.active = ? and bundle_properties.active = ?		
+	</entry>
+	<entry key="bundleLocale.query">
+		select bundle_properties._key, bundle_properties._value from bundles bundle
+		join bundles_properties bundle_properties on bundle_properties.bundleRef = bundle.id 
+		where bundle.bundle = ? and bundle.nodeId is null and bundle._locale = ? 
+		and bundle.active = ? and bundle_properties.active = ?		
+	</entry>
+	<entry key="bundleNodeId.query">
+		select bundle_properties._key, bundle_properties._value from bundles bundle
+		join bundles_properties bundle_properties on bundle_properties.bundleRef = bundle.id 
+		where bundle.bundle = ? and bundle.nodeId = ? and bundle._locale is null 
+		and bundle.active = ? and bundle_properties.active = ?		
+	</entry>
+	<entry key="bundle.query">
+		select bundle_properties._key, bundle_properties._value from bundles bundle
+		join bundles_properties bundle_properties on bundle_properties.bundleRef = bundle.id 
+		where bundle.bundle = ? and bundle.nodeId is null and bundle._locale is null 
+		and bundle.active = ? and bundle_properties.active = ?		
+	</entry>
+	<entry key="updater.bundleHashTimestamp.query">
+		select _timestamp from bundles_hash 
+		where _hash = ?		
+	</entry>
+	<entry key="updater.insertBundle.query">
+		insert into bundles(bundle, nodeId, _locale, active, _group) values(?, ?, ?, ?, ?)		
+	</entry>
+	<entry key="updater.insertBundleProperties.query">
+		insert into bundles_properties(bundleRef, _key, _value, active, _group) values(?, ?, ?, ?, ?)
+	</entry>
+	<entry key="updater.insertBundleHash.query">
+		insert into bundles_hash(_hash, _timestamp) values(?, ?)
+	</entry>
+	<entry key="updater.getBundleId.query">
+		select id from bundles where bundle = ? and nodeId = ? and _locale = ?
+	</entry>
+	<entry key="updater.bundlePropertyExists.query">
+		select count(id) from bundles_properties where bundleRef = ? and _key = ?
+	</entry>
+	<entry key="updater.updateBundleProperties.query">
+		update bundles_properties set _value = ? where bundleRef = ? and _key = ?
+	</entry>
+	<entry key="updater.updateBundleHash.query">
+		update bundles_hash set _timestamp = ? where _hash = ?
+	</entry>
+	<entry key="updater.synchonizer.bundles">
+		select * from bundles
+	</entry>
+	<entry key="updater.synchonizer.bundlesProperties">
+		select * from bundles_properties
+	</entry>
+</properties>

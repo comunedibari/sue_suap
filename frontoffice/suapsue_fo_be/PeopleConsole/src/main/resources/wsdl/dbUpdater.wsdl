@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://client.ws.console.people.it/schemas" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://client.ws.console.people.it/definitions" targetNamespace="http://client.ws.console.people.it/definitions">
+  <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://client.ws.console.people.it/schemas" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://client.ws.console.people.it/schemas">
+	<xs:element name="UpdateRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+		<xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+				<xs:element maxOccurs="unbounded" name="instructions" type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="UpdateRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:part element="sch:UpdateRequest" name="UpdateRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"/>
+  </wsdl:message>
+  <wsdl:portType name="DbUpdater" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:operation name="Update" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <wsdl:input message="tns:UpdateRequest" name="UpdateRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DbUpdaterSoap11" type="tns:DbUpdater" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    <wsdl:operation name="Update" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <soap:operation soapAction="" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      <wsdl:input name="UpdateRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DbUpdaterService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:port binding="tns:DbUpdaterSoap11" name="DbUpdaterSoap11" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <soap:address location="http://people.rer.ri:8080/PeopleConsole/ws/dbUpdaterService/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

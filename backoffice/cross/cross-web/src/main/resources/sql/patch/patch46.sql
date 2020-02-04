@@ -1,0 +1,2 @@
+UPDATE lk_tipo_particella SET descrizione = 'Fondiario', cod_tipo_particella = 'T' WHERE cod_tipo_particella = 'T';
+UPDATE lk_tipo_particella SET descrizione = 'Edificiale', cod_tipo_particella = 'E' WHERE cod_tipo_particella = 'F';

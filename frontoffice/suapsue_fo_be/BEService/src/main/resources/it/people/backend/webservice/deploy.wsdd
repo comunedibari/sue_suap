@@ -1,0 +1,44 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from BEServiceService WSDL service -->
+
+  <service name="BEService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://webservice.backend.people.it/"/>
+      <parameter name="wsdlServiceElement" value="BEServiceService"/>
+      <parameter name="schemaQualified" value="http://webservice.backend.people.it/"/>
+      <parameter name="wsdlServicePort" value="BEService"/>
+      <parameter name="className" value="it.people.backend.webservice.BEService"/>
+      <parameter name="wsdlPortType" value="BEService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="process" qname="operNS:process" xmlns:operNS="http://webservice.backend.people.it/" returnQName="retNS:processReturn" xmlns:retNS="http://webservice.backend.people.it/" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="process" >
+        <parameter qname="pns:data" xmlns:pns="http://webservice.backend.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="process"/>
+
+  </service>
+
+ <service name="people.condivisi.ricercacodiceattivitaistat" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://webservice.backend.people.it/"/>
+      <parameter name="wsdlServiceElement" value="RicercaCodiciAttivitaISTATServiceService"/>
+      <parameter name="schemaQualified" value="http://webservice.backend.people.it/"/>
+      <parameter name="wsdlServicePort" value="RicercaCodiciAttivitaISTATService"/>
+     <parameter name="className" value="it.people.backend.webservice.codiciistat.RicercaCodiciAttivitaISTATProvider"/>
+      <parameter name="wsdlPortType" value="RicercaCodiciAttivitaISTATService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="process" qname="operNS:process" xmlns:operNS="http://webservice.backend.people.it/" returnQName="retNS:processReturn" xmlns:retNS="http://webservice.backend.people.it/" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="process" >
+        <parameter qname="pns:data" xmlns:pns="http://webservice.backend.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+     <parameter name="allowedMethods" value="process"/>
+ </service>
+  
+</deployment>

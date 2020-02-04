@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-740-. --><!-- Created with Liquid XML Studio 1.0.8.0 (http://www.liquid-technologies.com) --><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xyz="http://people.dbm.it" elementFormDefault="qualified" targetNamespace="http://people.dbm.it">
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+  
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://www.osor.eu/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+    <xs:element name="documentRoot">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="intervento">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="codice" type="xs:integer" />
+                            <xs:element minOccurs="1" maxOccurs="1" name="descrizione" type="xs:string" />
+                            <xs:element name="flgObbligatorio" type="xs:string" />
+                            <xs:element name="procedimento">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="codice" type="xs:string" />
+                                        <xs:element name="cud" type="xyz:cudType" />
+                                        <xs:element name="terminiEvasione" type="xs:integer" />
+                                        <xs:element name="tipoProc" type="xs:string" />
+                                        <xs:element name="flgBollo">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="S" />
+                                                    <xs:enumeration value="N" />
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="descrizione" type="xs:string" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="allegati">
+                                <xs:complexType>
+                                    <xs:sequence minOccurs="1" maxOccurs="1">
+                                        <xs:element minOccurs="1" maxOccurs="unbounded" name="allegato" type="xyz:allegatoType" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="normative">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element minOccurs="1" maxOccurs="unbounded" name="normativa">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="codice" type="xs:string" />
+                                                    <xs:element name="descrizione" type="xs:string" />
+                                                    <xs:element name="nomeRiferimento" nillable="true" type="xs:string" />
+                                                    <xs:element name="tipoNormativa" type="xyz:tipoNormativa" />
+                                                    <xs:element minOccurs="0" maxOccurs="1" name="documentoFisico" type="xyz:documentoType" />
+                                                    <xs:element name="articoloRiferimento" type="xs:string" />
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="codiceEnteOrigine" nillable="true" type="xs:string" />
+                            <xs:element minOccurs="0" name="codiceOrigine" nillable="true" type="xs:int" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="codiceComune" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="cudType">
+        <xs:sequence>
+            <xs:element name="codice" type="xs:string" />
+            <xs:element name="descrizione" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="allegatoType">
+        <xs:sequence>
+            <xs:element name="documento">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="codice" type="xs:string" />
+                        <xs:element name="flgDichiarazione">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="S" />
+                                    <xs:enumeration value="N" />
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="dichiarazione">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="codice" type="xs:string" />
+                                    <xs:element minOccurs="1" maxOccurs="1" name="descrizione" type="xs:string" />
+                                    <xs:element minOccurs="0" maxOccurs="1" name="testoPiede" type="xs:string" />
+                                    <xs:element name="campi">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element minOccurs="1" maxOccurs="unbounded" name="campo">
+                                                    <xs:complexType>
+                                                        <xs:sequence>
+                                                            <xs:element name="contatore" type="xs:integer" />
+                                                            <xs:element name="nome" type="xs:string" />
+                                                            <xs:element name="tipoRiga" type="xs:string" />
+                                                            <xs:element name="tipoCampo" type="xs:string" />
+                                                            <xs:element name="riga" type="xs:integer" />
+                                                            <xs:element name="posizione" type="xs:integer" />
+                                                            <xs:element name="controllo" nillable="true" type="xs:string" />
+                                                            <xs:element name="tipoControllo" type="xs:string" />
+                                                            <xs:element name="lunghezza" type="xs:integer" />
+                                                            <xs:element name="decimali" type="xs:integer" />
+                                                            <xs:element name="valore" type="xs:string" />
+                                                            <xs:element name="editabile">
+                                                                <xs:simpleType>
+                                                                    <xs:restriction base="xs:string">
+                                                                        <xs:enumeration value="S" />
+                                                                        <xs:enumeration value="N" />
+                                                                    </xs:restriction>
+                                                                </xs:simpleType>
+                                                            </xs:element>
+                                                            <xs:element name="raggruppamentoCheck" nillable="true" type="xs:string" />
+                                                            <xs:element name="campoCollegato" nillable="true" type="xs:string" />
+                                                            <xs:element name="valoreCampoCollegato" nillable="true" type="xs:string" />
+                                                            <xs:element name="marcatoreIncrociato" type="xs:string" />
+                                                            <xs:element name="precompilazione" type="xs:string" />
+                                                            <xs:element name="nomeWebService" nillable="true" type="xs:string" />
+                                                            <xs:element name="nomeXsd" nillable="true" type="xs:string" />
+                                                            <xs:element name="campoKey" nillable="true" type="xs:string" />
+                                                            <xs:element name="campoDati" nillable="true" type="xs:string" />
+                                                            <xs:element name="campoXmlMod" nillable="true" type="xs:string" />
+                                                            <xs:element name="descrizione" type="xs:string" />
+                                                        </xs:sequence>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element minOccurs="0" name="valoriListBox">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element minOccurs="1" maxOccurs="unbounded" name="valoreListBox">
+                                                    <xs:complexType>
+                                                        <xs:sequence>
+                                                            <xs:element name="nome" type="xs:string" />
+                                                            <xs:element name="valoreListBox" type="xs:string" />
+                                                            <xs:element name="descrizioneListBox" type="xs:string" />
+                                                        </xs:sequence>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element minOccurs="0" maxOccurs="1" name="documentoFisico" type="xyz:documentoType" />
+                        <xs:element minOccurs="0" maxOccurs="1" name="descrizione" type="xs:string" />
+                        <xs:element minOccurs="1" maxOccurs="1" name="titolo" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="copie" type="xs:integer" />
+            <xs:element minOccurs="0" name="condizione">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="codice" type="xs:string" />
+                        <xs:element minOccurs="1" maxOccurs="1" name="descrizione" type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="flgAutocertificazione" type="xs:string" />
+            <xs:element name="flgObbligatorieta" type="xs:string" />
+            <xs:element minOccurs="0" name="tipologie" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="numPagineMax" nillable="true" type="xs:integer" />
+            <xs:element minOccurs="0" name="dimensioneMax" nillable="true" type="xs:integer" />
+            <xs:element default="9999" name="ordinamento" type="xs:integer" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="documentoType">
+        <xs:sequence>
+            <xs:element name="tipoDocumento" type="xs:string" />
+            <xs:element name="nomeFile" type="xs:string" />
+            <xs:element name="blob" type="xs:base64Binary" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="tipoNormativa">
+        <xs:sequence>
+            <xs:element name="codice" type="xs:string" />
+            <xs:element name="descrizione" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

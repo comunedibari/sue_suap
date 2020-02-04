@@ -1,0 +1,163 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15-gen-2015, 16.25.18
+    Author     : Gabriele
+*/
+
+.navbar{
+    min-height: 80px;
+    padding-top: 17px;
+    background: url(../default/images/bgheader_bn.png) 0 0 no-repeat #ffffff;
+}
+
+.navbar-fixed-top + .main-container{
+    padding-top: 80px;
+}
+
+.navbar .navbar-brand{
+    /*background: url(../default/images/opencross.png) 0 0 no-repeat;
+    height: 50px;
+    width: 267px;
+    margin-top: 3px;
+    margin-left: 10px;*/
+    background: url(../default/images/header.jpg) 0 0 no-repeat;
+    display: block;
+    margin: 10px;
+    height: 70px;    
+    width: 280px;
+}
+.navbar .navbar-brand > small {
+    display: none;
+}
+
+.navbar .navbar-nav > li{
+    border : none;
+}
+.navbar .navbar-nav > li > a{
+    color: #231f20!important;
+    font-weight: bold;
+    text-shadow:none;
+}
+
+.navbar .navbar-nav .dropdown-menu > li > a{
+    color: #231f20!important;
+    font-weight: bold;
+    text-shadow:none;
+}
+
+.navbar .navbar-nav .dropdown-menu > li > a > .ace-icon{
+    color: #231f20!important;
+}
+
+.navbar .navbar-nav > li > a:hover, 
+.navbar .navbar-nav > li > a:focus, 
+.navbar .navbar-nav > li.open > a {
+    color: #231f20 !important;
+}
+
+.navbar .navbar-nav > li > a:hover, .navbar .navbar-nav > li > a:focus, .navbar .navbar-nav > li.open > a {
+    background: none!important;
+}
+
+.navbar-form input[type=text]{
+    border-width: 1px;
+}
+
+.navbar-form.form-search input[type=text]{
+    width:250px;    
+}
+.page-header{
+    background-color: #eee;
+}
+
+.page-header{
+    padding-bottom: 9px;
+}
+
+.page-header h1, .page-header h1 small{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.btn.btn-app.btn-xs > .ace-icon{
+    line-height: 15px;    
+}
+
+.navbar-fixed-top {
+    /*top: 25px;*/
+}
+.user-info>div{
+    font-size: 90%;
+}
+
+.ace-nav > li > a{
+    background-color: #555555 !important;
+}
+
+.dropdown-navbar .msg-body{
+    margin-left:0px;
+}
+
+.ui-jqgrid tr.jqgrow td{
+    white-space: nowrap;
+    height: 45px;
+}
+
+.grid.action-buttons{
+    text-align: center;
+}
+
+@media only screen and (max-width: 991px) and (min-width: 768px){
+    .navbar.navbar-collapse .navbar-container {
+        background: none;
+    }
+    .dropdown-menu.dropdown-close.dropdown-menu-right{
+    }
+    .grid-row-action-cell{
+        overflow: visible!important;
+    }
+}
+
+@media only screen and (max-width: 991px){
+    .navbar.navbar-collapse .navbar-container {
+        background: none;
+    }
+    .dropdown-menu.dropdown-close.dropdown-menu-right{
+    }
+    .grid-row-action-cell{
+        overflow: visible!important;
+    }
+}
+
+.cross-box.widget-box.transparent > .widget-body{
+    margin-top: 20px;
+}
+
+div.ui-jqgrid-view table.ui-jqgrid-btable{
+    border-left-style: none;
+    border-collapse: initial;
+}
+
+/** Per gestire i vecchi forms **/
+.wgf-label{
+    display:block;
+}
+
+.wgf-textField, .wgf-select{
+    width:100%}
+
+.error{
+    color: #d16e6c;    
+}
+
+.wgf-select.select2-hidden-accessible{
+    width:auto;
+}
+
+.select2-search:after{
+    content: "";
+}

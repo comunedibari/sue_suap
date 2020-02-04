@@ -1,0 +1,29 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
+<%/*
+	Il frammento di jsp include gli script e l'active-x necessari al procedimento 
+	di firma.
+
+	Può essere incluso nei servizi che richiedono un utilizzo custom del componente 
+	di firma, non previsto dalle normali funzioni del framework.	
+	
+	ATTENZIONE: è necessario anche includere il frammento signFooter.jsp
+*/%>
+
+	<object type="application/x-oleobject" id="oCAPICOM" classid="clsid:A996E48C-D3DC-4244-89F7-AFA33EC60679" codebase="./framework/sign/generic/default/html/capicom.cab#version=2,1,0,1" viewastext=""></object>
+	<object type="application/x-oleobject" id="CedafFSM" classid="clsid:F0A8EC0B-68F2-4819-B2CC-40AEBF2D6296" codebase="./framework/sign/generic/default/html/CedafFSM.cab#version=2,1,0,4" viewastext=""></object>
+	<script type="text/javascript" src="./framework/sign/generic/default/html/<%=it.people.process.sign.ConcreteSign.getScriptFileName(request)%>"></script>
+	<script type="text/javascript" src="./framework/sign/generic/default/html/iiFSMain.js"></script>
+	<script type="text/javascript" >
+		// Inizializza le variabili per la firma
+		var remoteSignEnabled = false;
+		<c:if test="${initParam.remoteSignEnabled}">remoteSignEnabled = true;</c:if>
+				
+		var weakSignEnabled = false;
+		<c:if test="${initParam.weakSignEnabled}">weakSignEnabled = true;</c:if>
+
+		var weakSignDisclaimer = "<bean:message key="label.sign.weakSignDisclaimer"/>";
+		var remoteSignDisclaimer= "<bean:message key="label.sign.remoteSignDisclaimer"/>";	
+	</script>			

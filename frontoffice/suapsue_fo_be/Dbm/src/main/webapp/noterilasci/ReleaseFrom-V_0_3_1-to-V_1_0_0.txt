@@ -1,0 +1,51 @@
+---Upgrade della versione Master Copy V.0.3.1 alla V.1.0.0
+---Si ricorda che le il passaggio alla versione V.1.0.0 prevede di
+   avere il software alla versione V.0.3
+
+bug-fix:
+
+
+
+miglioramenti:
+
+- inserito in web.xml relativa alla configurazione dello scheduler Quartz
+- aggiunte le funzionalità di pubblicazione (su BDCC) degli interventi modificati
+  le modifiche apportate che generano una segnalazione di possibile pubblicazione sono:
+    - modifica dell'intervento
+    - modifica del cud
+    - modifica del procedimento
+    - modifica degli allegati
+    - modifica dei documenti
+    - modifica delle normative
+    - modifica delle dichiarazioni (HREF)
+
+passi:
+1) effettuare una copia del db
+2) eseguire lo script sql release_1_ver_0.sql
+3) salvare il file web.xml presente nella cartella <tomcat>/webapps/Dbm/WEB-INF
+4) salvare il file log4j.properties presente nella cartella <tomcat>/webapps/Dbm/WEB-INF/classes
+5) effettuare il deploy del software (Dbm.war)
+6) ripristinare il file web.xml salvato inprecedenza
+7) ripristinare il file log4j.properties salvato in precedenza
+8) modificare il file web.xml inserendo
+    <!-- *************************************************** -->
+    <!-- quartz -->
+    <!-- *************************************************** -->
+    <servlet>
+        <servlet-name>QuartzInitializer</servlet-name>
+        <servlet-class>org.quartz.ee.servlet.QuartzInitializerServlet</servlet-class>
+        <init-param>
+            <param-name>shutdown-on-unload</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>start-scheduler-on-load</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+   tale modifica attiva lo scheduler per l'allineamnto dei dati verso la banca dati BDCC regionale
+9) nella cartella WEB-IF/classes è presente un file job.xml che definisce le modalità di scheduling
+   modificando il seguente tag xml
+                <cron-expression>0 0 22 * * ?</cron-expression><!-- ogni giorno alle 22 -->
+10) riavviare tomcat

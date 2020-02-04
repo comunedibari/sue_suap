@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>
+	</comment>
+	
+	<entry key="getTableValueIdNoLocale.query">
+		select id from tablevalues where tableId = ? and processName = ? and nodeId = ? and locale is NULL
+	</entry>
+	
+	<entry key="getTableValueIdNoLocaleNoNodeId.query">
+		select id from tablevalues where tableId = ? and processName = ? and nodeId is NULL and locale is NULL
+	</entry>
+	
+	<entry key="getTableValueIdNoNodeId.query">
+		select id from tablevalues where tableId = ? and processName = ? and nodeId is NULL and locale = ?
+	</entry>
+	
+	<entry key="getTableValueId.query">
+		select id from tablevalues where tableId = ? and processName = ? and nodeId = ? and locale = ?
+	</entry>
+	
+	<entry key="getTableValuesPropertiesForId.query">
+		select id, value from tablevalues_properties where tablevalueRef = ? 
+	</entry>
+	
+	<entry key="updater.hashTimestamp.query">
+		select timestamp from tablevalues_hash where hash = ?		
+	</entry>
+	<entry key="updater.checkEmptyTablevalues.query">
+		select count(id) from tablevalues limit 5
+	</entry>
+	<entry key="updater.checkEmptyTablevaluesProperties.query">
+		select count(id) from tablevalues_properties limit 5
+	</entry>
+	<entry key="updater.checkEmptyTablevaluesHash.query">
+		select count(id) from tablevalues_hash limit 5
+	</entry>
+	
+	<entry key="updater.truncateTablevaluesHash.query">
+		delete from tablevalues_hash
+	</entry>
+	<entry key="updater.truncateTablevalues.query">
+		delete from tablevalues
+	</entry>
+	<entry key="updater.truncateTablevaluesProperties.query">
+		delete from tablevalues_properties
+	</entry>
+
+	<entry key="updater.insertTableValue.query">
+		insert into tablevalues(tableId, processName, nodeId, locale, charset) values(?, ?, ?, ?, ?)		
+	</entry>
+	
+	<entry key="updater.insertTableValueProperties.query">
+		insert into tablevalues_properties(value, tablevalueRef) values(?, ?)
+	</entry>
+	<entry key="updater.insertBundleHash.query">
+		insert into tablevalues_hash(hash, timestamp) values(?, ?)
+	</entry>
+
+	<entry key="updater.getTableValueId.query">
+		select id from tablevalues where tableId = ? and processName = ? and nodeId = ? and locale = ?
+	</entry>
+	
+	<entry key="updater.synchonizer.tableValues">
+		select * from tablevalues
+	</entry>
+	<entry key="updater.synchonizer.tableValuesProperties">
+		select * from tablevalues_properties
+	</entry>
+	
+	
+
+
+
+</properties>

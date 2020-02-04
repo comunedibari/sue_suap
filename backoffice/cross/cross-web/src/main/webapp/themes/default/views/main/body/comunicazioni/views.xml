@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="comunicazione_index" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/comunicazioni/index.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>
+        
+    <definition name="comunicazione_evento_dettaglio" extends=".main">
+        <put-attribute name="title"         value="Dettaglio evento" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/comunicazioni/dettaglio.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Dettaglio evento" type="string" />
+    </definition>
+    
+    <definition name="comunicazione_gestisci" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/comunicazioni/gestisci.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>
+
+    
+    
+</tiles-definitions>

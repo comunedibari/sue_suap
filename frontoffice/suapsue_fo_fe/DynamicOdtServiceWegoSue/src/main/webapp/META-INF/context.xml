@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/DynamicOdtServiceWegoSue">
+	<Logger className="org.apache.catalina.logger.FileLogger"
+		prefix="DynamicOdtServiceWegoSue." suffix=".log" timestamp="true" />
+	<Resource name="jdbc/puDS" auth="Container" type="javax.sql.DataSource"
+		maxActive="8" maxIdle="8" maxWait="-1"
+		username="${DynamicOdtServiceWegoSue.jdbc/puDS.username}" password="${DynamicOdtServiceWegoSue.jdbc/puDS.password}"
+		driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true"
+		testOnReturn="false" removeAbandoned="true" validationQuery="SELECT 1"
+		validationQueryTimeout="-1" url="${DynamicOdtServiceWegoSue.jdbc/puDS.url}" />
+</Context>

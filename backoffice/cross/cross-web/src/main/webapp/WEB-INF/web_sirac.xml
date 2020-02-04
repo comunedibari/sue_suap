@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring/web/application-context-web.xml</param-value>
+    </context-param>
+    <!-- CONTEXT-PARAM SIRAC 2.0.2 -->
+    <context-param>
+        <param-name>idComune</param-name>
+        <param-value>010025</param-value>
+    </context-param>
+    <context-param>
+        <param-name>people.sirac.webservice.accreditamento.address</param-name>
+        <param-value>http://srv01.wego.it/ws_accr121/services/IAccreditamentoWS</param-value>
+    </context-param>
+    <context-param>
+        <param-name>people.sirac.error.page</param-name>
+        <param-value>/SiracError.jsp</param-value>
+    </context-param>
+    <context-param>
+        <param-name>showDetailInErrorPage</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>people.sirac.error.returnURL</param-name>
+        <param-value>http://localhost:8080/cross</param-value>
+    </context-param>
+    <context-param>
+        <param-name>authenticationResponseReceiverServiceTransferMode</param-name>
+        <!--  Indicare FORWARD o POST -->
+        <param-value>POST</param-value>
+    </context-param>
+    <context-param>
+        <param-name>encryptAuthResponse</param-name>
+        <!--  Indicare true o false -->
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>encryptAuthResponseKeyFile</param-name>
+        <!--  path relativo alla webapp -->
+        <param-value>/keystore/encryptAuthResponse_Rijndael_256_PBEWithSHAAnd128BitRC4_100.key</param-value>
+    </context-param>
+    <context-param>
+        <param-name>encryptAuthResponseKeyFilePassPhrase</param-name>
+        <param-value>testpassphrase</param-value>
+    </context-param>
+    <context-param>
+        <param-name>authResponseExpirationTime</param-name>
+        <!--  expiration time in msec (usato solo nel caso di TransferMode=POST)-->
+        <param-value>300000</param-value>
+    </context-param>
+    <context-param>
+        <param-name>authResponseExpirationDateTimeFormat</param-name>
+        <param-value>yyyyMMdd'T'HH:mm:ss.SSSz</param-value>
+    </context-param>
+    <context-param>
+        <param-name>ignoreAuthResponseExpirationTime</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>assertionIntendedRecipientURL</param-name>
+        <param-value>http://localhost:8080/cross/AssertionConsumerService</param-value>
+    </context-param>
+    <!-- Utilizzato dal Sirac e dal filtro di selezione del comune -->
+    <context-param>
+        <param-name>peopleFSLHostURL</param-name>
+        <param-value>http://localhost:8080</param-value>
+    </context-param>
+    <context-param>
+        <param-name>weakSignEnabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>remoteSignEnabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>remoteSignMode</param-name>
+        <param-value>p7m</param-value>
+    </context-param>
+    
+    <filter>
+        <filter-name>encoding-filter</filter-name>
+        <filter-class>
+            org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encoding-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--*********************************************************************-->
+    <!--*********************************************************************-->
+    <!-- SIRAC - Filtro di caricamento del service Profile                   -->
+    <!--*********************************************************************-->
+    <filter>
+        <filter-name>SIRAC Service Profile Loader Filter</filter-name>
+        <filter-class>it.people.sirac.filters.SiracServiceProfileLoaderFilter</filter-class>
+        <init-param>
+            <param-name>defaultserviceprofile</param-name>
+            <param-value>/it/people/defaultserviceprofile.xml</param-value>
+        </init-param>
+    </filter>
+    <!--*********************************************************************-->
+    <!-- SIRAC - Filtro di Autenticazione                                    -->
+    <!--*********************************************************************-->
+    <filter>
+        <filter-name>SIRAC Authentication Filter</filter-name>
+        <filter-class>it.people.sirac.filters.SiracAuthenticationFilter</filter-class>
+        <init-param>
+            <param-name>SIRACGatewayRedirectURL</param-name>
+            <param-value>http://srv01.wego.it/sirac-sso/AuthGatewayWAYFService</param-value>
+        </init-param>
+        <init-param>
+            <param-name>assertionConsumerURL</param-name>
+            <param-value>http://srv01.wego.it/sirac-sso/AssertionConsumerService</param-value>
+        </init-param>
+        <init-param>
+            <param-name>postAuthRequestPage</param-name>
+            <param-value>/PostAuthRequest.jsp</param-value>
+        </init-param>
+    </filter>
+ 
+    <!--*********************************************************************-->
+    <!-- CROSS - Filtro di post Autenticazione                               -->
+    <!--*********************************************************************-->   
+    <filter>
+        <filter-name>CrossPostAuthenticationFilter</filter-name>
+        <filter-class>it.wego.cross.filters.CrossPostAuthenticationFilter</filter-class>
+    </filter>    
+
+    <!--********************************************-->
+    <!--* Definizione delle Servlet                *-->
+    <!--********************************************-->
+    <servlet>
+        <servlet-name>action</servlet-name>
+        <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>/WEB-INF/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>validate</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>detail</param-name>
+            <param-value>2</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <!--  SIRAC AssertionConsumerService -->
+    <servlet>
+        <servlet-name>AssertionConsumerService</servlet-name>
+        <servlet-class>it.people.sirac.web.AssertionConsumerServlet</servlet-class>
+        <init-param>
+            <param-name>keystorePath</param-name>
+            <!--  path relativo alla webapp -->
+            <param-value>/keystore/test.jks</param-value>
+        </init-param>
+        <init-param>
+            <param-name>certificateAlias</param-name>
+            <param-value>mykey</param-value>
+        </init-param>
+        <init-param>
+            <param-name>keystorePassword</param-name>
+            <param-value>opensaml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>authenticationResponseReceiverServiceForwardURL</param-name>
+            <param-value>/AuthResponseReceiverService</param-value>
+        </init-param>
+        <init-param>
+            <param-name>authenticationResponseReceiverServicePOSTURL</param-name>
+            <param-value>http://localhost:8080/cross/AuthResponseReceiverService</param-value>
+        </init-param>
+        <init-param>
+            <param-name>postResponsePage</param-name>
+            <param-value>/PostAuthResponse.jsp</param-value>
+        </init-param>
+    </servlet>
+
+    <!-- TUTTE LE SERVLET DEL DBM -->
+    <servlet>
+        <servlet-name>AuthResponseReceiverService</servlet-name>
+        <servlet-class>it.people.sirac.web.AuthenticationResponseReceiverServlet</servlet-class>
+    </servlet>
+    <!-- FINE DI TUTTE LE SERVLET DEL DBM -->
+
+    <servlet>
+        <servlet-name>downloadAllegatoEvento</servlet-name>
+        <servlet-class>it.wego.cross.servlets.downloadAllegatoEvento</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>generateDocument</servlet-name>
+        <servlet-class>it.wego.cross.servlets.generateDocument</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>downloadFile</servlet-name>
+        <servlet-class>it.wego.cross.servlets.downloadFile</servlet-class>
+    </servlet>
+    <!-- FINE DELLE SERVLET RIC -->
+
+    <!-- SERVLET MAPPING DBM -->
+    <servlet-mapping>
+        <servlet-name>AuthResponseReceiverService</servlet-name>
+        <url-pattern>/AuthResponseReceiverService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AssertionConsumerService</servlet-name>
+        <url-pattern>/AssertionConsumerService</url-pattern>
+    </servlet-mapping>
+    <!-- FINE SERVLET MAPPING DBM -->
+
+    <!-- *************************************************** -->
+    <!-- Gestione Eccezioni                               -->
+    <!-- *************************************************** -->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/protected/index.htm</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/protected/index.htm</location>
+    </error-page>
+    <error-page>
+        <exception-type>it.people.sirac.error.SiracException</exception-type>
+        <location>/SiracError.jsp</location>
+    </error-page>
+
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+    
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring/web/web-beans.xml</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+    
+    
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <filter-mapping>
+        <filter-name>SIRAC Authentication Filter</filter-name>
+        <url-pattern>/protected/*</url-pattern>
+    </filter-mapping>
+    <!--*********************************************************************-->
+    <!-- CROSS - Mapping di post Autenticazione                              -->
+    <!--*********************************************************************-->     
+    <filter-mapping>
+        <filter-name>CrossPostAuthenticationFilter</filter-name>
+        <url-pattern>/protected/*</url-pattern>
+    </filter-mapping>
+        
+        
+    <resource-ref>
+        <description>Cross Datasource</description>
+        <res-ref-name>jdbc/CrossDS</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    
+    <resource-ref>
+        <description>Activiti Datasource</description>
+        <res-ref-name>jdbc/ActivitiDS</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+</web-app>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="certificate.send.mail.subject">
+		People Console - Certificato visualizzazione XML
+	</entry>
+
+	<entry key="certificate.send.mail.body">
+		<![CDATA[
+		Gentile {0}, in allegato il certificato per la visualizzazione in chiaro 
+		degli XML scambiati tra f.e. e b.e. richiesto dalle funzionalità di audit 
+		delle attività degli utenti.<br/><br/>
+		
+		Di seguito sono riportati l''alias del certificato e la password.<br/><br/>
+		
+		
+		Alias: {1}<br/>
+		Password: {2}<br/><br/>
+		
+		Cordiali saluti.
+		]]>
+	</entry>
+
+	<entry key="certificate.send.mail.subject.footer">
+		<![CDATA[
+		<br/>_____________________________________________________________________________<br/><br/>
+		
+		Questa mail è stata spedita in modalità  automatica dal, la preghiamo quindi 
+		di non rispondere e di non scrivere all'indirizzo del mittente, in quanto non 
+		riceverebbe nessun tipo di risposta.
+		]]>
+	</entry>
+	
+	<!-- Monitoring: office business hours ("HH:mm" format) -->
+	
+	<entry key="monitoring.indicators.office.morningOpeningTime">8:30</entry>
+	
+	<entry key="monitoring.indicators.office.morningClosingTime">14:30</entry>
+	
+	<entry key="monitoring.indicators.office.afternoonOpeningTime">15:30</entry>
+	
+	<entry key="monitoring.indicators.office.afternoonClosingTime">17:30</entry>
+
+</properties>

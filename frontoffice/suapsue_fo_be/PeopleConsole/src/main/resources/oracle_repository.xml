@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE descriptor-repository PUBLIC
+       "-//Apache Software Foundation//DTD OJB Repository//EN"
+       "repository.dtd"
+[
+
+<!ENTITY internal SYSTEM "repository_internal.xml">
+]>
+
+
+<descriptor-repository version="1.0" isolation-level="read-uncommitted">
+	<!-- PEOPLE_DB Oracle -->
+
+	<jdbc-connection-descriptor 
+		jcd-alias="PEOPLE_DB" 
+		default-connection="true" 
+		platform="Oracle9i" 
+		jdbc-level="2.0" 
+		driver="oracle.jdbc.driver.OracleDriver" 
+		protocol="jdbc" 
+		subprotocol="oracle" 
+		dbalias="thin:@fabmi-xp:1521:xe" 
+		username="PEOPLE" 
+		password="PEOPLE" 
+		useAutoCommit="1">
+		<connection-pool maxActive="1000" maxIdle="10" whenExhaustedAction="2" 
+			testOnBorrow="true" timeBetweenEvictionRunsMillis="5000"/>
+		<sequence-manager className="org.apache.ojb.broker.util.sequence.SequenceManagerNextValImpl">
+			<attribute attribute-name="autoNaming" attribute-value="true"/>
+		</sequence-manager>
+	</jdbc-connection-descriptor>
+	
+</descriptor-repository>

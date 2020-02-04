@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="pratiche_nuove" extends=".main">
+        <put-attribute name="title"         value="Pratiche Nuove" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/assegnamento/nuova.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Lista pratiche nuove" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/assegnamento/ricerca.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="pratica_assegna_utente" extends=".main">
+        <put-attribute name="title"         value="Assegna istruttore" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/assegnamento/assegna.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Assegna utente" type="string" />
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="pratiche_apertura_nuove" extends=".main">
+        <put-attribute name="title"         value=" - Apertura Pratiche Nuove" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/list.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Apertura pratiche nuove" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/ricerca.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="pratiche_apertura_nuove_dettaglio" extends="pratiche_apertura_nuove">
+        <put-attribute name="body_title"    cascade="true"  value=" "  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/dettaglio.jsp"/>
+        <put-attribute name="dati_catastali"   cascade="true"  expression="${dati_catastali_custom}"/>
+        <put-attribute name="indirizzi_intervento"   cascade="true"  expression="${indirizzi_intervento}"/>
+        <put-attribute name="allegati"   cascade="true"  expression="/themes/default/views/main/body/pratiche/apertura/allegati.jsp"/>
+        <put-attribute name="operazioneRiuscitaAjax"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscitaAjax.jsp"/>
+        <put-attribute name="operazioneRiuscita"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+        <put-attribute name="eventi"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/eventi.jsp"/>
+        <put-attribute name="notifica"  cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/notifica.jsp"/>
+        <put-attribute name="confrontaAnagrafiche"  cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/confronta_anagrafiche.jsp"/>
+    </definition>
+    
+    <definition name="pratica_gestione" extends=".main">
+        <put-attribute name="title"         value="Gestione pratiche" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Gestione pratiche" type="string" />
+        <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/gestione.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ricerca.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="pratica_riassegnazione_selezione_utente" extends=".main">
+        <put-attribute name="title"         value="Riassegna pratica" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Riassegna pratica" type="string" />
+        <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/riassegna.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="pratica_dettaglio" extends=".main">
+        <put-attribute name="title"         value="Dettaglio della pratica" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Dettaglio pratica" type="string" />
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="anagrafica"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/anagrafica.jsp"/>
+        <put-attribute name="procedimenti"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/procedimenti.jsp"/>
+        <put-attribute name="allegati"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/allegati.jsp"/>
+        <put-attribute name="dati_catastali"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/dati_catastali.jsp"/>
+        <put-attribute name="indirizzi_intervento"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/indirizzi_intervento.jsp"/>
+        <put-attribute name="scadenze"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/scadenze.jsp"/>
+        <put-attribute name="eventi"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/eventi.jsp"/>
+        <put-attribute name="note"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/note.jsp"/>
+        <put-attribute name="pratiche_collegate"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/pratiche_collegate.jsp"/>
+        <put-attribute name="messaggi"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/messaggi.jsp"/>
+        <put-attribute name="copertina"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/copertina.jsp"/>
+        <put-attribute name="operazioneRiuscitaAjax"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscitaAjax.jsp"/>
+        <put-attribute name="operazioneRiuscita"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+    </definition>
+    
+    <definition name="pratica_collega_procedimento" extends=".main">
+        <put-attribute name="title"         value="Collega procedimento alla pratica" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Collega procedimento alla pratica" type="string" />
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/collega_procedimento/associa.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/collega_procedimento/ricercaProcedimenti.jsp"/>
+    </definition>    
+
+    <definition name="pratica_collega_procedimento_lista_enti" extends=".main">
+        <put-attribute name="title"         value="Collega procedimento alla pratica" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Collega procedimento alla pratica" type="string" />
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/collega_procedimento/listaEnti.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/collega_procedimento/ricercaEnti.jsp"/>
+    </definition>  
+                        
+    <definition name="pratica_collega_anagrafica" extends=".main">
+        <put-attribute name="title"         value="Collega anagrafica alla pratica" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Collega anagrafica alla pratica" type="string" />
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/collega_anagrafica/lista.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/ricerca.jsp"/>
+    </definition>
+    
+    <definition name="pratica_collega_anagrafica_ruolo" extends=".main">
+        <put-attribute name="title"         value="Collega anagrafica alla pratica" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Collega anagrafica alla pratica" type="string" />
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/collega_anagrafica/assegna_ruolo.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="estrazione_cila" extends=".main">
+        <put-attribute name="title"         value="Estrazione Pratiche CILA" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Estrazione Pratiche CILA" type="string" />
+        <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/estrazioni/gestioneCILA.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/estrazioni/ricerca.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="estrazione_scia" extends=".main">
+        <put-attribute name="title"         value="Estrazione Pratiche SCIA" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Estrazione Pratiche SCIA" type="string" />
+        <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/estrazioni/gestioneSCIA.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/estrazioni/ricerca.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="estrazione_pdc" extends=".main">
+        <put-attribute name="title"         value="Estrazione Pratiche PDC" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Estrazione Pratiche PDC" type="string" />
+        <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/estrazioni/gestionePDC.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/estrazioni/ricerca.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="estrazione_agib" extends=".main">
+        <put-attribute name="title"         value="Estrazione Pratiche AGIB" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Estrazione Pratiche AGIB" type="string" />
+        <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/estrazioni/gestioneAGIB.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/estrazioni/ricerca.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="estrazione_cila_to_do" extends=".main">
+        <put-attribute name="title"         value="Estrazione CILA 20%" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Estrazione CILA 20%" type="string" />
+        <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/estrazioni/gestioneCILAToDo.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/estrazioni/ricercaCILAToDo.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+        
+</tiles-definitions>

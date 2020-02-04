@@ -1,0 +1,11 @@
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.endpoint.creaud','', 'Endpoint creazione Unita documentale (servizio WsAddUd)');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.endpoint.estrazionefilesingolo','', 'Endpoint interrogazione file singolo Unita documentale (servizio WSExtractOne)');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.endpoint.caricaallegato','', 'Endpoint caricamento di un file (servizio WSCheckIn)');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.codice.applicazione','', 'Codice identificativo dell\'applicazione che chiama il webservice');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.codice.istanza','', 'Identificativo dell\'istanza esterna che chiama il webservice');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.username','', 'Username che si autentica nell\'applicazione AURIGA');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.password','', 'Password che si autentica nell\'applicazione AURIGA');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.url.mypage','http://localhost:8080/AllegatiService/services/allegatiService', 'Url del servizio allegatiService');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.endpoint.estrazionefilemultipli','', 'Endpoint interrogazione alleati Unita documentale (servizio WSExtractMulti)');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.endpoint.caricaallegato.folder','FONDO PRIMARIO/TEST', 'Folder per il caricamento dei file tramite WSCheckIn');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('documentale.auriga.endpoint.getmetadata', 'http://vm-testdoc:8080/aurigarepository/services/WSGetMetadataUd', 'Endpoint ricerca metadati');

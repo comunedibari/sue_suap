@@ -1,0 +1,1 @@
+ALTER TABLE configuration CHANGE COLUMN `value` `value` LONGTEXT NULL DEFAULT NULL ;

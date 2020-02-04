@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <!-- Default Main Template -->
+    <definition name=".main" template="/themes/default/views/main.jsp">
+        <put-attribute name="title"         cascade="true" value="Cross" type="string"/>
+        <put-attribute name="infobar"       cascade="true" value="/themes/default/views/main/infobar.jsp"/>
+        <put-attribute name="body_header"   cascade="true"  value="" type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="" type="string" />
+        <put-attribute name="header"        cascade="true" value="/themes/default/views/main/header.jsp"/>
+        <put-attribute name="body"          cascade="true" value="/themes/default/views/main/body.jsp"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_error"    cascade="true" value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="body_footer"   cascade="true" type="string"  value=""/>
+        <put-attribute name="footer"        cascade="true" value="/themes/default/views/main/footer.jsp"/>
+    </definition>
+    
+    <definition name="ajax" template="/themes/default/views/ajax.jsp">
+        <put-attribute name="title"         value="Cross" type="string"/>
+        <put-attribute name="infobar"       value=" " type="string"/>
+        <put-attribute name="menu"          value=" " type="string"/>
+        <put-attribute name="header"        value=" " type="string"/>
+        <put-attribute name="body"          value=" " type="/themes/default/views/ajax.jsp"/>
+        <put-attribute name="body_error"    value=" "   type="string" cascade="true"/>
+        <put-attribute name="body_footer"   value=" " type="string"/>
+        <put-attribute name="footer"        value=" " type="string"/>
+        <put-attribute name="body_inner_footer" value="" type="string" cascade="true"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=" "  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value=" "  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value=" " type="string" />
+    </definition>
+	
+    <!-- David -->
+    <definition name=".search" template="/themes/default/views/search.jsp">
+        <put-attribute name="title"         cascade="true" value="Cross" type="string"/>
+        <put-attribute name="infobar"       cascade="true" value="/themes/default/views/main/infobar.jsp"/>
+        <put-attribute name="body_header"   cascade="true"  value="" type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="" type="string" />
+        <put-attribute name="header"        cascade="true" value="/themes/default/views/main/header.jsp"/>
+        <put-attribute name="body"          cascade="true" value="/themes/default/views/main/body.jsp"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_error"    cascade="true" value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="body_footer"   cascade="true" type="string"  value=""/>
+        <put-attribute name="footer"        cascade="true" value="/themes/default/views/main/footer.jsp"/>
+    </definition>
+    <!-- Stop David -->
+    
+    <definition name="cross_index" extends=".main">
+        <put-attribute name="title"         value="Benvenuti su " type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value="Benvenuti su CROSS 2"  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/home.jsp"/>
+        <put-attribute name="body_error"    cascade="true" value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Lista Pratiche" type="string" />
+    </definition>
+    
+    <definition name="sportelli_index" extends=".main">
+        <put-attribute name="title"         value=" - Sportelli" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value="Sportelli"  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/sportelli/index.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Lista sportelli" type="string" />
+    </definition>
+    
+    <definition name="enti_operatore_lista" extends=".main">
+        <put-attribute name="title"         value="Enti Terzi" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value="Indice Operatori" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value="Enti Operatore"  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/enti/lista.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Indice Operatori" type="string" />
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="enti_operatore_aggiungi" extends=".main">
+        <put-attribute name="title"         value="Enti Terzi" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value="Aggiungi Operatore" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value="Aggiungi Operatore Ente"  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/enti/aggiungi.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Aggiungi Operatore" type="string" />
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="enti_operatore_elimina" extends=".main">
+        <put-attribute name="title"         value="Enti Terzi" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value="Elimina  Operatori" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value="Elimina Operatore Ente"  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/enti/elimina.jps"/>
+        <put-attribute name="infopath"      cascade="true"  value="Elimina  Operatori" type="string" />
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="enti_operatore_modifica" extends=".main">
+        <put-attribute name="title"         value="Enti Terzi" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value="Modifica Operatori" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value="Modifica Operatore Ente"  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/enti/modifica.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Modifica Operatori" type="string" />
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+     
+    <definition name="scadenzario_index" extends=".main">
+        <put-attribute name="title"         value="Scadenzario" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/scadenze/scadenzario.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Scadenzario" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/scadenze/ricerca.jsp"/>
+    </definition>
+	
+    <!-- David -->
+    <definition name="scadenzario_bar" extends=".search">
+        <put-attribute name="title"         value="Scadenzario" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/scadenze/barra.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Scadenzario" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/scadenze/ricerca.jsp"/>
+    </definition>
+    <!-- Stop David -->
+    
+    <definition name="lista_pratiche_protocollo" extends=".main">
+        <put-attribute name="title"         value="Pratiche da protocollo" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/lista_pratiche_protocollo.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Istanze di ingresso" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/ricerca.jsp"/>
+    </definition>
+    
+    <definition name="lista_documenti_protocollo" extends=".main">
+        <put-attribute name="title"         value="Documenti da protocollo" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/lista_documenti_protocollo.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Documenti da protocollo" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/ricerca.jsp"/>
+    </definition>
+        
+    <definition name="documento_protocollo" extends=".main">
+        <put-attribute name="title"         value="Dettaglio della pratica - Passo 1" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/dettaglio_documento.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Dettaglio della pratica - Passo 1" type="string" />
+    </definition>
+    
+<!--    <definition name="documento_protocollo_anagrafiche" extends=".main">
+        <put-attribute name="title"         value="Dettaglio della pratica - Passo 2" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/anagrafiche.jsp"/>
+        <put-attribute name="body_error"    cascade="true" value=""  />
+        <put-attribute name="body_error_custom"    cascade="true" value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Dettaglio della pratica - Passo 2" type="string" />
+    </definition>-->
+    
+    <definition name="documento_protocollo_cerca_anagrafica" extends=".main">
+        <put-attribute name="title"         value="Cerca anagrafica" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/cerca_anagrafiche.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Cerca anagrafica" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/ricerca.jsp"/>
+    </definition>
+    
+    <definition name="lista_pratiche_per_protocollo" extends=".main">
+        <put-attribute name="title"         value="Elenco delle pratiche" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/pratiche_per_documento.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Elenco delle pratiche" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/ricerca.jsp"/>        
+        <!--<put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/ricerca_pratica.jsp"/>-->
+    </definition>
+
+    <definition name="lista_eventi_protocollo" extends=".main">
+        <put-attribute name="title"         value="Eventi" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/eventi_protocollo.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Eventi" type="string" />
+    </definition>
+    
+    <definition name="dettaglio_evento_protocollo" extends=".main">
+        <put-attribute name="title"         value="Dettaglio evento" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/dettaglio_evento_protocollo.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Dettaglio evento" type="string" />
+        <put-attribute name="comunicazione_destinatari"  cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/comunicazione/destinatari.jsp"/>
+        <put-attribute name="comunicazione_mittenti"  cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/comunicazione/mittenti.jsp"/>
+        <put-attribute name="comunicazione_destinatari_limited"  cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/comunicazione/destinatari_limited.jsp"/>
+        <put-attribute name="comunicazione_ricevuta" cascade="true"   value="/themes/default/views/main/body/pratiche/caricamento/comunicazione/ricevuta.jsp"/>
+        <put-attribute name="comunicazione_mail" cascade="true"   value="/themes/default/views/main/body/pratiche/caricamento/comunicazione/mail.jsp"/>
+        <put-attribute name="comunicazione_protocollo_manuale"  cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/comunicazione/protocollo_manuale.jsp"/>
+        <put-attribute name="comunicazione_file_upload"  cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/comunicazione/allegati.jsp"/>
+        <put-attribute name="comunicazione_procedimenti"  cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/comunicazione/procedimenti.jsp"/>
+        <put-attribute name="comunicazione_scadenze"  cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/comunicazione/scadenze.jsp"/>
+    </definition>
+    
+    <definition name="403" extends=".main">
+        <put-attribute name="title"         value="Permesso Negato" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="menu"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/403.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Errore" type="string" />
+    </definition>
+    
+    <definition name="evento_scelta" extends=".main">
+        <put-attribute name="title"         value="Comunicazione" type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Nuovo evento" type="string" />
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/eventi/index.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="anagrafica_dettaglio" template="/themes/default/views/main/body/pratiche/anagrafica_dettaglio.jsp">
+    </definition>
+    
+    <definition name="caricamento_pratica_danumero" extends=".main">
+        <put-attribute name="title"         value="Caricamento pratica da protocollo" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/danumero/apertura.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Caricamento pratica da protocollo" type="string" />
+    </definition>
+    
+</tiles-definitions>

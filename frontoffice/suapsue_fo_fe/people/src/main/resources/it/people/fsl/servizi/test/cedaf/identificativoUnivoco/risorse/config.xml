@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<servizio>
+    <nome>Servizio Test Identificativo univoco</nome>
+    <attivita>test</attivita>
+    <sottoattivita>cedaf</sottoattivita>
+    <process>it.people.process.GenericProcess</process>
+    <package>it.people.fsl.servizi.test.cedaf.identificativoUnivoco</package>
+    <references name="SUBMIT_PROCESS" value="Prova" shortflag="0" address="UNDEFINED" />
+    <context-element name="Test Identificativo Univoco" />
+</servizio>

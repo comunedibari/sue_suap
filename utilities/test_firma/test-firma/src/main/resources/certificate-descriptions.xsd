@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+ xmlns="http://www.w3.org/2001/XMLSchema"
+ elementFormDefault="unqualified"
+ version="0.0.1">
+ <!-- 
+ targetNamespace="http://www.example.org/certificate"
+ xmlns:tns="http://www.example.org/certificate"
+  -->
+  
+  <element name="certificate-descriptions">
+  	<complexType>
+  		<sequence>
+ 			<choice maxOccurs="unbounded">
+ 				<annotation>
+ 					<documentation>
+ 						Parte di riconoscimento del formato. Sono supportati 2 meccanismi:
+ 						alias di issuer.CN e generica classe Java.
+ 					</documentation>
+ 				</annotation>
+  				<element name="format-alias">
+  					<complexType>
+  						<attribute name="issuer-match" type="string" use="required"/>
+  						<attribute name="format-name" type="string" use="required"/>
+  					</complexType>
+  				</element>
+  				<element name="format-java-detector">
+  					<complexType>
+  						<attribute name="class" type="string" use="required"/>
+  					</complexType>
+  				</element>
+			</choice>
+			<element name="format" type="Format" maxOccurs="unbounded"/>
+  		</sequence>
+  	</complexType>
+  </element>
+  
+  <complexType name="Format">
+  	<annotation>
+  		<documentation>
+  			Estrazione dei dati dal certificato.
+  			Il nome del tag individua la proprietà Java, mentre gli
+  			attributi individuano i dati del certificato da estrarre.
+  			
+  			Ogni tag di Format ha il nomeche coincide al percorso
+  			secondo la notazione Java Beans. Esempio:
+  			nome corrisponde a DatiUtente.setNome()
+  			datiNascita/stato corrisponde a DatiUtente.getDatiNascita().setStato()
+  			
+  			Gli attributi del tag sono 3:
+  			 attribute: attributo del certificato da prendere. Esempio subject.CN
+  			 matcher: opzionale, espressione regolare da applicare ad attribute
+  			 group: opzionale, selezione del sottogruppo individuato dall'espressione regolare.
+  			 
+  			Se matcher e group mancano si prende tutto l'attributo indicato, altrimenti
+  			si applica l'espressione regolare e si considera il gruppo indicato
+  			(0 sta per tutta la parte matchata).
+  			
+  			Esempio:
+		      gruppo 1  di [^:]*:[^:]*:([^0-9]+)
+
+            significa prendere solo le cifre decimali alla fine, cioe' la rx matcha 3
+            componenti separate da : di cui l'ultima costituita solo da cifre,
+            e si prende quella (le tonde delimitano il gruppo).
+            
+            Per la definizione di rx e gruppi vedi java.util.Pattern.
+  		</documentation>
+  	</annotation>
+  	<sequence>
+  		<element name="nome" type="Property" minOccurs="0"/>
+  		<element name="cognome" type="Property" minOccurs="0"/>
+  		<element name="codiceFiscale" type="Property" minOccurs="0"/>
+  		<element name="email" type="Property" minOccurs="0"/>
+  		<element name="datiNascita" minOccurs="0">
+  			<complexType>
+  				<sequence>
+  					<element name="stato" type="Property" minOccurs="0"/>
+  					<element name="citta" type="Property" minOccurs="0"/>
+  					<element name="provincia" type="Property" minOccurs="0"/>
+  					<element name="sesso" type="Property" minOccurs="0"/>
+  				</sequence>
+  			</complexType>
+  		</element>
+  		<element name="associazioneCategoria" type="Property" minOccurs="0"/>
+  		<element name="telefono" type="Property" minOccurs="0"/>
+  		<element name="residenza" type="Indirizzo" minOccurs="0"/>
+
+  		<element name="certificato.stato" type="Property" minOccurs="0"/>
+  		<element name="certificato.unitaOrganizzativa" type="Property" minOccurs="0"/>
+  		<element name="certificato.organizzazione" type="Property" minOccurs="0"/>
+  		<element name="certificato.enteCertificatore" type="Property" minOccurs="0"/>
+  		<!--
+  		<element name="impreseRappresentate" minOccurs="0">
+  			<complexType>
+  				<sequence>
+  					<element name="impresa" type="Impresa" minOccurs="0" maxOccurs="unbounded"/>
+  				</sequence>
+  			</complexType>
+  		</element>
+  		<element name="studioProfessionale" minOccurs="0" ="unbounded">
+  			<complexType>
+		  		<element name="ragioneSociale" type="Property" minOccurs="0"/>
+  				<element name="indirizzo" type="Indirizzo" minOccurs="0"/>
+		  		<element name="email" type="Property" minOccurs="0"/>
+  				<element name="telefono" type="Property" minOccurs="0"/>
+  			</complexType>
+  		</element>
+  		-->
+  	</sequence>
+  	<attribute name="name" type="string" use="required"/>
+  </complexType>
+  
+  <complexType name="Indirizzo">
+  	<sequence>
+		<element name="cap" type="Property" minOccurs="0"/>
+		<element name="comune" type="Property" minOccurs="0"/>
+		<element name="provincia" type="Property" minOccurs="0"/>
+		<element name="denominazioneStradale" type="Property" minOccurs="0"/>
+		<element name="frazione" type="Property" minOccurs="0"/>
+		<element name="numeroCivico" type="Property" minOccurs="0"/>
+		<element name="toponimo" type="Property" minOccurs="0"/>
+  	</sequence>
+  </complexType>
+  
+  <!--
+  <complexType name="Impresa">
+  </complexType>
+  -->
+  
+  <complexType name="Property">
+  	<attribute name="attribute" type="string" use="required"/>
+  	<attribute name="group" type="string" use="optional"/>
+  	<attribute name="matcher" type="string" use="optional"/>
+  </complexType>
+  
+</schema>

@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="CrossServicesImplService" targetNamespace="http://interoperability.cxf.webservices.cross.wego.it/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://interoperability.cxf.webservices.cross.wego.it/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://interoperability.cxf.webservices.cross.wego.it/" xmlns:tns="http://interoperability.cxf.webservices.cross.wego.it/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="getListaEventi" type="tns:getListaEventi"/>
+<xs:element name="getListaEventiResponse" type="tns:getListaEventiResponse"/>
+<xs:element name="inserisciEvento" type="tns:inserisciEvento"/>
+<xs:element name="inserisciEventoResponse" type="tns:inserisciEventoResponse"/>
+<xs:complexType name="inserisciEvento">
+<xs:sequence>
+<xs:element minOccurs="0" name="evento" type="tns:evento"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="evento">
+<xs:sequence>
+<xs:element minOccurs="0" name="allegati" type="tns:allegati"/>
+<xs:element minOccurs="0" name="codiceEnte" type="xs:string"/>
+<xs:element minOccurs="0" name="codiceEvento" type="xs:string"/>
+<xs:element minOccurs="0" name="comunicazione" type="tns:comunicazione"/>
+<xs:element minOccurs="0" name="dataEvento" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="dataProtocollo" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="descrizioneEvento" type="xs:string"/>
+<xs:element minOccurs="0" name="idEvento" type="xs:int"/>
+<xs:element minOccurs="0" name="idPratica" type="xs:int"/>
+<xs:element minOccurs="0" name="identificativoPratica" type="xs:string"/>
+<xs:element minOccurs="0" name="numeroProtocollo" type="xs:string"/>
+<xs:element minOccurs="0" name="soggetto" type="tns:soggetti"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="allegati">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="allegati" nillable="true" type="tns:allegato"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="allegato">
+<xs:sequence>
+<xs:element minOccurs="0" name="descrizione" type="xs:string"/>
+<xs:element minOccurs="0" name="file" type="xs:string"/>
+<xs:element minOccurs="0" name="idFileEsterno" type="xs:string"/>
+<xs:element minOccurs="0" name="mimeType" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeFile" type="xs:string"/>
+<xs:element minOccurs="0" name="principale" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="comunicazione">
+<xs:sequence>
+<xs:element minOccurs="0" name="contenuto" type="xs:string"/>
+<xs:element minOccurs="0" name="oggetto" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="soggetti">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="soggetti" nillable="true" type="tns:soggetto"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="soggetto">
+<xs:sequence>
+<xs:element minOccurs="0" name="codice" type="xs:string"/>
+<xs:element minOccurs="0" name="codiceFiscale" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoSoggetto" type="tns:tipoSoggetto"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="inserisciEventoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="evento" type="tns:evento"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getListaEventi">
+<xs:sequence>
+<xs:element minOccurs="0" name="idPratica" type="xs:int"/>
+<xs:element minOccurs="0" name="identificativoPratica" type="xs:string"/>
+<xs:element minOccurs="0" name="codiceEnte" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getListaEventiResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="eventi" type="tns:eventi"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="eventi">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="evento" nillable="true" type="tns:evento"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="tipoSoggetto">
+<xs:restriction base="xs:string">
+<xs:enumeration value="ANAGRAFICA"/>
+<xs:enumeration value="ENTE"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="CrossServicesException" type="tns:CrossServicesException"/>
+<xs:complexType name="CrossServicesException">
+<xs:sequence>
+<xs:element name="detail" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getListaEventi">
+    <wsdl:part element="tns:getListaEventi" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListaEventiResponse">
+    <wsdl:part element="tns:getListaEventiResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="inserisciEvento">
+    <wsdl:part element="tns:inserisciEvento" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="inserisciEventoResponse">
+    <wsdl:part element="tns:inserisciEventoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CrossServicesException">
+    <wsdl:part element="tns:CrossServicesException" name="CrossServicesException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CrossServices">
+    <wsdl:operation name="inserisciEvento">
+      <wsdl:input message="tns:inserisciEvento" name="inserisciEvento">
+    </wsdl:input>
+      <wsdl:output message="tns:inserisciEventoResponse" name="inserisciEventoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CrossServicesException" name="CrossServicesException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getListaEventi">
+      <wsdl:input message="tns:getListaEventi" name="getListaEventi">
+    </wsdl:input>
+      <wsdl:output message="tns:getListaEventiResponse" name="getListaEventiResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CrossServicesException" name="CrossServicesException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CrossServicesImplServiceSoapBinding" type="tns:CrossServices">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="inserisciEvento">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="inserisciEvento">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="inserisciEventoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CrossServicesException">
+        <soap:fault name="CrossServicesException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getListaEventi">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getListaEventi">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getListaEventiResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CrossServicesException">
+        <soap:fault name="CrossServicesException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CrossServicesImplService">
+    <wsdl:port binding="tns:CrossServicesImplServiceSoapBinding" name="CrossServicesImplPort">
+      <soap:address location="http://localhost:8080/cross-ws/services/CrossServices"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,243 @@
+<managedData xmlns="http://www.insiel.it/gestioneDocumentale/FEG/common/managedData">
+  <datiCompilazione>
+    <codiceFiscaleCompilatore>GDSFRC74H26L483F</codiceFiscaleCompilatore>
+    <dataInizioCompilazione>2014-10-27T04:57:49.000000</dataInizioCompilazione>
+  </datiCompilazione>
+  <datoReferenziabile xmlns:atrb="http://www.insiel.it/gestioneDocumentale/FEG/common/managedData" atrb:nomeLogicoDato="feg_parteGenerale">
+    <parteGenerale xmlns="http://www.insiel.it/masterdata/mdap/istanze">
+      <listaSoggettiInteressati>
+        <interessato xmlns:atrb="http://www.insiel.it/masterdata/mdap/istanze" atrb:idInIstanza="1">
+          <richiedenteFormaGiuridica>
+            <figuraGiuridicaBase xmlns="http://www.insiel.it/masterdata/mdas">
+              <denominazione>WEGO</denominazione>
+              <codiceFiscale>01425360938</codiceFiscale>
+              <tipoFiguraGiuridica>SOCIETA&apos; A RESPONSABILITA&apos; LIMITATA</tipoFiguraGiuridica>
+            </figuraGiuridicaBase>
+            <sedeLegale xmlns="http://www.insiel.it/masterdata/mdas">
+              <tipologia>Sede principale</tipologia>
+              <indirizzo>
+                <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">VIA</tipoIndirizzo>
+                <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">Pontebbana</indirizzo>
+                <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">103</numeroCivico>
+                <cap xmlns="http://www.insiel.it/masterdata/mdet">33031</cap>
+                <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+                  <comuneItaliano>
+                    <id>5562</id>
+                    <denominazioneComune>Basiliano</denominazioneComune>
+                    <provincia>
+                      <denominazioneProvincia>Udine</denominazioneProvincia>
+                      <siglaProvincia>UD</siglaProvincia>
+                    </provincia>
+                  </comuneItaliano>
+                </luogo>
+              </indirizzo>
+              <listaRiferimenti>
+                <riferimento>
+                  <tipoRiferimento>PEC</tipoRiferimento>
+                  <valoreRiferimento>federico.godeassi@pec.it</valoreRiferimento>
+                </riferimento>
+                <riferimento>
+                  <tipoRiferimento>Telefono principale</tipoRiferimento>
+                  <valoreRiferimento>3351097669</valoreRiferimento>
+                </riferimento>
+              </listaRiferimenti>
+            </sedeLegale>
+            <iscrizioneRI xmlns="http://www.insiel.it/masterdata/mdas">
+              <numeroRI>01425360938</numeroRI>
+            </iscrizioneRI>
+            <listaCaricaPersona xmlns="http://www.insiel.it/masterdata/mdas">
+              <caricaPersona>
+                <personaFisica>
+                  <personaFisicaBase>
+                    <cognome>Godeassi</cognome>
+                    <nome>Federico</nome>
+                    <codiceFiscale>GDSFRC74H26L483F</codiceFiscale>
+                  </personaFisicaBase>
+                  <sesso>M</sesso>
+                  <luogoNascita>
+                    <comuneItaliano xmlns="http://www.insiel.it/masterdata/mdet">
+                      <id>5562</id>
+                      <denominazioneComune>Udine</denominazioneComune>
+                      <provincia>
+                        <denominazioneProvincia>Udine</denominazioneProvincia>
+                        <siglaProvincia>UD</siglaProvincia>
+                      </provincia>
+                    </comuneItaliano>
+                  </luogoNascita>
+                  <dataNascita>1974-06-26</dataNascita>
+                  <residenza>
+                    <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">ANDRONA</tipoIndirizzo>
+                    <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">Valentinis</indirizzo>
+                    <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">1</numeroCivico>
+                    <cap xmlns="http://www.insiel.it/masterdata/mdet">33050</cap>
+                    <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+                      <comuneItaliano>
+                        <id>10932</id>
+                        <denominazioneComune>Ronchis</denominazioneComune>
+                        <provincia>
+                          <denominazioneProvincia>Udine</denominazioneProvincia>
+                          <siglaProvincia>UD</siglaProvincia>
+                        </provincia>
+                      </comuneItaliano>
+                    </luogo>
+                  </residenza>
+                  <cittadinanza>
+                    <id xmlns="http://www.insiel.it/masterdata/mdet">1</id>
+                    <denominazione xmlns="http://www.insiel.it/masterdata/mdet">Italia</denominazione>
+                  </cittadinanza>
+                  <listaRiferimenti/>
+                </personaFisica>
+                <listaCariche>
+                  <carica>
+                    <tipologia>Legale rappresentante</tipologia>
+                    <titolarita>S</titolarita>
+                  </carica>
+                </listaCariche>
+              </caricaPersona>
+            </listaCaricaPersona>
+          </richiedenteFormaGiuridica>
+        </interessato>
+      </listaSoggettiInteressati>
+      <localizzazioneIntervento>
+        <localizzazioneTerritoriale>
+          <indirizzo xmlns="http://www.insiel.it/masterdata/mdet-ext">
+            <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">ANDRONA</tipoIndirizzo>
+            <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">Valentinis</indirizzo>
+            <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">11</numeroCivico>
+            <cap xmlns="http://www.insiel.it/masterdata/mdet">33050</cap>
+            <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+              <comuneItaliano>
+                <id>10932</id>
+                <denominazioneComune>Ronchis</denominazioneComune>
+                <provincia>
+                  <denominazioneProvincia>Udine</denominazioneProvincia>
+                  <siglaProvincia>UD</siglaProvincia>
+                </provincia>
+              </comuneItaliano>
+            </luogo>
+          </indirizzo>
+          <estremiCatastali xmlns="http://www.insiel.it/masterdata/mdet-ext" xmlns:atrb="http://www.insiel.it/masterdata/mdet" atrb:tipoCatasto="catasto fabbricati (N.C.E.U.)">
+            <catastoFabbricati xmlns="http://www.insiel.it/masterdata/mdet">
+              <comuneCatastale>
+                <id>10932</id>
+                <denominazioneComune>Ronchis</denominazioneComune>
+                <provincia>
+                  <denominazioneProvincia>Udine</denominazioneProvincia>
+                  <siglaProvincia>UD</siglaProvincia>
+                </provincia>
+              </comuneCatastale>
+              <foglio>1</foglio>
+              <particella>1</particella>
+            </catastoFabbricati>
+          </estremiCatastali>
+          <destinazioneUso xmlns="http://www.insiel.it/masterdata/mdet-ext" xmlns:atrb="http://www.insiel.it/masterdata/mdet-ext" atrb:codiceDestinazioneUso="02">
+            <descrizioneDestinazioneUso>servizi: superfici di unita&apos; immobiliari adibite alle attivita&apos; connesse alla cura della persona o alla manutenzione dei beni di uso personale e comune, della casa e degli edifici produttivi o finalizzate alla produzione di servizi necessari ad altre funzioni residenziali o produttive</descrizioneDestinazioneUso>
+          </destinazioneUso>
+        </localizzazioneTerritoriale>
+        <titoloDisponibilita>
+          <IdSoggettoInIstanza>1</IdSoggettoInIstanza>
+          <titolarita>proprietà</titolarita>
+        </titoloDisponibilita>
+      </localizzazioneIntervento>
+      <procedimento>
+        <procedimentoBase xmlns="http://www.insiel.it/masterdata/mdap">
+          <id>10148</id>
+          <titolo>Somministrazione di alimenti e bevande (tipologia a) - Ampliamento / Riduzione</titolo>
+        </procedimentoBase>
+      </procedimento>
+      <procedimento>
+        <procedimentoBase xmlns="http://www.insiel.it/masterdata/mdap">
+          <id>43545</id>
+          <titolo>SCIA Edilizia - Presentazione</titolo>
+        </procedimentoBase>
+      </procedimento>
+    </parteGenerale>
+  </datoReferenziabile>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>10148</idProcedimento>
+    <idProcedimento>43545</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>QIG</identifierInDocEsteso>
+      <infoFirmaAllaCompilazione>
+        <dataVerificaFirma>2014-10-27T05:27:49.000000</dataVerificaFirma>
+      </infoFirmaAllaCompilazione>
+    </datiModulo>
+    <codiceModulo>QIG</codiceModulo>
+  </datoAcquisitoPerModulo>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>10148</idProcedimento>
+    <idProcedimento>43545</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>DI</identifierInDocEsteso>
+    </datiModulo>
+    <codiceModulo>DI</codiceModulo>
+  </datoAcquisitoPerModulo>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>10148</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>B5</identifierInDocEsteso>
+    </datiModulo>
+    <codiceModulo>B5</codiceModulo>
+  </datoAcquisitoPerModulo>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>10148</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>C4</identifierInDocEsteso>
+    </datiModulo>
+    <codiceModulo>C4</codiceModulo>
+  </datoAcquisitoPerModulo>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>43545</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>A4</identifierInDocEsteso>
+      <infoFirmaAllaCompilazione>
+        <dataVerificaFirma>2014-10-27T05:24:29.000000</dataVerificaFirma>
+      </infoFirmaAllaCompilazione>
+    </datiModulo>
+    <codiceModulo>A4</codiceModulo>
+  </datoAcquisitoPerModulo>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>10148</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>E2</identifierInDocEsteso>
+      <infoFirmaAllaCompilazione>
+        <dataVerificaFirma>2014-10-27T05:26:25.000000</dataVerificaFirma>
+      </infoFirmaAllaCompilazione>
+    </datiModulo>
+    <codiceModulo>E2</codiceModulo>
+  </datoAcquisitoPerModulo>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>43545</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>A2</identifierInDocEsteso>
+      <infoFirmaAllaCompilazione>
+        <dataVerificaFirma>2014-10-27T05:26:48.000000</dataVerificaFirma>
+      </infoFirmaAllaCompilazione>
+    </datiModulo>
+    <codiceModulo>A2</codiceModulo>
+  </datoAcquisitoPerModulo>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>10148</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>PLA</identifierInDocEsteso>
+    </datiModulo>
+    <codiceModulo>PLA</codiceModulo>
+  </datoAcquisitoPerModulo>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>43545</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>ADI1</identifierInDocEsteso>
+      <infoFirmaAllaCompilazione>
+        <dataVerificaFirma>2014-10-27T05:32:09.000000</dataVerificaFirma>
+      </infoFirmaAllaCompilazione>
+    </datiModulo>
+    <codiceModulo>ADI1</codiceModulo>
+  </datoAcquisitoPerModulo>
+  <datoAcquisitoPerModulo>
+    <idProcedimento>10148</idProcedimento>
+    <datiModulo>
+      <identifierInDocEsteso>AVASS</identifierInDocEsteso>
+    </datiModulo>
+    <codiceModulo>AVASS</codiceModulo>
+  </datoAcquisitoPerModulo>
+</managedData>

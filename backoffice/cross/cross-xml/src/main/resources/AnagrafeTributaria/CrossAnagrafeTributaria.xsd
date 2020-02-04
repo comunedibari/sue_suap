@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.wego.it/cross"
+    targetNamespace="http://www.wego.it/cross" elementFormDefault="qualified">
+    <xs:element name="anagrafeTributariaEdilizia">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="recordTesta" type="recordControllo"/>
+                <xs:element name="recordsDettaglio">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="1" name="recordDettaglio"
+                                type="recordDettaglio"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="recordCoda" type="recordControllo"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="recordControllo">
+        <xs:sequence>
+            <xs:element name="tipoRecord">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="0"/>
+                        <xs:enumeration value="9"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element fixed="DIAXX" name="codiceIdentificativoFornitura" type="xs:string"/>
+            <xs:element fixed="29" name="codiceNumericoFornitura" type="xs:string"/>
+            <xs:element name="soggettoObbligato" type="soggetto"/>
+            <xs:element name="annoRiferimento">
+                <xs:annotation>
+                    <xs:documentation> Formato anno [AAAA] </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="(19|20)(\d{2})"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="controllo" type="controllo"> </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="recordDettaglio">
+        <xs:sequence>
+            <xs:element name="identificazioneRichiesta" type="identificazioneRichiesta"/>
+            <xs:element name="beneficiari">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="beneficiario" type="beneficiario"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="datiCatastali">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="datoCatastale" type="datoCatastale"
+                        />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="professionisti">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="professionista"
+                            type="professionista"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="imprese">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="impresa" type="impresa"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="identificazioneRichiesta">
+        <xs:sequence>
+            <xs:element name="tipoRecord" fixed="1" type="xs:string"> </xs:element>
+            <xs:element name="soggettoRichiedente" type="soggetto"/>
+            <xs:element name="qualificaRichiedente">
+                <xs:annotation>
+                    <xs:documentation> 1 : Proprietario; 2 : Usufruttuario; 3 : Titolare di altro
+                        diritto sull'immobile; 4 : Rappresentante legale o volontario di uno degli
+                        aventi titolo sopra indicati. </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="1"/>
+                        <xs:enumeration value="2"/>
+                        <xs:enumeration value="3"/>
+                        <xs:enumeration value="4"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="richiesta">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="tipoRichiesta">
+                            <xs:annotation>
+                                <xs:documentation> 0 : Permesso di costruire, certificato di
+                                    agibilità o altro atto di assenso; 1 : Denuncia di inizio
+                                    attività (DIA). </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="0"/>
+                                    <xs:enumeration value="1"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="tipologiaIntervento">
+                            <xs:annotation>
+                                <xs:documentation> 1 : Interventi di manutenzione ordinaria (art. 3,
+                                    comma 1, lett. a) DPR 380/2001; 2 : Interventi di manutenzione
+                                    straordinaria (art. 3, comma 1, lett. b) DPR 380/2001; 3 :
+                                    Interventi di restauro e di risanamento conservativo (art. 3,
+                                    comma 1, lett. c) DPR 380/2001; 4 : Interventi di
+                                    ristrutturazione edilizia (art. 3, comma 1, lett. d) DPR
+                                    380/2001; 5 : Interventi di nuova costruzione (art. 3, comma 1,
+                                    lett. e) DPR 380/2001; 6 : Interventi di ristrutturazione
+                                    urbanistica (art. 3, comma 1, lett. f) DPR 380/2001; 7 : Altro.
+                                </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="1"/>
+                                    <xs:enumeration value="2"/>
+                                    <xs:enumeration value="3"/>
+                                    <xs:enumeration value="4"/>
+                                    <xs:enumeration value="5"/>
+                                    <xs:enumeration value="6"/>
+                                    <xs:enumeration value="7"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="numeroProtocollo">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="20"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="tipologiaRichiesta">
+                            <xs:annotation>
+                                <xs:documentation> 0 : Rilascio 1 : Cessazione. Si considerano atti
+                                    di cessazione: revoca, abrogazione, ritiro, annullamento,
+                                    pronuncia di decadenza, diniego di rinnovo o di proroga,
+                                    rinuncia ed estinzione. </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="0"/>
+                                    <xs:enumeration value="1"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="dataPresentazioneRichiesta" nillable="true">
+                            <xs:simpleType>
+                                <xs:restriction base="data">
+                                    <xs:pattern
+                                        value="(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])(19|20)(\d{2})"
+                                    />
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="dataInizioLavori" nillable="true" type="data"/>
+                        <xs:element name="dataFineLavori" nillable="true" type="data"/>
+                        <xs:element name="indirizzoOggettoIstanza">
+                            <xs:annotation>
+                                <xs:documentation>Via e Numero civico</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="35"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="controllo" type="controllo"> </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="beneficiario">
+        <xs:sequence>
+            <xs:element name="tipoRecord" fixed="2" type="xs:string"> </xs:element>
+            <xs:element name="concatenazione" type="concatenazione"> </xs:element>
+            <xs:element name="soggettoBeneficiario" type="soggetto"/>
+            <xs:element name="qualificaBeneficiario">
+                <xs:annotation>
+                    <xs:documentation>
+                        1 = Proprietario;
+                        2 = Usufruttuario;
+                        3 = Titolare di altro diritto sull'immobile;;
+                        4 = Rappresentante legale o volontario di uno degli aventi titolo sopra indicati.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="1"/>
+                        <xs:enumeration value="2"/>
+                        <xs:enumeration value="3"/>
+                        <xs:enumeration value="4"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="controllo" type="controllo"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="datoCatastale">
+        <xs:sequence>
+            <xs:element name="tipoRecord" fixed="3" type="xs:string"> </xs:element>
+            <xs:element name="concatenazione" type="concatenazione"> </xs:element>
+            <xs:element name="tipoUnita">
+                <xs:annotation>
+                    <xs:documentation>T = Terreni
+F = Fabbricati</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="T"/>
+                        <xs:enumeration value="F"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="sezione">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="foglio">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="particella">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="estensioneParticella">
+                <xs:annotation>
+                    <xs:documentation>solo per Comuni con sistema tavolare</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="4"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tipoParticella">
+                <xs:annotation>
+                    <xs:documentation>Solo per Comuni con sistema tavolare . Valori ammessi:
+F  = Fondiario
+E = Edificiale</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="F"/>
+                        <xs:enumeration value="E"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="subalterno">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="4"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="controllo" type="controllo"/>
+            <xs:element name="tipoCatasto">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="ORDINARIO"/>
+                        <xs:enumeration value="TAVOLARE"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="professionista">
+        <xs:sequence>
+            <xs:element name="tipoRecord" fixed="4" type="xs:string"> </xs:element>
+            <xs:element name="concatenazione" type="concatenazione"/>
+            <xs:element name="dettaglioProfessionista">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="codiceFiscale">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="16"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="alboProfessionale">
+                            <xs:annotation>
+                                <xs:documentation>1  = Agronomo;
+2  = Architetto;
+3  = Geometra;
+4  = Ingegnere;
+5  = Perito;
+6  = Altro;</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="1"/>
+                                    <xs:enumeration value="2"/>
+                                    <xs:enumeration value="3"/>
+                                    <xs:enumeration value="4"/>
+                                    <xs:enumeration value="5"/>
+                                    <xs:enumeration value="6"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="provinciaAlbo">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="2"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="numeroIscrizioneAlbo">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="10"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="qualificaProfessionale">
+                            <xs:annotation>
+                                <xs:documentation>0  = Progettista;
+1  = Direttore dei lavori;
+2  = Progettista e Direttore dei lavori.</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="0"/>
+                                    <xs:enumeration value="1"/>
+                                    <xs:enumeration value="2"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="controllo" type="controllo"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="impresa">
+        <xs:sequence>
+            <xs:element name="tipoRecord" fixed="5" type="xs:string"> </xs:element>
+            <xs:element name="concatenazione" type="concatenazione"/>
+            <xs:element name="partitaIvaImpresa">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="11"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="denominazione">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="50"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="codiceCatastaleComuneSedeLegale">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:length value="4"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="controllo" type="controllo"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="soggettoFisico">
+        <xs:sequence>
+            <xs:element name="codiceFiscale">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="cognome">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="26"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="nome">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="25"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="sesso">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="M"/>
+                        <xs:enumeration value="F"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dataNascita" type="data">
+                <xs:annotation>
+                    <xs:documentation> Formato data [GGMMAAAA] </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="codiceCatastaleComuneNascita">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:length value="4"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="soggettoGiuridico">
+        <xs:sequence>
+            <xs:element name="denominazione">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="60"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="codiceCatastaleSedeLegale">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:length value="4"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="data">
+        <xs:annotation>
+            <xs:documentation>Formato data [GGMMAAAA]</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])(19|20)(\d{2})"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="controllo">
+        <xs:sequence>
+            <xs:element name="filler" type="xs:string"/>
+            <xs:element fixed="A" name="carattereControllo" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="concatenazione">
+        <xs:sequence>
+            <xs:element name="codiceFiscaleRichiedente">
+                <xs:annotation>
+                    <xs:documentation>Deve essere uguale al codice fiscale del richiedente registrato nel tipo record 1.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="numeroProtocollo">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="soggetto">
+        <xs:sequence>
+            <xs:element name="codiceFiscale">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:choice>
+                <xs:element name="soggettoFisico" type="soggettoFisico"/>
+                <xs:element name="soggettoGiuridico" type="soggettoGiuridico"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

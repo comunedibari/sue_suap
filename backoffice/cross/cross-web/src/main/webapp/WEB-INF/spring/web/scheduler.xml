@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="scheduler" 
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+        <!-- Start the Scheduler as soon as it is instantiated -->
+        <property name="autoStartup" value="true"/>
+        <!-- The key in the map that will be passed to our jobs that has the Spring Application Context in it -->
+        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+        <!-- Should we not shut down if a job is in the middle of executing -->
+        <property name="waitForJobsToCompleteOnShutdown" value="true"/>
+        <!--- If the configuration in this file changes from what Quartz has in the database, should the database values be overwritten -->
+        <property name="overwriteExistingJobs" value="true"/>
+        <!-- The dataSource (already defined as a bean somewhere) that should be used for database connectivity -->
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <!-- The transactionManager (already defined as a bean somewhere) that should be used to retrieve transactions -->
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+        </property>
+        <!-- The factory that will create the Jobs. 
+        Spring Scheduler ships with a version that works by creating a new instance of a job each time the job is to be executed. 
+        The issue with this is that the job is not in the scope of the Spring application because of this. 
+        The Job does have its parameters set but any autowiring or, more importantly, transactions, will not exists. 
+        This means that if you job does any database manipulation that requires a commit, it will not work. 
+        CrossSchedulerJobFactory gets around this by creating the job as a regular Spring bean and then using that instance of the bean to execute the job.-->
+        <property name="jobFactory">
+            <bean class="it.wego.cross.scheduler.CrossSchedulerJobFactory"/>
+        </property>
+        <property name="quartzProperties">
+            <props>
+                <!-- The the number of milliseconds the scheduler will ‘tolerate’ a trigger to pass its next-fire-time by, before being considered "misfired" -->
+                <prop key="org.quartz.jobStore.misfireThreshold">6000000</prop>
+                <!--The class to use to connect to your database instance.--> 
+                <prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
+                <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+                <!--    ENABLE FOR CLUSTERING -->
+                <!--  Is this a clustered instance. Yes because we are running on more than one server -->
+                <prop key="org.quartz.jobStore.isClustered">false</prop>
+                <!-- How often should things be checked -->
+                <prop key="org.quartz.jobStore.clusterCheckinInterval">20000</prop>
+                <!-- The name of this cluster instance -->
+                <prop key="org.quartz.scheduler.instanceName">PraticheProtocolloScheduler</prop>
+                <!-- ow will the instances be id’ed? AUTO lets Quartz deal with it -->
+                <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+            </props>
+        </property>
+        <!-- The triggers are a list of jobs that need to be executed. -->
+        <property name="triggers">
+            <list>
+                <ref bean="recuperoPraticheDaProtocolloJobTrigger"/>
+                <ref bean="LeggiMailJobTrigger"/>
+                <!--<ref bean="SpedisciMailJobTrigger"/>-->
+            </list>
+        </property>
+    </bean>
+    <bean id="recuperoPraticheDaProtocolloJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <bean name="recuperoPraticheDaProtocolloJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+                <property name="name" value="recuperoPraticheDaProtocolloJob"/>
+                <property name="jobClass" value="it.wego.cross.scheduler.RecuperoPraticheDaProtocolloJob"/>
+            </bean>
+        </property>
+        <!-- 2 volte al giorno, alle 13.15 e alle 20.15 -->
+        <!--<property name="cronExpression" value="0 15 13,20 * * ?"/>-->
+<!--        <property name="cronExpression" value="0 0 0 31 12 ?"/>-->
+        <property name="cronExpression" value="0 0 0 * * ?" />
+    </bean>
+
+    <bean id="recuperoPraticheDaProtocolloJob" class="it.wego.cross.scheduler.RecuperoPraticheDaProtocolloJob"/>
+    
+    <bean id="LeggiMailJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <bean name="LeggiMailJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+                <property name="name" value="LeggiMailJob"/>
+                <property name="jobClass" value="it.wego.cross.scheduler.LeggiMailJob"/>
+            </bean>
+        </property>
+       <!-- Ogni giorno alle ore zero -->
+        <property name="cronExpression" value="0 0 0 * * ?" />
+         <!-- Ogni 5 min -->
+<!--          <property name="cronExpression" value="0 0/5 * 1/1 * ? *" /> -->
+       
+        <!--<property name="cronExpression" value="0 0 0 * *  ?" />-->
+    </bean>
+    <bean id="LeggiMailJob" class="it.wego.cross.scheduler.LeggiMailJob" />
+	<!--
+	<bean id="SpedisciMailJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <bean name="SpedisciMailJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+                <property name="name" value="SpedisciMailJob"/>
+                <property name="jobClass" value="it.wego.cross.scheduler.SpedisciMailJob"/>
+            </bean>
+        </property>
+         Ogni 5 minuti dalle 7.00 alle 13 e dalle 14 alle 20 
+        <property name="cronExpression" value="30 0/2 7-13,14-20 * *  ?" />
+        <property name="cronExpression" value="0 0 0 * *  ?" />
+    </bean>
+    
+    <bean id="SpedisciMailJob" class="it.wego.cross.scheduler.SpedisciMailJob" />
+    
+    <bean id="sincronizzaDocumentiAurigaJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <bean name="sincronizzaDocumentiAurigaJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+                <property name="name" value="sincronizzaDocumentiAurigaJob"/>
+                <property name="jobClass" value="it.wego.cross.scheduler.genova.SincronizzaDocumentiAurigaJob"/>
+            </bean>
+        </property>
+         2 volte al giorno, alle 13.15 e alle 20.15 
+        <property name="cronExpression" value="0 15 13,20 * * ?"/>
+        <property name="cronExpression" value="0 * * * * ?"/>
+    </bean>
+
+    <bean id="sincronizzaDocumentiAurigaJob" class="it.wego.cross.scheduler.genova.SincronizzaDocumentiAurigaJob"/>
+    -->
+</beans>

@@ -1,0 +1,3 @@
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('demo.attachment.url.mypage','http://localhost:8080/BEService/services/setEventService', 'Endpoint del servizio inserimento eventi');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('demo.attachment.url.visura','http://localhost:8080/cross/services/RicercaPraticheService', 'Endpoint del servizio di visura');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('demo.attachment.file.method','/tmp', 'Cartella per il salvataggio dei file temporanei');

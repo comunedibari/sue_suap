@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:cross="http://www.wego.it/cross"
+    elementFormDefault="qualified"
+    targetNamespace="http://www.wego.it/cross">
+    
+    <xs:complexType name="praticaSIT">
+        <xs:sequence>
+            <xs:element name="id_pratica" type="xs:integer"/>
+            <xs:element name="operazione" type="xs:string"/>
+            <xs:element name="identificativo_pratica" type="xs:string"/>
+            <xs:element name="id_sportello" type="xs:string"/>
+            <xs:element name="des_sportello" type="xs:string"/>
+            <xs:element name="id_procedimento_suap" type="xs:string"/>
+            <xs:element name="des_procedimento_suap" type="xs:string"/>
+            <xs:element name="oggetto" type="xs:string"/>
+            <xs:element name="responsabile_procedimento" type="xs:string"/>
+            <xs:element name="istruttore" type="xs:string"/>
+            <xs:element name="cod_catastale_comune" type="xs:string"/>
+            <xs:element name="des_comune" type="xs:string"/>
+            <xs:element name="segnatura_protocollo">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="registro" type="xs:string"/>
+                        <xs:element name="anno" type="xs:string"/>
+                        <xs:element name="protocollo" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="data_protocollo" type="xs:string"/>
+            <xs:element name="data_ricezione" type="xs:string"/>
+            <xs:element name="anagraficheSIT" type="cross:anagraficheSIT"/>
+            <xs:element name="dati_catastali" type="cross:dati_catastaliSIT"/>
+            <xs:element name="indirizzi_interventoSIT" type="cross:indirizzi_interventoSIT"/>
+            <xs:element name="procedimentiSIT" type="cross:procedimentiSIT"/>
+            <xs:element name="cod_stato_pratica" type="xs:string"/>
+            <xs:element name="des_stato_pratica" type="xs:string"/>
+            <xs:element name="data_chiusura" type="xs:string"/>
+            <xs:element name="data_inizio_lavori" type="xs:string"/>
+            <xs:element name="data_fine_lavori_presunta" type="xs:string"/>
+            <xs:element name="data_fine_lavori" type="xs:string"/>
+            <xs:element name="flg_sanatoria" type="xs:string"/>
+            <xs:element name="flg_deroga" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="anagraficheSIT">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="anagraficaSIT" type="cross:anagraficaSIT"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="anagraficaSIT">
+        <xs:sequence>
+            <xs:element name="id_anagrafica" type="xs:string"/>
+            <xs:element name="cod_tipo_ruolo" type="xs:string"/>
+            <xs:element name="des_tipo_ruolo" type="xs:string"/>
+            <xs:element name="cognome" type="xs:string"/>
+            <xs:element name="nome" type="xs:string"/>
+            <xs:element name="denominazione" type="xs:string"/>
+            <xs:element name="codice_fiscale" type="xs:string"/>
+            <xs:element name="partita_iva" type="xs:string"/>
+            <xs:element name="tipo_anagrafica" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="dati_catastaliSIT">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="dato_catastaleSIT" type="cross:dato_catastaleSIT"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="dato_catastaleSIT">
+        <xs:sequence>
+            <xs:element name="id_immobile" type="xs:string"/>
+            <xs:element name="codice_sit" type="xs:string"/>
+            <xs:element name="cod_tipo_unita" type="xs:string"/>
+            <xs:element name="des_tipo_unita" type="xs:string"/>
+            <xs:element name="sezione" type="xs:string"/>
+            <xs:element name="foglio" type="xs:string"/>
+            <xs:element name="mappale" type="xs:string"/>
+            <xs:element name="subalterno" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="indirizzi_interventoSIT">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="indirizzo_interventoSIT"
+                type="cross:indirizzo_interventoSIT"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="indirizzo_interventoSIT">
+        <xs:sequence>
+            <xs:element name="id_indirizzo_intervento" type="xs:string"/>
+            <xs:element name="codice_sit" type="xs:string"/>
+            <xs:element name="localita" type="xs:string"/>
+            <xs:element name="indirizzo" type="xs:string"/>
+            <xs:element name="civico" type="xs:string"/>
+            <xs:element name="cap" type="xs:string"/>
+            <xs:element name="interno_numero" type="xs:string"/>
+            <xs:element name="interno_lettera" type="xs:string"/>
+            <xs:element name="interno_scala" type="xs:string"/>
+            <xs:element name="piano" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="procedimentiSIT">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="procedimentoSIT" type="cross:procedimentoSIT"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="procedimentoSIT">
+        <xs:sequence>
+            <xs:element name="id_procedimento" type="xs:int"/>
+            <xs:element name="cod_procedimento" type="xs:string"/>
+            <xs:element name="des_procedimento" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+    
+    <xs:complexType name="PraticaDetailRequest">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="idPratica" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PraticaDetailResponse">
+        <xs:sequence>
+            <xs:element name="Pratica" type="cross:praticaSIT"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="PraticaDetailRequest" type="cross:PraticaDetailRequest"/>
+    <xs:element name="PraticaDetailResponse" type="cross:PraticaDetailResponse"/>
+    
+    
+    <xs:complexType name="ElencoPraticheRequest">
+        <xs:sequence>
+            <xs:element form="unqualified" name="idEnte" type="xs:integer"/>
+            <xs:element form="unqualified" name="idComune" type="xs:integer"/>
+            <xs:element form="unqualified" name="dataRicezioneDa" type="xs:string"/>
+            <xs:element form="unqualified" name="dataRicezioneA" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ElencoPraticheResponse">
+        <xs:sequence>
+            <xs:element form="unqualified" maxOccurs="unbounded" minOccurs="0" name="Pratica">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element form="unqualified" name="idPratica" type="xs:integer"/>
+                        <xs:element form="unqualified" name="identificativoPratica" type="xs:string"/>
+                        <xs:element form="unqualified" name="oggetto" type="xs:string"/>
+                        <xs:element form="unqualified" name="dataRicezione" type="xs:string"/>
+                        <xs:element form="unqualified" name="idEnte" type="xs:integer"/>
+                        <xs:element form="unqualified" name="descrizioneEnte" type="xs:string"/>
+                        <xs:element form="unqualified" name="idComune" type="xs:integer"/>
+                        <xs:element form="unqualified" name="descrizioneComune" type="xs:string"/>
+                        <xs:element form="unqualified" name="codiceStatoPratica" type="xs:string"/>
+                        <xs:element form="unqualified" name="descrizioneStatoPratica" type="xs:string"/>
+                        <xs:element form="unqualified" name="ubicazione" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ElencoPraticheRequest" type="cross:ElencoPraticheRequest"/>
+    <xs:element name="ElencoPraticheResponse" type="cross:ElencoPraticheResponse"/>
+    
+</xs:schema>

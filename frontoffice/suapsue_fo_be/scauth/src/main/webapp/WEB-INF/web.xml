@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+
+  <display-name>SIRAC SmartCard Authentication and Registration</display-name>
+  <description>Applicazione per l'autenticazione e registrazione mediante smart card</description>
+
+  <context-param>
+   	<param-name>IDP-People.domain.suffix</param-name>
+ 	<param-value>idp-people.it</param-value>
+  </context-param>
+
+	<context-param>
+		<param-name>people.sirac.error.page</param-name>
+		<param-value>/SiracError.jsp</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>showDetailInErrorPage</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>people.sirac.error.returnURL</param-name>
+		<param-value>${scauth.people.sirac.error.returnURL}</param-value>
+		<!-- <param-value>http://localhost:8080/people</param-value> -->
+		<!--<param-value>http://fossg.avmtb.rsr.rupar.puglia.it:8080/people</param-value>-->
+	</context-param>
+
+	<context-param>
+		<param-name>sirac.registration.returnURL</param-name>
+		<param-value>${scauth.sirac.registration.returnURL}</param-value>
+		<!-- <param-value>http://localhost:9080/idp-people</param-value> -->
+		<!--<param-value>http://fossg.avmtb.rsr.rupar.puglia.it/idp-people</param-value>-->
+	</context-param>
+
+  <context-param>
+    <param-name>registration_authDataConsumerServiceTransferMode</param-name>
+    <!--  Indicare FORWARD o POST -->
+    <param-value>POST</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>authentication_authDataConsumerServiceTransferMode</param-name>
+    <!--  Indicare FORWARD o POST -->
+    <param-value>POST</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>registration_targetServiceURL</param-name>
+    <param-value>UserRegistrationServlet</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>wsauth_address</param-name>
+	 <param-value>${scauth.wsauth_address}</param-value>
+	 <!-- <param-value>http://localhost:9080/ws_regauth/services/AuthenticationInterface</param-value> -->
+   <!-- <param-value>http://fossg.avmtb.rsr.rupar.puglia.it/ws_regauth/services/AuthenticationInterface</param-value>-->
+  </context-param>
+  
+  <context-param>
+    <param-name>wsreg_address</param-name>
+	 <param-value>${scauth.wsreg_address}</param-value>
+	 <!-- <param-value>http://localhost:9080/ws_regauth/services/RegistrationInterface</param-value> -->
+ <!--   <param-value>http://fossg.avmtb.rsr.rupar.puglia.it/ws_regauth/services/RegistrationInterface</param-value>-->
+  </context-param>
+  
+  <context-param>
+    <param-name>showPasswordAndPin</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+	<servlet>
+		<servlet-name>UserRegistrationServlet</servlet-name>
+		<servlet-class>it.cefriel.people.ssl.UserRegistrationServlet</servlet-class>
+		<init-param>
+			<param-name>portAddress_prefix</param-name>
+			<param-value>${scauth.portAddress_prefix}</param-value>
+			<!-- <param-value>http://localhost:9080/ws_regauth/services</param-value> -->
+		<!-- 	<param-value>http://fossg.avmtb.rsr.rupar.puglia.it/ws_regauth/services</param-value>-->
+		</init-param>
+		<init-param>
+			<param-name>timeout</param-name>
+			<param-value>120000</param-value>
+		</init-param>
+		<init-param>
+			<param-name>registrationPage</param-name>
+			<param-value>/registration.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>registrationConfirmationPage</param-name>
+			<param-value>/registrationOK.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>registrationErrorPage</param-name>
+			<param-value>/registrationKO.jsp</param-value>
+		</init-param>
+		<init-param>
+		    <param-name>caKeyStoreFilename</param-name>
+		    <param-value>keystore/PeopleCA.p12</param-value>
+		</init-param>
+		<init-param>
+		    <param-name>caKeyStorePassword</param-name>
+		    <param-value>people</param-value>
+		</init-param>
+		<init-param>
+		    <param-name>caKeyStoreAlias</param-name>
+		    <param-value>People CA</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SSLAuthServlet</servlet-name>
+		<servlet-class>it.cefriel.people.ssl.SmartCardAuthSSLServlet</servlet-class>
+		<init-param>
+			<param-name>portAddress_prefix</param-name>
+			<param-value>${scauth.portAddress_prefix}</param-value>
+			<!-- <param-value>http://localhost:9080/ws_regauth/services</param-value> -->
+		<!--	<param-value>http://fossg.avmtb.rsr.rupar.puglia.it/ws_regauth/services</param-value>-->
+		</init-param>
+		<init-param>
+			<param-name>timeout</param-name>
+			<param-value>120000</param-value>
+		</init-param>
+	  <init-param>
+	    <param-name>authDataConsumerService_postResponsePage</param-name>
+	    <!--  Utilizzata solo se modalita di trasferimento = POST -->
+	    <param-value>/PostAuthResponse.jsp</param-value>
+	    <!-- <param-value>/PostAuthResponse_debug.jsp</param-value>-->
+	  </init-param>
+	  <init-param>
+	    <param-name>authentication_authDataConsumerServiceForwardURL</param-name>
+	    <param-value>/IntersiteTransferService</param-value>
+	  </init-param>
+	  <init-param>
+	    <param-name>authentication_authDataConsumerServicePOSTURL</param-name>
+		<param-value>${scauth.authentication_authDataConsumerServicePOSTURL}</param-value>
+		<!-- <param-value>http://localhost:9080/idp-people/IntersiteTransferService</param-value> -->
+	 <!--   <param-value>http://fossg.avmtb.rsr.rupar.puglia.it/idp-people/IntersiteTransferService</param-value>-->
+	  </init-param>
+	  <init-param>
+	    <param-name>registration_authDataConsumerServiceForwardURL</param-name>
+	    <param-value>UserRegistrationServlet</param-value>
+	  </init-param>
+	<!--  <init-param>
+	   	<param-value>http://localhost:9080/scauth/UserRegistrationServlet</param-value>
+		<param-value>http://fossg.avmtb.rsr.rupar.puglia.it/scauth/UserRegistrationServlet</param-value>
+	  </init-param> -->
+		<init-param>
+    	<param-name>smartCardProfilesXmlFile</param-name>
+	    <!-- Path relativo alla webapp -->
+	    <param-value>/WEB-INF/smartcard_profiles.xml</param-value>
+		</init-param>
+			<!--  Il parametro seguente forza la visualizzazione della GUI
+			      dell'applet che legge i dati personali dalla carta. Se 
+			      impostato a false, la GUI e' visualizzata solo se non viene
+			      trovata nessuna carta nei lettori -->
+		<init-param>
+			<param-name>alwaysShowAppletGUI</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>crlFilesLocation</param-name>
+		    <param-value>/crl</param-value>
+		</init-param>
+		<init-param>
+			<param-name>jarCodebaseURL</param-name>
+			<param-value>${scauth.jarCodebaseURL}</param-value>
+			<!-- <param-value>http://localhost:9080/idp-people/archive/</param-value> -->
+		<!--	<param-value>http://fossg.avmtb.rsr.rupar.puglia.it/idp-people/archive/</param-value>-->
+		</init-param>
+		<init-param>
+			<param-name>smartCardPersonalDataConsumerURL</param-name>
+			<param-value>SmartCardPersonalDataConsumerServlet</param-value>
+		</init-param>
+		<init-param>
+			<param-name>matchWithStoredProfileRequired</param-name>
+			<param-value>true</param-value>
+		</init-param>
+
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SmartCardPersonalDataConsumerServlet</servlet-name>
+		<display-name>SmartCardPersonalDataConsumerServlet</display-name>
+		<description>SmartCardPersonalDataConsumerServlet</description>
+		<servlet-class>it.cefriel.people.ssl.SmartCardPersonalDataConsumerServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>PrintCertificateInfoServlet</servlet-name>
+		<display-name>PrintCertificateInfoServlet</display-name>
+		<description>PrintCertificateInfoServlet</description>
+		<servlet-class>it.cefriel.people.ssl.PrintCertificateInfoServlet</servlet-class>
+	</servlet>
+
+  <servlet>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <display-name>ChangePasswordServlet</display-name>
+    <description>ChangePasswordServlet</description>
+    <servlet-class>it.cefriel.people.ssl.ChangePasswordServlet</servlet-class>
+    <init-param>
+		 	<param-name>changePasswordPage</param-name>
+			<param-value>/changePassword.jsp</param-value>
+   	</init-param>
+	 	<init-param>
+			<param-name>changePasswordConfirmationPage</param-name>
+			<param-value>/changePasswordOK.jsp</param-value>
+	 	</init-param>
+  </servlet>
+
+	<servlet-mapping>
+		<servlet-name>UserRegistrationServlet</servlet-name>
+		<url-pattern>/UserRegistrationServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SSLAuthServlet</servlet-name>
+		<url-pattern>/SSLAuthServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SmartCardPersonalDataConsumerServlet</servlet-name>
+		<url-pattern>/SmartCardPersonalDataConsumerServlet</url-pattern>
+	</servlet-mapping>
+  
+	<servlet-mapping>
+		<servlet-name>PrintCertificateInfoServlet</servlet-name>
+		<url-pattern>/PrintCertificateInfoServlet</url-pattern>
+	</servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/ChangePasswordServlet</url-pattern>
+  </servlet-mapping>
+	
+	<mime-mapping>
+		<extension>wsdl</extension>
+		<mime-type>text/xml</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>xsd</extension>
+		<mime-type>text/xml</mime-type>
+	</mime-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
+
+	<!-- stampa lo stack trace di qualsiasi eccezione non gestita -->
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/SiracError.jsp</location>
+	</error-page>
+
+	<error-page>
+		<exception-type>java.lang.RuntimeException</exception-type>
+		<location>/SiracError.jsp</location>
+	</error-page>
+
+	<error-page>
+		<exception-type>it.people.sirac.error.SiracException</exception-type>
+		<location>/SiracError.jsp</location>
+	</error-page>
+
+	<!--  TAGLIBS -->
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/core</taglib-uri>
+		<taglib-location>/WEB-INF/tld/c.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/core_rt</taglib-uri>
+		<taglib-location>/WEB-INF/tld/c-rt.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/xml</taglib-uri>
+		<taglib-location>/WEB-INF/tld/x.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/xml_rt</taglib-uri>
+		<taglib-location>/WEB-INF/tld/x-rt.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/fmt</taglib-uri>
+		<taglib-location>/WEB-INF/tld/fmt.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/fmt_rt</taglib-uri>
+		<taglib-location>/WEB-INF/tld/fmt-rt.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/sql</taglib-uri>
+		<taglib-location>/WEB-INF/tld/sql.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/sql_rt</taglib-uri>
+		<taglib-location>/WEB-INF/tld/sql-rt.tld</taglib-location>
+	</taglib>
+
+	<!-- 
+	<security-constraint>
+		<display-name>TEST</display-name>
+		<web-resource-collection>
+			<web-resource-name>SSLServlet</web-resource-name>
+			<url-pattern>/SSLServlet</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>CLIENT-CERT</auth-method>
+		<realm-name>My Application</realm-name>
+	</login-config>
+	-->
+
+</web-app>

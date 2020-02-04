@@ -1,0 +1,240 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/people.tld" prefix="ppl" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="it.people.process.common.entity.Attachment"%>
+<%@page import="it.people.util.NavigatorHelper"%>
+<%@page import="it.people.util.ServiceParameters"%>
+
+<%
+ArrayList bottoniNascosti = (ArrayList)request.getAttribute("bottoniNascosti");
+if (bottoniNascosti!=null){
+	bottoniNascosti.add(NavigatorHelper.BOTTONE_SALVA);
+	//bottoniNascosti.add(NavigatorHelper.BOTTONE_AVANTI);
+	//bottoniNascosti.add(NavigatorHelper.BOTTONE_INDIETRO);
+}
+%>
+
+
+<script type="text/javascript">
+		function multipleSignClick() {		
+			var content = "<html><body>" + document.getElementById("Content").innerHTML + "</body></html>";		
+			return multipleSignContent(content);		
+		}
+								
+		function multipleSignContent(content) {	
+			var ObjSign = new WebSign();
+			/*
+			var ret=ObjSign.SetCertificateFilter(FILTER_NON_REPUDIATION_ENABLED);
+				if(ret==RETURN_ERROR_VALUE)
+				{
+					alert("Si e' verificato un errore:\n" + objSign.LastError());
+					return false;
+				}
+			*/		
+			if(ObjSign.Sign(content, CONTENT_TYPE_STRING, SIGN_MODE_ATTACHED) == RETURN_ERROR_VALUE) {		
+				alert(ObjSign.LastError());
+		        // Cerca di eseguire, se definita, la funzione SignContent_nextAction		
+		        try {		
+					SignContent_nextAction();		
+		        } catch(e) {}		
+		
+			} else {		
+				var signedData = document.getElementById("signedData");		
+				signedData.value = ObjSign.ContentSigned;	
+				executeSubmit("loopBack.do?propertyName=multipleSign");		
+			}			
+		}
+		
+		function avantiSenzaFirma() {		
+			var content = "<html><body>" + document.getElementById("Content").innerHTML + "</body></html>";	
+			return avantiSenzaFirma2(content);		
+		}
+								
+		function avantiSenzaFirma2(content) {	
+			var signedData = document.getElementById("signedData");		
+			signedData.value = content;
+			executeSubmit("loopBack.do?propertyName=avantiSenzaFirma");		
+		}
+</script>
+
+
+<html:xhtml/>
+<logic:equal value="true" name="pplProcess" property="data.internalError">
+	<jsp:include page="defaultError.jsp" flush="true" />
+</logic:equal>
+<logic:notEmpty name="ERRORE_RIEPILOGO_FIRMA" scope="request">
+<table style="border:2px dotted red; padding: 3px; width:96%;">
+	<tr>
+		<td><img src="/people/servizi/concessioniedautorizzazioni/servizicondivisi/procedimentounico/img/iconWarning.gif" alt="attenzione" />
+		<bean:message key="error.firma_riepilogo"/>
+		</td>
+	</tr>
+</table>
+</logic:notEmpty>
+
+<logic:notEqual value="true" name="pplProcess" property="data.internalError">
+<logic:messagesPresent>
+	<table style="border:2px dotted red; padding: 3px; width:96%;">
+		<tr>
+			<td><img src="/people/servizi/concessioniedautorizzazioni/servizicondivisi/procedimentounico/img/iconWarning.gif" alt="attenzione" />
+			<b><ppl:errors /></b>
+			</td>
+		</tr>
+	</table>
+	<br/>
+</logic:messagesPresent>
+
+<jsp:include page="webclock.jsp" flush="true" />
+
+<noscript>
+<%
+	AbstractPplProcess pplProcess__ = (AbstractPplProcess) session.getAttribute("pplProcess");
+	ProcessData dataForm__ = (ProcessData)pplProcess__.getData();
+	if (dataForm__.getFirmaBookmark().equalsIgnoreCase(Costant.conFirmaLabel) && !dataForm__.getTipoBookmark().equalsIgnoreCase(Costant.bookmarkTypeLivello2Label)){ 
+%>
+<table style="border:2px dotted red; padding: 3px; width:96%;">
+	<tr>
+		<td width="100%" align="center">
+			<b>Attenzione! La funzione di firma del documento di riepilogo &egrave; possibile solo con gli script abilitati.</b>
+		</td>
+	</tr>
+</table>
+<%} %>
+</noscript>
+
+	<%if (dataForm__.getFirmaBookmark().equalsIgnoreCase(Costant.conFirmaLabel) && !dataForm__.getTipoBookmark().equalsIgnoreCase(Costant.bookmarkTypeLivello2Label)){ 
+	%>
+	<div id="Content" style="display: none"> 
+		<logic:equal name="dynamicDocument" value="" scope="request">
+			<table style="border:2px dotted red; padding: 3px; font-size:120%; width:96%;">
+				<tr>	
+					<td width="100%" align="center"><br /><br />
+					<img src="/people/servizi/concessioniedautorizzazioni/servizicondivisi/procedimentounico/img/iconWarning.gif" alt="attenzione" />
+					<b>&nbsp;&nbsp;Attenzione&nbsp;&nbsp;</b>
+					<img src="/people/servizi/concessioniedautorizzazioni/servizicondivisi/procedimentounico/img/iconWarning.gif" alt="attenzione" />
+					<br />Si è verificato un errore durante la generazione del riepilogo della domanda.<br />Cliccare sul pulsante qui sotto per tornare allo step precedente o contattare l'amministatore del sistema.<br /><br /><br />
+					<ppl:linkLoopback  property="abortMultipleSign" propertyIndex="" styleClass="pulsanteFirma" title="Cliccando su questo pulsante tutte le eventuali firma saranno annullate" style="text-decoration: none;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Indietro</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ppl:linkLoopback>&nbsp;&nbsp;&nbsp;&nbsp;
+					<br /><br /><br /></td>
+				</tr>
+			</table>
+		</logic:equal>	
+		<logic:notEqual name="dynamicDocument" value="" scope="request">
+			<bean:write  name="pplProcess" property="data.datiTemporanei.htmlRiepilogo"  />
+		</logic:notEqual>
+	</div>
+	<%} else{} { %>
+	<div id="Content2"> 
+		<logic:equal name="AcceptInvalid" value="true" scope="request">
+			<table style="border:2px dotted red; padding: 3px; font-size:120%; width:100%;">
+				<tr>	
+					<td width="100%" align="center"><br />
+					<img src="/people/servizi/concessioniedautorizzazioni/servizicondivisi/procedimentounico/img/iconWarning.gif" alt="attenzione" />
+					<b>&nbsp;&nbsp;Attenzione : per proseguire bisogna spuntare la voce di "presa visione della pratica"&nbsp;&nbsp;</b><br /><br />
+					</td>
+				</tr>
+			</table>
+			<br />
+		</logic:equal>
+		<table width="100%" style="font-size: 90%;">
+			<tr><td align="right"><b><%=((SportelloBean)request.getAttribute("sportello")).getDescrizioneSportello()%></b></td></tr>
+			<tr><td align="right"><%=((SportelloBean)request.getAttribute("sportello")).getIndirizzo()%></td></tr>
+			<tr><td align="right"><%=((SportelloBean)request.getAttribute("sportello")).getCap()%>&nbsp;<%=((SportelloBean)request.getAttribute("sportello")).getCitta()%></td></tr>
+		</table>
+		<br />
+		<table width="100%" style="font-size: 90%;">
+			<tr><td width="20%"  style="border-width:1px; padding:3px; border-style: solid;" ><b>Codice domanda</b></td>
+			<td width="80%" style="border-width:1px; padding:3px; border-style: solid;"><b><bean:write name="pplProcess" property="data.identificatorePeople.identificatoreProcedimento" />
+			<%if (dataForm__.getListaSportelli().size()>1) {%>/<%=((SportelloBean)request.getAttribute("sportello")).getIdx()%><%}%></b></td>
+			</tr>
+		</table>
+		<br />
+		<%if (((String)request.getAttribute("oggettoPratica"))!=null ) { %>
+			<b>OGGETTO PRATICA</b>
+			<%=((String)request.getAttribute("oggettoPratica")) %>
+		<%} %>
+		<b>PROCEDIMENTI ATTIVATI</b>
+		<table width="100%" style="border-width: 1px; border-style: solid;" cellspacing="5" cellpadding="5">
+			<tr><td><logic:iterate id="rowsId" name="listaProcedimenti">
+						<bean:write name="rowsId" property="descrizione" /> (<bean:write name="rowsId" property="ente" />)
+					</logic:iterate>
+			</td></tr>
+		</table>
+		
+		<br /><b>ANAGRAFICA DICHIARANTE</b>
+		<table width="100%" style="border-width: 1px; border-style: solid;" cellspacing="5" cellpadding="5">
+			<logic:iterate id="rowsId" name="anagrafica" scope="request">
+				<tr><td ><bean:write name="rowsId" filter="yes" /><br/></td></tr>
+			</logic:iterate>
+		</table>
+		<br /><b>FILE ALLEGATI</b>
+		<table width="100%" style="border-width: 1px; border-style: solid;" cellspacing="5" cellpadding="5">
+			<logic:empty name="pplProcess" property="data.allegati"><tr><td >...nessun allegato inserito</td></tr></logic:empty>
+			<logic:notEmpty name="pplProcess" property="data.allegati">
+				<%String param_ = application.getInitParameter("remoteAttachFile");
+				  if (param_==null || param_.equalsIgnoreCase("false")){
+					  %>
+					   	<logic:iterate id="rowsId" name="pplProcess" property="data.allegati">
+							<tr><td ><bean:write name="rowsId" property="name" /><br/></td></tr>
+						</logic:iterate>
+					  <%
+				  } else {
+					   for (Iterator iterator = dataForm__.getAllegati().iterator(); iterator.hasNext();) { 
+					       Attachment attach = (Attachment) iterator.next();
+					       String nome = attach.getName();
+					       if (nome.indexOf("_")!=-1) {
+						       nome = nome.substring(nome.indexOf("_")+1,nome.length());
+					       }
+					       %><tr><td ><%=nome %></td></tr>
+					       <%
+					   }
+				  }
+			    %> 
+
+			</logic:notEmpty>
+		</table>
+		<%	ServiceParameters params = (ServiceParameters) session.getAttribute("serviceParameters");
+    		String param = params.get("checkboxPresaVisione"); 
+    		if (param!=null && param.equalsIgnoreCase("TRUE")){
+    	%>
+		<br /><input type="checkbox" name="presaVisionePratica" id="presaVisionePratica" value="true"/>Dichiaro di aver preso visione della pratica in formato PDF
+		<%} %>
+		<br />
+	<%} %>
+</div>
+	<noscript>
+	<%
+		if (dataForm__.getFirmaBookmark().equalsIgnoreCase(Costant.conFirmaLabel) && !dataForm__.getTipoBookmark().equalsIgnoreCase(Costant.bookmarkTypeLivello2Label)){ 
+	%>
+	<table style="border:2px dotted red; padding: 3px; width:96%;">
+		<tr>
+			<td width="100%" align="center">
+				<b>Attenzione! La funzione di firma del documento di riepilogo &egrave; possibile solo con gli script abilitati.</b>
+			</td>
+		</tr>
+	</table>
+	<%} %>
+	</noscript>
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<tr>
+			<td> 
+				<%if (dataForm__.getFirmaBookmark().equalsIgnoreCase(Costant.conFirmaLabel) && !dataForm__.getTipoBookmark().equalsIgnoreCase(Costant.bookmarkTypeLivello2Label) && (request.getAttribute("dynamicDocument")==null || ((String)request.getAttribute("dynamicDocument")).equalsIgnoreCase(""))  ){} else { %>
+				<%@include file="./multipleSign/genericFooter.jsp"%>
+				<%} %>
+			</td>	
+		</tr>
+		<tr>
+			<td>
+			<!-- 
+				...
+			-->
+			</td>	
+		</tr>
+   </table>
+	<input type="hidden" id="signedData" name="signedData" value="" />
+	<input type="hidden" id="policyID" name="policyID" value="<%=it.people.security.Policy.XMLTEXT %>" />
+	<input type="hidden" id="userID" name="userID" value='<%= session.getId() %>' />
+</logic:notEqual>

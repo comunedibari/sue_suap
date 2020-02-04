@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<servizio>
+    <nome>Servizio Demo Cedaf</nome>
+    <attivita>test</attivita>
+    <sottoattivita>cedaf</sottoattivita>
+    <process>it.people.process.GenericProcess</process>
+    <package>it.people.fsl.servizi.test.cedaf.demo</package>
+    <references name="SUBMIT_PROCESS" value="BE Genova" shortflag="0" address="UNDEFINED" />
+    <references name="BACKEND_TEST" value="BE Genova" shortflag="0" address="UNDEFINED" />
+    <context-element name="Test Funzionalità" />
+
+	<parameter name="parametro1" value="Io sono il valore del parametro 1"/>		
+	<parameter name="parametro2" value="Io sono il valore del paramtero 2"/>	
+	<parameter name="xmlPath" value="C:\Programmi\ApacheSoftwareFoundation\Tomcat5\webapps\people\WEB-INF\classes\it\people\fsl\servizi\test\cedaf\demo\risorse\test.xml" />
+	
+</servizio>

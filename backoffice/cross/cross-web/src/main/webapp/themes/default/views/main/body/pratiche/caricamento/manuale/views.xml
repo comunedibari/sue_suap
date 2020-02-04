@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="caricamento_pratica_manuale" extends=".main">
+        <put-attribute name="title"         value="Caricamento pratica da protocollo" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/caricamento/manuale/compilazione.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Caricamento pratica da protocollo" type="string" />
+        <put-attribute name="body_error"    cascade="true" value=""  />
+        <put-attribute name="body_error_custom"    cascade="true" value="/themes/default/views/main/body/error.jsp"  />
+    </definition>   
+    
+</tiles-definitions>

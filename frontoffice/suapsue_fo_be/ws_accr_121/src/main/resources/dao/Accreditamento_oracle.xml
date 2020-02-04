@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<!--
+  Modifiche:
+    13-04-2005: Modificati delegaMap e delegaResult per includere il nuovo campo idComuneDelegante
+                Modificata query creaDelega per includere il campo idComuneDelegante
+                Modificate query  creaDelega e getDeleghe
+-->
+<sqlMap namespace="Accreditamento">
+
+	<!--  tipi: profilo accreditamento, accreditamento e profilo locale -->
+	<typeAlias alias="profiloAccr"
+		type="it.people.sirac.accr.beans.ProfiloAccreditamento" />
+
+    <typeAlias alias="accr"
+		type="it.people.sirac.accr.beans.Accreditamento" />
+
+    <typeAlias alias="rapprLegale"
+		type="it.people.sirac.accr.beans.RappresentanteLegale" />
+		
+    <typeAlias alias="delega"
+		type="it.people.sirac.accr.beans.Delega" />
+	
+	<!--  custom handlers per tipi JDBC non gestiti nativamente da iBatis -->
+	<typeAlias alias="blobHandler"
+		type="it.people.sirac.dao.util.BlobHandler" />
+		
+    <typeAlias alias="boolToCharHandler"
+		type="it.people.sirac.dao.util.BooleanToCharHandler" />
+		
+	<typeAlias alias="calendarHandler"
+		type="it.people.sirac.dao.util.CalendarHandler" />
+
+    <parameterMap id="accrMap" class="accr">
+        <!-- <parameter property="id" /> -->
+        <parameter property="codiceFiscale" />
+        <parameter property="attivo" jdbcType="String" typeHandler="boolToCharHandler"/>
+        <parameter property="idComune" />
+        <parameter property="qualifica.idQualifica" />
+        <parameter property="profilo.codiceFiscaleIntermediario" />
+        <parameter property="profilo.partitaIvaIntermediario" />
+        <parameter property="profilo.descrizione" />        
+        <parameter property="profilo.denominazione" />
+        <parameter property="profilo.sedeLegale" />
+        <parameter property="profilo.domicilioElettronico" />
+        <parameter property="profilo.timestampAutoCert" />
+        <parameter property="profilo.autoCert" jdbcType="BLOB" typeHandler="blobHandler" />
+        <parameter property="profilo.autoCertFilename" />
+    </parameterMap>
+    
+    <parameterMap id="rapprLegaleMap" class="rapprLegale">
+    	<parameter property="idAccreditamento" />
+    	<parameter property="nome" />
+    	<parameter property="cognome" />
+    	<parameter property="codiceFiscale" />
+    	<parameter property="sesso" />
+    	<parameter property="dataNascita" jdbcType="DATE"/>
+    	<parameter property="luogoNascita" />
+    	<parameter property="provinciaNascita" />
+    	<parameter property="indirizzoResidenza" />
+    	<parameter property="codiceFiscaleIntermediario" />
+    	<parameter property="partitaIvaIntermediario" />
+    </parameterMap>
+    
+    <!-- 
+    <parameterMap id="delegaMap" class="delega">
+        <parameter property="codiceFiscaleDelegato" />
+        <parameter property="codiceFiscaleDelegante" />
+        <parameter property="idAccreditamento" />
+        <parameter property="idQualifica" />
+        <parameter property="nome" />
+        <parameter property="cognome" />
+        <parameter property="timestampCertificazione" />
+        <parameter property="certificazione" jdbcType="BLOB" typeHandler="blobHandler" />
+    </parameterMap>
+    -->
+    
+    <parameterMap id="delegaMap" class="delega">
+        <parameter property="codiceFiscaleDelegato" />
+        <parameter property="codiceFiscaleDelegante" />
+        <parameter property="idAccreditamento" />
+        <parameter property="idQualifica" />
+        <parameter property="nome" />
+        <parameter property="cognome" />
+        <parameter property="timestampCertificazione" />
+        <parameter property="certificazione" jdbcType="BLOB" typeHandler="blobHandler" />
+        <parameter property="idComuneDelegante" />
+        <parameter property="certificazioneFilename" />
+    </parameterMap>
+    
+	<!--  bean profilo accreditamento -->	
+	<!-- 	
+	<resultMap id="profiloAccrResult" class="profiloAccr">
+		<result property="codiceFiscaleIntermediario" column="codicefiscale_intermediario" />
+		<result property="partitaIvaIntermediario" column="partitaiva_intermediario" />
+		<result property="domicilioElettronico" column="domicilio_elettronico" />
+		<result property="descrizione" column="descrizione" />
+		<result property="autoCert" column="auto_certificazione" 
+				typeHandler="blobHandler"/>
+		<result property="timestampAutoCert" column="timestamp_certificazione" />
+		<result property="denominazione" column="denominazione" />
+		<result property="sedeLegale" column="sede_legale" />
+	</resultMap>
+	-->
+	
+    <!--  bean accreditamento (incluso il profilo) -->		
+  	<resultMap id="accrResult" class="accr">
+      <result property="id" column="id_accreditamento" />		
+      <result property="attivo" column="attivo" typeHandler="boolToCharHandler" />
+	  <result property="codiceFiscale" column="codice_fiscale" />
+	  <result property="idComune" column="id_comune" />
+	  <result property="qualifica.idQualifica" column="id_qualifica" />
+	  <result property="qualifica.tipoQualifica" column="tipo_qualifica" />
+	  <result property="qualifica.descrizione" column="descrizione_qualifica" />
+	  <result property="qualifica.hasRappresentanteLegale" column="has_rappresentante_legale" typeHandler="boolToCharHandler"/>
+      <result property="profilo.codiceFiscaleIntermediario" column="codicefiscale_intermediario"/>
+      <result property="profilo.partitaIvaIntermediario" column="partitaiva_intermediario"/>
+      <result property="profilo.descrizione" column="descrizione" />        
+      <result property="profilo.denominazione" column="denominazione"/>
+      <result property="profilo.sedeLegale" column="sede_legale"/>
+      <result property="profilo.domicilioElettronico" column="domicilio_elettronico"/>
+      <result property="profilo.autoCert" column="auto_certificazione" typeHandler="blobHandler" />
+      <result property="profilo.autoCertFilename" column="auto_certificazione_filename"/>
+	  <result property="profilo.timestampAutoCert" column="timestamp_certificazione" />
+	</resultMap>
+
+    <resultMap id="accrDelegaResult" class="accr">
+      <result property="id" column="id_accreditamento" />		
+      <result property="attivo" column="attivo" typeHandler="boolToCharHandler" />
+   	  <result property="codiceFiscale" column="codice_fiscale" />
+      <result property="idComune" column="id_comune" />
+  	  <result property="qualifica.idQualifica" column="id_qualifica" />
+  	  <result property="qualifica.tipoQualifica" column="tipo_qualifica" />
+  	  <result property="qualifica.descrizione" column="descrizione_qualifica" />
+  	  <result property="qualifica.hasRappresentanteLegale" column="has_rappresentante_legale" typeHandler="boolToCharHandler"/>
+      <result property="profilo.codiceFiscaleIntermediario" column="codicefiscale_intermediario"/>
+      <result property="profilo.partitaIvaIntermediario" column="partitaiva_intermediario"/>
+      <result property="profilo.descrizione" column="descrizione" />        
+      <result property="profilo.denominazione" column="denominazione"/>
+      <result property="profilo.sedeLegale" column="sede_legale"/>
+      <result property="profilo.domicilioElettronico" column="domicilio_elettronico"/>
+      <result property="profilo.autoCert" column="auto_certificazione" typeHandler="blobHandler" />
+      <result property="profilo.autoCertFilename" column="auto_certificazione_filename"/>
+  	  <result property="profilo.timestampAutoCert" column="timestamp_certificazione" />
+ 	  <result property="profilo.rappresentanteLegale.nome" column="rappr_nome" />
+ 	  <result property="profilo.rappresentanteLegale.cognome" column="rappr_cognome" />
+ 	  <result property="profilo.rappresentanteLegale.codiceFiscale" column="rappr_codiceFiscale" /> 		
+ 	  <result property="profilo.rappresentanteLegale.codiceFiscaleIntermediario" column="rappr_cfIntermediario" />
+ 	  <result property="profilo.rappresentanteLegale.partitaIvaIntermediario" column="rappr_partitaIvaIntermediario" /> 		
+ 	  <result property="profilo.rappresentanteLegale.sesso" column="rappr_sesso" /> 		
+ 	  <result property="profilo.rappresentanteLegale.luogoNascita" column="rappr_luogoNascita" /> 		
+   	  <result property="profilo.rappresentanteLegale.provinciaNascita" column="rappr_provinciaNascita" /> 		
+ 	  <result property="profilo.rappresentanteLegale.dataNascita" jdbcType="DATE" column="rappr_dataNascita" /> 		
+ 	  <result property="profilo.rappresentanteLegale.indirizzoResidenza" column="rappr_indirizzoResidenza" /> 		
+  	</resultMap>
+    
+    <resultMap id="rapprLegaleResult" class="rapprLegale">
+    	<result property="idAccreditamento" column="id_accreditamento"/>
+    	<result property="nome" column="nome"/>
+    	<result property="cognome" column="cognome"/>
+    	<result property="codiceFiscale" column="codice_fiscale"/>
+    	<result property="sesso" column="sesso"/>
+    	<result property="dataNascita" jdbcType="DATE" column="data_nascita"/>
+    	<result property="luogoNascita" column="luogo_nascita"/>
+    	<result property="provinciaNascita" column="provincia_nascita"/>
+    	<result property="indirizzoResidenza" column="indirizzo_residenza"/>
+    	<result property="codiceFiscaleIntermediario" column="codicefiscale_intermediario"/>
+    	<result property="partitaIvaIntermediario" column="partitaiva_intermediario"/>
+    </resultMap>
+	
+	
+    <!--  bean delega -->		
+	<resultMap id="delegaResult" class="delega">
+        <result property="idAccreditamento" column="id_accreditamento" />		
+		<result property="codiceFiscaleDelegante" column="cf_delegante" />
+		<result property="codiceFiscaleDelegato" column="cf_delegato" />
+		<result property="nome" column="nome" />
+		<result property="cognome" column="cognome" />
+		<result property="idQualifica" column="id_qualifica" />
+        <result property="certificazione" column="certificazione" 
+                    typeHandler="blobHandler"/>
+		<result property="timestampCertificazione" column="timestamp_certificazione" />
+		<result property="idComuneDelegante" column="id_comune_delegante" />
+    <result property="certificazioneFilename" column="certificazione_filename" />
+	</resultMap>
+	
+	
+    <!-- accreditamenti -->
+    <!--  recupera accreditamenti di un dato codice fiscale su un comune -->
+    <!--  Chiamata da it.people.sirac.dao.ISiracDao.getAccreditamenti -->
+	<select id="getAccreditamenti" resultMap="accrResult" parameterClass="java.util.Map">
+        SELECT  a.id_accreditamento, a.attivo, a.codice_fiscale, a.id_comune, a.id_qualifica, 
+                q.descrizione AS descrizione_qualifica,
+                q.tipo_qualifica, q.has_rappresentante_legale,
+                a.domicilio_elettronico, a.codicefiscale_intermediario, a.partitaiva_intermediario,
+                a.descrizione, a.sede_legale, a.denominazione, 0 AS auto_certificazione, 
+                a.auto_certificazione_filename,
+                a.timestamp_certificazione
+        FROM accreditamenti a
+        INNER JOIN qualifiche q ON q.id_qualifica = a.id_qualifica        
+        WHERE UPPER(a.codice_fiscale) = UPPER(#codiceFiscale#)
+        AND UPPER(a.id_comune) = UPPER(#idComune#)
+        AND a.deleted = '0' AND a.attivo = '1'
+		ORDER BY q.descrizione ASC
+	</select>
+	
+  
+	
+	<!-- MYSQL -->	
+	<!-- 
+	<select id="esisteAccreditamento" resultClass="java.lang.String" 
+			parameterClass="java.util.Map">
+		SELECT codice_fiscale FROM accreditamenti
+		WHERE UPPER(codice_fiscale) = UPPER(#codiceFiscale#)
+		AND UPPER(id_qualifica) = UPPER(#idQualifica#)
+		AND UPPER(id_comune) = UPPER(#idComune#)
+		AND deleted = '0' AND attivo = '1'
+		LIMIT 1
+	</select>
+	-->
+		
+	<!-- ORACLE -->
+	<select id="esisteAccreditamento" resultClass="java.lang.String" 
+			parameterClass="java.util.Map">
+		SELECT codice_fiscale FROM accreditamenti
+		WHERE UPPER(codice_fiscale) = UPPER(#codiceFiscale#)
+		AND UPPER(id_qualifica) = UPPER(#idQualifica#)
+		AND UPPER(id_comune) = UPPER(#idComune#)
+		AND deleted = '0' AND attivo = '1'
+		AND ROWNUM = 1
+	</select>
+
+	
+    <insert id="creaAccreditamento" parameterMap="accrMap" parameterClass="accr">
+		INSERT INTO accreditamenti (codice_fiscale, attivo, id_comune, id_qualifica, 
+                                    codicefiscale_intermediario, 
+                                    partitaiva_intermediario, 
+                                    descrizione,
+                                    denominazione, sede_legale,
+                                    domicilio_elettronico,
+                                    timestamp_certificazione,               
+                                    auto_certificazione,
+                                    auto_certificazione_filename)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+	    
+	    <!-- VERSIONE MYSQL -->
+	    <!-- 
+		<selectKey resultClass="java.lang.Integer" keyProperty="id" >
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		-->
+		 		
+	    <!-- VERSIONE ORACLE -->
+		<selectKey resultClass="java.lang.Integer" keyProperty="id" >
+			select accreditamenti_sequence.currval AS id from dual
+		</selectKey>
+		
+	</insert>
+
+    <insert id="creaRapprLegale" parameterMap="rapprLegaleMap" parameterClass="rapprLegale">
+		INSERT INTO rappr_legale (id_accreditamento, nome, cognome, codice_fiscale, 
+								  sesso, data_nascita, luogo_nascita, provincia_nascita, indirizzo_residenza,
+								  codicefiscale_intermediario, partitaiva_intermediario)
+		VALUES (?,?,?,?,?,?,?,?,?,?,?) 
+    </insert>
+    
+    <select id="getRapprLegaleByIdAccreditamento" parameterClass="java.util.Map" resultMap="rapprLegaleResult">
+		SELECT a.id_accreditamento, a.nome, a.cognome, a.codice_fiscale, 
+		       a.sesso, a.data_nascita, a.luogo_nascita, a.provincia_nascita, a.indirizzo_residenza,
+		       a.codicefiscale_intermediario, a.partitaiva_intermediario 
+		FROM rappr_legale a
+		WHERE a.id_accreditamento = #id#
+    </select>
+	
+    <select id="getAccreditamentoByIdCodiceFiscaleComune" parameterClass="java.util.Map" resultMap="accrResult">
+		SELECT  a.id_accreditamento, a.attivo, a.codice_fiscale, a.id_comune, a.id_qualifica, 
+                a.codicefiscale_intermediario, a.partitaiva_intermediario,
+                a.denominazione, a.sede_legale, a.domicilio_elettronico, a.descrizione, 
+                a.timestamp_certificazione, a.auto_certificazione, a.auto_certificazione_filename,
+                q.descrizione AS descrizione_qualifica, q.tipo_qualifica, q.has_rappresentante_legale
+        FROM accreditamenti a
+        INNER JOIN qualifiche q ON q.id_qualifica = a.id_qualifica
+		WHERE id_accreditamento = #id# 
+		AND UPPER(codice_fiscale) = UPPER(#codiceFiscale#)
+		AND UPPER(id_comune) = UPPER(#idComune#)
+		AND deleted = '0' AND attivo = '1'
+	</select>
+	
+    <select id="getAccreditamentoById" parameterClass="java.lang.Integer" resultMap="accrResult">
+		SELECT  a.id_accreditamento, a.attivo, a.codice_fiscale, a.id_comune, a.id_qualifica, 
+                a.codicefiscale_intermediario, a.partitaiva_intermediario,
+                a.denominazione, a.sede_legale, a.domicilio_elettronico, a.descrizione, 
+                a.timestamp_certificazione, a.auto_certificazione, a.auto_certificazione_filename,
+                q.descrizione AS descrizione_qualifica, q.tipo_qualifica, q.has_rappresentante_legale
+        FROM accreditamenti a
+        INNER JOIN qualifiche q ON q.id_qualifica = a.id_qualifica
+		WHERE id_accreditamento = #id# AND deleted = '0' AND attivo = '1'
+	</select>
+
+    <select id="getAccreditamentoByCodiceIntermediario" parameterClass="java.util.Map" resultMap="accrResult">
+		SELECT  a.id_accreditamento, a.attivo, a.codice_fiscale, a.id_comune, a.id_qualifica, 
+                a.codicefiscale_intermediario, a.partitaiva_intermediario,
+                a.denominazione, a.sede_legale, a.domicilio_elettronico, a.descrizione, 
+                a.timestamp_certificazione, a.auto_certificazione, a.auto_certificazione_filename,
+                q.descrizione AS descrizione_qualifica, q.tipo_qualifica, q.has_rappresentante_legale
+        FROM accreditamenti a
+        INNER JOIN qualifiche q ON q.id_qualifica = a.id_qualifica
+		WHERE UPPER(a.id_qualifica) = UPPER(#idQualifica#)
+		AND UPPER(a.codicefiscale_intermediario) = UPPER(#codiceFiscaleIntermediario#)
+		AND UPPER(a.partitaiva_intermediario) = UPPER(#partitaIvaIntermediario#)
+		AND UPPER(codice_fiscale) = UPPER(#codiceFiscale#)
+		AND UPPER(id_comune) = UPPER(#idComune#)
+		AND deleted = '0' AND attivo = '1'
+	</select>
+
+	
+    <update id="deleteAccreditamento" parameterClass="java.lang.Integer">
+		UPDATE accreditamenti SET deleted = '1' WHERE id_accreditamento = ?
+	</update>
+	
+	<!-- ****************************************************************************** -->
+	<!-- Deleghe -->
+	<!-- 
+	<insert id="creaDelega" parameterMap="delegaMap">
+        INSERT INTO deleghe (cf_delegato, cf_delegante, id_accreditamento, id_qualifica,
+                             nome, cognome, timestamp_certificazione, certificazione)
+        VALUES (?,?,?,?,?,?,?,?);
+        
+	</insert>
+    -->
+	<insert id="creaDelega" parameterMap="delegaMap">
+        INSERT INTO deleghe (cf_delegato, cf_delegante, id_accreditamento, id_qualifica,
+                             nome, cognome, timestamp_certificazione, certificazione, id_comune_delegante, certificazione_filename)
+        VALUES (?,?,?,?,?,?,?,?,?,?)
+        
+	</insert>
+    
+	<select id="getDeleghe" resultMap="delegaResult" parameterClass="java.util.Map">
+        SELECT  d.cf_delegato, d.cf_delegante, d.id_accreditamento, d.id_qualifica,
+                d.nome, d.cognome, d.certificazione, d.timestamp_certificazione,
+                d.id_comune_delegante, d.certificazione_filename
+        FROM deleghe d INNER JOIN accreditamenti a
+        ON a.id_accreditamento = d.id_accreditamento
+        WHERE
+            d.id_accreditamento = #idAccreditamento# AND 
+            UPPER(d.cf_delegante) = UPPER(#delegante#) AND 
+            UPPER(a.id_comune) = UPPER(#idComune#) AND 
+            <!-- check flags -->
+            d.deleted = '0' AND a.deleted = '0' AND a.attivo = '1'
+		ORDER BY cognome ASC, nome ASC
+	</select>
+	
+	<update id="eliminaDelega" parameterClass="java.util.Map">
+        UPDATE deleghe SET deleted='1' WHERE 
+        cf_delegato = #delegato# AND 
+        cf_delegante = #delegante# AND
+        id_qualifica = #idQualifica# AND
+        id_accreditamento = #idAccreditamento#
+	</update>
+	
+	<!--  MYSQL -->
+	<!-- 
+	<select id="esisteDelega" parameterClass="java.util.Map">
+        SELECT id_accreditamento FROM deleghe
+        WHERE id_accreditamento = #idAccreditamento#
+        AND cf_delegato = #delegato#
+        AND id_qualifica = #idQualifica#
+        LIMIT 1
+	</select>
+	-->
+	
+	<!--  ORACLE -->
+	<select id="esisteDelega" parameterClass="java.util.Map">
+        SELECT id_accreditamento FROM deleghe
+        WHERE id_accreditamento = #idAccreditamento#
+        AND cf_delegato = #delegato#
+        AND id_qualifica = #idQualifica#
+        AND ROWNUM = 1
+	</select>
+		
+	<!--
+        Seleziona tutti gli accreditamenti per i quali esiste una delega
+        per un dato utente.
+        Gli accreditamenti verrano inseriti nella tabella accreditamenti,
+        collegati al profilo del delegato.
+        Gli accreditamenti devono essere attivi (non è possibile creare una delega
+        finchè l'accreditamento non è stato attivato)
+    -->
+    <select id="getAccreditamentiPerDelega" resultMap="accrDelegaResult" parameterClass="java.util.Map">
+        SELECT 
+                a.id_accreditamento, a.attivo, a.id_comune, 
+                d.cf_delegato AS codice_fiscale, d.id_qualifica, 
+                a.domicilio_elettronico, a.codicefiscale_intermediario, a.partitaiva_intermediario,
+                a.descrizione, a.sede_legale, a.denominazione,
+                d.certificazione AS auto_certificazione, 
+                d.timestamp_certificazione,
+                q.descrizione AS descrizione_qualifica,
+                q.tipo_qualifica, q.has_rappresentante_legale AS has_rappresentante_legale,
+        		a.auto_certificazione_filename,
+                a.timestamp_certificazione,
+                r.nome AS rappr_nome, r.cognome AS rappr_cognome, r.codice_fiscale AS rappr_codiceFiscale,
+                r.codicefiscale_intermediario AS rappr_cfIntermediario, 
+                r.partitaiva_intermediario AS rappr_partitaIvaIntermediario,
+                r.sesso AS rappr_sesso,
+                r.luogo_nascita AS rappr_luogoNascita, 
+                r.provincia_nascita AS rappr_provinciaNascita,
+                r.data_nascita AS rappr_dataNascita,
+                r.indirizzo_residenza AS rappr_indirizzoResidenza
+        FROM accreditamenti a
+        INNER JOIN qualifiche q ON q.id_qualifica = a.id_qualifica
+        INNER JOIN deleghe d ON
+        a.codice_fiscale = d.cf_delegante AND 
+        a.id_accreditamento = d.id_accreditamento
+        INNER JOIN rappr_legale r ON
+        a.id_accreditamento = r.id_accreditamento
+        WHERE UPPER(d.cf_delegato) = UPPER(#codiceFiscale#) 
+        AND UPPER(a.id_comune) = UPPER(#idComune#)
+        AND d.deleted = '0' AND a.attivo = '1' AND a.deleted = '0'
+    </select>
+    
+		
+	<!--
+    <select id="esisteQualifica" resultClass="java.lang.String" 
+			parameterClass="java.util.Map">
+		SELECT id_qualifica FROM accreditamenti a 
+		INNER JOIN profili_locali p ON 
+		UPPER(p.codice_fiscale) = UPPER(a.codice_fiscale) AND
+		UPPER(p.id_comune) = UPPER(a.id_comune)
+		
+		WHERE UPPER(a.codice_fiscale) = UPPER(#codiceFiscale#)
+		AND UPPER(a.id_comune) = UPPER(#idComune#)
+        AND a.valido = '1'
+		AND UPPER(a.id_qualifica) IN ($idList$)
+		LIMIT 1
+	</select> -->
+			
+		
+
+</sqlMap>

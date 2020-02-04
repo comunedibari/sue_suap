@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<info primitiveTypes="element">
+	<element name="Uomo">
+		<attribute name='className' value='it.people.fsl.servizi.esempi.tutorial.serviziotutorial1.model.Donna'/>
+		<addDefaults/>
+	</element>
+</info>

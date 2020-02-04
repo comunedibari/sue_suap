@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+
+    <!-- <properties resource="dao/db.properties" /> -->
+    <!-- <settings cacheModelsEnabled="true" enhancementEnabled="true" />-->
+    
+    <settings cacheModelsEnabled="false" />
+	<!-- 
+    <transactionManager type="JDBC">
+        <dataSource type="DBCP">
+            <property name="JDBC.Driver" value="${driver}" />
+            <property name="JDBC.ConnectionURL" value="${url}" />
+            <property name="JDBC.Username" value="${username}" />
+            <property name="JDBC.Password" value="${password}" />
+            <property name="JDBC.autoReconnect" value="true" />
+            <property name="JDBC.autoCommit" value="true" />
+        </dataSource>
+    </transactionManager>
+    -->
+    <transactionManager type="JDBC" > 
+      <dataSource type="JNDI"> 
+        <property name="DataSource" value="java:comp/env/jdbc/SIRAC"/>
+      </dataSource> 
+    </transactionManager>
+
+    <sqlMap resource="dao/Accreditamento_mysql.xml" />
+    <!-- <sqlMap resource="dao/Accreditamento_oracle.xml" />-->
+    <sqlMap resource="dao/Qualifica.xml" />
+    <sqlMap resource="dao/ProfiloLocale.xml" />
+</sqlMapConfig>

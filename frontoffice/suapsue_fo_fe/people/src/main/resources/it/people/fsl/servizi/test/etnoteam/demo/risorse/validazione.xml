@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<form-validation>
+
+	<formset>
+		<!-- ISTANZE DI RIMBORSO -->
+			<form name="rimborsoiciview:0">
+			<field property="annoImposta" indexedListProperty="istanzeRimborso" 
+				depends="required,integer">
+				<arg0 key="label.istanzeRimborso[].annoImposta" resource="false"></arg0>
+			</field>
+			<field property="importo" indexedListProperty="istanzeRimborso" 
+				depends="required,double">
+				<arg0 key="label.istanzeRimborso[].importo" resource="false"></arg0>
+			</field>
+			
+			<field property="motivazioniRimborso[0].codice" indexedListProperty="istanzeRimborso" 
+				depends="required">
+				<arg0 key="label.istanzeRimborso[].motivazioniRimborso[].codice" resource="false"></arg0>
+			</field>
+		</form>
+	
+		<!-- MODALITA PAGAMENTO -->
+		<form name="rimborsoiciview:1">
+			<field property="codiceModalitaPagamento"  depends="required,double">
+				<arg0 key="label.codiceModalitaPagamento" resource="false"></arg0>
+			</field>
+			
+			<field property="coordinateBancarie.abi" depends="maxlength,mask">
+				<arg0 key="label.coordinateBancarie.abi" resource="false"></arg0>
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false"></arg1>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>5</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${unsignedNumber}</var-value>
+				</var>
+			</field>
+			
+			<field property="coordinateBancarie.cab" depends="maxlength,mask">
+				<arg0 key="label.coordinateBancarie.cab" resource="false"></arg0>
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false"></arg1>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>5</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${unsignedNumber}</var-value>
+				</var>
+			</field>
+			
+			<field property="coordinateBancarie.numeroConto" depends="maxlength,mask">
+				<arg0 key="label.coordinateBancarie.numeroConto" resource="false"></arg0>
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false"></arg1>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>12</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${unsignedNumber}</var-value>
+				</var>
+			</field>
+			
+			<field property="coordinateBancarie.cin" depends="maxlength">
+				<arg0 key="label.coordinateBancarie.cin" resource="false"></arg0>
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false"></arg1>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1</var-value>
+				</var>
+			</field>
+			<field property="presentiAllegati"  depends="required,boolean">
+				<arg0 key="label.presentiAllegati" resource="false"></arg0>
+			</field>
+			<field property="presentiImmobili"  depends="required,boolean">
+				<arg0 key="label.presentiImmobili" resource="false"></arg0>
+			</field>
+		</form>
+		
+		<!-- ALLEGATI -->
+		<form name="rimborsoiciview:2">
+			<field property="descrizione" indexedListProperty="allegati"
+				depends="required">
+				<arg0 key="label.istanzeRimborso[].allegati" resource="false"></arg0>
+			</field>
+		</form>
+		<!-- IMMOBILI -->
+			<form name="rimborsoiciview:3">
+				<field property="indirizzo.numeroCivico" indexedListProperty="immobile" 
+					depends="integer">
+					<arg0 key="label.immobile[].indirizzo.numeroCivico" resource="false"></arg0>
+				</field>
+				<field property="indirizzo.esponenteCivico" indexedListProperty="immobile" 
+					depends="maxlength">
+					<arg0 key="label.immobile[].indirizzo.esponenteCivico" resource="false"></arg0>
+					<arg1 name="maxlength" key="${var:maxlength}" resource="false"></arg1>
+					<var>
+						<var-name>maxlength</var-name>
+						<var-value>3</var-value>
+					</var>
+				</field>
+				<field property="indirizzo.interno" indexedListProperty="immobile" 
+					depends="maxlength">
+					<arg0 key="label.immobile[].indirizzo.interno" resource="false"></arg0>
+					<arg1 name="maxlength" key="${var:maxlength}" resource="false"></arg1>
+					<var>
+						<var-name>maxlength</var-name>
+						<var-value>3</var-value>
+					</var>
+				</field>
+				<field property="indirizzo.esponenteInterno" indexedListProperty="immobile" 
+					depends="maxlength">
+					<arg0 key="label.immobile[].indirizzo.esponenteInterno" resource="false"></arg0>
+					<arg1 name="maxlength" key="${var:maxlength}" resource="false"></arg1>
+					<var>
+						<var-name>maxlength</var-name>
+						<var-value>3</var-value>
+					</var>
+				</field>
+				
+				<field property="datiCatastali.numero" indexedListProperty="immobile" 
+					depends="integer">
+					<arg0 key="label.immobile[].datiCatastali.numero" resource="false"></arg0>
+				</field>
+				<field property="datiCatastali.rendita" indexedListProperty="immobile" depends="double">
+					<arg0 key="label.immobile[].datiCatastali.rendita" resource="false"></arg0>
+				</field>
+			</form>
+	</formset>
+</form-validation>

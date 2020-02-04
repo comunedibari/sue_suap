@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.6.0_65-b14-462-11M4609 (Apple Inc.)
+Built-By: RERCCDGERF
+
+Name: distrib
+People-Reference-Version: 2.5.3 (build 0585)
+People-Reference-Vendor: Regione Emilia-Romagna - Centro di competenza
+  per il dispiegamento delle soluzioni di e-government
+Specification-Title: FEService
+Specification-Version: 2.5.3
+Specification-Vendor: Regione Emilia-Romagna - Centro di competenza pe
+ r il dispiegamento delle soluzioni di e-government
+Implementation-Title: FEService - 2.5.5 (build 0081)
+Implementation-Version: 2.5.5_0081 2013-11-19 15:25:57
+Implementation-Vendor: Regione Emilia-Romagna - Centro di competenza p
+ er il dispiegamento delle soluzioni di e-government
+

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<portlet-app version="2.0" xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
+	
+	<portlet>
+		<portlet-name>suap-sue</portlet-name>
+		<display-name>SUAP SUE</display-name>
+		<portlet-class>it.exprivia.pal.avbari.suapsue.portlet.SuapSuePortlet</portlet-class>
+		<init-param>
+			<name>view-jsp</name>
+			<value>/html/suapsue/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>Sportello SUAP SUE</title>
+			<short-title>Sportello SUAP SUE</short-title>
+			<keywords>suap sue</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>servizi-suap-sue</portlet-name>
+		<display-name>Servizi SUAP SUE</display-name>
+		<portlet-class>it.exprivia.pal.avbari.suapsue.portlet.ServiziPortlet</portlet-class>
+		<init-param>
+			<name>view-jsp</name>
+			<value>/html/servizi/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>Servizi SUAP SUE</title>
+			<short-title>Servizi SUAP SUE</short-title>
+			<keywords>servizi suap sue</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+</portlet-app>

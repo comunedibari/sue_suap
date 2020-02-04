@@ -1,0 +1,27 @@
+---Upgrade della versione Master Copy alla V.1.0.8
+---Si ricorda che le il passaggio alla versione V.1.0.8 prevede di
+   avere il software alla versione V.1.0.7
+
+bug-fix:
+
+
+
+miglioramenti:
+
+- inserita la gestione dei testi in lingua per aggregazione
+- nuove tabelle ed informazioni su sportelli 
+- miglioramento sulla limitazione in visualizzazione/aggiornamento delle entità territoriali
+
+
+passi:
+1) effettuare una copia del db
+2) eseguire lo script sql release_1_ver_8.sql
+3) salvare il file web.xml presente nella cartella <tomcat>/webapps/Dbm/WEB-INF
+4) salvare il file log4j.properties presente nella cartella <tomcat>/webapps/Dbm/WEB-INF/classes
+5) effettuare il deploy del software (Dbm.war)
+6) ripristinare il file web.xml salvato inprecedenza
+7) ripristinare il file log4j.properties salvato in precedenza
+8) riavviare tomcat
+9) la funzionalità si attiva una volta è stata popolata la tabella lingue_aggregazioni
+Nella nuova tabella vanno inserite solo le lingue aggiuntive non la lingua Italiana che è il default.
+Nella nuova tabella va inserito il codice; es "de", "fr" etc

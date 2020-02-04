@@ -1,0 +1,51 @@
+/**
+ * Copyright (c) 2011, Regione Emilia-Romagna, Italy
+ * 
+ * Licensed under the EUPL, Version 1.1 or - as soon they
+ * will be approved by the European Commission - subsequent
+ * versions of the EUPL (the "Licence");
+ * You may not use this work except in compliance with the
+ * Licence.
+ * 
+ * For convenience a plain text copy of the English version
+ * of the Licence can be found in the file LICENCE.txt in
+ * the top-level directory of this software distribution.
+ * 
+ * You may obtain a copy of the Licence in any of 22 European
+ * Languages at:
+ * 
+ * http://www.osor.eu/eupl
+ * 
+ * Unless required by applicable law or agreed to in
+ * writing, software distributed under the Licence is
+ * distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied.
+ * See the Licence for the specific language governing
+ * permissions and limitations under the Licence.
+**/
+package it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.oggetti;
+
+/**
+ * @author riccardob
+ *
+ * TODO To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Style - Code Templates
+ */
+public class IndiciStep {
+
+	public static final int ACT1_INFOSERVIZIO=1;
+	public static final int ACT1_SCELTACOMUNE=2;
+	public static final int ACT1_SCELTASETTORE=3;
+	public static final int ACT1_SCELTAOPERAZIONI1=4;
+	public static final int ACT1_SCELTAOPERAZIONI2=5;
+	public static final int ACT1_INTERVENTIFACOLTATIVI=6;
+	public static final int ACT1_ALLEGATIFACOLTATIVI=7;
+	public static final int ACT1_INDIVIDUAZIONEONERI=8;
+	public static final int ACT1_SCELTAONERI=9;
+	public static final int ACT1_RIEPILOGOONERI=10;
+	public static final int ACT1_GENERAZIONEITER=11;
+	
+	
+
+}

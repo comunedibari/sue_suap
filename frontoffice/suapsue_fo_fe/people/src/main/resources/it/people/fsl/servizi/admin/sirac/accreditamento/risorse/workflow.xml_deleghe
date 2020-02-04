@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS>
+	<PROCESS-CONFIG>
+		<default>
+			<SIGN-ENABLED>false</SIGN-ENABLED>
+		</default>
+		<PROCESS-VIEW>
+			<default>
+				<SAVE-BAR-ENABLED>false</SAVE-BAR-ENABLED>
+				<NAVIGATION-BAR-ENABLED>true</NAVIGATION-BAR-ENABLED>
+			</default>
+		</PROCESS-VIEW>
+	</PROCESS-CONFIG>
+
+	<VIEW id="1">
+		<default>
+			<name>Servizio di gestione accreditamenti</name>
+			<!-- <activity-order>0,1,2</activity-order>-->
+			<activity-order>0,1, 2,3,4,5,6</activity-order>
+		</default>
+		<ACTIVITIES>
+			<ACTIVITY id="0">
+				<default>
+					<name>Selezione nuova attivita'</name>
+					<step-order>0</step-order>
+					<!-- <state>inactive</state>-->
+				</default>
+				<STEPS>
+					<STEP id="0">
+						<default>
+							<name>Attivita'</name>
+							<view>informazioni.jsp</view>
+							<classname>InformazioniStep</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="1">
+				<default>
+					<name>Profilo Locale</name>
+					<step-order>1</step-order>
+					<state>Inactive</state>
+				</default>
+				<STEPS>
+					<STEP id="1">
+						<default>
+							<name>Profilo Locale</name>
+							<view>informazioniProfiloLocale.jsp</view>
+							<classname>ProfiloLocaleStep</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="2">
+				<default>
+					<name>Selezione Accreditamento</name>
+					<step-order>1,2,3,4</step-order>
+					<state>inactive</state>
+					<!-- <state>inactive</state>-->
+				</default>
+				<STEPS>
+					<STEP id="1">
+						<default>
+							<name>Elenco Accreditamenti</name>
+							<view>selAccreditamento1.jsp</view>
+							<classname>SelAccr1Step</classname>
+						</default>
+					</STEP>
+					<STEP id="2">
+						<default>
+							<name>Dati Richiedente</name>
+							<view>selAccreditamento2.jsp</view>
+							<classname>SelAccr2Step</classname>
+						</default>
+					</STEP>
+					<STEP id="3">
+						<default>
+							<name>Dati Titolare</name>
+							<!-- <view>selAccreditamento3.jsp</view>-->
+							<view>selAccreditamento3.jsp</view>
+							<classname>SelAccr3Step</classname>
+							<dto-class>it.people.sirac.deleghe.beans.CriteriRicercaDeleganti</dto-class>
+						</default>
+					</STEP>
+					<STEP id="4">
+						<default>
+							<name>Riepilogo e conferma</name>
+							<view>selAccreditamento4.jsp</view>
+							<classname>SelAccr4Step</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="3">
+				<default>
+					<name>Creazione nuovo Accreditamento</name>
+					<step-order>1,2,3,4</step-order>
+					<state>inactive</state>
+					<!-- <state>inactive</state> -->
+				</default>
+				<STEPS>
+					<STEP id="1">
+						<default>
+							<name>Selezione tipo qualifica</name>
+							<view>creaAccreditamento1.jsp</view>
+							<classname>CreaAccr1Step</classname>
+						</default>
+					</STEP>
+					<STEP id="2">
+						<default>
+							<name>Inserimento Profilo</name>
+							<view>creaAccreditamento2.jsp</view>
+							<classname>CreaAccr2Step</classname>
+						</default>
+					</STEP>
+					<STEP id="3">
+						<default>
+							<name>Compilazione Autocertificazione</name>
+							<view>creaAccreditamento3.jsp</view>
+							<classname>CreaAccr3Step</classname>
+						</default>
+					</STEP>
+					<STEP id="4">
+						<default>
+							<name>Conferma e riepilogo</name>
+							<view>creaAccreditamento4.jsp</view>
+							<classname>CreaAccr4Step</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="4">
+				<default>
+					<name>Accreditamento operatori agenzie intermediazione</name>
+					<state>inactive</state>
+					<!-- <state>inactive</state> -->
+					<step-order>Intro,1,2,3,4</step-order>
+				</default>
+				<STEPS>
+					<STEP id="Intro">
+						<default>
+							<name>Introduzione</name>
+							<view>creaDelegaIntro.jsp</view>
+							<classname>CreaDelegaIntroStep</classname>
+						</default>
+					</STEP>
+					<STEP id="1">
+						<default>
+							<name>Selezione accreditamento CAF</name>
+							<view>creaDelega1.jsp</view>
+							<classname>CreaDelega1Step</classname>
+						</default>
+					</STEP>
+					<STEP id="2">
+						<default>
+							<name>Inserimento Profilo Delegato</name>
+							<view>creaDelega2.jsp</view>
+							<classname>CreaDelega2Step</classname>
+						</default>
+					</STEP>
+					<STEP id="3">
+						<default>
+							<name>Compilazione Certificazione</name>
+							<view>creaDelega3.jsp</view>
+							<classname>CreaDelega3Step</classname>
+						</default>
+					</STEP>
+					<STEP id="4">
+						<default>
+							<name>Conferma e riepilogo</name>
+							<view>creaDelega4.jsp</view>
+							<classname>CreaDelega4Step</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="5">
+				<default>
+					<name>Accreditamento operatori associazione di categoria</name>
+					<state>inactive</state>
+					<!-- <state>inactive</state> -->
+					<step-order>Intro,1,2,3,4</step-order>
+				</default>
+				<STEPS>
+					<STEP id="Intro">
+						<default>
+							<name>Introduzione</name>
+							<view>creaOACIntro.jsp</view>
+							<classname>CreaOACIntroStep</classname>
+						</default>
+					</STEP>
+					<STEP id="1">
+						<default>
+							<name>Selezione accreditamento rappr. associazione categoria</name>
+							<view>creaOAC1.jsp</view>
+							<classname>CreaOAC1Step</classname>
+						</default>
+					</STEP>
+					<STEP id="2">
+						<default>
+							<name>Inserimento Profilo Delegato</name>
+							<view>creaOAC2.jsp</view>
+							<classname>CreaOAC2Step</classname>
+						</default>
+					</STEP>
+					<STEP id="3">
+						<default>
+							<name>Compilazione Certificazione</name>
+							<view>creaOAC3.jsp</view>
+							<classname>CreaOAC3Step</classname>
+						</default>
+					</STEP>
+					<STEP id="4">
+						<default>
+							<name>Conferma e riepilogo</name>
+							<view>creaOAC4.jsp</view>
+							<classname>CreaOAC4Step</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="6">
+				<default>
+					<name>Creazione/Attivazione deleghe</name>
+					<step-order>1,2</step-order>
+					<state>inactive</state>
+					<!-- <state>inactive</state>-->
+				</default>
+				<STEPS>
+					<STEP id="1">
+						<default>
+							<name>Scelta accreditamento</name>
+							<view>creaPrelimDelega1.jsp</view>
+							<classname>CreaPrelimDelega1Step</classname>
+						</default>
+					</STEP>
+					<STEP id="2">
+						<default>
+							<name>Impostazione dati del richiedente</name>
+							<view>creaPrelimDelega2.jsp</view>
+							<classname>CreaPrelimDelega2Step</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+		</ACTIVITIES>
+	</VIEW>
+</PROCESS>

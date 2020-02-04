@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<servizio>
+    <nome>Servizio Gestione Service Profile</nome>
+    <attivita>test</attivita>
+    <sottoattivita>cedaf</sottoattivita>
+    <process>it.people.process.GenericProcess</process>
+    <package>it.people.fsl.servizi.test.cedaf.serviceprofile</package>
+    <references name="SUBMIT_PROCESS" value="BEService" shortflag="0" address="UNDEFINED" />
+    <context-element name="Test Service Profile" />
+</servizio>

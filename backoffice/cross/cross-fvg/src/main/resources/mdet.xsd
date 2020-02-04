@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.insiel.it/masterdata/mdet" xmlns:mdap="http://www.insiel.it/masterdata/mdap" xmlns:ns1="http://www.insiel.it/masterdata/mdas" xmlns:atrb="http://www.insiel.it/masterdata/mdap/istanze" xmlns:mdet-ext="http://www.insiel.it/masterdata/mdet-ext" xmlns:ns2="http://www.insiel.it/masterdata/mdet">
+  <xs:import namespace="http://www.insiel.it/masterdata/mdap" schemaLocation="mdap.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdap/istanze" schemaLocation="atrb.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdas" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdet-ext" schemaLocation="mdet-ext.xsd"/>
+  <xs:element name="denominazione" type="xs:NCName"/>
+  <xs:element name="catastoFabbricati">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns2:comuneCatastale"/>
+        <xs:element ref="ns2:foglio"/>
+        <xs:element ref="ns2:particella"/>
+        <xs:element ref="ns2:subalterno"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="comuneCatastale">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns2:id"/>
+        <xs:element ref="ns2:denominazioneComune"/>
+        <xs:element ref="ns2:provincia"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="foglio" type="xs:string"/>
+  <xs:element name="particella" type="xs:decimal"/>
+  <xs:element name="subalterno" type="xs:integer"/>
+  <xs:complexType name="ns2.comuneItaliano">
+    <xs:sequence>
+      <xs:element ref="ns2:comuneItaliano"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="comuneItaliano">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns2:id"/>
+        <xs:element ref="ns2:denominazioneComune"/>
+        <xs:element ref="ns2:provincia"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tipoIndirizzo" type="xs:NCName"/>
+  <xs:element name="indirizzo" type="xs:NCName"/>
+  <xs:element name="numeroCivico" type="xs:integer"/>
+  <xs:element name="cap" type="xs:integer"/>
+  <xs:element name="luogo" type="ns2:ns2.comuneItaliano"/>
+  <xs:element name="id" type="xs:integer"/>
+  <xs:element name="denominazioneComune" type="xs:string"/>
+  <xs:element name="provincia">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns2:denominazioneProvincia"/>
+        <xs:element ref="ns2:siglaProvincia"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="denominazioneProvincia" type="xs:NCName"/>
+  <xs:element name="siglaProvincia" type="xs:NCName"/>
+  <xs:attribute name="tipoCatasto"/>
+</xs:schema>

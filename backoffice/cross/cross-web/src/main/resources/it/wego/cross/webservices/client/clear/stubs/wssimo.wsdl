@@ -1,0 +1,116 @@
+<?xml version="1.0" ?>
+<definitions name="simo_wsdl" targetNamespace="http://www.simo.org" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.simo.org" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.simo.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <types>
+        <xsd:schema targetNamespace="http://www.simo.org/simo.xsd" xmlns:ns2="http://www.simo.org/simo.xsd">
+            <xsd:import namespace="http://www.simo.org" schemaLocation="simo.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="simo_crea_praticaRequest">
+        <part element="tns:pratica_simo" name="body"/>
+    </message>
+    <message name="simo_crea_praticaReply">
+        <part element="tns:log" name="body"/>
+    </message>
+    <message name="simo_associa_eventoRequest">
+        <part element="tns:evento_simo" name="body"/>
+    </message>
+    <message name="simo_associa_eventoReply">
+        <part element="tns:log" name="body"/>
+    </message>
+    <message name="simo_crea_pratica_extendedRequest">
+        <part element="tns:pratica_simo_extended" name="body"/>
+    </message>
+    <message name="simo_crea_pratica_extendedReply">
+        <part element="tns:log" name="body"/>
+    </message>
+    <message name="simo_associa_evento_extendedRequest">
+        <part element="tns:evento_simo_extended" name="body"/>
+    </message>
+    <message name="simo_associa_evento_extendedReply">
+        <part element="tns:log" name="body"/>
+    </message>
+    <message name="simo_crea_procedimentoRequest">
+        <part element="tns:procedimento_simo" name="body"/>
+    </message>
+    <message name="simo_crea_procedimentoReply">
+        <part element="tns:log" name="body"/>
+    </message>
+	
+    <portType name="simo_wsdlPortType">
+        <operation name="simo_crea_pratica">
+            <input message="tns:simo_crea_praticaRequest" name="input1"/>
+            <output message="tns:simo_crea_praticaReply" name="output1"/>
+        </operation>
+        <operation name="simo_associa_evento">
+            <input message="tns:simo_associa_eventoRequest" name="input2"/>
+            <output message="tns:simo_associa_eventoReply" name="output2"/>
+        </operation>
+		        <operation name="simo_crea_pratica_extended">
+            <input message="tns:simo_crea_pratica_extendedRequest" name="input3"/>
+            <output message="tns:simo_crea_pratica_extendedReply" name="output3"/>
+        </operation>
+        <operation name="simo_associa_evento_extended">
+            <input message="tns:simo_associa_evento_extendedRequest" name="input4"/>
+            <output message="tns:simo_associa_evento_extendedReply" name="output4"/>
+        </operation>
+        <operation name="simo_crea_procedimento">
+            <input message="tns:simo_crea_procedimentoRequest" name="input5"/>
+            <output message="tns:simo_crea_procedimentoReply" name="output5"/>
+        </operation>
+
+    </portType>
+    <binding name="simo_wsdlBinding" type="tns:simo_wsdlPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="simo_crea_pratica">
+            <soap:operation soapAction="crea_pratica" style="document"/>
+            <input name="input1">
+                <soap:body parts="body" use="literal"/>				
+            </input>
+            <output name="output1">
+                <soap:body parts="body" use="literal"/>
+            </output>
+        </operation>
+        <operation name="simo_associa_evento">
+            <soap:operation soapAction="associa_evento" style="document"/>
+            <input name="input2">
+                <soap:body parts="body" use="literal"/>
+            </input>
+            <output name="output2">
+                <soap:body parts="body" use="literal"/>
+            </output>
+        </operation>
+		        <operation name="simo_crea_pratica_extended">
+            <soap:operation soapAction="crea_pratica_extended" style="document"/>
+            <input name="input3">
+                <soap:body parts="body" use="literal"/>				
+            </input>
+            <output name="output3">
+                <soap:body parts="body" use="literal"/>
+            </output>
+        </operation>
+        <operation name="simo_associa_evento_extended">
+            <soap:operation soapAction="associa_evento_extended" style="document"/>
+            <input name="input4">
+                <soap:body parts="body" use="literal"/>
+            </input>
+            <output name="output4">
+                <soap:body parts="body" use="literal"/>
+            </output>
+        </operation>
+        <operation name="simo_crea_procedimento">
+            <soap:operation soapAction="crea_procedimento" style="document"/>
+            <input name="input5">
+                <soap:body parts="body" use="literal"/>
+            </input>
+            <output name="output5">
+                <soap:body parts="body" use="literal"/>
+            </output>
+        </operation>
+
+    </binding>
+    <service name="simo_wsdlService">
+        <port binding="tns:simo_wsdlBinding" name="simo_wsdlPort">
+            <soap:address location="http://opendesk-eco:8083/wssimo"/>
+        </port>
+    </service>
+</definitions>

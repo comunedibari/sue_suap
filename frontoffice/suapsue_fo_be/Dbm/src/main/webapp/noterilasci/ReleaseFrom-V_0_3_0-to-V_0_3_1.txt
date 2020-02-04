@@ -1,0 +1,25 @@
+---Upgrade della versione Master Copy V.0.3.0 alla V.0.3.1
+---Si ricorda che le il passaggio alla versione V.0.3 prevede di
+   avere il software alla versione V.0.2
+
+bug-fix:
+
+
+
+miglioramenti:
+
+- inserito in web.xml un nuovo parametro identificativo dell'url per risovere malfunzionamenti
+  in alcune configurazioni di Apache
+
+passi:
+1) salvare il file web.xml presente nella cartella <tomcat>/webapps/Dbm/WEB-INF
+2) salvare il file log4j.properties presente nella cartella <tomcat>/webapps/Dbm/WEB-INF/classes
+3) effettuare il deploy del software (Dbm.war)
+4) ripristinare il file web.xml salvato inprecedenza
+5) ripristinare il file log4j.properties salvato in precedenza
+6) modificare il file web.xml inserendo
+    <context-param>
+        <param-name>baseUrl</param-name>
+        <param-value>http://localhost:8080/Dbm/</param-value>
+    </context-param>
+7) riavviare tomcat

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<project name="ws_regauth(ws_accr121)" default="deploy" basedir=".">
+
+	<!-- file con properties comuni ai diversi progetti al framework -->
+	<property file="../../build_conf/sirac_build.properties"/>
+
+	<!-- proprietà del Manifest-->
+	<property name="implementation.title" value="ws_accr121"/>
+	<property name="implementation.vendor" value="CEFRIEL"/>
+
+	<!-- proprietà del progetto-->
+	<property name="sirac_lib.path" value="../../sirac_lib/dist/sirac_lib.jar"/>	
+	<property name="app.name" value="ws_accr121"/>
+    <property name="ant.dir" value="${basedir}/ant"/>  
+	<property name="war.name" value="${app.name}.war"/>
+	<property name="dist.dir" value="${basedir}/../dist"/>
+	<property name="build.dir" value="${basedir}/../WebContent/WEB-INF"/>	
+	<property name="web.dir" value="${basedir}/../WebContent"/>	
+	<property name="lib.dir" value="${basedir}/../WebContent/WEB-INF/lib"/>	
+	<property name="src.dir" value="${basedir}/../src"/>
+	<property name="fdsfds" value="${release.dir}"/>
+	<property name="release.dir.dist" value="${release.dir}/software"/>
+	<property name="release.dir.src" value="${release.dir}/source/${app.name}"/>
+	
+	<!-- Task di ant -->
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpath="${catalina-ant.path}"/>
+	<taskdef name="list" classname="org.apache.catalina.ant.ListTask" classpath="${catalina-ant.path}"/>
+	<taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask" classpath="${catalina-ant.path}"/>
+	<taskdef name="resources" classname="org.apache.catalina.ant.ResourcesTask" classpath="${catalina-ant.path}"/>
+	<taskdef name="roles" classname="org.apache.catalina.ant.RolesTask" classpath="${catalina-ant.path}"/>
+	<taskdef name="start" classname="org.apache.catalina.ant.StartTask" classpath="${catalina-ant.path}"/>
+	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask" classpath="${catalina-ant.path}"/>
+	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpath="${catalina-ant.path}"/>
+
+	<!-- target -->
+	<target name="clean" description="Rimuove i file compilati">
+		<!-- delete dir="${build.dir}"/ -->
+	</target>
+	
+	<target name="init">
+		<!-- mkdir dir="${build.dir}"/ -->
+		<mkdir dir="${dist.dir}"/>				
+	</target>
+
+	<!--<target name="updateLibrary" description="Rilegge le librerie di People">-->
+	<target name="updateLibrary">
+		<copy file="${sirac_lib.path}" todir="${lib.dir}"/>		
+	</target>	
+	
+	<target name="compile" depends="init, updateLibrary" description="Compila i sorgenti">
+	<!--<target name="compile" depends="init" description="Compila i sorgenti">-->
+		<javac srcdir="${src.dir}" destdir="${build.dir}" debug="${debug}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar"/>
+				</fileset>
+				<fileset dir="${external.lib.dir}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="dist" depends="init, updateLibrary" description="Crea il war file">		
+
+		<ant antfile="${ant.dir}/buildwsaccr121jar.xml" target="makejar" />			
+		
+		<war destfile="${dist.dir}/${war.name}" 
+			 webxml="${web.dir}/WEB-INF/web.xml">
+			<!--
+			<lib dir="lib"/>
+			<classes dir="${build.dir}"/>
+			<classes dir="${src.dir}">
+				<exclude name="**/*.java"/>
+			</classes>
+			-->
+			<fileset dir="${web.dir}"/>
+			<manifest>
+				<attribute name="Implementation-Title" value="${implementation.title}" />
+				<attribute name="Implementation-Version" value="${implementation.number}" />
+				<attribute name="Implementation-Vendor" value="${implementation.vendor}" />
+			</manifest>			
+		</war>
+		
+	</target>
+
+	<target name="deploy" description="Installa la web application" depends="dist">
+		<deploy url="${tomcat.manager.url}" 
+			username="${tomcat.manager.name}" 
+			password="${tomcat.manager.password}" 
+			path="/${app.name}" 
+			war="${dist.dir}/${war.name}"
+			update="true" />
+	</target>
+
+	<target name="reload" description="Ricarica la web application" depends="dist">
+		<reload url="${tomcat.manager.url}" 
+			username="${tomcat.manager.name}" 
+			password="${tomcat.manager.password}" 
+			path="/${app.name}"/>
+	</target>
+
+	<target name="undeploy" description="Rimuove la web application">
+		<undeploy url="${tomcat.manager.url}" 
+			username="${tomcat.manager.name}" 
+			password="${tomcat.manager.password}" 
+			path="/${app.name}"/>
+	</target>
+
+	<target name="release" depends="dist" description="copia tutti i file necessari per il rilascio, escludendo quelli di appoggio (es. CVS)">		
+		<copy todir="${release.dir.src}">
+			<fileset dir=".">
+				<!-- exclude name="bin/**" / -->
+				<exclude name="WebContent/WEB-INF/classes/**" />		
+				<exclude name=".my*/**" />
+			</fileset>
+		</copy>
+		<copy todir="${release.dir.dist}" file="${dist.dir}/${war.name}" />
+	</target>		
+</project>

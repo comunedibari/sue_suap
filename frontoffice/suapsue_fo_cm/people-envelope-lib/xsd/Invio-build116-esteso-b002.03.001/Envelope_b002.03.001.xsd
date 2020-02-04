@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<xs:schema
+	xmlns="http://www.progettopeople.it/b002/ServiziCondivisi/Envelope"
+	xmlns:OggettiCondivisi="http://egov.diviana.it/b116/OggettiCondivisi"
+	xmlns:ServiziCondivisi="http://egov.diviana.it/b116/ServiziCondivisi"
+	xmlns:CNIPA="http://egov.diviana.it/b116/CNIPA"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:Envelope="http://www.progettopeople.it/b002/ServiziCondivisi/Envelope"
+	targetNamespace="http://www.progettopeople.it/b002/ServiziCondivisi/Envelope"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--Busta di trasporto richieste e risposte utilizzata nel progetto People-->
+	<xs:annotation>
+		<xs:documentation>
+			Estensione della busta definita nella modellazione (Servizi
+			Condivisi\Servizi Infrastrutturali\Invio) attraverso la
+			ridefinizione di alcuni elementi
+		</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>
+			<Modello Versione="v0.3 - 15/05/2007" Build="003"
+				Data="15/05/2007" Reference="Modellazione Build 116" />
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://egov.diviana.it/b116/OggettiCondivisi"
+		schemaLocation="OggettiCondivisi.xsd" />
+	<xs:import namespace="http://egov.diviana.it/b116/ServiziCondivisi"
+		schemaLocation="ServiziCondivisi.xsd" />
+	<xs:import namespace="http://egov.diviana.it/b116/CNIPA"
+		schemaLocation="CNIPA.xsd" />
+	<xs:element name="RichiestadiInvio"
+		type="Envelope:RichiestadiInvio" />
+	<xs:element name="RispostadiInvio"
+		type="ServiziCondivisi:RispostadiInvio" />
+	<xs:element name="Risposta" type="OggettiCondivisi:SceltaRisposta" />
+	<xs:element name="RichiestadiInvioMassivo"
+		type="Envelope:RichiestadiInvioMassivo" />
+	<!--Ridefinizione ed estensione dei tipi definiti nella busta della modellazione (ref. build 116 del 04/08/2006)-->
+	<xs:complexType name="RichiestadiInvio">
+		<xs:complexContent>
+			<xs:extension base="Envelope:BustaSpedizione" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="IndirizzoTestuale">
+		<xs:annotation>
+			<xs:documentation>
+				Stessa definizione presente in oggetti condivisi
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="OggettiCondivisi:Testo" />
+	</xs:simpleType>
+	<xs:complexType name="BustaSpedizione">
+		<xs:annotation>
+			<xs:documentation>
+				OggettiCondivisi:BustaSpedizione ridefinita per
+				estensione di OggettiCondivisi:Busta e ridefinizione
+				elemento InformazioniperProtocollazione
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="OggettiCondivisi:Busta">
+				<xs:sequence>
+					<xs:element name="TipoComunicazione"
+						type="OggettiCondivisi:SceltaTipoComunicazione" />
+					<xs:element name="InformazioniperProtocollazione"
+						type="Envelope:InformazioniperProtocollazione" minOccurs="0" />
+					<xs:element name="InformazioniperVerificaDelega"
+						type="InformazioniperVerificaDelega" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InformazioniperProtocollazione">
+		<xs:annotation>
+			<xs:documentation>
+				Ridefinizione di
+				OggettiCondivisi:InformazioniperProtocollazione con la
+				possibilita di indicare piu recapiti e di indicare un
+				recapito postale testuale in aggiunta alle tipologie di
+				recapito gi� definite
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Richiedente"
+				type="OggettiCondivisi:EstremidellaPersona" />
+			<xs:element name="Recapito" type="Envelope:Recapito"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Recapito definito in OggettiCondivisi:Recapito
+						esteso con cardinalita 1..n e con la possibilita
+						di inserire recapito postale testuale
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Titolare" type="CNIPA:SceltaTitolare" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Recapito">
+		<xs:annotation>
+			<xs:documentation>
+				Ridefinizione di OggettiCondivisi:Recapito con
+				l'aggiunta del RecapitoPostaleTestuale
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Tipo" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Istituzionale" />
+						<xs:enumeration value="Personale" />
+						<xs:enumeration value="Professionale" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Nota" type="OggettiCondivisi:Nota"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="Referente" type="OggettiCondivisi:Testo" />
+			<xs:element name="Priorita">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Principale" />
+						<xs:enumeration value="Alternativo" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Indirizzoemail"
+					type="OggettiCondivisi:Indirizzoemail" />
+				<xs:element name="RecapitoPostale"
+					type="OggettiCondivisi:RecapitoPostale" />
+				<xs:element name="RecapitoPostaleTestuale"
+					type="Envelope:IndirizzoTestuale" />
+				<xs:element name="RecapitoTelefonico"
+					type="OggettiCondivisi:RecapitoTelefonico" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RichiestadiInvioMassivo">
+		<xs:sequence>
+			<xs:element name="DatiRiepilogativi"
+				type="Envelope:DatiRiepilogativi" />
+			<xs:element name="ElencoRichiestediInvio"
+				type="Envelope:ElencoRichiestediInvio" />
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 
+		<xs:complexType name="DatiRiepilogativi">
+		<xs:sequence>
+		<xs:sequence>
+		<xs:element name="SommarioPratica" type="Envelope:SommarioPratica"></xs:element>
+		</xs:sequence>
+		<xs:element name="DatiIdentificativiIntermediario" type="CNIPA:SceltaTitolare">
+		</xs:element>
+		</xs:sequence>
+		</xs:complexType>
+	-->
+	<xs:complexType name="DatiRiepilogativi">
+		<xs:sequence>
+			<xs:element name="SommarioPratiche"
+				type="Envelope:SommarioPratiche" />
+			<xs:element name="DatiIdentificativiIntermediario"
+				type="CNIPA:SceltaTitolare" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ElencoRichiestediInvio">
+		<xs:sequence>
+			<xs:element name="RichiestadiInvio"
+				type="Envelope:RichiestadiInvio" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SommarioPratica">
+		<xs:attribute name="nomeServizio" type="OggettiCondivisi:Testo"
+			use="required" />
+		<xs:attribute name="numeroPraticheInRichiestaMassiva"
+			type="OggettiCondivisi:InteroPositivo" use="required" />
+	</xs:complexType>
+	<xs:complexType name="SommarioPratiche">
+		<xs:sequence>
+			<xs:element name="SommarioPratica"
+				type="Envelope:SommarioPratica" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformazioniperVerificaDelega">
+		<xs:complexContent>
+			<xs:extension
+				base="ServiziCondivisi:InformazioniperVerificaDelega">
+				<xs:sequence>
+					<xs:element name="EstremiSoggettoDelegato"
+						type="CNIPA:SceltaTitolare" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

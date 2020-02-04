@@ -1,0 +1,267 @@
+///////////////////////////////////////////////////////////////////////CaricaModuloCompilato.java////////////////////////////////////////////
+
+package it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.controllers;
+
+import it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.model.ProcessData;
+import it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.oggetti.HrefCampiBean;
+import it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.oggetti.SezioneCompilabileBean;
+import it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.utility.Bean2XML;
+import it.people.process.AbstractPplProcess;
+import it.people.wrappers.IRequestWrapper;
+import java.util.*;
+import java.util.Map.Entry;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.Validate;
+import org.apache.struts.action.Action;
+import org.apache.log4j.Logger;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.upload.FormFile;
+
+/**
+ *
+ * @author aleph
+ */
+public class CaricaModuloCompilato extends Action {
+
+    private String encoding;
+    private final Logger logger = Logger.getLogger(this.getClass());
+    public static final String PARAMETER_UPLOADFILE = "uploadFile";
+    public static final String PARAMETER_FORZATURA = "forzaCaricamento";
+    private final static Map<String, Object> exceptions = new LinkedHashMap<String, Object>() {
+        @Override
+        protected boolean removeEldestEntry(Entry<String, Object> eldest) {
+            return size() > 100;
+        }
+    };
+
+    public static Object extractException(String id) {
+        return exceptions.remove(id);
+    }
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        
+        this.encoding = request.getCharacterEncoding();
+        
+        AbstractPplProcess process = (AbstractPplProcess) form;
+        logger.debug("loading pdf module");
+        try {
+            FormFile formFile = (FormFile) PropertyUtils.getProperty(process.getData(), PARAMETER_UPLOADFILE);
+            boolean forzaCaricamento = false;
+            if (process.getMultipartRequestHandler().getTextElements().containsKey(PARAMETER_FORZATURA) 
+                    && process.getMultipartRequestHandler().getTextElements().get(PARAMETER_FORZATURA) != null 
+                    && ((String[]) process.getMultipartRequestHandler().getTextElements().get(PARAMETER_FORZATURA))[0].equals(PARAMETER_FORZATURA)) {
+                forzaCaricamento = true;
+                
+            }
+            byte[] pdf = formFile == null ? null : formFile.getFileData();
+            PropertyUtils.setProperty(process.getData(), PARAMETER_UPLOADFILE, null);
+            String newXmlBlob;
+            ProcessData oldProcessData = (ProcessData) process.getData();
+            if (pdf != null && pdf.length > 0) {
+                final String wsUrl = "SIMPLEDESK_PD_WS";
+                String pdfBlob = new String(Base64.encodeBase64(pdf)),
+                        oldXml = Bean2XML.marshallObject(oldProcessData, this.encoding),
+                        xmlBlob = new String(Base64.encodeBase64(oldXml.getBytes("UTF-8")));
+                if (!forzaCaricamento){
+                newXmlBlob = process.callService(wsUrl, "{'method':'mergePdf','processData':'" + xmlBlob + "','pdfFile':'" + pdfBlob + "'}");
+                } else {
+                    newXmlBlob = process.callService(wsUrl, "{'method':'mergePdfForced','processData':'" + xmlBlob + "','pdfFile':'" + pdfBlob + "'}");
+                }
+            } else {
+                newXmlBlob = "Errore : e' necessario selezionare un file da caricare";
+            }
+
+            if (newXmlBlob.startsWith("Error")) {
+                ActionForward forward = mapping.findForward("retry");
+                ActionForward modifiedSuccessAction = new ActionForward(forward);
+                String uuid = UUID.randomUUID().toString();
+                exceptions.put(uuid, newXmlBlob);
+                modifiedSuccessAction.setPath(forward.getPath() + "&errorMessageId=" + uuid);
+                return modifiedSuccessAction;
+            } else {
+                String newXml = new String(Base64.decodeBase64(newXmlBlob.getBytes()), "UTF-8");
+                ProcessData newProcessData = (ProcessData) Bean2XML.unmarshallObject(newXml, ProcessData.class, this.encoding);
+
+                // copiamo solo i campi
+                for (Iterator iterator = newProcessData.getListaHref().entrySet().iterator(); iterator.hasNext();) {
+                    Map.Entry entry = (Map.Entry) iterator.next();
+                    String hrefName = entry.getKey().toString();
+                    SezioneCompilabileBean newHref = (SezioneCompilabileBean) entry.getValue(),
+                            oldHref = (SezioneCompilabileBean) oldProcessData.getListaHref().get(hrefName);
+                    Map map = new HashMap();
+                    for (Iterator campi = oldHref.getCampi().iterator(); campi.hasNext();) {
+                        HrefCampiBean campo = (HrefCampiBean) campi.next();
+                        map.put(campo.getNome() + "_" + campo.getContatore(), campo);
+                    }
+                    for (Iterator campi = newHref.getCampi().iterator(); campi.hasNext();) {
+                        HrefCampiBean newCampo = (HrefCampiBean) campi.next(),
+                                oldCampo = (HrefCampiBean) map.get(newCampo.getNome() + "_" + newCampo.getContatore());
+                        oldCampo.setValoreUtente(newCampo.getValoreUtente());
+                    }
+                }
+
+                return mapping.findForward("success");
+            }
+        } catch (Throwable ex) {
+            logger.error("error loading pdf", ex);
+            String uuid = UUID.randomUUID().toString();
+            exceptions.put(uuid, ex);
+            ActionForward forward = mapping.findForward("error");
+            ActionForward modifiedSuccessAction = new ActionForward(forward);
+            modifiedSuccessAction.setPath(forward.getPath() + "&errorMessageId=" + uuid);
+            return modifiedSuccessAction;
+        }
+    }
+}
+
+
+////////////////////////////////////////////////////moduloCompilabile.jsp////////////////////////////////////////////////
+
+
+<%@page import="it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.steps.ModelloUnicoStep"%>
+<%@page import="it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.oggetti.SezioneCompilabileBean"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.oggetti.InterventoBean"%>
+<%@page import="java.util.List"%>
+<%@page import="org.apache.commons.codec.binary.Base64"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="java.io.PrintStream"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.utility.*"%>
+<%@ page import="it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.model.ProcessData"%>
+<%@ taglib uri="/WEB-INF/people.tld" prefix="ppl" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<jsp:useBean id="pplProcess" scope="session" type="it.people.process.AbstractPplProcess" /><%
+    try {
+        final String wsUrl = "SIMPLEDESK_PD_WS";
+        ProcessData processData = (ProcessData) pplProcess.getData();
+        String encoding = request.getCharacterEncoding();
+
+        if (request.getParameter("scarica") != null) {
+            Iterator hrefIterator = processData.getListaHref().values().iterator();
+            ModelloUnicoStep mus = new ModelloUnicoStep();
+            while (hrefIterator.hasNext()) {
+                SezioneCompilabileBean href = (SezioneCompilabileBean) hrefIterator.next();
+                while (href.getNumSezioniMultiple() > 0 && href.getNumSezioniMultiple() < 5) {
+                    mus.aggiungiSezioneMultipla(href);
+                }
+            }
+            // end grow multiple fields
+            String xml = Bean2XML.marshallObject(processData, encoding);
+            String xmlBlob = new String(Base64.encodeBase64(xml.getBytes("UTF-8")));
+            String pdfBlob = pplProcess.callService(wsUrl, "{'method':'xmlToPdf','processData':'" + xmlBlob + "'}");
+            byte[] pdf = Base64.decodeBase64(pdfBlob.getBytes());
+            if (pdf == null || pdf.length == 0) {
+                throw new Exception("unable to obtain pdf file");
+            }
+            StringBuilder fileNameBuilder = new StringBuilder("modulo_compilabile_");
+            List interventi = processData.getInterventi();
+            for (int i = 0; i < interventi.size(); i++) {
+                if (fileNameBuilder.length() > 50) {
+                    fileNameBuilder.append("_etc");
+                    break;
+                }
+                if (i > 0) {
+                    fileNameBuilder.append("_e_");
+                }
+                fileNameBuilder.append(((InterventoBean) interventi.get(i)).getDescrizione());
+            }
+            String fileName = fileNameBuilder.toString().replaceAll("[^a-zA-Z0-9]+", "_").replaceAll("_$", "") + ".pdf";
+            response.setHeader("Content-disposition", "inline;filename=" + fileName);
+            response.setContentType("application/pdf");
+            response.getOutputStream().write(pdf);
+            response.getOutputStream().close();
+        }
+        String errorMessage = (String) request.getAttribute("moduloCompilabile_errorMessage");
+        if (request.getParameter("ricarica") != null || errorMessage != null) {
+
+%>
+
+<h1><bean:message key="moduloCompilabile.ricarica.title"/></h1>
+<div style="border:1px solid #EAEAEA; padding: 5px; width:96%;" >
+    <% if (errorMessage != null) {%> <div style="border:2px dotted red; padding: 12px; width:96%; margin: 12px; font-size: 12px"><img src="/people/servizi/concessioniedautorizzazioni/servizicondivisi/procedimentounico/img/iconWarning.gif" alt="attenzione"><b><%=errorMessage%></b></div> <% }%>
+    <form enctype="multipart/form-data" method="post" action="servizi/concessioniedautorizzazioni/servizicondivisi/procedimentounico/view/default/html/moduloCompilabile.jsp"
+          onSubmit="if(document.getElementById('caricaModuloCompilato_fileInput').value == '') return false;" >
+        <div style="padding:5em 4em 5em 3em;">
+            &nbsp;&nbsp;<label>modulo pdf: </label>&nbsp;&nbsp;
+            <html:file styleId="nomeallegato" property="data.uploadFile"/>
+            &nbsp;&nbsp;<input class="btn" type="submit" name="navigation.button.caricaModuloCompilato" value="Carica" id="caricaModuloCompilato_fileInput"></input>
+            <br />&nbsp;&nbsp;Forza il caricamento&nbsp;<input type="checkbox" name="forzaCaricamento" value="forzaCaricamento">
+        </div>
+    </form>
+</div>
+<div align="center">
+
+    <ppl:linkLoopback accesskey="B" property="modelloUnico.jsp" styleClass="btn">Annulla e torna indietro</ppl:linkLoopback>
+    </div>
+    <script type="text/javascript" >
+        window.onload=function(){
+            document.getElementById('footer').style.display='none'; // hide footer buttons
+        }
+    </script>
+
+<%    }
+    } catch (Exception e) {
+        System.out.println("ERRORE - MODULO COMPILABILE");
+        e.printStackTrace();
+        response.setHeader("Pragma", "No-cache");
+        response.setContentType("text/html");
+        PrintWriter writer = response.getWriter();
+        if (e.getMessage().contains("compatibile")) {
+            writer.write("<h3>Si e' verificato un errore: il modulo caricato non corrisponde con il processo selezionato.</h3>\n");
+        } else {
+            writer.write("<h3>Si e' verificato un errore, ci scusiamo per il disagio.</h3>\n");
+            e.printStackTrace(writer);
+        }
+        writer.close();
+    } finally {
+        response.flushBuffer();
+    }
+%>
+
+
+//////////////////////////////////////////////////////////////struts-config.xml//////////////////////////////////////////
+
+	<!-- ========== Action Mapping Definitions ============================== -->
+	<action-mappings>
+		
+		<!-- Dispatcher per la pagina di compilazione del procedimento.           -->
+		<!-- Ogni pulsante può essere mappato su una action, l'attributo name del -->
+		<!-- tag html di submit deve essere uguale al name del forward.           -->
+		<!-- Se non è trovato nessun parametro della richiesta di cui esista il   -->
+		<!-- corispondente forward allora viene eseguito il salto a default.      -->
+		<action name="pplProcess" type="it.people.action.DispatchProcess" path="/lookupDispatchProcess" scope="session" parameter="action" input="/viewProcess.do" validate="false">			
+.
+.
+.
+.
+.                        
+                        <forward name="navigation.button.caricaModuloCompilato" path="/caricaModuloCompilato.do" />
+.
+.
+		</action>
+.
+.
+.
+.
+.
+.
+                <action name="pplProcess" type="it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.controllers.CaricaModuloCompilato" validate="true" input="/viewProcess.do" scope="session" path="/caricaModuloCompilato">
+                        <forward name="success" path="/loopBack.do?propertyName=moduloCompilabile_refreshModulo" />
+                        <forward name="error" path="/loopBack.do?propertyName=moduloCompilabile_throwError" />
+                        <forward name="retry" path="/loopBack.do?propertyName=moduloCompilabile_retryUpload" />
+                </action>
+.
+.
+.
+.
+..

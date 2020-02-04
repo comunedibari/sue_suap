@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="internal_server_error" extends=".main">
+        <put-attribute name="title" value="Internal Server Error" type="string"/>
+        <put-attribute name="body_center" cascade="true"  value="/themes/default/views/main/body/error/500.jsp" />
+    </definition>
+    
+</tiles-definitions>

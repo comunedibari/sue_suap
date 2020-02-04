@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/aleph/svn/WegoRepository/Maven/cross2/trunk/cross-plugins/cross-fvg/../../../../../../../download/SuapFVG.xsd" uri="src/main/resources/jaxb/SuapFvg/SuapFVG.xsd"/>
+    <system systemId="file:/home/aleph/download/mdap.xsd" uri="src/main/resources/jaxb/SuapFvg/mdap.xsd"/>
+    <system systemId="file:/home/aleph/download/atrb.xsd" uri="src/main/resources/jaxb/SuapFvg/atrb.xsd"/>
+    <system systemId="file:/home/aleph/download/ns1.xsd" uri="src/main/resources/jaxb/SuapFvg/ns1.xsd"/>
+    <system systemId="file:/home/aleph/download/mdet-ext.xsd" uri="src/main/resources/jaxb/SuapFvg/mdet-ext.xsd"/>
+</catalog>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web
+Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+    <display-name>PeopleService</display-name>
+
+
+	<listener>
+		<listener-class>org.apache.axis.transport.http.AxisHTTPSessionListener</listener-class>
+	</listener>
+    
+	<servlet>
+        <servlet-name>AxisServlet</servlet-name>
+        <display-name>Apache-Axis Servlet</display-name>
+        <servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <display-name>Axis Admin Servlet</display-name>
+        <servlet-class>org.apache.axis.transport.http.AdminServlet</servlet-class>
+        <load-on-startup>100</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>SOAPMonitorService</servlet-name>
+        <display-name>SOAPMonitorService</display-name>
+        <servlet-class>org.apache.axis.monitor.SOAPMonitorService</servlet-class>
+        <init-param>
+            <param-name>SOAPMonitorPort</param-name>
+            <param-value>5001</param-value>
+		</init-param>
+        <load-on-startup>100</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>/servlet/AxisServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>*.jws</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>SOAPMonitorService</servlet-name>
+        <url-pattern>/SOAPMonitor</url-pattern>
+    </servlet-mapping>
+
+    <!-- Questo servlet puo' andare disattivato -->
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/servlet/AdminServlet</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!-- currently the W3C havent settled on a media type for WSDL;
+    http://www.w3.org/TR/2003/WD-wsdl12-20030303/#ietf-draft
+    for now we go with the basic 'it's XML' response -->
+    <mime-mapping>
+        <extension>wsdl</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+  
+    <mime-mapping>
+        <extension>xsd</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+
+    <welcome-file-list id="WelcomeFileList">
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jws</welcome-file>
+    </welcome-file-list>
+
+	<env-entry>
+		<description>Timeout di invocazione dei webservice di backend espresso in millisecondi, inserire zero per escludere il timeout.</description>
+		<env-entry-name>webservice.calling.timeout</env-entry-name>
+		<env-entry-value>60000</env-entry-value>
+		<env-entry-type>java.lang.Integer</env-entry-type>
+	</env-entry>
+
+	<env-entry>
+		<description>Path dove sono registrati i log dei messaggi scambiati tra PeopleService ed i back-end</description>
+        <env-entry-name>xml_logs</env-entry-name>
+		<env-entry-value>${PeopleService.xml_logs}</env-entry-value>
+        <env-entry-type>java.lang.String</env-entry-type>
+    </env-entry>
+
+	<env-entry>
+		<description>Permette di storicizzare i messaggi scambiati tra il PeopleService e i back-end</description>
+        <env-entry-name>storicizza_dump</env-entry-name>
+        <env-entry-value>true</env-entry-value>
+        <env-entry-type>java.lang.Boolean</env-entry-type>
+    </env-entry>
+	
+	<env-entry>
+		<description>Se abilitato il dump dei servizi sara effettuato in cartelle separate per servizio di front-end</description>
+        <env-entry-name>suddividi_dump</env-entry-name>
+        <env-entry-value>true</env-entry-value>
+        <env-entry-type>java.lang.Boolean</env-entry-type>
+    </env-entry>
+	
+</web-app>

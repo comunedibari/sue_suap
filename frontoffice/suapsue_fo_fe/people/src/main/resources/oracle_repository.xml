@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE descriptor-repository PUBLIC
+       "-//Apache Software Foundation//DTD OJB Repository//EN"
+       "repository.dtd"
+[
+
+<!ENTITY internal SYSTEM "repository_internal.xml">
+]>
+
+
+<descriptor-repository version="1.0" isolation-level="read-uncommitted">
+	<!-- PEOPLE_DB Oracle -->
+
+	<jdbc-connection-descriptor 
+		jcd-alias="PEOPLE_DB" 
+		default-connection="true" 
+		platform="Oracle9i" 
+		jdbc-level="2.0" 
+		driver="oracle.jdbc.driver.OracleDriver" 
+		protocol="jdbc" 
+		subprotocol="oracle" 
+		dbalias="thin:@fabmi-xp:1521:xe" 
+		username="PEOPLE" 
+		password="PEOPLE" 
+		useAutoCommit="1">
+		<connection-pool maxActive="1000" maxIdle="10" whenExhaustedAction="2" 
+			testOnBorrow="true" timeBetweenEvictionRunsMillis="5000"/>
+		<sequence-manager className="org.apache.ojb.broker.util.sequence.SequenceManagerNextValImpl">
+			<attribute attribute-name="autoNaming" attribute-value="true"/>
+		</sequence-manager>
+	</jdbc-connection-descriptor>
+	
+	<!-- ***************************************************************************************************************************************************************************-->
+	<!-- ************************************************************* Process********************************************************************************************-->
+	<!-- ***************************************************************************************************************************************************************************-->
+	<class-descriptor class="it.people.process.data.PplPersistentData" table="PENDING_PROCESS">
+		<field-descriptor id="1" name="oid" column="OID" jdbc-type="BIGINT" 
+			primarykey="true" 
+			conversion="it.people.core.persistence.converters.sql.LongConverter" autoincrement="true"/>
+		<field-descriptor id="2" name="userID" column="USER_ID" jdbc-type="VARCHAR"/>
+		<field-descriptor id="3" name="commune" column="COMMUNE_ID" jdbc-type="VARCHAR" conversion="it.people.core.persistence.converters.sql.CommuneConverter"/>
+		<field-descriptor id="4" name="processData" column="PROCESS_VALUE" jdbc-type="CLOB" conversion="it.people.core.persistence.converters.sql.ClobConverter"/>
+		<field-descriptor id="5" name="processClass" column="PROCESS_CLASSNAME" jdbc-type="VARCHAR" conversion="it.people.core.persistence.converters.sql.ClassNameConverter"/>
+		<field-descriptor id="6" name="lastModifiedTime" column="LAST_MODIFIED_TIME" jdbc-type="TIMESTAMP" conversion="it.people.core.persistence.converters.sql.DateConverter"/>
+		<field-descriptor id="7" name="creationTime" column="CREATION_TIME" jdbc-type="TIMESTAMP" conversion="it.people.core.persistence.converters.sql.DateConverter"/>
+		<field-descriptor id="8" name="sent" column="SENT" jdbc-type="BIGINT" conversion="it.people.core.persistence.converters.sql.BooleanConverter"/>
+		<field-descriptor id="9" name="status" column="STATUS" jdbc-type="BIGINT" conversion="it.people.core.persistence.converters.sql.StatusConverter"/>
+        <field-descriptor id="10" name="contentName" column="CONTENT_NAME" jdbc-type="VARCHAR"/>
+        <field-descriptor id="11" name="contentID" column="CONTENT_ID" jdbc-type="VARCHAR"/>
+		<field-descriptor id="12" name="processName" column="PROCESS_NAME" jdbc-type="VARCHAR"/>
+		<field-descriptor id="13" name="processDataID" column="PROCESS_DATA_ID" jdbc-type="VARCHAR"/>
+
+		<collection-descriptor name="principal" element-class-ref="it.people.core.PplPrincipal" auto-update="true" auto-delete="true">
+			<inverse-foreignkey field-id-ref="1"/>
+		</collection-descriptor>
+
+		<collection-descriptor name="delegate" element-class-ref="it.people.core.PplDelegate" auto-update="true" auto-delete="true">
+			<inverse-foreignkey field-id-ref="1"/>
+		</collection-descriptor>
+	</class-descriptor>
+
+    <!-- PENDING_PROCESS_ACL -> PplPrincipal  -->
+	<class-descriptor class="it.people.core.PplPrincipal" table="PENDING_PROCESS_ACL">
+		<field-descriptor id="1" name="oid" column="PROCESS_ID" jdbc-type="BIGINT" primarykey="true" conversion="it.people.core.persistence.converters.sql.LongConverter"/>
+		<field-descriptor id="2" name="userID" column="USER_ID" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor id="3" name="role" column="ROLE" jdbc-type="VARCHAR" primarykey="true" conversion="it.people.core.persistence.converters.sql.PplRoleConverter"/>
+	</class-descriptor>
+
+    <!-- PENDING_PROCESS_DELEGATE -> PplDelegate  -->
+	<class-descriptor class="it.people.core.PplDelegate" table="PENDING_PROCESS_DELEGATE">
+		<field-descriptor id="1" name="oid"        column="PROCESS_ID"  jdbc-type="BIGINT" primarykey="true"/>
+		<field-descriptor id="2" name="ownerID"    column="USER_ID"     jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor id="3" name="delegateID" column="DELEGATE_ID" jdbc-type="VARCHAR" primarykey="false"/>
+   </class-descriptor>
+
+    <!-- PROCESS_DELEGATE -> PplProcessDelegate -->
+	<class-descriptor class="it.people.core.PplProcessDelegate" table="PROCESS_DELEGATE">
+		<field-descriptor id="1" name="oid"              column="OID"               jdbc-type="BIGINT" primarykey="true" autoincrement="true"/>
+		<field-descriptor id="2" name="processName"      column="PROCESS_CLASSNAME" jdbc-type="VARCHAR" primarykey="false"/>
+		<field-descriptor id="3" name="communeId"        column="COMMUNE_ID"        jdbc-type="VARCHAR" primarykey="false"/>
+		<field-descriptor id="4" name="userId"           column="USER_ID"           jdbc-type="VARCHAR" primarykey="false"/>
+		<field-descriptor id="5" name="delegateId"       column="DELEGATE_ID"       jdbc-type="VARCHAR" primarykey="false"/>
+		<field-descriptor id="6" name="validFrom"        column="VALID_FROM"        jdbc-type="TIMESTAMP" primarykey="false" conversion="it.people.core.persistence.converters.sql.DateConverter"/>
+		<field-descriptor id="7" name="validTo"          column="VALID_TO"          jdbc-type="TIMESTAMP" primarykey="false" conversion="it.people.core.persistence.converters.sql.DateConverter"/>
+   </class-descriptor>
+
+	<class-descriptor class="it.people.City" table="COMMUNE">
+		<field-descriptor id="1" name="oid" column="OID" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor id="2" name="name" column="NAME" jdbc-type="VARCHAR"/>
+		<field-descriptor id="3" name="label" column="LABEL" jdbc-type="VARCHAR"/>
+		<field-descriptor id="4" name="aooPrefix" column="AOOPREFIX" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+
+	<class-descriptor class="it.people.process.SubmittedProcess" table="SUBMITTED_PROCESS">
+		<field-descriptor id="1" name="oid" column="OID" jdbc-type="BIGINT" primarykey="true" conversion="it.people.core.persistence.converters.sql.LongConverter" autoincrement="true"/>
+		<field-descriptor id="2" name="editableProcessId" column="EDITABLE_PROCESS_ID" jdbc-type="BIGINT" conversion="it.people.core.persistence.converters.sql.LongConverter"/>
+		<field-descriptor id="3" name="user" column="USER_ID" jdbc-type="VARCHAR" conversion="it.people.core.persistence.converters.sql.UserConverter"/>
+		<field-descriptor id="4" name="peopleProtocollId" column="PEOPLE_PROTOCOL_ID" jdbc-type="VARCHAR"/>
+		<field-descriptor id="5" name="communeProtocollId" column="COMMUNE_PROTOCOL_ID" jdbc-type="VARCHAR"/>
+		<field-descriptor id="6" name="transportTrackingNumber" column="TRANSPORT_TRACKINGNUMBER" jdbc-type="VARCHAR"/>
+		<field-descriptor id="7" name="commune" column="COMMUNE_ID" jdbc-type="VARCHAR" conversion="it.people.core.persistence.converters.sql.CommuneConverter"/>
+		<field-descriptor id="8" name="submittedTime" column="SUBMITTED_TIME" jdbc-type="TIMESTAMP" conversion="it.people.core.persistence.converters.sql.DateConverter"/>
+		<field-descriptor id="9" name="completed" column="COMPLETED" jdbc-type="BIGINT" conversion="it.people.core.persistence.converters.sql.BooleanConverter"/>
+
+		<collection-descriptor name="historyState" element-class-ref="it.people.process.SubmittedProcessHistory" auto-update="true" auto-delete="true">
+			<inverse-foreignkey field-id-ref="1"/>
+		</collection-descriptor>
+
+		<collection-descriptor name="processInformation" element-class-ref="it.people.process.SubmittedProcessInformation" auto-update="true" auto-delete="true">
+			<inverse-foreignkey field-id-ref="1"/>
+		</collection-descriptor>
+
+		<reference-descriptor 
+			name="persistentData"
+			class-ref="it.people.process.data.PplPersistentData"
+			auto-retrieve="true" auto-delete="false" auto-update="false" >
+			<foreignkey field-id-ref="2" />
+	    </reference-descriptor>
+	</class-descriptor>
+
+	<class-descriptor class="it.people.process.SubmittedProcessHistory" table="SUBMITTED_PROCESS_HISTORY">
+		<field-descriptor id="1" name="oid" column="SBMT_PROCESS_ID" jdbc-type="BIGINT" primarykey="true" conversion="it.people.core.persistence.converters.sql.LongConverter"/>
+		<field-descriptor id="2" name="transactionTime" column="TRANSACTION_TIME" jdbc-type="TIMESTAMP" primarykey="true" conversion="it.people.core.persistence.converters.sql.DateConverter"/>
+		<field-descriptor id="3" name="state" column="STATUS_ID" jdbc-type="BIGINT" conversion="it.people.core.persistence.converters.sql.SubmittedProcessStateConverter"/>
+	</class-descriptor>
+
+	<class-descriptor class="it.people.process.SubmittedProcessInformation" table="SUBMITTED_PROCESS_INFO">
+		<field-descriptor id="1" name="oid" column="SBMT_PROCESS_ID" jdbc-type="BIGINT" primarykey="true" conversion="it.people.core.persistence.converters.sql.LongConverter"/>
+		<field-descriptor id="2" name="key" column="INFORMATION_KEY" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor id="3" name="path" column="INFORMATION_PATH" jdbc-type="VARCHAR" />
+		<field-descriptor id="4" name="marshalledData" column="INFORMATION_VALUE" jdbc-type="CLOB" conversion="it.people.core.persistence.converters.sql.ClobConverter"/>
+	</class-descriptor>
+
+  <!-- ConfigSenderProcess -->
+	<class-descriptor class="it.people.process.config.ConfigSender" table="CONFIGSENDERPROCESS">
+		<field-descriptor id="1" name="commune"        column="COMMUNE_ID"     jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor id="2" name="process"        column="PROCESS_NAME"   jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor id="3" name="className"      column="CLASSNAME"      jdbc-type="VARCHAR" primarykey="false" conversion="it.people.core.persistence.converters.sql.ClassNameConverter"/>
+		<field-descriptor id="4" name="mailAddress"    column="MAILADDRESS"    jdbc-type="VARCHAR" primarykey="false"/>
+ 		<field-descriptor id="5" name="pickupPassword" column="PICKUPPASSWORD" jdbc-type="VARCHAR" primarykey="false"/>
+ 		<field-descriptor id="6" name="dummyPassword" column="DUMMY_PASSWORD" jdbc-type="VARCHAR" primarykey="false"/>
+  </class-descriptor>
+
+	<!-- ************************************************************************************** -->
+	<!-- Gestione categorie      **************************************************************
+	     ************************************************************************************** -->
+	<class-descriptor class="it.people.content.CategoryImpl" table="CATEGORY">
+		<field-descriptor id="1" name="oid" column="OID" jdbc-type="BIGINT" primarykey="true" conversion="it.people.core.persistence.converters.sql.LongConverter" autoincrement="true"/>
+		<field-descriptor id="2" name="name" column="NAME" jdbc-type="VARCHAR" />
+        <field-descriptor id="3" name="label" column="LABEL" jdbc-type="VARCHAR" />
+
+        <collection-descriptor name="child" element-class-ref="it.people.content.CategoryAbstractImpl" auto-update="true" auto-delete="true" auto-retrieve="true" refresh="true" indirection-table="CHILDCATEGORY">
+            <inverse-foreignkey field-id-ref="1"/>
+            <fk-pointing-to-this-class column="PARENT_ID"/>
+            <fk-pointing-to-element-class column="CAT_ID"/>
+        </collection-descriptor>
+
+		<collection-descriptor name="process" element-class-ref="it.people.content.ContentImpl" auto-update="true" auto-delete="true" auto-retrieve="true">
+			<inverse-foreignkey field-id-ref="1"/>
+		</collection-descriptor>
+	</class-descriptor>
+
+	<class-descriptor class="it.people.content.CategoryAbstractImpl" table="CATEGORY">
+		<field-descriptor id="1" name="oid" column="OID" jdbc-type="BIGINT" primarykey="true" conversion="it.people.core.persistence.converters.sql.LongConverter"/>
+	</class-descriptor>
+
+	<class-descriptor class="it.people.content.ContentImpl" table="CONTENTCATEGORY">
+		<field-descriptor id="1" name="oid" column="CAT_ID" jdbc-type="BIGINT" primarykey="true" conversion="it.people.core.persistence.converters.sql.LongConverter"/>
+		<field-descriptor id="2" name="key" column="CONTENT_KEY" jdbc-type="VARCHAR" primarykey="true"/>
+		<field-descriptor id="3" name="name" column="CONTENT_NAME" jdbc-type="VARCHAR"/>
+		<field-descriptor id="4" name="processClass" column="PROCESS_CLASS" jdbc-type="VARCHAR" conversion="it.people.core.persistence.converters.sql.ClassNameConverter"/>
+		<field-descriptor id="5" name="processName" column="PROCESS_NAME" jdbc-type="VARCHAR" />
+	</class-descriptor>
+
+
+	<class-descriptor class="it.people.process.sign.SignedDataHolder" table="SIGNSTEPS">
+		<field-descriptor id="1" name="stepOid" column="STEP_OID" primarykey="true" jdbc-type="VARCHAR"/>
+		<field-descriptor id="2" name="parentOid" column="PROCESS_OID" jdbc-type="BIGINT" primarykey="true" conversion="it.people.core.persistence.converters.sql.LongConverter"/>
+		<field-descriptor id="3" name="fileName" column="FILE_NAME" jdbc-type="VARCHAR"/>
+		<field-descriptor id="4" name="filePath" column="FILE_PATH" jdbc-type="VARCHAR"/>
+	</class-descriptor>
+
+	<!-- puo essere cancellata -->
+	<class-descriptor class="it.people.process.sign.StepSign" table="PROCESS_STEPS">
+		<field-descriptor id="1" name="oid" column="OID" primarykey="true" jdbc-type="BIGINT"  conversion="it.people.core.persistence.converters.sql.LongConverter"/>
+		<field-descriptor id="2" name="processName" column="PROCESS_NAME" jdbc-type="VARCHAR"/>
+		<field-descriptor id="3" name="orderNumber" column="ORDER_NUMBER" jdbc-type="BIGINT"  conversion="it.people.core.persistence.converters.sql.LongConverter"/>
+		<field-descriptor id="4" name="jsp" column="JSP_PATH" jdbc-type="VARCHAR"/>
+		<field-descriptor id="5" name="help" column="HELP_PATH" jdbc-type="VARCHAR"/>
+		<field-descriptor id="3" name="active" column="ACTIVE" jdbc-type="BIGINT"  conversion="it.people.core.persistence.converters.sql.BooleanConverter"/>
+	</class-descriptor>
+
+
+    <!-- USER_PROFILE -->
+	<class-descriptor class="it.people.core.PplUser" table="USER_PROFILE">
+		<field-descriptor id="1" name="userID" column="USER_ID" primarykey="true" jdbc-type="VARCHAR"/>
+		<field-descriptor id="2" name="EMail"  column="E_MAIL"  jdbc-type="VARCHAR"/>
+		<field-descriptor id="3" name="userName"  column="USER_NAME"  jdbc-type="VARCHAR"/>
+
+        <collection-descriptor name="adminCommuni" element-class-ref="it.people.core.PplAdminCommune" auto-update="true" auto-delete="true" auto-retrieve="true">
+			<inverse-foreignkey field-id-ref="1"/>
+		</collection-descriptor>
+	</class-descriptor>
+
+    <!-- AMMINISTRATORE_COMMUNE -->
+    <class-descriptor class="it.people.core.PplAdminCommune" table="AMMINISTRATORE_COMMUNE">
+            <field-descriptor id="1" name="userID"    column="USER_ID"    primarykey="true" jdbc-type="VARCHAR"/>
+            <field-descriptor id="2" name="communeID" column="COMMUNE_ID" primarykey="true" jdbc-type="VARCHAR"/>
+    </class-descriptor>
+
+	<!-- SERVICE_PROFILE -->
+    <class-descriptor class="it.people.core.ServiceProfileStore" table="SERVICE_PROFILE">
+            <field-descriptor id="1" name="processName" column="PROCESS_NAME" primarykey="true" jdbc-type="VARCHAR" autoincrement="false"/>
+            <field-descriptor id="2" name="profile" column="PROFILE" jdbc-type="CLOB"/>
+    </class-descriptor>
+
+	<!-- include mappings for JUnit tests here -->
+	<!-- include ojb internal mappings here -->
+    &internal;
+
+	<!-- user data of farAway db -->
+</descriptor-repository>

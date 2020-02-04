@@ -1,0 +1,185 @@
+<parteGenerale xmlns="http://www.insiel.it/masterdata/mdap/istanze">
+  <listaSoggettiInteressati>
+    <interessato xmlns:atrb="http://www.insiel.it/masterdata/mdap/istanze" atrb:idInIstanza="1">
+      <richiedenteFormaGiuridica>
+        <figuraGiuridicaBase xmlns="http://www.insiel.it/masterdata/mdas">
+          <denominazione>FEDRIGO LIVIO &amp; C. SNC</denominazione>
+          <partitaIva>02540190309</partitaIva>
+          <tipoFiguraGiuridica>SOCIETA&apos; IN NOME COLLETTIVO</tipoFiguraGiuridica>
+        </figuraGiuridicaBase>
+        <sedeLegale xmlns="http://www.insiel.it/masterdata/mdas">
+          <tipologia>Sede principale</tipologia>
+          <dataInizioAttivita>2010-12-04</dataInizioAttivita>
+          <iscrizioneREA>
+            <numeroREA>269115</numeroREA>
+            <provinciaCCIAA>UDINE</provinciaCCIAA>
+            <principale>true</principale>
+          </iscrizioneREA>
+          <progressivoREA>1</progressivoREA>
+          <indirizzo>
+            <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">PASSO</tipoIndirizzo>
+            <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">PRAMOLLO</indirizzo>
+            <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">13</numeroCivico>
+            <cap xmlns="http://www.insiel.it/masterdata/mdet">33016</cap>
+            <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+              <comuneItaliano>
+                <id>10398</id>
+                <denominazioneComune>Pontebba</denominazioneComune>
+                <provincia>
+                  <denominazioneProvincia>Udine</denominazioneProvincia>
+                  <siglaProvincia>UD</siglaProvincia>
+                </provincia>
+              </comuneItaliano>
+            </luogo>
+          </indirizzo>
+        </sedeLegale>
+        <iscrizioneRI xmlns="http://www.insiel.it/masterdata/mdas">
+          <numeroRI>0254019030</numeroRI>
+          <dataIscrizioneRI>2008-09-24</dataIscrizioneRI>
+          <sezione>ORDINARIA</sezione>
+        </iscrizioneRI>
+        <listaCaricaPersona xmlns="http://www.insiel.it/masterdata/mdas">
+          <caricaPersona>
+            <personaFisica>
+              <personaFisicaBase>
+                <cognome>FEDRIGO</cognome>
+                <nome>LIVIO</nome>
+                <codiceFiscale>FDRFST78E05Z102H</codiceFiscale>
+              </personaFisicaBase>
+              <sesso>M</sesso>
+              <luogoNascita>
+                <comuneItaliano xmlns="http://www.insiel.it/masterdata/mdet">
+                  <id>10398</id>
+                  <denominazioneComune>Malborghetto Valbruna</denominazioneComune>
+                  <provincia>
+                    <denominazioneProvincia>Udine</denominazioneProvincia>
+                    <siglaProvincia>UD</siglaProvincia>
+                  </provincia>
+                </comuneItaliano>
+              </luogoNascita>
+              <dataNascita>1952-09-28</dataNascita>
+              <residenza>
+                <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">PASSO</tipoIndirizzo>
+                <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">PRAMOLLO</indirizzo>
+                <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">8</numeroCivico>
+                <cap xmlns="http://www.insiel.it/masterdata/mdet">33016</cap>
+                <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+                  <comuneItaliano>
+                    <id>10398</id>
+                    <denominazioneComune>Pontebba</denominazioneComune>
+                    <provincia>
+                      <denominazioneProvincia>Udine</denominazioneProvincia>
+                      <siglaProvincia>UD</siglaProvincia>
+                    </provincia>
+                  </comuneItaliano>
+                </luogo>
+              </residenza>
+              <cittadinanza>
+                <id xmlns="http://www.insiel.it/masterdata/mdet">1</id>
+                <denominazione xmlns="http://www.insiel.it/masterdata/mdet">Italia</denominazione>
+              </cittadinanza>
+              <listaRiferimenti/>
+            </personaFisica>
+            <listaCariche>
+              <carica>
+                <tipologia>Legale rappresentante della persona giuridica</tipologia>
+                <titolarita>S</titolarita>
+              </carica>
+            </listaCariche>
+          </caricaPersona>
+        </listaCaricaPersona>
+      </richiedenteFormaGiuridica>
+    </interessato>
+  </listaSoggettiInteressati>
+  <localizzazioneIntervento>
+    <localizzazioneTerritoriale>
+      <indirizzo xmlns="http://www.insiel.it/masterdata/mdet-ext">
+        <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">PASSO</tipoIndirizzo>
+        <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">PRAMOLLO</indirizzo>
+        <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">8</numeroCivico>
+        <cap xmlns="http://www.insiel.it/masterdata/mdet">33016</cap>
+        <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+          <comuneItaliano>
+            <id>10398</id>
+            <denominazioneComune>Pontebba</denominazioneComune>
+            <provincia>
+              <denominazioneProvincia>Udine</denominazioneProvincia>
+              <siglaProvincia>UD</siglaProvincia>
+            </provincia>
+          </comuneItaliano>
+        </luogo>
+      </indirizzo>
+      <estremiCatastali xmlns="http://www.insiel.it/masterdata/mdet-ext" xmlns:atrb="http://www.insiel.it/masterdata/mdet" atrb:tipoCatasto="catasto fabbricati (N.C.E.U.)">
+        <catastoFabbricati xmlns="http://www.insiel.it/masterdata/mdet">
+          <comuneCatastale>
+            <id>10398</id>
+            <denominazioneComune>Pontebba</denominazioneComune>
+            <provincia>
+              <denominazioneProvincia>Udine</denominazioneProvincia>
+              <siglaProvincia>UD</siglaProvincia>
+            </provincia>
+          </comuneCatastale>
+          <foglio>A/2</foglio>
+          <particella>.531</particella>
+          <subalterno>3</subalterno>
+        </catastoFabbricati>
+      </estremiCatastali>
+      <destinazioneUso xmlns="http://www.insiel.it/masterdata/mdet-ext" xmlns:atrb="http://www.insiel.it/masterdata/mdet-ext" atrb:codiceDestinazioneUso="03">
+        <descrizioneDestinazioneUso>alberghiera: superfici di unita&apos; immobiliari, destinate all&apos;uso abitativo ricettivo, integrate da locali di soggiorno e servizi di uso comune, nonche&apos; da eventuale ristorante e bar, definite dalla vigente legislazione di settore come strutture ricettive turistiche alberghiere, anche se gestite in forma periodica o stagionale, quali: alberghi, motel, villaggi albergo, residenze turistico-alberghiere;</descrizioneDestinazioneUso>
+      </destinazioneUso>
+      <estremiProprieta xmlns="http://www.insiel.it/masterdata/mdet-ext">
+        <soggettoProprietario>
+          <proprietarioFormaGiuridica>
+            <figuraGiuridicaBase xmlns="http://www.insiel.it/masterdata/mdas">
+              <denominazione>IMMOBILIARE WULFENIA SRL</denominazione>
+              <partitaIva>01411580309</partitaIva>
+              <tipoFiguraGiuridica>SOCIETA&apos; A RESPONSABILITA&apos; LIMITATA</tipoFiguraGiuridica>
+            </figuraGiuridicaBase>
+            <sedeLegale xmlns="http://www.insiel.it/masterdata/mdas">
+              <tipologia>Sede principale</tipologia>
+              <dataInizioAttivita>1985-09-28</dataInizioAttivita>
+              <iscrizioneREA>
+                <numeroREA>172119</numeroREA>
+                <provinciaCCIAA>UDINE</provinciaCCIAA>
+                <principale>true</principale>
+              </iscrizioneREA>
+              <progressivoREA>1</progressivoREA>
+              <indirizzo>
+                <tipoIndirizzo xmlns="http://www.insiel.it/masterdata/mdet">PASSO</tipoIndirizzo>
+                <indirizzo xmlns="http://www.insiel.it/masterdata/mdet">PRAMOLLO</indirizzo>
+                <numeroCivico xmlns="http://www.insiel.it/masterdata/mdet">8</numeroCivico>
+                <cap xmlns="http://www.insiel.it/masterdata/mdet">33016</cap>
+                <luogo xmlns="http://www.insiel.it/masterdata/mdet">
+                  <comuneItaliano>
+                    <id>10398</id>
+                    <denominazioneComune>Pontebba</denominazioneComune>
+                    <provincia>
+                      <denominazioneProvincia>Udine</denominazioneProvincia>
+                      <siglaProvincia>UD</siglaProvincia>
+                    </provincia>
+                  </comuneItaliano>
+                </luogo>
+              </indirizzo>
+            </sedeLegale>
+          </proprietarioFormaGiuridica>
+        </soggettoProprietario>
+      </estremiProprieta>
+    </localizzazioneTerritoriale>
+    <titoloDisponibilita>
+      <IdSoggettoInIstanza>1</IdSoggettoInIstanza>
+      <titolarita>titolare di diritti di superficie, usufrutto, uso e abitazione e di altri diritti reali</titolarita>
+      <estremiRegistrazioneAtto>CONTRATTO DI AFFITTO DI AZIENDA DEL 27/11/2013 NOTAIO PERESSON LUCIA REP. 23782 RACC. 10414</estremiRegistrazioneAtto>
+    </titoloDisponibilita>
+  </localizzazioneIntervento>
+  <procedimento>
+    <procedimentoBase xmlns="http://www.insiel.it/masterdata/mdap">
+      <id>11094</id>
+      <titolo>Strutture alberghiere - Subingresso</titolo>
+    </procedimentoBase>
+  </procedimento>
+  <note>
+    <nota xmlns:atrb="http://www.insiel.it/masterdata/mdap/istanze" atrb:descrizione="NotaIstanzaCompleta">
+      <Contenuto>TRATTASI DI SUBENTRO NELLA GESTIONE IN SEGUITO A CONTRATTO DI AFFITTO DI AZIENDA CON DATA EFFETTIVA DI INIZIO ATTIVITA&apos; DAL 14/12/2013</Contenuto>
+    </nota>
+  </note>
+</parteGenerale>

@@ -1,0 +1,9 @@
+/* $Id: small.css,v 1.1 2011/03/11 09:39:39 mirkoc Exp $ */
+.calendar {
+  border-width: 1px;
+  font-size: 9px;
+}
+
+.calendar table {
+  font-size: 9px;
+}

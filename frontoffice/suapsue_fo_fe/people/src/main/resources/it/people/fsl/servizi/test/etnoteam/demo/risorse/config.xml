@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<servizio>
+    <nome>Servizio Demo</nome>
+    <attivita>fiscali</attivita>
+    <sottoattivita>ici</sottoattivita>
+    <process>it.people.process.GenericProcess</process>
+    <package>it.people.fsl.servizi.test.etnoteam.demo</package>
+    <parameter name="parametro1" value="Servizio di test di Etnoteam"/>
+    <parameter name="realizzatore" value="Etnoteam" />
+    <references name="SUBMIT_PROCESS" value="BE Genova" shortflag="0" address="UNDEFINED" />
+    <references name="BACKEND_TEST" value="BE Genova" shortflag="0" address="UNDEFINED" />
+    <connected-service label="Servizi di prova" uri="http://www.people.it" />
+    <connected-service label="Servizi di test" uri="http://www.people.it" />
+    <context-element name="Etnoteam" />
+    <context-element name="programmazione Java" />
+</servizio>

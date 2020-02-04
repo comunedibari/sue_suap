@@ -1,0 +1,316 @@
+.uniForm
+{
+    position: relative;
+    display: block;
+}
+.containerDettaglio{
+    border-bottom: 1px solid #D6D2D0;
+    float: left;
+    width: 50%;
+}
+.confronta{
+    /*display: block;
+    width: auto;
+    height: 20px;
+    float: left;*/
+}
+.label{
+    /*height: 1px;*/
+    text-align: center;
+}
+.sorgente{
+    border-right: none;
+}
+.destinazione{
+    border-left: none;
+}
+
+.sorgente, .destinazione{
+    /* height: 98%; */
+    margin-top: 0.5%;
+    width: 45%;
+    background-color: #F7F7F7;
+    padding-bottom: 10px;
+}
+
+.containerAnagrafiche ul{
+    margin-bottom: 0;
+    margin-bottom: 6px;
+    padding-top: 14px;
+    border-top: 1px solid #0067c7;
+    background-color: #F7F7F7;
+    margin-left: 0px !important;
+}
+
+.azioni{
+    background-color: transparent;
+    border-bottom: medium none;
+    border-top: medium none;
+    height: 100%;
+    text-align: center;
+    width: 9%;
+}
+.azioni>div{
+    width: 94px;
+    height: 16px;
+    cursor: pointer;
+    float: left;
+    list-style: none outside none;
+    margin: 2px;
+    padding: 4px 0;
+    position: relative;
+}
+.containerAnagrafiche{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: auto;
+    min-width: 420px;
+}
+.containerAnagrafiche > div{
+    position: relative;
+    display: block;
+    float: left;
+}
+#spostaSingola{
+    width: 93%;
+    border-radius: 2px;
+    box-shadow: 3px 3px #EEE;
+    background:#b40000 !important;
+}
+.containerAnagrafiche ul li{
+    list-style: none;
+    height: 25px;
+    margin-bottom:10px !important;
+}
+
+.containerAnagrafiche li{
+    height: 28px;
+    margin: 1px;
+    padding: 0;
+    padding-left: 10px;
+}
+.containerAnagrafiche li > label{
+    display: block;
+    width: 150px;
+    float: left;
+    font-size: 12px;
+    min-height: 15x;
+}
+.containerAnagrafiche li > input{
+    display: block;
+    width: 270px;
+}
+
+
+.containerAnagrafiche input[readonly="readonly"], input[readonly]{
+    border: none;
+    background-color: transparent;
+}
+.recapito{
+    display: block;
+}
+
+.uniForm ul select, .uniForm .inlineLabels select{
+    width: 200px;
+}
+DatiCatastali{
+    display: block;
+    height: auto;
+
+}
+.DatiCatastali ul{
+    display: block;
+    margin-top: 7px;
+    float: none;
+    width: 100%;
+    position: relative;
+}
+.DatiCatastali li{
+    float: left;
+    margin-top: 1px;
+    display: block;
+
+}
+.DatiCatastali input,.DatiCatastali select{
+    width: 200px
+}
+.DatiCatastali button{
+    margin-right: 20px;
+    right: 0;
+}
+DatiTavolari{
+    display: block;
+    height: auto;
+
+}
+.DatiTavolari ul{
+    display: block;
+    margin-top: 7px;
+    float: none;
+    width: 100%;
+    position: relative;
+}
+.DatiTavolari li{
+    float: left;
+    margin-top: 1px;
+    display: block;
+
+}
+.DatiTavolari input,.DatiTavolari select{
+    width: 200px
+}
+.DatiTavolari button{
+    margin-right: 20px;
+    right: 0;
+}
+
+IndirizziIntervento{
+    display: block;
+    height: auto;
+
+}
+.IndirizziIntervento ul{
+    /*display: block;*/
+    display: inline;
+    margin-top: 7px;
+    float: none;
+    width: 100%;
+    position: relative;
+}
+.IndirizziIntervento li{
+    display: inline;
+    float: left;
+    margin-top: 1px;
+    /*display: block;*/
+
+}
+.IndirizziIntervento input,.IndirizziIntervento select{
+    width: 200px
+}
+.IndirizziIntervento button{
+    margin-right: 20px;
+    right: 0;
+}
+
+.confermataBG{
+    background-color: #C5DBEC;
+}
+.ui-dialog .ui-dialog-content{
+    padding: 0px;
+}
+.ui-dialog .ui-dialog-titlebar, .ui-dialog .ui-dialog-buttonpane { font-size: 0.8em; }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight,.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus
+{
+    border: 0px;
+}
+
+.erro{
+    width: 523px; 
+    min-height: 59.1667px; 
+    height: 293px; 
+    color: red; 
+    font-style: italic; 
+    padding-left: 65px;
+}
+.messaggioErrore{
+    padding-left: 25px;
+}
+.recapitoNotifica {
+    display: block; position: relative; overflow: hidden;
+}
+.recapitoNotifica label{
+    display: block;
+    width: 130px;
+    float: left;
+    font-size: 12px;
+}
+.containerAnagrafiche li > span{
+    font-size: 12px;
+    height: 1px;
+    margin-left: 130px;
+    padding: 0;
+    position: absolute;
+    top: 10px;
+    color: red;
+    font-weight: bold;
+}
+.registroImprese
+{
+    font-size: 12px;
+    width: 23%;
+    display: none;
+}
+.ricercaAnagrafe
+{
+    font-size: 12px;
+    width: 23%;
+    display: none;
+}
+
+/* nuovaAnagraficaDialog */
+
+.nuovaAnagraficaDialog {
+    margin-left: 43px;
+    margin-top: 10px;
+    width: 100%;
+}
+.nuovaAnagraficaDialog > div {
+    height: 30px;
+}
+.nuovaAnagraficaDialog label{
+    float:left;
+    width:225px;
+
+}
+.nuovaAnagraficaDialog input{
+    width:200px;
+}
+.nuovaAnagraficaDialog select{
+    width:200px;
+}
+#ricercaPraticaOrigine
+{
+    font-size: 13px;
+}
+#listaPraticaOrigine > h2
+{
+    display:none;
+}
+
+.task_protocol_manual_management .ctrlHolder{
+    padding: 5px;    
+}
+
+.task_protocol_manual_management .ctrlHolder select, .task_protocol_manual_management .ctrlHolder input{
+    width: 230px; 
+}
+
+.task_protocol_manual_management label{
+    display: inline-block;
+    width: 340px;
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+.ui-dialog .formHint {
+    font-size: 0.65em;
+    color: #777;
+    margin-bottom: 10px;
+    clear: both;
+}
+
+#errorInternalDialog{
+    overflow: auto;   
+    height: 400px;
+    font: 12px Arial;
+}
+
+.scelta{
+    display: inline!important;
+    padding-left: 10px!important;
+}

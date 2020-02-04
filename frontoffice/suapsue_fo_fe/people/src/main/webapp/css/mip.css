@@ -1,0 +1,284 @@
+/***********************************************/
+/* tag html ridefiniti                         */
+/***********************************************/ 
+
+body {
+	margin: 0px;
+	padding: 0px;				
+	border: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	background-color: #ffffff;
+}
+
+hr
+{ 
+	display: none;
+}
+
+img
+{
+	border: none;
+}
+
+
+/***********************************************/
+/*               intestazione                  */
+/***********************************************/
+
+/* Intestazione degli errori */
+#header
+{ 
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0; 
+	padding-right: 0; 
+	width: 100%;
+	background-color: #ffffff;
+	margin: 0;
+	color: #000; 
+	height: 64px; 
+	background-image: url(../img/banner.jpg);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+#intestazione
+{
+	background: #ffffff;
+}
+#logo
+{ 
+	width: auto; 
+	margin: 0; 
+	height: 61px;
+}
+#logo
+{
+	background: url(../img/grafica_top.jpg) no-repeat;	
+}
+
+/************* sottointestazione *************/
+	
+#sottointestazione
+{ 		
+	width: 100%;	
+	font-weight: bold;			
+  	background: #336699;
+	margin-top: 1px;
+	padding-bottom: 0.4em;
+	padding-top: 0.4em;	
+}
+
+/* classi invisibile */
+.invisibile
+{ 
+	display: none;
+}
+
+.inv
+{ 
+	display: none;
+}
+
+/* Titolo Pagina Servizio */
+h2.int
+{
+	margin: 0px 0px 0px 0px;
+	text-align: center;
+	background-color: #336699;
+	color: #ffffff;
+	font-size: 80%;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-weight: bold;
+	width: 100%;
+	border: 0;
+	padding: 0.2ex 0 0.5ex 0.5ex;
+	vertical-align: middle;
+}
+
+/* Titolo per insieme di campi */
+div.contenitorepagamento
+{
+	width: 100%; 
+ 	padding: 0;
+ 	margin: 0;	
+}
+
+div.DescrPag
+{
+	width: 100%;
+	font-size: 80%;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	background-color: transparent;
+	padding: 2px;
+  	margin: 0;
+	padding: 0.2ex 0 0.5ex 0.5ex;
+  	text-align: left
+}
+
+/*Gestione errore*/
+div.ErroreUtente { 
+  	width: 100%;
+	border-left: 2px solid #b2b2b2;
+	border-top: 2px solid #b2b2b2;
+	background-color: #eaeaea; 
+	color: #000000;  
+  	text-align: center;
+}
+
+div.ErroreUtente ul
+{ 
+  	list-style:none; /* elimino i punti elenco */
+  	margin: 0;
+	padding: 0; 
+  	text-align: center;
+}
+
+div.ErroreUtente ul li
+{ 
+	padding: 2px; /* elimino i rientri delle liste */
+}
+
+div.ErroreUtente p
+{ 
+  	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color: #FF0000;
+	margin: 0px 0px 0px 0px;
+	background-color: transparent;
+  	font-weight: bold;
+	text-align: center;
+	padding: 2px; /* elimino i rientri delle liste */
+}
+/*Fine Gestione errore*/
+
+/*---pulsanti per la tastiera---*/	
+.form
+{
+	width: 100%; 
+	padding: 0;
+	margin: 0;	
+}
+
+.formbut 
+{ 
+	height: 25px; 
+	width: 120px; 
+	border: 1px outset #b2b2b2; 
+	background: #336699;
+	color: #ffffff; 
+	font: 12px verdana,sans-serif
+}
+.formbutOver 
+{ 
+	height: 25px; 
+	width: 120px; 
+	border: 1px outset #b2b2b2; 
+	background: #EAEAEA;
+	color: #000000; 
+	font: 12px verdana,sans-serif
+}
+
+.bottoniNav 
+{
+	margin: 20px;
+	padding: 0;
+	background-color: transparent;
+	text-align: center;
+	display: block;
+	color: #000000;
+}
+/*---fine pulsanti per la tastiera---*/
+
+
+/*h3 per titolo*/
+h3.titserv 
+{
+	margin: 0;
+	text-align: center;
+	background-color: #ffffff;
+	color: #000000;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif; 
+	font-weight: bold;
+	width: 100%;
+	border: 1px solid #336699;
+	padding: 0.2ex 0 0.2ex 0;
+	vertical-align: middle
+}
+
+/* tabelle di contenuti */
+table.tbServ
+{
+	width: 100%;
+	font-size: 80%;
+	font-family: Arial, Helvetica, sans-serif; 
+	background-color: #ffffff;
+	padding: 0;
+	margin: 0;
+	border:	1px solid #336699
+}
+
+table.tbServ  td
+{
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif; 
+	background-color: transparent;
+	padding: 2px;
+	margin: 0;
+	text-align: left;
+	vertical-align: middle
+}
+
+table.tbServ  td.tabella
+{
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif; 
+	background-color: transparent;
+	vertical-align: middle;
+	padding: 2px;
+	margin: 0;
+	text-align: center
+}
+
+/* Tabella di riepilogo degli importi */
+table.tbPagamento
+{
+	width: 80%;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif; 
+	background-color: transparent;
+	padding: 0;
+	margin: 0
+}
+
+table.tbPagamento  td, table.tbPagamento th
+{
+	color:#000000;
+	font-family: Arial, Helvetica, sans-serif;
+	border:	1px solid #336699;
+	background-color: transparent;
+	padding:2px;
+	margin:0;
+	text-align: left;
+	vertical-align: middle
+}
+
+table.tbPagamento  td.numerico
+{
+	text-align: right;
+}
+
+table.tbPagamento  th
+{
+	text-align: center;
+	font-weight: bold;
+}
+
+table.tbPagamento tfoot td 
+{
+	font-weight: bold;
+}
+
+
+

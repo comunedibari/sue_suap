@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<xb:config xmlns:xb="http://xml.apache.org/xmlbeans/2004/02/xbean/config"
+           xmlns:diviana="http://egov.diviana.it"> 
+           
+<!--           
+    <xb:namespace uri='##local'>
+ 	    <xb:package>nonamespace</xb:package>
+    </xb:namespace>
+-->
+    
+    <xb:namespace uri='http://www.progettopeople.it/b002/ServiziCondivisi/Envelope'>
+ 	    <xb:package>it.people.b002.serviziCondivisi.envelope</xb:package>
+    </xb:namespace>
+
+    <xb:namespace uri='http://egov.diviana.it/b116/CNIPA'>
+ 	    <xb:package>it.diviana.egov.b116.cnipa</xb:package>
+    </xb:namespace>
+
+    <xb:namespace uri='http://egov.diviana.it/b116/OggettiCondivisi'>
+ 	    <xb:package>it.diviana.egov.b116.oggettiCondivisi</xb:package>
+    </xb:namespace>
+
+    <xb:namespace uri='http://egov.diviana.it/b116/Infrastruttura'>
+ 	    <xb:package>it.diviana.egov.b116.infrastruttura</xb:package>
+    </xb:namespace>
+
+    <xb:namespace uri='http://egov.diviana.it/b116/ServiziCondivisi'>
+ 	    <xb:package>it.diviana.egov.b116.serviziCondivisi</xb:package>
+    </xb:namespace>
+
+</xb:config>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:RichiestadiInvio xmlns:ogg="http://egov.diviana.it/b116/OggettiCondivisi" xmlns:cnip="http://egov.diviana.it/b116/CNIPA" xmlns:ser="http://egov.diviana.it/b116/ServiziCondivisi" xmlns:env="http://www.progettopeople.it/b002/ServiziCondivisi/Envelope" xmlns:CNIPA="http://egov.diviana.it/b116/CNIPA" xmlns:OggettiCondivisi="http://egov.diviana.it/b116/OggettiCondivisi" xmlns:ServiziCondivisi="http://egov.diviana.it/b116/ServiziCondivisi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.progettopeople.it/b002/ServiziCondivisi/Envelope
+C:\People-dev\people_dev\PeopleEnvelope\xsd\Invio-build116-esteso-b002.03.004\Envelope_b002.03.004.xsd">
+	<ogg:Contenuto>
+		<ogg:anyType>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NPGlzdDpSaWNoaWVzdGFkaUlz
+dGFuemFkaVJpbWJvcnNvSUNJIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxT
+Y2hlbWEtaW5zdGFuY2UiIHhtbG5zOmlzdD0iaHR0cDovL2Vnb3YuZGl2aWFuYS5pdC9iMTE1L0Zp
+c2NhbGkvSXN0YW56YWRpUmltYm9yc29JQ0kiIHhtbG5zOm9nZz0iaHR0cDovL2Vnb3YuZGl2aWFu
+YS5pdC9iMTE1L09nZ2V0dGlDb25kaXZpc2kiDQl4bWxuczpmaXM9Imh0dHA6Ly9lZ292LmRpdmlh
+bmEuaXQvYjExNS9GaXNjYWxpIg0JeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZWdvdi5kaXZp
+YW5hLml0L2IxMTUvRmlzY2FsaS9Jc3RhbnphZGlSaW1ib3Jzb0lDSSAuL0lzdGFuemFkaVJpbWJv
+cnNvSUNJLnhzZCI+DQk8b2dnOlJlY2FwaXRvPg0JCTxvZ2c6UmVmZXJlbnRlPlJlZmVyZW50ZVJl
+Y2FwaXRvPC9vZ2c6UmVmZXJlbnRlPg0JCTxvZ2c6UHJpb3JpdGE+UHJpbmNpcGFsZTwvb2dnOlBy
+aW9yaXRhPg0JCTxvZ2c6SW5kaXJpenpvZW1haWw+YWFAYmIuY2M8L29nZzpJbmRpcml6em9lbWFp
+bD4NCTwvb2dnOlJlY2FwaXRvPg0JPG9nZzpSaWVwaWxvZ29SaWNoaWVzdGE+DQkJPG9nZzpBbGxl
+Z2F0b0Zpcm1hdG9EaWdpdGFsbWVudGU+DQkJCTxvZ2c6Tm9tZUZpbGU+UmllcGlsb2dvLmh0bWwu
+cDdtPC9vZ2c6Tm9tZUZpbGU+DQkJCTxvZ2c6RGVzY3JpemlvbmU+UmllcGlsb2dvIHJpY2hpZXN0
+YTwvb2dnOkRlc2NyaXppb25lPg0JCQk8b2dnOkNvbnRlbnV0bz5ZMjl1ZEdWdWRYUnY8L29nZzpD
+b250ZW51dG8+DQkJPC9vZ2c6QWxsZWdhdG9GaXJtYXRvRGlnaXRhbG1lbnRlPg0JPC9vZ2c6Umll
+cGlsb2dvUmljaGllc3RhPg0JPG9nZzpJZGVudGlmaWNhdG9yZWRpUmljaGllc3RhPg0JCTxvZ2c6
+SWRlbnRpZmljYXRvcmVVbml2b2NvPg0JCQk8b2dnOkNvZGljZVByb2dldHRvPlBJUFBPPC9vZ2c6
+Q29kaWNlUHJvZ2V0dG8+DQkJCTxvZ2c6Q29kaWNlU2lzdGVtYT4NCQkJCTxvZ2c6Tm9tZVNlcnZl
+cj5QQUxMSU5PPC9vZ2c6Tm9tZVNlcnZlcj4NCQkJCTxvZ2c6Q29kaWNlQW1taW5pc3RyYXppb25l
+PkNPREFNTTwvb2dnOkNvZGljZUFtbWluaXN0cmF6aW9uZT4NCQkJPC9vZ2c6Q29kaWNlU2lzdGVt
+YT4NCQkJPG9nZzpEYXRhZGlSZWdpc3RyYXppb25lPjIwMDYtMDgtMDNUMDk6MTk6NTUuNTkyKzAy
+OjAwPC9vZ2c6RGF0YWRpUmVnaXN0cmF6aW9uZT4NCQkJPG9nZzpDb2RpY2VJZGVudGlmaWNhdGl2
+b09wZXJhemlvbmU+MDAwMTwvb2dnOkNvZGljZUlkZW50aWZpY2F0aXZvT3BlcmF6aW9uZT4NCQk8
+L29nZzpJZGVudGlmaWNhdG9yZVVuaXZvY28+DQk8L29nZzpJZGVudGlmaWNhdG9yZWRpUmljaGll
+c3RhPg0JPGZpczpSaW1ib3Jzb3BlckFubm8+DQkJPGZpczpBbm5vZGlBcHBsaWNhemlvbmU+MjAw
+NjwvZmlzOkFubm9kaUFwcGxpY2F6aW9uZT4NCQk8ZmlzOk1vdGl2YXppb25lZGlSaW1ib3Jzb0Nv
+ZGlmaWNhdGE+QXZ2aXNvIGRpIExpcXVpZGF6aW9uZSBvIEFjY2VydGFtZW50byBQYWdhdG8gZSBu
+b24gRG92dXRvPC9maXM6TW90aXZhemlvbmVkaVJpbWJvcnNvQ29kaWZpY2F0YT4NCTwvZmlzOlJp
+bWJvcnNvcGVyQW5ubz4NCTxmaXM6TW9kYWxpdGFkaVBhZ2FtZW50b0NvZGlmaWNhdGE+QXNzZWdu
+byBjaXJjb2xhcmUgbm9uIHRyYXNmZXJpYmlsZTwvZmlzOk1vZGFsaXRhZGlQYWdhbWVudG9Db2Rp
+ZmljYXRhPg0JPGZpczpUaXRvbGFyZT4NCQk8b2dnOlBlcnNvbmFGaXNpY2E+DQkJCTxvZ2c6Q29n
+bm9tZT5Db2dub21lVGl0b2xhcmU8L29nZzpDb2dub21lPg0JCQk8b2dnOk5vbWU+Tm9tZVRpdG9s
+YXJlPC9vZ2c6Tm9tZT4NCQkJPG9nZzpDb2RpY2VGaXNjYWxlPkFBQVNTUzU2VDQ1RjIwNVA8L29n
+ZzpDb2RpY2VGaXNjYWxlPg0JCQk8b2dnOkRhdGFkaU5hc2NpdGE+MjAwNi0wOC0wMzwvb2dnOkRh
+dGFkaU5hc2NpdGE+DQkJCTxvZ2c6THVvZ29kaU5hc2NpdGE+DQkJCQk8b2dnOkNvbXVuZUVzdGVz
+bz4NCQkJCQk8b2dnOk5vbWU+TWlsYW5vPC9vZ2c6Tm9tZT4NCQkJCQk8b2dnOlNpZ2xhZGlQcm92
+aW5jaWFFc3Rlc2E+TUk8L29nZzpTaWdsYWRpUHJvdmluY2lhRXN0ZXNhPg0JCQkJPC9vZ2c6Q29t
+dW5lRXN0ZXNvPg0JCQk8L29nZzpMdW9nb2RpTmFzY2l0YT4NCQkJPG9nZzpTZXNzbz5NYXNjaGlv
+PC9vZ2c6U2Vzc28+DQkJCTxvZ2c6UmVzaWRlbnphPg0JCQkJPG9nZzpMdW9nb0VjY2V6aW9uYWxl
+PkluZGlyaXp6byBUZXN0dWFsZTwvb2dnOkx1b2dvRWNjZXppb25hbGU+DQkJCTwvb2dnOlJlc2lk
+ZW56YT4NCQk8L29nZzpQZXJzb25hRmlzaWNhPg0JPC9maXM6VGl0b2xhcmU+DQk8ZmlzOlJpY2hp
+ZWRlbnRlPg0JCTxvZ2c6Q29kaWNlRmlzY2FsZT5BQUFCQkI1NUExMkYyMDVQPC9vZ2c6Q29kaWNl
+RmlzY2FsZT4NCQk8b2dnOkNyZWRlbnppYWxpRmlybWF0ZT4NCQkJPG9nZzpOb21lRmlsZT5Ob21l
+RmlsZUNyZWRlbnppYWxpRmlybWF0ZTwvb2dnOk5vbWVGaWxlPg0JCQk8b2dnOkRlc2NyaXppb25l
+PkNyZWRlbnppYWxpIEZpcm1hdGU8L29nZzpEZXNjcml6aW9uZT4NCQkJPG9nZzpDb250ZW51dG8+
+UTNKbFpHVnVlbWxoYkdrPTwvb2dnOkNvbnRlbnV0bz4NCQk8L29nZzpDcmVkZW56aWFsaUZpcm1h
+dGU+DQk8L2ZpczpSaWNoaWVkZW50ZT4NPC9pc3Q6UmljaGllc3RhZGlJc3RhbnphZGlSaW1ib3Jz
+b0lDST4N</ogg:anyType>
+	</ogg:Contenuto>
+	<ogg:NomeServizio>it.people.fsl.servizi.fiscali.ici.istanzadirimborsoici</ogg:NomeServizio>
+	<ogg:IdentificatorediRichiesta>
+		<ogg:IdentificatoreUnivoco>
+			<ogg:CodiceProgetto>PRJ001</ogg:CodiceProgetto>
+			<ogg:CodiceSistema>
+				<ogg:NomeServer>SERVER001</ogg:NomeServer>
+				<ogg:CodiceAmministrazione>feF205</ogg:CodiceAmministrazione>
+			</ogg:CodiceSistema>
+			<ogg:DatadiRegistrazione>2006-08-24T13:08:30.908+02:00</ogg:DatadiRegistrazione>
+			<ogg:CodiceIdentificativoOperazione>PNBWER56A45F205N-dsarty-1234567</ogg:CodiceIdentificativoOperazione>
+		</ogg:IdentificatoreUnivoco>
+	</ogg:IdentificatorediRichiesta>
+	<env:TipoComunicazione>
+		<ogg:RichiestaC2G>
+			<ogg:Destinatario>F205</ogg:Destinatario>
+			<ogg:Mittente>
+				<ogg:CodiceFiscale>QWEASD45A33F205P</ogg:CodiceFiscale>
+				<ogg:CredenzialiFirmate>
+					<ogg:NomeFile>Credenziali.xml</ogg:NomeFile>
+					<ogg:Descrizione>Credenziali firmate del richiedente</ogg:Descrizione>
+					<ogg:Contenuto>ZmpoZ2ZqaGdmamhqcXdlcjU0MzU=</ogg:Contenuto>
+				</ogg:CredenzialiFirmate>
+			</ogg:Mittente>
+		</ogg:RichiestaC2G>
+	</env:TipoComunicazione>
+	<env:InformazioniperProtocollazione>
+		<env:Richiedente>
+			<ogg:Cognome>cognome</ogg:Cognome>
+			<ogg:Nome>nome</ogg:Nome>
+			<ogg:CodiceFiscale>QWEASD45A33F205P</ogg:CodiceFiscale>
+		</env:Richiedente>
+		<env:Recapito>
+			<env:Tipo>Personale</env:Tipo>
+			<env:Referente>ReferenteRecapito</env:Referente>
+			<env:Priorita>Principale</env:Priorita>
+			<env:Indirizzoemail>aa@bb.cdef</env:Indirizzoemail>
+		</env:Recapito>
+		<env:Titolare>
+			<cnip:EstremidellaPersona>
+				<ogg:Cognome>cognome</ogg:Cognome>
+				<ogg:Nome>nome</ogg:Nome>
+				<ogg:CodiceFiscale>QWEASD45A33F205P</ogg:CodiceFiscale>
+			</cnip:EstremidellaPersona>
+		</env:Titolare>
+	</env:InformazioniperProtocollazione>
+	<env:InformazioniperVerificaDelega>
+		<ser:ContestoServizio>it.people.fsl.servizi.fiscali.ici.istanzadirimborsoici</ser:ContestoServizio>
+		<ser:Titolare>
+			<cnip:EstremidellaPersona>
+				<ogg:Cognome>cognome</ogg:Cognome>
+				<ogg:Nome>nome</ogg:Nome>
+				<ogg:CodiceFiscale>QWEASD45A33F205P</ogg:CodiceFiscale>
+			</cnip:EstremidellaPersona>
+		</ser:Titolare>
+		<!--  elemento aggiunto il  04/06/2007 -->
+		<env:EstremiSoggettoDelegato>
+			<cnip:EstremidellaPersona>
+				<ogg:Cognome>cognomedelegato</ogg:Cognome>
+				<ogg:Nome>nomedelegato</ogg:Nome>
+				<ogg:CodiceFiscale>QWEASD45A33F205P</ogg:CodiceFiscale>
+			</cnip:EstremidellaPersona>
+		</env:EstremiSoggettoDelegato>
+	</env:InformazioniperVerificaDelega>
+</env:RichiestadiInvio>

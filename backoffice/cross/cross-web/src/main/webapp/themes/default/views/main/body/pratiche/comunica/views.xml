@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    
+    <!-- COMUNICA --> 
+
+    <definition name="comunica_index" extends=".main">
+        <put-attribute name="title"         value="Caricamento pratica comunica" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/comunica/index.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Caricamento pratica comunica" type="string" />
+    </definition>
+    
+    <definition name="comunica_riepilogo_error" extends=".main">
+    	<put-attribute name="title"         value="Riepilogo del caricamento pratica comunica" type="string"/>
+    	<put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/caricamentopratiche/index.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Riepilogo del caricamento pratica comunica" type="string" />
+    </definition>
+    
+    <definition name="comunica_step1" extends=".main">
+        <put-attribute name="title"         value="Caricamento pratica comunica" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/comunica/step1.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Caricamento pratica comunica" type="string" />
+        <put-attribute name="comunica_riepilogo" cascade="true"  value="/themes/default/views/main/body/pratiche/comunica/riepilogo.jsp"/>
+        <put-attribute name="comunica_impresa" cascade="true"  value="/themes/default/views/main/body/pratiche/comunica/impresa.jsp"/>
+        <put-attribute name="comunica_legale_rappresentante" cascade="true"  value="/themes/default/views/main/body/pratiche/comunica/legale_rappresentante.jsp"/>
+        <put-attribute name="comunica_dichiarante" cascade="true"  value="/themes/default/views/main/body/pratiche/comunica/dichiarante.jsp"/>
+        <put-attribute name="comunica_allegati" cascade="true"  value="/themes/default/views/main/body/pratiche/comunica/allegati.jsp"/>
+    </definition>
+    
+</tiles-definitions>

@@ -1,0 +1,80 @@
+/*
+ * Created on 10-mag-2005
+ *
+ */
+package it.people.util.payment;
+
+import it.people.util.ActivityLogger;
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Michele Fabbri - Cedaf s.r.l.
+ *
+ */
+public class NotificationManager {
+    private ActivityLogger tracer = ActivityLogger.getInstance();
+	
+	/**
+	 * 
+	 * @param request
+	 * @return il codice di acknowledge, OK - esito positivo, FAIL - esito negativo
+	 */
+	public String execute(HttpServletRequest request)
+	{
+	    String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/payment.properties");
+        PaymentManager pm = new PaymentManager(realPath);
+ 				
+		String portaleId = "";
+		String numeroOperazione = "";
+		String idOrdine = "";
+		
+		try
+		{
+			portaleId = pm.getPortaleId();
+			
+			EsitoPagamento esitoPagamento = decodeBuffer(request, pm);			
+			numeroOperazione = esitoPagamento.getNumeroOperazione();
+			idOrdine = esitoPagamento.getIDOrdine();
+			
+			// Dal MIP si accettano le sole risposte: OK o KO
+            if (!esitoPagamento.getEsito().equals(EsitoPagamento.ES_PAGAMENTO_OK) 
+            		&& !esitoPagamento.getEsito().equals(EsitoPagamento.ES_PAGAMENTO_KO)) 
+            	throw new PaymentException("Codice di risposta del MIP non valido.");
+			
+			new PaymentThread(esitoPagamento, pm.getObserverSetting()).start();
+			tracer.log(this.getClass(), "Avviato thread su notifica Pagamento.", ActivityLogger.DEBUG);
+						
+			return pm.getCommitMessage(portaleId, numeroOperazione, idOrdine, true);
+		}
+		catch(Exception ex)
+		{
+			tracer.log(this.getClass(), "Errore nell'avvio del thread su notifica Pagamento:\n" + ex.toString(), ActivityLogger.WARN);
+			// Il messaggio non valido è stato accettato ma non verrà considerato
+			// nelle specifico serve a gestire l'annullamento di un pagamento.
+			return pm.getCommitMessage(portaleId, numeroOperazione, idOrdine, true);
+		}						
+	}
+
+	/**
+	 * Decodifica il buffer di risposta
+	 * @param request
+	 * @return
+	 */
+	private EsitoPagamento decodeBuffer(HttpServletRequest request, PaymentManager pm)
+		throws PaymentException
+	{
+        String reqBuffer = request.getParameter("buffer");
+        
+        if (reqBuffer == null)
+        	throw new PaymentException("Buffer di risposta del MIP non valido.");
+               
+        //PaymentManager pm = new PaymentManager(request.getRealPath("/WEB-INF/payment.properties"));
+        
+        EsitoPagamento esitoPagamento = pm.getEsitoPagamento(reqBuffer);
+        
+        if (esitoPagamento == null)
+        	throw new PaymentException("Buffer di risposta del MIP non valido.");
+        
+        return esitoPagamento;
+	}	
+}

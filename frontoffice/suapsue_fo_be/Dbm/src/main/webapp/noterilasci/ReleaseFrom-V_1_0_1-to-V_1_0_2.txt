@@ -1,0 +1,23 @@
+---Upgrade della versione Master Copy V.1.0.1 alla V.1.0.2
+---Si ricorda che le il passaggio alla versione V.1.0.1 prevede di
+   avere il software alla versione V.1.0.1
+
+bug-fix:
+
+
+
+miglioramenti:
+
+- inserimento nuovo campo su tabella enti_comuni per gestire la lista comuni in base al nodo people
+- inserimento nuovo campo ordinamento su tabella interventi
+
+passi:
+1) effettuare una copia del db
+2) eseguire lo script sql release_1_ver_2.sql
+3) salvare il file web.xml presente nella cartella <tomcat>/webapps/Dbm/WEB-INF
+4) salvare il file log4j.properties presente nella cartella <tomcat>/webapps/Dbm/WEB-INF/classes
+5) effettuare il deploy del software (Dbm.war)
+6) ripristinare il file web.xml salvato inprecedenza
+7) ripristinare il file log4j.properties salvato in precedenza
+8) riavviare tomcat
+9) tramite dbm valorizzare il nuovo campo (Codice nodo people) con il codice nodo people di appartenenza del comune

@@ -1,0 +1,8 @@
+#main {padding: 0px !important}
+header {border-bottom: 5px solid #828282}
+footer {background: #fff; padding: 20px; border-top: 5px solid #EF3331;}
+footer img {margin: 0 auto}
+#logo {display: block; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;}
+#content {padding-bottom: 20px}
+h2 {background: #E5E5E5; color: #555; border-left: 3px solid #EF3331; padding: 10px;}
+p, a {font-size: 16px; line-height: 22px}

@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<SmartCardProfiles
+	xmlns="http://www.progettopeople.it/sirac/peoplesmartcardprofiles"
+	xmlns:scp="http://www.progettopeople.it/sirac/peoplesmartcardprofiles"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.progettopeople.it/sirac/peoplesmartcardprofiles smartcardprofiles.xsd">
+
+	<!--
+			POSTECOM
+	-->
+
+	<SmartCardProfile cardType="Postecom">
+		<CardDescription>Postecom Incrypto34v2</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b0209020001010144534410318092</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Postecom CA1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="true" updateIntervalHours="10" crlFileName="PostecomIncrypto.crl">
+			<alternativeCRLDistributionPointURL>http://postecert.poste.it/postecomca1/crl0</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd/MM/yyyy">
+			<![CDATA[OID.2.5.4.13="C=$Cognome$/N=$Nome$/D=$DataDiNascita$/R=TITOLARE", EMAILADDRESS=$Email$, CN=$Cognome$/$Nome$/$CodiceFiscale$/$CodiceCarta$, OU=Titolari, L=RA1, O=Utente Postecert, C=IT]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+	<SmartCardProfile cardType="Postecom">
+		<CardDescription>Postecom Gemplus</CardDescription>
+		<CardATR>3be200ffc11031fe55c8029c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">gclib.dll</CardLibrary>
+			<CardLibrary type="csp">gemcsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Postecom CA1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="PostecomGemplus.crl">
+			<alternativeCRLDistributionPointURL>http://postecert.poste.it/postecomca1/crl0</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd/MM/yyyy">
+			<![CDATA[OID.2.5.4.13="C=$Cognome$/N=$Nome$/D=$DataDiNascita$/R=TITOLARE", EMAILADDRESS=$Email$, CN=$Cognome$/$Nome$/$CodiceFiscale$/$CodiceCarta$, OU=Titolari, L=RA1, O=Postecom s.p.a., C=IT]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+  <SmartCardProfile cardType="Postecom">
+		<CardDescription>Postecom Firma per Titolare - Autenticazione</CardDescription>
+		<CardATR>3be200ffc11031fe55c8029c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Postecom CA1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="PostecomFirmaTitolare.crl">
+			<alternativeCRLDistributionPointURL>http://postecert.poste.it/postecomca1/crl0</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd/MM/yyyy">
+			<![CDATA[SURNAME=$Cognome$, GIVENNAME=$Nome$, CN=$Cognome2$/$Nome2$/$CodiceFiscale$/$CodiceCarta$, O=NON PRESENTE, C=IT]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+  <SmartCardProfile cardType="Postecom">
+		<CardDescription>Postecom Firma per Titolare 2 - Autenticazione</CardDescription>
+		<CardATR>3be200ffc11031fe55c8029c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Postecom CA1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="PostecomFirmaTitolare2.crl">
+			<alternativeCRLDistributionPointURL>http://postecert.poste.it/postecomca1/crl3</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd/MM/yyyy">
+			<![CDATA[SURNAME=$Cognome$, GIVENNAME=$Nome$, CN=$Cognome2$/$Nome2$/$CodiceFiscale$/$CodiceCarta$, O=POSTECOM SPA/05838841004, C=IT]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="Postecom">
+		<CardDescription>Postecom Firma per Titolare 3 - Autenticazione</CardDescription>
+		<CardATR>3be200ffc11031fe55c8029c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Postecom CA1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="PostecomFirmaTitolare3.crl">
+			<alternativeCRLDistributionPointURL>http://postecert.poste.it/postecomca1/crl3</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd/MM/yyyy">
+			<![CDATA[SURNAME=$Cognome$, GIVENNAME=$Nome$, CN=$Cognome2$/$Nome2$/$CodiceFiscale$/$CodiceCarta$, OU=$OrganizationUnit$ O=$Organization$, C=$Country$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+		
+  <SmartCardProfile cardType="Postecom">
+		<CardDescription>Postecom Firma per Titolare - Firma digitale</CardDescription>
+		<CardATR>3be200ffc11031fe55c8029c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Postecom CA1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="PostecomFirmaTitolare.crl">
+			<alternativeCRLDistributionPointURL>http://postecert.poste.it/postecomca1/crl0</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd/MM/yyyy">
+			<![CDATA[DNQ=$Dnq$, SURNAME=$Cognome$, GIVENNAME=$Nome$, SERIALNUMBER=IT:$CodiceFiscale$, CN=$CognomeNome$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<!--
+			CIE
+	-->
+	
+	<SmartCardProfile cardType="CIE">
+		<CardDescription>Carta d'identità elettronica emissione1-mi</CardDescription>
+		<CardATR>3be900ffc11031fe5500640500c80231800047</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">CIE_pkcs11.dll</CardLibrary>
+			<CardLibrary type="csp">CIE_CSP.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>SUBCA-EMISSIONE1-MI</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="false"
+			overrideInternalCRLUpdateInterval="true" updateIntervalHours="10" crlFileName="CIE.emissione1.crl">
+			<alternativeCRLDistributionPointURL>ldap://195.120.182.229:389/cn=SUBCA-EMISSIONE1-MI,ou=SERVIZI TECNICI,ou=CIE,o=MINISTERO DELL'INTERNO,c=IT?certificateRevocationList</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="yyyyMMdd">
+			<![CDATA[CN="$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit1$, OU=$OrganizationUnit2$, OU=$OrganizationUnit3$, OU=$OrganizationUnit4$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+  <SmartCardProfile cardType="CIE">
+    <CardDescription>Carta d'identità elettronica emissione2-mi</CardDescription>
+    <CardATR>3be900ffc11031fe5500640500c80231800047</CardATR>
+    <CardLibraries>
+      <CardLibrary type="pkcs11">CIE_pkcs11.dll</CardLibrary>
+      <CardLibrary type="csp">CIE_CSP.dll</CardLibrary>
+    </CardLibraries>
+    <CertificateIssuer>SUBCA-EMISSIONE2-MI</CertificateIssuer>
+    <CertificateValidityCheck enabled="true" />
+    <CertificateChainCheck enabled="true" />
+    <CRLCheck enabled="false" onCardCrlURLCheck="false"
+      overrideInternalCRLUpdateInterval="true" updateIntervalHours="10" crlFileName="CIE.emissione2.crl">
+      <alternativeCRLDistributionPointURL>ldap://195.120.182.229:389/cn=SUBCA-EMISSIONE2-MI,ou=SERVIZI TECNICI,ou=CIE,o=MINISTERO DELL'INTERNO,c=IT?certificateRevocationList</alternativeCRLDistributionPointURL>
+    </CRLCheck>
+    <DistinguishedNamePattern tokenSeparator="$" datePattern="yyyyMMdd">
+      <![CDATA[CN="$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit1$, OU=$OrganizationUnit2$, OU=$OrganizationUnit3$, OU=$OrganizationUnit4$, O=$Organization$, C=$CountryCode$]]>
+    </DistinguishedNamePattern>
+  </SmartCardProfile>
+  
+  
+  <SmartCardProfile cardType="CIE">
+		<CardDescription>Carta d'identità elettronica emissione4-mi</CardDescription>
+		<CardATR>3be900ffc11031fe5500640500c80231800047</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">CIE_pkcs11.dll</CardLibrary>
+			<CardLibrary type="csp">CIE_CSP.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>SUBCA-EMISSIONE4-MI</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="false"
+			overrideInternalCRLUpdateInterval="true" updateIntervalHours="10" crlFileName="CIE-emissione4.crl">
+			<alternativeCRLDistributionPointURL>ldap://195.120.182.229:389/cn=SUBCA-EMISSIONE4-MI,ou=SERVIZI TECNICI,ou=CIE,o=MINISTERO DELL'INTERNO,c=IT?certificateRevocationList</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="yyyyMMdd">
+			<![CDATA[CN="$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit1$, OU=$OrganizationUnit2$, OU=$OrganizationUnit3$, OU=$OrganizationUnit4$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+  <SmartCardProfile cardType="CIE">
+    <CardDescription>Carta d'identità elettronica emissione5-mi</CardDescription>
+    <CardATR>3be900ffc11031fe5500640500c80231800047</CardATR>
+    <CardLibraries>
+      <CardLibrary type="pkcs11">CIE_pkcs11.dll</CardLibrary>
+      <CardLibrary type="csp">CIE_CSP.dll</CardLibrary>
+    </CardLibraries>
+    <CertificateIssuer>SUBCA-EMISSIONE5-MI</CertificateIssuer>
+    <CertificateValidityCheck enabled="true" />
+    <CertificateChainCheck enabled="true" />
+    <CRLCheck enabled="false" onCardCrlURLCheck="false"
+      overrideInternalCRLUpdateInterval="true" updateIntervalHours="10" crlFileName="CIE-emissione5.crl">
+      <alternativeCRLDistributionPointURL>ldap://195.120.182.229:389/cn=SUBCA-EMISSIONE5-MI,ou=SERVIZI TECNICI,ou=CIE,o=MINISTERO DELL'INTERNO,c=IT?certificateRevocationList</alternativeCRLDistributionPointURL>
+    </CRLCheck>
+    <DistinguishedNamePattern tokenSeparator="$" datePattern="yyyyMMdd">
+      <![CDATA[CN="$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit1$, OU=$OrganizationUnit2$, OU=$OrganizationUnit3$, OU=$OrganizationUnit4$, O=$Organization$, C=$CountryCode$]]>
+    </DistinguishedNamePattern>
+  </SmartCardProfile>
+  
+  
+  <SmartCardProfile cardType="CIE">
+    <CardDescription>Carta d'identità elettronica emissione6-mi</CardDescription>
+    <CardATR>3be900ffc11031fe5500640500c80231800047</CardATR>
+    <CardLibraries>
+      <CardLibrary type="pkcs11">CIE_pkcs11.dll</CardLibrary>
+      <CardLibrary type="csp">CIE_CSP.dll</CardLibrary>
+    </CardLibraries>
+    <CertificateIssuer>SUBCA-EMISSIONE6-MI</CertificateIssuer>
+    <CertificateValidityCheck enabled="true" />
+    <CertificateChainCheck enabled="true" />
+    <CRLCheck enabled="false" onCardCrlURLCheck="false"
+      overrideInternalCRLUpdateInterval="true" updateIntervalHours="10" crlFileName="CIE-emissione6.crl">
+      <alternativeCRLDistributionPointURL>ldap://195.120.182.229:389/cn=SUBCA-EMISSIONE6-MI,ou=SERVIZI TECNICI,ou=CIE,o=MINISTERO DELL'INTERNO,c=IT?certificateRevocationList</alternativeCRLDistributionPointURL>
+    </CRLCheck>
+    <DistinguishedNamePattern tokenSeparator="$" datePattern="yyyyMMdd">
+      <![CDATA[CN="$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit1$, OU=$OrganizationUnit2$, OU=$OrganizationUnit3$, OU=$OrganizationUnit4$, O=$Organization$, C=$CountryCode$]]>
+    </DistinguishedNamePattern>
+  </SmartCardProfile>
+  
+  <!--
+  		CRS
+  -->
+  
+	<SmartCardProfile cardType="CRS">
+		<CardDescription>Carta Regionale dei Servizi Test</CardDescription>
+		<CardATR>3bff1800ffc10a31fe55006b0508c805010101434e531031801c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="csp">bit4csp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Regione Lombardia Certification Authority Cittadini Virtuale</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="CRSVirtuale.crl">
+			<alternativeCRLDistributionPointURL>URL</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="ddMMyyyy">
+			<![CDATA[CN="$CodiceFiscale$/$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+	<SmartCardProfile cardType="CRS">
+		<CardDescription>Carta Regionale dei Servizi</CardDescription>
+		<CardATR>3bff1800ffc10a31fe55006b0508c805010101434e531031801c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="csp">bit4csp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Regione Lombardia Certification Authority Cittadini</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="CRSReale.crl">
+			<alternativeCRLDistributionPointURL>URL</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="ddMMyyyy">
+			<![CDATA[CN="$CodiceFiscale$/$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+	<!--
+			INFOCAMERE
+	-->
+
+  <SmartCardProfile cardType="CNS">
+		<CardDescription>CNS Infocamere - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Infocamere Servizi di Certificazione 2</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="InfocamereCNS.crl">
+			<alternativeCRLDistributionPointURL>ldap://ldap2.infocamere.it:389/cn%3dInfoCamere%20Servizi%20di%20Certificazione%202%20CRL01,ou%3dEnte%20Certificatore%20del%20Sistema%20Camerale,o%3dInfoCamere%20SCpA,c%3dIT?certificateRevocationList</alternativeCRLDistributionPointURL>
+			<alternativeCRLDistributionPointURL>http://www.carm.infocamere.it/AUT/CRL01.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="ddMMyyyy">
+			<![CDATA[DNQ=$Dnq$, SURNAME=$Cognome$, GIVENNAME=$Nome$, EMAILADDRESS=$Email$, SERIALNUMBER=$CodiceFiscale$, CN="$CodiceFiscale$/$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="CNS">
+		<CardDescription>CNS Infocamere - Firma digitale</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>InfoCamere Firma Qualificata</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="InfocamereCNS.crl">
+			<alternativeCRLDistributionPointURL>ldap://ldap2.infocamere.it:389/cn%3dInfoCamere%20Servizi%20di%20Certificazione%202%20CRL01,ou%3dEnte%20Certificatore%20del%20Sistema%20Camerale,o%3dInfoCamere%20SCpA,c%3dIT?certificateRevocationList</alternativeCRLDistributionPointURL>
+			<alternativeCRLDistributionPointURL>http://www.carm.infocamere.it/AUT/CRL01.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[C=$Country$,O=$Organization$,OU=$OrganizationUnit$,CN=$Cognome$/$Nome$/$CodiceFiscale$/$CodiceCarta$,2.5.4.13=C=$Cognome2$/$Nome2$/D=$DataDiNascita$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="CNS">
+		<CardDescription>CNS Infocamere 2 - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Infocamere Servizi di Certificazione 2</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="InfocamereCNS.crl">
+			<alternativeCRLDistributionPointURL>ldap://ldap2.infocamere.it:389/cn%3dInfoCamere%20Servizi%20di%20Certificazione%202%20CRL01,ou%3dEnte%20Certificatore%20del%20Sistema%20Camerale,o%3dInfoCamere%20SCpA,c%3dIT?certificateRevocationList</alternativeCRLDistributionPointURL>
+			<alternativeCRLDistributionPointURL>http://www.carm.infocamere.it/AUT/CRL01.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="ddMMyyyy">
+			<![CDATA[DNQ=$Dnq$, SURNAME=$Cognome$, GIVENNAME=$Nome$, SERIALNUMBER=$CodiceFiscale$, CN="$CodiceFiscale$/$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	  
+  <SmartCardProfile cardType="Infocamere">
+		<CardDescription>CNS Infocamere Test</CardDescription>
+		<CardATR>3bff1800ffc10a31fe55006b0508c805010101434e531031801c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>InfoCamere Servizi di Certificazione 2 TEST</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="InfocamereCNSTest.crl">
+			<alternativeCRLDistributionPointURL>URL</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$">
+				<![CDATA[DNQ=$CodiceCarta$, SURNAME=$Cognome$, GIVENNAME=$Nome$, EMAILADDRESS=$Email$, SERIALNUMBER=$CodiceFiscale$, CN=$Cognome$/$Nome$/$CodiceCarta$, OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+  
+	<SmartCardProfile cardType="Infocamere12xx">
+		<CardDescription>Carta di firma Infocamere serie 12xx - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Infocamere Servizi di Certificazione 2</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Infocamere12xx.crl">
+			<alternativeCRLDistributionPointURL>ldap://ldap2.infocamere.it:389/cn%3dInfoCamere%20Servizi%20di%20Certificazione%202%20CRL01,ou%3dEnte%20Certificatore%20del%20Sistema%20Camerale,o%3dInfoCamere%20SCpA,c%3dIT?certificateRevocationList</alternativeCRLDistributionPointURL>
+			<alternativeCRLDistributionPointURL>http://www.carm.infocamere.it/AUT/CRL01.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="ddMMyyyy">
+			<![CDATA[DNQ=$Dnq$, SURNAME=$Cognome$, GIVENNAME=$Nome$, EMAILADDRESS=$Email$, SERIALNUMBER=$CodiceFiscale$, CN=$Cognome2$/$Nome2$/$CodiceCarta$, OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+  <SmartCardProfile cardType="CNS">
+		<CardDescription>CNS Infocamere - firma digitale</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>InfoCamere Firma Qualificata</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="InfocamereCNS.crl">
+			<alternativeCRLDistributionPointURL>ldap://ldap2.infocamere.it:389/cn%3dInfoCamere%20Firma%20Qualificata%20CRL02,ou%3dCertificatore%20Accreditato%20del%20Sistema%20Camerale,o%3dInfoCamere%20SCpA,c%3dIT?certificateRevocationList</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OID.2.5.4.13="C=$Cognome$/N=$Nome$/D=$DataDiNascita$", CN=$Cognome2$/$Nome2$/$CodiceFiscale$/$CodiceCarta$, OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+	<SmartCardProfile cardType="Infocamere12xx">
+		<CardDescription>Carta di firma Infocamere serie 12xx - Firma digitale</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>InfoCamere Firma Digitale 2</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="InfocamereCNS.crl">
+			<alternativeCRLDistributionPointURL>ldap://ldap.infocamere.it/cn%3DInfoCamere%20Firma%20Digitale%202%2Cou%3DCertificati%20di%20Firma%2Co%3DInfoCamere%20SCpA%2Cc%3DIT?certificaterevocationlist</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OID.2.5.4.13="C=$Cognome$/N=$Nome$/D=$DataDiNascita$", CN=$Cognome2$/$Nome2$/$CodiceFiscale$/$CodiceCarta$, OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<!--
+			ACTALIS
+  -->
+	
+  <SmartCardProfile cardType="Actalis">
+		<CardDescription>Carta di firma Actalis - Firma digitale</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Actalis S.p.A. - Direzione Commerciale Firma</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="InfocamereCNS.crl">
+			<alternativeCRLDistributionPointURL>ldap://fe.csp.multicertify.com:389/ou%3DActalis%20S.p.A.%20-%20Direzione%20Commerciale%20Firma%2Co%3DActalis%20S.p.A.%20-%20Direzione%20Commerciale?certificaterevocationlist</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OID.2.5.4.13="C=$Cognome$/N=$Nome$/D=$DataDiNascita$/R=$Ruolo$", EMAILADDRESS=$Email$, CN=$Cognome2$/$Nome2$/$CodiceFiscale$/$CodiceCarta$, C=IT]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<!--
+			TRUSTITALIA
+	-->
+	
+	<SmartCardProfile cardType="Trustitalia">
+		<CardDescription>Trustitalia - Avvocati di Catania - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>TI Firma Digitale CA - G3</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_AvvocatiCT.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneFD/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OID.1.3.6.1.5.5.7.9.1=$DataDiNascita$, OU=$OrganizationUnit$, EMAILADDRESS=$Email$, CN=$NomeCognome$, T=Avv, DNQ=$Dnq$, OID.2.5.4.65=$Pseud$, SERIALNUMBER=$CodiceFiscale$/, O=$Organization$, GIVENNAME=$Nome$, SURNAME=$Cognome$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="Trustitalia">
+		<CardDescription>Trustitalia - Avvocati di Catania - Firma</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>TI Firma Digitale CA - G3</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_AvvocatiCT.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneFD/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OU=Servizi di Certificazione FD, O=Trust Italia S.p.A., EMAILADDRESS=$Email$, OID.2.5.4.13="C=$Cognome2$/N=$Nome2$/D=$DataDiNascita$/R=Avvocato", CN=$Cognome$/$Nome$/$CodiceFiscale$/$CodiceCarta$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="CNS">
+		<CardDescription>Trustitalia - Carta per CNR - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Authentication CA-G1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_CNR.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneAuthCA1/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OU=CNR Authentication CA, O=Trust Italia S.p.A., CN="$CodiceFiscale$/$CodiceCarta$.$HashDatiPersonali$"]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="Trustitalia">
+		<CardDescription>Trustitalia - Carta Teseo Comune di Verona - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Authentication CA-G1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_Teseo.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneAuthCA1/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OU=Teseo Authentication CA, O=Trust Italia S.p.A., CN=$Cognome$/$Nome$/$CodiceFiscale$/$CodiceCarta$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="CNS">
+		<CardDescription>CNS Trustitalia</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>CNS CA Cittadini</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_CNS.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneCNSCA1/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="ddMMyyyy">
+			<![CDATA[C=$CountryCode$, OU=$OrganizationUnit$, O=$Organization$, CN="$CodiceFiscale$/$CodiceCarta$.$HashDatiPersonali$"]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+
+	<SmartCardProfile cardType="Trustitalia">
+		<CardDescription>Trustitalia - Comune di Pavia - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Authentication CA-G1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_Pavia.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneAuthCA1/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OID.1.3.6.1.5.5.7.9.1=$DataDiNascita$, OU=Servizi di Certificazione Auth CA1, EMAILADDRESS=$Email$, CN=$NomeCognome$, DNQ=$Dnq$, O=$Organization$, GIVENNAME=$Nome$, SURNAME=$Cognome$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="Trustitalia">
+		<CardDescription>Trustitalia - Comune di Terni - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Authentication CA-G1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_Terni.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneAuthCA1/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[EMAILADDRESS=$Email$, OU=Comune di Terni, O=Trust Italia S.p.A., CN=$Cognome$/$CodiceFiscale$/$Nome$/$CodiceCarta$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="CNS">
+		<CardDescription>Trustitalia - GeoCard - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Authentication CA-G1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_Terni.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneAuthCA1/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OU=Geocard, O=Trust Italia S.p.A., CN="$CodiceFiscale$/$CodiceCarta$.$HashDatiPersonali$"]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="CNS">
+		<CardDescription>Trustitalia - Kit Borsa Elettrica - Autenticazione</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Authentication CA-G1</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_Terni.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneCNSCA1/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[C=$CountryCode$, L=$Location$, OU=$OrganizationUnit$, O=$Organization$, CN=$Cognome$/$Nome$/$CodiceFiscale$/$CodiceCarta$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<SmartCardProfile cardType="CNS">
+		<CardDescription>Trustitalia - Kit Borsa Elettrica - Firma</CardDescription>
+		<CardATR>3bff1800ff8131fe55006b02090200010101434e531031809f</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>TI Firma Digitale CA - G3</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Trustitalia_Terni.crl">
+			<alternativeCRLDistributionPointURL>http://onsitecrl.trustitalia.it/TrustItaliaSpAServizidiCertificazioneFD/LatestCRL.crl</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$" datePattern="dd-MM-yyyy">
+			<![CDATA[OU=Servizi di Certificazione FD, O=Trust Italia S.p.A., EMAILADDRESS=$Email$, OID.2.5.4.13="C=$Cognome2$/N=$Nome2$/D=$DataDiNascita$/R=$Titolo$", CN=$Cognome$/$Nome$/$CodiceFiscale$/$CodiceCarta$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	<!--
+			VARIE
+	-->
+	
+	<SmartCardProfile cardType="CNS">
+		<CardDescription>CNS Raffaello</CardDescription>
+		<CardATR>3bff1800ffc10a31fe55006b0508c805010101434e531031801c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Actalis CA per certificati CNS</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="Raffaello.crl">
+			<alternativeCRLDistributionPointURL>http://portal.actalis.it/Repository/CNS/getCRL</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$">
+				<![CDATA[CN="$CodiceFiscale$/$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+	</SmartCardProfile>
+	
+	
+	<SmartCardProfile cardType="CNS">
+		<CardDescription>CNS Regione Sicilia</CardDescription>
+		<CardATR>3bff1800ffc10a31fe55006b0508c805010101434e531031801c</CardATR>
+		<CardLibraries>
+			<CardLibrary type="pkcs11">incryptoki2.dll</CardLibrary>
+			<CardLibrary type="csp">sysgillocsp.dll</CardLibrary>
+		</CardLibraries>
+		<CertificateIssuer>Regione Siciliana Certification Authority Cittadini</CertificateIssuer>
+		<CertificateValidityCheck enabled="true" />
+		<CertificateChainCheck enabled="true" />
+		<CRLCheck enabled="false" onCardCrlURLCheck="true"
+			overrideInternalCRLUpdateInterval="false" updateIntervalHours="10" crlFileName="CNS_Sicilia.crl">
+			<alternativeCRLDistributionPointURL>http://portal.actalis.it/Repository/CNSRS/P/R/getLastCRL?name=CRL18</alternativeCRLDistributionPointURL>
+		</CRLCheck>
+		<DistinguishedNamePattern tokenSeparator="$">
+				<![CDATA[CN="$CodiceFiscale$/$CodiceCarta$.$HashDatiPersonali$", OU=$OrganizationUnit$, O=$Organization$, C=$CountryCode$]]>
+		</DistinguishedNamePattern>
+  </SmartCardProfile>	
+	
+</SmartCardProfiles>
+
+
+
+
+

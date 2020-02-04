@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS>
+	<PROCESS-CONFIG>
+		<default>
+			<SUMMARY-ENABLED>false</SUMMARY-ENABLED>			
+			<SIGN-ENABLED>false</SIGN-ENABLED>
+			<PAYMENT-OBSERVER>PaymentObserver</PAYMENT-OBSERVER>			
+		</default>
+		<PROCESS-VIEW>
+			<default>
+				<SAVE-BAR-ENABLED>true</SAVE-BAR-ENABLED>
+				<NAVIGATION-BAR-ENABLED>true</NAVIGATION-BAR-ENABLED>
+			</default>
+		</PROCESS-VIEW>
+	</PROCESS-CONFIG>
+	<VIEW id="1">
+		<default>
+			<name>PagamentoAnonimoView</name>
+			<activity-order>0</activity-order>
+		</default>
+		<ACTIVITIES>
+			<ACTIVITY id="0">
+				<default>
+					<name>Pagamento Anonimo</name>
+					<step-order>0, 1, RIMP, EPAG</step-order>
+				</default>
+				<STEPS>
+					<STEP id="0">
+						<default>
+							<name>Introduzione</name>
+							<view>informazioni.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="1">
+						<default>
+							<name>Dati Pagamento</name>
+							<view>datiPagamento.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="RIMP">
+						<default>
+							<name>Accedi</name>
+							<view>accediPagamenti.jsp</view>
+							<classname>AccediPagamenti</classname>
+						</default>
+					</STEP>                
+					<STEP id="EPAG">
+						<default>
+							<name>Esito Pagamento</name>
+							<view>esitoPagamenti.jsp</view>
+							<classname>EsitoPagamenti</classname>
+						</default>
+					</STEP>					     					            
+				</STEPS>
+			</ACTIVITY>
+		</ACTIVITIES>
+	</VIEW>
+</PROCESS>

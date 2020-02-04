@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.7-b01-. --><xs:schema xmlns:tns="http://server.ws.protocollo.linksmt.it/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://server.ws.protocollo.linksmt.it/">
+
+<xs:element name="creazioneFascicolo" type="tns:creazioneFascicolo" />
+
+<xs:element name="creazioneFascicoloResponse" type="tns:creazioneFascicoloResponse" />
+
+<xs:element name="fascicolaDocProtocollato" type="tns:fascicolaDocProtocollato" />
+
+<xs:element name="fascicolaDocProtocollatoResponse" type="tns:fascicolaDocProtocollatoResponse" />
+
+<xs:element name="fascicolaDocumentoRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="idProtocollo" type="xs:string" />
+<xs:element name="idVoceTitolario" type="xs:string" />
+<xs:element name="idVoceFascicolo" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="fascicolaDocumentoResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="esitoFascicolazione" type="xs:boolean" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="fascicolaNuovoDocumento" type="tns:fascicolaNuovoDocumento" />
+
+<xs:element name="fascicolaNuovoDocumentoIN">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="idVoceTitolario" type="xs:string" />
+<xs:element name="idFascicolo" type="xs:string" />
+<xs:element name="documento" type="tns:DocumentData" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="fascicolaNuovoDocumentoOUT">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="esito" type="xs:boolean" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="fascicolaNuovoDocumentoResponse" type="tns:fascicolaNuovoDocumentoResponse" />
+
+<xs:element name="nuovoFascicoloRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="autore" type="xs:string" />
+<xs:element name="profilo" type="xs:int" />
+<xs:element name="idNodoPadre" type="xs:string" />
+<xs:element name="idNodoTitolario" type="xs:string" />
+<xs:element name="idModelloFascicolo" type="xs:int" />
+<xs:element name="descrizione" type="xs:string" />
+<xs:element name="riservato" type="xs:boolean" />
+<xs:element name="startDate" type="xs:dateTime" />
+<xs:element name="endDate" type="xs:dateTime" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="nuovoFascicoloResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="idFascicolo" type="xs:string" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:complexType name="fascicolaDocProtocollato">
+<xs:sequence>
+<xs:element name="fascicolaDocumentoRequest" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="idProtocollo" type="xs:string" />
+<xs:element name="idVoceTitolario" type="xs:string" />
+<xs:element name="idVoceFascicolo" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fascicolaDocProtocollatoResponse">
+<xs:sequence>
+<xs:element name="return" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="esitoFascicolazione" type="xs:boolean" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Errore">
+<xs:sequence>
+<xs:element name="codice" type="xs:string" />
+<xs:element name="descrizione" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fascicolaNuovoDocumento">
+<xs:sequence>
+<xs:element name="fascicolaNuovoDocumentoIN" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="idVoceTitolario" type="xs:string" />
+<xs:element name="idFascicolo" type="xs:string" />
+<xs:element name="documento" type="tns:DocumentData" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DocumentData">
+<xs:sequence>
+<xs:element name="titolo" type="xs:string" />
+<xs:element name="nomeFile" type="xs:string" />
+<xs:element name="contenuto" type="xs:base64Binary" />
+<xs:element name="startDate" type="xs:dateTime" />
+<xs:element name="autoreUsername" type="xs:string" />
+<xs:element name="sunto" type="xs:string" minOccurs="0" />
+<xs:element name="dettaglio" type="xs:string" minOccurs="0" />
+<xs:element name="classifica" type="xs:string" minOccurs="0" />
+<xs:element name="improntaMIME" type="tns:ImprontaMIME" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ImprontaMIME">
+<xs:simpleContent>
+<xs:extension base="xs:string">
+<xs:attribute name="algoritmo" type="xs:string" />
+<xs:attribute name="codifica" type="xs:string" />
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+
+<xs:complexType name="fascicolaNuovoDocumentoResponse">
+<xs:sequence>
+<xs:element name="return" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="esito" type="xs:boolean" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="creazioneFascicolo">
+<xs:sequence>
+<xs:element name="nuovoFascicoloRequest" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="autore" type="xs:string" />
+<xs:element name="profilo" type="xs:int" />
+<xs:element name="idNodoPadre" type="xs:string" />
+<xs:element name="idNodoTitolario" type="xs:string" />
+<xs:element name="idModelloFascicolo" type="xs:int" />
+<xs:element name="descrizione" type="xs:string" />
+<xs:element name="riservato" type="xs:boolean" />
+<xs:element name="startDate" type="xs:dateTime" />
+<xs:element name="endDate" type="xs:dateTime" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="creazioneFascicoloResponse">
+<xs:sequence>
+<xs:element name="return" minOccurs="0">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="idFascicolo" type="xs:string" minOccurs="0" />
+<xs:element name="errore" type="tns:Errore" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

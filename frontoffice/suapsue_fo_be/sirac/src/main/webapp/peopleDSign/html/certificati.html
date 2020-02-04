@@ -1,0 +1,131 @@
+<html>
+	<head>
+		<title>Introduzione - Guida alla firma Digitale by Cedaf</title>
+		<link rel="stylesheet" type="text/css" href="../css/help.css" />
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td class="stepMenu">
+					<ul class="stepUL">
+						<li>
+							Introduzione
+							<ul class="stepUL">
+								<li><a href="intro.html">Introduzione</a></li>
+							</ul>
+						</li>
+						<li>
+							Configurazione&nbsp;PC
+							<ul  class="stepUL">
+								<li><a href="cPcIntro.html">Introduzione</a></li>
+								<li><a href="actalis.html">Actalis</a></li>
+								<li><a href="infocamere.html">Infocamere</a></li>
+								<li><a href="postecom.html">Postecom</a></li>
+								<li><a href="otherCA.html">Altre CA</a></li>
+							</ul>
+						</li>
+						<li>
+							Configurazione Browser
+							<ul class="stepUL">
+								<li><a href="cBrIntro.html">Introduzione</a></li>
+								<li><a class="lnkselected" href="certificati.html">Certificati</a></li>
+								<li><a href="ie.html">Internet&nbsp;Explorer</a></li>
+								<li><a href="ff.html">Mozilla&nbsp;Firefox</a></li>
+								<li><a href="op.html">Opera</a></li>
+							</ul>
+						</li>
+						<li>
+							Test
+							<ul class="stepUL">
+								<li><a href="instActiveX.html">Installazione&nbsp;ActiveX</a></li>
+								<li><a href="test.html">Test</a></li>
+							</ul>
+						</li>
+					</ul>
+				</td>
+				<td class="contentArea">
+					<div class="box2" style="border-bottom: medium none;">
+						<div class="maintitle">
+							<div class="maintitle-right">
+								<div class="maintitle-left">
+									<div class="maintitle-title">
+										<b>
+											<span title="guida alla firma digitale:introduzione">Configurazione Browser - Certificati</span>
+										</b>
+									</div>
+									<div class="maintitle-subtitle">
+										<span class="postername">Guida alla configurazione della firma digitale sul portale P.E.O.P.L.E.</span> 					
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="maincontent">
+							Affinch&egrave; lo scaricamento dei cab contenenti gli ActiveX di firma non sia pregiudicato, occorre 
+							precedentemente installare alcuni certificati: questi certificati affermano che il componente di firma digitale
+							che si va ad installare &egrave; stato realizzato da terze parti ritenute affidabili e che quindi non dannegger&agrave;
+							in alcun modo il client ospite. 
+							<br /><br />
+							I certificati da installare (nell&rsquo;ordine) sono:
+							<br /><br />
+							<b>Certificati Microsoft:&nbsp;</b>opzionali, dovrebbero gi&agrave; essere installati sul client
+							<ul id="certificateMsUL" class="stepUL">
+								<li><a href="../risorse/certificate/MicrosoftRootAuthority.zip">Microsoft Root Authority</a></li>
+								<li><a href="../risorse/certificate/MicrosoftCodeSigningPCA.zip">Microsoft Code Signing PCA</a></li>
+								<li><a href="../risorse/certificate/MicrosoftCorporation.zip">Microsoft Corporation</a></li>
+							</ul>
+							<br />
+							<b>Certificato Actalis: (certificato utilizzato da versioni precedenti del componente di firma digitale)</b>
+							<ul id="certificateActalisUL" class="stepUL">
+								<li><a id="ActalisDFD" href="../risorse/certificate/Actalis.zip">Actalis Direzione Firma Digitale</a></li>
+							</ul>
+							<br />
+							<b>Certificati CEDAF:</b>
+							<ul id="certificateCedafUL" class="stepUL">
+								<li><a href="../risorse/certificate/MsCedaf.zip">MsCedaf</a></li>
+							</ul>
+							<br />
+							<b><u>Per l&rsquo;installazione dei certificati</u></b>, &egrave; sufficiente:
+							<ul id="installStep" class="stepUL">
+								<li>scaricare lo zip che lo contiene (cliccando sul link corrispondente)</li>
+								<li>aprire lo zip con il programma di gestione degli archivi compressi preferito (e.g. WinZip o WinRAR)</li>
+								<li>fare doppio click sul file contenuto</li>
+								<li>seguire le istruzioni della procedura guidata</li>
+							</ul>
+							<br /><br />
+							&Egrave; inoltre possibile effettuare un test di firma digitale, anche se sprovvisti di smart card equipaggiate con
+							certificato X509, scaricando ed installando questo <a id="pfxCert" href="../risorse/certificate/UtentePeople.pfx"><b>certificato</b></a>.<br />
+							<br />
+							Ma <b><u>Attenzione</u></b>! Le firme 
+							realizzate con questo certificato hanno valenza soltanto a fini di test, <b>NON HANNO ALCUNA VALENZA GIURIDICA !!!</b> 
+							<br /><br />
+							Per installare il certificato nello store di windows, &egrave; sufficiente scaricare il file con estensione .pfx e farci
+							doppio click sopra. Durante la procedura di installazione verr&agrave; chiesta una password; digitare: 123456. Nella stessa
+							schermata, spuntare anche i due controlli check proposti e al termine della procedura impostare ad &quot;alto&quot; il livello di protezione
+							della chiave; in questo modo in fase di firma verr&agrave; richiesto il PIN che si va a digitare.
+							<br />
+							<div class="footer-content">
+							  <!--
+								&nbsp;
+								<a href="intro.html" title="Home page"><b>Home Page</b></a>
+								-->
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<div>
+						<div class="divleft">
+							<input id="prevBtn" type="button" value="<< Schermata Precedente" class="btn" onclick="window.location='cBrIntro.html';" />
+						</div>
+						<div class="divright">
+							<input id="nextBtn" type="button" value="Continua >>" class="btn" onclick="window.location='ie.html';" />
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

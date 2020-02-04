@@ -1,0 +1,144 @@
+<html>
+	<head>
+		<title>Introduzione - Guida alla firma Digitale</title>
+		<link rel="stylesheet" type="text/css" href="../css/help.css" />
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td class="stepMenu">
+					<ul class="stepUL">
+						<li>
+							Introduzione
+							<ul class="stepUL">
+								<li><a href="intro.html">Introduzione</a></li>
+							</ul>
+						</li>
+						<li>
+							Configurazione&nbsp;PC
+							<ul  class="stepUL">
+								<li><a href="cPcIntro.html">Introduzione</a></li>
+								<li><a href="actalis.html">Actalis</a></li>
+								<li><a href="infocamere.html">Infocamere</a></li>
+								<li><a href="postecom.html">Postecom</a></li>
+								<li><a href="otherCA.html">Altre CA</a></li>
+							</ul>
+						</li>
+						<li>
+							Configurazione Browser
+							<ul class="stepUL">
+								<li><a href="cBrIntro.html">Introduzione</a></li>
+								<li><a href="certificati.html">Certificati</a></li>
+								<li><a class="lnkselected" href="ie.html">Internet&nbsp;Explorer</a></li>
+								<li><a href="ff.html">Mozilla&nbsp;Firefox</a></li>
+								<li><a href="op.html">Opera</a></li>
+							</ul>
+						</li>
+						<li>
+							Test
+							<ul class="stepUL">
+								<li><a href="instActiveX.html">Installazione&nbsp;ActiveX</a></li>
+								<li><a href="test.html">Test</a></li>
+							</ul>
+						</li>
+					</ul>
+				</td>
+				<td class="contentArea">
+					<div class="box2" style="border-bottom: medium none;">
+						<div class="maintitle">
+							<div class="maintitle-right">
+								<div class="maintitle-left">
+									<div class="maintitle-title">
+										<b>
+											<span title="guida alla firma digitale:introduzione">Configurazione Browser - Internet Explorer</span>
+										</b>
+									</div>
+									<div class="maintitle-subtitle">
+										<span class="postername">Guida alla configurazione della firma digitale sul portale P.E.O.P.L.E.</span> 					
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="maincontent">
+							La configurazione del browser <b>Internet Explorer</b> versione 5.5 o successive consiste nell&rsquo;impostazione
+							delle politiche di sicurezza riguardanti il download e l&rsquo;attivazione dei componenti ActiveX.
+							<br /><br />
+							Tali impostazioni sono da eseguire anche se si utilizzano browser differenti (<b>Mozilla Firefox</b> o <b>Opera</b>), in
+							quanto tali browser leggono le stesse informazioni di protezione impostate da Internet Explorer.
+							<br /><br />
+							Per impostare la configurazione corretta occorre agire sul menu <b>Strumenti/Opzioni Internet</b> e selezionare il
+							tab <b>Protezione</b>:
+							<ul id="activeXStep" class="stepUL">
+								<li>Selezionare l&rsquo;<b>area</b> in cui ricade il portale &quot;Innovazione Comune&quot;; generalmente dovrebbe
+								essere Internet per un cittadino, e probabilmente Intranet per un fuonzionario di un ente</li>
+								<li>
+									Impostare il livello di protezione per l&rsquo;area individuata al punto precedente a &quot;<b>medio</b>&quot;
+								</li>
+								<li>
+									Accedere all&rsquo;area individuata al primo punto, e cliccare sul pulsante: &quot;<b>livello personalizzato</b>&quot;
+								</li>
+								<li>
+									Individuare la sezione relativa agli ActiveX ed eseguire le seguenti impostazioni:
+									<ul id="innerActiveXStep" class="stepUL">
+										<li>
+											se si tratta di un Internet Explorer versione 6.0 SP2 o successiva,impostare ad &quot;<b>Attiva</b>&quot; 
+											la voce &quot;<b>Richiesta di conferma automatica per controlli ActiveX</b>&quot;
+										</li>
+										<li>
+											impostare a &quot;<b>Chiedi conferma</b>&quot; la voce &quot;<b>Esegui script controlli ActiveX contrassegnati come sicuri</b>&quot;
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<br /><br />
+							Se si intende utilizzare un browser differente da Internet Explorer, selezionarlo tra quelli in elenco......
+							
+							<br /><br />
+							<ul class="stepUL">
+								<li>
+									<div class="divRadio">
+										<a id="mozFFLbl" href="ff.html" class="lblBold">Mozilla Firefox</a>
+									</div>
+								</li>
+								<li>
+									<div class="divRadio">
+										<a id="operaLbl" href="op.html" class="lblBold">Opera</a>
+									</div>
+								</li>
+							</ul>
+							......oppure &egrave; possibile procedere con il test di firma:
+							<br /><br />
+							<ul class="stepUL">
+								<li>
+									<div class="divRadio">
+										<a id="testLbl" href="test.html" class="lblBold">Procedi con il test</a>
+									</div>
+								</li>
+							</ul>
+							<br /><br />
+							<div class="footer-content">
+							  <!--
+								&nbsp;
+								<a href="intro.html" title="Home page"><b>Home Page</b></a>
+								-->
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<div>
+						<div class="divleft">
+							<input id="prevBtn" type="button" value="<< Schermata Precedente" class="btn" onclick="window.location='certificati.html';" />
+						</div>
+						<div class="divright">
+							<input id="nextBtn" type="button" value="Continua >>" class="btn" onclick="window.location='ff.html';" />
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

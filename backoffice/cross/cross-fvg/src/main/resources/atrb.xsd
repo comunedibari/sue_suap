@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.insiel.it/masterdata/mdap/istanze" xmlns:mdap="http://www.insiel.it/masterdata/mdap" xmlns:ns1="http://www.insiel.it/masterdata/mdas" xmlns:atrb="http://www.insiel.it/masterdata/mdap/istanze" xmlns:mdet-ext="http://www.insiel.it/masterdata/mdet-ext" xmlns:ns2="http://www.insiel.it/masterdata/mdet">
+  <xs:import namespace="http://www.insiel.it/masterdata/mdap" schemaLocation="mdap.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdas" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdet" schemaLocation="mdet.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdet-ext" schemaLocation="mdet-ext.xsd"/>
+  <xs:element name="parteGenerale">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atrb:listaSoggettiInteressati"/>
+        <xs:element ref="atrb:localizzazioneIntervento"/>
+        <xs:element ref="atrb:procedimento"/>
+        <xs:element ref="atrb:note"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="listaSoggettiInteressati">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atrb:interessato"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="interessato">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atrb:richiedenteFormaGiuridica"/>
+      </xs:sequence>
+      <xs:attribute name="idInIstanza" use="required" form="qualified" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="richiedenteFormaGiuridica">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:figuraGiuridicaBase"/>
+        <xs:element ref="ns1:sedeLegale"/>
+        <xs:element ref="ns1:iscrizioneRI"/>
+        <xs:element ref="ns1:listaCaricaPersona"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="localizzazioneIntervento">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atrb:localizzazioneTerritoriale"/>
+        <xs:element ref="atrb:titoloDisponibilita"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="localizzazioneTerritoriale">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="mdet-ext:indirizzo"/>
+        <xs:element ref="mdet-ext:estremiCatastali"/>
+        <xs:element ref="mdet-ext:destinazioneUso"/>
+        <xs:element ref="mdet-ext:estremiProprieta"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="titoloDisponibilita">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atrb:IdSoggettoInIstanza"/>
+        <xs:element ref="atrb:titolarita"/>
+        <xs:element ref="atrb:estremiRegistrazioneAtto"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IdSoggettoInIstanza" type="xs:integer"/>
+  <xs:element name="titolarita" type="xs:string"/>
+  <xs:element name="estremiRegistrazioneAtto" type="xs:string"/>
+  <xs:element name="procedimento">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="mdap:procedimentoBase"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="note">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atrb:nota"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="nota">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atrb:Contenuto"/>
+      </xs:sequence>
+      <xs:attribute name="descrizione" use="required" form="qualified" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Contenuto" type="xs:string"/>
+</xs:schema>

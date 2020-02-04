@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<PROCESS>
+	<PROCESS-CONFIG>
+		<default>
+			<SUMMARY-ENABLED>always</SUMMARY-ENABLED>
+			<SIGN-ENABLED>true</SIGN-ENABLED>			
+		</default>
+	</PROCESS-CONFIG>
+	<VIEW id="1">
+		<default>
+			<name>TestCedaf</name>
+			<activity-order>1, 2, 3, 4</activity-order>
+		</default>
+		<ACTIVITIES>
+			<ACTIVITY id="1">
+				<default>
+					<name>Prima&#10;Parte</name>
+					<step-order>validaElencoSemplice, validaElenco, loopback, validazione, log, webservice</step-order>
+				</default>
+				<STEPS>
+					<STEP id="loopback">
+						<default>
+							<name>Loopback</name>
+							<view>loopback.jsp</view>
+							<classname>LoopbackStep</classname>
+						</default>
+					</STEP>
+					<STEP id="validaElencoSemplice">
+						<default>
+							<name>Valida semplice</name>
+							<view>validaElencoSemplice.jsp</view>
+							<classname>ValidaElencoSemplice</classname>
+						</default>
+					</STEP>										
+					<STEP id="validaElenco">
+						<default>
+							<name>Valida Elenco</name>
+							<view>validaElenco.jsp</view>
+						</default>
+					</STEP>										
+					<STEP id="validazione">
+						<default>
+							<name>Validazione</name>
+							<view>validazione.jsp</view>
+						</default>
+					</STEP>										
+					<STEP id="log">
+						<default>
+							<name>Log</name>
+							<view>testlogger.jsp</view>
+							<classname>TestLogger</classname>
+						</default>
+					</STEP>
+					<STEP id="webservice">
+						<default>
+							<name>WebService</name>
+							<view>TestWS.jsp</view>
+							<classname>TestWS</classname>							
+							<controller>Controllo</controller>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>			
+			<ACTIVITY id="2">
+				<default>
+					<name>Seconda&#10;Parte</name>
+					<step-order>abilitaFirma, parametri</step-order>
+				</default>
+				<STEPS>
+					<STEP id="abilitaFirma">
+						<default>
+							<name>Abilita Firma</name>
+							<classname>EnableSignAndSummary</classname>														
+							<view>enableSignAndSummary.jsp</view>
+						</default>						
+					</STEP>
+					<STEP id="parametri">
+						<default>
+							<name>Parametri</name>
+							<classname>Parametri</classname>														
+							<view>parametri.jsp</view>
+						</default>
+					</STEP>								
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="3">
+				<default>
+					<name>Terza&#10;Parte</name>
+					<step-order>gestioneOggetti, gestioneAllegati</step-order>
+				</default>
+				<STEPS>
+					<STEP id="gestioneOggetti">
+						<default>
+							<name>Gestione oggetti</name>
+							<view>manageObject.jsp</view>
+							<classname>ManageObjectStep</classname>
+						</default>
+					</STEP>
+					<STEP id="gestioneAllegati">
+						<default>
+							<name>Gestione allegati</name>
+							<view>allegati.jsp</view>
+						</default>
+					</STEP>										
+				</STEPS>
+			</ACTIVITY>			
+			<ACTIVITY id="4">
+				<default>
+					<name>Quarta&#10;Parte</name>
+					<step-order>checkBox</step-order>
+				</default>
+				<STEPS>
+					<STEP id="checkBox">
+						<default>
+							<name>Test Checkbox</name>
+							<view>testcheckbox.jsp</view>
+							<classname>TestCheckbox</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>			
+		</ACTIVITIES>
+	</VIEW>
+</PROCESS>

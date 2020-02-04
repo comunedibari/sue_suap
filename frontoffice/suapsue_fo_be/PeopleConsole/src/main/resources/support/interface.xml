@@ -1,0 +1,1278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="main.title">
+		PeopleConsole
+	</entry>
+
+	<entry key="error.title">
+		Errore
+	</entry>
+	
+	<entry key="confirm.title">
+		Conferma
+	</entry>
+
+
+
+	<entry key="jasper.report.pdf.label">
+		Pdf
+	</entry>
+	<entry key="jasper.report.csv.label">
+		Csv
+	</entry>
+	<entry key="jasper.report.html.label">
+		Html
+	</entry>
+	<entry key="jasper.report.xls.label">
+		Xls
+	</entry>
+
+
+	<entry key="pageNavigation.label.resultForPage">
+		Numero risultati per pagina 
+	</entry>
+	<!-- numero risultati per pagina separati da virgola --> 
+	<entry key="pageNavigation.resultForPage">
+		5,10,15,20
+	</entry>
+
+
+	<entry key="fenodes.listAndAdd.title">
+		Nodi di FE
+	</entry>
+	<entry key="fenodes.listAndAdd.nodeName">
+		Nome
+	</entry>
+	<entry key="fenodes.listAndAdd.nodeFEWSURL">
+		URL del Web Service di Front End
+	</entry>
+	<entry key="fenodes.listAndAdd.communeName">
+		Comune
+	</entry>
+	<entry key="fenodes.listAndAdd.communeCode">
+		Codice Comune
+	</entry>
+	<entry key="fenodes.listAndAdd.delegationControlEnabled">
+		Attiva il controllo delle deleghe
+	</entry>
+	<entry key="fenodes.listAndAdd.delegationControlWSURL">
+		URL del web-service di controllo delle deleghe
+	</entry>
+	<entry key="fenodes.listAndAdd.aooPrefix">
+		Prefisso AOO
+	</entry>
+	
+	<!-- Messaggio di avviso-comunincazione -->
+	<entry key="fenodes.listAndAdd.announcementMessage">
+		Messaggio di avviso/comunicazione
+	</entry>
+		<entry key="fenodes.listAndAdd.showAnnouncement">
+		Attiva la visualizzazione del messaggio di avviso
+	</entry>
+	
+	
+	<entry key="fenodes.nodeDetails.title">
+		Dettaglio nodo
+	</entry>
+
+	<entry key="fenodes.nodeLogs.title">
+		Logs nodo
+	</entry>
+	<entry key="fenodes.nodeLogs.searchByLevel">
+		Ricerca per Livello Log
+	</entry>
+	<entry key="fenodes.nodeLogs.searchByService">
+		Ricerca per Servizio
+	</entry>
+	<entry key="fenodes.nodeLogs.searchByDate">
+		Ricerca per Data
+	</entry>
+	<entry key="fenodes.nodeLogs.searchByDate_from">
+		Dal
+	</entry>
+	<entry key="fenodes.nodeLogs.searchByDate_to">
+		Al
+	</entry>
+	<entry key="fenodes.nodeLogs.label.date">
+		Data
+	</entry>
+	<entry key="fenodes.nodeLogs.label.logLevel">
+		Log
+	</entry>                
+	<entry key="fenodes.nodeLogs.label.service">
+		Servizio
+	</entry>               
+	<entry key="fenodes.nodeLogs.label.message">
+		Messaggio
+	</entry>   
+
+
+	<entry key="accreditamentiManagement.title">
+		Gestione Amministrativa Accreditamenti
+	</entry>
+	<entry key="accreditamentiManagement.tipoQualifica">
+		Tipo Qualifica
+	</entry>
+	<entry key="accreditamentiManagement.nomeEnte">
+		Nome Ente
+	</entry>
+	<entry key="accreditamentiManagement.taxcodeUtente">
+		Codice Fiscale Utente Accreditato 
+	</entry>
+	<entry key="accreditamentiManagement.taxcodeIntermediario">
+		Codice Fiscale Intermediario
+	</entry>
+	<entry key="accreditamentiManagement.vatnumberIntermediario">
+		Partita IVA Intermediario
+	</entry>
+	<entry key="accreditamentiManagement.e_addressIntermediario">
+		Domicilio Elettronico Intermediario
+	</entry>
+	<entry key="accreditamentiManagement.tipologiaIntermediario">
+		Tipologia Intermediario
+	</entry>
+	<entry key="accreditamentiManagement.addressIntermediario">
+		Sede Legale
+	</entry>
+	<entry key="accreditamentiManagement.statoAccreditamento">
+		Stato Accreditamento
+	</entry>
+	<entry key="accreditamentiManagement.label.taxcodeUtente">
+		Codice fiscale
+	</entry>
+	<entry key="accreditamentiManagement.label.nomeEnte">
+		Ente
+	</entry>
+	<entry key="accreditamentiManagement.label.qualifica">
+		Qualifica
+	</entry>
+	<entry key="accreditamentiManagement.label.tipologiaIntermediario">
+		Tipologia Intermediario
+	</entry>
+		<entry key="accreditamentiManagement.label.taxcodeIntermediario">
+		Codice Fiscale Intermediario
+	</entry>
+	<entry key="accreditamentiManagement.label.vatnumberIntermediario">
+		Partita IVA Intermediario
+	</entry>
+	<entry key="accreditamentiManagement.label.e_addressIntermediario">
+		Domicilio Elettronico Intermediario
+	</entry>
+	<entry key="accreditamentiManagement.label.addressIntermediario">
+		Sede Legale
+	</entry>
+	<entry key="accreditamentiManagement.label.stato">
+		Stato
+	</entry>
+	<entry key="accreditamentiManagement.label.attiva">
+		Attiva
+	</entry>
+	<entry key="accreditamentiManagement.label.attivo">
+		Attivo
+	</entry>
+	<entry key="accreditamentiManagement.label.disattiva">
+		Disattiva
+	</entry>
+	<entry key="accreditamentiManagement.label.disattivo">
+		Disattivo
+	</entry>
+	<entry key="accreditamentiManagement.label.eliminare">
+		Eliminare/ Ripristinare
+	</entry>
+	<entry key="accreditamentiManagement.label.file_autocertificazione">
+		Download Autocertificazione
+	</entry>
+	<entry key="accreditamentiManagement.label.file_autocertificazione.notavailable">
+		Non disponibile
+	</entry>
+	<entry key="accreditamentiManagement.label.dettaglio">
+		Dettaglio
+	</entry>
+	<entry key="accreditamentiManagementDetails.title">
+		Dettaglio Accreditamento
+	</entry>
+	<entry key="accreditamentiManagementDetails.operatori.title">
+		Operatori accreditati per l'associazione di categoria
+	</entry>
+
+
+	<!-- AccreditamentiVisibilità Qualifiche -->
+	
+	<entry key="accreditamentiVisibilitaQualifiche.title">
+		Visibilità delle qualifiche per i singoli nodi
+	</entry>
+	<entry key="accreditamentiVisibilitaQualifiche.page1.title">
+		Visibilità delle qualifiche - Selezione del nodo  
+	</entry>
+	<entry key="accreditamentiVisibilitaQualifiche.page1.selectNodeFieldset">
+		Selezione del nodo
+	</entry>
+	
+	<entry key="accreditamentiVisibilitaQualifiche.page1.subtitle">
+		Selezione il nodo del quale modificare la visibilità delle qualifiche 
+	</entry>
+	<entry key="accreditamentiVisibilitaQualifiche.page2.title">
+		Visibilità delle qualifiche - Modiche visibilità
+	</entry>
+	<entry key="accreditamentiVisibilitaQualifiche.page2.visibilityFieldset">
+		Qualifiche da rendere visibili
+	</entry>
+	
+	<entry key="accreditamentiVisibilitaQualifiche.page2.subtitle">
+		Selezionare le qualifiche da visualizzare o deselezionarle per nascondrle 
+	</entry>
+		<entry key="accreditamentiVisibilitaQualifiche.page3.title">
+		Visibilità delle qualifiche - Conferma
+	</entry>
+	<entry key="accreditamentiVisibilitaQualifiche.page3.subtitle">
+		Modifiche alla visibilità effettuate
+	</entry>
+	<entry key="accreditamentiVisibilitaQualifiche.page3.resultsFieldset">
+		Risultato dell'operazione
+	</entry>
+	
+	<entry key="accreditamentiVisibilitaQualifiche.page3.repeatWizard">
+		Ripeti l'operazione per un altro nodo
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	<entry key="accreditamentiQualifiche.title">
+		Qualifiche Accreditamento
+	</entry>
+	<entry key="accreditamentiQualifiche.label.id_qualifica">
+		ID Qualifica
+	</entry>
+	<entry key="accreditamentiQualifiche.label.descrizione">
+		Descrizione
+	</entry>
+	<entry key="accreditamentiQualifiche.label.tipo_qualifica">
+		Tipo qualifica
+	</entry>
+	<entry key="accreditamentiQualifiche.label.titolare">
+		Titolare
+	</entry>
+	<entry key="accreditamentiQualifiche.label.auto_certificabile">
+		Autocertificabile
+	</entry>
+	<entry key="accreditamentiQualifiche.label.rappresentante_legale">
+		Rappresentante Legale
+	</entry>
+	<entry key="accreditamentiQualifiche.label.yes">
+		Sì
+	</entry>
+	<entry key="accreditamentiQualifiche.label.no">
+		No
+	</entry>
+	<entry key="accreditamentiQualificheDetail.title">
+		Dettaglio Qualifica
+	</entry>
+	
+	
+	<entry key="userNotificationsSuggestion.title">
+		Notifiche Utente - Suggerimenti
+	</entry>
+	<entry key="userNotificationsError.title">
+		Notifiche Utente - Errori
+	</entry>
+	<entry key="userNotificationsError.fields.name">Nome</entry>
+	<entry key="userNotificationsError.fields.lastname">Cognome</entry>
+	<entry key="userNotificationsError.fields.email">Email</entry>
+	<entry key="userNotificationsError.fields.municipalityCode">Comune ID</entry>
+	<entry key="userNotificationsError.fields.searchByDate">Ricerca per Data</entry>
+	<entry key="userNotificationsError.fields.fromDate">Da</entry>
+	<entry key="userNotificationsError.fields.toDate">a</entry>
+	
+	
+	<entry key="auditStatistiche.title">
+		Statistiche
+	</entry>
+	<entry key="auditStatistiche.totaleAccessiPerServizio.title">
+		Numero di accessi ai servizi per singolo servizio
+	</entry>
+	<entry key="auditStatistiche.serviziTopTen.title">
+		Top ten servizi
+	</entry>
+	<entry key="auditStatistiche.abbandonoServizi.title">
+		Percentuale di abbandono servizi per singolo servizio 
+	</entry>	
+	<entry key="auditStatistiche.label.servizio">
+		Servizio
+	</entry>
+	<entry key="auditStatistiche.label.totali">
+		Totali
+	</entry>
+	<entry key="auditStatistiche.label.accessi">
+		Accessi
+	</entry>
+	<entry key="auditStatistiche.label.abbandoni">
+		Abbandoni
+	</entry>
+
+
+	<entry key="nodeAuditConversations.title">
+		Attività svolte
+	</entry>
+	<entry key="nodeAuditConversations.searchByUser">
+		Ricerca per Utente
+	</entry>
+	<entry key="nodeAuditConversations.searchByUser_cittadini">
+		Cittadini
+	</entry>
+	<entry key="nodeAuditConversations.searchByUser_intermediari">
+		Intermediari
+	</entry>
+	<entry key="nodeAuditConversations.searchByUser_firstName">
+		Nome
+	</entry>
+	<entry key="nodeAuditConversations.searchByUser_lastName">
+		Cognome
+	</entry>
+	<entry key="nodeAuditConversations.searchByUser_taxCode">
+		Codice Fiscale
+	</entry>
+	<entry key="nodeAuditConversations.searchByUser_businessName">
+		Denominazione
+	</entry>
+	<entry key="nodeAuditConversations.searchByService">
+		Ricerca per Servizio
+	</entry>
+	<entry key="nodeAuditConversations.searchByService_area">
+		Area
+	</entry>
+	<entry key="nodeAuditConversations.searchByService_service">
+		Servizio
+	</entry>
+	<entry key="nodeAuditConversations.searchByDate">
+		Ricerca per Data
+	</entry>
+	<entry key="nodeAuditConversations.searchByDate_from">
+		Dal
+	</entry>
+	<entry key="nodeAuditConversations.searchByDate_to">
+		Al
+	</entry>
+	<entry key="nodeAuditConversations.label.date">
+		Data/Ora
+	</entry>
+	<entry key="nodeAuditConversations.label.user">
+		Utente
+	</entry>                
+	<entry key="nodeAuditConversations.label.service">
+		Servizio
+	</entry>               
+	<entry key="nodeAuditConversations.label.action">
+		Azione
+	</entry>               
+	<entry key="nodeAuditConversations.label.message">
+		Messaggio
+	</entry>   
+	
+		
+	<entry key="auditConversationDetails.title">
+		Dettaglio attività
+	</entry>
+	<entry key="auditConversationDetails.np_user">
+		Operatore / Utente
+	</entry>
+	<entry key="auditConversationDetails.anon_user">
+		Operatore / Utente anonimo
+	</entry>
+	
+	
+	
+	<entry key="auditConversationDetails.lp">
+		Persona Giuridica
+	</entry>
+	<entry key="auditConversationDetails.np.firstName">
+		Nome
+	</entry>
+	<entry key="auditConversationDetails.np.lastName">
+		Cognome
+	</entry>
+	<entry key="auditConversationDetails.np.taxcode">
+		Codice Fiscale
+	</entry>
+	<entry key="auditConversationDetails.np.address">
+		Indirizzo residenza
+	</entry>
+	<entry key="auditConversationDetails.np.e_address">
+		Domicilio elettronico
+	</entry>
+	<entry key="auditConversationDetails.tipo_qualifica">
+		Tipo qualifica
+	</entry>
+	<entry key="auditConversationDetails.descr_qualifica">
+		Descrizione qualifica
+	</entry>
+	<entry key="auditConversationDetails.operatore">
+		Operatore
+	</entry>
+	<entry key="auditConversationDetails.richiedente.title">
+		Richiedente il servizio
+	</entry>
+	<entry key="auditConversationDetails.richiedente">
+		Dati richiedente
+	</entry>
+	<entry key="auditConversationDetails.titolare.title">
+		Titolare del servizio
+	</entry>
+	<entry key="auditConversationDetails.titolare">
+		Dati titolare
+	</entry>
+	<entry key="auditConversationDetails.pg.business.name">
+		Denominazione
+	</entry>
+	<entry key="auditConversationDetails.pg.address">
+		Sede legale
+	</entry>
+	<entry key="auditConversationDetails.pg.taxcode">
+		Codice Fiscale
+	</entry>
+	<entry key="auditConversationDetails.pg.vatnumber">
+		Partita IVA
+	</entry>
+	<entry key="auditConversationDetails.rapprLegale.title">
+		Rappresentante Legale
+	</entry>
+	
+	
+	<entry key="auditConversationDetails.c.title">
+		Dettaglio attività
+	</entry>
+	<entry key="auditConversationDetails.c.action">
+		Azione
+	</entry>
+	<entry key="auditConversationDetails.c.datetime">
+		Data/Ora
+	</entry>
+	<entry key="auditConversationDetails.c.message">
+		Messaggio
+	</entry>
+	<entry key="auditConversationDetails.c.includexml">
+		XML
+	</entry>
+	<entry key="auditConversationDetails.xmlIn">
+		XML In
+	</entry>
+	<entry key="auditConversationDetails.xmlOut">
+		XML Out
+	</entry>
+
+
+
+	<entry key="beservices.list.title">
+		Servizi di BE
+	</entry>
+	<entry key="beservices.list.nodeName">
+		Nodo
+	</entry>
+	<entry key="beservices.list.logicalName">
+		Nome Logico Back End
+	</entry>
+	<entry key="beservices.list.beUrl">
+		URL Back End
+	</entry>
+	<entry key="beservices.list.useEnvelope">
+		Utilizzo della Busta di trasporto
+	</entry>
+	<entry key="beservices.list.denyDelegationControl">
+		Inibire il controllo delle deleghe
+	</entry>
+	
+	<entry key="beservices.details.title">
+		Dettaglio servizio di BE
+	</entry>
+
+	<entry key="beservices.massiveParametersSettings.title">
+			Modifica massiva dei parametri dei servizi di back end
+	</entry>
+	<entry key="beservices.massiveParametersSettings.page1.title">
+			Selezione dei nodi di backe end da modificare
+	</entry>
+	<entry key="beservices.massiveParametersSettings.page1.selectNodesSingleServices">
+		Seleziona singoli servizi dei nodi
+	</entry>
+
+	<entry key="beservices.massiveParametersSettings.page2.title">
+			Selezione dei servizi da modificare
+	</entry>
+
+	<entry key="beservices.massiveParametersSettings.page3.title">
+			Impostazione dei nuovi parametri
+	</entry>
+	<entry key="beservices.massiveParametersSettings.page3.beUrlSchema">
+		Protocollo URL Back End
+	</entry>
+	<entry key="beservices.massiveParametersSettings.page3.beUrlHost">
+		Host URL Back End
+	</entry>
+	<entry key="beservices.massiveParametersSettings.page3.beUrlPort">
+		Porta URL Back End
+	</entry>
+	<entry key="beservices.massiveParametersSettings.page3.useEnvelope">
+		Utilizzo della Busta di trasporto
+	</entry>
+	<entry key="beservices.massiveParametersSettings.page3.denyDelegationControl">
+		Inibire il controllo delle deleghe
+	</entry>
+
+
+
+
+	<entry key="feservices.list.title">
+		Servizi di FE
+	</entry>
+	<entry key="feservices.list.feNodesList">
+		Nodi
+	</entry>
+	<entry key="feservices.list.package">
+		Package
+	</entry>
+
+
+
+	<entry key="feservice.details.title">
+		Dettaglio servizio di FE
+	</entry>
+	<entry key="feservice.details.serviceId">
+		ID Servizio
+	</entry>
+	<entry key="feservice.details.serviceName">
+		Nome Servizio
+	</entry>
+	<entry key="feservice.details.municipalityName">
+		Comune
+	</entry>
+	<entry key="feservice.details.activity">
+		Attività
+	</entry>
+	<entry key="feservice.details.subActivity">
+		Sottoattività
+	</entry>
+	<entry key="feservice.details.package">
+		Package
+	</entry>
+	<entry key="feservice.details.process">
+		Process
+	</entry>
+	<entry key="feservice.details.logLevel">
+		Livello Log
+	</entry>
+	<entry key="feservice.details.state">
+		Stato
+	</entry>
+	<entry key="feservice.details.signProcess">
+		Firma Procedimento
+	</entry>
+	
+	<entry key="feservice.details.signProcess">
+		Firma Procedimento
+	</entry>
+	
+	<entry key="feservice.details.onlineSign">
+		Firma on-line
+	</entry>
+	
+	<entry key="feservice.details.offlineSign">
+		Firma off-line
+	</entry>
+	
+	
+	<entry key="feservice.details.includeAttachmentsInReceipt">
+		Allegati  nella ricevuta per il cittadino
+	</entry>
+	<entry key="feservice.details.embedAttachmentInXml">
+		Modalità di gestione degli allegati
+	</entry>
+	<entry key="feservice.details.sendmailtoowner">
+		Invia la ricevuta al cittadino
+	</entry>
+	<entry key="feservice.details.processActivationType">
+		Tipo di Attivazione Procedimento
+	</entry>
+	<entry key="feservice.details.processActivationType.webService">
+		web-service [SUBMIT-PROCESS]
+	</entry>
+	<entry key="feservice.details.processActivationType.eMail">
+		e-mail
+	</entry>
+	<entry key="feservice.details.processActivationType.eMail.address">
+		Indirizzo e-mail:
+	</entry>
+	
+	<entry key="feservice.details.processActivationType.none">
+		non previsto
+	</entry>
+	
+	<entry key="feservice.details.privacy">
+		Privacy
+	</entry>
+	<entry key="feservice.details.privacy.showPrivacyDisclaimer">
+		Visualizza disclaimer
+	</entry>
+	<entry key="feservice.details.privacy.privacyDisclaimerRequireAcceptance">
+		Richiedi presa visione
+	</entry>
+	
+	
+	
+	<entry key="addOrEditVelocityTemplate.templateScopeTitle">
+		 Specificità del template
+	</entry>
+	<entry key="addOrEditVelocityTemplate.title">
+		 Inserisci dettagli del Template Velocity
+	</entry>
+	<entry key="addOrEditVelocityTemplate.serviceName">
+		Srvizio
+	</entry>
+	<entry key="addOrEditVelocityTemplate.nodeName">
+		Nodo
+	</entry>
+	<entry key="addOrEditVelocityTemplate.templateSubject">
+	   Subject
+	</entry>
+	
+	<entry key="addOrEditVelocityTemplate.templateBody">
+	   Body
+	</entry>
+	<entry key="addOrEditVelocityTemplate.templateBodyMapper">
+	   Body mapper
+	</entry>
+	<entry key="addOrEditVelocityTemplate.templateSubjectMapper">
+	   Subject mapper
+	</entry>
+	<entry key="addOrEditVelocityTemplate.templateDesc">
+		Descrizione
+	</entry>
+	<entry key="addOrEditVelocityTemplate.templateKey">
+		Identificativo del template
+	</entry>
+	
+	
+
+	<entry key="feservice.nodeDeployedServiceRegistration.title">
+		Servizi di FE - Registrazione servizi dispiegati
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page.title">
+		Registrazione servizi dispiegati
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page1.title">
+		Registrazione servizi dispiegati - Selezione nodo
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page1.subtitle">
+		Selezione nodo
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page1.nodesList">
+		Selezionare il nodo
+	</entry>
+	
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.title">
+		Registrazione servizi dispiegati - Selezione servizi
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.subtitle">
+		Selezione servizi
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.registeredServices">
+		Servizi registrati:
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.availableServices">
+		Servizi disponibili:
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.selectedNode">
+		Nodo selezionato:
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.servicesList">
+		Selezionare i servizi da registrare
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.beUrl">
+		URL Back End
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.logicalNamesPrefix">
+		Prefisso nomi logici
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.logicalNamesSuffix">
+		Suffisso nomi logici
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.servicesPrefix">
+		Prefisso servizi
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page2.servicesSuffix">
+		Suffisso servizi
+	</entry>
+	
+	<entry key="feservice.nodeDeployedServiceRegistration.page3.title">
+		Registrazione servizi dispiegati - Risultato registrazione
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page3.subtitle">
+		Risultato registrazione
+	</entry>
+	<entry key="feservice.nodeDeployedServiceRegistration.page3.log">
+		Log delle operazioni
+	</entry>
+
+
+
+
+
+
+
+
+
+	<entry key="feservice.nodeToNodeCopy.title">
+		Servizi di FE - Copia da nodo a nodo
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page1.title">
+		Copia da nodo a nodo - Selezione nodo di origine e di destinazione
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page1.subtitle">
+		Selezione nodo di origine e di destinazione
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page1.fromNodeFieldset">
+		Nodo di partenza
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page1.fromNodeSelection">
+		Selezionare il nodo da cui copiare
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page1.toNodeFieldset">
+		Nodo di destinazione
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page1.toNewNodeSelection">
+		Nuovo nodo
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page1.toNodeSelection">
+		Nodo esistente
+	</entry>
+	
+	<entry key="feservice.nodeToNodeCopy.page2.title">
+		Copia da nodo a nodo - Selezione servizi da copiare
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page2.subtitle">
+		Selezione servizi da copiare
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page2.fromNode">
+		Nodo di origine:
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page2.toNode">
+		Nodo di destinazione:
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page2.servicesList">
+		Selezionare i servizi da registrare
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page2.registeredServices">
+		Servizi registrati:
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page2.availableServices">
+		Servizi disponibili:
+	</entry>
+	
+	<entry key="feservice.nodeToNodeCopy.page3.title">
+		Copia da nodo a nodo - Risultato copia
+	</entry>
+	<entry key="feservice.nodeToNodeCopy.page3.subtitle">
+		Risultato copia
+	</entry>
+
+
+
+
+	<entry key="feservice.massiveChange.title">
+		Servizi di FE - Modifica massiva parametri
+	</entry>
+	<entry key="feservice.massiveChange.page1.subtitle">
+		Selezionare i nodi per cui modificare i servizi
+	</entry>
+	<entry key="feservice.massiveChange.page1.nodesSelectionFieldset">
+		Nodi disponibili
+	</entry>
+	<entry key="feservice.massiveChange.page1.nodesSelection">
+		Nodi:
+	</entry>
+	
+	<entry key="feservice.massiveChange.page2.subtitle">
+		Selezionare i servizi da modificare
+	</entry>
+	<entry key="feservice.massiveChange.page2.availableServices">
+		Servizi disponibili:
+	</entry>
+	
+	<entry key="feservice.massiveChange.page3.subtitle">
+		Impostazione parametri
+	</entry>
+
+	<entry key="feservice.massiveChange.page4.subtitle">
+		Risultato dell''operazione
+	</entry>
+
+	<entry key="feservice.massiveChange.page4.action">
+		Modificato
+	</entry>
+
+	<entry key="feservice.massiveChange.page4.lowerCaseAction">
+		modificato
+	</entry>
+
+
+
+	<entry key="feservice.massiveDeletion.title">
+		Servizi di FE - Eliminazione massiva
+	</entry>
+	<entry key="feservice.massiveDeletion.page1.subtitle">
+		Selezione dei nodi di front end per cui si desidera eliminare i servizi
+	</entry>
+	<entry key="feservice.massiveDeletion.page1.nodesSelectionFieldset">
+		Nodi disponibili
+	</entry>
+	<entry key="feservice.massiveDeletion.page1.nodesSelection">
+		Nodi:
+	</entry>
+	
+	<entry key="feservice.massiveDeletion.page2.subtitle">
+		Selezionare i servizi da eliminare
+	</entry>
+	<entry key="feservice.massiveDeletion.page2.servicesList">
+		Selezionare i servizi da eliminare
+	</entry>
+
+
+	
+	<entry key="feservice.massiveDeletion.page3.subtitle">
+		Conferma dell'eliminazione
+	</entry>
+
+	<entry key="feservice.massiveDeletion.page4.subtitle">
+		Risultato dell''operazione
+	</entry>
+
+	<entry key="feservice.massiveDeletion.page4.action">
+		Eliminato
+	</entry>
+
+	<entry key="feservice.massiveDeletion.page4.lowerCaseAction">
+		eliminato
+	</entry>
+
+
+
+
+
+
+	<entry key="beservice.massiveChange.title">
+		Servizi di BE - Modifica massiva parametri
+	</entry>
+	<entry key="beservice.massiveChange.page1.subtitle">
+		Selezionare i nodi per cui modificare i servizi
+	</entry>
+	<entry key="beservice.massiveChange.page1.nodesSelectionFieldset">
+		Nodi disponibili
+	</entry>
+	<entry key="beservice.massiveChange.page1.nodesSelection">
+		Nodi:
+	</entry>
+	
+	<entry key="beservice.massiveChange.page2.subtitle">
+		Selezionare i servizi da modificare
+	</entry>
+	<entry key="beservice.massiveChange.page2.availableServices">
+		Servizi disponibili:
+	</entry>
+	
+	<entry key="beservice.massiveChange.page3.subtitle">
+		Impostazione parametri
+	</entry>
+
+	<entry key="beservice.massiveChange.page3.protocol">
+		Protocollo
+	</entry>
+
+	<entry key="beservice.massiveChange.page3.hostName">
+		Nome host
+	</entry>
+
+	<entry key="beservice.massiveChange.page3.port">
+		Porta
+	</entry>
+
+	<entry key="beservice.massiveChange.page3.advancedUrlSubstitution">
+		Utilizzo espressioni regolari
+	</entry>
+
+	<entry key="beservice.massiveChange.page3.find">
+		Trova
+	</entry>
+
+	<entry key="beservice.massiveChange.page3.replace">
+		Sostituisci
+	</entry>
+
+
+	<entry key="beservice.massiveChange.page4.subtitle">
+		Risultato dell''operazione
+	</entry>
+
+	<entry key="beservice.massiveChange.page4.action">
+		Modificato
+	</entry>
+
+	<entry key="beservice.massiveChange.page4.lowerCaseAction">
+		modificato
+	</entry>
+
+
+
+	<entry key="beservice.massiveDeletion.title">
+		Servizi di BE - Eliminazione massiva
+	</entry>
+	<entry key="beservice.massiveDeletion.page1.subtitle">
+		Selezione dei nodi di front end per cui si desidera eliminare i servizi
+	</entry>
+	<entry key="beservice.massiveDeletion.page1.nodesSelectionFieldset">
+		Nodi disponibili
+	</entry>
+	<entry key="beservice.massiveDeletion.page1.nodesSelection">
+		Nodi:
+	</entry>
+	
+	<entry key="beservice.massiveDeletion.page2.subtitle">
+		Selezionare i servizi da eliminare
+	</entry>
+	<entry key="beservice.massiveDeletion.page2.servicesList">
+		Selezionare i servizi da eliminare
+	</entry>
+
+
+	
+	<entry key="beservice.massiveDeletion.page3.subtitle">
+		Conferma dell'eliminazione
+	</entry>
+
+	<entry key="beservice.massiveDeletion.page4.subtitle">
+		Risultato dell''operazione
+	</entry>
+
+	<entry key="beservice.massiveDeletion.page4.action">
+		Eliminato
+	</entry>
+
+	<entry key="beservice.massiveDeletion.page4.lowerCaseAction">
+		eliminato
+	</entry>
+
+
+	<entry key="admin.mainPage.title">
+		Amministrazione People Console
+	</entry>
+
+
+
+
+	<entry key="root.login.title">
+		Accesso utente root
+	</entry>
+	<entry key="root.login.password.label">
+		Password
+	</entry>
+	<entry key="root.login.passwordCheck.label">
+		Verifica password
+	</entry>
+
+	<entry key="root.login.update.firstName.label">
+		Nome
+	</entry>
+	<entry key="root.login.update.lastName.label">
+		Cognome
+	</entry>
+	<entry key="root.login.update.eMail.label">
+		E-Mail
+	</entry>
+
+	<entry key="root.login.update.message">
+		Inserire i dati per l'utente Root.
+	</entry>
+	<entry key="root.login.defaultRoot.message">
+		Utente Root di default, inserire la password.	
+	</entry>
+	<entry key="root.login.defaultRoot.update.message">
+		I dati dell'utente Root sono stati cambiati, per procedere è necessario inserire nuovamente la password.
+	</entry>
+	<entry key="root.login.message">
+		Inserire la password per l'utente Root.
+	</entry>
+	
+	
+	<entry key="admin.userNotification.suggestion.title">
+		Elenco suggerimenti inviati dagli utenti
+	</entry>
+	<entry key="admin.userNotification.error.title">
+		Elenco bug segnalati dagli utenti
+	</entry>
+	<entry key="admin.userNotification.noResult">
+		Nessun risultato ottenuto
+	</entry>
+
+
+
+	<entry key="admin.processes.deletion.title">
+		Archiviazione e cancellazione pratiche
+	</entry>
+	
+	<entry key="admin.processes.deletion.useDateFilter">
+		Intervallo
+	</entry>
+	
+	<entry key="admin.processes.deletion.dateFilterFrom">
+		Data da
+	</entry>
+	
+	<entry key="admin.processes.deletion.dateFilterTo">
+		Data a
+	</entry>
+	
+	<entry key="admin.processes.deletion.useOlderThanDaysFilter">
+		Antecedente a
+	</entry>
+	
+	<entry key="admin.processes.deletion.olderThanDays">
+		Giorni trascorsi dall'invio
+	</entry>
+	
+	<entry key="admin.processes.deletion.useUsersFilter">
+		Utenti
+	</entry>
+	
+	<entry key="admin.processes.deletion.useNodesFilter">
+		Enti
+	</entry>
+	
+	<entry key="admin.processes.deletion.useTypeFilter">
+		Tipo
+	</entry>
+	
+	<entry key="admin.processes.deletion.onlyNotSubmittable">
+		solo visure
+	</entry>
+	
+	<entry key="admin.processes.deletion.onlyPending">
+		solo pratiche in compilazione
+	</entry>
+	
+	<entry key="admin.processes.deletion.onlySubmitted">
+		solo pratiche inviate
+	</entry>
+	
+	
+	
+	
+
+
+	<entry key="admin.accounts.listAndAdd.title">
+		Accounts
+	</entry>
+	<entry key="admin.accounts.listAndAdd.taxCode">
+		Codice fiscale
+	</entry>
+	<entry key="admin.accounts.listAndAdd.role">
+		Ruoli
+	</entry>
+
+	<entry key="admin.accounts.generalErrorEMailReceiver.label">
+		errore generale
+	</entry>
+	<entry key="admin.accounts.sendErrorEMailReceiver.label">
+		errore invio
+	</entry>
+	<entry key="admin.accounts.userSignallingErrorsEMailReceiver.label">
+		segnalazione malfunzionamento da utenti
+	</entry>
+	<entry key="admin.accounts.userSuggestionsEMailReceiver.label">
+		segnalazione suggerimenti da utenti
+	</entry>
+	<entry key="admin.accounts.newAccreditamentoEMailReceiver.label">
+		definizione nuovo accreditamento
+	</entry>
+
+
+	<entry key="admin.certificates.listAndAdd.title">
+		Certificati
+	</entry>
+
+	<entry key="admin.certificates.generation.title">
+		Dati generazione certificato
+	</entry>
+	<entry key="admin.certificates.generation.alias.label">
+		Alias
+	</entry>
+	<entry key="admin.certificates.generation.passwordAutogeneration.label">
+		Generazione automatica password
+	</entry>
+	<entry key="admin.certificates.generation.password.label">
+		Password
+	</entry>
+	<entry key="admin.certificates.generation.passwordCheck.label">
+		Verifica password
+	</entry>
+	<entry key="admin.certificates.generation.commonName.label">
+		Nome comune
+	</entry>
+	<entry key="admin.certificates.generation.organizationUnit.label">
+		Nome unità organizzativa
+	</entry>
+	<entry key="admin.certificates.generation.organizationName.label">
+		Nome organizzazione
+	</entry>
+	<entry key="admin.certificates.generation.locality.label">
+		Nome località
+	</entry>
+	<entry key="admin.certificates.generation.stateName.label">
+		Nome provincia
+	</entry>
+	<entry key="admin.certificates.generation.country.label">
+		Stato
+	</entry>
+	<entry key="admin.certificates.generation.eMail.label">
+		E-Mail
+	</entry>
+	<entry key="admin.certificates.generation.validity.label">
+		Validità (gg)
+	</entry>
+	<entry key="admin.certificates.generation.allowedNodes.label">
+		Nodi abilitati
+	</entry>
+
+	<entry key="admin.certificates.send.title">
+		Invio dati all''utente
+	</entry>
+
+	<entry key="admin.certificates.sentResult.title">
+		Risultati invio dati all''utente
+	</entry>
+
+	<entry key="notAuthorized.title">
+		Accesso non consentito
+	</entry>
+
+	<entry key="logout.title">
+		Uscita dal sistema
+	</entry>
+
+
+	<entry key="admin.securitySettings.title">
+		Impostazioni sicurezza
+	</entry>
+
+
+
+	<entry key="admin.settings.title">
+		Impostazioni
+	</entry>
+	<entry key="admin.settings.mail.title">
+		Mail server
+	</entry>
+	<entry key="admin.settings.security.title">
+		Sicurezza
+	</entry>
+	
+	<entry key="admin.settings.monitoring.title">
+		Monitoraggio
+	</entry>
+	
+	<entry key="admin.settings.scheduler.title">
+		Scheduler
+	</entry>
+	
+
+	<entry key="generalmessages.listAndModify.title">
+		Messaggi generali
+	</entry>
+
+	<entry key="pagedlists.rowsPerPageList">
+		5|10|15|20|25|30|35|40
+	</entry>
+
+	<entry key="pagedlistholders.rowsPerPageLabel">
+		Righe per pagina
+	</entry>
+
+	<entry key="pagedlistholders.rowsPerPageRefreshLabel">
+		Aggiorna
+	</entry>
+
+	<entry key="pagedlistholders.defaultHiglightingColor">
+		#D3E1F1
+	</entry>
+
+
+
+	<entry key="monitoraggio.indicatori.filtriFieldsetTitle">
+		Filtri
+	</entry>
+	
+	
+	<entry key="monitoraggio.indicatori.legendaFieldsetTitle">
+		Legenda
+	</entry>
+
+
+	<entry key="monitoraggio.mainPage.title">
+		Osservatorio sulle performance delle soluzioni di e-Government
+	</entry>
+		
+	<entry key="monitoraggio.indicatori.title">
+		Indicatori chiave di performance delle soluzioni di e-Government
+	</entry>
+	
+	<entry key="monitoraggio.indicatori.filterByDate_from">
+		Data Da
+	</entry>
+	
+	<entry key="monitoraggio.indicatori.filterByDate_to">
+		Data A
+	</entry>
+
+	<entry key="monitoraggio.indicatori.filterByEnti">
+		Enti
+	</entry>
+
+	<entry key="monitoraggio.indicatori.filterBySoluzioni">
+		Soluzioni
+	</entry>
+	
+</properties>

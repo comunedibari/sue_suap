@@ -1,0 +1,96 @@
+
+<wsdl:definitions xmlns:ns1="http://org.apache.axis2/xsd"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:ns0="http://webservice.backend.people.it/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://webservice.backend.people.it/">
+	<wsdl:documentation>
+		Dynamic Odt generation from Odt template to several outputs (PDF, DOC,
+		HTML...)
+	</wsdl:documentation>
+	<wsdl:types>
+		<xs:schema xmlns:ns="http://webservice.backend.people.it/"
+			attributeFormDefault="qualified" elementFormDefault="qualified"
+			targetNamespace="http://webservice.backend.people.it/">
+			<xs:element name="process">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="data" nillable="true" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="processResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" nillable="true" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="processMessage">
+		<wsdl:part name="part1" element="ns0:process" />
+	</wsdl:message>
+	<wsdl:message name="processResponse">
+		<wsdl:part name="part1" element="ns0:processResponse" />
+	</wsdl:message>
+	<wsdl:portType name="DynamicOdtServicePortType">
+		<wsdl:operation name="process">
+			<wsdl:input xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+				message="ns0:processMessage" wsaw:Action="urn:process" />
+			<wsdl:output message="ns0:processResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="DynamicOdtServiceSOAP11Binding" type="ns0:DynamicOdtServicePortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<wsdl:operation name="process">
+			<soap:operation soapAction="urn:process" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="DynamicOdtServiceSOAP12Binding" type="ns0:DynamicOdtServicePortType">
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<wsdl:operation name="process">
+			<soap12:operation soapAction="urn:process" style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="DynamicOdtServiceHttpBinding" type="ns0:DynamicOdtServicePortType">
+		<http:binding verb="POST" />
+		<wsdl:operation name="process">
+			<http:operation location="process" />
+			<wsdl:input>
+				<mime:content type="text/xml" />
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content type="text/xml" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="DynamicOdtService">
+		<wsdl:port name="DynamicOdtServiceSOAP11port_http" binding="ns0:DynamicOdtServiceSOAP11Binding">
+			<soap:address
+				location="http://localhost:8080/DynamicOdtServiceWego/services/DynamicOdtService" />
+		</wsdl:port>
+		<wsdl:port name="DynamicOdtServiceSOAP12port_http" binding="ns0:DynamicOdtServiceSOAP12Binding">
+			<soap12:address
+				location="http://localhost:8080/DynamicOdtServiceWego/services/DynamicOdtService" />
+		</wsdl:port>
+		<wsdl:port name="DynamicOdtServiceHttpport1" binding="ns0:DynamicOdtServiceHttpBinding">
+			<http:address
+				location="http://localhost:8080/DynamicOdtServiceWego/rest/DynamicOdtService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

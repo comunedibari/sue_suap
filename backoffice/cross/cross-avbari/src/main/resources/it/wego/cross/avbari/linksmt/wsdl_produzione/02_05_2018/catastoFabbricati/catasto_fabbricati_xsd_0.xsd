@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://webservice.backend.people.it/" elementFormDefault="qualified" targetNamespace="http://webservice.backend.people.it/">
+   <xs:element name="process">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element minOccurs="0" name="data" nillable="true" type="xs:string" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="processResponse">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="cross">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="cross-aosta-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-aosta/cross-aosta">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-auriga-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-auriga/cross-auriga">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-concessioni-autorizzazioni-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-concessioni-autorizzazioni/cross-concessioni-autorizzazioni">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-datasiel-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-datasiel/cross-datasiel">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-demo-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-demo/cross-demo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-egrammata-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-egrammata/cross-egrammata">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-genova-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-genova/cross-genova">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-genuit-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-genuit/cross-genuit">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-mypage-client-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-mypage-client/cross-mypage-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-plugin-interfaces-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-plugin-interfaces/cross-plugin-interfaces">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-registro-imprese-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-registro-imprese/cross-registro-imprese">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-fvg-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-fvg/cross-fvg">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-avbari-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-avbari/cross-avbari">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-xml-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-xml/cross-xml">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-xml-schema-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-xml-schema/cross-xml-schema">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-xml-visura-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-xml-visura/cross-xml-visura">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-entities-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-entities/cross-entities">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-dao-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-dao/cross-dao">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-services-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-services/cross-services">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-filters-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-filters/cross-filters">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="wego-cas-filter-1.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/wego-cas-filter/wego-cas-filter">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/" handle="module:/overlay/var/M2_REPO/it/wego/utils/wego-forms-web/1.1-SNAPSHOT/wego-forms-web-1.1-SNAPSHOT.war?unpackFolder=target/m2e-wtp/overlays&amp;includes=**/**&amp;excludes=META-INF/MANIFEST.MF">
+            <dependency-type>consumes</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/" handle="module:/overlay/slf/?includes=**/**&amp;excludes=META-INF/MANIFEST.MF">
+            <dependency-type>consumes</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="cross"/>
+        <property name="java-output-path" value="/cross-web/target/classes"/>
+    </wb-module>
+</project-modules>

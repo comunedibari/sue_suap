@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:pratica xmlns:p="http://www.wego.it/cross" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.wego.it/cross cross.xsd ">
+<!-- Obbligatori da schema cross.xsd -->
+  <p:id_procedimento_suap>p:id_procedimento_suap</p:id_procedimento_suap>
+   <p:procedimenti>
+   	<p:procedimento>
+   		<p:cod_ente_destinatario>2006</p:cod_ente_destinatario>
+   		<p:cod_lang>IT</p:cod_lang>
+   		<p:cod_procedimento>4</p:cod_procedimento>
+   		<p:des_ente_destinatario>2006</p:des_ente_destinatario>
+   		<p:des_procedimento>SCIA</p:des_procedimento>
+   		<p:id_ente_destinatario>2006</p:id_ente_destinatario>
+   		<p:termini>
+   			test
+   		</p:termini>
+   	</p:procedimento>
+   </p:procedimenti>
+<!-- Non obbligatori da schema cross.xsd -->
+ <!--  <p:anno>2018</p:anno>
+  <p:cap_ente>70032</p:cap_ente>
+  <p:cod_catastale_comune>A893</p:cod_catastale_comune>
+  <p:cod_ente>2006</p:cod_ente>
+  -->
+  <!-- dalla tabella opencross.lk_stato_pratica -->
+  <!--
+  <p:cod_stato_pratica>A</p:cod_stato_pratica>
+  <p:data_chiusura>2018-08-08</p:data_chiusura>
+  <p:data_protocollo>2018-04-04</p:data_protocollo>
+  <p:data_ricezione>2018-04-04</p:data_ricezione>
+  <p:dati_catastali>
+  	<p:immobile>
+  		<p:cod_immobile>1</p:cod_immobile>
+  		<p:counter>1</p:counter>
+  		<p:des_comune>bitonto</p:des_comune>
+  		<p:des_provincia>ba</p:des_provincia>
+  		<p:des_tipo_particella>4</p:des_tipo_particella>
+  		<p:des_tipo_sistema_catastale>des_tipo_sistema_catastale</p:des_tipo_sistema_catastale>
+  		<p:des_tipo_unita>des_tipo_unita</p:des_tipo_unita>
+  		<p:estensione_particella>p:estensione_particella</p:estensione_particella>
+  		<p:foglio>p:foglio</p:foglio>
+  		<p:id_comune>12</p:id_comune>
+  		<p:id_immobile>13</p:id_immobile>
+  		<p:id_provincia>3</p:id_provincia>
+  		<p:id_tipo_particella>2</p:id_tipo_particella>
+  		<p:id_tipo_sistema_catastale>6</p:id_tipo_sistema_catastale>
+  		<p:id_tipo_unita>2</p:id_tipo_unita>
+  	</p:immobile>
+  </p:dati_catastali>
+  <p:anagrafiche>
+  	
+  </p:anagrafiche>
+  -->
+</p:pratica>

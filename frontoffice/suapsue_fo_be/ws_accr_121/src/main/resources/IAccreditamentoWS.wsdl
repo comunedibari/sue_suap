@@ -1,0 +1,1157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:it:people:sirac:accr" xmlns:impl="urn:it:people:sirac:accr" xmlns:intf="urn:it:people:sirac:accr" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns1="urn:it:people:sirac:accr:beans" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<!--WSDL created by Apache Axis version: 1.2.1
+Built on Jun 14, 2005 (09:15:57 EDT)-->
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:it:people:sirac:accr" elementFormDefault="qualified">
+   <import namespace="urn:it:people:sirac:accr:beans"/>
+   <element name="creaProfiloLocale">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+      <element name="idCARegistrazione" type="xsd:string"/>
+      <element name="domicilioElettronico" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="creaProfiloLocaleResponse">
+    <complexType>
+     <sequence>
+      <element name="creaProfiloLocaleReturn" type="tns1:ProfiloLocale"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="accreditaIntermediario">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+      <element name="qualifica" type="xsd:string"/>
+      <element name="profilo" type="tns1:ProfiloAccreditamento"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="accreditaIntermediarioResponse">
+    <complexType/>
+   </element>
+   <element name="creaDelega">
+    <complexType>
+     <sequence>
+      <element name="delega" type="tns1:Delega"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="creaDelegaResponse">
+    <complexType/>
+   </element>
+   <element name="esisteProfiloLocale">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="esisteProfiloLocaleResponse">
+    <complexType>
+     <sequence>
+      <element name="esisteProfiloLocaleReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAccreditamenti">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAccreditamentiResponse">
+    <complexType>
+     <sequence>
+      <element name="getAccreditamentiReturn" type="tns1:Accreditamento" maxOccurs="unbounded"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDeleghe">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+      <element name="idAccreditamento" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDelegheResponse">
+    <complexType>
+     <sequence>
+      <element name="getDelegheReturn" type="tns1:Delega" maxOccurs="unbounded"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="eliminaDelega">
+    <complexType>
+     <sequence>
+      <element name="delega" type="tns1:Delega"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="eliminaDelegaResponse">
+    <complexType/>
+   </element>
+   <element name="esisteQualifica">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+      <element name="qualifiche" type="xsd:string" maxOccurs="unbounded"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="esisteQualificaResponse">
+    <complexType>
+     <sequence>
+      <element name="esisteQualificaReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAccreditamentoById">
+    <complexType>
+     <sequence>
+      <element name="idAccreditamento" type="xsd:int"/>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAccreditamentoByIdResponse">
+    <complexType>
+     <sequence>
+      <element name="getAccreditamentoByIdReturn" type="tns1:Accreditamento"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAccreditamentoByCodiceIntermediario">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+      <element name="codiceFiscaleIntermediario" type="xsd:string"/>
+      <element name="partitaIvaIntermediario" type="xsd:string"/>
+      <element name="idQualifica" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAccreditamentoByCodiceIntermediarioResponse">
+    <complexType>
+     <sequence>
+      <element name="getAccreditamentoByCodiceIntermediarioReturn" type="tns1:Accreditamento"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProfiloLocale">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProfiloLocaleResponse">
+    <complexType>
+     <sequence>
+      <element name="getProfiloLocaleReturn" type="tns1:ProfiloLocale"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualifiche">
+    <complexType/>
+   </element>
+   <element name="getQualificheResponse">
+    <complexType>
+     <sequence>
+      <element name="getQualificheReturn" type="tns1:Qualifica" maxOccurs="unbounded"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualificheAbilitate">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualificheAbilitateResponse">
+    <complexType>
+     <sequence>
+      <element name="getQualificheAbilitateReturn" type="tns1:Qualifica" maxOccurs="unbounded"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualificheAccreditabili">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualificheAccreditabiliResponse">
+    <complexType>
+     <sequence>
+      <element name="getQualificheAccreditabiliReturn" type="tns1:Qualifica" maxOccurs="unbounded"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualificaById">
+    <complexType>
+     <sequence>
+      <element name="idQualifica" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualificaByIdResponse">
+    <complexType>
+     <sequence>
+      <element name="getQualificaByIdReturn" type="tns1:Qualifica"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualifiche2Persona">
+    <complexType>
+     <sequence>
+      <element name="tipoQualifica" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualifiche2PersonaResponse">
+    <complexType>
+     <sequence>
+      <element name="getQualifiche2PersonaReturn" type="tns1:Qualifica2Persona" maxOccurs="unbounded"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="canCreateDelega">
+    <complexType>
+     <sequence>
+      <element name="codiceFiscale" type="xsd:string"/>
+      <element name="idComune" type="xsd:string"/>
+      <element name="idQualifica" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="canCreateDelegaResponse">
+    <complexType>
+     <sequence>
+      <element name="canCreateDelegaReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAutoCertTemplate">
+    <complexType>
+     <sequence>
+      <element name="tipoqualifica" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAutoCertTemplateResponse">
+    <complexType>
+     <sequence>
+      <element name="getAutoCertTemplateReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDelegaTemplate">
+    <complexType>
+     <sequence>
+      <element name="tipoDelega" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDelegaTemplateResponse">
+    <complexType>
+     <sequence>
+      <element name="getDelegaTemplateReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualifica2Persona">
+    <complexType>
+     <sequence>
+      <element name="tipoQualifica" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getQualifica2PersonaResponse">
+    <complexType>
+     <sequence>
+      <element name="getQualifica2PersonaReturn" type="tns1:Qualifica2Persona"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:it:people:sirac:accr:beans" elementFormDefault="qualified">
+   <complexType name="ProfiloLocale">
+    <sequence>
+     <element name="codiceFiscale" nillable="true" type="xsd:string"/>
+     <element name="domicilioElettronico" nillable="true" type="xsd:string"/>
+     <element name="idCA" nillable="true" type="xsd:string"/>
+     <element name="idComune" nillable="true" type="xsd:string"/>
+     <element name="username" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="RappresentanteLegale">
+    <sequence>
+     <element name="codiceFiscale" nillable="true" type="xsd:string"/>
+     <element name="codiceFiscaleIntermediario" nillable="true" type="xsd:string"/>
+     <element name="cognome" nillable="true" type="xsd:string"/>
+     <element name="dataNascita" nillable="true" type="xsd:dateTime"/>
+     <element name="idAccreditamento" type="xsd:int"/>
+     <element name="indirizzoResidenza" nillable="true" type="xsd:string"/>
+     <element name="luogoNascita" nillable="true" type="xsd:string"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="partitaIvaIntermediario" nillable="true" type="xsd:string"/>
+     <element name="provinciaNascita" nillable="true" type="xsd:string"/>
+     <element name="sesso" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ProfiloAccreditamento">
+    <sequence>
+     <element name="autoCert" nillable="true" type="xsd:base64Binary"/>
+     <element name="autoCertFilename" nillable="true" type="xsd:string"/>
+     <element name="codiceFiscaleIntermediario" nillable="true" type="xsd:string"/>
+     <element name="denominazione" nillable="true" type="xsd:string"/>
+     <element name="descrizione" nillable="true" type="xsd:string"/>
+     <element name="domicilioElettronico" nillable="true" type="xsd:string"/>
+     <element name="partitaIvaIntermediario" nillable="true" type="xsd:string"/>
+     <element name="rappresentanteLegale" nillable="true" type="tns1:RappresentanteLegale"/>
+     <element name="sedeLegale" nillable="true" type="xsd:string"/>
+     <element name="timestampAutoCert" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Delega">
+    <sequence>
+     <element name="certificazione" nillable="true" type="xsd:base64Binary"/>
+     <element name="certificazioneFilename" nillable="true" type="xsd:string"/>
+     <element name="codiceFiscaleDelegante" nillable="true" type="xsd:string"/>
+     <element name="codiceFiscaleDelegato" nillable="true" type="xsd:string"/>
+     <element name="cognome" nillable="true" type="xsd:string"/>
+     <element name="idAccreditamento" type="xsd:int"/>
+     <element name="idComuneDelegante" nillable="true" type="xsd:string"/>
+     <element name="idQualifica" nillable="true" type="xsd:string"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="timestampCertificazione" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Qualifica">
+    <sequence>
+     <element name="descrizione" nillable="true" type="xsd:string"/>
+     <element name="hasRappresentanteLegale" type="xsd:boolean"/>
+     <element name="idQualifica" nillable="true" type="xsd:string"/>
+     <element name="tipoQualifica" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Accreditamento">
+    <sequence>
+     <element name="attivo" type="xsd:boolean"/>
+     <element name="codiceFiscale" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:int"/>
+     <element name="idComune" nillable="true" type="xsd:string"/>
+     <element name="profilo" nillable="true" type="tns1:ProfiloAccreditamento"/>
+     <element name="qualifica" nillable="true" type="tns1:Qualifica"/>
+    </sequence>
+   </complexType>
+   <complexType name="Qualifica2Persona">
+    <sequence>
+     <element name="richiedente" nillable="true" type="xsd:string"/>
+     <element name="tipoQualifica" nillable="true" type="xsd:string"/>
+     <element name="titolare" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getProfiloLocaleRequest">
+
+      <wsdl:part name="parameters" element="impl:getProfiloLocale"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualificheAbilitateResponse">
+
+      <wsdl:part name="parameters" element="impl:getQualificheAbilitateResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="eliminaDelegaResponse">
+
+      <wsdl:part name="parameters" element="impl:eliminaDelegaResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDelegaTemplateResponse">
+
+      <wsdl:part name="parameters" element="impl:getDelegaTemplateResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualificheRequest">
+
+      <wsdl:part name="parameters" element="impl:getQualifiche"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="accreditaIntermediarioRequest">
+
+      <wsdl:part name="parameters" element="impl:accreditaIntermediario"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="esisteQualificaResponse">
+
+      <wsdl:part name="parameters" element="impl:esisteQualificaResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="esisteQualificaRequest">
+
+      <wsdl:part name="parameters" element="impl:esisteQualifica"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualifica2PersonaRequest">
+
+      <wsdl:part name="parameters" element="impl:getQualifica2Persona"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAutoCertTemplateResponse">
+
+      <wsdl:part name="parameters" element="impl:getAutoCertTemplateResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualificaByIdResponse">
+
+      <wsdl:part name="parameters" element="impl:getQualificaByIdResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="creaDelegaRequest">
+
+      <wsdl:part name="parameters" element="impl:creaDelega"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDelegheResponse">
+
+      <wsdl:part name="parameters" element="impl:getDelegheResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAccreditamentiRequest">
+
+      <wsdl:part name="parameters" element="impl:getAccreditamenti"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="eliminaDelegaRequest">
+
+      <wsdl:part name="parameters" element="impl:eliminaDelega"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="accreditaIntermediarioResponse">
+
+      <wsdl:part name="parameters" element="impl:accreditaIntermediarioResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualificaByIdRequest">
+
+      <wsdl:part name="parameters" element="impl:getQualificaById"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualificheAbilitateRequest">
+
+      <wsdl:part name="parameters" element="impl:getQualificheAbilitate"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAutoCertTemplateRequest">
+
+      <wsdl:part name="parameters" element="impl:getAutoCertTemplate"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="creaProfiloLocaleRequest">
+
+      <wsdl:part name="parameters" element="impl:creaProfiloLocale"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAccreditamentoByIdResponse">
+
+      <wsdl:part name="parameters" element="impl:getAccreditamentoByIdResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="canCreateDelegaResponse">
+
+      <wsdl:part name="parameters" element="impl:canCreateDelegaResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProfiloLocaleResponse">
+
+      <wsdl:part name="parameters" element="impl:getProfiloLocaleResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAccreditamentiResponse">
+
+      <wsdl:part name="parameters" element="impl:getAccreditamentiResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualifiche2PersonaResponse">
+
+      <wsdl:part name="parameters" element="impl:getQualifiche2PersonaResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDelegheRequest">
+
+      <wsdl:part name="parameters" element="impl:getDeleghe"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAccreditamentoByIdRequest">
+
+      <wsdl:part name="parameters" element="impl:getAccreditamentoById"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="creaProfiloLocaleResponse">
+
+      <wsdl:part name="parameters" element="impl:creaProfiloLocaleResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualifiche2PersonaRequest">
+
+      <wsdl:part name="parameters" element="impl:getQualifiche2Persona"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDelegaTemplateRequest">
+
+      <wsdl:part name="parameters" element="impl:getDelegaTemplate"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="esisteProfiloLocaleRequest">
+
+      <wsdl:part name="parameters" element="impl:esisteProfiloLocale"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualificheResponse">
+
+      <wsdl:part name="parameters" element="impl:getQualificheResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualificheAccreditabiliRequest">
+
+      <wsdl:part name="parameters" element="impl:getQualificheAccreditabili"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualifica2PersonaResponse">
+
+      <wsdl:part name="parameters" element="impl:getQualifica2PersonaResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="canCreateDelegaRequest">
+
+      <wsdl:part name="parameters" element="impl:canCreateDelega"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="creaDelegaResponse">
+
+      <wsdl:part name="parameters" element="impl:creaDelegaResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getQualificheAccreditabiliResponse">
+
+      <wsdl:part name="parameters" element="impl:getQualificheAccreditabiliResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAccreditamentoByCodiceIntermediarioRequest">
+
+      <wsdl:part name="parameters" element="impl:getAccreditamentoByCodiceIntermediario"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="esisteProfiloLocaleResponse">
+
+      <wsdl:part name="parameters" element="impl:esisteProfiloLocaleResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAccreditamentoByCodiceIntermediarioResponse">
+
+      <wsdl:part name="parameters" element="impl:getAccreditamentoByCodiceIntermediarioResponse"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="IAccreditamentoWS">
+
+      <wsdl:operation name="creaProfiloLocale">
+
+         <wsdl:input name="creaProfiloLocaleRequest" message="impl:creaProfiloLocaleRequest"/>
+
+         <wsdl:output name="creaProfiloLocaleResponse" message="impl:creaProfiloLocaleResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="accreditaIntermediario">
+
+         <wsdl:input name="accreditaIntermediarioRequest" message="impl:accreditaIntermediarioRequest"/>
+
+         <wsdl:output name="accreditaIntermediarioResponse" message="impl:accreditaIntermediarioResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="creaDelega">
+
+         <wsdl:input name="creaDelegaRequest" message="impl:creaDelegaRequest"/>
+
+         <wsdl:output name="creaDelegaResponse" message="impl:creaDelegaResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="esisteProfiloLocale">
+
+         <wsdl:input name="esisteProfiloLocaleRequest" message="impl:esisteProfiloLocaleRequest"/>
+
+         <wsdl:output name="esisteProfiloLocaleResponse" message="impl:esisteProfiloLocaleResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAccreditamenti">
+
+         <wsdl:input name="getAccreditamentiRequest" message="impl:getAccreditamentiRequest"/>
+
+         <wsdl:output name="getAccreditamentiResponse" message="impl:getAccreditamentiResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDeleghe">
+
+         <wsdl:input name="getDelegheRequest" message="impl:getDelegheRequest"/>
+
+         <wsdl:output name="getDelegheResponse" message="impl:getDelegheResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="eliminaDelega">
+
+         <wsdl:input name="eliminaDelegaRequest" message="impl:eliminaDelegaRequest"/>
+
+         <wsdl:output name="eliminaDelegaResponse" message="impl:eliminaDelegaResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="esisteQualifica">
+
+         <wsdl:input name="esisteQualificaRequest" message="impl:esisteQualificaRequest"/>
+
+         <wsdl:output name="esisteQualificaResponse" message="impl:esisteQualificaResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAccreditamentoById">
+
+         <wsdl:input name="getAccreditamentoByIdRequest" message="impl:getAccreditamentoByIdRequest"/>
+
+         <wsdl:output name="getAccreditamentoByIdResponse" message="impl:getAccreditamentoByIdResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAccreditamentoByCodiceIntermediario">
+
+         <wsdl:input name="getAccreditamentoByCodiceIntermediarioRequest" message="impl:getAccreditamentoByCodiceIntermediarioRequest"/>
+
+         <wsdl:output name="getAccreditamentoByCodiceIntermediarioResponse" message="impl:getAccreditamentoByCodiceIntermediarioResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProfiloLocale">
+
+         <wsdl:input name="getProfiloLocaleRequest" message="impl:getProfiloLocaleRequest"/>
+
+         <wsdl:output name="getProfiloLocaleResponse" message="impl:getProfiloLocaleResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualifiche">
+
+         <wsdl:input name="getQualificheRequest" message="impl:getQualificheRequest"/>
+
+         <wsdl:output name="getQualificheResponse" message="impl:getQualificheResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualificheAbilitate">
+
+         <wsdl:input name="getQualificheAbilitateRequest" message="impl:getQualificheAbilitateRequest"/>
+
+         <wsdl:output name="getQualificheAbilitateResponse" message="impl:getQualificheAbilitateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualificheAccreditabili">
+
+         <wsdl:input name="getQualificheAccreditabiliRequest" message="impl:getQualificheAccreditabiliRequest"/>
+
+         <wsdl:output name="getQualificheAccreditabiliResponse" message="impl:getQualificheAccreditabiliResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualificaById">
+
+         <wsdl:input name="getQualificaByIdRequest" message="impl:getQualificaByIdRequest"/>
+
+         <wsdl:output name="getQualificaByIdResponse" message="impl:getQualificaByIdResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualifiche2Persona">
+
+         <wsdl:input name="getQualifiche2PersonaRequest" message="impl:getQualifiche2PersonaRequest"/>
+
+         <wsdl:output name="getQualifiche2PersonaResponse" message="impl:getQualifiche2PersonaResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="canCreateDelega">
+
+         <wsdl:input name="canCreateDelegaRequest" message="impl:canCreateDelegaRequest"/>
+
+         <wsdl:output name="canCreateDelegaResponse" message="impl:canCreateDelegaResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAutoCertTemplate">
+
+         <wsdl:input name="getAutoCertTemplateRequest" message="impl:getAutoCertTemplateRequest"/>
+
+         <wsdl:output name="getAutoCertTemplateResponse" message="impl:getAutoCertTemplateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDelegaTemplate">
+
+         <wsdl:input name="getDelegaTemplateRequest" message="impl:getDelegaTemplateRequest"/>
+
+         <wsdl:output name="getDelegaTemplateResponse" message="impl:getDelegaTemplateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualifica2Persona">
+
+         <wsdl:input name="getQualifica2PersonaRequest" message="impl:getQualifica2PersonaRequest"/>
+
+         <wsdl:output name="getQualifica2PersonaResponse" message="impl:getQualifica2PersonaResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="IAccreditamentoWS" type="impl:IAccreditamentoWS">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="creaProfiloLocale">
+
+         <wsdlsoap:operation soapAction="creaProfiloLocale"/>
+
+         <wsdl:input name="creaProfiloLocaleRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="creaProfiloLocaleResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="accreditaIntermediario">
+
+         <wsdlsoap:operation soapAction="accreditaIntermediario"/>
+
+         <wsdl:input name="accreditaIntermediarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="accreditaIntermediarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="creaDelega">
+
+         <wsdlsoap:operation soapAction="creaDelega"/>
+
+         <wsdl:input name="creaDelegaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="creaDelegaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="esisteProfiloLocale">
+
+         <wsdlsoap:operation soapAction="esisteProfiloLocale"/>
+
+         <wsdl:input name="esisteProfiloLocaleRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="esisteProfiloLocaleResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAccreditamenti">
+
+         <wsdlsoap:operation soapAction="getAccreditamenti"/>
+
+         <wsdl:input name="getAccreditamentiRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAccreditamentiResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDeleghe">
+
+         <wsdlsoap:operation soapAction="getDeleghe"/>
+
+         <wsdl:input name="getDelegheRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDelegheResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="eliminaDelega">
+
+         <wsdlsoap:operation soapAction="eliminaDelega"/>
+
+         <wsdl:input name="eliminaDelegaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="eliminaDelegaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="esisteQualifica">
+
+         <wsdlsoap:operation soapAction="esisteQualifica"/>
+
+         <wsdl:input name="esisteQualificaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="esisteQualificaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAccreditamentoById">
+
+         <wsdlsoap:operation soapAction="getAccreditamentoById"/>
+
+         <wsdl:input name="getAccreditamentoByIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAccreditamentoByIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAccreditamentoByCodiceIntermediario">
+
+         <wsdlsoap:operation soapAction="getAccreditamentoByCodiceIntermediario"/>
+
+         <wsdl:input name="getAccreditamentoByCodiceIntermediarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAccreditamentoByCodiceIntermediarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProfiloLocale">
+
+         <wsdlsoap:operation soapAction="getProfiloLocale"/>
+
+         <wsdl:input name="getProfiloLocaleRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProfiloLocaleResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualifiche">
+
+         <wsdlsoap:operation soapAction="getQualifiche"/>
+
+         <wsdl:input name="getQualificheRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getQualificheResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualificheAbilitate">
+
+         <wsdlsoap:operation soapAction="getQualificheAbilitate"/>
+
+         <wsdl:input name="getQualificheAbilitateRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getQualificheAbilitateResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualificheAccreditabili">
+
+         <wsdlsoap:operation soapAction="getQualificheAccreditabili"/>
+
+         <wsdl:input name="getQualificheAccreditabiliRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getQualificheAccreditabiliResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualificaById">
+
+         <wsdlsoap:operation soapAction="getQualificaById"/>
+
+         <wsdl:input name="getQualificaByIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getQualificaByIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualifiche2Persona">
+
+         <wsdlsoap:operation soapAction="getQualifiche2Persona"/>
+
+         <wsdl:input name="getQualifiche2PersonaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getQualifiche2PersonaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="canCreateDelega">
+
+         <wsdlsoap:operation soapAction="canCreateDelega"/>
+
+         <wsdl:input name="canCreateDelegaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="canCreateDelegaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAutoCertTemplate">
+
+         <wsdlsoap:operation soapAction="getAutoCertTemplate"/>
+
+         <wsdl:input name="getAutoCertTemplateRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAutoCertTemplateResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDelegaTemplate">
+
+         <wsdlsoap:operation soapAction="getDelegaTemplate"/>
+
+         <wsdl:input name="getDelegaTemplateRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDelegaTemplateResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getQualifica2Persona">
+
+         <wsdlsoap:operation soapAction="getQualifica2Persona"/>
+
+         <wsdl:input name="getQualifica2PersonaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getQualifica2PersonaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="IAccreditamentoWSService">
+
+      <wsdl:port name="IAccreditamentoWS" binding="impl:IAccreditamentoWS">
+
+         <wsdlsoap:address location="http://localhost:80/ws_accr121/services/IAccreditamentoWS"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

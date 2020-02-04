@@ -1,0 +1,66 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2-dic-2014, 16.47.23
+    Author     : Gabriele
+*/
+
+.nav-bar .nav-bar-inner > ul.menu > li a, .nav-bar .nav-bar-inner .element a, .nav-bar .nav-bar-inner a .element a{
+    color: #231f20;    
+    font-weight: bold;
+}
+
+#headingnew{
+    background: url(../images/bgheader_bn.png) 0 0 no-repeat #ffffff;
+}
+
+.header_logo_cross_container{
+    height: 100%;
+}
+
+.header_logo_cross_link{    
+    /*background: url(../images/opencross.png) 0 0 no-repeat;
+    margin: 20px;
+    display:block;
+    height:50px;    
+    width:267px;*/
+    background: url(../images/header.jpg) 0 0 no-repeat;
+    display: block;
+    margin: 10px;
+    height: 70px;    
+    width: 280px;
+}
+
+.user-bar, .dropdown-menu{
+    border-color: #aeaeae!important;
+    border-style: solid!important;
+    border-width: 1px!important;
+}
+.accettazione{
+    background: url(images/accettazione_black.png) no-repeat;
+}
+.gestione {
+    background:url(images/penna_black.png) no-repeat;
+}
+.admin {
+    background:url(images/gestione_black.png) no-repeat;
+}
+.notifiche {
+    background:url(images/bell_black.png) no-repeat;
+}
+.divider{
+    width: 2px!important;
+    background-color: #231f20;
+}
+.notificheDaLeggere{
+    color:#fff!important;
+}
+#navigation{
+    font-weight: bold;
+}
+.dropdown-menu a:hover{
+    background-color: #aeaeae !important;
+}

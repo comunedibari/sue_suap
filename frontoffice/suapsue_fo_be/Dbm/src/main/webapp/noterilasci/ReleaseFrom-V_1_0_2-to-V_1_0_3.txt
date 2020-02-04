@@ -1,0 +1,22 @@
+---Upgrade della versione Master Copy V.1.0.2 alla V.1.0.3
+---Si ricorda che le il passaggio alla versione V.1.0.1 prevede di
+   avere il software alla versione V.1.0.2
+
+bug-fix:
+- sistemate delle query che davano problemi con 
+
+
+miglioramenti:
+
+- inserimento nuovo campo su tabella anagrafica "marcatore_incrociato" per gestire la valorizzazione di dati tra livelli di anagrafica diversi
+
+passi:
+1) effettuare una copia del db
+2) eseguire lo script sql release_1_ver_3.sql
+3) salvare il file web.xml presente nella cartella <tomcat>/webapps/Dbm/WEB-INF
+4) salvare il file log4j.properties presente nella cartella <tomcat>/webapps/Dbm/WEB-INF/classes
+5) effettuare il deploy del software (Dbm.war)
+6) ripristinare il file web.xml salvato inprecedenza
+7) ripristinare il file log4j.properties salvato in precedenza
+8) riavviare tomcat
+

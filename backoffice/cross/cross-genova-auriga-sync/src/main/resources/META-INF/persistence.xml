@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="crossPU" transaction-type="RESOURCE_LOCAL">
+    <!--<non-jta-data-source>java:comp/env/jdbc/CrossDS</non-jta-data-source>-->
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>it.wego.cross.entity.Allegati</class>
+    <class>it.wego.cross.entity.Anagrafica</class>
+    <class>it.wego.cross.entity.AnagraficaRecapiti</class>
+    <class>it.wego.cross.entity.Comunicazione</class>
+    <class>it.wego.cross.entity.Configuration</class>
+    <class>it.wego.cross.entity.DatiCatastali</class>
+    <class>it.wego.cross.entity.DefDatiEstesi</class>
+    <class>it.wego.cross.entity.DizionarioErrori</class>
+    <class>it.wego.cross.entity.Email</class>
+    <class>it.wego.cross.entity.Enti</class>
+    <class>it.wego.cross.entity.Errori</class>
+    <class>it.wego.cross.entity.EventiTemplate</class>
+    <class>it.wego.cross.entity.IndirizziIntervento</class>
+    <class>it.wego.cross.entity.Lingue</class>
+    <class>it.wego.cross.entity.LingueTesti</class>
+    <class>it.wego.cross.entity.LkCittadinanza</class>
+    <class>it.wego.cross.entity.LkComuni</class>
+    <class>it.wego.cross.entity.LkDug</class>
+    <class>it.wego.cross.entity.LkFormeGiuridiche</class>
+    <class>it.wego.cross.entity.LkNazionalita</class>
+    <class>it.wego.cross.entity.LkProvincie</class>
+    <class>it.wego.cross.entity.LkRuoliCommissione</class>
+    <class>it.wego.cross.entity.LkScadenze</class>
+    <class>it.wego.cross.entity.LkStati</class>
+    <class>it.wego.cross.entity.LkStatiMail</class>
+    <class>it.wego.cross.entity.LkStatiPraticaOrganiCollegiali</class>
+    <class>it.wego.cross.entity.LkStatiScadenze</class>
+    <class>it.wego.cross.entity.LkStatiSedute</class>
+    <class>it.wego.cross.entity.LkStatoPratica</class>
+    <class>it.wego.cross.entity.LkTipiAttore</class>
+    <class>it.wego.cross.entity.LkTipoCollegio</class>
+    <class>it.wego.cross.entity.LkTipoIndirizzo</class>
+    <class>it.wego.cross.entity.LkTipoLegameAnagrafica</class>
+    <class>it.wego.cross.entity.LkTipoOggetto</class>
+    <class>it.wego.cross.entity.LkTipoParticella</class>
+    <class>it.wego.cross.entity.LkTipoQualifica</class>
+    <class>it.wego.cross.entity.LkTipoRuolo</class>
+    <class>it.wego.cross.entity.LkTipoSistemaCatastale</class>
+    <class>it.wego.cross.entity.LkTipoUnita</class>
+    <class>it.wego.cross.entity.Messaggio</class>
+    <class>it.wego.cross.entity.NotePratica</class>
+    <class>it.wego.cross.entity.OcPraticaCommissione</class>
+    <class>it.wego.cross.entity.OcSedutePratiche</class>
+    <class>it.wego.cross.entity.OrganiCollegiali</class>
+    <class>it.wego.cross.entity.OrganiCollegialiCommissione</class>
+    <class>it.wego.cross.entity.OrganiCollegialiSedute</class>
+    <class>it.wego.cross.entity.OrganiCollegialiTemplate</class>
+    <class>it.wego.cross.entity.Permessi</class>
+    <class>it.wego.cross.entity.PluginConfiguration</class>
+    <class>it.wego.cross.entity.Pratica</class>
+    <class>it.wego.cross.entity.PraticaAnagrafica</class>
+    <class>it.wego.cross.entity.PraticaEventiProcedimenti</class>
+    <class>it.wego.cross.entity.PraticaOrganiCollegiali</class>
+    <class>it.wego.cross.entity.PraticaPratica</class>
+    <class>it.wego.cross.entity.PraticaProcedimenti</class>
+    <class>it.wego.cross.entity.PraticheAssociate</class>
+    <class>it.wego.cross.entity.PraticheDirittiSegreteria</class>
+    <class>it.wego.cross.entity.PraticheEventi</class>
+    <class>it.wego.cross.entity.PraticheEventiAllegati</class>
+    <class>it.wego.cross.entity.PraticheEventiAnagrafiche</class>
+    <class>it.wego.cross.entity.PraticheProtocollo</class>
+    <class>it.wego.cross.entity.Procedimenti</class>
+    <class>it.wego.cross.entity.ProcedimentiEnti</class>
+    <class>it.wego.cross.entity.ProcedimentiTesti</class>
+    <class>it.wego.cross.entity.Processi</class>
+    <class>it.wego.cross.entity.ProcessiEventi</class>
+    <class>it.wego.cross.entity.ProcessiEventiAnagrafica</class>
+    <class>it.wego.cross.entity.ProcessiEventiEnti</class>
+    <class>it.wego.cross.entity.ProcessiEventiScadenze</class>
+    <class>it.wego.cross.entity.ProcessiSteps</class>
+    <class>it.wego.cross.entity.Recapiti</class>
+    <class>it.wego.cross.entity.RelazioniAnagrafiche</class>
+    <class>it.wego.cross.entity.Scadenze</class>
+    <class>it.wego.cross.entity.Staging</class>
+    <class>it.wego.cross.entity.Templates</class>
+    <class>it.wego.cross.entity.Utente</class>
+    <class>it.wego.cross.entity.UtenteRuoloEnte</class>
+    <class>it.wego.cross.entity.UtenteRuoloProcedimento</class>
+    <class>it.wego.cross.entity.view.EndoprocedimentiView</class>
+    <class>it.wego.cross.entity.view.PraticheAllegatiView</class>
+    <class>it.wego.cross.entity.view.ProcedimentiCollegatiView</class>
+    <class>it.wego.cross.entity.view.ProcedimentiLocalizzatiView</class>
+    <class>it.wego.cross.entity.view.ProcedimentoUnicoView</class>
+    <class>it.wego.cross.entity.view.ScadenzeDaChiudereView</class>
+    <class>it.wego.cross.events.anagrafetributaria.entity.AtRecordDettaglio</class>
+    <class>it.wego.cross.events.comunicazionerea.entity.RiIntegrazioneRea</class>
+    <properties>
+      <property name="eclipselink.session.customizer" value="it.wego.cross.utils.JPAEclipseLinkSessionCustomizer"/>
+      <property name="eclipselink.logging.logger" value="it.wego.cross.utils.JPALogger"/>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <!--      <property name="eclipselink.logging.file" value="sql.log"/>-->
+      <property name="eclipselink.weaving" value="false"/>
+      <property name="eclipselink.query-results-cache" value="false"/>
+      <property name="eclipselink.cache.shared.default" value="false"/>
+    </properties>
+    <shared-cache-mode>NONE</shared-cache-mode>
+  </persistence-unit>
+</persistence>

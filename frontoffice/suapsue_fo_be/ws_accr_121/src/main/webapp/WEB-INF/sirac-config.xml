@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<sirac>
+
+    <!-- 
+        Comuni gestiti e parametri relativi a uno specifico comune.
+        
+        * id comune: il codice univoco che identifica un comune (lo stesso utilizzato nel database)
+        * auto_attivazione_accreditamenti: valori accettati: true/false, case insensitive.
+         Se false gli accreditamenti possono essere usati appena creati,
+         altrimenti è richiesta l'attivazione manuale da parte di un
+         funzionario del comune
+    -->
+    <comune>
+        <item>
+            <id>010025</id> 
+            <auto_attiva_accreditamenti>true</auto_attiva_accreditamenti>
+        </item>
+        <item>
+            <id>037006</id> 
+            <auto_attiva_accreditamenti>true</auto_attiva_accreditamenti>
+        </item>
+    </comune>
+	
+	<!-- 
+        Certificate Authority di riferimento per questa installazione del Sirac.
+        E' possibile inserire più ca, ma per ora viene gestita solo la prima dell'elenco.
+        Con poche modifiche alle classi SiracConfigParser, ICAPeople e CAPeople
+        dovrebbe essere possibile ricavare le ca da un parametro (ogni ProfiloLocale
+        utente contiene un riferimento alla propria ca)
+    -->
+	<ca>
+        <item>
+            <id>idppeople.it</id>
+            <url>http://people.rer.ri:8080/idp-people/</url>
+            <!--  directory contenente i web services, relativa alla / della web app CA -->
+            <services_path>services</services_path>
+		</item>
+	</ca>
+	
+
+	
+	<!-- 
+        Template di autocertificazione. I tipi di qualifica devono essere uguali
+        ai tipi definiti nella tabella qualifiche 
+    -->
+    <autocertificazione type="Professionista">
+    	<![CDATA[
+In data %dataCorrente%,
+il sottoscritto %nome% %cognome% nato a %luogoNascita% il %dataNascita% codice fiscale %codiceFiscale%, 
+certifica sotto la propria responsabilità la propria qualifica di %qualifica% 
+con Codice Fiscale %codiceFiscaleIntermediario% P.IVA %partitaIvaIntermediario%.
+    ]]>
+    </autocertificazione>
+    <autocertificazione type="Intermediario">
+	<![CDATA[
+In data %dataCorrente%,
+il sottoscritto %nome% %cognome% nato a %luogoNascita% il %dataNascita% codice fiscale %codiceFiscale%,
+certifica sotto la propria responsabilità la propria qualifica di %qualifica% dell'Agenzia di Intermediazione %denominazione% con sede in %sedeLegale%,
+Codice Fiscale %codiceFiscaleIntermediario% P.IVA %partitaIvaIntermediario%.
+    ]]>
+    </autocertificazione>
+    <autocertificazione type="Rappresentante Persona Giuridica">
+	<![CDATA[
+In data %dataCorrente%,
+il sottoscritto %nome% %cognome% nato a %luogoNascita% il %dataNascita% codice fiscale %codiceFiscale%,
+certifica sotto la propria responsabilità la propria qualifica di %qualifica% 
+per la persona giuridica %denominazione% con sede in %sedeLegale%,
+con Codice Fiscale %codiceFiscaleIntermediario% P.IVA %partitaIvaIntermediario%.
+Dati del Rappresentante Legale:
+Nome: %nomeRapprLegale%
+Cognome: %cognomeRapprLegale%
+Codice Fiscale: %codiceFiscaleRapprLegale%
+Data di nascita: %dataNascitaRapprLegale%
+Luogo di Nascita: %luogoNascitaRapprLegale%
+Provincia Nascita: %provinciaNascitaRapprLegale%
+Indirizzo di residenza: %indirizzoResidenzaRapprLegale%
+    ]]>
+    </autocertificazione>
+    
+	<!-- 
+        Template di delega. I tipi di qualifica devono essere uguali
+        ai tipi definiti nella tabella qualifiche 
+    -->
+	<delega type="Intermediario">
+	<![CDATA[
+In data %dataCorrente%,
+io sottoscritto %cognomeDelegante% %nomeDelegante%, codice fiscale %codiceFiscaleDelegante%, 
+nato a %luogoNascitaDelegante% il %dataNascitaDelegante%, in qualità di %qualificaIntermediario% dell'Agenzia di Intermediazione %denominazione% con sede in %sedeLegale%,
+con Codice Fiscale %codiceFiscaleIntermediario% P.IVA %partitaIvaIntermediario% conferisco una delega ad operare per mio conto nella fruizione dei servizi di e-Government erogati da questo Comune a %cognomeDelegato% %nomeDelegato%, codice fiscale %codiceFiscaleDelegato%
+[ ... ]
+    ]]>
+    </delega>
+    
+
+</sirac>

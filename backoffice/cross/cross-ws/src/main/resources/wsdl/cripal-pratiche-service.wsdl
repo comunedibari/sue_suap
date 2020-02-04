@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CripalPraticheService" targetNamespace="http://www.wego.it/cross"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cross="http://www.wego.it/cross">
+
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified">
+            <xs:import namespace="http://www.wego.it/cross"
+                schemaLocation="cripal-pratiche-service.xsd"/>
+            <xs:element name="PraticaDetailRequest" type="cross:PraticaDetailRequest"/>
+            <xs:element name="PraticaDetailResponse" type="cross:PraticaDetailResponse"/>
+            <xs:element name="ElencoPraticheRequest" type="cross:ElencoPraticheRequest"/>
+            <xs:element name="ElencoPraticheResponse" type="cross:ElencoPraticheResponse"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getPraticaDetailRequest">
+        <wsdl:part element="cross:PraticaDetailRequest" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPraticaDetailResponse">
+        <wsdl:part element="cross:PraticaDetailResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPraticheListRequest">
+        <wsdl:part element="cross:ElencoPraticheRequest" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPraticheListResponse">
+        <wsdl:part element="cross:ElencoPraticheResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    
+    <wsdl:portType name="CripalPraticheService">
+        <wsdl:operation name="getPraticaDetail">
+            <wsdl:input message="cross:getPraticaDetailRequest" name="getPraticaDetailRequest"> </wsdl:input>
+            <wsdl:output message="cross:getPraticaDetailResponse" name="getPraticaDetailResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getPraticheList">
+            <wsdl:input message="cross:getPraticheListRequest" name="getPraticheListRequest"> </wsdl:input>
+            <wsdl:output message="cross:getPraticheListResponse" name="getPraticheListResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="CripalPraticheServiceSoapBinding" type="cross:CripalPraticheService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getPraticaDetail">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getPraticaDetailRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getPraticaDetailResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getPraticheList">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getPraticheListRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getPraticheListResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="CripalPraticheService">
+        <wsdl:port binding="cross:CripalPraticheServiceSoapBinding" name="CripalPraticheService">
+            <soap:address location="http://localhost:8080/cross-ws/services/CripalPraticheService"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,13 @@
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.aoo','SPORTELLO', 'Area Organizzativa Omogenea');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.endpoint','http://suictest.invallee.it/pri/gnu4300i/services/ProtocolloService', 'Endpoint Genuit');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.soggetto.mezzo','Raccomandata', '');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.soggetto.tipo','Principale', '');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.user','CROSS', 'Utente Genuit');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.password','12345', 'Password Genuit');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.ws.pratiche','http://suictest.invallee.it:8081/WS_INVA/services/OtherServices', 'Recupero pratiche');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.documento.arrivo','DOCARR', 'Tipo documento Genuit comunicazioni entrata');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.documento.uscita','LET', 'Tipo documento Genuit comunicazioni uscita');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('protocollo.genuit.documento.pratica','UNICO', 'Tipo documento Pratica');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('giorni.sincronizzazione.protocollo','10', '');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('abilita.lettura.email','N', '');
+INSERT INTO configuration (NAME, VALUE, note) VALUES ('views.plugin.id','aostaCustomView', '');

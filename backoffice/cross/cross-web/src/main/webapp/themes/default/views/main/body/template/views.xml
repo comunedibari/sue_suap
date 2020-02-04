@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    
+    <definition name="eventiTemplate_lista" extends=".main">
+        <put-attribute name="title"         value="Template" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/template/listaEventiTemplate.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Lista template per evento" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/template/ricercaEventiTemplate.jsp"/>
+        <put-attribute name="operazioneRiuscitaAjax"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscitaAjax.jsp"/>
+    </definition>
+    
+    <definition name="template_lista" extends=".main">
+        <put-attribute name="title"         value="Template" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/template/listaTemplate.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Lista documento template" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/template/ricercaTemplate.jsp"/>
+        <put-attribute name="operazioneRiuscitaAjax" cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscitaAjax.jsp"/>
+        <put-attribute name="operazioneRiuscita" cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+    </definition>
+    
+    <definition name="template_modifica" extends=".main">
+        <put-attribute name="title"         value="Template" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/template/modificaTemplate.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Modifica documento template" type="string" />
+    </definition>
+    <definition name="template_nuova" extends=".main">
+        <put-attribute name="title"         value="Template" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/template/nuova.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Aggiungi documento template" type="string" />
+    </definition>
+    
+</tiles-definitions>

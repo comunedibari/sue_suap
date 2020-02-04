@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="error.generic">
+		Si è verificato un errore durante l'esecuzione dell'operazione richiesta.
+	</entry>
+
+
+
+	<entry key="error.fenodes.listAndAdd.node.exists">
+		Il nodo esiste già.
+	</entry>
+	<entry key="error.fenodes.listAndAdd.nodeName.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.fenodes.listAndAdd.nodeFEWSURL.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.fenodes.listAndAdd.nodeFEWSURL.wrong">
+		Il valore del campo {0} non è URL valido.
+	</entry>
+	<entry key="error.fenodes.listAndAdd.communeName.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.fenodes.listAndAdd.communeCode.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.fenodes.listAndAdd.delegationControlWSURL.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.fenodes.listAndAdd.delegationControlWSURL.wrong">
+		Il valore del campo {0} non è URL valido.
+	</entry>
+	
+	<entry key="error.fenodes.nodeDetails.WSURL.invokeException">
+		Impossibile contattare il servizio indicato nel campo URL del Web Service di Front End.
+	</entry>
+	
+	
+	<entry key="error.fenodes.listAndAdd.aooPrefix.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.feservices.listAndAdd.service.exists">
+		Il servizio ''{0}'' è già stato registrato.
+	</entry>	
+	<entry key="error.feservices.listAndAdd.service.notAvailable">
+		Il servizio ''{0}'' non è installato quindi non è disponibile per la registrazione.
+	</entry>
+	<entry key="error.feservices.listAndAdd.service.dbError">
+		Si è verificato un errore per cui non è possibile registrare il servizio ''{0}''.
+	</entry>
+		
+	<entry key="error.feservices.servicesRegistration.package.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+
+	<entry key="error.feservices.nodeDeployedServicesRegistration.selectedServices.empty">
+		Non è stato selezionato alcun servizio per la registrazione. Selezionare il pulsante 'Annulla' per concludere il procedimento, oppure selezionare almeno un servizio e cliccare sul pulsante 'Avanti'.
+	</entry>
+
+	<entry key="error.feservices.nodeToNodeCopy.invalidChoosedNodes.same">
+		Il nodo di origine e di destinazione coincidono. Selezionare due nodi differenti.
+	</entry>
+	<entry key="error.feservices.nodeToNodeCopy.selectedServices.empty">
+		Non è stato selezionato alcun servizio per la registrazione. Selezionare il pulsante 'Annulla' per concludere il procedimento, oppure selezionare almeno un servizio e cliccare sul pulsante 'Avanti'.
+	</entry>
+	<entry key="error.feservices.nodeToNodeCopy.toNewNode.exists">
+		Il nodo di destinazione è già registrato.
+	</entry>
+	<entry key="error.feservices.nodeToNodeCopy.toNewNode.error">
+		Si è verificato un errore nella registrazione del nodo di destinazione.
+	</entry>
+	<entry key="error.feservices.nodeToNodeCopy.toNewNode.dbError">
+		Si è verificato un errore nella registrazione del nodo di destinazione.
+	</entry>
+	<entry key="error.feservices.nodeToNodeCopy.toNewNode.feReferenceError">
+		Si è verificato un errore nella registrazione del nodo di destinazione.
+	</entry>
+	<entry key="error.feservices.nodeToNodeCopy.toNewNode.remoteException">
+		Si è verificato un errore nella registrazione del nodo di destinazione.
+	</entry>
+
+	<entry key="error.feservices.nodeViewLogs.dateFromError">
+		La data di inizio periodo non è corretta.
+	</entry>
+	<entry key="error.feservices.nodeViewLogs.dateToError">
+		La data di fine periodo non è corretta.
+	</entry>
+	<entry key="error.feservices.nodeViewLogs.dateFromFutureError">
+		La data di inizio periodo non può essere futura.
+	</entry>
+	<entry key="error.feservices.nodeViewLogs.dateToFutureError">
+		La data di fine periodo non può essere futura.
+	</entry>
+	<entry key="error.feservices.nodeViewLogs.dateLaterError">
+		La data di inizio periodo non può essere successiva a quella di fine periodo.
+	</entry>
+
+
+
+	<entry key="error.feservices.serviceDetail.signProcessNotEnabled">
+		Non è stato selezionato il tipo di firma procedimento da abilitare: selezionare un tipo di firma o disattivare la firma procedimento.
+	</entry>
+
+
+
+
+	<entry key="error.beservices.listAndAdd.service.exists">
+		Il servizio esiste già.
+	</entry>
+	<entry key="error.beservices.listAndAdd.service.dbError">
+		Si è verificato un errore irreversibile.
+	</entry>
+	<entry key="error.beservices.listAndAdd.logicalName.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.beservices.listAndAdd.backEndURL.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.beservices.listAndAdd.backEndURL.wrong">
+		Il valore del campo {0} non è URL valido.
+	</entry>
+	<entry key="error.beservices.connected">
+		Impossibile eliminare un Back-end collegato a servizi.
+	</entry>
+	
+	<entry key="error.viewAuditConversations.dateFromError">
+		La data di inizio periodo non è corretta.
+	</entry>
+	<entry key="error.viewAuditConversations.dateToError">
+		La data di fine periodo non è corretta.
+	</entry>
+	<entry key="error.viewAuditConversations.dateFromFutureError">
+		La data di inizio periodo non può essere futura.
+	</entry>
+	<entry key="error.viewAuditConversations.dateToFutureError">
+		La data di fine periodo non può essere futura.
+	</entry>
+	<entry key="error.viewAuditConversations.dateLaterError">
+		La data di inizio periodo non può essere successiva a quella di fine periodo.
+	</entry>
+	
+	
+	<entry key="error.monitoring.dateFromError">
+		La data di inizio periodo non è corretta.
+	</entry>
+	<entry key="error.monitoring.dateToError">
+		La data di fine periodo non è corretta.
+	</entry>
+	<entry key="error.monitoring.dateFromFutureError">
+		La data di inizio periodo non può essere futura.
+	</entry>
+	<entry key="error.monitoring.dateToFutureError">
+		La data di fine periodo non può essere futura.
+	</entry>
+	<entry key="error.monitoring.dateLaterError">
+		La data di inizio periodo non può essere successiva a quella di fine periodo.
+	</entry>
+
+	
+	
+	<entry key="error.processes.dateFilterError">
+		Seleziona uno dei due tipi di filtri da applicare.
+	</entry>	
+	<entry key="error.processes.dateFromError">
+		La data di inizio periodo non è corretta.
+	</entry>
+	<entry key="error.processes.dateToError">
+		La data di fine periodo non è corretta.
+	</entry>
+	<entry key="error.processes.dateFromFutureError">
+		La data di inizio periodo non può essere futura.
+	</entry>
+	<entry key="error.processes.dateToFutureError">
+		La data di fine periodo non può essere futura.
+	</entry>
+	<entry key="error.processes.dateLaterError">
+		La data di inizio periodo non può essere successiva a quella di fine periodo.
+	</entry>
+	
+	<entry key="error.processes.daysFilterError">
+		Il numero dei giorni deve essere un numero positivo.
+	</entry>
+	
+	<entry key="error.processes.selecteNodesError">
+		Selezionare uno o più enti (Usa il tasto CTRL per selezione multipla).
+	</entry>
+	
+	<entry key="error.processes.selecteUsersError">
+		Selezionare uno o più utenti (Usa il tasto CTRL per selezione multipla).
+	</entry>
+	
+	<entry key="warning.processes.confirmDelete">
+		ATTENZIONE: l'eliminazione delle pratiche influisce sulle statistiche e sul monitoraggio degli indicatori
+		di prestazioni per le solzuzioni. 
+		Si desidera eliminare definitivamente dal DB tutte le pratiche selezionate?
+	</entry>
+	
+	<entry key="warning.processes.confirmFiling">
+		ATTENZIONE: l'archiviazione delle pratiche influisce sulle statistiche e sul monitoraggio degli indicatori
+		di prestazioni per le solzuzioni. 
+		Si desidera archiviare su file remoto ed eliminare definitivamente dal DB tutte le pratiche selezionate?
+	</entry>
+	
+	
+	<entry key="error.certificate.noFileUploaded">
+		Selezionare un file di tipo certificato P12.
+	</entry>
+	<entry key="error.certificate.invalidPassword">
+		La password immessa non è corretta.
+	</entry>
+	<entry key="error.certificate.invalidFileType">
+		Il file non è un certificato valido.
+	</entry>
+	<entry key="error.certificate.expired">
+		Il certificato è scaduto.
+	</entry>
+	<entry key="error.certificate.untrusted">
+		Il certificato non è abilitato per la funzione richiesta.
+	</entry>
+	
+	<entry key="accreditamenti.no.data">
+		Non vi sono accreditamenti registrati.
+	</entry>
+	<entry key="accreditamenti.update.success">
+		Le modifiche agli accreditamenti sono state salvate correttamente.
+	</entry>
+	<entry key="accreditamenti.update.error">
+		Si è verificato un errore nel salvataggio delle modifiche agli accreditamenti.
+	</entry>
+	
+	<entry key="error.accreditamenti.qualifiche.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.accreditamenti.qualifiche.exists">
+		La qualifica è già presente.
+	</entry>
+	<entry key="error.accreditamenti.qualifiche.invalid">
+		ID Qualifica deve essere una sigla composta da tre caratteri.
+	</entry>
+	
+	<entry key="error.statistiche.dateFromError">
+		La data di inizio periodo non è corretta.
+	</entry>
+	<entry key="error.statistiche.dateToError">
+		La data di fine periodo non è corretta.
+	</entry>
+	<entry key="error.statistiche.dateFromFutureError">
+		La data di inizio periodo non può essere futura.
+	</entry>
+	<entry key="error.statistiche.dateToFutureError">
+		La data di fine periodo non può essere futura.
+	</entry>
+	<entry key="error.statistiche.dateLaterError">
+		La data di inizio periodo non può essere successiva a quella di fine periodo.
+	</entry>
+
+
+	<entry key="error.login.password.notValid">
+		La password non è valida.
+	</entry>
+
+
+	<entry key="error.root.login.password.empty">
+		La password non può essere vuota.
+	</entry>
+	<entry key="error.root.login.passwordCheck.empty">
+		Il campo di verifica della password non può essere vuoto.
+	</entry>
+	<entry key="error.root.login.passwordCheck.notMatch">
+		La password e la password di verifica non coincidono.
+	</entry>
+
+
+	<entry key="error.admin.accounts.add.noSelectedRoles">
+		Selezionare uno o più ruoli dall'elenco.
+	</entry>
+	<entry key="error.admin.accounts.add.noSelectedNodes">
+		Selezionare uno o più nodi per il ruolo Amministratore nodi di f.e.
+	</entry>
+	<entry key="error.admin.accounts.add.noSelectedFEServices">
+		Selezionare uno o più servizi per il ruolo Amministratore servizi di f.e.
+	</entry>
+	<entry key="error.admin.accounts.add.noSelectedBEServices">
+		Selezionare uno o più servizi per il ruolo Amministratore servizi di b.e.
+	</entry>
+	<entry key="error.admin.accounts.add.userAccountExists">
+		Esiste già un account con il codice fiscale {0}.
+	</entry>
+
+
+	<entry key="error.field.empty">
+		Il campo {0} non può essere vuoto.
+	</entry>
+	<entry key="error.field.malformed">
+		Il campo {0} ha un formato errato.
+	</entry>
+	<entry key="error.field.invalid">
+		Il campo {0} ha un valore errato.
+	</entry>
+	<entry key="error.field.length">
+		Il campo {0} deve avere un numero di caratteri uguale a {1}.
+	</entry>
+
+
+	<entry key="error.admin.certificates.generation.allowedNodes.empty">
+		E'' necessario selezionare almeno un valore dalla lista {0}.
+	</entry>
+
+
+	<entry key="message.admin.certificates.generated">
+		E'' stato generato il {0} per l''account {1} (alias ''{2}'').
+	</entry>
+	<entry key="message.admin.certificates.send">
+		L''alias, la password ed il certificato verranno inviati via e-mail all''indirizzo {0}.
+	</entry>
+
+	<entry key="message.admin.certificates.sent.successfull">
+		I dati sono stati correttamente inviati all''utente all''indirizzo {0}.
+	</entry>
+
+	<entry key="message.admin.certificates.sent.unsuccessfull">
+		Non è stato possibile inviare i dati all''utente all''indirizzo {0}.
+	</entry>
+
+
+	<entry key="error.notauthorized">
+		Il suo account non è abilitato all''accesso.
+	</entry>
+
+	<entry key="message.logout">
+		Si desidera uscire dal sistema?
+	</entry>
+
+	<entry key="message.logout.success">
+		<![CDATA[
+			<p>Uscita effettuata correttamente.</p><p>{0}</p>
+		]]>
+	</entry>
+
+	<entry key="message.save.success">
+		Aggiornamento effettuato.
+	</entry>
+	<entry key="message.save.failed">
+		Si è verificato un errore nell'effettuare l'aggiornamento.
+	</entry>
+	
+	<entry key="message.ftpUpload.success">
+		Invio del file su server FTP completato correttamente.
+	</entry>
+	
+	<entry key="message.ftpUpload.fail">
+		Si è verificato un errore durante l'invio del file.
+	</entry>
+
+
+
+	<entry key="message.ftpUpload.errorMessage.ioException">
+		Error di IO nella preparazione del file da inviare.
+	</entry>
+
+	<entry key="message.ftpUpload.errorMessage.connectionRefused">
+		Il server FTP ha rifiutato la connessione. Controllare i parametri di configurazione della connessione al server FTP.
+	</entry>
+
+	<entry key="message.ftpUpload.errorMessage.success">
+		Trasferimento completato.
+	</entry>
+
+	<entry key="message.ftpUpload.errorMessage.loginFailed">
+		Impossibile connettersi al server FTP: login fallito. Controllare nome utente e password nella sezione delle impostazioni.
+	</entry>
+
+	<entry key="message.ftpUpload.errorMessage.serverClosedConnection">
+		Il server FTP ha chiuso la connessione. Controllare i parametri di configurazione della connessione al server FTP.
+	</entry>
+
+	<entry key="message.ftpUpload.errorMessage.socketExcpetion">
+		Si è verificato un errore di socket nel collegamento al server FTP. Controllare i parametri di configurazione della connessione al server FTP.
+	</entry>
+
+	<entry key="message.ftpUpload.errorMessage.noConnection">
+		Impossibile connettersi al server FTP. Controllare i parametri di configurazione della connessione al server FTP.
+	</entry>
+
+
+
+	
+	
+	<entry key="message.statistics.empty">
+		Non sono presenti servizi associati di cui fornire statistiche.
+	</entry>
+
+	<entry key="error.feservice.update.nameExists">
+		Esiste già un servizio con il nome specificato {0} 
+	</entry>
+
+
+	<entry key="error.beservices.massiveParametersSettings.noSelectedNodes">
+		Selezionare almeno un nodo prima di proseguire.
+	</entry>
+
+	<entry key="log.nodeToNodeCopier.addServiceFromSelectedArea">
+		Aggiunto alla registrazione il servizio {0} per l''area {1}.
+	</entry>
+
+	<entry key="log.nodeToNodeCopier.beLogicalNameRegistration">
+		Registrato il riferimento logico di back end {0} (riferimento logico originale = {1})
+	</entry>
+
+	<entry key="log.nodeToNodeCopier.beUrlRegistration">
+		associato all''url {0} (url originale = {1}).
+	</entry>
+
+	<entry key="log.nodeToNodeCopier.nodeCopyError">
+		Si è verificato un errore durante la copia del nodo.
+	</entry>
+
+	<entry key="error.feservices.parametersMassiveChange.invalidChoosedNodes.empty">
+		Non è stato selezionato alcun nodo. Selezionare almeno un nodo per proseguire.
+	</entry>
+	
+	
+	<entry key="error.feservices.parametersMassiveChange.invalidChoosedServices.empty">
+		<![CDATA[
+		Non è stato selezionato alcun nodo, alcuna area o servizio. Selezionare almeno un nodo, un''area oppure un servizio per proseguire.
+		]]>
+	</entry>
+	
+
+	<entry key="error.feservices.massiveChange.feInterface.error">
+		Si è verificato un errore nel collegamento al servizio FEService. Nessun servizio del nodo {0} è stato modificato.
+	</entry>
+
+	<entry key="error.feservices.massiveChange.serviceChange.error">
+		Si è verificato un errore nella modifica del servizio {0}. I rimanenti servizi del nodo {1} non sono stati modificati.
+	</entry>
+
+	<entry key="error.feservices.massiveChange.serviceDeletion.error">
+		Si è verificato un errore nell''eliminazione del servizio {0}. I rimanenti servizi del nodo {1} non sono stati eliminati.
+	</entry>
+
+
+
+	<entry key="error.beservices.massiveChange.invalidChoosedNodes.empty">
+		Non è stato selezionato alcun nodo. Selezionare almeno un nodo per proseguire.
+	</entry>
+	
+	
+	<entry key="error.beservices.massiveChange.invalidChoosedServices.empty">
+		<![CDATA[
+		Non è stato selezionato alcun nodo o servizio. Selezionare almeno un nodo oppure un servizio per proseguire.
+		]]>
+	</entry>
+	
+
+	<entry key="error.beservices.massiveChange.serviceChange.error">
+		Si è verificato un errore nella modifica del servizio {0}. I rimanenti servizi del nodo {1} non sono stati modificati.
+	</entry>
+
+	<entry key="error.beservices.massiveChange.serviceChange.url.error">
+		Si è verificato un errore nella modifica dell''url del servizio {0} (nodo {1}). L''url non e'' stata modificata.
+	</entry>
+
+	<entry key="error.beservices.massiveChange.serviceDeletion.error">
+		Si è verificato un errore nell''eliminazione del servizio {0}. I rimanenti servizi del nodo {1} non sono stati eliminati.
+	</entry>
+
+
+
+
+	<entry key="beservices.massiveChange.service.successfully.deletion">
+		Il servizio {0} del nodo {1} e'' stato correttamente eliminato.
+	</entry>
+	<entry key="beservices.massiveChange.service.successfully.change">
+		Il servizio {0} del nodo {1} e'' stato correttamente modificato.
+	</entry>
+
+	<entry key="error.beservices.massiveChange.db.error">
+		Si è verificato un errore nell''eliminazione dei servizi. Nessun servizio e'' stato eliminato.
+	</entry>
+	<entry key="error.beservices.massiveChange.deletion.service.error">
+		Si è verificato un errore nell''eliminazione dei servizio {0} del nodo {1}.
+	</entry>
+	<entry key="error.beservices.massiveChange.change.service.error">
+		Si è verificato un errore nella modifica del servizio {0} del nodo {1}.
+	</entry>
+
+</properties>

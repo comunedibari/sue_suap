@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+
+  http://joinup.ec.europa.eu/software/page/eupl
+
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+
+  This product includes software developed by Yale University
+
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        id="WebApp_ID" version="2.4"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+        <display-name>PeopleConsole</display-name>
+        <distributable />
+        <description>People framework console</description>
+        <!-- - Location of the Log4J config file, for initialization and refresh
+                checks. - Applied by Log4jConfigListener. -->
+
+        <context-param>
+                <param-name>log4jConfigLocation</param-name>
+                <param-value>/WEB-INF/classes/config/log4j.properties</param-value>
+        </context-param>
+        <!--context-param> <param-name>log4jRefreshInterval</param-name> <param-value>1000</param-value>
+                </context-param -->
+        <context-param>
+                <param-name>webAppRootKey</param-name>
+                <param-value>PeopleConsole.root</param-value>
+        </context-param>
+        <context-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>/WEB-INF/classes/config/applicationContext-*.xml</param-value>
+        </context-param>
+
+
+
+
+
+
+        <!-- ****************** <SIRAC ******************* -->
+        <!-- CONTEXT-PARAM SIRAC 2.0.2 -->
+        <context-param>
+                <param-name>idComune</param-name>
+                <param-value>pc010025</param-value>
+        </context-param>
+        <context-param>
+                <param-name>people.sirac.webservice.accreditamento.address</param-name>
+                <param-value>${peopleConsole.people.sirac.webservice.accreditamento.address}</param-value>
+                <!-- <param-value>http://localhost:9080/ws_accr121/services/IAccreditamentoWS</param-value> -->
+        </context-param>
+        <context-param>
+                <param-name>people.sirac.webservice.accreditamentiManagement.address</param-name>
+                <param-value>${peopleConsole.people.sirac.webservice.accreditamentiManagement.address}</param-value>
+                <!-- <param-value>http://localhost:9080/ws_accr121/services/IAccreditamentiManagementWS</param-value> -->
+        </context-param>
+        <context-param>
+                <param-name>people.sirac.error.page</param-name>
+                <param-value>/SiracError.jsp</param-value>
+        </context-param>
+        <context-param>
+                <param-name>showDetailInErrorPage</param-name>
+                <param-value>false</param-value>
+        </context-param>
+        <context-param>
+                <param-name>people.sirac.error.returnURL</param-name>
+<!-- 		<param-value>http://192.168.11.125:9080/PeopleConsole</param-value> -->
+<param-value>${peopleConsole.people.sirac.error.returnURL}</param-value>
+              <!--  <param-value>http://fossg.avmtb.rsr.rupar.puglia.it/PeopleConsole</param-value>-->
+        </context-param>
+        <context-param>
+                <param-name>authenticationResponseReceiverServiceTransferMode</param-name>
+                <!-- Indicare FORWARD o POST -->
+                <param-value>POST</param-value>
+        </context-param>
+        <context-param>
+                <param-name>encryptAuthResponse</param-name>
+                <!-- Indicare true o false -->
+                <param-value>true</param-value>
+        </context-param>
+        <context-param>
+                <param-name>encryptAuthResponseKeyFile</param-name>
+                <!-- path relativo alla webapp -->
+                <param-value>/sirac_keystore/encryptAuthResponse_Rijndael_256_PBEWithSHAAnd128BitRC4_100.key</param-value>
+        </context-param>
+        <context-param>
+                <param-name>encryptAuthResponseKeyFilePassPhrase</param-name>
+                <param-value>testpassphrase</param-value>
+        </context-param>
+        <context-param>
+                <param-name>authResponseExpirationTime</param-name>
+                <!-- expiration time in msec (usato solo nel caso di TransferMode=POST) -->
+                <param-value>300000</param-value>
+        </context-param>
+        <context-param>
+                <param-name>authResponseExpirationDateTimeFormat</param-name>
+                <param-value>yyyyMMdd'T'HH:mm:ss.SSSz</param-value>
+        </context-param>
+        <context-param>
+                <param-name>ignoreAuthResponseExpirationTime</param-name>
+                <param-value>true</param-value>
+        </context-param>
+        <context-param>
+                <param-name>assertionIntendedRecipientURL</param-name>
+<!-- 				 <param-value>http://localhost:9080/PeopleConsole/AssertionConsumerService</param-value> -->
+ 				<param-value>${peopleConsole.assertionIntendedRecipientURL}</param-value>
+              <!--  <param-value>http://fossg.avmtb.rsr.rupar.puglia.it/PeopleConsole/AssertionConsumerService</param-value>-->
+        </context-param>
+        <!-- Utilizzato dal Sirac e dal filtro di selezione del comune -->
+        <context-param>
+                <param-name>peopleFSLHostURL</param-name>
+                <param-value>${peopleConsole.peopleFSLHostURL}</param-value>
+<!-- 				<param-value>http://localhost:9080</param-value> -->
+              <!--  <param-value>http://fossg.avmtb.rsr.rupar.puglia.it</param-value>-->
+        </context-param>
+        <context-param>
+                <param-name>weakSignEnabled</param-name>
+                <param-value>true</param-value>
+        </context-param>
+        <context-param>
+                <param-name>remoteSignEnabled</param-name>
+                <param-value>true</param-value>
+        </context-param>
+        <context-param>
+                <param-name>remoteSignMode</param-name>
+                <param-value>p7m</param-value>
+        </context-param>
+        <context-param>
+                <param-name>remoteSign_pathPrefix</param-name>
+				<param-value>${peopleConsole.remoteSign_pathPrefix}</param-value>
+				<!-- <param-value>http://localhost:9080/sirac/remotesign</param-value> -->
+              <!--  <param-value>http://fossg.avmtb.rsr.rupar.puglia.it/sirac/remotesign</param-value>-->
+        </context-param>
+        <!-- FINE CONTEXT-PARAM SIRAC 2.0.2 -->
+
+
+          <filter>
+            <filter-name>Sessions Data Final Garbage Collector</filter-name>
+            <filter-class>it.people.console.system.sessions.SessionsDataFinalGarbageCollectorFilter</filter-class>
+          </filter>
+
+        <filter>
+                <filter-name>SIRAC Service Profile Loader Filter</filter-name>
+                <filter-class>it.people.sirac.filters.SiracServiceProfileLoaderFilter</filter-class>
+                <init-param>
+                        <param-name>defaultserviceprofile</param-name>
+                        <param-value>/support/serviceprofile/defaultserviceprofile.xml</param-value>
+                </init-param>
+        </filter>
+
+
+        <filter>
+                <filter-name>PeopleConsole Authentication Filter</filter-name>
+                <filter-class>it.people.console.security.auth.filters.AuthenticationFilter</filter-class>
+                <init-param>
+                        <param-name>SIRACGatewayRedirectURL</param-name>
+						  <param-value>${peopleConsole.SIRACGatewayRedirectURL}</param-value>
+						  <!-- <param-value>http://localhost:9080/sirac/AuthGatewayServlet</param-value> -->
+                     <!--   <param-value>http://fossg.avmtb.rsr.rupar.puglia.it/sirac/AuthGatewayServlet</param-value>-->
+                </init-param>
+                <init-param>
+                        <param-name>assertionConsumerURL</param-name>
+<!-- 						 <param-value>http://localhost:9080/PeopleConsole/AssertionConsumerService</param-value> -->
+						  <param-value>${peopleConsole.assertionConsumerURL}</param-value>
+                   <!--     <param-value>http://fossg.avmtb.rsr.rupar.puglia.it/PeopleConsole/AssertionConsumerService</param-value>-->
+                </init-param>
+                <init-param>
+                        <param-name>postAuthRequestPage</param-name>
+                        <param-value>/PostAuthRequest.jsp</param-value>
+                </init-param>
+        </filter>
+
+        <filter>
+                <filter-name>filterChainProxy</filter-name>
+                <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        </filter>
+
+        <filter>
+                <filter-name>securityContextPersistenceFilter</filter-name>
+                <filter-class>org.springframework.security.web.context.SecurityContextPersistenceFilter</filter-class>
+        </filter>
+
+        <filter>
+                <filter-name>sitemesh</filter-name>
+                <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
+        </filter>
+
+        <!-- - Configures Log4J for this web app. - As this context specifies a
+                context-param "log4jConfigLocation", its file path - is used to load the
+                Log4J configuration, including periodic refresh checks. - - Would fall back
+                to default Log4J initialization (non-refreshing) if no special - context-params
+                are given. -->
+        <listener>
+                <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+        </listener>
+        <!-- - Loads the root application context of this web app at startup, -
+                by default from "/WEB-INF/applicationContext.xml". - Note that you need to
+                fall back to Spring's ContextLoaderServlet for - J2EE servers that do not
+                follow the Servlet 2.4 initialization order. - - Use WebApplicationContextUtils.getWebApplicationContext(servletContext)
+                - to access it anywhere in the web application, outside of the framework.
+                - - The root context is the parent of all servlet-specific contexts. - This
+                means that its beans are automatically available in these child contexts,
+                - both for getBean(name) calls and (external) bean references. -->
+        <listener>
+                <listener-class>it.people.console.context.ContextLoaderListener</listener-class>
+        </listener>
+
+<!--
+        <listener>
+                <listener-class>org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
+        </listener>
+-->
+
+  <listener>
+    <listener-class>it.people.console.system.sessions.SessionEventListener</listener-class>
+  </listener>
+
+        <!-- - Spring web MVC servlets that dispatches requests to registered handlers.
+                - Has its own application context, by default defined in "{servlet-name}-servlet.xml",
+                - i.e. "atweb-servlet.xml". - - A web app can contain any number of
+                such servlets. - Note that this web app has a shared root application context,
+                serving as parent - of all DispatcherServlet contexts. -->
+        <servlet>
+                <servlet-name>peopleconsole</servlet-name>
+                <servlet-class>it.people.console.web.servlet.DispatcherServlet</servlet-class>
+                <load-on-startup>2</load-on-startup>
+        </servlet>
+        <!--servlet>
+                <servlet-name>axis</servlet-name>
+                <servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class>
+                <load-on-startup>5</load-on-startup>
+        </servlet-->
+
+  <servlet>
+    <servlet-name>peopleconsole-ws</servlet-name>
+    <servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
+    <init-param>
+      <!-- Transform the location attributes in WSDLs -->
+      <param-name>transformWsdlLocations</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </servlet>
+
+
+        <!-- ****************** <SIRAC ******************* -->
+        <!-- SIRAC AssertionConsumerService -->
+        <servlet>
+                <servlet-name>AssertionConsumerService</servlet-name>
+<!--                 <display-name>Sirac Assertion Consumer Service</display-name> -->
+<!--                 <description>Sirac Assertion Consumer Service</description> -->
+                <servlet-class>it.people.sirac.web.AssertionConsumerServlet</servlet-class>
+                <init-param>
+                        <param-name>keystorePath</param-name>
+                        <!-- path relativo alla webapp -->
+                        <param-value>/sirac_keystore/test.jks</param-value>
+                </init-param>
+                <init-param>
+                        <param-name>certificateAlias</param-name>
+                        <param-value>mykey</param-value>
+                </init-param>
+                <init-param>
+                        <param-name>keystorePassword</param-name>
+                        <param-value>opensaml</param-value>
+                </init-param>
+                <init-param>
+                        <param-name>authenticationResponseReceiverServiceForwardURL</param-name>
+                        <param-value>/AuthResponseReceiverService</param-value>
+                </init-param>
+                <init-param>
+                        <param-name>authenticationResponseReceiverServicePOSTURL</param-name>
+<!-- 						 <param-value>http://localhost:9080/PeopleConsole/AuthResponseReceiverService</param-value> -->
+				 <param-value>${peopleConsole.authenticationResponseReceiverServicePOSTURL}</param-value>
+                  <!--      <param-value>http://fossg.avmtb.rsr.rupar.puglia.it/PeopleConsole/AuthResponseReceiverService</param-value>-->
+                </init-param>
+                <init-param>
+                        <param-name>postResponsePage</param-name>
+                        <param-value>/PostAuthResponse.jsp</param-value>
+                </init-param>
+        </servlet>
+        <servlet>
+                <servlet-name>AuthResponseReceiverService</servlet-name>
+<!--                 <display-name>Authentication Response Receiver Service</display-name> -->
+<!--                 <description>Authentication Response Receiver Service</description> -->
+                <servlet-class>
+                        it.people.sirac.web.AuthenticationResponseReceiverServlet</servlet-class>
+        </servlet>
+        <!-- ****************** >SIRAC ******************* -->
+
+        <filter-mapping>
+                <filter-name>securityContextPersistenceFilter</filter-name>
+                <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+                <filter-name>PeopleConsole Authentication Filter</filter-name>
+                <url-pattern>*.mdo</url-pattern>
+        </filter-mapping>
+        <filter-mapping>
+                <filter-name>PeopleConsole Authentication Filter</filter-name>
+                <url-pattern>*.do</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+                <filter-name>filterChainProxy</filter-name>
+                <url-pattern>*.mdo</url-pattern>
+        </filter-mapping>
+        <filter-mapping>
+                <filter-name>filterChainProxy</filter-name>
+                <url-pattern>*.do</url-pattern>
+        </filter-mapping>
+
+        <filter-mapping>
+                <filter-name>sitemesh</filter-name>
+                <url-pattern>*.do</url-pattern>
+        </filter-mapping>
+        <filter-mapping>
+                <filter-name>sitemesh</filter-name>
+                <url-pattern>*.rdo</url-pattern>
+        </filter-mapping>
+        <filter-mapping>
+                <filter-name>sitemesh</filter-name>
+                <url-pattern>*.nldo</url-pattern>
+        </filter-mapping>
+
+  <servlet-mapping>
+    <servlet-name>peopleconsole-ws</servlet-name>
+    <url-pattern>/ws/*</url-pattern>
+  </servlet-mapping>
+
+        <!-- - Dispatcher servlet mapping for the main web user interface. -->
+        <servlet-mapping>
+                <servlet-name>peopleconsole</servlet-name>
+                <url-pattern>*.do</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+                <servlet-name>peopleconsole</servlet-name>
+                <url-pattern>*.mdo</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+                <servlet-name>peopleconsole</servlet-name>
+                <url-pattern>*.rdo</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+                <servlet-name>peopleconsole</servlet-name>
+                <url-pattern>*.nldo</url-pattern>
+        </servlet-mapping>
+
+        <servlet-mapping>
+                <servlet-name>AuthResponseReceiverService</servlet-name>
+                <url-pattern>/AuthResponseReceiverService</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+                <servlet-name>AssertionConsumerService</servlet-name>
+                <url-pattern>/AssertionConsumerService</url-pattern>
+        </servlet-mapping>
+
+        <welcome-file-list>
+                <welcome-file>jsp/index.jsp</welcome-file>
+        </welcome-file-list>
+        <resource-ref>
+                <res-ref-name>jdbc/PeopleDB</res-ref-name>
+                <res-type>javax.sql.DataSource</res-type>
+                <res-auth>Container</res-auth>
+        </resource-ref>
+
+</web-app>

@@ -1,0 +1,289 @@
+//------------------------------------------------------------------------------
+// Interfaccia verso il server di pagamento esterno Regulus.
+// Implementazione allineata alle specifiche del documento: 
+// 	"Server di Pagamento, Protocollo di attivazione v. 1.4"
+//	di Sirio Candini, Data:			Gennaio 20
+//------------------------------------------------------------------------------
+package it.people.util.payment;
+
+import it.people.process.common.entity.AbstractEntity;
+import java.util.Date;
+import org.apache.xerces.parsers.DOMParser;
+import it.people.util.ActivityLogger;
+import org.w3c.dom.*;
+import org.xml.sax.*;
+import java.io.*;
+import java.text.SimpleDateFormat;
+//import it.regulus.pagamenti.gestoreincassi.oggetticondivisi.utilities;
+
+public class EsitoPagamento  extends AbstractEntity
+{
+	// Esiti pagamento
+	public static final String ES_PAGAMENTO_OK="OK";		// Successo nell'operazione
+	public static final String ES_PAGAMENTO_KO="KO";		// Autorizzazione negata dal circuito
+	public static final String ES_PAGAMENTO_OP="OP";		// Operazione in pagamento
+	public static final String ES_PAGAMENTO_UK="UK";		// Operazione sconosciuta
+	public static final String ES_PAGAMENTO_ER="ER";		// Operazione andata in errore per problemi di comunicazione con il sistema di pagamento
+
+	private static final String RX_DATETIME_FORMAT = "yyyyMMddHHmmss";
+	
+	private ActivityLogger	m_oTracer;
+
+	private String m_sNumeroOperazione;
+	private String m_sIDTransazione;
+	private Date m_dtDataTransazione;
+	private String m_sSistemaPagamento;
+	private String m_sSistemaPagamentoD;
+	private String m_sCircuitoAutorizzativo;
+	private String m_sCircuitoAutorizzativoD;
+	private String m_sCircuitoSelezionato;
+	private String m_sCircuitoSelezionatoD;
+	private long m_lImportoPagato;
+	private long m_lImportoCommissioni;
+	private String m_sIDOrdine;
+	private Date m_dtDataOrdine;
+	private String m_sEsito;
+	private String m_sDescrizioneEsito;
+	private Date m_dtDataAutorizzazione;
+	private String m_sNumeroAutorizzazione;
+	private String m_sDatiSpecifici;
+	
+	public String getNumeroOperazione() { return m_sNumeroOperazione; }
+	public String getIDTransazione() { return m_sIDTransazione; }
+	public Date getDataTransazione() { return m_dtDataTransazione; }
+	public String getSistemaPagamento() { return m_sSistemaPagamento; }
+	public String getDescrizioneSistemaPagamento() { return m_sSistemaPagamentoD; }
+	public String getCircuitoAutorizzativo() { return m_sCircuitoAutorizzativo; }
+	public String getDescrizioneCircuitoAutorizzativo() { return m_sCircuitoAutorizzativoD; }
+	public String getCircuitoSelezionato() { return m_sCircuitoSelezionato; }
+	public String getDescrizioneCircuitoSelezionato() { return m_sCircuitoSelezionatoD; }
+	public long getImportoPagato() { return m_lImportoPagato; }
+	public long getImportoCommissioni() { return m_lImportoCommissioni; }
+	public String getIDOrdine() { return m_sIDOrdine; }
+	public Date getDataOrdine() { return m_dtDataOrdine; }
+	public String getEsito() { return m_sEsito; }
+	public String getDescrizioneEsito() { return m_sDescrizioneEsito; }
+	public Date getDataAutorizzazione() { return m_dtDataAutorizzazione; }
+	public String getNumeroAutorizzazione() { return m_sNumeroAutorizzazione; }
+	public String getDatiSpecifici() { return m_sDatiSpecifici; }
+
+	private void initFields()
+	{
+		m_sNumeroOperazione = "";
+		m_sIDTransazione = "";
+		m_sSistemaPagamento = "";
+		m_sSistemaPagamentoD = "";
+		m_sCircuitoAutorizzativo = "";
+		m_sCircuitoAutorizzativoD = "";
+		m_sCircuitoSelezionato = "";
+		m_sCircuitoSelezionatoD = "";
+		m_sIDOrdine = "";
+		m_sEsito = "";
+		m_sDescrizioneEsito = "";
+		m_sNumeroAutorizzazione = "";
+		m_dtDataOrdine = null;
+		m_dtDataTransazione = null;
+		m_dtDataAutorizzazione = null;
+		m_lImportoPagato = 0;
+		m_lImportoCommissioni = 0;
+		m_sDatiSpecifici = "";
+	}
+
+	public EsitoPagamento()	
+	{
+		m_oTracer = ActivityLogger.getInstance();
+		initFields();
+	}
+	
+	public EsitoPagamento(String sXml)
+	{
+		m_oTracer = ActivityLogger.getInstance();
+		m_oTracer.log(this.getClass(), "EsitoPagamento(): xml - " + sXml, ActivityLogger.DEBUG);
+		Document oDoc = createDocument(sXml);
+		if (oDoc != null)
+		{
+			try
+			{
+				Element oDatiPag = (Element) oDoc.getDocumentElement();
+				m_sNumeroOperazione= readSectionElement(oDatiPag, "NumeroOperazione");
+				m_sIDTransazione= readSectionElement(oDatiPag, "IDTransazione");
+				m_dtDataTransazione = String2Date( readSectionElement(oDatiPag, "DataOraTransazione"));
+				m_sSistemaPagamento= readSectionElement(oDatiPag, "SistemaPagamento");
+				m_sSistemaPagamentoD = readSectionElement(oDatiPag, "SistemaPagamentoD");
+				m_sCircuitoAutorizzativo = readSectionElement(oDatiPag, "CircuitoAutorizzativo");
+				m_sCircuitoAutorizzativoD = readSectionElement(oDatiPag, "CircuitoAutorizzativoD");
+				m_sCircuitoSelezionato = readSectionElement(oDatiPag, "CircuitoSelezionato");
+				m_sCircuitoSelezionatoD = readSectionElement(oDatiPag, "CircuitoSelezionatoD");
+				m_lImportoPagato = XMLValueToLong(oDatiPag, "ImportoTransato");
+				m_lImportoCommissioni = XMLValueToLong(oDatiPag, "ImportoCommissioni");
+				m_sEsito = readSectionElement(oDatiPag, "Esito");
+				m_sDescrizioneEsito = readSectionElement(oDatiPag, "EsitoD");
+				m_sIDOrdine = readSectionElement(oDatiPag, "IDOrdine");
+				m_dtDataOrdine = String2Date( readSectionElement(oDatiPag, "DataOraOrdine"));
+				m_dtDataAutorizzazione = String2Date( readSectionElement(oDatiPag, "DataOra"));
+				m_sNumeroAutorizzazione = readSectionElement(oDatiPag, "Autorizzazione");
+				m_sDatiSpecifici = readSectionElement(oDatiPag, "DatiSpecifici");
+			}
+			catch(Exception exc)
+			{
+				initFields();
+				m_oTracer.log(this.getClass(), "EsitoPagamento(): Generic Exception - " + exc.toString(), ActivityLogger.ERROR);
+			}
+		}
+		else
+			initFields();
+	}
+
+	public String marshall()
+	{
+		String xml = "<PaymentData>"
+			+ "<PortaleID>PeopleFwk</PortaleID>"
+			+ "<NumeroOperazione>" + this.getNumeroOperazione() + "</NumeroOperazione>"
+			+ "<IDOrdine>"+ this.getIDOrdine() + "</IDOrdine>"
+			+ "<DataOraOrdine>" + Date2String(this.getDataOrdine()) + "</DataOraOrdine>"
+			+ "<IDTransazione>" + this.getIDTransazione() + "</IDTransazione>"
+			+ "<DataOraTransazione>" + Date2String(this.getDataTransazione()) + "</DataOraTransazione>"
+			+ "<SistemaPagamento>" + this.getSistemaPagamento() + "</SistemaPagamento>"
+			+ "<SistemaPagamentoD>" + this.getDescrizioneSistemaPagamento() + "</SistemaPagamentoD>"
+			+ "<CircuitoAutorizzativo>" + this.getCircuitoAutorizzativo() + "</CircuitoAutorizzativo>"
+			+ "<CircuitoAutorizzativoD>" + this.getDescrizioneCircuitoAutorizzativo() + "</CircuitoAutorizzativoD>"
+			+ "<CircuitoSelezionato>" + this.getCircuitoSelezionato() + "</CircuitoSelezionato>"
+			+ "<CircuitoSelezionatoD>" + this.getDescrizioneCircuitoSelezionato() + "</CircuitoSelezionatoD>"
+			+ "<ImportoTransato>" + LongToXMLValue(this.getImportoPagato()) + "</ImportoTransato>"
+			+ "<ImportoAutorizzato></ImportoAutorizzato>"
+			+ "<ImportoCommissioni>" + LongToXMLValue(this.getImportoCommissioni()) + "</ImportoCommissioni>"
+			+ "<Esito>" + this.getEsito() + "</Esito>"
+			+ "<EsitoD>" + this.getDescrizioneEsito() + "</EsitoD>"
+			+ "<DataOra>" + Date2String(this.getDataAutorizzazione()) + "</DataOra>"
+			+ "<Autorizzazione>" + this.getNumeroAutorizzazione() + "</Autorizzazione>"
+			+ "<DatiSpecifici><![CDATA[" + this.getDatiSpecifici() + "]]></DatiSpecifici>"
+			+ "</PaymentData>";
+		return xml;
+	}
+	
+	private String Date2String(java.util.Date date)
+	{
+		try
+		{			
+			return (new SimpleDateFormat(RX_DATETIME_FORMAT)).format(date);			
+		}
+		catch(Exception ex)	{ }
+		return "";
+	}
+	
+	private String LongToXMLValue(long val)
+	{
+		return (new Long(val)).toString();
+	}
+	
+	private Document createDocument( String sXmlMsg )
+	{
+			Document oDoc = null;
+			try
+			{
+					DOMParser parser = new DOMParser();
+					parser.setFeature("http://xml.org/sax/features/validation", false);            
+					parser.parse(new InputSource(new StringReader(sXmlMsg)));
+					oDoc = parser.getDocument();                
+			}
+			catch(SAXException exc)
+			{
+					m_oTracer.log(this.getClass(), "createDocument: SAXException - input string[" + sXmlMsg + "] " + exc.toString(), ActivityLogger.ERROR);
+					oDoc = null;
+			}
+			catch(IOException exc)
+			{
+					m_oTracer.log(this.getClass(), "createDocument: IOException - input string[" + sXmlMsg + "] " + exc.toString(), ActivityLogger.ERROR);
+					oDoc=null;
+			}
+			return oDoc;
+	}
+
+	private String readSectionElement(Element oElem, String tagXml)
+	{
+		String sText = "";
+		try
+		{
+			NodeList nodeList = oElem.getElementsByTagName(tagXml);
+			if (nodeList.getLength() > 0)
+				sText = getNodeValue(nodeList.item(0));
+		}
+		catch(NullPointerException exc)
+		{
+			m_oTracer.log(this.getClass(), "readSectionElement: NullPointerException - input tag[" + tagXml + "] ", ActivityLogger.ERROR);
+		}
+		catch(Exception exc)
+		{
+			m_oTracer.log(this.getClass(), "readSectionElement: Generic Exception - input tag[" + tagXml + "] " + exc.toString(), ActivityLogger.ERROR);
+		}
+		return sText;
+	}
+
+	private String getNodeValue(Node oNode)
+	{
+		Node oChildNode = oNode.getFirstChild();
+		if (null != oChildNode)
+				return oChildNode.getNodeValue();
+		else
+				return "";
+	}
+	
+	private int XMLValueToInt(Element oElem, String sTag)
+	{
+		int iValue = 0;
+		String sValue = readSectionElement(oElem, sTag);
+		if (sValue.length() > 0)
+		{
+				try
+				{
+						iValue = Integer.parseInt(sValue);
+				}
+				catch(Exception exc)
+				{
+						iValue = 0;
+				}
+		}
+		return iValue;
+	}
+	
+	private long XMLValueToLong(Element oElem, String sTag)
+	{
+		long dValue = 0;
+		String sValue = readSectionElement(oElem, sTag);
+		if (sValue.length() > 0)
+		{
+				try
+				{
+						dValue = Long.parseLong(sValue);
+				}
+				catch(Exception exc)
+				{
+						dValue = 0;
+				}
+		}
+		return dValue;
+	}
+	
+	private boolean XMLValueToFlag(Element oElem, String sTag)
+	{
+		String sValue = readSectionElement(oElem, sTag);
+		return (sValue.equalsIgnoreCase("S")) ? true : false;
+	}
+
+	public java.util.Date String2Date(String sDate)
+	{
+		java.util.Date date = null;
+		if ((sDate != null) && (sDate.trim().length() > 0))
+		{
+			try 
+			{
+				date = new SimpleDateFormat(RX_DATETIME_FORMAT).parse(sDate);
+			} 
+			catch(Exception exc) 
+			{
+				date = null;
+			}
+		}
+		return date;
+	}
+}

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<peopleadministrators 
+	xmlns="http://www.progettopeople.it/people/peopleadministrators" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.progettopeople.it/people/peopleadministrators peopleadministrators.xsd">
+	<administrator username="people">
+		<param>
+			<param-name>nome</param-name>
+			<param-value>Michele</param-value>
+		</param>
+		<param>
+			<param-name>cognome</param-name>
+			<param-value>Fabbri</param-value>
+		</param>
+		<param>
+			<param-name>codiceFiscale</param-name>
+			<param-value>FBBMHL75A14D704M</param-value>
+		</param>
+		<param>
+			<param-name>email</param-name>
+			<param-value>mi.fabbri@cedaf.it</param-value>
+		</param>
+		<param>
+			<param-name>dataNascita</param-name>
+			<param-value>14/01/1975</param-value>			
+		</param>
+		<param>
+			<param-name>luogoNascita</param-name>
+			<param-value>Forlimpopoli</param-value>			
+		</param>
+		<param>
+			<param-name>sesso</param-name>
+			<param-value>M</param-value>			
+		</param>		
+		<param>
+			<param-name>capResidenza</param-name>
+			<param-value>47100</param-value>			
+		</param>		
+		<param>
+			<param-name>cittaResidenza</param-name>
+			<param-value>Forlimpopoli</param-value>			
+		</param>		
+		<param>
+			<param-name>indirizzoResidenza</param-name>
+			<param-value>Via la greca, 17</param-value>			
+		</param>				
+		<commune-id>000001</commune-id>
+		<commune-id>040007</commune-id>
+	</administrator>
+	<administrator username="peopleAdmin2">
+		<param>
+			<param-name>nome</param-name>
+			<param-value>Mario</param-value>
+		</param>
+		<param>
+			<param-name>cognome</param-name>
+			<param-value>Rossi</param-value>
+		</param>
+		<param>
+			<param-name>codiceFiscale</param-name>
+			<param-value>FBBMHL75A14D704M</param-value>
+		</param>
+		<param>
+			<param-name>email</param-name>
+			<param-value>ma.rossi@cedaf.it</param-value>
+		</param>
+		<param>
+			<param-name>dataNascita</param-name>
+			<param-value>01/01/1960</param-value>			
+		</param>
+		<param>
+			<param-name>capResidenza</param-name>
+			<param-value>47100</param-value>			
+		</param>		
+		<param>
+			<param-name>cittaResidenza</param-name>
+			<param-value>Forlimpopoli</param-value>			
+		</param>		
+		<param>
+			<param-name>indirizzoResidenza</param-name>
+			<param-value>Via la greca, 17</param-value>			
+		</param>				
+		<commune-id>010025</commune-id>
+	</administrator>
+</peopleadministrators>

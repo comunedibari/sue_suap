@@ -1,0 +1,1 @@
+-- delete from configuration where name = 'protocollo.modalita.caricamento';

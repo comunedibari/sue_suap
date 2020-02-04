@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Administrator (Bubble) -->
+<xs:schema xmlns="http://www.progettopeople.it/b002/ServiziCondivisi/Envelope" xmlns:OggettiCondivisi="http://egov.diviana.it/b116/OggettiCondivisi" xmlns:ServiziCondivisi="http://egov.diviana.it/b116/ServiziCondivisi" xmlns:CNIPA="http://egov.diviana.it/b116/CNIPA" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:Envelope="http://www.progettopeople.it/b002/ServiziCondivisi/Envelope" targetNamespace="http://www.progettopeople.it/b002/ServiziCondivisi/Envelope" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--Busta di trasporto richieste e risposte utilizzata nel progetto People-->
+	<xs:annotation>
+		<xs:documentation>
+			Estensione della busta definita nella modellazione (Servizi
+			Condivisi\Servizi Infrastrutturali\Invio) attraverso la
+			ridefinizione di alcuni elementi
+		</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>
+			<Modello Versione="v0.3 - 15/11/2007" Build="002" Data="15/11/2007" Reference="Modellazione Build 116"/>
+			<Revisioni>
+				<Revisione Build="002" Rev="004" data="15/11/2007" author="Progetto People">
+	          Aggiunto attributo forceSkipCheckDeleghe nell'elemento InformazioniPerVerificaDelega
+	          di tipo boolean opzionale (valore di default "false"). Chi prepara la busta deve
+	          impostare questo valore a true nel caso in cui l'accreditamento in uso sia di tipo 
+	          Rappresentante Legale di Persona Giuridica. In tutti gli altri casi deve essere 
+	          impostato a false.
+		        </Revisione>
+			</Revisioni>
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://egov.diviana.it/b116/OggettiCondivisi" schemaLocation="OggettiCondivisi.xsd"/>
+	<xs:import namespace="http://egov.diviana.it/b116/ServiziCondivisi" schemaLocation="ServiziCondivisi.xsd"/>
+	<xs:import namespace="http://egov.diviana.it/b116/CNIPA" schemaLocation="CNIPA.xsd"/>
+	<xs:element name="RichiestadiInvio" type="Envelope:RichiestadiInvio"/>
+	<xs:element name="RispostadiInvio" type="ServiziCondivisi:RispostadiInvio"/>
+	<xs:element name="Risposta" type="OggettiCondivisi:SceltaRisposta"/>
+	<xs:element name="RichiestadiInvioMassivo" type="Envelope:RichiestadiInvioMassivo"/>
+	<!--Ridefinizione ed estensione dei tipi definiti nella busta della modellazione (ref. build 116 del 04/08/2006)-->
+	<xs:complexType name="RichiestadiInvio">
+		<xs:complexContent>
+			<xs:extension base="Envelope:BustaSpedizione"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="IndirizzoTestuale">
+		<xs:annotation>
+			<xs:documentation>
+				Stessa definizione presente in oggetti condivisi
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="OggettiCondivisi:Testo"/>
+	</xs:simpleType>
+	<xs:complexType name="BustaSpedizione">
+		<xs:annotation>
+			<xs:documentation>
+				OggettiCondivisi:BustaSpedizione ridefinita per
+				estensione di OggettiCondivisi:Busta e ridefinizione
+				elemento InformazioniperProtocollazione
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="OggettiCondivisi:Busta">
+				<xs:sequence>
+					<xs:element name="TipoComunicazione" type="OggettiCondivisi:SceltaTipoComunicazione"/>
+					<xs:element name="InformazioniperProtocollazione" type="Envelope:InformazioniperProtocollazione" minOccurs="0"/>
+					<xs:element name="InformazioniperVerificaDelega" type="InformazioniperVerificaDelega"/>
+					<xs:element name="InformazioniProfili" type="InformazioniProfili" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InformazioniperProtocollazione">
+		<xs:annotation>
+			<xs:documentation>
+				Ridefinizione di
+				OggettiCondivisi:InformazioniperProtocollazione con la
+				possibilita di indicare piu recapiti e di indicare un
+				recapito postale testuale in aggiunta alle tipologie di
+				recapito gi� definite
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Richiedente" type="OggettiCondivisi:EstremidellaPersona"/>
+			<xs:element name="Recapito" type="Envelope:Recapito" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Recapito definito in OggettiCondivisi:Recapito
+						esteso con cardinalita 1..n e con la possibilita
+						di inserire recapito postale testuale
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Titolare" type="CNIPA:SceltaTitolare"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Recapito">
+		<xs:annotation>
+			<xs:documentation>
+				Ridefinizione di OggettiCondivisi:Recapito con
+				l'aggiunta del RecapitoPostaleTestuale
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Tipo" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Istituzionale"/>
+						<xs:enumeration value="Personale"/>
+						<xs:enumeration value="Professionale"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Nota" type="OggettiCondivisi:Nota" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Referente" type="OggettiCondivisi:Testo"/>
+			<xs:element name="Priorita">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Principale"/>
+						<xs:enumeration value="Alternativo"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Indirizzoemail" type="OggettiCondivisi:Indirizzoemail"/>
+				<xs:element name="RecapitoPostale" type="OggettiCondivisi:RecapitoPostale"/>
+				<xs:element name="RecapitoPostaleTestuale" type="Envelope:IndirizzoTestuale"/>
+				<xs:element name="RecapitoTelefonico" type="OggettiCondivisi:RecapitoTelefonico"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RichiestadiInvioMassivo">
+		<xs:sequence>
+			<xs:element name="DatiRiepilogativi" type="Envelope:DatiRiepilogativi"/>
+			<xs:element name="ElencoRichiestediInvio" type="Envelope:ElencoRichiestediInvio"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 
+		<xs:complexType name="DatiRiepilogativi">
+		<xs:sequence>
+		<xs:sequence>
+		<xs:element name="SommarioPratica" type="Envelope:SommarioPratica"></xs:element>
+		</xs:sequence>
+		<xs:element name="DatiIdentificativiIntermediario" type="CNIPA:SceltaTitolare">
+		</xs:element>
+		</xs:sequence>
+		</xs:complexType>
+	-->
+	<xs:complexType name="DatiRiepilogativi">
+		<xs:sequence>
+			<xs:element name="SommarioPratiche" type="Envelope:SommarioPratiche"/>
+			<xs:element name="DatiIdentificativiIntermediario" type="CNIPA:SceltaTitolare"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ElencoRichiestediInvio">
+		<xs:sequence>
+			<xs:element name="RichiestadiInvio" type="Envelope:RichiestadiInvio" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SommarioPratica">
+		<xs:attribute name="nomeServizio" type="OggettiCondivisi:Testo" use="required"/>
+		<xs:attribute name="numeroPraticheInRichiestaMassiva" type="OggettiCondivisi:InteroPositivo" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="SommarioPratiche">
+		<xs:sequence>
+			<xs:element name="SommarioPratica" type="Envelope:SommarioPratica" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformazioniperVerificaDelega">
+		<xs:complexContent>
+			<xs:extension base="ServiziCondivisi:InformazioniperVerificaDelega">
+				<xs:sequence>
+					<xs:element name="EstremiSoggettoDelegato" type="CNIPA:SceltaTitolare"/>
+				</xs:sequence>
+				<xs:attribute name="forceSkipCheckDeleghe" type="xs:boolean" use="optional" default="false"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InformazioniProfili">
+		<xs:sequence>
+			<xs:element name="Operatore" type="SoggettoPersonaFisica" minOccurs="0"/>
+			<xs:element name="Richiedente" type="SoggettoPersonaFisica"/>
+			<xs:element name="Titolare">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="PersonaFisica" type="SoggettoPersonaFisica"/>
+						<xs:element name="PersonaGiuridica" type="SoggettoPersonaGiuridica"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SoggettoPersonaFisica">
+		<xs:sequence>
+			<xs:element name="Cognome" type="xs:string"/>
+			<xs:element name="Nome" type="xs:string"/>
+			<xs:element name="CodiceFiscale" type="OggettiCondivisi:CodiceFiscale"/>
+			<xs:element name="EMail" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SoggettoPersonaGiuridica">
+		<xs:sequence>
+			<xs:element name="DenominazioneoRagioneSociale" type="xs:string"/>
+			<xs:element name="CodiceFiscalePersonaGiuridica" type="OggettiCondivisi:CodiceFiscalePersonaGiuridica"/>
+			<xs:element name="EMail" type="xs:string"/>
+			<xs:element name="RappresentanteLegale" type="SoggettoPersonaFisica"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2011, Regione Emilia-Romagna, Italy Licensed under the 
+	EUPL, Version 1.1 or - as soon they will be approved by the European Commission 
+	- subsequent versions of the EUPL (the "Licence"); You may not use this work 
+	except in compliance with the Licence. For convenience a plain text copy 
+	of the English version of the Licence can be found in the file LICENCE.txt 
+	in the top-level directory of this software distribution. You may obtain 
+	a copy of the Licence in any of 22 European Languages at: http://joinup.ec.europa.eu/software/page/eupl 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. This product includes 
+	software developed by Yale University See the Licence for the specific language 
+	governing permissions and limitations under the Licence. -->
+<Context path="/people">
+	<Logger className="org.apache.catalina.logger.FileLogger"
+		prefix="people." suffix=".log" timestamp="true" />
+	<!-- <ResourceLink global="people/FEDB" name="jdbc/FEDB" type="javax.sql.DataSource"/> -->
+	<Resource name="jdbc/FEDB" auth="Container" type="javax.sql.DataSource"
+		maxActive="8" maxIdle="8" maxWait="-1" username="${people.jdbc/FEDB.username}"
+		password="${people.jdbc/FEDB.password}" driverClassName="com.mysql.jdbc.Driver"
+		testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
+		validationQuery="SELECT 1" validationQueryTimeout="-1"
+		url="${people.jdbc/FEDB.url}" />
+	<!-- <ResourceLink global="people/LegacyDB" name="jdbc/LegacyDB" type="javax.sql.DataSource" 
+		/> -->
+	<Resource name="jdbc/LegacyDB" auth="Container" type="javax.sql.DataSource"
+		maxActive="8" maxIdle="8" maxWait="-1" username="${people.jdbc/LegacyDB.username}"
+		password="${people.jdbc/LegacyDB.password}" driverClassName="com.mysql.jdbc.Driver"
+		testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
+		validationQuery="SELECT 1" validationQueryTimeout="-1"
+		url="${people.jdbc/LegacyDB.url}" />
+
+	<!-- <ResourceLink global="people/puDS" name="jdbc/puDS" type="javax.sql.DataSource" 
+		/> -->
+	<Resource name="jdbc/puDS" auth="Container" type="javax.sql.DataSource"
+		maxActive="8" maxIdle="8" maxWait="-1" username="${people.jdbc/puDS.username}"
+		password="${people.jdbc/puDS.password}" driverClassName="com.mysql.jdbc.Driver"
+		testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
+		validationQuery="SELECT 1" validationQueryTimeout="-1"
+		url="${people.jdbc/puDS.url}" />
+
+	<!-- <ResourceLink global="people/puDSEdilizia" name="jdbc/puDSEdilizia" 
+		type="javax.sql.DataSource" /> -->
+	<Resource name="jdbc/puDSEdilizia" auth="Container" type="javax.sql.DataSource"
+		maxActive="8" maxIdle="8" maxWait="-1"
+		username="${people.jdbc/puDSEdilizia.username}" password="${people.jdbc/puDSEdilizia.password}"
+		driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true"
+		testOnReturn="false" removeAbandoned="true" validationQuery="SELECT 1"
+		validationQueryTimeout="-1" url="${people.jdbc/puDSEdilizia.url}" />
+
+	<!-- <ResourceLink global="people/OJBLegacyDB" name="jdbc/OJBLegacyDB" type="javax.sql.DataSource" 
+		/> -->
+	<Resource name="jdbc/OJBLegacyDB" auth="Container" type="javax.sql.DataSource"
+		maxActive="8" maxIdle="8" maxWait="-1"
+		username="${people.jdbc/OJBLegacyDB.username}" password="${people.jdbc/OJBLegacyDB.password}"
+		driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true"
+		testOnReturn="false" removeAbandoned="true" validationQuery="SELECT 1"
+		validationQueryTimeout="-1" url="${people.jdbc/OJBLegacyDB.url}" />
+
+
+	<Resource name="audit/PjpManagerBeanFactory" type="it.people.PjpManagerBean" />
+	<ResourceParams name="audit/PjpManagerBeanFactory">
+		<parameter>
+			<name>factory</name>
+			<value>it.people.PjpManagerBeanFactory</value>
+		</parameter>
+	</ResourceParams>
+</Context>

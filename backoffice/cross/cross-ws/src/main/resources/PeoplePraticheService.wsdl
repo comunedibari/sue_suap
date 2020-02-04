@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice.backend.people.it/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservice.backend.people.it/" xmlns:intf="http://webservice.backend.people.it/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://webservice.backend.people.it/" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="process">
+    <complexType>
+     <sequence>
+      <element name="data" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="processResponse">
+    <complexType>
+     <sequence>
+      <element name="processReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+   <wsdl:message name="processResponse">
+      <wsdl:part element="impl:processResponse" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="processRequest">
+      <wsdl:part element="impl:process" name="parameters"/>
+   </wsdl:message>
+   <wsdl:portType name="PeoplePratiche">
+      <wsdl:operation name="process">
+         <wsdl:input message="impl:processRequest" name="processRequest"/>
+         <wsdl:output message="impl:processResponse" name="processResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="PeoplePraticheSoapBinding" type="impl:PeoplePratiche">
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="process">
+         <wsdlsoap:operation soapAction="process"/>
+         <wsdl:input name="processRequest">
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="processResponse">
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="PeoplePraticheService">
+      <wsdl:port binding="impl:PeoplePraticheSoapBinding" name="PeoplePratiche">
+         <wsdlsoap:address location="http://localhost:8080/PeoplePratiche/services/PeoplePratiche"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

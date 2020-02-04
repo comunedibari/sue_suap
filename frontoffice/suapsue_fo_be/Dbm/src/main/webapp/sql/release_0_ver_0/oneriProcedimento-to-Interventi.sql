@@ -1,0 +1,1 @@
+insert into oneri_interventi (cod_int,cod_oneri) select b.cod_int, a.cod_oneri from oneri_procedimenti a join interventi b on a.cod_proc=b.cod_proc;

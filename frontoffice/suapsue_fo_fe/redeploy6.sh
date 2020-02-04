@@ -1,0 +1,14 @@
+cd AllegatiService/
+mvn tomcat6:redeploy
+cd ../DynamicOdtServiceWego/
+mvn tomcat6:redeploy
+cd ../FEService
+mvn tomcat6:redeploy
+cd ../firmasemplice
+mvn tomcat6:redeploy
+cd ../people
+mvn tomcat6:redeploy
+cd ../PeopleService
+mvn tomcat6:redeploy
+cd ../SimpleDesk
+mvn tomcat6:redeploy

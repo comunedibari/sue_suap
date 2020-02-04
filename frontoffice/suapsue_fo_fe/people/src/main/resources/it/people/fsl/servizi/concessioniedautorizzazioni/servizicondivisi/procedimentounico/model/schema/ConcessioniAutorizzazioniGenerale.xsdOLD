@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://gruppoinit.it/b110/ConcessioniEAutorizzazioni/procedimentoUnico" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://gruppoinit.it/b110/ConcessioniEAutorizzazioni/procedimentoUnico" xmlns:OggettiCondivisi="http://egov.diviana.it/b109/OggettiCondivisi" xmlns:DocumentiUfficiali="http://egov.diviana.it/b109/DocumentiUfficiali">
+  <xs:import namespace="http://egov.diviana.it/b109/DocumentiUfficiali" schemaLocation="DocumentiUfficiali.xsd" />
+  <xs:import namespace="http://egov.diviana.it/b109/OggettiCondivisi" schemaLocation="OggettiCondivisi.xsd" />
+
+  <xs:element name="Richiesta" type="RichiestadiConcessioniEAutorizzazioniType" />
+
+  <!-- RICHIESTA C&A -->
+  <xs:complexType name="RichiestadiConcessioniEAutorizzazioniType">
+    <xs:annotation>
+      <xs:documentation>
+        La richiesta inviata dal servizio People di Concessioni e
+        Autorizzazioni ad un BackEnd generico.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="OggettiCondivisi:RichiestadiServizioOnLineallaPA">
+        <xs:sequence>
+          <xs:element name="Richiedente" type="OggettiCondivisi:CredenzialiUtenteCertificate" />
+          <!-- xs:element name="PraticaAnonima" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false" / -->
+          <!-- xs:element name="Delega" type="DelegaType" minOccurs="0" maxOccurs="1"/ -->
+          <!-- xs:element name="Domanda" type="DomandaType" / -->
+          <!-- xs:element name="SettoreAttivita" type="SettoreAttivitaType" / -->
+          <!-- xs:element name="DataOraPresentazione" type="xs:dateTime"/ -->
+          <xs:element name="Titolare" type="OggettiCondivisi:SceltaTitolare" minOccurs="0"/>
+          <xs:element name="EmailTitolare" type="xs:string" minOccurs="0" maxOccurs="1" nillable="true" />
+          <!-- xs:element name="EnteDestinatario" type="EnteType" / -->
+          <!-- xs:element name="Oneri" type="OneriType" minOccurs="0" / -->
+          <!--
+          Il codice che individua il Tipo Documento censito in Connects per la
+          comunicazione con il protocollo e l'eventuale WS di backoffice
+          -->
+          <!-- xs:element name="TipoDocumento" type="xs:string" /-->
+          <!-- xs:element name="DocArea" maxOccurs="1" minOccurs="0" / -->
+          <!-- xs:element name="AnagraficaRichiedente" type="RichiedenteTypeOld" minOccurs="0" maxOccurs="1" / -->
+          
+          <!-- NUOVI DATI -->
+          <!-- xs:element name="Soggetti" type="SoggettiDomandaType" maxOccurs="1"/-->
+          <!-- xs:element name="AssociazioneCategoria" type="AssociazioneDiCategoriaType" minOccurs="0" maxOccurs="1"/-->
+          <!-- xs:element name="DocumentiIstanza" type="NodoDocumentiIstanzaType" minOccurs="0" maxOccurs="1" /-->
+          
+          <!-- Nuova versione infomativaPrivacy  comuneSelezionato settoreScelto  -->
+           <xs:element name="InfomativaPrivacy" type="xs:boolean" />
+           <xs:element name="ComuneSelezionato" type="ComuneType" maxOccurs="1"/>
+           <xs:element name="AlberoSettori" type="AlberoSettoriType" minOccurs="1"/>
+           <xs:element name="SettoreScelto" type="SettoreType" maxOccurs="1"/>
+           <xs:element name="tmp" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+<!-- **************************************************************************************************************** -->
+  <!-- SETTORE -->
+  <xs:complexType name="SettoreType">
+    <xs:annotation>
+      <xs:documentation>
+				Descrive il settore scelto dall'utente
+			</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+       <xs:element name="Codice" type="xs:string" />
+       <xs:element name="Descrizione" nillable="true" type="xs:string" />
+       <xs:element name="Selezionato" type="xs:boolean" />
+       <xs:element name="Path" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+       <xs:element name="Parent" type="SettoreType" nillable="true"/>
+       <xs:element name="Children" type="SettoreType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AlberoSettoriType">
+    <xs:sequence>
+      <xs:element name="Settore" type="SettoreType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- Sportello -->
+  <xs:complexType name="SportelloType">
+    <xs:annotation>
+      <xs:documentation>
+			Descrive lo sportello
+	  </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="CodiceSportello" nillable="true" type="xs:string" />
+        <xs:element name="DescrizioneSportello" nillable="true" type="xs:string" />
+		<xs:element name="Telefono" nillable="true" type="xs:string" />
+		<xs:element name="Fax" nillable="true" type="xs:string" />
+		<xs:element name="Email" nillable="true" type="xs:string" />
+		<xs:element name="Pec" nillable="true" type="xs:string" />
+		<xs:element name="Indirizzo" nillable="true" type="xs:string" />
+		<xs:element name="Cap" nillable="true" type="xs:string" />
+	    <xs:element name="Citta" nillable="true" type="xs:string" />   
+		<xs:element name="Provincia" nillable="true" type="xs:string" />
+		<xs:element name="Rup" nillable="true" type="xs:string" />
+		<xs:element name="FlgAttivo" nillable="true" type="xs:string" />
+	    <xs:element name="FlgPu" nillable="true" type="xs:string" />     
+	    <xs:element name="FlgSu" nillable="true" type="xs:string" />       	                                   
+    </xs:sequence>
+  </xs:complexType>
+  
+    <!-- Comune -->
+  <xs:complexType name="ComuneType">
+    <xs:annotation>
+      <xs:documentation>
+			Descrive il comune
+	  </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+		<xs:element name="CodEnte" nillable="true" type="xs:string" />
+		<xs:element name="CcodClasseEnte" nillable="true" type="xs:string" />
+		<xs:element name="Ccb" nillable="true" type="xs:string" />
+		<xs:element name="Ccp" nillable="true" type="xs:string" />
+	    <xs:element name="Tp_prg" nillable="true" type="xs:string" />   
+		<xs:element name="Prg_href" nillable="true" type="xs:string" />
+		<xs:element name="Aoo" nillable="true" type="xs:string" />
+		<xs:element name="TipAggregazione" nillable="true" type="xs:string" />
+	    <xs:element name="Sportello" nillable="true" type="SportelloType" />     
+	    <xs:element name="CodBf" nillable="true" type="xs:string" />   
+	    <xs:element name="CodIstat" nillable="true" type="xs:string" />     	                                   
+    </xs:sequence>
+  </xs:complexType>
+  
+<!-- ****************************************************************************************************** -->
+
+
+</xs:schema>

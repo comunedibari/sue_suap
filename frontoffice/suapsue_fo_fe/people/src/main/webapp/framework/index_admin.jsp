@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<%@ taglib uri="/WEB-INF/people.tld" prefix="people" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
+<%@ taglib uri="/WEB-INF/sql.tld" prefix="sql" %>
+
+<%@ page import="it.people.db.fedb.*, java.util.Collection" %>
+<%@ page import="it.people.util.PeopleProperties" %>
+<%@ page import="it.people.util.ServiceParameters" %>
+
+<jsp:useBean id="City" scope="session" type="it.people.City" />
+<%
+	String communeId = City.getOid();
+	System.out.println(communeId);
+
+	// Ridirezione alla pagina dei servizi specifica 
+	// per il comune corrente se configurata.
+	String servicePageUrl = PeopleProperties.SERVIZIPEOPLE_ADDRESS.getValueString(communeId);
+	if (servicePageUrl != null && !"".equals(servicePageUrl)) {
+		response.sendRedirect(servicePageUrl);
+	}	
+%>
+
+<!-- index.jsp -->
+<%@page import="it.people.City"%>
+<html:html xhtml="true">
+<head>
+    <meta http-equiv="Expires" content="0" />
+    <title><bean:message key="label.windowTitle"/></title>
+    <people:frameworkCss />
+</head>
+<body>
+<sql:query var="rsTest" dataSource="jdbc/puDS">
+	select distinct cod_com from servizi A 
+	inner join enti_comuni B on B.cod_ente = A.cod_com
+	where B.cod_istat='<%=communeId %>'
+</sql:query>
+    <table cellspacing="0" width="100%">
+        <tr><td colspan="2">
+    		<people:include rootPath="/framework/view/generic" 
+    			nestedPath="/html" 
+    			elementName="header.jsp" />	        			
+        </td></tr>
+        <tr><td>
+	        <jsp:include page="/include/navbar.jsp" />
+        </td></tr>
+        <tr><td valign="top">
+				<%String area = "concessioniedautorizzazioni";%>
+				<%Collection services = (new ServiceFactory()).getEnabledServices(communeId, area);%>
+				<% if (services.isEmpty()) { %>
+					<h2 class="index"><bean:message key="label.nessunServizioInstallato"/></h2>
+				<% } else {%>
+					<h2 class="index"><bean:message key="label.serviziInstallati"/>&nbsp;<span style="font-style:italic"><%=area%></span></h2>
+					<ul class="indexListService">
+						<logic:iterate id="service" collection="<%=services%>">
+							<li>
+								<html:link action="initProcess" paramId="processName" paramName="service" paramProperty="processName">
+									<bean:write name="service" property="description"/>
+								</html:link>
+							</li>
+						</logic:iterate>
+						<!--  
+						<logic:equal parameter="selectedArea" value="concessioniedautorizzazioni">
+							<li><a href="/people/backdoor">
+				                Gestione bookmark <br />
+				            </a></li>
+			            </logic:equal> 
+						-->
+					</ul>
+				<% } %>
+		</td></tr>
+		<tr><td>
+		<c:forEach var="rsTest" items="${rsTest.rows}">
+			<div class="title1" title="Eventi della vita"><h1>Eventi della vita</h1></div>
+
+			<sql:query var="rsEventiVita" dataSource="jdbc/puDS">
+			    select * from eventi_vita order by des_eve_vita
+			</sql:query>
+
+			<table title="Eventi della vita" cellpadding="5" cellspacing="0" border="0" width="100%">
+				<c:forEach var="rowEventiVita" items="${rsEventiVita.rows}">
+					<tr>
+						<td>
+						<table title='<c:out value="${rowEventiVita.des_eve_vita}" />'><tr><td><b><c:out value="${rowEventiVita.des_eve_vita}" /></b></td></tr>
+						
+						<sql:query var="rsServizi" dataSource="jdbc/puDS">
+						    select B.nome_servizio,A.cod_servizio,A.cod_com,A.cod_eve_vita from servizi A 
+						    inner join servizi_testi B on B.cod_servizio = A.cod_servizio and B.cod_com = A.cod_com and B.cod_eve_vita = A.cod_eve_vita 
+						    inner join enti_comuni C on C.cod_ente = A.cod_com
+						    where A.cod_eve_vita = <c:out value="${rowEventiVita.cod_eve_vita}" /> and C.cod_istat='<%=communeId %>'
+						    order by B.nome_servizio
+						</sql:query>
+						<c:choose>
+						<c:when test="${rsServizi != null && rsServizi.rowCount > 0}">
+						<c:forEach var="rowServizi" items="${rsServizi.rows}">
+							<tr>
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href='<%=request.getContextPath()%>/initProcess.do?processName=it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico&amp;idBookmark=<c:out value="${rowServizi.cod_servizio}"/>&amp;codEnte=<c:out value="${rowServizi.cod_com}"/>&amp;codEveVita=<c:out value="${rowServizi.cod_eve_vita}"/>'>
+									<c:out value="${rowServizi.nome_servizio}" />
+								</a>
+								</td>
+							</tr>
+						</c:forEach>
+						</c:when>		
+						<c:otherwise>
+						<tr>
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nessun servizio per questo evento della vita</td>
+							</tr>
+						</c:otherwise>	
+						</c:choose>
+						</table>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:forEach>
+    </td>
+    </tr>
+        
+    </table>
+</body>
+</html:html>

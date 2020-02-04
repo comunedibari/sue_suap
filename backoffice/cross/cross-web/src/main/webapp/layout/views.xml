@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <!-- Default Main Template -->
+    <definition name=".main4" template="/layout/main.jsp">
+        <put-attribute name="title" cascade="true" value="Cross" type="string"/>
+        <put-attribute name="header" cascade="true" value="/layout/header.jsp"/>
+        <put-attribute name="messages" cascade="true" value="/layout/messages.jsp"/>
+        <put-attribute name="footer" cascade="true" value="/layout/footer.jsp"/>
+    </definition>
+    
+    <definition name="FORM_VIEW" extends=".main4">
+        <!--<put-attribute name="title" cascade="true" expression="${pageTitle}" type="string"/>-->
+        <put-attribute name="title"   cascade="true"  expression="${pageTitle}"/>
+        <put-attribute name="body" cascade="true" value="/layout/form2.jsp"/>
+    </definition>
+    
+</tiles-definitions>

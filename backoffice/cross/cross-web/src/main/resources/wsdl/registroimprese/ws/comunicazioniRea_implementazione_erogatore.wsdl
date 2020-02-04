@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="ProtocolloSUAPWS"
+    targetNamespace="http://www.impresainungiorno.gov.it/schema/suap/ri"
+    xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns1="http://www.impresainungiorno.gov.it/schema/suap/ri"
+    xmlns:tns="http://ejb.protocollo.infocamere.it/"
+    xmlns:ri="http://www.impresainungiorno.gov.it/schema/suap/ri/spc"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <types>
+        <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:import namespace="http://ejb.protocollo.infocamere.it/"
+                schemaLocation="../allegati/comunicazioni_rea.xsd"/>
+        </xs:schema>
+        <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:import namespace="http://www.impresainungiorno.gov.it/schema/suap/ri/spc"
+                schemaLocation="../allegati/interazioni-ri-1.0.1.xsd"/>
+        </xs:schema>
+    </types>
+
+    <message name="ProtocolloSUAPException">
+        <part element="tns:ProtocolloSUAPException" name="ProtocolloSUAPException"/>
+    </message>
+    <message name="ProtocolloSUAP_comunicazioneREAResponse">
+        <part element="tns:comunicazioneREAResponse" name="comunicazioneREAResponse"/>
+    </message>
+    <message name="ProtocolloSUAP_comunicazioneREA">
+        <part element="tns:comunicazioneREA" name="comunicazioneREA"/>
+    </message>
+    <message name="PraticaSUAPException">
+        <part element="tns:PraticaSUAPException" name="PraticaSUAPException"/>
+    </message>
+
+    <message name="IscrizioneImpresaRiSpcRequest">
+        <part element="ri:IscrizioneImpresaRiSpcRequest" name="IscrizioneImpresaRiSpcRequest"/>
+    </message>
+
+    <message name="IscrizioneImpresaRiSpcResponse">
+        <part element="ri:IscrizioneImpresaRiSpcResponse" name="IscrizioneImpresaRiSpcResponse"/>
+    </message>
+
+    <portType name="ProtocolloSUAP">
+        <operation name="comunicazioneREA" parameterOrder="comunicazioneREA">
+            <input message="tns1:ProtocolloSUAP_comunicazioneREA"/>
+            <output message="tns1:ProtocolloSUAP_comunicazioneREAResponse"/>
+            <fault message="tns1:PraticaSUAPException" name="PraticaSUAPException"/>
+            <fault message="tns1:ProtocolloSUAPException" name="ProtocolloSUAPException"/>
+        </operation>
+    </portType>
+
+    <portType name="RichiestaIscrizioneImpresaRiSPC">
+        <operation name="IscrizioneImpresaRiSpc">
+            <input message="tns1:IscrizioneImpresaRiSpcRequest" name="IscrizioneImpresaRiSpcRequest"/>
+            <output message="tns1:IscrizioneImpresaRiSpcResponse"
+                name="IscrizioneImpresaRiSpcResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="richiesta-iscrizione-impresa-binding"
+        type="tns1:RichiestaIscrizioneImpresaRiSPC">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="IscrizioneImpresaRiSpc">
+            <soap:operation soapAction="IscrizioneImpresaRiSpc"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    
+    <binding name="richiesta-dettaglio-impresa-binding"
+        type="tns1:ProtocolloSUAP">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="comunicazioneREA">
+            <soap:operation soapAction="IscrizioneImpresaRiSpc"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PraticaSUAPException"></fault>
+            <fault name="ProtocolloSUAPException"></fault>
+        </operation>
+    </binding>
+
+    <service name="ServizioIntegrazioneSuapRi">
+        <documentation>Servizio di integrazione tra Suap e Ri</documentation>
+        <port name="RichiestaIscrizioneImpresaRiSPC" binding="tns1:richiesta-iscrizione-impresa-binding">
+            <soap:address location="http://217.76.210.138:8080/pddRegioneAutonomaValledAosta/PD/SPCSoggettoVdaTest/SPCPAGenericaPortaleImprese/SPCinterazioni-ri/richiesta-iscrizione-impresa-RI"/>
+        </port>
+        <port name="ProtocolloSUAP" binding="tns1:richiesta-dettaglio-impresa-binding">
+            <soap:address location="http://217.76.210.138:8080/pddRegioneAutonomaValledAosta/PD/SPCSoggettoVdaTest/SPCPAGenericaPortaleImprese/SPCinterazioni-ri/richiesta-dettaglio-impresa-RI"/>
+        </port>
+    </service>
+
+</definitions>

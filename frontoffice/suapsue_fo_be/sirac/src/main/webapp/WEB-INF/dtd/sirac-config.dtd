@@ -1,0 +1,18 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT sirac (comune,ca,autocertificazione+,delega)>
+<!ELEMENT comune (item)+>
+<!ELEMENT ca (item)>
+
+<!ELEMENT autocertificazione (#PCDATA)>
+<!ATTLIST autocertificazione type CDATA #REQUIRED>
+
+<!ELEMENT delega (#PCDATA)>
+<!ATTLIST delega type CDATA #REQUIRED>
+
+<!ELEMENT item (id,(auto_attiva_accreditamenti|(url,services_path)))>
+<!ELEMENT id (#PCDATA)>
+
+<!ELEMENT auto_attiva_accreditamenti (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
+<!ELEMENT services_path (#PCDATA)>

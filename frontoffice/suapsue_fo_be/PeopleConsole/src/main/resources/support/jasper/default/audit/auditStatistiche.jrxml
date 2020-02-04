@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="auditStatistiche" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="template.type" value="columnar"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[(SELECT communeid, NULL AS nomeEnte, 0 AS ordine,"Numero di accessi ai servizi per singolo servizio" AS nomeStatistica, package AS process_name, nome AS nomeServizio, NULL AS action_name, audit_timestamp, IFNULL(accessi,0) AS risultati FROM service AS s LEFT JOIN (SELECT DISTINCT au.commune_key, ac.process_name, ac.audit_timestamp, COUNT(*) AS accessi FROM audit_conversations AS ac JOIN audit_users AS au ON ac.audit_users_ref = au.id WHERE action_name LIKE ('caricamento servizio%') GROUP BY commune_key, ac.process_name, ac.action_name) AS stat ON s.package = stat.process_name AND s.communeid = stat.commune_key ORDER BY communeid, nome)
+UNION
+(SELECT communeid, NULL AS nomeEnte, 1 AS ordine, "Top ten servizi" AS nomeStatistica, package AS process_name, nome AS nomeServizio, NULL AS action_name, NULL AS audit_timestamp, IFNULL(accessi,0) AS risultati FROM service AS s LEFT JOIN (SELECT DISTINCT au.commune_key, ac.process_name, COUNT(*) AS accessi FROM audit_conversations AS ac JOIN audit_users AS au ON ac.audit_users_ref = au.id WHERE action_name LIKE ('caricamento servizio%') GROUP BY commune_key, ac.process_name, ac.action_name) AS stat ON s.package = stat.process_name AND s.communeid = stat.commune_key ORDER BY risultati DESC, communeid, nome LIMIT 0,10 )
+UNION
+(SELECT communeid, NULL AS nomeEnte, 2 AS ordine, "Percentuale di abbandono servizi per singolo servizio"  AS nomeStatistica, package AS process_name, nome AS nomeServizio, NULL AS action_name, audit_timestamp, IFNULL(100-(IFNULL((inviati) ,0)*100)/accessi,0) AS risultati FROM service AS s LEFT JOIN (SELECT DISTINCT au.commune_key, ac.process_name, ac.audit_timestamp, COUNT(*) AS accessi, (SELECT COUNT(*) FROM audit_conversations ac2 JOIN audit_users AS au2 ON ac2.audit_users_ref = au2.id WHERE ac2.process_name = ac.process_name AND au.commune_key = au2.commune_key AND action_name LIKE 'invio pratica' ) AS inviati FROM audit_conversations AS ac JOIN audit_users AS au ON ac.audit_users_ref = au.id WHERE action_name LIKE ('caricamento servizio%') GROUP BY commune_key, ac.process_name, ac.action_name) AS stat ON s.package = stat.process_name AND s.communeid = stat.commune_key WHERE s.id IN ( SELECT serviceid FROM reference WHERE NAME = 'SUBMIT_PROCESS' ) ORDER BY risultati DESC, communeid, nome )
+
+ORDER BY communeid, ordine, risultati DESC]]>
+	</queryString>
+	<field name="communeid" class="java.lang.String"/>
+	<field name="nomeStatistica" class="java.lang.String"/>
+	<field name="nomeServizio" class="java.lang.String"/>
+	<field name="risultati" class="java.lang.String"/>
+	<field name="nomeNodo" class="java.lang.String"/>
+	<group name="communeid">
+		<groupExpression><![CDATA[$F{communeid}]]></groupExpression>
+		<groupHeader>
+			<band height="31">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" forecolor="#B89F7D" backcolor="#9DB1B8"/>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="2" y="1" width="479" height="23" forecolor="#FFFFFF"/>
+						<textElement>
+							<font fontName="Times New Roman" size="16" isBold="false"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeNodo}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<group name="nomeStatistica">
+		<groupExpression><![CDATA[$F{nomeStatistica}]]></groupExpression>
+		<groupHeader>
+			<band height="48">
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="4" width="551" height="20" forecolor="#000000"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeStatistica} + " "]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" mode="Transparent" x="36" y="28" width="132" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[servizio ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="414" y="28" width="53" height="20" forecolor="#000000">
+						<printWhenExpression><![CDATA[$F{nomeStatistica}=="Numero di accessi ai servizi per singolo servizio"
+|
+$F{nomeStatistica}=="Top ten servizi"]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Accessi ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="356" y="28" width="111" height="20" forecolor="#000000">
+						<printWhenExpression><![CDATA[$F{nomeStatistica}=="Percentuale di abbandono servizi per singolo servizio"]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Abbandoni (%)  ]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="4" y="0" width="435" height="46"/>
+				<textElement>
+					<font size="32" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Statistiche  ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="36" y="17" width="431" height="1"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="36" y="2" width="378" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nomeServizio} + " "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="414" y="2" width="53" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{risultati}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8"/>
+				<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+					<reportElement style="Column header" mode="Transparent" x="502" y="0" width="48" height="13" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement style="Column header" mode="Transparent" x="405" y="0" width="95" height="13" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di" +" "]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="false">
+					<reportElement style="Column header" mode="Transparent" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

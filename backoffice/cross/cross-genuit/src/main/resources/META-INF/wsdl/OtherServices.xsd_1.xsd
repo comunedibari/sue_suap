@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.7-b01  svn-revision#${svn.Last.Changed.Rev}. --><xs:schema xmlns:tns="http://swinva.invallee.it/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://swinva.invallee.it/">
+
+<xs:complexType name="DettaglioProtocollo">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="uo" type="xs:string" minOccurs="0"/>
+<xs:element name="direzione" type="xs:string" minOccurs="0"/>
+<xs:element name="codregistro" type="xs:string" minOccurs="0"/>
+<xs:element name="annoProt" type="xs:short" minOccurs="0"/>
+<xs:element name="numeroProt" type="xs:int" minOccurs="0"/>
+<xs:element name="dataProt" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="titolario" type="xs:string" minOccurs="0"/>
+<xs:element name="classifica" type="xs:string" minOccurs="0"/>
+<xs:element name="oggetto" type="xs:string" minOccurs="0"/>
+<xs:element name="dataDoc" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="riservato" type="xs:string" minOccurs="0"/>
+<xs:element name="emittente" type="xs:string" minOccurs="0"/>
+<xs:element name="fileOrig" type="xs:int" minOccurs="0"/>
+<xs:element name="carico" type="xs:string" minOccurs="0"/>
+<xs:element name="source" type="xs:string" minOccurs="0"/>
+<xs:element name="aoo" type="xs:string" minOccurs="0"/>
+<xs:element name="numFascicolo" type="xs:string" minOccurs="0"/>
+<xs:element name="annoFascicolo" type="xs:short" minOccurs="0"/>
+<xs:element name="tipoDoc" type="xs:string" minOccurs="0"/>
+<xs:element name="pubblicato" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DettaglioProtocolloArray" final="#all">
+<xs:sequence>
+<xs:element name="item" type="tns:DettaglioProtocollo" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<info primitiveTypes="element">
+	<element name="Data">
+		<element name="anno" property="marshallingYear"/>
+		<element name="mese" property="marshallingMonth"/>
+		<element name="giorno" property="marshallingDay"/>
+		<addDefaults/>
+	</element>
+</info>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<servizio>
+	<nome>Gestione Accreditamenti</nome>
+	<attivita>admin</attivita>
+	<sottoattivita>sirac</sottoattivita>
+	<process>it.people.process.GenericProcess</process>
+	<package>it.people.fsl.servizi.admin.sirac.accreditamento</package>
+	<!--<parameter name="__IAccreditamentoServiceURL" value="http://localhost/sirac/services/IAccreditamentoWS"/>-->
+	<references name="SUBMIT_PROCESS" value="BE Genova" shortflag="0" address="UNDEFINED"/>
+	<!--<connected-service label="Home Page Servizi People" uri="http://localhost/people"/>-->
+	<context-element name="Servizi di supporto"/>
+	<context-element name="Servizi per Intermediari"/>
+	<parameter name="smartCardProfilesXmlFile" value="/WEB-INF/smartcard_profiles.xml"/>		
+	<parameter name="abilitaValidazioneP7M" value="false"/>		
+    <parameter name="accettaSoloSmartCardNotePerValidazioneP7M" value="true"/>		
+	<parameter name="elencoDelegantiBE_URL" value="${people.elencoDelegantiBE_URL}"/>		
+	<parameter name="abilitaRicercaDeleganti" value="false"/>		
+    <parameter name="maxDelegantiTrovati" value="10"/>
+    <parameter name="abilitaModificaDeleganti" value="true"/>
+    <parameter name="creazionePreliminareDelega_URL" value="${people.creazionePreliminareDelega_URL}"/>
+    <parameter name="attivazioneDelega_URL" value="${people.attivazioneDelega_URL}"/>
+    <parameter name="disabilitaControlloDelegheInAccesso" value="true"/>
+</servizio>

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.6.0_27-b07 (Sun Microsystems Inc.)
+Built-By: RERCCDGERF
+
+Name: distrib
+People-Reference-Version: 2.5.4 (build 0347)
+People-Reference-Vendor: Regione Emilia-Romagna - Centro di competenza
+  per il dispiegamento delle soluzioni di e-government
+Specification-Title: ACR
+Specification-Version: 3.0.2
+Specification-Vendor: Regione Emilia-Romagna - Centro di competenza pe
+ r il dispiegamento delle soluzioni di e-government
+Implementation-Title: ACR - 3.0.2 (build 0043)
+Implementation-Version: 3.0.2_0043 2013-10-01 15:06:40
+Implementation-Vendor: Regione Emilia-Romagna - Centro di competenza p
+ er il dispiegamento delle soluzioni di e-government

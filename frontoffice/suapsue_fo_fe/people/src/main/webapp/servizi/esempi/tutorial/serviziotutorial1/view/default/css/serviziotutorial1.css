@@ -1,0 +1,12 @@
+li.errItemFont {
+	color: red;
+	font-weight: bold;
+}
+
+span.errHeaderFont {
+	font-weight: bold;
+}
+
+th {
+	text-align: left;
+}

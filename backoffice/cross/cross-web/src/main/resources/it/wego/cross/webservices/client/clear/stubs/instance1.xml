@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<procedimento_simo xmlns="http://www.simo.org"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.simo.org file:/C:/WegoSvn/WegoRepository/cross/trunk/src/main/resources/it/wego/cross/webservices/client/clear/stubs/simo.xsd">
+    <codice>codice0</codice>
+    <descrizione>descrizione0</descrizione>
+    <eventi>
+        <evento>
+            <codice>codice1</codice>
+            <descrizione>descrizione1</descrizione>
+            <flg_chiusura>S</flg_chiusura>
+            <stato_post_evento>A</stato_post_evento>
+            <flg_riavvio>N</flg_riavvio>
+        </evento>
+        <evento>
+            <codice>codice2</codice>
+            <descrizione>descrizione2</descrizione>
+            <flg_chiusura>S</flg_chiusura>
+            <stato_post_evento>A</stato_post_evento>
+            <flg_riavvio>N</flg_riavvio>
+        </evento>
+    </eventi>
+</procedimento_simo>

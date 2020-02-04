@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.wego.it/cross"
+    targetNamespace="http://www.wego.it/cross" elementFormDefault="qualified">
+
+    <xs:element name="pratica" type="pratica"/>
+
+    <xs:complexType name="anagrafica">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="counter" type="xs:integer"/>
+            <xs:element minOccurs="0" name="confermata" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_anagrafica" type="xs:integer"/>
+            <xs:element minOccurs="1" name="tipo_anagrafica" type="xs:string"/>
+            <xs:element minOccurs="0" name="variante_anagrafica" type="xs:string"/>
+            <xs:element minOccurs="0" name="cognome" type="xs:string"/>
+            <xs:element minOccurs="0" name="denominazione" type="xs:string"/>
+            <xs:element minOccurs="0" name="nome" type="xs:string"/>
+            <xs:element minOccurs="0" name="codice_fiscale" type="xs:string"/>
+            <xs:element minOccurs="0" name="partita_iva" type="xs:string"/>
+            <xs:element minOccurs="0" name="flg_individuale" type="xs:string"/>
+            <xs:element minOccurs="0" name="data_nascita" type="xs:date"/>
+            <xs:element minOccurs="0" name="id_cittadinanza" type="xs:integer"/>
+            <xs:element minOccurs="0" name="cod_cittadinanza" type="xs:string"/>
+            <xs:element minOccurs="0" name="des_cittadinanza" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_nazionalita" type="xs:integer"/>
+            <xs:element minOccurs="0" name="cod_nazionalita" type="xs:string"/>
+            <xs:element minOccurs="0" name="des_nazionalita" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_comune_nascita" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_comune_nascita" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_provincia_nascita" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_provincia_nascita" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_stato_nascita" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_stato_nascita" type="xs:string"/>
+            <xs:element minOccurs="0" name="localita_nascita" type="xs:string"/>
+            <xs:element minOccurs="0" name="sesso" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_tipo_collegio" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_tipo_collegio" type="xs:string"/>
+            <xs:element minOccurs="0" name="numero_iscrizione" type="xs:string"/>
+            <xs:element minOccurs="0" name="data_iscrizione" type="xs:date"/>
+            <xs:element minOccurs="0" name="id_provincia_iscrizione" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_provincia_iscrizione" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_provincia_cciaa" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_provincia_cciaa" type="xs:string"/>
+            <xs:element minOccurs="0" name="flg_attesa_iscrizione_ri" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="flg_obbligo_iscrizione_ri" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="data_iscrizione_ri" type="xs:date"/>
+            <xs:element minOccurs="0" name="n_iscrizione_ri" type="xs:string"/>
+            <xs:element minOccurs="0" name="flg_attesa_iscrizione_rea" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="data_iscrizione_rea" type="xs:date"/>
+            <xs:element minOccurs="0" name="n_iscrizione_rea" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_forma_giuridica" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_forma_giuridica" type="xs:string"/>
+            <xs:element minOccurs="0" name="recapiti" type="recapiti"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="recapiti">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="recapito" type="recapito"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="recapito">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="counter" type="xs:integer"/>
+            <xs:element minOccurs="0" name="id_recapito" type="xs:integer"/>
+            <xs:element minOccurs="0" name="presso" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_comune" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_comune" type="xs:string"/>
+            <xs:element minOccurs="0" name="localita" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_provincia" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_provincia" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_stato" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_stato" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_dug" type="xs:integer"/>
+            <xs:element minOccurs="0" name="indirizzo" type="xs:string"/>
+            <xs:element minOccurs="0" name="codice_via" type="xs:string"/>
+            <xs:element minOccurs="0" name="n_civico" type="xs:string"/>
+            <xs:element minOccurs="0" name="codice_civico" type="xs:string"/>
+            <xs:element minOccurs="0" name="interno_numero" type="xs:string"/>
+            <xs:element minOccurs="0" name="interno_lettera" type="xs:string"/>
+            <xs:element minOccurs="0" name="interno_scala" type="xs:string"/>
+            <xs:element minOccurs="0" name="lettera" type="xs:string"/>
+            <xs:element minOccurs="0" name="colore" type="xs:string"/>
+            <xs:element minOccurs="0" name="cap" type="xs:string"/>
+            <xs:element minOccurs="0" name="casella_postale" type="xs:string"/>
+            <xs:element minOccurs="0" name="altre_info_indirizzo" type="xs:string"/>
+            <xs:element minOccurs="0" name="telefono" type="xs:string"/>
+            <xs:element minOccurs="0" name="cellulare" type="xs:string"/>
+            <xs:element minOccurs="0" name="fax" type="xs:string"/>
+            <xs:element minOccurs="0" name="email" type="xs:string"/>
+            <xs:element minOccurs="0" name="pec" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_tipo_indirizzo" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_tipo_indirizzo" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="dati_catastali">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="immobile" type="immobile"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="immobile">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="counter" type="xs:integer"/>
+            <xs:element minOccurs="0" name="id_immobile" type="xs:integer"/>
+            <xs:element minOccurs="0" name="id_tipo_sistema_catastale" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_tipo_sistema_catastale" type="xs:string"/>
+            <xs:element minOccurs="0" name="sezione" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_tipo_unita" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_tipo_unita" type="xs:string"/>
+            <xs:element minOccurs="0" name="foglio" type="xs:string"/>
+            <xs:element minOccurs="0" name="mappale" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_tipo_particella" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_tipo_particella" type="xs:string"/>
+            <xs:element minOccurs="0" name="estensione_particella" type="xs:string"/>
+            <xs:element minOccurs="0" name="subalterno" type="xs:string"/>
+            <xs:element minOccurs="0" name="latitudine" type="xs:string"/>
+            <xs:element minOccurs="0" name="longitudine" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_comune" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_comune" type="xs:string"/>
+            <xs:element minOccurs="0" name="localita" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_provincia" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_provincia" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_dug" type="xs:integer"/>
+            <xs:element minOccurs="0" name="indirizzo" type="xs:string"/>
+            <xs:element minOccurs="0" name="civico" type="xs:string"/>
+            <xs:element minOccurs="0" name="altre_informazioni_indirizzo" type="xs:string"/>
+            <xs:element minOccurs="0" name="cap" type="xs:string"/>
+            <xs:element minOccurs="0" name="codice_via" type="xs:string"/>
+            <xs:element minOccurs="0" name="codice_civico" type="xs:string"/>
+            <xs:element minOccurs="0" name="interno_numero" type="xs:string"/>
+            <xs:element minOccurs="0" name="interno_lettera" type="xs:string"/>
+            <xs:element minOccurs="0" name="interno_scala" type="xs:string"/>
+            <xs:element minOccurs="0" name="lettera" type="xs:string"/>
+            <xs:element minOccurs="0" name="colore" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="anagrafiche">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="anagrafica" type="anagrafica"/>
+            <xs:element minOccurs="0" name="notifica" type="recapito"/>
+            <xs:element minOccurs="0" name="id_tipo_ruolo" type="xs:integer"/>
+            <xs:element minOccurs="0" name="cod_tipo_ruolo" type="xs:string"/>
+            <xs:element minOccurs="0" name="des_tipo_ruolo" type="xs:string"/>
+            <xs:element minOccurs="0" name="data_inizio_validita" type="xs:date"/>
+            <xs:element minOccurs="0" name="id_tipo_qualifica" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_tipo_qualifica" type="xs:string"/>
+            <xs:element minOccurs="0" name="descrizione_titolarita" type="xs:string"/>
+            <xs:element minOccurs="0" name="assenso_uso_pec" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="pec" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="pratica">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id_pratica" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation>Identificativo pratica. Viene utilizzato nel ws di creazione di un evento</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" maxOccurs="1" name="id_procedimento_suap" type="xs:integer"/>
+            <xs:element minOccurs="0" name="identificativo_pratica" type="xs:string"/>
+            <xs:element minOccurs="0" name="oggetto" type="xs:string"/>
+            <xs:element minOccurs="0" name="responsabile_procedimento" type="xs:string"/>
+            <xs:element minOccurs="0" name="istruttore" type="xs:string"/>
+            <xs:element minOccurs="0" name="termini_evasione_pratica" type="xs:integer"/>
+            <xs:element minOccurs="0" name="notifica" type="recapito"/>
+            <xs:element minOccurs="0" name="cod_catastale_comune" type="xs:string"/>
+            <xs:element minOccurs="0" name="des_comune" type="xs:string"/>
+            <!-- Identifica lo sportello a cui viene presentata la pratica e deve essere censito nella tabella enti di cross -->
+            <xs:element minOccurs="0" name="id_ente" type="xs:integer"/>
+            <xs:element minOccurs="0" name="cod_ente" type="xs:string"/>
+            <xs:element minOccurs="0" name="des_ente" type="xs:string"/>
+            <xs:element minOccurs="0" name="des_comune_ente" type="xs:string"/>
+            <xs:element minOccurs="0" name="indirizzo_ente" type="xs:string"/>
+            <xs:element minOccurs="0" name="cap_ente" type="xs:string"/>
+            <xs:element minOccurs="0" name="fax_ente" type="xs:string"/>
+            <xs:element minOccurs="0" name="email_ente" type="xs:string"/>
+            <xs:element minOccurs="0" name="pec_ente" type="xs:string"/>
+            <xs:element minOccurs="0" name="telefono_ente" type="xs:string"/>
+            <!-- Indica il riferimento alle pratiche protocollate manualmente e popolate tramite quartz-->
+            <xs:element minOccurs="0" name="id_protocollo_manuale" type="xs:integer"/>
+            <xs:element minOccurs="0" name="registro" type="xs:string"/>
+            <xs:element minOccurs="0" name="protocollo" type="xs:string"/>
+            <xs:element minOccurs="0" name="fascicolo" type="xs:string"/>
+            <xs:element minOccurs="0" name="anno" type="xs:string"/>
+            <xs:element minOccurs="0" name="data_protocollo" type="xs:date"/>
+            <xs:element minOccurs="0" name="data_ricezione" type="xs:date"/>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="anagrafiche" type="anagrafiche"/>
+            <xs:element minOccurs="0" name="dati_catastali" type="dati_catastali"/>
+            <xs:element minOccurs="1" name="procedimenti" type="procedimenti"/>
+            <xs:element minOccurs="0" name="scadenze" type="scadenze"/>
+            <xs:element minOccurs="0" name="allegati" type="allegati"/>
+            <xs:element minOccurs="0" name="eventi" type="eventi"/>
+            <xs:element minOccurs="0" maxOccurs="1" name="evento_corrente" type="evento"/>
+            <xs:element minOccurs="0" name="dati_da_front" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="eventi">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="evento" type="evento"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="evento">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id_pratica_evento" type="xs:integer"/>
+            <xs:element minOccurs="0" name="id_evento" type="xs:integer"/>
+            <xs:element minOccurs="0" name="descrizione_evento" type="xs:string"/>
+            <xs:element minOccurs="0" name="data_evento" type="xs:date"/>
+            <xs:element minOccurs="0" name="id_utente" type="xs:integer"/>
+            <xs:element minOccurs="0" name="nome" type="xs:string"/>
+            <xs:element minOccurs="0" name="cognome" type="xs:string"/>
+            <xs:element minOccurs="0" name="note" type="xs:string"/>
+            <xs:element minOccurs="0" name="numero_protocollo" type="xs:string"/>
+            <xs:element minOccurs="0" name="verso">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="I"/>
+                        <xs:enumeration value="O"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="visibilita_cross">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="S"/>
+                        <xs:enumeration value="N"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="visibilita_utente">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="S"/>
+                        <xs:enumeration value="N"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="allegati" type="allegati"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="procedimenti">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="procedimento" type="procedimento"
+            />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="procedimento">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id_procedimento" type="xs:int"/>
+            <xs:element minOccurs="0" name="cod_procedimento" type="xs:string"/>
+            <xs:element minOccurs="0" name="termini" type="xs:integer"/>
+            <xs:element minOccurs="0" name="des_procedimento" type="xs:string"/>
+            <xs:element minOccurs="0" name="cod_lang" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_ente_destinatario" type="xs:integer"/>
+            <!-- In A&C inserire il valore codiceDestinatario del procedimento. Deve essere censito nella tabella enti di cross -->
+            <xs:element minOccurs="0" name="cod_ente_destinatario" type="xs:string"/>
+            <xs:element minOccurs="0" name="des_ente_destinatario" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="allegati">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="allegato" type="allegato"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="allegato">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="riepilogoPratica">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="S"/>
+                        <xs:enumeration value="N"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="id_allegato" type="xs:integer"/>
+            <xs:element minOccurs="0" name="descrizione" type="xs:string"/>
+            <xs:element minOccurs="0" name="nome_file" type="xs:string"/>
+            <xs:element minOccurs="0" name="tipo_file" type="xs:string"/>
+            <xs:element minOccurs="0" name="path_file" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_file_esterno" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!--^^CS AGGIUNTA-->
+    <xs:complexType name="scadenze">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="scadenza" type="scadenza"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="scadenza">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id_scadenza" type="xs:integer"/>
+            <xs:element minOccurs="0" name="id_pratica" type="xs:integer"/>
+            <xs:element minOccurs="0" name="data_scadenza" type="xs:date"/>
+            <xs:element minOccurs="0" name="id_ana_scadenza" type="xs:string"/>
+            <xs:element minOccurs="0" name="des_ana_scadenza" type="xs:string"/>
+            <xs:element minOccurs="0" name="flg_ana_scadenza" type="xs:string"/>
+            <xs:element minOccurs="0" name="id_stato_scadenza" type="xs:string"/>
+            <xs:element minOccurs="0" name="des_stato_scadenza" type="xs:string"/>
+            <xs:element minOccurs="0" name="grp_stato_scadenza" type="xs:string"/>
+            <xs:element minOccurs="0" name="data_fine_scadenza" type="xs:date"/>
+            <xs:element minOccurs="0" name="data_inizio_scadenza" type="xs:date"/>
+            <xs:element minOccurs="0" name="id_pratica_evento" type="xs:integer"/>
+            <xs:element minOccurs="0" name="giorni_teorici_scadenza" type="xs:integer"/>
+            <xs:element minOccurs="0" name="descrizione" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

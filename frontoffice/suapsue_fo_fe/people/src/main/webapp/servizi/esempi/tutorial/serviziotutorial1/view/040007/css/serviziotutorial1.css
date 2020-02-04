@@ -1,0 +1,8 @@
+li.errItemFont {
+	color: green;
+	font-weight: bold;
+}
+
+span.errHeaderFont {
+	font-weight: bold;
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="procedimenti_lista_index" extends=".main">
+        <put-attribute name="title"         value="Elenco procedimenti" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/procedimenti/lista.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Elenco procedimenti censiti" type="string" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/procedimenti/ricerca.jsp"/>
+        <put-attribute name="operazioneRiuscita"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+    </definition>
+    <definition name="procedimenti_lista_modifica" extends=".main">
+        <put-attribute name="title"         value="Gestione procedimento" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/procedimenti/modifica.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Gestione procedimento" type="string" />
+    </definition>
+    
+</tiles-definitions>

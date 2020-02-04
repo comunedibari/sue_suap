@@ -1,0 +1,7 @@
+ <Context path="/cross">
+    <Resource name="jdbc/CrossDS" auth="Container"
+               type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/crossdb"
+               username="crossdb" password="bdssorc" maxActive="20" maxIdle="10"
+               maxWait="-1"/>
+</Context>

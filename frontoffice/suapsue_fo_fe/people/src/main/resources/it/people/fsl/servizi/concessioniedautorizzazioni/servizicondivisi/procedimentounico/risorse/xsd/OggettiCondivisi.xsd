@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	targetNamespace="http://egov.diviana.it/b109/OggettiCondivisi"
+	xmlns="http://egov.diviana.it/b109/OggettiCondivisi">
+	<xs:annotation>
+		<xs:documentation>
+			<Copyright xmlns="">
+				Copyright Diviana 2002-2005 - Produced By Diviana - Rome
+				- Italy per conto di Progetto People - Tutti i diritti
+				riservati
+			</Copyright>
+			<Modello xmlns=""
+				Versione="People-v1.7-Release - 21/04/2005" Build="109"
+				Data="27/12/2005" />
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DocumentoXML" abstract="true" />
+	<xs:complexType name="Documento" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="DocumentoXML" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Risposta" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					E' una risposta sincrona restituita da un sistema
+					applicativo di Back End verso il VSL o dal VSL verso
+					un'applicazione di Front End, in replica ad una
+					Richiesta.
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Documento">
+				<xs:sequence>
+					<xs:element name="IdentificatorediRichiesta"
+						type="IdentificatorediRichiesta" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IdentificatorediRichiesta">
+		<xs:sequence>
+			<xs:element name="IdentificatoreUnivoco"
+				type="IdentificatoreUnivoco" />
+			<xs:element name="IdentificatorediProtocollo"
+				type="IdentificatorediProtocollo" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IdentificatoreUnivoco">
+		<xs:sequence>
+			<xs:element name="CodiceProgetto" type="CodiceProgetto" />
+			<xs:element name="CodiceSistema" type="CodiceSistema" />
+			<xs:element name="DatadiRegistrazione"
+				type="FrazionediSecondo" />
+			<xs:element name="CodiceIdentificativoOperazione"
+				type="CodiceIdentificativoOperazione" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Testo">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\S[\S|\s]*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceProgetto">
+		<xs:restriction base="Testo" />
+	</xs:simpleType>
+	<xs:complexType name="CodiceSistema">
+		<xs:sequence>
+			<xs:element name="NomeServer" type="NomeServer" />
+			<xs:element name="CodiceAmministrazione"
+				type="CodiceAmministrazione" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NomeServer">
+		<xs:restriction base="Testo" />
+	</xs:simpleType>
+	<xs:simpleType name="CodiceAmministrazione">
+		<xs:restriction base="Testo">
+			<xs:pattern value="[0-9A-Za-z\-]{1,8}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FrazionediSecondo">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					Alcuni esempi di "Frazione di Secondo":
+					2005-12-23T11:24:37.234+01:00
+					2005-12-23T11:24:37.234Z
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime">
+			<xs:pattern
+				value="\d{4}-\d{2}\-\d{2}[T]\d{2}[:]\d{2}[:]\d{2}[.]\d+(([+|\-]\d{2}:\d{2})|Z)" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceIdentificativoOperazione">
+		<xs:restriction base="Testo" />
+	</xs:simpleType>
+	<xs:complexType name="IdentificatorediProtocollo">
+		<xs:sequence>
+			<xs:element name="CodiceAOO" type="CodiceAmministrazione" />
+			<xs:element name="NumerodiRegistrazione"
+				type="InteroNonNegativo" />
+			<xs:element name="DatadiRegistrazione" type="Data" />
+			<xs:element name="CodiceAmministrazione"
+				type="CodiceAmministrazione" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="InteroNonNegativo">
+		<xs:restriction base="xs:nonNegativeInteger" />
+	</xs:simpleType>
+	<xs:simpleType name="Data">
+		<xs:restriction base="xs:date" />
+	</xs:simpleType>
+	<xs:simpleType name="Formato">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					E' l'estensione che descrive il formato fisico del
+					documento. Es: PDF, XML, DOC, JPEG
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="Testo" />
+	</xs:simpleType>
+	<xs:simpleType name="URI">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					Universal Resource Identifier
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI" />
+	</xs:simpleType>
+	<xs:complexType name="IndirizzoStrutturato">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="CivicoChilometrico"
+					type="CivicoChilometrico" />
+				<xs:element name="CivicoEsternoNumerico"
+					type="CivicoEsternoNumerico" />
+			</xs:choice>
+			<xs:element name="Toponimo" type="Toponimo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaCivicoEsterno">
+		<xs:choice>
+			<xs:element name="CivicoChilometrico"
+				type="CivicoChilometrico" />
+			<xs:element name="CivicoEsternoNumerico"
+				type="CivicoEsternoNumerico" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:simpleType name="Decimale">
+		<xs:restriction base="xs:decimal" />
+	</xs:simpleType>
+	<xs:simpleType name="CivicoChilometrico">
+		<xs:restriction base="Decimale" />
+	</xs:simpleType>
+	<xs:complexType name="CivicoEsternoNumerico">
+		<xs:sequence>
+			<xs:element name="Numero" type="InteroPositivo" />
+			<xs:choice minOccurs="0">
+				<xs:element name="Lettera" type="Lettera" />
+				<xs:element name="Esponente" type="Esponente" />
+			</xs:choice>
+			<xs:element name="Colore" type="Colore" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="InteroPositivo">
+		<xs:restriction base="xs:positiveInteger" />
+	</xs:simpleType>
+	<xs:complexType name="SceltaLetteraoEsponente">
+		<xs:choice>
+			<xs:element name="Lettera" type="Lettera" />
+			<xs:element name="Esponente" type="Esponente" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:simpleType name="Lettera">
+		<xs:restriction base="Testo">
+			<xs:length value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Esponente">
+		<xs:restriction base="Testo">
+			<xs:length value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Colore">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Rosso" />
+			<xs:enumeration value="Nero" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Toponimo">
+		<xs:sequence>
+			<xs:element name="DUG" type="DUG" />
+			<xs:element name="Denominazione" type="Testo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DUG">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					Definizione Urbana Generalizzata. Descrizione della
+					tipologia circolatoria della via (Via, Piazza,
+					Largo, etc) come da codifica della Agenzia del
+					Territorio Sinonimi: Area Toponimo
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Via" />
+			<xs:enumeration value="Viale" />
+			<xs:enumeration value="Piazza" />
+			<xs:enumeration value="Piazzale" />
+			<xs:enumeration value="Corso" />
+			<xs:enumeration value="Lungotevere" />
+			<xs:enumeration value="Lungarno" />
+			<xs:enumeration value="Lungadige" />
+			<xs:enumeration value="Carrugio" />
+			<xs:enumeration value="Vico" />
+			<xs:enumeration value="Largo" />
+			<xs:enumeration value="Vicolo" />
+			<xs:enumeration value="Molo" />
+			<xs:enumeration value="Cala" />
+			<xs:enumeration value="Vicoletto" />
+			<xs:enumeration value="Ponte" />
+			<xs:enumeration value="Stradone" />
+			<xs:enumeration value="Interrato" />
+			<xs:enumeration value="Galleria" />
+			<xs:enumeration value="Salita" />
+			<xs:enumeration value="Calle" />
+			<xs:enumeration value="Rio" />
+			<xs:enumeration value="Discesa" />
+			<xs:enumeration value="Campo" />
+			<xs:enumeration value="Corte" />
+			<xs:enumeration value="Portico" />
+			<xs:enumeration value="Sottoportico" />
+			<xs:enumeration value="Fondamenta" />
+			<xs:enumeration value="Ramo" />
+			<xs:enumeration value="Calata" />
+			<xs:enumeration value="Rua" />
+			<xs:enumeration value="Gradini" />
+			<xs:enumeration value="Cortile" />
+			<xs:enumeration value="Lungomare" />
+			<xs:enumeration value="Lungolago" />
+			<xs:enumeration value="Lungofiume" />
+			<xs:enumeration value="Strada" />
+			<xs:enumeration value="Promenade" />
+			<xs:enumeration value="Circonvallazione" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IndirizzoStrutturatoCompleto">
+		<xs:complexContent>
+			<xs:extension base="IndirizzoStrutturato">
+				<xs:sequence>
+					<xs:element name="CAP" type="CAP" minOccurs="0" />
+					<xs:element name="Comune" type="Comune" />
+					<xs:element name="FrazioneComunale"
+						type="FrazioneComunale" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="CAP">
+		<xs:restriction base="InteroPositivo">
+			<xs:pattern value="[0-9]{5,5}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Comune">
+		<xs:sequence>
+			<xs:element name="Nome" type="Testo" />
+			<xs:element name="SigladiProvinciaISTAT"
+				type="SigladiProvinciaISTAT" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SigladiProvinciaISTAT">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="FrazioneComunale">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					Questa classe permette di indicare la Frazione, una
+					Località specifica all'interno di un comune, la
+					circoscrizione o il municipio.
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="Testo" />
+	</xs:simpleType>
+	<xs:complexType name="Immagine">
+		<xs:sequence>
+			<xs:element name="Descrizione" type="Testo" minOccurs="0" />
+			<xs:element name="Tipo" type="Testo" minOccurs="0" />
+			<xs:choice>
+				<xs:element name="URI" type="URI" />
+				<xs:element name="Contenuto" type="Contenuto" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaFormatoImmagine">
+		<xs:choice>
+			<xs:element name="URI" type="URI" />
+			<xs:element name="Contenuto" type="Contenuto" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:simpleType name="Contenuto">
+		<xs:restriction base="xs:base64Binary" />
+	</xs:simpleType>
+	<xs:complexType name="Richiesta" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					Rappresenta una generica richiesta
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="AllegatoFirmatoDigitalmente"
+					type="AllegatoFirmatoDigitalmente" />
+				<xs:element name="AllegatononFirmato"
+					type="AllegatononFirmato" />
+				<xs:element name="AllegatoIncorporato"
+					type="AllegatoIncorporato" />
+				<xs:element name="FileAllegato" type="FileAllegato" />
+			</xs:choice>
+			<xs:element name="Recapito" type="Recapito"
+				maxOccurs="unbounded" />
+			<xs:element name="RiepilogoRichiesta"
+				type="SceltaRiepilogoRichiesta" />
+			<xs:element name="IdentificatorediRichiesta"
+				type="IdentificatorediRichiesta" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaAllegato">
+		<xs:choice>
+			<xs:element name="AllegatoFirmatoDigitalmente"
+				type="AllegatoFirmatoDigitalmente" />
+			<xs:element name="AllegatononFirmato"
+				type="AllegatononFirmato" />
+			<xs:element name="AllegatoIncorporato"
+				type="AllegatoIncorporato" />
+			<xs:element name="FileAllegato" type="FileAllegato" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:complexType name="AllegatononFirmato">
+		<xs:sequence>
+			<xs:element name="NomeFile" type="Testo" />
+			<xs:element name="Descrizione" type="Testo" />
+			<xs:element name="Contenuto" type="Contenuto" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AllegatoFirmatoDigitalmente">
+		<xs:complexContent>
+			<xs:extension base="AllegatononFirmato" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AllegatoIncorporato">
+		<xs:sequence>
+			<xs:element name="Contenuto" type="Contenuto" />
+			<xs:element name="Descrizione" type="Testo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FileAllegato">
+		<xs:sequence>
+			<xs:element name="URI" type="URI" />
+			<xs:element name="Descrizione" type="Testo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Enumeratore">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:complexType name="Recapito">
+		<xs:sequence>
+			<xs:element name="Tipo" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Istituzionale" />
+						<xs:enumeration value="Personale" />
+						<xs:enumeration value="Professionale" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Nota" type="Nota" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="Referente" type="Testo" />
+			<xs:element name="Priorita">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Principale" />
+						<xs:enumeration value="Alternativo" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Indirizzoemail" type="Indirizzoemail" />
+				<xs:element name="RecapitoPostale"
+					type="RecapitoPostale" />
+				<xs:element name="RecapitoTelefonico"
+					type="RecapitoTelefonico" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Nota">
+		<xs:sequence>
+			<xs:element name="DocBook" type="DocBook" minOccurs="0" />
+			<xs:element name="Descrizione" type="Testo" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:choice minOccurs="0">
+				<xs:element name="AllegatoFirmatoDigitalmente"
+					type="AllegatoFirmatoDigitalmente" />
+				<xs:element name="AllegatononFirmato"
+					type="AllegatononFirmato" />
+				<xs:element name="AllegatoIncorporato"
+					type="AllegatoIncorporato" />
+				<xs:element name="FileAllegato" type="FileAllegato" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocBook">
+		<xs:complexContent>
+			<xs:extension base="Documento">
+				<xs:sequence>
+					<xs:element name="URI" type="URI" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SceltaTipodiRecapito">
+		<xs:choice>
+			<xs:element name="Indirizzoemail" type="Indirizzoemail" />
+			<xs:element name="RecapitoPostale" type="RecapitoPostale" />
+			<xs:element name="RecapitoTelefonico"
+				type="RecapitoTelefonico" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:simpleType name="Indirizzoemail">
+		<xs:restriction base="xs:anyURI" />
+	</xs:simpleType>
+	<xs:complexType name="RecapitoPostale">
+		<xs:complexContent>
+			<xs:extension base="IndirizzoStrutturatoCompleto" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RecapitoTelefonico">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="NumeroTelefonicoEstero"
+					type="NumeroTelefonicoEstero" />
+				<xs:element name="NumeroTelefonicoNazionale"
+					type="NumeroTelefonicoNazionale" />
+			</xs:choice>
+			<xs:element name="Modalita">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Telefonata" />
+						<xs:enumeration value="SMS" />
+						<xs:enumeration value="Fax" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaNumeroTelefonico">
+		<xs:choice>
+			<xs:element name="NumeroTelefonicoEstero"
+				type="NumeroTelefonicoEstero" />
+			<xs:element name="NumeroTelefonicoNazionale"
+				type="NumeroTelefonicoNazionale" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:complexType name="NumeroTelefonicoEstero">
+		<xs:sequence>
+			<xs:element name="PrefissoInternazionale" type="Testo" />
+			<xs:element name="Numero" type="Testo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NumeroTelefonicoNazionale">
+		<xs:sequence>
+			<xs:element name="Prefisso" type="Testo" />
+			<xs:element name="Numero" type="Testo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaRiepilogoRichiesta">
+		<xs:choice>
+			<xs:element name="AllegatoFirmatoDigitalmente"
+				type="AllegatoFirmatoDigitalmente" />
+			<xs:element name="AllegatononFirmato"
+				type="AllegatononFirmato" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:complexType name="RichiestadiServizioallaPA" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					Rappresenta una richiesta presentata alla Pubblica
+					Amministrazione o ad altro Ente erogatore di
+					servizi.
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Richiesta" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RichiestadiServizioOnLineallaPA"
+		abstract="true">
+		<xs:complexContent>
+			<xs:extension base="RichiestadiServizioallaPA" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CredenzialiUtente">
+		<xs:sequence>
+			<xs:element name="CodiceFiscale" type="CodiceFiscale" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CodiceFiscale">
+		<xs:restriction base="Testo">
+			<xs:minLength value="16" />
+			<xs:maxLength value="16" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CredenzialiUtenteCertificate">
+		<xs:complexContent>
+			<xs:extension base="CredenzialiUtente">
+				<xs:sequence>
+					<xs:element name="CredenzialiFirmate"
+						type="AllegatoFirmatoDigitalmente">
+						<xs:annotation>
+							<xs:documentation>
+								<Documentazione xmlns="">
+									Sono le credenziali fornite dal
+									richiedente di un servizio firmate
+									da una CA.
+								</Documentazione>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SceltaTitolare">
+		<xs:choice>
+			<xs:element name="PersonaGiuridica" type="PersonaGiuridica" />
+			<xs:element name="PersonaGiuridicaEconomica"
+				type="PersonaGiuridicaEconomica" />
+			<xs:element name="PersonaFisica" type="PersonaFisica" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:complexType name="EstremiPersonaGiuridica">
+		<xs:sequence>
+			<xs:element name="DenominazioneoRagioneSociale"
+				type="DenominazioneoRagioneSociale" />
+			<xs:element name="CodiceFiscalePersonaGiuridica"
+				type="CodiceFiscalePersonaGiuridica" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DenominazioneoRagioneSociale">
+		<xs:restriction base="Testo" />
+	</xs:simpleType>
+	<xs:simpleType name="CodiceFiscalePersonaGiuridica">
+		<xs:restriction base="InteroPositivo">
+			<xs:totalDigits value="11" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PersonaGiuridica">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					Complesso di persone o di beni che l'ordinamento
+					giuridico riconosce soggetto o oggetto di diritto
+					come una persona fisica.
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EstremiPersonaGiuridica">
+				<xs:sequence>
+					<xs:element name="SedeLegale" type="Sede" />
+					<xs:element name="RappresentanteLegale"
+						type="RappresentanteLegale" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Sede">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="LuogoEccezionale"
+					type="LuogoEccezionale" />
+				<xs:element name="IndirizzoStrutturatoCompleto"
+					type="IndirizzoStrutturatoCompleto" />
+				<xs:element name="IndirizzoCompletoDettagliato"
+					type="IndirizzoCompletoDettagliato" />
+				<xs:element name="IndirizzoStrutturato"
+					type="IndirizzoStrutturato" />
+				<xs:element name="IndirizzoTestuale"
+					type="IndirizzoTestuale" />
+				<xs:element name="IndirizzoEstero"
+					type="IndirizzoEstero" />
+			</xs:choice>
+			<xs:element name="Recapito" type="Recapito" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaIndirizzo">
+		<xs:choice>
+			<xs:element name="LuogoEccezionale" type="LuogoEccezionale" />
+			<xs:element name="IndirizzoStrutturatoCompleto"
+				type="IndirizzoStrutturatoCompleto" />
+			<xs:element name="IndirizzoCompletoDettagliato"
+				type="IndirizzoCompletoDettagliato" />
+			<xs:element name="IndirizzoStrutturato"
+				type="IndirizzoStrutturato" />
+			<xs:element name="IndirizzoTestuale"
+				type="IndirizzoTestuale" />
+			<xs:element name="IndirizzoEstero" type="IndirizzoEstero" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:simpleType name="IndirizzoTestuale">
+		<xs:restriction base="Testo" />
+	</xs:simpleType>
+	<xs:simpleType name="LuogoEccezionale">
+		<xs:restriction base="IndirizzoTestuale" />
+	</xs:simpleType>
+	<xs:complexType name="SceltaIndirizzoCompleto">
+		<xs:choice>
+			<xs:element name="LuogoEccezionale" type="LuogoEccezionale" />
+			<xs:element name="IndirizzoStrutturatoCompleto"
+				type="IndirizzoStrutturatoCompleto" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:complexType name="IndirizzoCompletoDettagliato">
+		<xs:complexContent>
+			<xs:extension base="IndirizzoStrutturatoCompleto">
+				<xs:sequence>
+					<xs:element name="CivicoInterno"
+						type="CivicoInterno" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CivicoInterno">
+		<xs:sequence>
+			<xs:element name="Scala" type="Testo" minOccurs="0" />
+			<xs:element name="Piano" type="Testo" minOccurs="0" />
+			<xs:element name="Interno" type="Testo" minOccurs="0" />
+			<xs:element name="EsponenteInterno" type="Testo"
+				minOccurs="0" />
+			<xs:element name="Corte" type="Testo" minOccurs="0" />
+			<xs:element name="Edificio" type="Testo" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaIndirizzoItaliano">
+		<xs:choice>
+			<xs:element name="LuogoEccezionale" type="LuogoEccezionale" />
+			<xs:element name="IndirizzoStrutturatoCompleto"
+				type="IndirizzoStrutturatoCompleto" />
+			<xs:element name="IndirizzoCompletoDettagliato"
+				type="IndirizzoCompletoDettagliato" />
+			<xs:element name="IndirizzoStrutturato"
+				type="IndirizzoStrutturato" />
+			<xs:element name="IndirizzoTestuale"
+				type="IndirizzoTestuale" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:complexType name="IndirizzoEstero">
+		<xs:sequence>
+			<xs:element name="Testo" type="Testo" />
+			<xs:element name="CodiceStato" type="ISO3166code3" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ISO3166code3">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					Identifica univocamente uno Stato. Gli Stati cessati
+					mantengono il loro precedente codice.
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:complexType name="EstremidellaPersona">
+		<xs:sequence>
+			<xs:element name="Cognome" type="Testo" />
+			<xs:element name="Nome" type="Testo" />
+			<xs:element name="CodiceFiscale" type="CodiceFiscale" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RappresentanteLegale">
+		<xs:complexContent>
+			<xs:extension base="EstremidellaPersona" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PersonaGiuridicaEconomica">
+		<xs:complexContent>
+			<xs:extension base="PersonaGiuridica">
+				<xs:sequence>
+					<xs:element name="PartitaIVA" type="PartitaIVA" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PartitaIVA">
+		<xs:restriction base="InteroPositivo">
+			<xs:totalDigits value="11" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Persona">
+		<xs:complexContent>
+			<xs:extension base="EstremidellaPersona">
+				<xs:sequence>
+					<xs:element name="NomeSecondario" type="Testo"
+						minOccurs="0" />
+					<xs:element name="DatadiNascita" type="Data" />
+					<xs:element name="LuogodiNascita"
+						type="SceltaLuogoEsteso" />
+					<xs:element name="Sesso" type="Sesso" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SceltaLuogoEsteso">
+		<xs:choice>
+			<xs:element name="ComuneEsteso" type="ComuneEsteso" />
+			<xs:element name="LuogoEccezionale" type="LuogoEccezionale" />
+			<xs:element name="Localita" type="Localita" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:complexType name="ComuneEsteso">
+		<xs:sequence>
+			<xs:element name="Nome" type="Testo" />
+			<xs:element name="SigladiProvinciaEstesa"
+				type="SigladiProvinciaEstesa" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SigladiProvinciaEstesa">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ZA">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="Zara" />
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FU">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="Fiume" />
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PL">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="Pola" />
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Localita">
+		<xs:sequence>
+			<xs:element name="Nome" type="Testo" />
+			<xs:element name="CodiceStato" type="ISO3166code3"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Sesso">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Femmina">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="F" />
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Maschio">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="M" />
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PersonaFisica">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					L'individuo umano, dalla nascita alla morte, come
+					soggetto di diritto.
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Persona">
+				<xs:sequence>
+					<xs:element name="Residenza" type="SceltaResidenza" />
+					<xs:element name="Domicilio" type="SceltaIndirizzo"
+						minOccurs="0" />
+					<xs:element name="Cittadinanza" type="Cittadinanza"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SceltaResidenza">
+		<xs:choice>
+			<xs:element name="LuogoEccezionale" type="LuogoEccezionale" />
+			<xs:element name="IndirizzoStrutturatoCompleto"
+				type="IndirizzoStrutturatoCompleto" />
+			<xs:element name="IndirizzoEstero" type="IndirizzoEstero" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:complexType name="Cittadinanza">
+		<xs:sequence>
+			<xs:element name="Nazionalita" type="Nazionalita" />
+			<xs:element name="DatadiAcquistoCittadinanza" type="Data"
+				minOccurs="0" />
+			<xs:element name="CodiceStato" type="ISO3166code3" />
+			<xs:element name="EstremiAttodiCittadinanza"
+				type="SceltaAttodiStatoCivile" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Nazionalita">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:complexType name="SceltaAttodiStatoCivile">
+		<xs:choice>
+			<xs:element name="MotivodinonCertificabilita"
+				type="MotivodinonCertificabilita" />
+			<xs:element name="EstremiAttodiStatoCivile"
+				type="EstremiAttodiStatoCivile" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:simpleType name="MotivodinonCertificabilita">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Atto Perso" />
+			<xs:enumeration value="Atto Distrutto" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EstremiAttodiStatoCivile">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					L'identificazione degli Estremi di un Atto è basata
+					su Comune, Tipo e Anno di Registrazione e sulle
+					coordinate della collocazione dell'atto: Ufficio di
+					stato civile (nel caso di Comuni che hanno più di un
+					Ufficio), eventuale Parte, eventuale Serie,
+					eventuale Frazione e Numero. Eventuali Note di
+					Registrazione possono indicare il luogo dove l'atto
+					è fisicamente depositato, se diverso dall'ufficio di
+					stato civile del Comune di Registrazione, ad esempio
+					nel caso di Comuni cessati il cui archivio di stato
+					civile sia stato trasferito presso altra sede. Per
+					gli atti anomali, cioè non registrati presso un
+					Comune o privi di una collocazione nota, il Tipo di
+					Registrazione è anomalo: in questo caso,
+					l'identificazione è basata su Tipo di Registrazione,
+					Note di Registrazione a testo libero e, se rilevanti
+					e noti, Anno e Numero di Registrazione, con
+					riferimento alla normativa locale nel caso di atti
+					esteri.
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ComunediRegistrazione"
+				type="ComuneEsteso" />
+			<xs:element name="TipodiRegistrazione"
+				type="TipodiRegistrazione" />
+			<xs:element name="NotaRegistrazione" type="Testo"
+				minOccurs="0" />
+			<xs:element name="Anno" type="Anno" />
+			<xs:element name="Ufficio" type="InteroPositivo"
+				minOccurs="0" />
+			<xs:element name="Parte" type="Parte" minOccurs="0" />
+			<xs:element name="Serie" type="Serie" minOccurs="0" />
+			<xs:element name="Frazione" type="Testo" minOccurs="0" />
+			<xs:element name="Numero" type="InteroPositivo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TipodiRegistrazione">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Iscritto" />
+			<xs:enumeration value="Trascritto" />
+			<xs:enumeration value="Anomalo" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Anno">
+		<xs:restriction base="xs:gYear" />
+	</xs:simpleType>
+	<xs:simpleType name="Parte">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="I" />
+			<xs:enumeration value="II" />
+			<xs:enumeration value="U" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Serie">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A" />
+			<xs:enumeration value="B" />
+			<xs:enumeration value="C" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SceltaRisposta">
+		<xs:choice>
+			<xs:element name="Eccezione" type="Eccezione" />
+			<xs:element name="Risposta" type="Risposta" />
+		</xs:choice>
+		<xs:attribute name="Scelta" />
+	</xs:complexType>
+	<xs:complexType name="Eccezione">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">
+					E' un oggetto relativo alla gestione di errori e
+					condizioni eccezionali che possono verificarsi nel
+					corso dell'erogazione dei servizi.
+				</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Risposta">
+				<xs:sequence>
+					<xs:element name="Nota" type="Nota" minOccurs="0"
+						maxOccurs="unbounded" />
+					<xs:element name="Tipo">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Applicativa" />
+								<xs:enumeration
+									value="Infrastrutturale" />
+								<xs:enumeration value="Comunicazione" />
+								<xs:enumeration value="Altro" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Codice" type="Intero" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="Intero">
+		<xs:restriction base="xs:integer" />
+	</xs:simpleType>
+</xs:schema>

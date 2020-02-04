@@ -1,0 +1,9 @@
+.ajax_loader {
+    background: url("img/ajax-loader.gif") no-repeat center center transparent;
+    width:100%;
+    height:100%;
+}
+
+#page-wrapper {
+    margin: 0 0;
+}

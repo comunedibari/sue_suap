@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE web-app 
+PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" 
+"http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+  <display-name>IDP-People Demo</display-name>
+  <description>Esempio di integrazione di sistema di autenticazione esterno</description>
+	
+  <context-param>
+	  <param-name>IDP-People.domain.suffix</param-name>
+	  <param-value>idp-people.it</param-value>
+  </context-param>
+	
+	<context-param>
+		<param-name>people.sirac.error.page</param-name>
+		<param-value>/SiracError.jsp</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>showDetailInErrorPage</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>people.sirac.error.returnURL</param-name>
+		<param-value>${idp-people.people.sirac.error.returnURL}</param-value>
+		<!-- <param-value>http://localhost:8080/people</param-value> -->
+		<!--<param-value>http://fossg.egov.ba.it/people</param-value>-->
+	</context-param>
+
+  <context-param>
+    <param-name>wsreg_address</param-name>
+    <param-value>${idp-people.wsreg_address}</param-value>
+    <!-- <param-value>http://localhost:9080/ws_regauth/services/RegistrationInterface</param-value> -->
+  </context-param>
+	
+  <context-param>
+    <param-name>intersiteTransferServiceTransferMode</param-name>
+    <!--  Indicare FORWARD o POST -->
+    <param-value>POST</param-value>
+  </context-param>
+  
+  <context-param>
+      <param-name>smartCardRegistrationURL</param-name>
+	<param-value>${idp-people.smartCardRegistrationURL}</param-value>
+	<!-- <param-value>http://localhost:9080/scauth/SSLAuthServlet?mode=registration</param-value> -->
+    <!--  <param-value>http://fossg.egov.ba.it/scauth/SSLAuthServlet?mode=registration</param-value> -->
+  </context-param>
+  
+  <context-param>
+      <param-name>idComune</param-name>
+      <param-value>010025</param-value>
+  </context-param>
+  
+  <servlet>
+    <servlet-name>IDPLoginServlet</servlet-name>
+    <display-name>IDP Login Servlet</display-name>
+    <description>IDP User Login Management</description>
+    <servlet-class>it.idppeople.web.IDPLoginServlet</servlet-class>
+
+  	<init-param>
+  		<param-name>portAddress_prefix</param-name>
+      <param-value>${idp-people.portAddress_prefix}</param-value>
+      <!-- <param-value>http://localhost:9080/ws_regauth/services</param-value> -->
+  	</init-param>
+  	<init-param>
+  		<param-name>wsauth_address</param-name>
+      <param-value>${idp-people.wsauth_address}</param-value>
+      <!-- <param-value>http://localhost:9080/ws_regauth/services/AuthenticationInterface</param-value> -->
+  	</init-param>
+  	<init-param>
+  		<param-name>timeout</param-name>
+  		<param-value>120000</param-value>
+  	</init-param>
+    <init-param>
+      <param-name>smartcardLoginRedirectURL</param-name>
+	  <param-value>${idp-people.smartcardLoginRedirectURL}</param-value>
+	  <!-- <param-value>http://localhost:9080/scauth/SSLAuthServlet</param-value> -->
+    <!--  <param-value>http://fossg.egov.ba.it/scauth/SSLAuthServlet</param-value>-->
+    </init-param>
+    <init-param>
+      <param-name>postResponsePage</param-name>
+      <!-- param-value>/PostAuthResponse_debug.jsp</param-value-->
+      <!--  Utilizzata solo se modalit� di trasferimento = POST -->
+      <param-value>/PostAuthResponse.jsp</param-value>
+    </init-param>
+    <init-param>
+      <param-name>intersiteTransferServiceForwardURL</param-name>
+      <param-value>/IntersiteTransferService</param-value>
+    </init-param>
+    <init-param>
+      <param-name>intersiteTransferServicePOSTURL</param-name>
+	  <param-value>${idp-people.intersiteTransferServicePOSTURL}</param-value>
+	  <!-- <param-value>http://localhost:9080/idp-people/IntersiteTransferService</param-value> -->
+    <!--  <param-value>http://fossg.egov.ba.it/idp-people/IntersiteTransferService</param-value>-->
+    </init-param>
+  	<init-param>
+	  	<param-name>loginPage</param-name>
+  		<param-value>/login.jsp</param-value>
+  	</init-param>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>IntersiteTransferService</servlet-name>
+    <display-name>Sirac Intersite Transfer Service</display-name>
+    <description>Sirac Intersite Transfer Service</description>
+    <servlet-class>it.people.sirac.web.IntersiteTransferServlet</servlet-class>
+  	<init-param>
+  		<param-name>postResponsePage</param-name>
+  		<param-value>/PostSAMLResponse.jsp</param-value>
+      <!-- param-value>/PostSAMLResponse_debug.jsp</param-value-->
+	</init-param>
+  	<init-param>
+  		<param-name>keystorePath</param-name>
+  		<!--  path relativo alla webapp -->
+  		<param-value>/keystore/test.jks</param-value>
+  	</init-param>
+  	<init-param>
+  		<param-name>certificateAlias</param-name>
+  		<param-value>mykey</param-value>
+  	</init-param>
+   	<init-param>
+	  	<param-name>keystorePassword</param-name>
+	  	<param-value>opensaml</param-value>
+    </init-param>
+    <!-- 
+   	<init-param>
+	  	<param-name>keystoreType</param-name>
+	  	<param-value>PKCS12</param-value>
+  	</init-param>
+  	 -->
+  </servlet>
+
+  <servlet>
+      <servlet-name>ChangePasswordService</servlet-name>
+      <display-name>ChangePasswordService</display-name>
+      <description>ChangePasswordService</description>
+      <servlet-class>it.idppeople.web.ChangePasswordServlet</servlet-class>
+   	  <init-param>
+				<param-name>changePasswordPage</param-name>
+				<param-value>/changePassword.jsp</param-value>
+		  </init-param>
+		  <init-param>
+				<param-name>changePasswordConfirmationPage</param-name>
+				<param-value>/changePasswordOK.jsp</param-value>
+	  	</init-param>
+  </servlet>
+	
+  <servlet-mapping>
+    <servlet-name>IDPLoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>IDPLoginServlet</servlet-name>
+    <url-pattern>/loginWeak</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>IDPLoginServlet</servlet-name>
+    <url-pattern>/loginStrong</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>IntersiteTransferService</servlet-name>
+    <url-pattern>/IntersiteTransferService</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ChangePasswordService</servlet-name>
+    <url-pattern>/ChangePasswordService</url-pattern>
+  </servlet-mapping>
+
+  <mime-mapping>
+    <extension>wsdl</extension>
+    <mime-type>text/xml</mime-type>
+  </mime-mapping>
+
+  <mime-mapping>
+    <extension>xsd</extension>
+    <mime-type>text/xml</mime-type>
+  </mime-mapping>
+     
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+	  <welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
+    
+  <!-- stampa lo stack trace di qualsiasi eccezione non gestita -->
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/SiracError.jsp</location>
+   </error-page>
+    
+  <error-page>
+    <exception-type>java.lang.RuntimeException</exception-type>
+    <location>/SiracError.jsp</location>
+  </error-page>
+  
+  <error-page>
+    <exception-type>it.people.sirac.error.SiracException</exception-type>
+    <location>/SiracError.jsp</location>
+  </error-page>
+    
+  <!--  TAGLIBS -->
+  <taglib>
+    <taglib-uri>http://java.sun.com/jstl/core</taglib-uri>
+    <taglib-location>/WEB-INF/tld/c.tld</taglib-location>
+  </taglib>
+
+    <taglib>
+        <taglib-uri>http://java.sun.com/jstl/core_rt</taglib-uri>
+        <taglib-location>/WEB-INF/tld/c-rt.tld</taglib-location>
+    </taglib>
+
+    <taglib>
+        <taglib-uri>http://java.sun.com/jstl/xml</taglib-uri>
+        <taglib-location>/WEB-INF/tld/x.tld</taglib-location>
+    </taglib>
+
+    <taglib>
+        <taglib-uri>http://java.sun.com/jstl/xml_rt</taglib-uri>
+        <taglib-location>/WEB-INF/tld/x-rt.tld</taglib-location>
+    </taglib>
+
+    <taglib>
+        <taglib-uri>http://java.sun.com/jstl/fmt</taglib-uri>
+        <taglib-location>/WEB-INF/tld/fmt.tld</taglib-location>
+    </taglib>
+
+    <taglib>
+        <taglib-uri>http://java.sun.com/jstl/fmt_rt</taglib-uri>
+        <taglib-location>/WEB-INF/tld/fmt-rt.tld</taglib-location>
+    </taglib>
+
+    <taglib>
+        <taglib-uri>http://java.sun.com/jstl/sql</taglib-uri>
+        <taglib-location>/WEB-INF/tld/sql.tld</taglib-location>
+    </taglib>
+
+    <taglib>
+        <taglib-uri>http://java.sun.com/jstl/sql_rt</taglib-uri>
+        <taglib-location>/WEB-INF/tld/sql-rt.tld</taglib-location>
+    </taglib>
+    
+</web-app>

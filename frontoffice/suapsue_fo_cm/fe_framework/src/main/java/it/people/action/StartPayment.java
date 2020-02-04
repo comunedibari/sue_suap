@@ -1,0 +1,450 @@
+/**
+ * Copyright (c) 2011, Regione Emilia-Romagna, Italy
+ *  
+ * Licensed under the EUPL, Version 1.1 or - as soon they
+ * will be approved by the European Commission - subsequent
+ * versions of the EUPL (the "Licence");
+ * You may not use this work except in compliance with the
+ * Licence.
+ * 
+ * For convenience a plain text copy of the English version
+ * of the Licence can be found in the file LICENCE.txt in
+ * the top-level directory of this software distribution.
+ * 
+ * You may obtain a copy of the Licence in any of 22 European
+ * Languages at:
+ * 
+ * http://joinup.ec.europa.eu/software/page/eupl
+ * 
+ * Unless required by applicable law or agreed to in
+ * writing, software distributed under the Licence is
+ * distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied.
+ * 
+ * This product includes software developed by Yale University
+ * 
+ * See the Licence for the specific language governing
+ * permissions and limitations under the Licence.
+ **/
+/*
+ * StartPayment.java
+ *
+ * Created on 24 gennaio 2005, 16.50
+ */
+
+package it.people.action;
+
+import it.people.IActivity;
+import it.people.IStep;
+import it.people.core.PeopleContext;
+import it.people.core.ProcessManager;
+import it.people.core.persistence.exception.peopleException;
+import it.people.error.MessagesFactory;
+import it.people.error.errorMessage;
+import it.people.exceptions.PeopleDBException;
+import it.people.fsl.servizi.oggetticondivisi.PersonaFisica;
+import it.people.fsl.servizi.oggetticondivisi.personagiuridica.PersonaGiuridica;
+import it.people.process.AbstractPplProcess;
+import it.people.process.data.AbstractData;
+import it.people.util.ActivityLogger;
+import it.people.util.payment.IRimp;
+import it.people.util.payment.IStartPayment;
+import it.people.util.payment.PaymentException;
+import it.people.util.payment.PaymentManagerContext;
+import it.people.util.payment.request.PaymentRequestParameter;
+import it.people.util.status.ProcessStatus;
+import it.people.util.status.StatusHelper;
+
+import java.util.Iterator;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Category;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+/**
+ * 
+ * @author manelli
+ */
+public class StartPayment extends Action {
+
+    private ActivityLogger m_oTracer = ActivityLogger.getInstance();
+    private Category cat = Category.getInstance(this.getClass().getName());
+
+    /** Creates a new instance of StartPayment */
+    public StartPayment() {
+    }
+
+    public ActionForward execute(ActionMapping p_actionMapping,
+	    ActionForm p_actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	super.execute(p_actionMapping, p_actionForm, request, response);
+
+	ActionForward afwd = p_actionMapping.findForward("failed");
+	AbstractPplProcess process = (AbstractPplProcess) p_actionForm;
+	AbstractData data = (AbstractData) process.getData();
+	String peopleId = data.getIdentificatorePeople()
+		.getIdentificatoreProcedimento();
+
+	try {
+	    PeopleContext peopleContext = PeopleContext.create(request);
+
+	    // Estrae i dati del pagamento
+	    PaymentRequestParameter paymentParameter = getPaymentRequestParameter(
+		    request, process);
+	    paymentParameter = setupDefaultValueAndValidate(paymentParameter,
+		    data, peopleContext);
+
+	    String info1 = "";
+	    String info2 = "";
+
+	    if (paymentParameter.getPaymentManagerSpecificData() != null) {
+		info1 = paymentParameter.getPaymentManagerSpecificData().get(
+			"info1");
+	    }
+	    if (info1 == null) {
+		info1 = "";
+	    }
+	    if (paymentParameter.getPaymentManagerSpecificData() != null) {
+		info2 = paymentParameter.getPaymentManagerSpecificData().get(
+			"info2");
+	    }
+	    if (info2 == null) {
+		info2 = "";
+	    }
+
+	    // Nel caso di pagamenti anonimi � prevista solo l'invocazione
+	    // della
+	    // classe payment observer, non � quindi necessario salvare la
+	    // pratica
+	    // ma � sufficiente salvarne lo stato (Michele Fabbri - Cedaf
+	    // s.r.l.).
+
+	    // Observer della notifica di pagamento
+	    String notifierObserver = process.getProcessWorkflow()
+		    .getPaymentObserverClass();
+
+	    String paymentId = null;
+	    if (!peopleContext.getUser().isAnonymous()) {
+
+		// Salva lo stato del procedimento
+		// if (process.getStatus().equals("S_EDIT")) {
+		try {
+		    ProcessManager.getInstance().set(peopleContext, process);
+		    paymentId = StatusHelper.insertProcessStatus(peopleId,
+			    process.getOid(), ProcessStatus.PAYMENT_PENDING,
+			    paymentParameter.getUserData().getEmailUtente(),
+			    notifierObserver,
+			    paymentParameter.getObserverData(),
+			    process.getCommune(), process.getProcessName(),
+			    peopleContext.getUser().getUserID());
+
+		    if (data.getTitolare().getPersonaFisica() != null) {
+			PersonaFisica personaFisica = data.getTitolare()
+				.getPersonaFisica();
+			StatusHelper.insertProcessStatusOwner(peopleId,
+				paymentId, personaFisica.getNome(),
+				personaFisica.getCognome(),
+				personaFisica.getCodiceFiscale(), null, null,
+				info1, info2);
+		    } else {
+			if (data.getTitolare().getPersonaGiuridica() != null) {
+			    PersonaGiuridica personaGiuridica = data
+				    .getTitolare().getPersonaGiuridica();
+			    StatusHelper.insertProcessStatusOwner(peopleId,
+				    paymentId, null, null,
+				    personaGiuridica.getCodiceFiscale(),
+				    personaGiuridica.getRagioneSociale(),
+				    personaGiuridica.getPartitaIVA(), info1,
+				    info2);
+			}
+		    }
+
+		} catch (peopleException e) {
+		    cat.error(e);
+		    return p_actionMapping.findForward("failed");
+		} catch (PeopleDBException dbe) {
+		    cat.error(dbe);
+		    return p_actionMapping.findForward("failed");
+		}
+		cat.debug("success");
+		m_oTracer.log(process, "Salvataggio Processo",
+			ActivityLogger.INFO);
+		// }
+		// paymentId = StatusHelper.getId(peopleId);
+	    } else {
+		// Utente Anonimo
+		try {
+		    // ProcessManager.getInstance().set(peopleContext, process);
+		    paymentId = StatusHelper.insertProcessStatus(peopleId,
+			    ProcessStatus.PAYMENT_PENDING, paymentParameter
+				    .getUserData().getEmailUtente(),
+			    notifierObserver, paymentParameter
+				    .getObserverData(), process.getCommune(),
+			    process.getProcessName(), peopleContext.getUser()
+				    .getUserID());
+
+		    if (paymentParameter.getUserData() != null
+			    && paymentParameter.getUserData()
+				    .getPersonaFisica() != null) {
+			PersonaFisica personaFisica = paymentParameter
+				.getUserData().getPersonaFisica();
+			StatusHelper.insertProcessStatusOwner(peopleId,
+				paymentId, personaFisica.getNome(),
+				personaFisica.getCognome(),
+				personaFisica.getCodiceFiscale(), null, null,
+				info1, info2);
+		    } else {
+			if (paymentParameter.getUserData() != null
+				&& paymentParameter.getUserData()
+					.getPersonaGiuridica() != null) {
+			    PersonaGiuridica personaGiuridica = paymentParameter
+				    .getUserData().getPersonaGiuridica();
+			    StatusHelper.insertProcessStatusOwner(peopleId,
+				    paymentId, null, null,
+				    personaGiuridica.getCodiceFiscale(),
+				    personaGiuridica.getRagioneSociale(),
+				    personaGiuridica.getPartitaIVA(), info1,
+				    info2);
+			}
+		    }
+
+		} catch (PeopleDBException dbe) {
+		    cat.error(dbe);
+		    return p_actionMapping.findForward("failed");
+		}
+	    }
+
+	    // Invocazione dell'andata del pagamento
+	    PaymentManagerContext pm = new PaymentManagerContext(this
+		    .getServlet().getServletContext()
+		    .getRealPath("/WEB-INF/payment.properties"));
+
+	    afwd = pm.sendToPayment(process, paymentParameter, paymentId,
+		    process.getCommune(), request);
+
+	} catch (PaymentException pex) {
+	    cat.error(pex);
+	    errorMessage error = MessagesFactory.getInstance().getErrorMessage(
+		    process.getCommune().getKey(), "pagamento.error.start");
+	    error.setErrorForward("/framework/genericErrors/ProcessError.jsp");
+	    request.setAttribute("errorMessage", error);
+	} catch (Exception ex) {
+	    m_oTracer.log(process, ex.toString(), ActivityLogger.ERROR);
+	    cat.error(ex);
+	    if (process != null) {
+		errorMessage error = MessagesFactory.getInstance()
+			.getErrorMessage(process.getCommune().getKey(),
+				"SaveProcess.dbError");
+		error.setErrorForward("/framework/genericErrors/ProcessError.jsp");
+		error.setErrorSender("goActivityProcess.do?actIndex="
+			+ process.getView().getCurrentActivityIndex());
+		request.setAttribute("errorMessage", error);
+	    } else {
+		cat.debug("failed");
+		return p_actionMapping.findForward("failed");
+	    }
+	}
+
+	return afwd;
+    }
+
+    protected PaymentRequestParameter setupDefaultValueAndValidate(
+	    PaymentRequestParameter paymentParameter, AbstractData data,
+	    PeopleContext peopleContext) throws PaymentException,
+	    AddressException {
+	// Verifica della validit� dei dati
+	if (peopleContext.getUser().isAnonymous()
+		&& (paymentParameter.getUserData().getEmailUtente() == null || paymentParameter
+			.getUserData().getEmailUtente().getAddress() == ""))
+	    // Per l'utente anonimo il servizio deve obbligatoriamente
+	    // definire l'indirizzo di e-mail a cui comunicare l'esito
+	    // del pagamento.
+	    throw new PaymentException(
+		    "Indirizzo di e-mail non valido. Il pagamento anonimo richiede l'indirizzo di e-mail a cui ricapitare la notifica di pagamento.");
+	else if ((paymentParameter.getUserData().getEmailUtente() == null || paymentParameter
+		.getUserData().getEmailUtente().getAddress() == "")) {
+	    InternetAddress email = new InternetAddress((String) data
+		    .getRichiedente().getUtenteAutenticato().getRecapito()
+		    .get(0));
+	    paymentParameter.getUserData().setEmailUtente(email);
+	}
+
+	if (paymentParameter.getServiceData().getIdServizio() == null
+		|| paymentParameter.getServiceData().getIdServizio()
+			.compareTo("") == 0)
+	    throw new PaymentException("ServiceId non valido");
+
+	if (paymentParameter.getPaymentData().getImporto() == null
+		|| paymentParameter.getPaymentData().getImporto().longValue() <= 0)
+	    throw new PaymentException("Importo non valido");
+
+	return paymentParameter;
+    }
+
+    /**
+     * Estrae i dati del pagamento dallo step se implementa l'interfaccia
+     * IStartPayment, altrimenti dallo step che implementa IRimp, o come ultima
+     * alternativa dalla request.
+     * 
+     * @return un'istanza di PaymentRequestParameter con i dati del pagamento
+     *         impostati dal servizio
+     */
+    protected PaymentRequestParameter getPaymentRequestParameter(
+	    HttpServletRequest request, AbstractPplProcess process)
+	    throws PaymentException {
+
+	// Ricerca uno step che implementi l'interfaccia IStartPayment
+	int foundStartPayment = 0;
+	PaymentRequestParameter paymentParameter = null;
+
+	// Ricerca tra gli step quello che implementa l'interfaccia IRimp
+	for (int i = 0; i < process.getView().getActivities().length; i++) {
+	    IActivity activity = process.getView().getActivities()[i];
+	    for (Iterator iter = activity.getStepList().iterator(); iter
+		    .hasNext();) {
+		IStep step = (IStep) iter.next();
+		if (step instanceof IStartPayment) {
+		    paymentParameter = ((IStartPayment) step)
+			    .getPaymentRequestParameter();
+		    foundStartPayment++;
+		}
+	    }
+	}
+
+	if (foundStartPayment > 1)
+	    // errore sono presenti pi� Step IStartPayment
+	    throw new PaymentException(
+		    "Errore nella definizione degli step del servizio, solo uno step pu� implementare l'interfaccia IStartPayment");
+
+	if (foundStartPayment == 1)
+	    return paymentParameter;
+	else {
+	    // i dati devono essere letti dalla IRimp
+	    IRimp rimpData = getRimpData(request, process);
+	    paymentParameter = new PaymentRequestParameter();
+
+	    paymentParameter.getServiceData().setDatiSpecifici(
+		    rimpData.getDatiSpecifici());
+	    paymentParameter.getServiceData().setIdServizio(
+		    rimpData.getServiceId());
+	    paymentParameter.getUserData().setEmailUtente(rimpData.getEmail());
+	    paymentParameter.getPaymentData().setImporto(rimpData.getImporto());
+
+	    return paymentParameter;
+	}
+    }
+
+    /**
+     * Estrae i dati del pagamento dallo step se implementa l'interfaccia IRimp,
+     * dalla request altrimenti
+     * 
+     * @return un'istanza dell'interfaccia IRimp con i dati del pagamento
+     */
+    protected IRimp getRimpData(HttpServletRequest request,
+	    AbstractPplProcess process) throws PaymentException {
+
+	int foundIRimp = 0;
+	IRimp data = null;
+
+	// Ricerca tra gli step quello che implementa l'interfaccia IRimp
+	for (int i = 0; i < process.getView().getActivities().length; i++) {
+	    IActivity activity = process.getView().getActivities()[i];
+	    for (Iterator iter = activity.getStepList().iterator(); iter
+		    .hasNext();) {
+		IStep step = (IStep) iter.next();
+		if (step instanceof IRimp) {
+		    data = (IRimp) step;
+		    foundIRimp++;
+		}
+	    }
+	}
+
+	if (foundIRimp == 0) {
+	    // i dati devono essere letti dal querystring
+	    return getRimpDataFromRequest(request);
+	} else if (data != null && foundIRimp == 1) {
+	    // i dati devono essere letti da IRimp
+	    return data;
+	} else {
+	    // errore sono presenti pi� Step IRimp
+	    throw new PaymentException(
+		    "Errore nella definizione degli step del servizio, solo uno step pu� implementare l'interfaccia IRimp");
+	}
+    }
+
+    /**
+     * Estrae i dati del pagamento dalla request
+     * 
+     * @param request
+     * @return
+     */
+    private IRimp getRimpDataFromRequest(HttpServletRequest request) {
+	// Email
+	InternetAddress emailAddress = null;
+	try {
+	    emailAddress = new InternetAddress(request.getParameter("Email"));
+	} catch (Exception ex) {
+	}
+
+	// Importo
+	Long importo = null;
+	try {
+	    importo = new Long(request.getParameter("Importo"));
+	} catch (Exception ex) {
+	}
+
+	return new RimpData(request.getParameter("ServiceId"), importo,
+		emailAddress, request.getParameter("DatiSpecifici"));
+    }
+
+    private class RimpData implements IRimp {
+	private String datiSpecifici;
+	private InternetAddress email;
+	private Long importo;
+	private String serviceId;
+
+	/**
+	 * @return Returns the datiSpecifici.
+	 */
+	public String getDatiSpecifici() {
+	    return datiSpecifici;
+	}
+
+	/**
+	 * @return Returns the importo.
+	 */
+	public Long getImporto() {
+	    return importo;
+	}
+
+	/**
+	 * @return Returns the serviceId.
+	 */
+	public String getServiceId() {
+	    return serviceId;
+	}
+
+	/**
+	 * @return Returns the email.
+	 */
+	public InternetAddress getEmail() {
+	    return email;
+	}
+
+	public RimpData(String serviceId, Long importo, InternetAddress email,
+		String datiSpecifici) {
+	    this.serviceId = serviceId;
+	    this.importo = importo;
+	    this.email = email;
+	    this.datiSpecifici = datiSpecifici;
+	}
+    }
+}

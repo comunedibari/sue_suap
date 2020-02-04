@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-12/14/2009 02:16 PM(ramkris)-. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://server.ws.amministrazioneatti.avt.linksmt.it/" version="1.0" targetNamespace="http://server.ws.amministrazioneatti.avt.linksmt.it/">
+   <xs:element name="allegatiDeterminaRequest">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="annoDetermina" type="xs:int" />
+            <xs:element name="numeroRegistro" type="xs:int" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="allegatiDeterminaResponse">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="allegati" nillable="true" minOccurs="0" maxOccurs="unbounded">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="contenuto" type="xs:base64Binary" minOccurs="0" />
+                     <xs:element name="mimeType" type="xs:string" minOccurs="0" />
+                     <xs:element name="nomeFile" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+            <xs:element name="esito" type="xs:string" minOccurs="0" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="documentoDeterminaRequest">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="annoDetermina" type="xs:int" />
+            <xs:element name="numeroRegistro" type="xs:int" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="documentoDeterminaResponse">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="allegato" minOccurs="0">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="contenuto" type="xs:base64Binary" minOccurs="0" />
+                     <xs:element name="mimeType" type="xs:string" minOccurs="0" />
+                     <xs:element name="nomeFile" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+            <xs:element name="esito" type="xs:string" minOccurs="0" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="getAllegatiDetermina" type="tns:getAllegatiDetermina" />
+   <xs:element name="getAllegatiDeterminaResponse" type="tns:getAllegatiDeterminaResponse" />
+   <xs:element name="getDocumentoDetermina" type="tns:getDocumentoDetermina" />
+   <xs:element name="getDocumentoDeterminaResponse" type="tns:getDocumentoDeterminaResponse" />
+   <xs:complexType name="getAllegatiDetermina">
+      <xs:sequence>
+         <xs:element name="allegatiDeterminaRequest" minOccurs="0">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="annoDetermina" type="xs:int" />
+                  <xs:element name="numeroRegistro" type="xs:int" />
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getAllegatiDeterminaResponse">
+      <xs:sequence>
+         <xs:element name="return" minOccurs="0">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="allegati" nillable="true" minOccurs="0" maxOccurs="unbounded">
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="contenuto" type="xs:base64Binary" minOccurs="0" />
+                           <xs:element name="mimeType" type="xs:string" minOccurs="0" />
+                           <xs:element name="nomeFile" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="esito" type="xs:string" minOccurs="0" />
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getDocumentoDetermina">
+      <xs:sequence>
+         <xs:element name="documentoDeterminaRequest" minOccurs="0">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="annoDetermina" type="xs:int" />
+                  <xs:element name="numeroRegistro" type="xs:int" />
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="getDocumentoDeterminaResponse">
+      <xs:sequence>
+         <xs:element name="return" minOccurs="0">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="allegato" minOccurs="0">
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="contenuto" type="xs:base64Binary" minOccurs="0" />
+                           <xs:element name="mimeType" type="xs:string" minOccurs="0" />
+                           <xs:element name="nomeFile" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+                  <xs:element name="esito" type="xs:string" minOccurs="0" />
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

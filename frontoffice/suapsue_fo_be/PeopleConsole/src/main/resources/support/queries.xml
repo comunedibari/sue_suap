@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>
+	</comment>
+	
+	<entry key="registeredNodes.query">
+	    select id, nodofe 
+	    from fenode
+	</entry>
+
+	<entry key="registeredNodesCodes.query">
+	    select codicecomune 
+	    from fenode
+	</entry>
+
+	<entry key="registeredNodesWithBEServices.query">
+	    select distinct fe.id, fe.codicecomune, fe.comune, fe.nodofe, fe.reference 
+	    from fenode fe join benode be on be.nodeid = fe.id order by fe.nodofe
+	</entry>
+
+	<entry key="registeredFEServices.query">
+	    select distinct package, nome 
+	    from service
+	</entry>
+
+	<entry key="registeredBEServices.query">
+	    select distinct nodobe 
+	    from benode
+	</entry>
+
+	<entry key="registeredBEServicesUrlsAndNodeNames.query">
+	 	select fe.codicecomune, fe.comune, be.nodobe, be.reference 
+		from fenode fe 
+		join benode be ON be.nodeid = fe.id ORDER BY fe.nodofe
+	</entry>
+
+	<entry key="isRegisteredBEService.query">
+	    select count(id) from benode where nodobe = ? and nodeid = ?
+	</entry>
+
+	<entry key="registeredBEServicesAllData.query">
+		select * from benode order by nodeid
+	</entry>
+
+	<entry key="accountExists.query">
+	    select count(id) from pc_users where tax_code = ?
+	</entry>
+
+	<entry key="deleteAccount.query">
+	    {call pcDeleteUser(?)}
+	</entry>
+
+	<entry key="deleteAccount.query1">
+		delete from pc_users_allowed_nodes where userRef = ?;
+	</entry>
+	<entry key="deleteAccount.query2">
+		delete from pc_users_allowed_feservices where userRef = ?;
+	</entry>
+	<entry key="deleteAccount.query3">
+		delete from pc_users_allowed_beservices where userRef = ?;
+	</entry>
+	<entry key="deleteAccount.query4">
+		delete from pc_users_authorities where userRef = ?;
+	</entry>
+	<entry key="deleteAccount.query5">
+		delete from pc_users_certificates where userRef = ?;
+	</entry>
+	<entry key="deleteAccount.query6">
+		delete from pc_users_preferences where userRef = ?;
+	</entry>
+	<entry key="deleteAccount.query8">
+		delete from pc_users_allowed_ppladmin_nodes where userRef = ?;
+	</entry>
+	<entry key="deleteAccount.query7">
+		delete from pc_users where id = ?;
+	</entry>
+
+	
+
+	<entry key="getAccountData.query">
+	    select first_name, last_name, tax_code, email, description, email_receiver_types_flags from pc_users where id = ?
+	</entry>
+	<entry key="getAccountAllowedNodes.query">
+	    select nodeId from pc_users_allowed_nodes where userRef = ?
+	</entry>
+	<entry key="getAccountAllowedFEServices.query">
+	    select service_pkg from pc_users_allowed_feservices where userRef = ?
+	</entry>
+	<entry key="getAccountAllowedBEServices.query">
+	    select service_pkg from pc_users_allowed_beservices where userRef = ?
+	</entry>
+	<entry key="getAccountAuthorities.query">
+	    select ac.id from pc_users_authorities as ua join pc_authorities_catalog as ac on ac.id = ua.authorityRef where userRef = ?
+	</entry>
+	<entry key="getAccountAllowedPplAdminNodes.query">
+	    select nodeId from pc_users_allowed_ppladmin_nodes where userRef = ?
+	</entry>
+
+	<entry key="insertUserCertificate.query">
+	    insert into pc_users_certificates(userRef, alias, validity, generationTimestamp, certificate, sentMail) values(?, ?, ?, ?, ?, ?)
+	</entry>
+
+	<entry key="deleteUserCertificate.query">
+	    delete from pc_users_certificates where userRef = ?
+	</entry>
+
+	<entry key="updateConfiguration.query">
+	    update pc_configuration set _value = ? where _key = ?
+	</entry>
+
+	<entry key="nodeRegisteredBEServicesAllData.query">
+		select * from benode where nodeid in (?) order by nodeid
+	</entry>
+
+	<entry key="frameworkMessagesLocales.query">
+		select bundles._locale, pc_languages_codes._name from bundles join pc_languages_codes on pc_languages_codes.iso_code = bundles._locale where bundles.bundle = 'it.people.resources.FormLabels' and bundles.nodeId is null and bundles._locale is not null order by 2
+	</entry>
+
+	<entry key="frameworkMessagesRegisterableLocales.query">
+		select availableLanguages.iso_code, availableLanguages._name from pc_languages_codes 
+		as availableLanguages where availableLanguages.iso_code not in (select bundles._locale 
+		from bundles where bundles.bundle = 'it.people.resources.FormLabels' and 
+		bundles.nodeId is null and bundles._locale is not null) order by 2
+	</entry>
+
+
+	<entry key="frameworkMessagesByLocale.query">
+		SELECT * FROM (
+		SELECT bundleProp.id, bundleProp._key 'Chiave', bundleProp._value 'Valore', bundles._locale, IFNULL(pclc._name, 'Generale') AS 'Lingua' 
+		FROM bundles_properties bundleProp 
+		JOIN bundles ON bundles.id = bundleProp.bundleRef 
+		LEFT JOIN pc_languages_codes AS pclc ON pclc.iso_code = bundles._locale 
+		WHERE bundles.bundle = 'it.people.resources.FormLabels' 
+		AND bundles.nodeId IS NULL AND bundles._locale = ? 
+		UNION 
+		SELECT bundleProp.id, bundleProp._key 'Chiave', bundleProp._value 'Valore', bundles._locale, IFNULL(pclc._name, 'Generale') AS 'Lingua' 
+		FROM bundles_properties bundleProp 
+		JOIN bundles ON bundles.id = bundleProp.bundleRef LEFT JOIN pc_languages_codes AS pclc ON pclc.iso_code = bundles._locale 
+		WHERE bundles.bundle = 'it.people.resources.FormLabels' 
+		AND bundles.nodeId IS NULL AND bundles._locale IS NULL
+		AND bundleProp._key NOT IN (
+		SELECT bundleProp._key FROM bundles_properties bundleProp 
+		JOIN bundles ON bundles.id = bundleProp.bundleRef 
+		WHERE bundles.bundle = 'it.people.resources.FormLabels' 
+		AND bundles.nodeId IS NULL AND bundles._locale = ?)
+		ORDER BY 4 DESC, 2) AS bundle
+	</entry>
+	
+	
+	
+
+	<entry key="feRegisteredServicesPackages.query">
+		select distinct nome, package from service
+	</entry>
+	
+	<entry key="serviceMessagesByLocale.query">
+		select * from (select bundleProp.id, bundleProp._key 'Chiave', bundleProp._value 'Valore', bundles._locale, ifnull(pclc._name, 'Generale') as 'Lingua' 
+		from bundles_properties bundleProp 
+		join bundles on bundles.id = bundleProp.bundleRef 
+		left join pc_languages_codes as pclc on pclc.iso_code = bundles._locale 
+		where bundles.bundle = ! and bundles.nodeId is null and bundles._locale = ? 
+		union 
+		select bundleProp.id, bundleProp._key 'Chiave', bundleProp._value 'Valore', bundles._locale, ifnull(pclc._name, 'Generale') as 'Lingua' 
+		from bundles_properties bundleProp 
+		join bundles on bundles.id = bundleProp.bundleRef 
+		left join pc_languages_codes as pclc on pclc.iso_code = bundles._locale 
+		where bundles.bundle = ! and bundles.nodeId is null and bundles._locale is null 
+		and bundleProp._key not in (
+		select bundleProp._key from bundles_properties bundleProp 
+		join bundles on bundles.id = bundleProp.bundleRef 
+		where bundles.bundle = ! and bundles.nodeId is null and bundles._locale = ?)
+		order by 4 desc, 2) as bundle
+	</entry>
+
+	
+	<entry key="serviceMessagesByNodeIdLocale.query">
+		SELECT * FROM (SELECT bundleProp.id, bundleProp._key 'Chiave', bundleProp._value 'Valore', bundles._locale, IFNULL(pclc._name, 'Generale') AS 'Lingua' 
+		FROM bundles_properties bundleProp 
+		JOIN bundles ON bundles.id = bundleProp.bundleRef 
+		LEFT JOIN pc_languages_codes AS pclc ON pclc.iso_code = bundles._locale 
+		WHERE bundles.bundle = ! 
+		AND bundles.nodeId = $ AND bundles._locale ? 
+		UNION 
+		SELECT bundleProp.id, bundleProp._key 'Chiave', bundleProp._value 'Valore', bundles._locale, IFNULL(pclc._name, 'Generale') AS 'Lingua' 
+		FROM bundles_properties bundleProp 
+		JOIN bundles ON bundles.id = bundleProp.bundleRef LEFT JOIN pc_languages_codes AS pclc ON pclc.iso_code = bundles._locale 
+		WHERE bundles.bundle = ! 
+		AND bundles.nodeId IS NULL
+		AND bundles._locale IS NULL
+		AND bundleProp._key NOT IN (
+		SELECT bundleProp._key FROM bundles_properties bundleProp 
+		JOIN bundles ON bundles.id = bundleProp.bundleRef 
+		WHERE bundles.bundle = ! AND bundles.nodeId = $ AND bundles._locale ?)
+		ORDER BY 4 DESC, 2) AS bundle
+	</entry>
+	
+	<entry key="serviceMessagesBundleRefByNodeIdLocale.query">
+		select bundles.id from bundles where bundles.bundle = ? and bundles.nodeId ! and bundles._locale $
+	</entry>
+
+	<entry key="serviceMessageKeyById.query">
+		select bundleProp._key from bundles_properties bundleProp where bundleProp.id = ?
+	</entry>
+
+	<entry key="serviceMessagesLocales.query">
+		select bundles._locale, pc_languages_codes._name from bundles join pc_languages_codes on pc_languages_codes.iso_code = bundles._locale where bundles.bundle = ? and bundles.nodeId is null and bundles._locale is not null order by 2
+	</entry>
+
+	<entry key="serviceMessagesRegisterableLocales.query">
+		select availableLanguages.iso_code, availableLanguages._name from pc_languages_codes 
+		as availableLanguages where availableLanguages.iso_code not in (select bundles._locale 
+		from bundles where bundles.bundle = ? and bundles.nodeId is null and bundles._locale is not null) order by 2
+	</entry>
+
+	<entry key="userpreferences.pagedListHoldersSettings.query">
+		select _key, _value from pc_users_preferences where userRef = ? and _key like 'plh_%_rowsPerPage'
+	</entry>
+
+	<entry key="userpreferences.pagedListHoldersSettings.count.query">
+		select count(_key) from pc_users_preferences where userRef = ? and _key = ?
+	</entry>
+
+	<entry key="userpreferences.pagedListHoldersSettings.update.query">
+		update pc_users_preferences set _value = ? where userRef = ? and _key = ?
+	</entry>
+
+	<entry key="userpreferences.pagedListHoldersSettings.insert.query">
+		insert into pc_users_preferences(userRef, _key, _value) value(?, ?, ?)
+	</entry>
+
+	<entry key="feNodesList.query">
+		select id, comune, codicecomune from fenode
+	</entry>
+
+	<entry key="feNodesAvailableServices.query">
+		select svc.id, svc.nome, svc.package, svc.attivita, svc.sottoattivita, fenode.id, fenode.codicecomune, fenode.comune, 
+		fenode.nodofe, fenode.reference from service as svc join fenode on fenode.id = svc.nodeid where fenode.id = ? order by attivita, sottoattivita
+	</entry>
+
+	<entry key="registerBundle.query">
+		insert into bundles(bundle, nodeId, _locale, active, _group) values(?, ?, ?, ?, ?)
+	</entry>
+
+	<entry key="serviceMessagesLocalesByNodeId.query">
+		select bundles._locale, pc_languages_codes._name from bundles join pc_languages_codes 
+		on pc_languages_codes.iso_code = bundles._locale where bundles.bundle = ? 
+		and bundles.nodeId = ? and bundles._locale is not null order by 2
+	</entry>
+
+	<entry key="serviceMessagesRegisterableLocalesByNodeId.query">
+		select availableLanguages.iso_code, availableLanguages._name from pc_languages_codes 
+		as availableLanguages where availableLanguages.iso_code not in (select bundles._locale 
+		from bundles where bundles.bundle = ? and bundles.nodeId = ? and bundles._locale is not null) order by 2
+	</entry>
+
+	<entry key="insertBundleProperty.query">
+		insert into bundles_properties(bundleRef, _key, _value, active, _group) values(?, ?, ?, ?, ?)
+	</entry>
+
+	<entry key="updateBundleProperty.query">
+		update bundles_properties set _value = ?, active = ?, _group = ? where bundleRef = ? and _key = ?
+	</entry>
+
+	<entry key="searchBundleKey.query">
+		select count(id) from bundles_properties where bundleRef = ? and _key = ?
+	</entry>
+
+	<entry key="nodesOrphanedBeServices.query">
+		select ben.id, ben.nodeid, fen.nodofe, fen.comune, fen.codicecomune, ben.nodobe, ben.reference, ben.useenvelope, ben.disablecheckdelegate from benode ben 
+		join fenode fen on fen.id = ben.nodeid 
+		where ben.nodobe not in (
+		select ref.value from reference ref) 
+		and ben.nodeid = ?
+	</entry>
+
+	<entry key="nodesOrphanedBeServicesDeletion.query">
+		delete from benode where id = ?
+	</entry>
+
+	<entry key="beServicesMassiveChange.query">
+		update benode set reference = ?, useenvelope = ?, disablecheckdelegate = ? where id = ?
+	</entry>
+
+	<entry key="allBeServicesMassiveChange.query">
+		select ben.id, ben.nodeid, fen.nodofe, fen.comune, fen.codicecomune, ben.nodobe, ben.reference, ben.useenvelope, ben.disablecheckdelegate from benode ben 
+		join fenode fen on fen.id = ben.nodeid where ben.nodeid = ?
+	</entry>
+	
+	<entry key="tableValuesTableIdByProcessName.query">
+		select id, tableId, nodeId, locale from tablevalues where processName = ?
+	</entry>
+	
+	<entry key="tableValuesTableIdByProcessNameAndNodeId.query">
+		select id, tableId, nodeId, locale from tablevalues where processName = ? and nodeId = ?
+	</entry>
+	
+	<entry key="tableValuesTableIdByProcessNameAndNodeIdNull.query">
+		select id, tableId, nodeId, locale from tablevalues where processName = ? and nodeId is null
+	</entry>
+	
+	<entry key="tableValuesPropertiesByTablevalueRef.query">
+		select id, value from tablevalues_properties where tablevalueRef = ?
+	</entry>
+	
+	<entry key="tableValuesPropertiesInsert.query">
+		insert into tablevalues_properties (value, tablevalueRef) values(?, ?)
+	</entry>
+	
+	<entry key="tableValuesPropertiesUpdate.query">
+		update tablevalues_properties set value = ?, tablevalueRef = ? where value = ? and tablevalueRef = ?
+	</entry>
+	
+	<entry key="tableValuesPropertiesDelete.query">
+		delete from tablevalues_properties where value = ? and tablevalueRef = ?
+	</entry>
+
+	<entry key="auditProcessorsForService.query">
+		SELECT * FROM (
+		SELECT pro.id, pro.auditProcessor, pro.descrizione as Monitoraggio, servPro.serviceId, IFNULL(servPro.active, 0) AS Attivo 
+		FROM service_audit_processors AS servPro
+		LEFT JOIN pc_audit_processors AS pro ON pro.auditProcessor = servPro.auditProcessor WHERE servPro.serviceId = ?
+		UNION
+		SELECT pro.id, pro.auditProcessor, pro.descrizione, NULL, 0
+		FROM pc_audit_processors AS pro 
+		WHERE pro.id NOT IN (
+			SELECT pro.id
+			FROM service_audit_processors AS servPro
+			LEFT JOIN pc_audit_processors AS pro ON pro.auditProcessor = servPro.auditProcessor WHERE servPro.serviceId = ?)
+		ORDER BY 1)
+		AS processors
+	</entry>
+	
+	<entry key="checkExistsServiceAuditProcessor.query">
+		select * from service_audit_processors where serviceId = ? and auditProcessor = ?
+	</entry>
+	
+	<entry key="updateServiceAuditProcesor.query">
+		update service_audit_processors set active = ? where serviceId = ? and auditProcessor = ?
+	</entry>
+		
+	<entry key="insertServiceAuditProcessor.query">
+		insert into service_audit_processors (serviceId, auditProcessor, active) values (?, ?, ?)
+	</entry>
+	
+	<entry key="allFEInterfaces.query">
+		select codicecomune, reference from fenode
+	</entry>
+	
+	<entry key="feInterfacesByCommuneList.query">
+		select codicecomune, reference from fenode where codicecomune in (?)
+	</entry>
+	
+	
+	<entry key="velocityTemplatesForService.query">
+		SELECT vt._communeId, vt._serviceId, LEFT(vt._key, LENGTH(vt._key)-LOCATE('.', REVERSE(vt._key))) 'Chiave', 
+			vt._description 'Descrizione' FROM velocity_templates AS vt WHERE vt._key LIKE('%.body')  ORDER BY Chiave
+	</entry>
+
+	<entry key="velocityTemplateGeneric.query">
+		SELECT vt._communeId, vt._serviceId, LEFT(vt._key, LENGTH(vt._key)-LOCATE('.', REVERSE(vt._key))) 'Chiave', 
+			vt._description 'Descrizione' FROM velocity_templates AS vt WHERE vt._key LIKE('%.body')  ORDER BY Chiave
+	</entry>
+
+	<entry key="velocityTemplatesForNode.query">
+		SELECT vt._communeId, vt._serviceId, LEFT(vt._key, LENGTH(vt._key)-LOCATE('.', REVERSE(vt._key))) 'Chiave', 
+			vt._description 'Descrizione' FROM velocity_templates AS vt WHERE vt._key LIKE('%.body')  ORDER BY Chiave
+	</entry>
+
+
+
+
+
+</properties>

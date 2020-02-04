@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<PROCESS>
+	<PROCESS-CONFIG>
+		<default>
+			<SUMMARY-ENABLED>ALWAYS</SUMMARY-ENABLED>			
+			<SIGN-ENABLED>true</SIGN-ENABLED>
+			<PAYMENT-OBSERVER>SpecializedPaymentObserver</PAYMENT-OBSERVER>			
+		</default>
+		<PROCESS-VIEW>
+			<default>
+				<SAVE-BAR-ENABLED>true</SAVE-BAR-ENABLED>
+				<NAVIGATION-BAR-ENABLED>true</NAVIGATION-BAR-ENABLED>
+				<!-- consente di attivare la visualizzazione automatica
+					 di un messaggio di errore, nel caso di problemi
+					 di collegamento ai back-end di visura, attivati
+					 dalla callService().
+				-->
+				<!--<SHOW-BACKEND-ERROR>true</SHOW-BACKEND-ERROR>-->
+			</default>
+		</PROCESS-VIEW>
+	</PROCESS-CONFIG>
+	<VIEW id="1">
+		<default>
+			<name>TutorialView</name>
+			<activity-order>0, 1</activity-order>
+		</default>
+		<ACTIVITIES>
+			<ACTIVITY id="0">
+				<default>
+					<name>Parte 1</name>
+					<step-order>0, 1, 2, 3, 4, 5, 6, 7</step-order>
+				</default>
+				<STEPS>
+					<STEP id="0">
+						<default>
+							<name>Introduzione</name>
+							<view>informazioni.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="1">
+						<default>
+							<name>Navigazione</name>
+							<view>navigazione.jsp</view>
+						</default>
+					</STEP>                
+					<STEP id="2">
+						<default>
+							<name>Form</name>
+							<view>formTest.jsp</view>
+							<classname>FormTest</classname>
+						</default>
+					</STEP>
+					<STEP id="3">
+						<default>
+							<name>Web Services</name>
+							<view>wsTest.jsp</view>
+							<classname>WSTest</classname>
+						</default>
+					</STEP>
+					<STEP id="4">
+						<default>
+							<name>CMS</name>
+							<view>cmsTest.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="5">
+						<default>
+							<name>Parametri Configurazione</name>
+							<view>paramTest.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="6">
+						<default>
+							<name>Branch</name>
+							<view>branchTest.jsp</view>
+							<step>BranchTest</step>
+						</default>
+					</STEP>
+					<STEP id="7">
+						<default>
+							<name>Pagina Condizionata</name>
+							<view>paginaIntermedia.jsp</view>
+							<classname>PaginaIntermedia</classname>							
+							<controller>PagIntAccessController</controller>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="1">
+				<default>
+					<name>Parte 2</name>
+					<step-order>8, 9, datiPagamento, RIMP, EPAG, 10</step-order>
+				</default>				
+				<STEPS>
+					<STEP id="8">
+						<default>
+							<name>Gestione allegati</name>
+							<view>allegati.jsp</view>
+							<classname>Allegati</classname>
+						</default>
+					</STEP>					
+					<STEP id="9">
+						<default>
+							<name>Abilita Pagamenti</name>
+							<view>abilitaPagamenti.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="datiPagamento">
+						<default>
+							<name>Dati Pagamento</name>
+							<view>datiPagamento.jsp</view>
+							<controller>AbilitaPagamentiController</controller>							
+						</default>
+					</STEP>
+					<STEP id="RIMP">
+						<default>
+							<name>Accedi Pagamenti</name>
+							<view>accediPagamenti.jsp</view>
+							<classname>AccediPagamenti</classname>
+							<controller>AbilitaPagamentiController</controller>
+						</default>
+					</STEP>
+					<STEP id="EPAG">
+						<default>
+							<name>Esito Pagamento</name>
+							<view>esitoPagamenti.jsp</view>
+							<classname>EsitoPagamenti</classname>
+							<controller>AbilitaPagamentiController</controller>
+						</default>
+					</STEP>					     
+					<STEP id="10">
+						<default>
+							<name>Fine</name>
+							<view>fine.jsp</view>
+						</default>
+					</STEP>
+				</STEPS>				
+			</ACTIVITY>
+			
+		</ACTIVITIES>
+	</VIEW>
+</PROCESS>

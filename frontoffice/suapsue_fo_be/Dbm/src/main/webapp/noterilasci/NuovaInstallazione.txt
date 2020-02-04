@@ -1,0 +1,9 @@
+---Installazione banca dati e dbm da zero:
+
+seguire le istruzioni riportate nel documento ufficiale di installazione,
+gli script sql
+people_cea_create.sql
+people_cea_html_testi.sql
+people_cea_templates.sql
+people_cea_utenti.sql
+vanno eseguiti in sequenza per la creazione e popolamento inizale della base dati.

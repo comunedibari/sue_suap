@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.6.0_27-b07 (Sun Microsystems Inc.)
+Built-By: RERCCDGERF
+
+Name: distrib
+Specification-Title: DynamicOdtService
+Specification-Version: 2.5.4
+Specification-Vendor: Regione Emilia-Romagna - Centro di competenza pe
+ r il dispiegamento delle soluzioni di e-government
+Implementation-Title: DynamicOdtService - 2.5.4 (build 0001)
+Implementation-Version: 2.5.4_0001 2013-10-01 09:00:00
+Implementation-Vendor: Regione Emilia-Romagna - Centro di competenza p
+ er il dispiegamento delle soluzioni di e-government

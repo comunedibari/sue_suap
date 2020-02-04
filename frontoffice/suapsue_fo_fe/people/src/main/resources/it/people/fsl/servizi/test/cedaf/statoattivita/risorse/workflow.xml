@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<PROCESS>
+	<PROCESS-CONFIG>
+		<default>
+			<SUMMARY-ENABLED>false</SUMMARY-ENABLED>
+		</default>
+	</PROCESS-CONFIG>
+	<VIEW id="1">
+		<default>
+			<name>TestStatoAttivita</name>
+			<activity-order>0, 1, 2</activity-order>
+		</default>
+		<ACTIVITIES>
+			<ACTIVITY id="0">
+				<default>
+					<name>Inizializzazione</name>
+					<step-order>Intro, Init</step-order>
+				</default>
+				<STEPS>
+					<STEP id="Intro">
+						<default>
+							<name>Intro</name>
+							<view>intro.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="Init">
+						<default>
+							<name>Inizializza</name>
+							<view>initStep.jsp</view>
+							<classname>InitStep</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="1">
+				<default>
+					<name>Attivita1</name>
+					<step-order>1, 2</step-order>
+				</default>
+				<STEPS>
+					<STEP id="1">
+						<default>
+							<name>Step 1</name>
+							<view>genericStep.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="2">
+						<default>
+							<name>Step 2</name>
+							<view>genericStep.jsp</view>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+			<ACTIVITY id="2">
+				<default>
+					<name>Attivita2</name>
+					<step-order>3, 4</step-order>
+				</default>
+				<STEPS>
+					<STEP id="3">
+						<default>
+							<name>Step 3</name>
+							<view>genericStep.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="4">
+						<default>
+							<name>Step 4</name>
+							<view>genericStep.jsp</view>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+		</ACTIVITIES>
+	</VIEW>
+</PROCESS>

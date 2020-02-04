@@ -1,0 +1,674 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from FEInterfaceService WSDL service -->
+
+  <service name="FEInterface" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://feservice.people.it/"/>
+      <parameter name="wsdlServiceElement" value="FEInterfaceService"/>
+      <parameter name="schemaQualified" value="http://beans.feservice.people.it/,http://feservice.people.it/"/>
+      <parameter name="wsdlServicePort" value="FEInterface"/>
+      <parameter name="className" value="it.people.feservice.FEInterfaceImpl"/>
+      <parameter name="wsdlPortType" value="FEInterface"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="echo" qname="operNS:echo" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:echoReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="echo" >
+       <parameter qname="pns:word" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="registerNode" qname="operNS:registerNode" xmlns:operNS="http://feservice.people.it/" soapAction="registerNode" >
+        <parameter qname="pns:comune" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:codice" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:descrizione" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+       	<parameter qname="pns:announcementMessage" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:showAnnouncement" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:onlineSign" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+     	<parameter qname="pns:offlineSign" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="registerNodeWithAoo" qname="operNS:registerNodeWithAoo" xmlns:operNS="http://feservice.people.it/" soapAction="registerNodeWithAoo" >
+        <parameter qname="pns:comune" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:codice" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:descrizione" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:aooPrefix" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:announcementMessage" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:showAnnouncement" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:onlineSign" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+     	<parameter qname="pns:offlineSign" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="registerService" qname="operNS:registerService" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:registerServiceReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:ServiceVO" xmlns:rtns="http://beans.feservice.people.it/" soapAction="registerService" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:packageName" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="configureService" qname="operNS:configureService" xmlns:operNS="http://feservice.people.it/" soapAction="configureService" >
+        <parameter qname="pns:theService" xmlns:pns="http://feservice.people.it/" type="tns:ServiceVO" xmlns:tns="http://beans.feservice.people.it/"/>
+      </operation>
+      <operation name="updateService" qname="operNS:updateService" xmlns:operNS="http://feservice.people.it/" soapAction="updateService" >
+        <parameter qname="pns:theService" xmlns:pns="http://feservice.people.it/" type="tns:ServiceVO" xmlns:tns="http://beans.feservice.people.it/"/>
+      </operation>
+      <operation name="configureServiceParameter" qname="operNS:configureServiceParameter" xmlns:operNS="http://feservice.people.it/" soapAction="configureServiceParameter" >
+        <parameter qname="pns:parameterVO" xmlns:pns="http://feservice.people.it/" type="tns:ConfigParameterVO" xmlns:tns="http://beans.feservice.people.it/"/>
+      </operation>
+      <operation name="configureServiceReference" qname="operNS:configureServiceReference" xmlns:operNS="http://feservice.people.it/" soapAction="configureServiceReference" >
+        <parameter qname="pns:referenceVO" xmlns:pns="http://feservice.people.it/" type="tns:DependentModuleVO" xmlns:tns="http://beans.feservice.people.it/"/>
+      </operation>
+      <operation name="getAllLogs" qname="operNS:getAllLogs" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAllLogsReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:LogBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAllLogs" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getLogsForService" qname="operNS:getLogsForService" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getLogsForServiceReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:LogBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getLogsForService" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:serviceName" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:logLevel" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getLogsForDate" qname="operNS:getLogsForDate" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getLogsForDateReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:LogBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getLogsForDate" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:from" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:to" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getLogsForDateAndService" qname="operNS:getLogsForDateAndService" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getLogsForDateAndServiceReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:LogBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getLogsForDateAndService" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:serviceName" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:logLevel" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:from" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:to" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getOrderedLogs" qname="operNS:getOrderedLogs" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getOrderedLogsReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:LogBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getOrderedLogs" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:serviceName" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:logLevel" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:from" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:to" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:orderBy" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:orderType" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      
+      <!-- AuditConversations -->
+      <operation name="getAllAuditConversationsForComune" qname="operNS:getAllAuditConversationsForComune" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAllAuditConversationsForComuneReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:AuditConversationsBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAllAuditConversationsForComune" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:startingPoint" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:duration" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAuditConversationsForAllParameters" qname="operNS:getAuditConversationsForAllParameters" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAuditConversationsForAllParametersReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:AuditConversationsBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAuditConversationsForAllParameters" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:taxCode" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:processName" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:from" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:to" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:startingPoint" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:duration" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAuditConversationsForService" qname="operNS:getAuditConversationsForService" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAuditConversationsForServiceReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:AuditConversationsBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAuditConversationsForService" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:taxCode" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:processName" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:startingPoint" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:duration" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAuditConversationsForDate" qname="operNS:getAuditConversationsForDate" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAuditConversationsForDateReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:AuditConversationsBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAuditConversationsForDate" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:from" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:to" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:startingPoint" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:duration" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAuditUsersForComune" qname="operNS:getAuditUsersForComune" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAuditUsersForComuneReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:string" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAuditUsersForComune" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAuditUser" qname="operNS:getAuditUser" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAuditUserReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:AuditUserBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAuditUser" >
+        <parameter qname="pns:userId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:userAccrId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAuditConversation" qname="operNS:getAuditConversation" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAuditConversationReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:AuditConversationsBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAuditConversation" >
+        <parameter qname="pns:id" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAuditFeBeXml" qname="operNS:getAuditFeBeXml" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAuditFeBeXmlReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:AuditFeBeXmlBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAuditFeBeXml" >
+        <parameter qname="pns:id" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAuditConversations" qname="operNS:getAuditConversations" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getAuditConversationsReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:AuditConversationsBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getAuditConversations" >
+        <parameter qname="pns:query" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:queryCount" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>      
+      <!-- AuditConversations -->
+      <operation name="getStatistiche" qname="operNS:getStatistiche" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getStatisticheReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:AuditStatisticheBean" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getStatistiche" >
+        <parameter qname="pns:query" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+            
+      <operation name="deleteServiceByPackage" qname="operNS:deleteServiceByPackage" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:deleteServiceByPackageReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="deleteServiceByPackage" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:packageName" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="deleteAllServices" qname="operNS:deleteAllServices" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:deleteAllServicesReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="deleteAllServices" >
+        <parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+
+		<!-- -> Aggiunti per gestione multiente -->
+		<operation name="getNodeDeployedServices" qname="operNS:getNodeDeployedServices" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getNodeDeployedServicesReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:NodeDeployedServices" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="getNodeDeployedServices">
+			<parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	</operation>
+		<operation name="nodeCopy" qname="operNS:nodeCopy" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:nodeCopyReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="nodeCopy">
+			<parameter qname="pns:selectedServices" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+			<parameter qname="pns:areasLogicalNamesPrefix" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+			<parameter qname="pns:areasLogicalNamesSuffix" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+			<parameter qname="pns:servicesLogicalNamesPrefix" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+			<parameter qname="pns:servicesLogicalNamesSuffix" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+			<parameter qname="pns:fromCommuneId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+			<parameter qname="pns:toCommuneId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	</operation>
+		<!-- <- Aggiunti per gestione multiente -->
+		<operation name="getServiceOnlineHelpWorkflowElements" qname="operNS:getServiceOnlineHelpWorkflowElements" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getServiceOnlineHelpWorkflowElementsReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:ServiceOnlineHelpWorkflowElements" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="getServiceOnlineHelpWorkflowElements">
+			<parameter qname="pns:servicePackage" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	</operation>
+
+      <operation name="updateBundle" qname="operNS:updateBundle" xmlns:operNS="http://feservice.people.it/" soapAction="updateBundle" >
+        <parameter qname="pns:bundle" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:nodeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:locale" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:key" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:value" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:active" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:group" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+
+      <operation name="registerBundle" qname="operNS:registerBundle" xmlns:operNS="http://feservice.people.it/" soapAction="registerBundle" >
+        <parameter qname="pns:bundle" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:nodeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:locale" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:active" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:group" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+
+      <operation name="deleteBundle" qname="operNS:deleteBundle" xmlns:operNS="http://feservice.people.it/" soapAction="deleteBundle" >
+        <parameter qname="pns:bundle" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:nodeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:locale" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+
+      <operation name="updateFeServices" qname="operNS:updateFeServices" xmlns:operNS="http://feservice.people.it/" soapAction="updateFeServices" >
+      	<parameter qname="pns:services" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_tns2_ServiceVO" xmlns:tns="http://feservice.people.it/"/>
+      </operation>
+      
+      <operation name="deleteFeServicesByPackages" qname="operNS:deleteFeServicesByPackages" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:deleteFeServicesByPackagesReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="deleteFeServicesByPackages" >
+      	<parameter qname="pns:servicesCommunePackage" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_tns2_CommunePackageVO" xmlns:tns="http://feservice.people.it/"/>
+      </operation>
+      
+      <operation name="deleteBeServicesReferencesByPackages" qname="operNS:deleteBeServicesReferencesByPackages" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:deleteBeServicesReferencesByPackagesReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="deleteBeServicesReferencesByPackages" >
+      	<parameter qname="pns:servicesReferences" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_tns2_FEServiceReferenceVO" xmlns:tns="http://feservice.people.it/"/>
+      </operation>
+      
+      <operation name="configureTableValueProperty" qname="operNS:configureTableValueProperty" xmlns:operNS="http://feservice.people.it/" soapAction="configureTableValueProperty" >
+        <parameter qname="pns:tableValueProperty" xmlns:pns="http://feservice.people.it/" type="tns:TableValuePropertyVO" xmlns:tns="http://beans.feservice.people.it/"/>
+      </operation>
+      
+      
+      <operation name="configureServiceAuditProcessor" qname="operNS:configureServiceAuditProcessor" xmlns:operNS="http://feservice.people.it/" soapAction="configureServiceAuditProcessor" >
+        <parameter qname="pns:tableValueProperty" xmlns:pns="http://feservice.people.it/" type="tns:ServiceAuditProcessorVO" xmlns:tns="http://beans.feservice.people.it/"/>
+      </operation>
+      
+      <operation name="getMonitoringIndicators" qname="operNS:getMonitoringIndicators" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getMonitoringIndicatorsReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:IndicatorsVO" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getMonitoringIndicators" >
+        <parameter qname="pns:indicatorFilter" xmlns:pns="http://feservice.people.it/" type="tns:IndicatorFilter" xmlns:tns="http://beans.feservice.people.it/"/>
+      	<parameter qname="pns:lowerPageLimit" xmlns:pns="http://feservice.people.it/" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:pageSize" xmlns:pns="http://feservice.people.it/" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+     	<parameter qname="pns:selectedEnti" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+     	<parameter qname="pns:selectedAttivita" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+      	<parameter qname="pns:retrieveAll" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+
+
+		<operation name="setAsPeopleAdministrator" qname="operNS:setAsPeopleAdministrator" xmlns:operNS="http://feservice.people.it/" soapAction="setAsPeopleAdministrator">
+			<parameter qname="pns:userId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+			<parameter qname="pns:eMail" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+			<parameter qname="pns:userName" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+			<parameter qname="pns:allowedCommune" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+			<parameter qname="pns:mailReceiverTypeFlags" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	</operation>
+
+		<operation name="removeFromPeopleAdministrator" qname="operNS:removeFromPeopleAdministrator" xmlns:operNS="http://feservice.people.it/" soapAction="removeFromPeopleAdministrator">
+			<parameter qname="pns:userId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	</operation>
+
+		<operation name="getPeopleAdministrator" qname="operNS:getPeopleAdministrator" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getPeopleAdministratorReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:PeopleAdministratorVO" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getPeopleAdministrator">
+			<parameter qname="pns:userId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	</operation>
+      
+      <operation name="getProcesses" qname="operNS:getProcesses" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getProcessesReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:ProcessesVO" xmlns:rtns="http://beans.feservice.people.it/" soapAction="getProcesses" >
+        <parameter qname="pns:processFilter" xmlns:pns="http://feservice.people.it/" type="tns:ProcessFilter" xmlns:tns="http://beans.feservice.people.it/"/>
+      	<parameter qname="pns:lowerPageLimit" xmlns:pns="http://feservice.people.it/" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:pageSize" xmlns:pns="http://feservice.people.it/" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+     	<parameter qname="pns:selectedUsers" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+     	<parameter qname="pns:selectedNodes" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+      	<parameter qname="pns:retrieveAll" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      
+      <operation name="getProcessUsers" qname="operNS:getProcessUsers" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getProcessUsersReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="getProcessUsers" >
+      </operation>
+      
+       <operation name="deleteProcesses" qname="operNS:deleteProcesses" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:deleteProcessesReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:ProcessesDeletionResultVO" xmlns:rtns="http://beans.feservice.people.it/" soapAction="deleteProcesses" >
+        <parameter qname="pns:processFilter" xmlns:pns="http://feservice.people.it/" type="tns:ProcessFilter" xmlns:tns="http://beans.feservice.people.it/"/>
+     	<parameter qname="pns:selectedUsers" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+     	<parameter qname="pns:selectedNodes" xmlns:pns="http://feservice.people.it/" type="tns:ArrayOf_soapenc_string" xmlns:tns="http://feservice.people.it/"/>
+      	<parameter qname="pns:archiveInFile" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      
+      
+       <operation name="getVelocityTemplatesData" qname="operNS:getVelocityTemplatesData" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getVelocityTemplatesDataReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:VelocityTemplateDataVO" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="getVelocityTemplatesData" >
+      	<parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+       	<parameter qname="pns:servicePackage" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:retrieveAll" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+			
+      <operation name="updateVelocityTemplatesData" qname="operNS:updateVelocityTemplatesData" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:updateVelocityTemplatesDataReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="updateVelocityTemplatesData" >
+      	<parameter qname="pns:templateDataVO" xmlns:pns="http://feservice.people.it/" type="tns:VelocityTemplateDataVO" xmlns:tns="http://beans.feservice.people.it/"/>
+        <parameter qname="pns:delete" xmlns:pns="http://feservice.people.it/" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+
+
+		<operation name="getUserNotifications" qname="operNS:getUserNotifications" xmlns:operNS="http://feservice.people.it/" returnQName="retNS:getUserNotificationsReturn" xmlns:retNS="http://feservice.people.it/" returnType="rtns:UserNotificationDataVO" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="getUserNotifications" >
+      	<parameter qname="pns:processFilter" xmlns:pns="http://feservice.people.it/" type="tns:ProcessFilter" xmlns:tns="http://beans.feservice.people.it/"/>
+      	<parameter qname="pns:lowerPageLimit" xmlns:pns="http://feservice.people.it/" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:pageSize" xmlns:pns="http://feservice.people.it/" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:type" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:userId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:firstname" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:lastname" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:email" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:communeId" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:from" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:to" xmlns:pns="http://feservice.people.it/" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:sortType" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      	<parameter qname="pns:sortColumn" xmlns:pns="http://feservice.people.it/" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      
+      
+      <!-- ALLOWED METHODS -->
+      <parameter name="allowedMethods" value="getUserNotifications updateVelocityTemplatesData getVelocityTemplatesData getProcesses getProcessUsers deleteProcesses getMonitoringIndicators configureServiceAuditProcessor configureTableValueProperty deleteServiceByPackage getAllLogs registerNode getLogsForDateAndService getOrderedLogs configureService updateService configureServiceParameter configureServiceReference registerNodeWithAoo registerService getLogsForService getAllAuditConversationsForComune getAuditConversationsForAllParameters getAuditConversationsForService getAuditConversationsForDate getAuditUsersForComune getAuditUser getAuditConversation getAuditFeBeXml echo getLogsForDate deleteAllServices getNodeDeployedServices nodeCopy getStatistiche getAuditConversations getServiceOnlineHelpWorkflowElements updateBundle registerBundle updateFeServices deleteFeServicesByPackages deleteBeServicesReferencesByPackages deleteBundle setAsPeopleAdministrator removeFromPeopleAdministrator getPeopleAdministrator"  />
+      
+	  <!-- 	Velocity Templates mapping -->
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:VelocityTemplateBean"
+        type="java:it.people.feservice.beans.VelocityTemplateBean"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_VelocityTemplateBean"
+        type="java:it.people.feservice.beans.VelocityTemplateBean[]"
+        innerType="cmp-ns:VelocityTemplateBean" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:VelocityTemplateDataVO"
+        type="java:it.people.feservice.beans.VelocityTemplateDataVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      
+     
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_DependentModule"
+        type="java:it.people.feservice.beans.DependentModule[]"
+        innerType="cmp-ns:DependentModule" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_soapenc_string"
+        type="java:java.lang.String[]"
+        innerType="cmp-ns:string" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />      
+		<!-- -> Aggiunti per gestione multiente -->
+		<arrayMapping
+		  xmlns:ns="http://feservice.people.it/"
+		  qname="ns:ArrayOf_tns2_AvailableService"
+		  type="java:it.people.feservice.beans.AvailableService[]"
+		  innerType="cmp-ns:AvailableService" xmlns:cmp-ns="http://beans.feservice.people.it/"
+		  encodingStyle=""
+		/>
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_soapenc_string"
+        type="java:java.lang.String[]"
+        innerType="cmp-ns:string" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:NodeDeployedServices"
+        type="java:it.people.feservice.beans.NodeDeployedServices"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:ServiceOnlineHelpWorkflowElements"
+        type="java:it.people.feservice.beans.ServiceOnlineHelpWorkflowElements"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_OnlineHelpViewData"
+        type="java:it.people.feservice.beans.OnlineHelpViewData[]"
+		innerType="cmp-ns:OnlineHelpViewData" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      
+      
+      <!-- Monitoring: IndicatorBean, IndicatorBean[], IndicatiorsVO, IndicatorFilter  -->
+      
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:IndicatorBean"
+        type="java:it.people.feservice.beans.IndicatorBean"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_IndicatorBean"
+        type="java:it.people.feservice.beans.IndicatorBean[]"
+		innerType="cmp-ns:IndicatorBean" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:IndicatorsVO"
+        type="java:it.people.feservice.beans.IndicatorsVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:IndicatorFilter"
+        type="java:it.people.feservice.beans.IndicatorFilter"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      
+
+
+      <!-- Processes (also known as Pratiche): ProcessBean, ProcessBean[], ProcessesVO, IndicatorFilter  -->
+      
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:ProcessBean"
+        type="java:it.people.feservice.beans.ProcessBean"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_ProcessBean"
+        type="java:it.people.feservice.beans.ProcessBean[]"
+		innerType="cmp-ns:ProcessBean" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:ProcessesVO"
+        type="java:it.people.feservice.beans.ProcessesVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:ProcessFilter"
+        type="java:it.people.feservice.beans.ProcessFilter"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+
+
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:ProcessesDeletionResultVO"
+        type="java:it.people.feservice.beans.ProcessesDeletionResultVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_OnlineHelpActivityData"
+        type="java:it.people.feservice.beans.OnlineHelpActivityData[]"
+		innerType="cmp-ns:OnlineHelpActivityData" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_OnlineHelpStepData"
+        type="java:it.people.feservice.beans.OnlineHelpStepData[]"
+		innerType="cmp-ns:OnlineHelpStepData" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_ServiceVO"
+        type="java:it.people.feservice.beans.ServiceVO[]"
+		innerType="cmp-ns:ServiceVO" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_CommunePackageVO"
+        type="java:it.people.feservice.beans.CommunePackageVO[]"
+		innerType="cmp-ns:CommunePackageVO" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_FEServiceReferenceVO"
+        type="java:it.people.feservice.beans.FEServiceReferenceVO[]"
+		innerType="cmp-ns:FEServiceReferenceVO" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:OnlineHelpViewData"
+        type="java:it.people.feservice.beans.OnlineHelpViewData"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:OnlineHelpActivityData"
+        type="java:it.people.feservice.beans.OnlineHelpActivityData"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:OnlineHelpStepData"
+        type="java:it.people.feservice.beans.OnlineHelpStepData"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      
+		<!-- <- Aggiunti per gestione multiente -->
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:LogBean"
+        type="java:it.people.feservice.beans.LogBean"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:AuditConversationsBean"
+        type="java:it.people.feservice.beans.AuditConversationsBean"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:AuditStatisticheBean"
+        type="java:it.people.feservice.beans.AuditStatisticheBean"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:AuditUserBean"
+        type="java:it.people.feservice.beans.AuditUserBean"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:AuditFeBeXmlBean"
+        type="java:it.people.feservice.beans.AuditFeBeXmlBean"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://feservice.people.it/"
+        qname="ns:ArrayOf_tns2_ConfigParameter"
+        type="java:it.people.feservice.beans.ConfigParameter[]"
+        innerType="cmp-ns:ConfigParameter" xmlns:cmp-ns="http://beans.feservice.people.it/"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:DependentModule"
+        type="java:it.people.feservice.beans.DependentModule"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:ServiceVO"
+        type="java:it.people.feservice.beans.ServiceVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:TableValuePropertyVO"
+        type="java:it.people.feservice.beans.TableValuePropertyVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:ServiceAuditProcessorVO"
+        type="java:it.people.feservice.beans.ServiceAuditProcessorVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:ConfigParameterVO"
+        type="java:it.people.feservice.beans.ConfigParameterVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:DependentModuleVO"
+        type="java:it.people.feservice.beans.DependentModuleVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:ConfigParameter"
+        type="java:it.people.feservice.beans.ConfigParameter"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      
+		<!-- -> Aggiunti per gestione multiente -->
+		<typeMapping
+		  xmlns:ns="http://beans.feservice.people.it/"
+		  qname="ns:CommuneBean"
+		  type="java:it.people.feservice.beans.CommuneBean"
+		  serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+		  deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+		  encodingStyle=""
+		/>
+		<typeMapping
+		  xmlns:ns="http://beans.feservice.people.it/"
+		  qname="ns:AvailableService"
+		  type="java:it.people.feservice.beans.AvailableService"
+		  serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+		  deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+		  encodingStyle=""
+		/>
+
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:CommunePackageVO"
+        type="java:it.people.feservice.beans.CommunePackageVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:FEServiceReferenceVO"
+        type="java:it.people.feservice.beans.FEServiceReferenceVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      
+      <typeMapping
+        xmlns:ns="http://beans.feservice.people.it/"
+        qname="ns:PeopleAdministratorVO"
+        type="java:it.people.feservice.beans.PeopleAdministratorVO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+		
+	 <!-- <- Aggiunti per gestione multiente -->
+  </service>
+</deployment>

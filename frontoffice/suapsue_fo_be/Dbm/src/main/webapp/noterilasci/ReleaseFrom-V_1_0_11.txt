@@ -1,0 +1,11 @@
+Errori risolti
+
+ * Correte alcune query che generavano un errore visualizzando alcune 
+    tabelle del menù di terzo livello per gli utenti con profili A o B
+
+Miglioramenti / Funzionalità aggiunte:
+
+ * inserita la possibilità di inserire note di pubblicazione agli interventi 
+    (solo per la pubblicazione in modalità manuale)
+ * visualizzazione delle tabelle Settori attività, Gerarchia settori e Template
+    del menù di terzo livello solo per utenti con profilo D

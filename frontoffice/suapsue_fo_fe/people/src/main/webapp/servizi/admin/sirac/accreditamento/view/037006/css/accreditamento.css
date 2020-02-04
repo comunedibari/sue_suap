@@ -1,0 +1,143 @@
+
+/* Definizione Stili per template autocertificazione */
+
+div.admin_sirac_autocert_title{
+ font-family: 'Times New Roman','Times',serif;
+ font-size: 24px;font-weight:bold;
+ margin-bottom:0px;
+ /*margin-bottom:36px;*/
+ margin-top:0px;
+ margin-right:0px;
+ text-indent:0px;
+ direction:ltr;
+ color:black;
+ text-align:center;
+}
+
+div.admin_sirac_autocert_subtitle{
+ font-family: 'Times New Roman','Times',serif;
+ font-size: 14px;font-weight:bold;
+ margin-bottom:0px;
+ /*margin-bottom:36px;*/
+ margin-top:0px;
+ margin-right:0px;
+ text-indent:0px;
+ direction:ltr;
+ color:black;
+ text-align:center;
+}
+
+div.admin_sirac_autocert_body {
+ 
+ font-family: 'Times New Roman','Times',serif;
+ font-size: 16px;font-weight: normal;
+ 
+/*  
+  font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;margin:10px;
+  font-size:16px;font-weight: normal;
+*/  
+  padding-left:20px;
+/*  background-color:#fff;color:#444; */
+  
+ margin-bottom:0px;
+ /*margin-bottom:36px;*/
+ margin-top:0px;
+ margin-right:0px;
+ text-indent:0px;
+ direction:ltr;
+ color:black;
+ text-align: left;
+}
+
+/*
+body {font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;margin:10px; padding:0;background-color:#fff;color:#444;}
+body,td,div,input,select{font-size:90%;}
+td{vertical-align:top}
+*/
+
+div.admin_sirac_accr_main{width:80%;padding-left:10px;font-size:90%;} 
+div.admin_sirac_accr_main img{border:0;}/* le precedenti due righe servono per la pagina di introduzione*/
+div.admin_sirac_accr_titolo{font-family:Tahoma;  font-size:160%;   color:#005094;}
+
+
+/*Titoli*/ 
+div.admin_sirac_accr_title1{height:25px;background:none no-repeat top left}
+div.admin_sirac_accr_title2{height:25px;background:none no-repeat top left}
+div.admin_sirac_accr_title3{height:25px;background:none no-repeat top left}
+div.admin_sirac_accr_title4{height:25px;background:none no-repeat top left}
+div.admin_sirac_accr_title5{height:25px;background:none no-repeat top left}
+div.admin_sirac_accr_title6{height:25px;background:none no-repeat top left}
+div.admin_sirac_accr_title7{height:25px;background:none no-repeat top left}
+div.admin_sirac_accr_title8{height:25px;background:none no-repeat top left}
+
+
+
+
+table.selaccrmaintable {
+    border: 1px solid #9d8585;
+    border-collapse: collapse;
+    padding: 4px;
+}
+
+table.selaccrmaintable th {
+    border: 1px solid #9d8585;
+	 font-size: 75%; 
+}
+
+table.selaccrmaintable td {
+    border: 1px solid #9d8585;
+	 font-size: 75%;
+	 
+}
+
+.admin_sirac_accr_btn{
+  text-align:center;
+  font-weight:bold;
+  margin:0;
+  background-color:#f7f7f7;
+  color:#005094;
+  border-bottom:1px solid #5AA1DE;
+  border-right:1px solid #5AA1DE;
+  border-top:1px solid #5AA1DE;
+  border-left:1px solid #5AA1DE;
+  /*margin-top:0px; */
+  padding-left:2px; padding-right:2px; padding-top:2px; padding-bottom:2px;
+  cursor:pointer;}
+
+div.admin_sirac_accr_btn a{text-decoration: none;}
+div.admin_sirac_accr_btn a:hover{color:#005094;background-color:#F7F7F7;}
+div.admin_sirac_accr_btn a:link{color:#005094;background-color:#F7F7F7;}
+div.admin_sirac_accr_btn a:visited{
+  color:#005094;background-color:#F7F7F7;
+padding-right:2px;
+  
+}
+
+/*
+.admin_sirac_accr_bottone{ 
+font-weight:bold;
+margin:0;
+background-color:#fff;
+color:#005094;
+border-bottom:1px solid #5AA1DE;
+border-right:1px solid #5AA1DE;
+border-top:1px solid #5AA1DE;
+border-left:1px solid #5AA1DE; 
+cursor:hand;}
+*/
+
+li {
+	color: #000000;
+}
+
+.right {
+	margin: auto;
+	text-align: right;
+}
+
+.riferimentoNota {
+}
+
+.numeroNota {
+	text-weight: bold;
+}

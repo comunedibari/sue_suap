@@ -1,0 +1,15 @@
+---Upgrade della versione Master Copy V.0.1 alla V.0.2
+---Si ricorda che le il passaggio alla versione V.0.2 prevede di
+   avere il software alla versione V.0.1
+
+bug-fix:
+- correzione funzione di unpdate Templates generici
+
+miglioramenti:
+
+1) ulteriore miglioramento l'interfaccia di import di intervento da file
+
+
+passi:
+
+1) effettuare l'aggiornamento del software (Dbm.war)

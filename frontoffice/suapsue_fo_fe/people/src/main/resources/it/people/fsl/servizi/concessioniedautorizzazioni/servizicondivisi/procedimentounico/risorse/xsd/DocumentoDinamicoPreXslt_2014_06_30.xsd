@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			La richiesta inviata dal servizio People di Concessioni e
+			Autorizzazioni a Documenti Dinamici.
+		<Modello xmlns="" Versione="Documento Dinamico-v1.7.7-Release - 30/06/2014" Data="30/06/2014"/>
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CampoAnagraficaType">
+		<xs:sequence>
+			<xs:element name="campo_xml_mod" type="xs:string" nillable="true"/>
+			<xs:element name="contatore" type="xs:string"/>
+			<xs:element name="controllo" type="xs:string" nillable="true"/>
+			<xs:element name="decimali" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+			<xs:element name="edit" type="xs:string"/>
+			<xs:element name="livello" type="xs:string"/>
+			<xs:element name="lunghezza" type="xs:string"/>
+			<xs:element name="molteplicita" type="xs:string"/>
+			<xs:element name="nome" type="xs:string"/>
+			<xs:element name="posizione" type="xs:string"/>
+			<xs:element name="riga" type="xs:string"/>
+			<xs:element name="tipo" type="xs:string"/>
+			<xs:element name="valore" type="xs:string"/>
+			<xs:element name="valoreUtente" type="xs:string"/>
+			<xs:element name="val_campo_collegato" type="xs:string" nillable="true"/>
+			<xs:element name="campo_collegato" type="xs:string" nillable="true"/>
+			<xs:element name="raggruppamento_check" type="xs:string" nillable="true"/>
+			<xs:element name="opzioniCombo" type="OpzioniComboType"/>
+			<xs:element name="azione" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpzioneComboType">
+		<xs:sequence>
+			<xs:element name="Codice" type="xs:string"/>
+			<xs:element name="Etichetta" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpzioniComboType">
+		<xs:sequence>
+			<xs:element name="OpzioneCombo" type="OpzioneComboType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EsitoPagamento">
+		<xs:sequence>
+			<xs:element name="PortaleID" type="xs:string"/>
+			<xs:element name="NumeroOperazione" type="xs:string"/>
+			<xs:element name="IDOrdine" type="xs:string"/>
+			<xs:element name="DataOraOrdine" type="xs:string"/>
+			<xs:element name="IDTransazione" type="xs:string"/>
+			<xs:element name="DataOraTransazione" type="xs:string"/>
+			<xs:element name="SistemaPagamento" type="xs:string"/>
+			<xs:element name="SistemaPagamentoD" type="xs:string"/>
+			<xs:element name="CircuitoAutorizzativo" type="xs:string"/>
+			<xs:element name="CircuitoAutorizzativoD" type="xs:string"/>
+			<xs:element name="CircuitoSelezionato" type="xs:string"/>
+			<xs:element name="CircuitoSelezionatoD" type="xs:string"/>
+			<xs:element name="ImportoTransato" type="xs:string"/>
+			<xs:element name="ImportoAutorizzato" type="xs:string"/>
+			<xs:element name="ImportoCommissioni" type="xs:string"/>
+			<xs:element name="Esito" type="xs:string"/>
+			<xs:element name="EsitoD" type="xs:string"/>
+			<xs:element name="DataOra" type="xs:string"/>
+			<xs:element name="Autorizzazione" type="xs:string"/>
+			<xs:element name="DatiSpecifici" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="indirizzo">
+		<xs:sequence>
+			<xs:element name="cap" type="xs:string"/>
+			<xs:element name="citta" type="xs:string"/>
+			<xs:element name="email" type="xs:string" minOccurs="0"/>
+			<xs:element name="fax" type="xs:string" minOccurs="0"/>
+			<xs:element name="numero" type="xs:string" minOccurs="0"/>
+			<xs:element name="provincia" type="xs:string"/>
+			<xs:element name="stato" type="xs:string" minOccurs="0"/>
+			<xs:element name="telefono" type="xs:string" minOccurs="0"/>
+			<xs:element name="via" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="allegato">
+		<xs:sequence>
+			<xs:element name="codice" type="xs:string"/>
+			<xs:element name="copie" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Riporta il numero delle copie degli allegati fisici da allegare, per le dichiarazioni la scritta da riportare al posto del numero copie (es: contenuta nel modello di domanda).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tipoAutocertificazione" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Decodifica del valore flg_autocert (tipicamente 'autoceritificabile/non autocertificabile').</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="titolo" type="xs:string"/>
+			<xs:element name="flgDichiarazione" type="xs:string"/>
+			<xs:element name="checked" type="xs:string"/>
+			<xs:element name="codiceCondizione" type="xs:string"/>
+			<xs:element name="testoCondizione" type="xs:string"/>			
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="persona">
+		<xs:sequence>
+			<xs:element name="codiceFiscale" type="xs:string"/>
+			<xs:element name="cognome" type="xs:string"/>
+			<xs:element name="dataNascita" type="xs:string"/>
+			<xs:element name="luogoNascita" type="xs:string"/>
+			<xs:element name="nome" type="xs:string"/>
+			<xs:element name="provinciaNascita" type="xs:string"/>
+			<xs:element name="residenza" type="indirizzo"/>
+			<xs:element name="sesso" type="xs:string" minOccurs="0"/>
+			<xs:element name="statoNascita" type="xs:string" minOccurs="0"/>
+			<xs:element name="descrizioneMotivazioneRappresentanza" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AssociazioneDiCategoriaType">
+		<xs:sequence>
+			<xs:element name="Denominazione" type="xs:string" minOccurs="0"/>
+			<xs:element name="CodiceSportello" type="xs:string" minOccurs="0"/>
+			<xs:element name="Email" type="xs:string" minOccurs="0"/>
+			<xs:element name="CodiceControllo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="campoHrefType">
+		<xs:sequence>
+			<xs:element name="campo_collegato" type="xs:string" nillable="true"/>
+			<xs:element name="campo_dati" type="xs:string" nillable="true"/>
+			<xs:element name="campo_key" type="xs:string" nillable="true"/>
+			<xs:element name="campo_xml_mod" type="xs:string" nillable="true"/>
+			<xs:element name="contatore" type="xs:string"/>
+			<xs:element name="controllo" type="xs:string" nillable="true"/>
+			<xs:element name="decimali" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+			<xs:element name="edit" type="xs:string"/>
+			<xs:element name="lunghezza" type="xs:string"/>
+			<xs:element name="nome" type="xs:string"/>
+			<xs:element name="nome_xsd" type="xs:string" nillable="true"/>
+			<xs:element name="numCampo" type="xs:string"/>
+			<xs:element name="opzioniCombo" type="OpzioniComboType"/>
+			<xs:element name="posizione" type="xs:string"/>
+			<xs:element name="raggruppamento_check" type="xs:string" nillable="true"/>
+			<xs:element name="riga" type="xs:string"/>
+			<xs:element name="tipo" type="xs:string"/>
+			<xs:element name="tp_controllo" type="xs:string"/>
+			<xs:element name="val_campo_collegato" type="xs:string" nillable="true"/>
+			<xs:element name="valore" type="xs:string"/>
+			<xs:element name="valoreUtente" type="xs:string"/>
+			<xs:element name="web_serv" type="xs:string" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="documentRoot">
+		<xs:complexType>
+			<xs:annotation>
+				<xs:documentation>definizione dell'xml dei dati di input alla funzione di costruzione dei moduli dinamici di Autorizzazioni e Concessioni.</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+				<xs:element name="identificatoreProcedimentoPraticaSpacchettata" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Identificazione della pratica (con suffisso).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="idBookmark" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Identificazione del bookmark; se procedimento stringa vuota.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="moduloBianco">
+					<xs:annotation>
+						<xs:documentation>Identifica se modulo in bianco o meno per quel bookmark.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="S"/>
+							<xs:enumeration value="N"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="sportello">
+					<xs:annotation>
+						<xs:documentation>Dati deloo sportello (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="codiceSportello" type="xs:string"/>
+							<xs:element name="descrizioneSportello" type="xs:string"/>
+							<xs:element name="pec" type="xs:string" nillable="true"/>
+							<xs:element name="rup" type="xs:string" nillable="true"/>
+							<xs:element name="indirizzo" type="indirizzo"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="descrizioneSettore">
+					<xs:annotation>
+						<xs:documentation>Descrizione del settore individuato (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="codice" type="xs:string"/>
+							<xs:element name="descrizione" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="operazioniIndividuate">
+					<xs:annotation>
+						<xs:documentation>Elenco delle operazioni individuate (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="operazioneIndividuata" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="codice" type="xs:string"/>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="operazioniNonRichiesteEsplicitamente" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Elenco delle operazioni individuate (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="operazioneIndividuata" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="codice" type="xs:string"/>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dichiarazioniStatiche" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Elenco delle dichiarzioni statiche (non obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="dichiarazioneStatica" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="codice" type="xs:string"/>
+										<xs:element name="descrizione" type="xs:string" nillable="true"/>
+										<xs:element name="titolo" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="interventiSelezionati">
+					<xs:annotation>
+						<xs:documentation>Elenco degli interventi selezionati (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="interventoSelezionato" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="codice" type="xs:string"/>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="procedimenti">
+					<xs:annotation>
+						<xs:documentation>Elenco dei procedimenti selezionati (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="procedimento" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="normative" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="normativa" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Elenco normative collegate al procedimento (non obbligatorio).</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="codRif" type="xs:string"/>
+																<xs:element name="nomeRiferimento" type="xs:string" nillable="true"/>
+																<xs:element name="titoloRiferimento" type="xs:string" nillable="true"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="codice" type="xs:string"/>
+										<xs:element name="ente">
+											<xs:annotation>
+												<xs:documentation>Descrizione ente di competenza del procedimento(non descrizione classe ente) (obbligatorio).</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="codice" type="xs:string"/>
+													<xs:element name="descrizione" type="xs:string"/>
+													<xs:element name="codiceClasseEnte" type="xs:string"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="destinatario">
+											<xs:annotation>
+												<xs:documentation>Descrizione del destinatario del procedimento (obbligatorio). - AGGIUNTO</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="codice" type="xs:string"/>
+													<xs:element name="intestazione" type="xs:string"/>
+													<xs:element name="nome" type="xs:string"/>
+													<xs:element name="email" type="xs:string"/>
+													<xs:element name="indirizzo" type="xs:string"/>
+													<xs:element name="telefono" type="xs:string"/>
+													<xs:element name="citta" type="xs:string"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>										
+										<xs:element name="interventi" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Elenco interventi collegati al procedimento selezionato (obbligatorio).</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="intervento" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="codice" type="xs:string"/>
+																<xs:element name="descrizione" type="xs:string"/>
+																<xs:element name="allegati" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Elenco dei procedimenti selezionati (non dichiarazioni) (non obbligatorio).</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="allegato" type="allegato" minOccurs="0" maxOccurs="unbounded"/>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="descrizione" type="xs:string"/>
+										<xs:element name="oneriDovuti" type="xs:string" minOccurs="0"/>
+										<xs:element name="terminiEvasione" type="xs:string" minOccurs="0"/>
+										<xs:element name="oneriAnticipati" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Elenco oneri anticipati collegati al procedimento (non obbligatorio).</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="onereAnticipato">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="codice" type="xs:string"/>
+																<xs:element name="descrizioneDestinatario" type="xs:string"/>
+																<xs:element name="descrizione" type="xs:string"/>
+																<xs:element name="importo" type="xs:string"/>
+																<xs:element name="nota" type="xs:string" minOccurs="0"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="tipoProcedimento" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Decodifica tipo procedimento (comunicazione / procedimento autoceriticato / procedimento semplificato / etc.).</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="oneriPosticipati" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Elenco oneri posticipati collegati al procedimento (non obbligatorio).</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="onerePosticipato" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="codice" type="xs:string"/>
+																<xs:element name="descrizioneDestinatario" type="xs:string"/>
+																<xs:element name="descrizione" type="xs:string"/>
+																<xs:element name="importo" type="xs:string"/>
+																<xs:element name="nota" type="xs:string" minOccurs="0"/>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="allegatiTotali" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Elenco di tutti gli allegati collegati al  procedimento selezionati (comprese le dichiarazioni) (non obbligatorio).</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="allegato" type="allegato" minOccurs="0" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dichiarazioniDinamiche" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Elenco delle dichiarazioni dinamiche (non obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="dichiarazioneDinamica" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="codiceDocumento" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Codice del documento a cui è collegata la dichiarazione.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="html" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Rappresentazione html della dichiarazione con i valori caricati.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="piedeHref" type="xs:string" minOccurs="0"/>
+										<xs:element name="titolo" type="xs:string"/>
+										<xs:element name="campi">
+											<xs:annotation>
+												<xs:documentation>Elenco dei campi della dichiarazione come da processData.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="campo" type="campoHrefType" maxOccurs="unbounded"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="descrizione" type="xs:string"/>
+										<xs:element name="href" type="xs:string"/>
+										<xs:element name="rowCount" type="xs:string"/>
+										<xs:element name="tdCount" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Anagrafica" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Elenco dei campi anagrafica</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CampoAnagrafica" type="CampoAnagraficaType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="comune">
+					<xs:annotation>
+						<xs:documentation>Elenco dei campi del comune (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="codice" type="xs:string"/>
+							<xs:element name="descrizione" type="xs:string"/>
+							<xs:element name="indirizzo" type="indirizzo"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="bollo">
+					<xs:annotation>
+						<xs:documentation>Descrizione da evidenziare se modulo bollato (non obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="S"/>
+							<xs:enumeration value="N"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="AssociazioneCategoria" type="AssociazioneDiCategoriaType" minOccurs="0"/>
+				<xs:element name="riepilogoOneri" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Totale oneri (solo se presenti oneri da pagare) (non obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="totale" type="xs:string"/>
+							<xs:element name="EsitoPagamento" type="EsitoPagamento" minOccurs="0"/>
+							<xs:element name="modalitaPagamento" type="xs:string" default="ON_LINE"/>
+							<xs:element name="OneriPagati" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="totale" type="xs:double"/>
+										<xs:element name="onere" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="codice" type="xs:string" minOccurs="1" maxOccurs="1"/>
+													<xs:element name="aeCodiceUtente" type="xs:string" minOccurs="0"/>
+													<xs:element name="aeCodiceEnte" type="xs:string" minOccurs="0"/>
+													<xs:element name="aeCodiceUfficio" type="xs:string" minOccurs="0"/>
+													<xs:element name="aeTipoUfficio" type="xs:string" minOccurs="0"/>
+													<xs:element name="descrizione" type="xs:string"/>
+													<xs:element name="importo" type="xs:double"/>
+													<xs:element name="codiceDestinatario" type="xs:string" minOccurs="0"/>
+													<xs:element name="descrizioneDestinatario" type="xs:string" minOccurs="0"/>
+													<xs:element name="riversamentoAutomatico" type="xs:boolean"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="allegatiSelezionati" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Elenco degli allegati selezionati (non dichiarazioni) (non obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="allegato" type="allegato" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="allegatiSelezionatiTotali" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Elenco di tutti gli allegati selezionati comprese le dichiarazioni (non obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="allegato" type="allegato" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="allegatiFacoltativi" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Elenco degli allegati Facoltativi con l'indicatore se scelto o meno (non dichiarazioni) (non obbligatorio) suddiviso per condizione.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+						    <xs:element name="allegatoFacoltativo" maxOccurs="unbounded">
+							    <xs:complexType>
+									<xs:sequence>
+									    <xs:element name="codice" type="xs:string" minOccurs="1" maxOccurs="1"/>
+										<xs:element name="descrizione" type="xs:string" minOccurs="1" maxOccurs="1"/>
+										<xs:element name="selezionato" type="xs:string" minOccurs="1" maxOccurs="1"/>
+										<xs:element name="allegati" maxOccurs="unbounded">
+										    <xs:complexType>
+						                        <xs:sequence>
+							                        <xs:element name="allegato" type="allegato" minOccurs="0" maxOccurs="unbounded"/>
+						                        </xs:sequence>
+					                        </xs:complexType>
+				                        </xs:element>
+						            </xs:sequence>
+					            </xs:complexType>
+                            </xs:element>	
+			            </xs:sequence>
+		            </xs:complexType>
+                </xs:element>					
+				<xs:element name="comboAnagrafica">
+					<xs:annotation>
+						<xs:documentation>Elenco delle descrizioni dell'equivalente nodo di processData (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="elemento" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="comboProfessionista">
+					<xs:annotation>
+						<xs:documentation>Elenco delle descrizioni dell'equivalente nodo di processData (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="elemento" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="comboAltroEnte">
+					<xs:annotation>
+						<xs:documentation>Elenco delle descrizioni dell'equivalente nodo di processData (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="elemento" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="comboCausaleDelega">
+					<xs:annotation>
+						<xs:documentation>Elenco delle descrizioni dell'equivalente nodo di processData (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="elemento" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="comboImpresa">
+					<xs:annotation>
+						<xs:documentation>Elenco delle descrizioni dell'equivalente nodo di processData (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="elemento" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="comboAlbo">
+					<xs:annotation>
+						<xs:documentation>Elenco delle descrizioni dell'equivalente nodo di processData (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="elemento" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="comboTramiteDelega">
+					<xs:annotation>
+						<xs:documentation>Elenco delle descrizioni dell'equivalente nodo di processData (obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="elemento" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="descrizione" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="oggetto" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="html" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Rappresentazione html della dichiarazione con i valori caricati.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="piedeHref" type="xs:string" minOccurs="0"/>
+							<xs:element name="titolo" type="xs:string"/>
+							<xs:element name="campi">
+								<xs:annotation>
+									<xs:documentation>Elenco dei campi della dichiarazione come da processData.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="campo" type="campoHrefType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="descrizione" type="xs:string"/>
+							<xs:element name="href" type="xs:string"/>
+							<xs:element name="rowCount" type="xs:string"/>
+							<xs:element name="tdCount" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="allegatiFisici" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Elenco degli allegati fisici allegati (non obbligatorio).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="allegatoFisico" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="descrizione" type="xs:string"/>
+										<xs:element name="nomeFile" type="xs:string"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="azioneTemplate" type="xs:string" minOccurs="0"/>
+				<xs:element name="language" type="xs:string"/>
+				<xs:element name="datiAccreditamento" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="qualificaUtente">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="S"/>
+										<xs:enumeration value="N"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="profiloOperatore" type="profiloPersonaFisica"/>
+							<xs:element name="profiloRichiedente" type="profiloPersonaFisica"/>
+							<xs:element name="profiloTitolare" type="profiloTitolare"/>
+							<xs:element name="accreditamentoCorrente" type="accreditamentoCorrente"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="profiloPersonaFisica">
+		<xs:sequence>
+			<xs:element name="nome" type="xs:string"/>
+			<xs:element name="cognome" type="xs:string"/>
+			<xs:element name="codiceFiscale" type="xs:string"/>
+			<xs:element name="email" type="xs:string" minOccurs="0"/>
+			<xs:element name="dataNascita" type="xs:string" minOccurs="0"/>
+			<xs:element name="luogoNascita" type="xs:string" minOccurs="0"/>
+			<xs:element name="provinciaNascita" type="xs:string" minOccurs="0"/>
+			<xs:element name="residenza" type="xs:string" minOccurs="0"/>
+			<xs:element name="sesso" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="profiloPersonaGiuridica">
+		<xs:sequence>
+			<xs:element name="denominazione" type="xs:string"/>
+			<xs:element name="sedeLegale" type="xs:string"/>
+			<xs:element name="codiceFiscale" type="xs:string" minOccurs="0"/>
+			<xs:element name="partitaIVA" type="xs:string" minOccurs="0"/>
+			<xs:element name="descrizione" type="xs:string" minOccurs="0"/>
+			<xs:element name="email" type="xs:string"/>
+			<xs:element name="rappresentanteLegale" type="profiloPersonaFisica"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="accreditamentoCorrente">
+		<xs:sequence>
+			<xs:element name="idComune" type="xs:string"/>
+			<xs:element name="profilo" type="profiloAccreditamento"/>
+			<xs:element name="qualifica" type="qualifica"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="qualifica">
+		<xs:sequence>
+			<xs:element name="idQualifica" type="xs:string"/>
+			<xs:element name="tipoQualifica" type="xs:string"/>
+			<xs:element name="includeRappresentanteLegale" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="profiloAccreditamento">
+		<xs:sequence>
+			<xs:element name="codiceFiscaleIntermediario" type="xs:string" minOccurs="0"/>
+			<xs:element name="partitaIvaIntermediario" type="xs:string" minOccurs="0"/>
+			<xs:element name="descrizione" type="xs:string" minOccurs="0"/>
+			<xs:element name="email" type="xs:string"/>
+			<xs:element name="denominazione" type="xs:string" minOccurs="0"/>
+			<xs:element name="sedeLegale" type="xs:string" minOccurs="0"/>
+			<xs:element name="rappresentanteLegale" type="rappresentanteLegaleProfiloAccreditamento" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="rappresentanteLegaleProfiloAccreditamento">
+		<xs:sequence>
+			<xs:element name="nome" type="xs:string"/>
+			<xs:element name="cognome" type="xs:string"/>
+			<xs:element name="codiceFiscale" type="xs:string"/>
+			<xs:element name="email" type="xs:string" minOccurs="0"/>
+			<xs:element name="sesso" type="xs:string" minOccurs="0"/>
+			<xs:element name="dataNascita" type="xs:string" minOccurs="0"/>
+			<xs:element name="luogoNascita" type="xs:string" minOccurs="0"/>
+			<xs:element name="provinciaNascita" type="xs:string" minOccurs="0"/>
+			<xs:element name="indirizzoResidenza" type="xs:string" minOccurs="0"/>
+			<xs:element name="codiceFiscaleIntermediario" type="xs:string" minOccurs="0"/>
+			<xs:element name="partitaIvaIntermediario" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="profiloTitolare">
+		<xs:choice>
+			<xs:element name="profiloTitolarePF" type="profiloPersonaFisica"/>
+			<xs:element name="profiloTitolarePG" type="profiloPersonaGiuridica"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

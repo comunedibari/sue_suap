@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    
+    <definition name="comunicazionews_invia" extends=".main">
+        <put-attribute name="title"         value="Comunicazione tramite webservice" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>        
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/eventi/genova/sue_ws/index.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Lista pratiche nuove" type="string" />        
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="comunicazioneevanzamento" extends=".main">
+        <put-attribute name="title"         value="Comunicazione tramite webservice" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/eventi/genova/sue_ws/avanzamento.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+</tiles-definitions>

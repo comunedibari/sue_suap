@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/cross">
+	<Logger 
+		className="org.apache.catalina.logger.FileLogger"
+		prefix="cross." 
+		suffix=".log" 
+		timestamp="true" />	
+	<ResourceLink 
+		global="jdbc/CrossDS" 
+		name="jdbc/CrossDS"
+		type="javax.sql.DataSource" />
+	<ResourceLink 
+		global="jdbc/ActivitiDS" 
+		name="jdbc/ActivitiDS"
+		type="javax.sql.DataSource" />
+</Context>

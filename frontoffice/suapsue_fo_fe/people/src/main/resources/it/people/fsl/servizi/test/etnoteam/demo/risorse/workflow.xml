@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS>
+	<PROCESS-CONFIG>
+		<default>
+			<SIGN-ENABLED>false</SIGN-ENABLED>
+		</default>
+	</PROCESS-CONFIG>
+	<VIEW id="1">
+		<default>
+			<name>ServizioTestView</name>
+			<activity-order>1,2</activity-order>
+		</default>
+		<ACTIVITIES>
+			<ACTIVITY id="1">
+                            <default>
+                                <name>Funzionalità avanzate</name>
+                                <step-order>0,1,2</step-order>
+                            </default>
+                            <STEPS>
+                                <STEP id="0">
+                                    <default>
+                                        <name>Test dei parametri</name>
+                                        <view>parametersQuery.jsp</view>
+                                    </default>
+                                </STEP>
+                                <STEP id="1">
+                                    <default>
+                                        <name>Chiamata ad un WS remoto</name>
+					<view>wsCall.jsp</view>
+                                    </default>
+				</STEP>
+                                <STEP id="2">
+                                    <default>
+                                        <name>Uso Infomanager</name>
+					<view>InfomanagerTest.jsp</view>
+                                    </default>
+				</STEP>
+                            </STEPS>
+                        </ACTIVITY>
+                        <ACTIVITY id="2">
+				<default>
+					<name>Test Pagamento</name>
+					<step-order>0,RIMP,EPAG</step-order>
+				</default>
+				<STEPS>
+					<STEP id="0">
+						<default>
+							<name>Filler</name>
+							<view>filler.jsp</view>
+						</default>
+					</STEP>
+                                        <STEP id="RIMP">
+						<default>
+							<name>RIMP</name>
+							<view>pagamentoAndata.jsp</view>
+						</default>
+					</STEP>
+                                        <STEP id="EPAG">
+						<default>
+							<name>EPAG</name>
+							<view>pagamentoRitorno.jsp</view>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+		</ACTIVITIES>
+	</VIEW>
+</PROCESS>

@@ -1,0 +1,163 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+    font-size: 11px;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-size: 11px;
+}
+
+div, td {
+    font-size: 11px;
+}
+
+a img {
+    border: 0;
+    vertical-align: middle;
+}
+
+tbody {
+}
+
+/* @end */
+
+/* @group layout */
+
+div#wrapper {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+/* @end */
+
+/* @group typo */
+
+a {
+    color: #464648;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #545456;
+    text-decoration: none;
+}
+
+/* @end */
+
+/* @group modules */
+
+div#module_wrapper {
+    background: white;
+    clear: both;
+    width: 100%;
+    height: 100%;
+}
+
+div#module_toolbar {
+    padding: 15px;
+    clear: both;
+}
+
+div#module_container {
+    overflow: hidden;
+}
+
+div#module_sx {	
+    float: left;
+    overflow: hidden;
+}
+
+div#module_sx ul {
+    list-style-type: none;
+    overflow: hidden;
+}
+
+div#module_sx .block_sx {
+    margin:0;
+    padding:0;
+}
+
+.block_sx .title {
+    background: #d3d3d3;
+}
+
+div#module_sx #sections {
+    width: 188px;
+}
+
+div#module_sx #sections ul li {
+    /*	padding: 6px; */
+    border-top: 1px solid #d8d8d8;
+}
+
+div#module_main {
+    margin-left: 190px;
+}
+
+#module_main h4 {
+    font-size: 14px;
+    line-height: 26px;
+    color: #464648;
+}
+
+#module_main h3 {
+    font-size: 16px;
+    line-height: 26px;
+    color: #464648;
+}
+
+#module_main h2 {
+    color: #464648;
+    line-height: 26px;
+    font-size: 18px;
+}
+.x-form-field {
+    font-size:11px;
+}
+
+.ext-strict .x-form-text {
+    height:16px;
+}
+
+.x-form-field-wrap .x-form-trigger {
+    height:19px;
+}
+
+.ok-col {
+    height: 16px;
+    width: 16px;
+    background-image: url(../images/icons/accept.png);
+    padding-bottom: 2px;
+}
+
+/* style for the "alert" ActionColumn icon */
+.ko-col {
+    height: 16px;
+    width: 16px;
+    background-image: url(../images/icons/delete.png);
+    padding-bottom: 2px;
+}
+
+.db-col {
+    height: 16px;
+    width: 16px;
+    background-image: url(../images/icons/error.png);
+    padding-bottom: 2px;
+}
+.stop-col {
+    height: 16px;
+    width: 16px;
+    background-image: url(../images/icons/stop.jpg);
+    padding-bottom: 2px;
+}
+/* @end */
+.release{
+    margin-top: 20%;
+}

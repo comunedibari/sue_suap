@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<PROCESS>
+	<PROCESS-CONFIG>
+		<default>
+			<SUMMARY-ENABLED>false</SUMMARY-ENABLED>
+		</default>
+	</PROCESS-CONFIG>
+	<VIEW id="1">
+		<default>
+			<name>TestIdentificativoUnivoco</name>
+			<activity-order>0, 1</activity-order>
+		</default>
+		<ACTIVITIES>
+			<ACTIVITY id="0">
+				<default>
+					<name>Generazione Identificativo</name>
+					<step-order>Intro, Genera</step-order>
+				</default>
+				<STEPS>
+					<STEP id="Intro">
+						<default>
+							<name>Intro</name>
+							<view>intro.jsp</view>
+						</default>
+					</STEP>
+					<STEP id="Genera">
+						<default>
+							<name>Genera</name>
+							<view>createIdentifier.jsp</view>
+							<classname>CreateIdentifier</classname>
+						</default>
+					</STEP>
+				</STEPS>
+			</ACTIVITY>
+		</ACTIVITIES>
+	</VIEW>
+</PROCESS>

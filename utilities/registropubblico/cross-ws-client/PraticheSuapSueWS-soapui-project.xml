@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="c95d024f-5af2-4c94-a4ab-6256c3c51863" activeEnvironment="Default" name="PraticheSuapSueWS" resourceRoot="" soapui-version="5.1.3" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="1e296a51-155d-4adf-9d73-d09c8b40a36f" wsaVersion="NONE" name="CripalPraticheServiceSoapBinding" type="wsdl" bindingName="{http://www.wego.it/cross}CripalPraticheServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://10.0.6.4:8080/cross-ws/services/CripalPraticheService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://10.0.6.4:8080/cross-ws/services/CripalPraticheService?wsdl"><con:part><con:url>http://10.0.6.4:8080/cross-ws/services/CripalPraticheService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="CripalPraticheService" targetNamespace="http://www.wego.it/cross" xmlns:cross="http://www.wego.it/cross" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified">
+      <xs:import namespace="http://www.wego.it/cross" schemaLocation="http://10.0.6.4:8080/cross-ws/services/CripalPraticheService?xsd=cripal-pratiche-service.xsd"/>
+      <xs:element name="PraticaDetailRequest" type="cross:PraticaDetailRequest"/>
+      <xs:element name="PraticaDetailResponse" type="cross:PraticaDetailResponse"/>
+      <xs:element name="ElencoPraticheRequest" type="cross:ElencoPraticheRequest"/>
+      <xs:element name="ElencoPraticheResponse" type="cross:ElencoPraticheResponse"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getPraticheListResponse">
+    <wsdl:part element="cross:ElencoPraticheResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPraticaDetailResponse">
+    <wsdl:part element="cross:PraticaDetailResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPraticheListRequest">
+    <wsdl:part element="cross:ElencoPraticheRequest" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPraticaDetailRequest">
+    <wsdl:part element="cross:PraticaDetailRequest" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CripalPraticheService">
+    <wsdl:operation name="getPraticaDetail">
+      <wsdl:input message="cross:getPraticaDetailRequest" name="getPraticaDetailRequest"></wsdl:input>
+      <wsdl:output message="cross:getPraticaDetailResponse" name="getPraticaDetailResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPraticheList">
+      <wsdl:input message="cross:getPraticheListRequest" name="getPraticheListRequest"></wsdl:input>
+      <wsdl:output message="cross:getPraticheListResponse" name="getPraticheListResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CripalPraticheServiceSoapBinding" type="cross:CripalPraticheService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getPraticaDetail">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPraticaDetailRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPraticaDetailResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPraticheList">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPraticheListRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPraticheListResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CripalPraticheService">
+    <wsdl:port binding="cross:CripalPraticheServiceSoapBinding" name="CripalPraticheService">
+      <soap:address location="http://10.0.6.4:8080/cross-ws/services/CripalPraticheService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://10.0.6.4:8080/cross-ws/services/CripalPraticheService?xsd=cripal-pratiche-service.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://www.wego.it/cross" xmlns:cross="http://www.wego.it/cross" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="praticaSIT">
+    <xs:sequence>
+      <xs:element name="id_pratica" type="xs:integer"/>
+      <xs:element name="operazione" type="xs:string"/>
+      <xs:element name="identificativo_pratica" type="xs:string"/>
+      <xs:element name="id_sportello" type="xs:string"/>
+      <xs:element name="des_sportello" type="xs:string"/>
+      <xs:element name="id_procedimento_suap" type="xs:string"/>
+      <xs:element name="des_procedimento_suap" type="xs:string"/>
+      <xs:element name="oggetto" type="xs:string"/>
+      <xs:element name="responsabile_procedimento" type="xs:string"/>
+      <xs:element name="istruttore" type="xs:string"/>
+      <xs:element name="cod_catastale_comune" type="xs:string"/>
+      <xs:element name="des_comune" type="xs:string"/>
+      <xs:element name="segnatura_protocollo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="registro" type="xs:string"/>
+            <xs:element name="anno" type="xs:string"/>
+            <xs:element name="protocollo" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="data_protocollo" type="xs:string"/>
+      <xs:element name="data_ricezione" type="xs:string"/>
+      <xs:element name="anagraficheSIT" type="cross:anagraficheSIT"/>
+      <xs:element name="dati_catastali" type="cross:dati_catastaliSIT"/>
+      <xs:element name="indirizzi_interventoSIT" type="cross:indirizzi_interventoSIT"/>
+      <xs:element name="procedimentiSIT" type="cross:procedimentiSIT"/>
+      <xs:element name="cod_stato_pratica" type="xs:string"/>
+      <xs:element name="des_stato_pratica" type="xs:string"/>
+      <xs:element name="data_chiusura" type="xs:string"/>
+      <xs:element name="data_inizio_lavori" type="xs:string"/>
+      <xs:element name="data_fine_lavori_presunta" type="xs:string"/>
+      <xs:element name="data_fine_lavori" type="xs:string"/>
+      <xs:element name="flg_sanatoria" type="xs:string"/>
+      <xs:element name="flg_deroga" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="anagraficheSIT">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="anagraficaSIT" type="cross:anagraficaSIT"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="anagraficaSIT">
+    <xs:sequence>
+      <xs:element name="id_anagrafica" type="xs:string"/>
+      <xs:element name="cod_tipo_ruolo" type="xs:string"/>
+      <xs:element name="des_tipo_ruolo" type="xs:string"/>
+      <xs:element name="cognome" type="xs:string"/>
+      <xs:element name="nome" type="xs:string"/>
+      <xs:element name="denominazione" type="xs:string"/>
+      <xs:element name="codice_fiscale" type="xs:string"/>
+      <xs:element name="partita_iva" type="xs:string"/>
+      <xs:element name="tipo_anagrafica" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="dati_catastaliSIT">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="dato_catastaleSIT" type="cross:dato_catastaleSIT"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="dato_catastaleSIT">
+    <xs:sequence>
+      <xs:element name="id_immobile" type="xs:string"/>
+      <xs:element name="codice_sit" type="xs:string"/>
+      <xs:element name="cod_tipo_unita" type="xs:string"/>
+      <xs:element name="des_tipo_unita" type="xs:string"/>
+      <xs:element name="sezione" type="xs:string"/>
+      <xs:element name="foglio" type="xs:string"/>
+      <xs:element name="mappale" type="xs:string"/>
+      <xs:element name="subalterno" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="indirizzi_interventoSIT">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="indirizzo_interventoSIT" type="cross:indirizzo_interventoSIT"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="indirizzo_interventoSIT">
+    <xs:sequence>
+      <xs:element name="id_indirizzo_intervento" type="xs:string"/>
+      <xs:element name="codice_sit" type="xs:string"/>
+      <xs:element name="localita" type="xs:string"/>
+      <xs:element name="indirizzo" type="xs:string"/>
+      <xs:element name="civico" type="xs:string"/>
+      <xs:element name="cap" type="xs:string"/>
+      <xs:element name="interno_numero" type="xs:string"/>
+      <xs:element name="interno_lettera" type="xs:string"/>
+      <xs:element name="interno_scala" type="xs:string"/>
+      <xs:element name="piano" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="procedimentiSIT">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="procedimentoSIT" type="cross:procedimentoSIT"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="procedimentoSIT">
+    <xs:sequence>
+      <xs:element name="id_procedimento" type="xs:int"/>
+      <xs:element name="cod_procedimento" type="xs:string"/>
+      <xs:element name="des_procedimento" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PraticaDetailRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idPratica" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PraticaDetailResponse">
+    <xs:sequence>
+      <xs:element name="Pratica" type="cross:praticaSIT"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PraticaDetailRequest" type="cross:PraticaDetailRequest"/>
+  <xs:element name="PraticaDetailResponse" type="cross:PraticaDetailResponse"/>
+  <xs:complexType name="ElencoPraticheRequest">
+    <xs:sequence>
+      <xs:element form="unqualified" name="idEnte" type="xs:integer"/>
+      <xs:element form="unqualified" name="idComune" type="xs:integer"/>
+      <xs:element form="unqualified" name="dataRicezioneDa" type="xs:string"/>
+      <xs:element form="unqualified" name="dataRicezioneA" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ElencoPraticheResponse">
+    <xs:sequence>
+      <xs:element form="unqualified" maxOccurs="unbounded" minOccurs="0" name="Pratica">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="unqualified" name="idPratica" type="xs:integer"/>
+            <xs:element form="unqualified" name="identificativoPratica" type="xs:string"/>
+            <xs:element form="unqualified" name="oggetto" type="xs:string"/>
+            <xs:element form="unqualified" name="dataRicezione" type="xs:string"/>
+            <xs:element form="unqualified" name="idEnte" type="xs:integer"/>
+            <xs:element form="unqualified" name="descrizioneEnte" type="xs:string"/>
+            <xs:element form="unqualified" name="idComune" type="xs:integer"/>
+            <xs:element form="unqualified" name="descrizioneComune" type="xs:string"/>
+            <xs:element form="unqualified" name="codiceStatoPratica" type="xs:string"/>
+            <xs:element form="unqualified" name="descrizioneStatoPratica" type="xs:string"/>
+            <xs:element form="unqualified" name="ubicazione" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ElencoPraticheRequest" type="cross:ElencoPraticheRequest"/>
+  <xs:element name="ElencoPraticheResponse" type="cross:ElencoPraticheResponse"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://10.0.6.4:8080/cross-ws/services/CripalPraticheService</con:endpoint></con:endpoints><con:operation id="d049c334-aaba-4e4d-a177-684245753611" isOneWay="false" action="" name="getPraticaDetail" bindingOperationName="getPraticaDetail" type="Request-Response" outputName="getPraticaDetailResponse" inputName="getPraticaDetailRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="4436826b-bdc5-4626-a49c-93b4201d2230" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.0.6.4:8080/cross-ws/services/CripalPraticheService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cros="http://www.wego.it/cross">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <cros:PraticaDetailRequest>\r
+         <!--Optional:-->\r
+         <cros:idPratica>?</cros:idPratica>\r
+      </cros:PraticaDetailRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.wego.it/cross/CripalPraticheService/getPraticaDetailRequest"/></con:call></con:operation><con:operation id="d28e50ad-22ea-4283-a8eb-49936b72fe3a" isOneWay="false" action="" name="getPraticheList" bindingOperationName="getPraticheList" type="Request-Response" outputName="getPraticheListResponse" inputName="getPraticheListRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="05f72076-14ea-4aa5-a526-55930de4a5e7" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.0.6.4:8080/cross-ws/services/CripalPraticheService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cros="http://www.wego.it/cross">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <cros:ElencoPraticheRequest>\r
+         <idEnte>1001</idEnte>\r
+         <idComune>59</idComune>\r
+         <dataRicezioneDa>01/01/2014</dataRicezioneDa>\r
+         <dataRicezioneA>31/12/2015</dataRicezioneA>\r
+      </cros:ElencoPraticheRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.wego.it/cross/CripalPraticheService/getPraticheListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

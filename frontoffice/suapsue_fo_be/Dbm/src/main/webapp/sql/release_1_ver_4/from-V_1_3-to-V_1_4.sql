@@ -1,0 +1,1 @@
+update html_testi set cod_testo = 'Anagrafica_field_marcatore_incrociato' where cod_testo = 'Anagrafica_field_form_marcatore_incrociato';

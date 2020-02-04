@@ -1,0 +1,29 @@
+table{
+ width:100%;
+}
+
+th {
+	font-weight:bold;
+	background-color:#da532c; 
+	border: 2px;	
+	box-shadow:2px 2px 4px #AAA;
+	color:#fff;
+	padding-left: 15px;
+	padding-right: 15px;
+	
+	font-weight:bold;
+	font-size:12px;
+	line-height: 20px;
+}
+
+td {
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: #FFF;
+    border: 2px ;	
+	box-shadow:2px 2px 4px #AAA;
+	height: 45px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+

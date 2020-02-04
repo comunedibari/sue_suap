@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messaggi xmlns="http://xmlbeans.infomanager.util.people.it">
+	<messaggio>
+		<id>benvenuto</id>
+		<testo> benvenuto </testo>
+	</messaggio>
+	<messaggio>
+		<id>processoCompletato</id>
+		<testo> processo completato </testo>
+	</messaggio>
+	<messaggio>
+		<id>prossimoStep</id>
+		<testo> al prossimo step </testo>
+	</messaggio>
+	<messaggio>
+		<id>annulla</id>
+		<testo> annulla </testo>
+	</messaggio>
+	<messaggio>
+		<id>conferma</id>
+		<testo> conferma </testo>
+	</messaggio>
+	<messaggio>
+		<id>prova</id>
+		<testo>Questo � un messaggio di prova gestito da Infomanager</testo>
+	</messaggio>
+</messaggi>

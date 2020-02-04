@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment name="defaultClientConfig"
+            xmlns="http://xml.apache.org/axis/wsdd/"
+            xmlns:java="http://xml.apache.org/axis/wsdd/providers/java"
+            xmlns:handler="http://xml.apache.org/axis/wsdd/providers/handler">
+
+ <globalConfiguration>
+   <parameter name="disablePrettyXML" value="true"/>
+   <parameter name="dotNetSoapEncFix" value="true"/>
+   <requestFlow>
+     <handler type="java:org.apache.axis.handlers.JWSHandler">
+        <parameter name="scope" value="session"/>
+     </handler>
+     <handler type="java:org.apache.axis.handlers.JWSHandler">
+        <parameter name="scope" value="request"/>
+        <parameter name="extension" value=".jwr"/>
+     </handler>
+     <!-- uncomment this if you want the SOAP monitor -->
+     <!-- SOAP Monitor Enabled -->
+     <handler type="java:org.apache.axis.handlers.SOAPMonitorHandler"/>
+     <!-- SOAP Monitor Enabled - End -->
+   </requestFlow>
+   <!-- uncomment this if you want the SOAP monitor -->
+     <!-- SOAP Monitor Enabled -->
+   <responseFlow>
+     <handler type="java:org.apache.axis.handlers.SOAPMonitorHandler"/>
+   </responseFlow>
+     <!-- SOAP Monitor Enabled -->
+ </globalConfiguration>
+
+ <handler type="java:org.apache.axis.handlers.http.URLMapper" name="URLMapper"/>
+ <handler type="java:org.apache.axis.transport.local.LocalResponder" name="LocalResponder"/>
+ <handler type="java:org.apache.axis.handlers.SimpleAuthenticationHandler" name="Authenticate"/>
+
+ <service name="AdminService" provider="java:MSG">
+  <namespace>http://xml.apache.org/axis/wsdd/</namespace>
+  <parameter name="allowedMethods" value="AdminService"/>
+  <parameter name="enableRemoteAdmin" value="false"/>
+  <parameter name="className" value="org.apache.axis.utils.Admin"/>
+ </service>
+
+ <service name="Version" provider="java:RPC">
+  <parameter name="allowedMethods" value="getVersion"/>
+  <parameter name="className" value="org.apache.axis.Version"/>
+ </service>
+
+  <!-- Services from IAccreditamentoWSService WSDL service -->
+
+   <service name="IAccreditamentoWS" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="urn:it:people:sirac:accr"/>
+      <parameter name="wsdlServiceElement" value="IAccreditamentoWSService"/>
+      <parameter name="schemaQualified" value="urn:it:people:sirac:accr,urn:it:people:sirac:accr:beans"/>
+      <parameter name="wsdlServicePort" value="IAccreditamentoWS"/>
+      <parameter name="className" value="it.people.sirac.accr.IAccreditamentoWSImpl"/>
+      <parameter name="wsdlPortType" value="IAccreditamentoWS"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="creaProfiloLocale" qname="operNS:creaProfiloLocale" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:creaProfiloLocaleReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:ProfiloLocale" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="creaProfiloLocale" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idCARegistrazione" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:domicilioElettronico" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="accreditaIntermediario" qname="operNS:accreditaIntermediario" xmlns:operNS="urn:it:people:sirac:accr" soapAction="accreditaIntermediario" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:qualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:profilo" xmlns:pns="urn:it:people:sirac:accr" type="tns:ProfiloAccreditamento" xmlns:tns="urn:it:people:sirac:accr:beans"/>
+      </operation>
+      <operation name="creaDelega" qname="operNS:creaDelega" xmlns:operNS="urn:it:people:sirac:accr" soapAction="creaDelega" >
+        <parameter qname="pns:delega" xmlns:pns="urn:it:people:sirac:accr" type="tns:Delega" xmlns:tns="urn:it:people:sirac:accr:beans"/>
+      </operation>
+      <operation name="esisteProfiloLocale" qname="operNS:esisteProfiloLocale" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:esisteProfiloLocaleReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="esisteProfiloLocale" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAccreditamenti" qname="operNS:getAccreditamenti" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getAccreditamentiReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Accreditamento" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getAccreditamenti" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getDeleghe" qname="operNS:getDeleghe" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getDelegheReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Delega" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getDeleghe" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idAccreditamento" xmlns:pns="urn:it:people:sirac:accr" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="eliminaDelega" qname="operNS:eliminaDelega" xmlns:operNS="urn:it:people:sirac:accr" soapAction="eliminaDelega" >
+        <parameter qname="pns:delega" xmlns:pns="urn:it:people:sirac:accr" type="tns:Delega" xmlns:tns="urn:it:people:sirac:accr:beans"/>
+      </operation>
+      <operation name="esisteQualifica" qname="operNS:esisteQualifica" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:esisteQualificaReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="esisteQualifica" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:qualifiche" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAccreditamentoById" qname="operNS:getAccreditamentoById" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getAccreditamentoByIdReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Accreditamento" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getAccreditamentoById" >
+        <parameter qname="pns:idAccreditamento" xmlns:pns="urn:it:people:sirac:accr" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAccreditamentoByCodiceIntermediario" qname="operNS:getAccreditamentoByCodiceIntermediario" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getAccreditamentoByCodiceIntermediarioReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Accreditamento" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getAccreditamentoByCodiceIntermediario" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:codiceFiscaleIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:partitaIvaIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idQualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getProfiloLocale" qname="operNS:getProfiloLocale" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getProfiloLocaleReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:ProfiloLocale" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getProfiloLocale" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getQualifiche" qname="operNS:getQualifiche" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getQualificheReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Qualifica" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getQualifiche" >
+      </operation>
+      <operation name="getQualificheAbilitate" qname="operNS:getQualificheAbilitate" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getQualificheAbilitateReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Qualifica" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getQualificheAbilitate" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getQualificheAccreditabili" qname="operNS:getQualificheAccreditabili" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getQualificheAccreditabiliReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Qualifica" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getQualificheAccreditabili" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getQualificaById" qname="operNS:getQualificaById" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getQualificaByIdReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Qualifica" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getQualificaById" >
+        <parameter qname="pns:idQualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getQualifiche2Persona" qname="operNS:getQualifiche2Persona" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getQualifiche2PersonaReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Qualifica2Persona" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getQualifiche2Persona" >
+        <parameter qname="pns:tipoQualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="canCreateDelega" qname="operNS:canCreateDelega" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:canCreateDelegaReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="canCreateDelega" >
+        <parameter qname="pns:codiceFiscale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idQualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAutoCertTemplate" qname="operNS:getAutoCertTemplate" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getAutoCertTemplateReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="getAutoCertTemplate" >
+        <parameter qname="pns:tipoqualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getDelegaTemplate" qname="operNS:getDelegaTemplate" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getDelegaTemplateReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="getDelegaTemplate" >
+        <parameter qname="pns:tipoDelega" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getQualifica2Persona" qname="operNS:getQualifica2Persona" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getQualifica2PersonaReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Qualifica2Persona" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getQualifica2Persona" >
+        <parameter qname="pns:tipoQualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      
+      <parameter name="allowedMethods" value="getAccreditamenti getQualifiche canCreateDelega getQualificaById eliminaDelega getQualificheAbilitate creaProfiloLocale getAccreditamentoByCodiceIntermediario getQualifica2Persona getAccreditamentoById creaDelega getDelegaTemplate accreditaIntermediario esisteProfiloLocale esisteQualifica getAutoCertTemplate getDeleghe getProfiloLocale getQualifiche2Persona getQualificheAccreditabili"/>
+
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:Delega"
+        type="java:it.people.sirac.accr.beans.Delega"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:ProfiloAccreditamento"
+        type="java:it.people.sirac.accr.beans.ProfiloAccreditamento"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:Qualifica2Persona"
+        type="java:it.people.sirac.accr.beans.Qualifica2Persona"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:ProfiloLocale"
+        type="java:it.people.sirac.accr.beans.ProfiloLocale"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:Qualifica"
+        type="java:it.people.sirac.accr.beans.Qualifica"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:Accreditamento"
+        type="java:it.people.sirac.accr.beans.Accreditamento"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:RappresentanteLegale"
+        type="java:it.people.sirac.accr.beans.RappresentanteLegale"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+
+ <!-- Services from IAccreditamentiManagementWSService WSDL service -->
+
+   <service name="IAccreditamentiManagementWS" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="urn:it:people:sirac:accr"/>
+      <parameter name="wsdlServiceElement" value="IAccreditamentiManagementWSService"/>
+      <parameter name="schemaQualified" value="urn:it:people:sirac:accr,urn:it:people:sirac:accr:beans"/>
+      <parameter name="wsdlServicePort" value="IAccreditamentiManagementWS"/>
+      <parameter name="className" value="it.people.sirac.accr.management.IAccreditamentiManagementWSImpl"/>
+      <parameter name="wsdlPortType" value="IAccreditamentiMAnagementWS"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getQualifica" qname="operNS:getQualifica" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getQualificaReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Qualifica" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getQualifica" >
+        <parameter qname="pns:id_qualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getQualifiche" qname="operNS:getQualifiche" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getQualificheReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Qualifica" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getQualifiche" >
+        <parameter qname="pns:startingPoint" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:pageSize" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getComuni" qname="operNS:getComuni" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getComuniReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:string" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getComuni" >
+      </operation>
+      <operation name="getTipiQualifica" qname="operNS:getTipiQualifica" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getTipiQualificaReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:string" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getTipiQualifica" >
+      </operation>
+      <operation name="getAccreditamentiBySearch" qname="operNS:getAccreditamentiBySearch" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getAccreditamentiBySearchReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Accreditamento" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getAccreditamentiBySearch" >
+        <parameter qname="pns:idQualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:codiceFiscaleUtenteAccreditato" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:codiceFiscaleIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:partitaIvaIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:domicilioElettronicoIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:denominazioneIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:sedeLegale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:statoAccreditamento" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:startingPoint" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:duration" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAccreditamentoById" qname="operNS:getAccreditamentoById" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getAccreditamentoByIdReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Accreditamento" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getAccreditamentoById" >
+        <parameter qname="pns:idAccreditamento" xmlns:pns="urn:it:people:sirac:accr" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="setAccreditamentoDeleted" qname="operNS:setAccreditamentoDeleted" xmlns:operNS="urn:it:people:sirac:accr" soapAction="setAccreditamentoDeleted" >
+        <parameter qname="pns:idAccreditamento" xmlns:pns="urn:it:people:sirac:accr" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:status" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="setAccreditamentoAttivo" qname="operNS:setAccreditamentoAttivo" xmlns:operNS="urn:it:people:sirac:accr" soapAction="setAccreditamentoAttivo" >
+        <parameter qname="pns:idAccreditamento" xmlns:pns="urn:it:people:sirac:accr" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:status" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getOperatoriAssociazione" qname="operNS:getOperatoriAssociazione" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getOperatoriAssociazioneReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:Accreditamento" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getOperatoriAssociazione" >
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:codiceFiscaleIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:partitaIvaIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:startingPoint" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:duration" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getNumAccreditamentiBySearch" qname="operNS:getNumAccreditamentiBySearch" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getNumAccreditamentiBySearchReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="getNumAccreditamentiBySearch" >
+        <parameter qname="pns:idQualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:codiceFiscaleUtenteAccreditato" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:codiceFiscaleIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:partitaIvaIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:domicilioElettronicoIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:denominazioneIntermediario" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:sedeLegale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:statoAccreditamento" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="isAccreditamentoDeleted" qname="operNS:isAccreditamentoDeleted" xmlns:operNS="urn:it:people:sirac:accr" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="isAccreditamentoDeleted" >
+        <parameter qname="pns:idAccreditamento" xmlns:pns="urn:it:people:sirac:accr" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>      
+	  <operation name="setAccreditamenti_Attivo" qname="operNS:setAccreditamenti_Attivo" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:setAccreditamenti_AttivoReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="setAccreditamenti_Attivo">
+		<parameter qname="pns:attivo" xmlns:pns="urn:it:people:sirac:accr" type="tns:ArrayOf_soapenc_string" xmlns:tns="urn:it:people:sirac:accr"/>
+		<parameter qname="pns:non_attivo" xmlns:pns="urn:it:people:sirac:accr" type="tns:ArrayOf_soapenc_string" xmlns:tns="urn:it:people:sirac:accr"/>
+      </operation>       
+	  <operation name="setAccreditamenti_Deleted" qname="operNS:setAccreditamenti_Deleted" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:setAccreditamenti_DeletedReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="setAccreditamenti_Deleted">
+		<parameter qname="pns:deleted" xmlns:pns="urn:it:people:sirac:accr" type="tns:ArrayOf_soapenc_string" xmlns:tns="urn:it:people:sirac:accr"/>
+		<parameter qname="pns:non_deleted" xmlns:pns="urn:it:people:sirac:accr" type="tns:ArrayOf_soapenc_string" xmlns:tns="urn:it:people:sirac:accr"/>
+      </operation>
+      <operation name="getAutocertificazione" qname="operNS:getAutocertificazione" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getAutocertificazioneReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:string" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getAutocertificazione" >
+        <parameter qname="pns:idAccreditamento" xmlns:pns="urn:it:people:sirac:accr" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="insertQualifica" qname="operNS:insertQualifica" xmlns:operNS="urn:it:people:sirac:accr" soapAction="insertQualifica" >
+        <parameter qname="pns:id_qualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:descrizione" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:tipo_qualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:auto_certificabile" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:has_rappresentante_legale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="updateQualifica" qname="operNS:updateQualifica" xmlns:operNS="urn:it:people:sirac:accr" soapAction="updateQualifica" >
+        <parameter qname="pns:id_qualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:descrizione" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:tipo_qualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:auto_certificabile" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:has_rappresentante_legale" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="deleteQualifica" qname="operNS:deleteQualifica" xmlns:operNS="urn:it:people:sirac:accr" soapAction="deleteQualifica" >
+        <parameter qname="pns:id_qualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getInfoQualifica" qname="operNS:getInfoQualifica" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getInfoQualificaReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:string" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getInfoQualifica" >
+        <parameter qname="pns:id_qualifica" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+
+
+      <operation name="getVisibilitaQualifiche" qname="operNS:getVisibilitaQualifiche" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:getVisibilitaQualificheReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:ArrayOf_tns2_VisibilitaQualifica" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="getVisibilitaQualifiche" >
+        <parameter qname="pns:codiceComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>         
+
+
+      <operation name="setVisibilitaQualifiche" qname="operNS:setVisibilitaQualifiche" xmlns:operNS="urn:it:people:sirac:accr" returnQName="retNS:setVisibilitaQualificheReturn" xmlns:retNS="urn:it:people:sirac:accr" returnType="rtns:boolean" xmlns:rtns="urn:it:people:sirac:accr:beans" soapAction="setVisibilitaQualifiche" >
+        <parameter qname="pns:codiceComune" xmlns:pns="urn:it:people:sirac:accr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:visibilitaQualifiche" xmlns:pns="urn:it:people:sirac:accr" type="tns:ArrayOf_tns2_VisibilitaQualifica" xmlns:tns="urn:it:people:sirac:accr"/>
+      </operation>         
+
+               
+      <parameter name="allowedMethods" value="getQualifica getQualifiche getComuni getTipiQualifica getAccreditamentiBySearch getAccreditamentoById 
+      		setAccreditamentoDeleted setAccreditamentoAttivo getOperatoriAssociazione getNumAccreditamentiBySearch isAccreditamentoDeleted
+      		setAccreditamenti_Attivo setAccreditamenti_Deleted getAutocertificazione insertQualifica updateQualifica deleteQualifica getInfoQualifica 
+      		getVisibilitaQualifiche setVisibilitaQualifiche"/>
+
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:Delega"
+        type="java:it.people.sirac.accr.beans.Delega"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:ProfiloAccreditamento"
+        type="java:it.people.sirac.accr.beans.ProfiloAccreditamento"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:Qualifica2Persona"
+        type="java:it.people.sirac.accr.beans.Qualifica2Persona"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:ProfiloLocale"
+        type="java:it.people.sirac.accr.beans.ProfiloLocale"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:Qualifica"
+        type="java:it.people.sirac.accr.beans.Qualifica"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:Accreditamento"
+        type="java:it.people.sirac.accr.beans.Accreditamento"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:RappresentanteLegale"
+        type="java:it.people.sirac.accr.beans.RappresentanteLegale"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:VisibilitaQualifica"
+        type="java:it.people.sirac.accr.beans.VisibilitaQualifica"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:ArrayOf_soapenc_string"
+        type="java:java.lang.String[]"
+        innerType="cmp-ns:string" xmlns:cmp-ns="urn:it:people:sirac:accr:beans"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="urn:it:people:sirac:accr:beans"
+        qname="ns:ArrayOf_tns2_VisibilitaQualifica"
+        type="java:it.people.sirac.accr.beans.VisibilitaQualifica[]"
+        innerType="cmp-ns:VisibilitaQualifica" xmlns:cmp-ns="urn:it:people:sirac:accr:beans"
+        encodingStyle=""
+      />
+  </service>
+
+ <transport name="http">
+  <parameter name="qs:list" 
+               value="org.apache.axis.transport.http.QSListHandler"/>
+  <parameter name="qs:method" 
+               value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <parameter name="qs:wsdl" 
+               value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <requestFlow>
+   <handler type="URLMapper"/>
+   <handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </requestFlow>
+ </transport>
+
+ <transport name="local">
+  <responseFlow>
+   <handler type="LocalResponder"/>
+  </responseFlow>
+ </transport>
+
+</deployment>

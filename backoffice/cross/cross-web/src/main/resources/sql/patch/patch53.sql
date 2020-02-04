@@ -1,0 +1,3 @@
+INSERT INTO `configuration` (`name`, `value`, `note`) VALUES ('cross.pratica.evento.modificabile', 'TRUE', 'Abilita se autorizzato la modifica dei dati dell\'evento');
+INSERT INTO `configuration` (`name`, `value`, `note`) VALUES ('cross.pratica.allegati.descrizione.modificabile', 'TRUE', 'Abilita la modifica della descrizione dell\'allegato');
+INSERT IGNORE INTO `lk_tipo_indirizzo` (`cod_tipo_indirizzo`,`descrizione`) VALUES ('SEDOP','SEDE OPERATIVA');

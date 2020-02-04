@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    
+    <definition name="lista_processi" extends=".main">
+        <put-attribute name="title"         value="Gestione processi" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/processi/lista_processi.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Gestione processi" type="string" />
+        <put-attribute name="operazioneRiuscita"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+    </definition>
+    
+    <definition name="aggiungi_processo" extends=".main">
+        <put-attribute name="title"         value="Aggiungi processo" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/processi/processo_aggiungi.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Aggiungi processo" type="string" />
+    </definition>
+    
+    <definition name="modifica_processo" extends=".main">
+        <put-attribute name="title"         value="Modifica processo" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/processi/processo_modifica.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Modifica processo" type="string" />
+    </definition>
+    
+    <definition name="aggiungi_evento" extends=".main">
+        <put-attribute name="title"         value="Aggiungi evento" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/processi/evento_aggiungi.jsp"/>
+        <put-attribute name="evento_gestisci_anagrafiche"   cascade="true"  value="/themes/default/views/main/body/processi/evento_gestisci_anagrafiche.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Aggiungi evento" type="string" />
+    </definition>
+    
+    <definition name="modifica_evento" extends=".main">
+        <put-attribute name="title"         value="Modifica evento" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/processi/evento_modifica.jsp"/>
+        <put-attribute name="evento_gestisci_anagrafiche"   cascade="true"  value="/themes/default/views/main/body/processi/evento_gestisci_anagrafiche.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Modifica evento" type="string" />
+    </definition>
+    
+    <definition name="lista_processi_step" extends=".main">
+        <put-attribute name="title"         value="Gestione flow eventi" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/processi/lista_processi_step.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Gestione flow eventi" type="string" />
+    </definition>
+    
+    <definition name="lista_processi_eventi" extends=".main">
+        <put-attribute name="title"         value="Gestione flow eventi" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/processi/lista_processi_eventi.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Gestione flow eventi" type="string" />
+        <put-attribute name="operazioneRiuscita"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+    </definition>
+    
+    <definition name="processi_eventi_modifica" extends=".main">
+        <put-attribute name="title"         value="Gestione eventi" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/processi/processi_eventi_modifica.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Gestione eventi" type="string" />
+    </definition>
+    
+    <definition name="processi_processo_deploy" extends=".main">
+        <put-attribute name="title"         value="Deploy Processo" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/processi/processo_deploy.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Gestione Processi/Deploy Processo" type="string" />
+        <put-attribute name="operazioneRiuscitaAjax" cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscitaAjax.jsp"/>
+    </definition>
+    
+</tiles-definitions>

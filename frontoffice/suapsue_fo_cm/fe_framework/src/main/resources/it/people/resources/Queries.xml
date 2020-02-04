@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>
+	</comment>
+	<entry key="pplAdminsEMailAddresses.query">
+		select up.e_mail 
+		from user_profile as up 
+		join amministratore_commune as ac on ac.user_ref = up.oid 
+		where commune_id in ('*', ?)
+	</entry>
+	<entry key="pplAdminsEMailTemplatesByCommuneAndService.query">
+		select vt._key, vt._value from velocity_templates as vt join service as svc on svc.id = vt._serviceid where vt._key like '?%' 
+		and vt._communeid = '#' and svc.package = '$';
+	</entry>
+	<entry key="pplAdminsEMailTemplatesByCommune.query">
+		select _key, _value from velocity_templates where _key like '?%' and _communeId = '#' and _serviceId is null;
+	</entry>
+	<entry key="pplAdminsEMailTemplates.query">
+		select _key, _value from velocity_templates where _key like '?%' and _communeId is null and _serviceId is null;
+	</entry>
+</properties>

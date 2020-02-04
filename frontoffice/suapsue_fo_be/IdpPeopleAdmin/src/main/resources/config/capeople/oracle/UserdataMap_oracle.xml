@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="it.idp.people.admin.admin.sqlmap.capeople.userdata" >
+
+	<typeAlias alias="Userdata" type="it.idp.people.admin.sqlmap.capeople.userdata.Userdata"/>
+
+	<resultMap id="rsUserdata" class="Userdata">
+		<result column="CARTA_IDENTITA" property="cartaIdentita" />
+		<result column="NOME" property="nome" />
+		<result column="COGNOME" property="cognome" />
+		<result column="DATA_NASCITA" property="dataNascita" />
+		<result column="CAP_DOMICILIO" property="capDomicilio" />
+		<result column="CAP_RESIDENZA" property="capResidenza" />
+		<result column="CITTA_DOMICILIO" property="cittaDomicilio" />
+		<result column="CITTA_RESIDENZA" property="cittaResidenza" />
+		<result column="INDIRIZZO_DOMICILIO" property="indirizzoDomicilio" />
+		<result column="INDIRIZZO_RESIDENZA" property="indirizzoResidenza" />
+		<result column="LAVORO" property="lavoro" />
+		<result column="LUOGO_NASCITA" property="luogoNascita" />
+		<result column="PROVINCIA_DOMICILIO" property="provinciaDomicilio" jdbcType="CHAR" />
+		<result column="PROVINCIA_NASCITA" property="provinciaNascita" jdbcType="CHAR" />
+		<result column="PROVINCIA_RESIDENZA" property="provinciaResidenza" jdbcType="CHAR" />
+		<result column="SESSO" property="sesso" jdbcType="CHAR" />
+		<result column="STATO_DOMICILIO" property="statoDomicilio" />
+		<result column="STATO_RESIDENZA" property="statoResidenza" />
+		<result column="STATO_NASCITA" property="statoNascita" />
+		<result column="TELEFONO" property="telefono" />
+		<result column="CELLULARE" property="cellulare" />
+		<result column="TITOLO" property="titolo" />
+		<result column="E_MAIL" property="email" />
+		<result column="DOMICILIO_ELETTRONICO" property="domicilioElettronico" />
+		<result column="ID_COMUNE" property="idComune" />
+		<result column="PASSWORD" property="password" />
+		<result column="PIN" property="pin" />
+		<result column="DATA_REGISTRAZIONE" property="dataRegistrazione" jdbcType="DATE" />
+		<result column="DATA_ATTIVAZIONE" property="dataAttivazione" jdbcType="DATE" />
+		<result column="STATUS" property="status" />
+		<result column="CODICE_FISCALE" property="codiceFiscale" />
+		<result column="RUOLO" property="ruolo" />
+		<result column="TERRITORIO" property="territorio" />
+	</resultMap>
+  
+	<select id="getUserdataCount" resultClass="Integer">
+		SELECT count(*) as COUNT FROM Userdata
+		<isPropertyAvailable property="whereClause">
+			WHERE $whereClause$
+		</isPropertyAvailable>
+	</select>
+	
+	<select id="getUserdataList" resultMap="rsUserdata" parameterClass="java.util.Map">
+		select * 
+		  from ( select a.*, ROWNUM rnum 
+		      from ( SELECT * FROM Userdata
+				<isPropertyAvailable property="whereClause">
+					WHERE $whereClause$
+				</isPropertyAvailable>
+				<isPropertyAvailable property="column">
+					ORDER BY $column$ $ascending$
+			    </isPropertyAvailable>
+			 		) a
+		      where ROWNUM <![CDATA[ <= ]]> $exclude$ + $max$ ) 
+		  where rnum <![CDATA[ > ]]> $exclude$
+	</select>
+	
+	<insert id="insertUserdata" parameterClass="Userdata">
+		INSERT INTO Userdata 
+		(
+			CARTA_IDENTITA, NOME, COGNOME, DATA_NASCITA, CAP_DOMICILIO, CAP_RESIDENZA, 
+			CITTA_DOMICILIO, CITTA_RESIDENZA, INDIRIZZO_DOMICILIO, INDIRIZZO_RESIDENZA, 
+			LAVORO, LUOGO_NASCITA, PROVINCIA_DOMICILIO, PROVINCIA_NASCITA, 
+			PROVINCIA_RESIDENZA, SESSO, STATO_DOMICILIO, STATO_RESIDENZA, STATO_NASCITA,
+			TELEFONO, CELLULARE, TITOLO, E_MAIL, DOMICILIO_ELETTRONICO, ID_COMUNE,
+			PASSWORD, PIN, DATA_REGISTRAZIONE, DATA_ATTIVAZIONE, STATUS, CODICE_FISCALE, 
+			RUOLO, TERRITORIO
+		)
+		VALUES 
+		(		
+			#cartaIdentita#, #nome#, #cognome#, #dataNascita#, #capDomicilio#,
+			#capResidenza#, #cittaDomicilio#, #cittaResidenza#, #indirizzoDomicilio#,
+			#indirizzoResidenza#, #lavoro#, #luogoNascita#, #provinciaDomicilio#,
+			#provinciaNascita#, #provinciaResidenza#, #sesso#, #statoDomicilio#, 
+			#statoResidenza#, #statoNascita#, #telefono#, #cellulare#, #titolo#,
+			#email#, #domicilioElettronico#, #idComune#, #password#, #pin#,
+			#dataRegistrazione#, #dataAttivazione#, #status#, #codiceFiscale#, 
+			#ruolo#, #territorio#
+		)
+	</insert>
+	
+	<update id="updateUserdata" parameterClass="Userdata">
+	     UPDATE Userdata
+	     SET 
+	     	CARTA_IDENTITA = #cartaIdentita#, 
+	     	NOME = #nome#, 
+	     	COGNOME = #cognome#, 
+	     	DATA_NASCITA = #dataNascita#,
+		    CAP_DOMICILIO = #capDomicilio#, 
+		    CAP_RESIDENZA = #capResidenza#, 
+		    CITTA_DOMICILIO = #cittaDomicilio#,
+		    CITTA_RESIDENZA = #cittaResidenza#, 
+		    INDIRIZZO_DOMICILIO = #indirizzoDomicilio#, 
+		    INDIRIZZO_RESIDENZA = #indirizzoResidenza#,
+		    LAVORO = #lavoro#, 
+		    LUOGO_NASCITA = #luogoNascita#, 
+		    PROVINCIA_DOMICILIO = #provinciaDomicilio#,
+		    PROVINCIA_NASCITA = #provinciaNascita#, 
+		    PROVINCIA_RESIDENZA = #provinciaResidenza#, 
+		    SESSO = #sesso#,
+		    STATO_DOMICILIO = #statoDomicilio#, 
+		    STATO_RESIDENZA = #statoResidenza#, 
+		    STATO_NASCITA = #statoNascita#,
+		    TELEFONO = #telefono#, 
+		    CELLULARE = #cellulare#, 
+		    TITOLO = #titolo#, 
+		    E_MAIL = #email#,
+		    DOMICILIO_ELETTRONICO = #domicilioElettronico#, 
+		    ID_COMUNE = #idComune#, 
+		    PASSWORD = #password#, 
+		    PIN = #pin#, 
+		    DATA_REGISTRAZIONE = #dataRegistrazione#, 
+		    DATA_ATTIVAZIONE = #dataAttivazione#, 
+		    STATUS = #status#, 
+		    RUOLO = #ruolo#, 
+		    TERRITORIO = #territorio#
+	     WHERE CODICE_FISCALE = #codiceFiscale#
+	</update>
+	
+	<delete id="deleteUserdata" parameterClass="Userdata">
+	     DELETE 
+	     FROM Userdata
+	     WHERE CODICE_FISCALE = #codiceFiscale#
+	</delete>
+		
+</sqlMap>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid XML Studio 1.0.8.0 (http://www.liquid-technologies.com) -->
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://gruppoinit.it/b1/ConcessioniEAutorizzazioni/precompilazione" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="catasto_1.xsd" />
+  <xs:element name="PrecompilazioneBean">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="Input" />
+        <xs:element minOccurs="0" ref="CodEnte" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

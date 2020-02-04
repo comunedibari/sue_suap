@@ -1,0 +1,131 @@
+<html>
+	<head>
+		<title>Introduzione - Guida alla firma Digitale</title>
+		<link rel="stylesheet" type="text/css" href="../css/help.css" />
+		<script type="text/javascript" src="../script/iiFSMain.js"></script>
+		<script type="text/javascript" src="../script/iiFSMie.js"></script>
+		<script type="text/javascript" src="../script/firmadigitale.js"></script>
+		<object type="application/x-oleobject" id="oCAPICOM" classid="clsid:A996E48C-D3DC-4244-89F7-AFA33EC60679" codebase="../risorse/sign/capicom.cab#version=2,1,0,1" viewastext="">
+		</object>
+		<object type="application/x-oleobject" id="CedafFSM" classid="clsid:F0A8EC0B-68F2-4819-B2CC-40AEBF2D6296" codebase="../risorse/sign/CedafFSM.cab#version=2,1,0,4" viewastext="">
+		</object>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td class="stepMenu">
+					<ul class="stepUL">
+						<li>
+							Introduzione
+							<ul class="stepUL">
+								<li><a href="intro.html">Introduzione</a></li>
+							</ul>
+						</li>
+						<li>
+							Configurazione&nbsp;PC
+							<ul  class="stepUL">
+								<li><a href="cPcIntro.html">Introduzione</a></li>
+								<li><a href="actalis.html">Actalis</a></li>
+								<li><a href="infocamere.html">Infocamere</a></li>
+								<li><a href="postecom.html">Postecom</a></li>
+								<li><a href="otherCA.html">Altre CA</a></li>
+							</ul>
+						</li>
+						<li>
+							Configurazione Browser
+							<ul class="stepUL">
+								<li><a href="cBrIntro.html">Introduzione</a></li>
+								<li><a href="certificati.html">Certificati</a></li>
+								<li><a href="ie.html">Internet&nbsp;Explorer</a></li>
+								<li><a href="ff.html">Mozilla&nbsp;Firefox</a></li>
+								<li><a href="op.html">Opera</a></li>
+							</ul>
+						</li>
+						<li>
+							Test
+							<ul class="stepUL">
+								<li><a href="instActiveX.html">Installazione&nbsp;ActiveX</a></li>
+								<li><a class="lnkselected" href="test.html">Test</a></li>
+							</ul>
+						</li>
+					</ul>
+				</td>
+				<td class="contentArea">
+					<div class="box2" style="border-bottom: medium none;">
+						<div class="maintitle">
+							<div class="maintitle-right">
+								<div class="maintitle-left">
+									<div class="maintitle-title">
+										<b>
+											<span title="guida alla firma digitale:introduzione">Test di firma digitale</span>
+										</b>
+									</div>
+									<div class="maintitle-subtitle">
+										<span class="postername">Guida alla configurazione della firma digitale sul portale P.E.O.P.L.E.</span> 					
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="maincontent">
+							<div id="Content" class="summary">
+								<p class="mainP">Esempio di Riepilogo</p>
+								<p>Questo &egrave; un riepilogo di esempio per il test della firma digitale. Se la firma si conclude
+								con successo, significa che il PC &egrave; configurato correttamente e le eventuali operazioni 
+								di firma richieste dai servizi si concluderanno correttamente.</p>
+							</div>
+							<br />
+							<div>
+								<noscript><b>Attenzione !</b>&nbsp;Il browser ha gli script disabilitati: impossibile eseguire il test di firma.
+								Abilitare gli script e rieseguire il servizio.</noscript>
+							</div>
+							<div class="btnBar">
+								<input id="btnSign" type="button" value="Firma" onclick="document.getElementById('signKO').style.visibility='hidden'; document.getElementById('signOK').style.visibility='hidden'; if(SignClickTest()) document.getElementById('signOK').style.visibility='visible'; else document.getElementById('signKO').style.visibility='visible';" class="btn" />
+							</div>
+							
+							<br /><br />
+							<div id="signOK" class="hidden">
+								<div style="float:left;">
+									<img src="../img/ok.png" />
+								</div>
+								<div style="float:left;">
+									&nbsp;&nbsp;&nbsp;la firma si &egrave; conclusa con successo.
+								</div>
+							</div>
+							<br />
+							<div id="signKO" class="hidden">
+								<div style="float:left;">
+									<img src="../img/ko.png" />
+								</div>
+								<div style="float:left">
+									&nbsp;&nbsp;&nbsp;la firma non si &egrave; conclusa con successo.
+								</div>
+							</div>
+							<div>
+								<input id="signedData" type="hidden" />
+							</div>
+							<br />
+							<div class="footer-content">
+							  <!--
+								&nbsp;
+								<a href="intro.html" title="Home page"><b>Home Page</b></a>
+								-->
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<div>
+						<div class="divleft">
+							<input id="prevBtn" type="button" value="<< Schermata Precedente" class="btn" onclick="window.location='instActiveX.html';" />
+						</div>
+						<div class="divright">
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

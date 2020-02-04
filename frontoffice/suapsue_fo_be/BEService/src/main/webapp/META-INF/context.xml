@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2011, Regione Emilia-Romagna, Italy Licensed under the 
+	EUPL, Version 1.1 or - as soon they will be approved by the European Commission 
+	- subsequent versions of the EUPL (the "Licence"); You may not use this work 
+	except in compliance with the Licence. For convenience a plain text copy 
+	of the English version of the Licence can be found in the file LICENCE.txt 
+	in the top-level directory of this software distribution. You may obtain 
+	a copy of the Licence in any of 22 European Languages at: http://joinup.ec.europa.eu/software/page/eupl 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. This product includes 
+	software developed by Yale University See the Licence for the specific language 
+	governing permissions and limitations under the Licence. -->
+<Context path="/BEService">
+	<Logger className="org.apache.catalina.logger.FileLogger"
+		prefix="BEService." suffix=".log" timestamp="true" />
+	<!-- <ResourceLink name="jdbc/LegacyDB" global="people/LegacyDB" type="javax.sql.DataSource" 
+		/> -->
+	<Resource name="jdbc/LegacyDB" auth="Container" type="javax.sql.DataSource"
+		maxActive="8" maxIdle="8" maxWait="-1" username="${BEService.jdbc/LegacyDB.username}" password="${BEService.jdbc/LegacyDB.password}"
+		driverClassName="com.mysql.jdbc.Driver" testOnBorrow="true"
+		testOnReturn="false" removeAbandoned="true" validationQuery="SELECT 1"
+		validationQueryTimeout="-1"
+		url="${BEService.jdbc/LegacyDB.url}" />
+
+	<Resource type="javax.sql.DataSource" name="jdbc/BEServiceDB" />
+	<ResourceParams name="jdbc/BEServiceDB">
+		<parameter>
+			<name>maxWait</name>
+			<value>5000</value>
+		</parameter>
+		<parameter>
+			<name>maxActive</name>
+			<value>4</value>
+		</parameter>
+		<parameter>
+			<name>password</name>
+			<value>${BEService.jdbc/BEServiceDB.password}</value>
+		</parameter>
+		<parameter>
+			<name>url</name>
+			<value>${BEService.jdbc/BEServiceDB.url}</value>
+		</parameter>
+		<parameter>
+			<name>driverClassName</name>
+			<value>org.gjt.mm.mysql.Driver</value>
+		</parameter>
+		<parameter>
+			<name>maxIdle</name>
+			<value>4</value>
+		</parameter>
+		<parameter>
+			<name>username</name>
+			<value>${BEService.jdbc/BEServiceDB.username}</value>
+		</parameter>
+	</ResourceParams>
+
+</Context>

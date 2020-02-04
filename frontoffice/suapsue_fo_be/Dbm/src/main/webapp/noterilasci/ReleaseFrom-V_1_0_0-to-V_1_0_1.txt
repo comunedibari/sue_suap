@@ -1,0 +1,28 @@
+---Upgrade della versione Master Copy V.1.0.0 alla V.1.0.1
+---Si ricorda che le il passaggio alla versione V.1.0.1 prevede di
+   avere il software alla versione V.1.0.0
+
+bug-fix:
+
+
+
+miglioramenti:
+
+- inserimento nuovi campi su tabella sportelli per integrazione Connects e Pagamenti
+- inserimento nuovi campi su anagrafica e href per gestione nuovo controllo
+- migliorata la gestione delle tabelle di relazione
+- introdotti 2 nuovi parametri di configurazione nella tabella configuration
+  - 'urlTCR' per configurare l'url del servizio messo a disposizione dal Tcr per il caricamento dati via WS (già inserito in modo automatico con il precedente rilascio)
+     es: (INSERT INTO `configuration` (`name`, `value`, `note`) VALUES ('urlTCR', 'http://localhost:8080/TCR/Pubblicazione', 'url di pubblicazione (TCR)');)
+  - 'updateTCR' per configurare se l'aggiornamento del Tcr deve avvenire in modo automatico o manuale tramite la funzione di pubblicazione (inserito tramite script di aggiornamento db)
+     es: (INSERT INTO `configuration` (`name`, `value`, `note`) VALUES ('updateTCR', 'TRUE', 'TRUE aggiornamento automatico TCR, FALSE Aggiornamento manuale TCR');)
+
+passi:
+1) effettuare una copia del db
+2) eseguire lo script sql release_1_ver_1.sql
+3) salvare il file web.xml presente nella cartella <tomcat>/webapps/Dbm/WEB-INF
+4) salvare il file log4j.properties presente nella cartella <tomcat>/webapps/Dbm/WEB-INF/classes
+5) effettuare il deploy del software (Dbm.war)
+6) ripristinare il file web.xml salvato inprecedenza
+7) ripristinare il file log4j.properties salvato in precedenza
+8) riavviare tomcat

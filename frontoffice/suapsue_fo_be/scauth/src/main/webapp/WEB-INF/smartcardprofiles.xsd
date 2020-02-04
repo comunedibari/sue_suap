@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.progettopeople.it/sirac/peoplesmartcardprofiles"
+	xmlns:scp="http://www.progettopeople.it/sirac/peoplesmartcardprofiles"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	
+	<complexType name="CertDistinguishedNamePattern">
+		<simpleContent>
+			<extension base="string">
+				<attribute name="tokenSeparator" type="string"
+					use="required">
+				</attribute>
+				<attribute name="datePattern" type="string"
+					default="mmDDyyyy">
+				</attribute>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<simpleType name="CardDescription">
+		<restriction base="string">
+			<maxLength value="300"></maxLength>
+			<whiteSpace value="preserve"></whiteSpace>
+			<minLength value="0"></minLength>
+		</restriction>
+	</simpleType>
+	<simpleType name="CertificateIssuer">
+		<restriction base="string">
+			<maxLength value="300"></maxLength>
+			<whiteSpace value="preserve"></whiteSpace>
+			<minLength value="0"></minLength>
+		</restriction>
+	</simpleType>
+	<simpleType name="CardATR">
+		<restriction base="string">
+			<maxLength value="100"></maxLength>
+			<whiteSpace value="preserve"></whiteSpace>
+			<minLength value="0"></minLength>
+		</restriction>
+	</simpleType>
+	
+	<complexType name="CertificateValidityCheck">
+		<attribute name="enabled" type="boolean" use="required"></attribute>
+	</complexType>
+	<complexType name="CertificateChainCheck">
+		<attribute name="enabled" type="boolean" use="required"></attribute>
+	</complexType>
+	<complexType name="CRLCheck">
+        <sequence minOccurs="0" maxOccurs="unbounded">
+			<element name="alternativeCRLDistributionPointURL" type="scp:AlternativeCRLDistributionPointURL" minOccurs="1" maxOccurs="1"></element>
+		</sequence>
+		<attribute name="enabled" type="boolean" use="required"></attribute>
+		<attribute name="onCardCrlURLCheck" type="boolean"
+			use="required">
+		</attribute>
+		<attribute name="overrideInternalCRLUpdateInterval" type="boolean" use="required"></attribute>
+		<attribute name="updateIntervalHours" type="positiveInteger" use="required"></attribute>
+		<attribute name="crlFileName" type="string" use="required">
+			<annotation>
+				<documentation>pippo!</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+	<element name="SmartCardProfiles" type="scp:SmartCardProfiles"></element>
+
+	<complexType name="SmartCardProfiles">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<element name="SmartCardProfile"
+				type="scp:SmartCardProfile" minOccurs="1" maxOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="SmartCardProfile">
+		<sequence minOccurs="1" maxOccurs="1">
+		<element name="CardDescription" type="scp:CardDescription" minOccurs="1" maxOccurs="1"></element>
+		<element name="CardATR" type="scp:CardATR" minOccurs="1" maxOccurs="1"></element>
+		<element name="CardLibraries" type="scp:CardLibraries" minOccurs="1" maxOccurs="1">
+			</element>
+		<element name="CertificateIssuer" type="scp:CertificateIssuer" minOccurs="1" maxOccurs="1"></element>
+		<element name="CertificateValidityCheck" type="scp:CertificateValidityCheck" minOccurs="1" maxOccurs="1"></element>
+		<element name="CertificateChainCheck" type="scp:CertificateChainCheck" minOccurs="1" maxOccurs="1"></element>
+		<element name="CRLCheck" type="scp:CRLCheck" minOccurs="1" maxOccurs="1"></element>
+		<element name="DistinguishedNamePattern"
+			type="scp:CertDistinguishedNamePattern" minOccurs="1"
+			maxOccurs="1">
+		</element>
+		</sequence>
+		<attribute name="cardType" type="scp:CardTypeRestriction"
+			use="required">
+		</attribute>
+	</complexType>
+
+	<simpleType name="CardLibraryTypeRestriction">
+		<restriction base="NMTOKEN">
+			<enumeration value="csp" />
+			<enumeration value="pkcs11" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="CardLibraries">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<element name="CardLibrary" type="scp:CardLibrary"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="CardLibrary">
+		<simpleContent>
+			<extension base="string">
+				<attribute name="type"
+					type="scp:CardLibraryTypeRestriction" use="required">
+				</attribute>
+			</extension>
+		</simpleContent>
+	</complexType>
+
+	<simpleType name="AlternativeCRLDistributionPointURL">
+		<restriction base="string"></restriction>
+	</simpleType>
+
+	<simpleType name="CardTypeRestriction">
+		<restriction base="NMTOKEN"></restriction>
+	</simpleType>
+
+</schema>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<PROCESS>
+	<PROCESS-CONFIG>
+		<default>
+			<SUMMARY-ENABLED>false</SUMMARY-ENABLED>
+			<SIGN-ENABLED>false</SIGN-ENABLED>			
+		</default>
+	</PROCESS-CONFIG>
+	<VIEW id="1">
+		<default>
+			<name>Pipeline Less</name>
+			<activity-order>1, 2</activity-order>
+		</default>
+		<ACTIVITIES>
+			<ACTIVITY id="1">
+				<default>
+					<name>Inserimento</name>
+					<step-order>intro, riepilogo</step-order>
+				</default>
+				<STEPS>
+					<STEP id="intro">
+						<default>
+							<name>Intro</name>
+							<view>intro.jsp</view>
+							<classname>Intro</classname>							
+						</default>
+					</STEP>		
+					<STEP id="riepilogo">
+						<default>
+							<name>Riepilogo</name>
+							<view>invocazione.jsp</view>
+							<classname>Invocazione</classname>							
+						</default>
+					</STEP>		
+				</STEPS>
+			</ACTIVITY>			
+			<ACTIVITY id="2">
+				<default>
+					<name>Esito</name>
+					<step-order>cambiaStato</step-order>
+				</default>
+				<STEPS>
+					<STEP id="cambiaStato">
+						<default>
+							<name>Esito</name>
+							<view>esito.jsp</view>
+							<classname>Esito</classname>
+						</default>
+					</STEP>										
+				</STEPS>
+			</ACTIVITY>			
+		</ACTIVITIES>
+	</VIEW>
+</PROCESS>

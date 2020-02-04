@@ -1,0 +1,325 @@
+/**
+ * Copyright (c) 2011, Regione Emilia-Romagna, Italy
+ *  
+ * Licensed under the EUPL, Version 1.1 or - as soon they
+ * will be approved by the European Commission - subsequent
+ * versions of the EUPL (the "Licence");
+ * You may not use this work except in compliance with the
+ * Licence.
+ * 
+ * For convenience a plain text copy of the English version
+ * of the Licence can be found in the file LICENCE.txt in
+ * the top-level directory of this software distribution.
+ * 
+ * You may obtain a copy of the Licence in any of 22 European
+ * Languages at:
+ * 
+ * http://joinup.ec.europa.eu/software/page/eupl
+ * 
+ * Unless required by applicable law or agreed to in
+ * writing, software distributed under the Licence is
+ * distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied.
+ * 
+ * This product includes software developed by Yale University
+ * 
+ * See the Licence for the specific language governing
+ * permissions and limitations under the Licence.
+ **/
+/*
+ * ReturnFromPayment.java
+ *
+ * Created on 28 gennaio 2005, 14.47
+ */
+
+package it.people.action;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+import it.people.core.PeopleContext;
+import it.people.core.ProcessManager;
+import it.people.core.persistence.exception.dbAccessException;
+import it.people.core.persistence.exception.peopleException;
+import it.people.error.MessagesFactory;
+import it.people.error.errorMessage;
+import it.people.exceptions.PeopleDBException;
+import it.people.process.AbstractPplProcess;
+import it.people.propertymgr.PropertyFormatException;
+import it.people.util.ActivityLogger;
+import it.people.util.payment.EsitoPagamento;
+import it.people.util.payment.NotificationManager;
+import it.people.util.payment.PaymentException;
+import it.people.util.payment.PaymentManagerContext;
+import it.people.util.payment.PaymentThread;
+import it.people.util.status.ProcessStatus;
+import it.people.util.status.ProcessStatusTable;
+import it.people.util.status.StatusHelper;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Category;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+/**
+ * 
+ * @author manelli
+ */
+public class ReturnFromPayment extends Action {
+    private static final String CONTENT_TYPE = "text/html; charset = windows-1252";
+    private static final String DOC_TYPE = "<!DOCTYPE html  \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n"
+	    + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">";
+    private static final String URL_RESULT = "nextStepProcess.do";
+
+    private static String ERROR_JSP = "/framework/genericErrors/ProcessError.jsp";
+    private errorMessage m_error;
+    private Category cat = Category.getInstance(InitProcess.class.getName());
+    private PeopleContext peopleContext;
+
+    private ActivityLogger m_oTracer = ActivityLogger.getInstance();
+
+    public ActionForward execute(ActionMapping actionMapping,
+	    ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	boolean isPayERPaymentManager = false;
+	try {
+	    Properties paymentsConfig = new Properties();
+	    paymentsConfig.load(new FileInputStream(this.getServlet()
+		    .getServletContext()
+		    .getRealPath("/WEB-INF/payment.properties")));
+	    String paymentStrategyClassName = paymentsConfig
+		    .getProperty("payment.strategy.class");
+	    if (paymentStrategyClassName != null) {
+		isPayERPaymentManager = paymentStrategyClassName
+			.equalsIgnoreCase("it.people.util.payment.PayERPaymentManager");
+	    }
+	} catch (FileNotFoundException e) {
+	} catch (IOException e) {
+	}
+
+	if (isPayERPaymentManager) {
+
+	    NotificationManager notificationManager = new NotificationManager();
+	    notificationManager.execute(request);
+
+	}
+
+	m_oTracer.log(this.getClass(), "Avvio", ActivityLogger.DEBUG);
+	this.peopleContext = PeopleContext.create(request);
+
+	if (this.peopleContext.getUser().isAnonymous())
+	    // nel caso dell'utente anonimo non � gestita la
+	    // comunicazione dell'esito del pagamento
+	    return actionMapping.findForward("anonymous");
+
+	// --------------------------------------------------------------------
+	// 1� PASSO: determinare l'identificativo del procedimento
+
+	// Determina l'EsitoPagamento (quello comunicato dal MIP)
+	EsitoPagamento esitoPagamento = null;
+
+	try {
+	    PaymentManagerContext pm = new PaymentManagerContext(this
+		    .getServlet().getServletContext()
+		    .getRealPath("/WEB-INF/payment.properties"));
+	    esitoPagamento = pm.getEsitoPagamento(request,
+		    request.getParameter("buffer"));
+	} catch (PaymentException e) {
+	    m_oTracer.log(this.getClass(),
+		    "Il buffer comunicato dal MIP � nullo.",
+		    ActivityLogger.ERROR);
+	    return actionMapping.findForward("failed");
+	}
+	m_oTracer.log(this.getClass(),
+		"Buffer del MIP:'" + request.getParameter("buffer") + "'.",
+		ActivityLogger.DEBUG);
+
+	if (esitoPagamento == null) {
+	    m_oTracer.log(this.getClass(),
+		    "Errore nella determinazione dell'esito pagamento.",
+		    ActivityLogger.ERROR);
+	    return actionMapping.findForward("failed");
+	}
+
+	m_oTracer.log(this.getClass(), "EsitoPagamento istanziato.",
+		ActivityLogger.DEBUG);
+
+	// Determina l'identificativo
+	String id = esitoPagamento.getNumeroOperazione();
+
+	/*
+	 * String peopleId = StatusHelper.id2PeopleId(id); if (peopleId == null)
+	 * { m_oTracer.log(this.getClass(),
+	 * "Errore nella determinazione del peopleId del procedimento.",
+	 * ActivityLogger.ERROR); return actionMapping.findForward("failed"); }
+	 * m_oTracer.log(this.getClass(),
+	 * "peopleId del procedimento determinato.", ActivityLogger.DEBUG);
+	 * 
+	 * Long oid = fetchProcessOid(peopleId); if (oid == null) {
+	 * m_oTracer.log(this.getClass(),
+	 * "Errore nella determinazione dell'OID del procedimento.",
+	 * ActivityLogger.ERROR); return actionMapping.findForward("failed"); }
+	 * m_oTracer.log(this.getClass(), "OID del procedimento determinato.",
+	 * ActivityLogger.DEBUG);
+	 */
+
+	// ----------------------------------------------------------------------
+	// 2� PASSO: determinare lo stato del pagamento da FEDB.process_status
+	// lo stato deve essere letto dal DB e non direttamente da
+	// EsitoPagamento, perch� deve essere eseguita anche la funzione
+	// di callback.
+
+	ProcessStatusTable processStatusTable = null;
+
+	try {
+	    processStatusTable = StatusHelper
+		    .getProcessStatusTableFromPaymentId(id);
+	} catch (PeopleDBException dbEx) {
+	    m_oTracer.log(this.getClass(),
+		    "Errore nella lettura dello stato del pagamento.",
+		    ActivityLogger.ERROR);
+	    return actionMapping.findForward("failed");
+	}
+	m_oTracer.log(this.getClass(), "Lettura stato del pagamento riuscita.",
+		ActivityLogger.DEBUG);
+
+	if (processStatusTable.getStatus() == ProcessStatus.PAYMENT_OK
+		.getStatusCode()) {
+	    // Il pagamento ha raggiunto un esito positivo
+	    m_oTracer.log(this.getClass(), "Esito pagamento: Completato (OK)",
+		    ActivityLogger.DEBUG);
+
+	    request.getSession().setAttribute("EsitoPagamento", esitoPagamento);
+	    AbstractPplProcess process = (AbstractPplProcess) actionForm;
+	    loadPplProcess(process, request,
+		    processStatusTable.getSavedProcessId());
+	    process.getView().setActivePaymentResultStep();
+
+	    return actionMapping.findForward("success");
+	} else if (processStatusTable.getStatus() == ProcessStatus.PAYMENT_ABORTED
+		.getStatusCode()) {
+	    // Il pagamento � stato annullato (autorizzazione negata)
+	    m_oTracer.log(this.getClass(), "Esito pagamento: Abortito (KO).",
+		    ActivityLogger.WARN);
+
+	    request.getSession().setAttribute("EsitoPagamento", esitoPagamento);
+	    return failedMessageForward(actionMapping, request,
+		    "pagamento.error.KO");
+	} else if (processStatusTable.getStatus() == ProcessStatus.PAYMENT_PENDING
+		.getStatusCode()) {
+	    // Il pagamento � pendente
+	    if (esitoPagamento.getEsito()
+		    .equals(EsitoPagamento.ES_PAGAMENTO_ER)) {
+		// Errore di trasmissione
+		m_oTracer.log(this.getClass(),
+			"Esito pagamento: Errore di trasmissione (ER).",
+			ActivityLogger.WARN);
+		return failedMessageForward(actionMapping, request,
+			"pagamento.error.ER");
+	    } else if (esitoPagamento.getEsito().equals(
+		    EsitoPagamento.ES_PAGAMENTO_UK)) {
+		// Operazione sconosciuta
+		m_oTracer.log(this.getClass(),
+			"Esito pagamento: Operazione sconosciuta (UK).",
+			ActivityLogger.WARN);
+		return failedMessageForward(actionMapping, request,
+			"pagamento.error.UK");
+	    } else /*
+		    * if (esitoPagamento.getEsito().equals(EsitoPagamento.
+		    * ES_PAGAMENTO_OP))
+		    */
+	    {
+		// operazione sospesa ma in corso
+		// comprende anche il caso in cui non sia ancora stata fatta la
+		// notifica asincrona
+		// ma l'esitoPagamento abbia gi� il risultato
+
+		// il pagamento pendente � gestito dall'apposita pagina
+		// che permette di verificare in modo automatico
+		// l'eventuale aggiornamento dello stato.
+		return actionMapping.findForward("pendingPayment");
+	    }
+	} else
+	    m_oTracer
+		    .log(this.getClass(),
+			    "Esito pagamento: Il codice di pagamento letto dalla process status non � valido.",
+			    ActivityLogger.DEBUG);
+
+	m_oTracer.log(this.getClass(), "Errore non gestito.",
+		ActivityLogger.DEBUG);
+	return actionMapping.findForward("failed");
+    }
+
+    private ActionForward failedMessageForward(ActionMapping p_actionMapping,
+	    HttpServletRequest request, String messageId)
+	    throws PropertyFormatException {
+	m_error = MessagesFactory.getInstance().getErrorMessage(
+		this.peopleContext.getCommune().getOid(), messageId);
+	m_error.setErrorForward(ERROR_JSP);
+	request.setAttribute("errorMessage", m_error);
+	return p_actionMapping.findForward("failed");
+    }
+
+    private void loadPplProcess(AbstractPplProcess proc,
+	    HttpServletRequest p_servletRequest, Long processId) {
+	try {
+	    ProcessManager.getInstance().load(proc,
+		    PeopleContext.create(p_servletRequest), processId);
+	    proc.getView().propertyUpdate();
+
+	    if (proc != null) {
+		p_servletRequest.getSession().setAttribute("pplProcess", proc);
+		p_servletRequest.getSession().setAttribute("City",
+			proc.getCommune());
+	    }
+	    ActivityLogger.getInstance().log(proc, "Caricamento Processo",
+		    ActivityLogger.INFO);
+	} catch (peopleException pex) {
+	    if (pex instanceof dbAccessException) {
+		try {
+		    m_error = MessagesFactory.getInstance().getErrorMessage(
+			    this.peopleContext.getCommune().getOid(),
+			    "InitProcess.dbError");
+		    m_error.setErrorForward(ERROR_JSP);
+		    p_servletRequest.setAttribute("errorMessage", m_error);
+		    cat.error(pex);
+		} catch (Exception ex) {
+		    m_oTracer.log(this.getClass(), ex.toString(),
+			    ActivityLogger.ERROR);
+		}
+	    }
+	} catch (Exception ex) {
+	    m_oTracer.log(this.getClass(), ex.toString(), ActivityLogger.ERROR);
+	}
+    }
+
+    /*
+     * private Long fetchProcessOid(String peopleId) throws PeopleDBException {
+     * Connection conn = DBConnector.getInstance().connect(DBConnector.FEDB);
+     * Long retVal = null; try { Statement stat = conn.createStatement(); String
+     * query = "SELECT * FROM process_status WHERE peopleid = '" + peopleId
+     * +"'";
+     * 
+     * ResultSet rs = stat.executeQuery(query);
+     * 
+     * //PeopleId � univoco, al massimo esiste uno ed un solo risultato if
+     * (rs.next()) { long pid = rs.getInt("savedprocessid"); retVal = new
+     * Long(pid); }
+     * 
+     * try { rs. close(); stat.close(); conn.close(); } catch (Exception e) {
+     * //Swallow close exceptions m_oTracer.log(this.getClass(), e.toString(),
+     * ActivityLogger.ERROR); } } catch (SQLException e) {
+     * m_oTracer.log(this.getClass(), e.toString(), ActivityLogger.ERROR); throw
+     * new PeopleDBException(e.getMessage()); }
+     * 
+     * return retVal; }
+     */
+}

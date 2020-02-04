@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSpy v2011 sp1 (x64) (http://www.altova.com) by USER (USER) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="RispostaBO" type="RispostaBO"/>
+    <xs:complexType name="RispostaBO">
+        <xs:sequence>
+            <xs:element name="errorMessage" type="xs:string" minOccurs="0"/>
+            <xs:element name="esito" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Esito della chiamata al Backoffice. I valori di ritorno ammessi sono OK e KO</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="OK"/>
+                        <xs:enumeration value="KO"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tipoRegistroProtocolloBackOffice" type="xs:string" minOccurs="0"
+                                    maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>tipoRegistroProtocolloBackOffice, ad oggi esiste solo un registro con valore "vuoto"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="numeroRegistroProtocolloBackOffice" type="xs:int" minOccurs="0"
+                                    maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>numeroRegistroProtocolloBackOffice è il progressivo assegnato dal sistema all'atto dellinserimento della pratica, è unico nell'anno (ed eventualmte duplicato se appartente a diversi tipoRegistroProtocolloBackOffice nello stesso anno)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="annoRegistroProtocolloBackOffice" type="xs:int" minOccurs="0"
+                                    maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>annoRegistroProtocolloBackOffice l'anno di inserimento della pratica</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" name="dataRegistroProtocolloBackOffice" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>dataRegistroProtocolloBackOffice la data di inserimento della pratica ... formato dd/mm/yyyy ... </xs:documentation>
+                </xs:annotation>
+            </xs:element>                        
+            <xs:element name="fascicoloProtocollo" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>fascicoloProtocollo la concatenazione di tipoRegistroProtocolloBackOffice + " " + numeroRegistroProtocolloBackOffice + " / " + annoRegistroProtocolloBackOffice
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="idFascicoloProtocollo" type="xs:int" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>id Identificativo univoco del fascicolo (la stringa di cui al punto "fascicoloProtocollo") sul Protocollo Generale</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="resposabileProcedimento" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Il responsabile del procedimento</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ufficioRiferimento" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>L'ufficio che processera' la pratica</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

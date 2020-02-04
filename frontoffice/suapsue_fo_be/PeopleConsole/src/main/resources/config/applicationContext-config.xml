@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" 	
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="staticMessageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>support/static/controllers</value>
+				<value>support/static/sessions</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/classes/support/interface</value>
+				<value>/WEB-INF/classes/support/messages</value>
+				<value>/WEB-INF/classes/support/queries</value>
+				<value>/WEB-INF/classes/support/system</value>
+			</list>
+		</property>
+		<property name="cacheSeconds">
+			<value>15</value>
+		</property>
+	</bean>
+	
+	<bean id="beServicesChecker" class="it.people.console.beservices.BeServicesChecker" />
+	
+	<bean id="messageSourceAwareValidator" class="it.people.console.validation.MessageSourceAwareValidator" 
+		p:propertiesRepository-ref="messageSource" />
+
+	<bean id="feNodeValidator" class="it.people.console.web.controllers.validator.FeNodeValidator" />
+
+	<bean id="beServiceValidator" class="it.people.console.web.controllers.validator.BeServiceValidator" />
+
+	<bean id="feServicesRegistrationValidator" class="it.people.console.web.controllers.validator.FeServicesRegistrationValidator" />
+
+	<bean id="feNodeDeployedServicesRegistrationValidator" class="it.people.console.web.controllers.validator.FENodeDeployedServicesRegistrationValidator" />
+
+	<bean id="feNodeToNodeCopyValidator" class="it.people.console.web.controllers.validator.FENodeToNodeCopyValidator" />
+	
+	<bean id="feNodeViewLogsValidator" class="it.people.console.web.controllers.validator.FENodeViewLogsValidator" />
+
+	<bean id="feViewAuditConversationsValidator" class="it.people.console.web.controllers.validator.FEViewAuditConversationsValidator" />
+
+	<bean id="rootLoginValidator" class="it.people.console.web.controllers.validator.RootLoginValidator" />
+
+	<bean id="accountsValidator" class="it.people.console.web.controllers.validator.AccountsValidator" />
+
+	<bean id="auditStatisticheValidator" class="it.people.console.web.controllers.validator.AuditStatisticheValidator" />
+
+	<bean id="consoleSettingsValidator" class="it.people.console.web.controllers.validator.ConsoleSettingsValidator" />
+	
+	<bean id="trustStoreUtils" class="it.people.console.security.TrustStoreUtils" scope="prototype" />
+		
+	<bean id="cryptoUtils" class="it.people.console.security.CryptoUtils" />
+
+	<bean id="ruManager" class="it.people.console.security.ru.RUManager" />
+
+	<bean id="regExpUtils" class="it.people.console.utils.RegExpUtils" />
+
+	<bean id="certificatesManager" class="it.people.console.security.certificates.CertificatesManager" />
+
+	<bean id="queryColumnExecutor" class="it.people.console.persistence.jdbc.support.QueryColumnExecutor" />
+
+	<bean id="persistenceBroker" class="it.people.console.persistence.PersistenceBroker" />
+
+	<bean id="certificatesManagerValidator" class="it.people.console.web.controllers.validator.CertificatesManagerValidator" />
+
+	<bean id="actionsViewsCache" class="it.people.console.web.controllers.utils.ActionsViewsCache" />
+
+	<bean id="jasperGenericReport" class="it.people.console.jasper.JasperReportView" />
+		
+	<bean id="dataUtils" class="it.people.console.web.utils.DataUtils" />
+	
+	<bean id="beServicesMPSValidator" class="it.people.console.web.controllers.validator.BEServicesMPSValidator" />
+
+	<bean id="accreditamentiQualificheValidator" class="it.people.console.web.controllers.validator.AccreditamentiQualificheValidator" />
+
+
+</beans>

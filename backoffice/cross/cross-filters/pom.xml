@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.wego.cross</groupId>
+	<artifactId>cross-filters</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<name>cross-filters</name>
+	<!-- <distributionManagement> <repository> <id>ygg.repo</id> <url>http://maven.ud.wego.it:8081/nexus/content/repositories/releases</url> 
+		</repository> <snapshotRepository> <id>ygg.snapshots</id> <url>http://maven.ud.wego.it:8081/nexus/content/repositories/snapshots</url> 
+		</snapshotRepository> </distributionManagement> -->
+	<properties>
+		<cas.client.core.version>3.3.3</cas.client.core.version>
+	</properties>	
+		
+		
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>it.people</groupId>
+			<artifactId>feframework</artifactId>
+			<version>2.5</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jasig.cas</groupId> -->
+<!-- 			<artifactId>cas-client-core</artifactId> -->
+<!-- 			<version>3.1.2</version> -->
+<!-- 		</dependency>  -->
+		<dependency>
+			<groupId>org.jasig.cas.client</groupId>
+			<artifactId>cas-client-core</artifactId>
+			<version>${cas.client.core.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+<!-- 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.6</source>
+					<target>1.6</target>
+					<debug>true</debug>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
+		</plugins>
+	</build>
+</project>

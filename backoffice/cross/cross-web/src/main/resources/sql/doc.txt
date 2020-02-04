@@ -1,0 +1,5 @@
+Configuration to remove:
+    InserisciEventoWS (deprecated)
+    webservices.plugin.id (deprecated)
+    procedimento.codice.suap (deprecated)
+    generazioneXMLSuri (deprecated)

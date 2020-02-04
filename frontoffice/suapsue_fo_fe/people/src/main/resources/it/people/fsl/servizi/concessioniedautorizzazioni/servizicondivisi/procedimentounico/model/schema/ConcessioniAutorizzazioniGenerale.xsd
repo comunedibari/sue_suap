@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Administrator (Bubble) -->
+<!-- 
+	Modellazione People (servizio Autorizzazioni e Concessioni) versione 2.0.2
+	autore: Mirko Calandrini
+	http://www.gruppoinit.it
+-->
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://gruppoinit.it/b110/ConcessioniEAutorizzazioni/procedimentoUnico" xmlns:OggettiCondivisi="http://egov.diviana.it/b109/OggettiCondivisi" xmlns:DocumentiUfficiali="http://egov.diviana.it/b109/DocumentiUfficiali" targetNamespace="http://gruppoinit.it/b110/ConcessioniEAutorizzazioni/procedimentoUnico" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://egov.diviana.it/b109/DocumentiUfficiali" schemaLocation="DocumentiUfficiali.xsd"/>
+	<xs:import namespace="http://egov.diviana.it/b109/OggettiCondivisi" schemaLocation="OggettiCondivisi.xsd"/>
+	<xs:element name="Richiesta" type="RichiestadiConcessioniEAutorizzazioniType"/>
+	<!-- RICHIESTA C&A -->
+	<xs:complexType name="RichiestadiConcessioniEAutorizzazioniType">
+		<xs:annotation>
+			<xs:documentation>
+				La richiesta inviata dal servizio People di Concessioni e
+				Autorizzazioni ad un BackEnd generico.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="OggettiCondivisi:RichiestadiServizioOnLineallaPA">
+				<xs:sequence>
+					<xs:element name="Richiedente" type="OggettiCondivisi:CredenzialiUtenteCertificate"/>
+					<xs:element name="Titolare" type="OggettiCondivisi:SceltaTitolare"/>
+					<xs:element name="InvioDiCortesia" type="xs:boolean"/>
+					<xs:element name="PraticaAnonima" type="xs:boolean" default="false" minOccurs="0"/>
+					<xs:element name="DataOraPresentazione" type="xs:dateTime"/>
+					<xs:element name="Ente" type="EnteType"/>
+					<xs:element name="SportelloDestinatario" type="SportelloType"/>
+					<xs:element name="SettoreAttivita" type="SettoreAttivitaType"/>
+					<xs:element name="OperazioniAttivita" type="OperazioniAttivitaType"/>
+					<xs:element name="IdBookmark" type="xs:string" nillable="true"/>
+					<xs:element name="DescrizioneBookmark" type="xs:string" nillable="true"/>
+					<xs:element name="Anagrafica" type="AnagraficaType"/>
+					<xs:element name="AnagraficaAltriDichiaranti" type="AnagraficaType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="OggettoPratica" type="DichiarazioneDinamicaType"/>
+					<xs:element name="RiepilogoDomanda" type="RiepilogoDomandaType"/>
+					<xs:element name="pdfIstanza" type="xs:string"/>
+					<xs:element name="Normative" type="NormativeType"/>
+					<xs:element name="DichiarazioniDinamiche" type="DichiarazioniDinamicheType"/>
+					<xs:element name="DichiarazioniStatiche" type="DichiarazioniStaticheType"/>
+					<xs:element name="Modulistica" type="ModulisticaType"/>
+					<xs:element name="Documenti" type="DocumentiType"/>
+					<xs:element name="Cuds" type="CudsType"/>
+					<xs:element name="ClassiEnte" type="ClassiEnteType"/>
+					<xs:element name="Destinatari" type="DestinatariType"/>
+					<xs:element name="OneriRiepilogo" type="OneriRiepilogoType"/>
+					<xs:element name="RemoteAttachFile" type="xs:string"/>
+					<xs:element name="AltreInfo" type="AltreInfoType" minOccurs="0"/>
+					<xs:element name="Localizzazione" type="DichiarazioneDinamicaType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ENTE -->
+	<xs:complexType name="EnteType">
+		<xs:annotation>
+			<xs:documentation> Descrive l'ente, la struttura (ufficio) e il relativo sportello all'interno dell'ente.	</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CodEnte" type="xs:string"/>
+			<xs:element name="DesEnte" type="xs:string" nillable="true"/>
+			<xs:element name="Indirizzo" type="xs:string" minOccurs="0"/>
+			<xs:element name="Cap" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Citta" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Provincia" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Email" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Telefono" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Fax" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="CodIstat" type="xs:string" minOccurs="0"/>
+			<xs:element name="CodBf" type="xs:string" minOccurs="0"/>
+			<xs:element name="CodAoo" type="xs:string" minOccurs="0"/>
+			<xs:element name="CodiceClasseEnte" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- SPORTELLO -->
+	<xs:complexType name="SportelloType">
+		<xs:sequence>
+			<xs:element name="CodiceSportello" type="xs:string"/>
+			<xs:element name="DescrizioneSportello" type="xs:string"/>
+			<xs:element name="Indirizzo" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Cap" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Citta" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Provincia" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Email" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Pec" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Telefono" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Fax" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Rup" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="flgPu" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="flgSu" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="id_protocollo" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="id_mail_server" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="id_backoffice" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="template_oggetto_ricevuta" type="xs:base64Binary" minOccurs="0"/>
+			<xs:element name="template_corpo_ricevuta" type="xs:base64Binary" minOccurs="0"/>
+			<xs:element name="template_nome_file_zip" type="xs:base64Binary"/>
+			<xs:element name="send_zip_file" type="xs:boolean" default="true"/>
+			<xs:element name="send_single_files" type="xs:boolean" default="true"/>
+			<xs:element name="send_xml" type="xs:boolean" default="true"/>
+			<xs:element name="send_signature" type="xs:boolean" default="true"/>
+			<xs:element name="template_oggetto_mail_suap" type="xs:base64Binary"/>
+			<xs:element name="send_ricevuta_dopo_protocollazione" type="xs:boolean" default="true"/>
+			<xs:element name="send_ricevuta_dopo_invio_bo" type="xs:boolean" default="false"/>
+			<xs:element name="datiSegnaturaCittadino" nillable="true" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="dato" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="chiave" type="xs:string"/>
+									<xs:element name="valore" type="xs:string"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- SETTORE ATTIVITA -->
+	<xs:complexType name="SettoreAttivitaType">
+		<xs:annotation>
+			<xs:documentation>Il settore di attività dell'impresa individuato nella generazione dell'iter del procedimento.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CodiceSettore" type="xs:string" nillable="true"/>
+			<xs:element name="DescrizioneSettore" type="xs:string" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AltreInfoType">
+		<xs:annotation>
+			<xs:documentation>lista campi generici utilizzabile in futuro per verticalizzazioni</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Info" type="InfoType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InfoType">
+		<xs:annotation>
+			<xs:documentation>Dettaglio dell'informazione</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Cod" type="xs:string"/>
+			<xs:element name="Des" type="xs:string"/>
+			<xs:element name="Note" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- OPERAZIONI ATTIVATE -->
+	<xs:complexType name="OperazioniAttivitaType">
+		<xs:annotation>
+			<xs:documentation>Lista delle operazioni foglia selezionate nell'albero delle operazioni</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Operazione" type="OperazioneType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OperazioneType">
+		<xs:annotation>
+			<xs:documentation>Dettaglio dell'operazione</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CodOperazione" type="xs:string"/>
+			<xs:element name="DesOperazione" type="xs:string"/>
+			<xs:element name="isFoglia" type="xs:boolean"/>
+			<xs:element name="CodiceIntervento" type="xs:string" maxOccurs="unbounded"/>
+			<xs:element name="Codice" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- DICHIARAZIONI DINAMICHE -->
+	<xs:complexType name="DichiarazioniDinamicheType">
+		<xs:annotation>
+			<xs:documentation>Lista degli href</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DichiarazioneDinamica" type="DichiarazioneDinamicaType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DichiarazioneDinamicaType">
+		<xs:annotation>
+			<xs:documentation>Dettaglio dell'operazione</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="chiave" type="xs:string"/>
+			<xs:element name="titolo" type="xs:string"/>
+			<xs:element name="href" type="xs:string"/>
+			<xs:element name="piedeHref" type="xs:string"/>
+			<xs:element name="campiHref" type="campiHrefType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="campiHrefType">
+		<xs:annotation>
+			<xs:documentation>Lista campi href</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="campoHref" type="campoHrefType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="campoHrefType">
+		<xs:annotation>
+			<xs:documentation>Dettaglio del campo dinamico</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="nome" type="xs:string"/>
+			<xs:element name="contatore" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+			<xs:element name="riga" type="xs:string"/>
+			<xs:element name="posizione" type="xs:string"/>
+			<xs:element name="molteplicita" type="xs:string"/>
+			<xs:element name="tipo" type="xs:string"/>
+			<xs:element name="controllo" type="xs:string"/>
+			<xs:element name="valore" type="xs:string"/>
+			<xs:element name="valoreUtente" type="xs:string"/>
+			<xs:element name="lunghezza" type="xs:string"/>
+			<xs:element name="decimali" type="xs:string"/>
+			<xs:element name="edit" type="xs:string"/>
+			<xs:element name="CampoXmlMod" type="xs:string"/>
+			<xs:element name="opzioniCombo" type="OpzioniComboType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpzioniComboType">
+		<xs:sequence>
+			<xs:element name="OpzioneCombo" type="OpzioneComboType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpzioneComboType">
+		<xs:sequence>
+			<xs:element name="Codice" type="xs:string"/>
+			<xs:element name="Etichetta" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- fine dichiarazioni dinamiche-->
+	<xs:complexType name="campoAnagraficaType">
+		<xs:annotation>
+			<xs:documentation>Dettaglio del campo dinamico</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="nome" type="xs:string"/>
+			<xs:element name="contatore" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+			<xs:element name="riga" type="xs:string"/>
+			<xs:element name="posizione" type="xs:string"/>
+			<xs:element name="molteplicita" type="xs:string"/>
+			<xs:element name="tipo" type="xs:string"/>
+			<xs:element name="controllo" type="xs:string"/>
+			<xs:element name="valore" type="xs:string"/>
+			<xs:element name="valoreUtente" type="xs:string"/>
+			<xs:element name="lunghezza" type="xs:string"/>
+			<xs:element name="decimali" type="xs:string"/>
+			<xs:element name="edit" type="xs:string"/>
+			<xs:element name="CampoXmlMod" type="xs:string"/>
+			<xs:element name="opzioniCombo" type="OpzioniComboType"/>
+			<xs:element name="livello" type="xs:string"/>
+			<xs:element name="raggruppamento_check" type="xs:string"/>
+			<xs:element name="campo_collegato" type="xs:string"/>
+			<xs:element name="val_campo_collegato" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- DICHIARAZIONI STATICHE -->
+	<xs:complexType name="DichiarazioniStaticheType">
+		<xs:sequence>
+			<xs:element name="DichiarazioneStatica" type="DichiarazioneStaticaType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DichiarazioneStaticaType">
+		<xs:sequence>
+			<xs:element name="Chiave" type="xs:string" nillable="true"/>
+			<xs:element name="Titolo" type="xs:string"/>
+			<xs:element name="Valore" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ESITO PAGAMENTO -->
+	<xs:complexType name="EsitoPagamentoType">
+		<xs:sequence>
+			<xs:element name="PortaleID" type="xs:string"/>
+			<xs:element name="NumeroOperazione" type="xs:string"/>
+			<xs:element name="IDOrdine" type="xs:string"/>
+			<xs:element name="DataOraOrdine" type="xs:string"/>
+			<xs:element name="IDTransazione" type="xs:string"/>
+			<xs:element name="DataOraTransazione" type="xs:string"/>
+			<xs:element name="SistemaPagamento" type="xs:string"/>
+			<xs:element name="SistemaPagamentoD" type="xs:string"/>
+			<xs:element name="CircuitoAutorizzativo" type="xs:string"/>
+			<xs:element name="CircuitoAutorizzativoD" type="xs:string"/>
+			<xs:element name="CircuitoSelezionato" type="xs:string"/>
+			<xs:element name="CircuitoSelezionatoD" type="xs:string"/>
+			<xs:element name="ImportoTransato" type="xs:string"/>
+			<xs:element name="ImportoAutorizzato" type="xs:string"/>
+			<xs:element name="ImportoCommissioni" type="xs:string"/>
+			<xs:element name="Esito" type="xs:string"/>
+			<xs:element name="EsitoD" type="xs:string"/>
+			<xs:element name="DataOra" type="xs:string"/>
+			<xs:element name="Autorizzazione" type="xs:string"/>
+			<xs:element name="DatiSpecifici" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- NORMATIVE -->
+	<xs:complexType name="NormativeType">
+		<xs:annotation>
+			<xs:documentation>Lista delle normative</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Normativa" type="NormativaType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NormativaType">
+		<xs:annotation>
+			<xs:documentation>Dettaglio della normativa</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="nomeRiferimento" type="xs:string"/>
+			<xs:element name="titoloRiferimento" type="xs:string"/>
+			<xs:element name="nomeFile" type="xs:string"/>
+			<xs:element name="codRif" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ANAGRAFICA -->
+	<xs:complexType name="AnagraficaType">
+		<xs:annotation>
+			<xs:documentation>Anagrafica richiedente/dichiarante</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tipologiaAnagrafica" type="xs:string" minOccurs="0"/>
+			<xs:element name="CampoAnagrafica" type="campoAnagraficaType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- RIEPILOGO ONERI -->
+	<xs:complexType name="OneriRiepilogoType">
+		<xs:sequence>
+			<xs:element name="TotaleOneri" type="xs:double"/>
+			<xs:element name="PagamentoEffettuato" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="EsitoPagamento" type="EsitoPagamentoType" minOccurs="0"/>
+			<xs:element name="ModalitaPagamento" type="xs:string" default="ON_LINE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ONERI DETTAGLIO -->
+	<xs:complexType name="OneriDettaglioType">
+		<xs:sequence>
+			<xs:element name="OnereDettaglio" type="OnereDettaglioType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnereDettaglioType">
+		<xs:sequence>
+			<xs:element name="codice" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+			<xs:element name="importo" type="xs:string"/>
+			<xs:element name="note" type="xs:string"/>
+			<xs:element name="codiceCud" type="xs:string"/>
+			<xs:element name="codiceDestinatario" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- INTERVENTI -->
+	<xs:complexType name="InterventiType">
+		<xs:sequence>
+			<xs:element name="intervento" type="InterventoType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InterventoType">
+		<xs:sequence>
+			<xs:element name="codice" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+			<xs:element name="codiciNormative" type="codiciNormativeType"/>
+			<xs:element name="codiciDichiarazioniDinamiche" type="codiciDichiarazioniDinamicheType"/>
+			<xs:element name="codiciDichiarazioniStatiche" type="codiciDichiarazioniStaticheType"/>
+			<xs:element name="codiciModulistica" type="codiciModulisticaType"/>
+			<xs:element name="codiciDocumenti" type="codiciDocumentiType"/>
+			<xs:element name="OneriDettaglio" type="OneriDettaglioType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="codiciNormativeType">
+		<xs:sequence>
+			<xs:element name="codice" type="CodiceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="codiciDichiarazioniDinamicheType">
+		<xs:sequence>
+			<xs:element name="codice" type="CodiceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="codiciDichiarazioniStaticheType">
+		<xs:sequence>
+			<xs:element name="codice" type="CodiceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="codiciModulisticaType">
+		<xs:sequence>
+			<xs:element name="codice" type="CodiceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="codiciDocumentiType">
+		<xs:sequence>
+			<xs:element name="codice" type="CodiceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodiceType">
+		<xs:sequence>
+			<xs:element name="codice" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ALLEGATI 
+	<xs:complexType name="AllegatiType">
+		<xs:sequence>
+			<xs:element name="codiceHref" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			<xs:element name="codiceDicStatiche" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			<xs:element name="codiceDoc" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	-->
+	<!-- DOCUMENTI -->
+	<xs:complexType name="DocumentiType">
+		<xs:sequence>
+			<xs:element name="documento" type="DocumentoType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentoType">
+		<xs:sequence>
+			<xs:element name="codice" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+			<xs:element name="copie" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- MODULISTICA -->
+	<xs:complexType name="ModulisticaType">
+		<xs:sequence>
+			<xs:element name="modulo" type="ModuloType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModuloType">
+		<xs:sequence>
+			<xs:element name="codiceDoc" type="xs:string"/>
+			<xs:element name="tip_doc" type="xs:string"/>
+			<xs:element name="nomeFile" type="xs:string"/>
+			<xs:element name="titolo" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- RIEPILOGO ISTANZA -->
+	<xs:complexType name="RiepilogoDomandaType">
+		<xs:annotation>
+			<xs:documentation> Rappresenta la domanda al backoffice. Può contenere i dati o di un procedimento unico o di un procedimento plurimo.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Procedimenti" type="ProcedimentiType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedimentiType">
+		<xs:sequence>
+			<xs:element name="procedimento" type="ProcedimentoType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedimentoType">
+		<xs:sequence>
+			<xs:element name="nome" type="xs:string"/>
+			<xs:element name="terminiEvasione" type="xs:string"/>
+			<xs:element name="codiceProcedimento" type="xs:string"/>
+			<xs:element name="flagComune" type="xs:string"/>
+			<xs:element name="flagPu" type="xs:string"/>
+			<xs:element name="flagProcedimento" type="xs:string"/>
+			<xs:element name="codiceCud" type="xs:string"/>
+			<xs:element name="tipo" type="xs:string"/>
+			<xs:element name="flg_bollo" type="xs:string"/>
+			<xs:element name="TotaleOneri" type="xs:double" minOccurs="0"/>
+			<xs:element name="Interventi" type="InterventiType"/>
+			<xs:element name="codiceDestinatario" type="xs:string"/>
+			<xs:element name="codiceEnte" type="xs:string"/>
+			<xs:element name="codiceClasseEnte" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CudsType">
+		<xs:sequence>
+			<xs:element name="cud" type="CudType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CudType">
+		<xs:sequence>
+			<xs:element name="codice" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ClassiEnteType">
+		<xs:sequence>
+			<xs:element name="classeEnte" type="ClasseEnteType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ClasseEnteType">
+		<xs:sequence>
+			<xs:element name="codice" type="xs:string"/>
+			<xs:element name="descrizione" type="xs:string"/>
+			<xs:element name="FlgComune" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DestinatariType">
+		<xs:sequence>
+			<xs:element name="Destinatario" type="DestinatarioType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DestinatarioType">
+		<xs:sequence>
+			<xs:element name="codiceDestinatario" type="xs:string"/>
+			<xs:element name="Intestazione" type="xs:string"/>
+			<xs:element name="Nome" type="xs:string"/>
+			<xs:element name="Indirizzo" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Cap" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Citta" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Provincia" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Email" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Telefono" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Fax" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="CodiceEnte" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

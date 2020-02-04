@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0              http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>it.wego.cross</groupId>
+        <artifactId>cross</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../cross</relativePath>
+    </parent>
+
+    <artifactId>cross-plugins</artifactId>
+    <packaging>pom</packaging>
+    
+    <modules>
+    	 <!--NON NECESSARIO PER DEPLOY 
+    	  <module>cross-comunicazione-rea</module>-->
+    	  
+        <module>../cross-aosta</module>
+        <module>../cross-auriga</module>
+        <module>../cross-concessioni-autorizzazioni</module>
+        <module>../cross-datasiel</module>
+        <module>../cross-demo</module>
+        <module>../cross-egrammata</module>
+        <module>../cross-genova</module>
+        <module>../cross-genuit</module>
+        <module>../cross-mypage-client</module>
+        <module>../cross-plugin-interfaces</module>
+        <module>../cross-registro-imprese</module>
+        <module>../cross-xml</module>
+<!--         <module>../cross-xml-schema-impresainungiorno</module> -->
+ 		<module>../cross-xml-schema</module>
+        <module>../cross-xml-visura</module>
+        <module>../cross-fvg</module>
+        <module>../cross-avbari</module>
+    </modules> 
+       
+
+    <dependencies>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-aosta</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-auriga</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-concessioni-autorizzazioni</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-datasiel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-demo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-egrammata</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-genova</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-genuit</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-mypage-client</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-plugin-interfaces</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-registro-imprese</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-fvg</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-avbari</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>        
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-xml</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-xml-schema</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-xml-visura</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
+    
+
+</project>

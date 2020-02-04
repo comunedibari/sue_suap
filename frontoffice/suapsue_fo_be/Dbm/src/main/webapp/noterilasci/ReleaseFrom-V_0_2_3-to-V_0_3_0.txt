@@ -1,0 +1,26 @@
+---Upgrade della versione Master Copy V.0.2.3 alla V.0.3.0
+---Si ricorda che le il passaggio alla versione V.0.3 prevede di
+   avere il software alla versione V.0.2
+
+bug-fix:
+
+- correzione query su lista interventi per territorialità
+- correzione duplicazione intervento con Java 1.5. Aggiunte le seguenti librerie:
+  - jaxb1-impl
+  - jaxb-api
+  - jaxb-impl
+  - jaxb-xjc
+  - jsr173_1.0_api
+
+miglioramenti:
+
+- aggiunta colonna alla tabella templates_immagini_immagini
+
+passi:
+1) effettuare l'aggiornamento della base dati della conoscenza eseguendo lo script sql from-V_0_2_3-to-V_0_3_0.sql
+2) salvare il file web.xml presente nella cartella <tomcat>/webapps/Dbm/WEB-INF
+3) salvare il file log4j.properties presente nella cartella <tomcat>/webapps/Dbm/WEB-INF/classes
+4) effettuare il deploy del software (Dbm.war)
+5) ripristinare il file web.xml salvato inprecedenza
+6) ripristinare il file log4j.properties salvato in precedenza
+7) riavviare tomcat

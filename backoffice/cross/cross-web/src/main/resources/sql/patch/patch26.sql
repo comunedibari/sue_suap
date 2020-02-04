@@ -1,0 +1,1 @@
+INSERT INTO `configuration` (`name`, `value`,`note`) VALUES ('documentale.auriga.endpoint.getmetadata', 'http://vm-testdoc:8080/aurigarepository/services/WSGetMetadataUd', 'Endpoint ricerca metadati');

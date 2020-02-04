@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+  "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ProfiloLocale">
+
+  <typeAlias alias="profiloLocale" 
+    type="it.people.sirac.accr.beans.ProfiloLocale" />
+
+  <!--  bean profilo locale -->
+  <resultMap id="profiloLocaleResult" class="profiloLocale">
+    <result property="codiceFiscale" column="codice_fiscale" />
+    <result property="domicilioElettronico" column="domicilio_elettronico" />
+    <result property="idCA" column="id_ca" />
+    <result property="idComune" column="id_comune" />
+  </resultMap>
+  
+  <select id="getProfiloLocale" resultMap="profiloLocaleResult"
+      parameterClass="java.util.Map">
+    SELECT * FROM profili_locali 
+        WHERE UPPER(codice_fiscale) = UPPER(#codiceFiscale#)
+    AND UPPER(id_comune) = UPPER(#idComune#)
+  </select>
+  
+  <select id="esisteProfiloLocale" resultClass="java.lang.String" 
+      parameterClass="java.util.Map">
+    SELECT codice_fiscale FROM profili_locali
+    WHERE UPPER(codice_fiscale) = UPPER(#codiceFiscale#)
+    AND UPPER(id_comune) = UPPER(#idComune#)
+  </select>
+  
+  <!-- 
+        Utilizzato solo per i test. Il Sirac non definisce per il momento
+        alcuna policy di cancellazione profili.
+    -->
+  <delete id="eliminaProfiloLocale"  parameterClass="java.util.Map">
+    DELETE FROM profili_locali
+    WHERE UPPER(codice_fiscale) = UPPER(#codiceFiscale#)
+    AND UPPER(id_comune) = UPPER(#idComune#)
+    </delete> 
+  
+  <insert id="creaProfiloLocale" parameterClass="profiloLocale">
+  
+    INSERT INTO profili_locali (
+      codice_fiscale, domicilio_elettronico, id_ca, id_comune)
+    VALUES (UPPER(#codiceFiscale#), #domicilioElettronico#, #idCA#, #idComune#)
+
+  </insert>
+
+</sqlMap>

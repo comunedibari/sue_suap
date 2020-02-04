@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="anagrafica_nuova" extends=".main">
+        <put-attribute name="title"         value="Nuova anagrafica" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/nuova.jsp" />
+        <put-attribute name="ricerca_ri"   cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/ricerca_registroimprese.jsp"/>
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Nuova anagrafica" type="string" />
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+    <definition name="anagrafica_modifica" extends=".main">
+        <put-attribute name="title"         value="Modifica anagrafica" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/modifica.jsp" />
+        <put-attribute name="ricerca_ri"   cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/ricerca_registroimprese.jsp"/>
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Modifica anagrafica" type="string" />
+    </definition>
+    
+    <definition name="anagrafica_ricerca" extends=".main">
+        <put-attribute name="title"         value="Nuova anagrafica" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/lista.jsp" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/ricerca.jsp"/>
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Nuova anagrafica" type="string" />
+        <put-attribute name="operazioneRiuscita"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+    </definition>
+    
+    <definition name="anagrafica_template" template="/themes/default/views/main/body/pratiche/anagrafica/template.jsp">
+    </definition>
+    
+    <definition name="azienda_dettaglio" template="/themes/default/views/main/body/pratiche/anagrafica/azienda_dettaglio.jsp">
+    </definition>
+    
+    <definition name="ricerca_ri" template="/themes/default/views/main/body/pratiche/anagrafica/ricerca_registroimprese.jsp">
+    </definition>
+    
+</tiles-definitions>

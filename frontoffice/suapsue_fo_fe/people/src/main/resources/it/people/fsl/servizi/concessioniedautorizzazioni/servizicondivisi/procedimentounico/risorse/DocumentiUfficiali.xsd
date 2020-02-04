@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	targetNamespace="http://egov.diviana.it/b109/DocumentiUfficiali"
+	xmlns="http://egov.diviana.it/b109/DocumentiUfficiali"
+	xmlns:OggettiCondivisi="http://egov.diviana.it/b109/OggettiCondivisi">
+	<xs:annotation>
+		<xs:documentation>
+			<Copyright xmlns="">
+				Copyright Diviana 2002-2005 - Produced By Diviana - Rome
+				- Italy per conto di Progetto People - Tutti i diritti
+				riservati
+			</Copyright>
+			<Modello xmlns=""
+				Versione="People-v1.7-Release - 21/04/2005" Build="109"
+				Data="27/12/2005" />
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://egov.diviana.it/b109/OggettiCondivisi"
+		schemaLocation="OggettiCondivisi.xsd" />
+	<xs:complexType name="DocumentoUfficiale" abstract="true">
+		<xs:sequence>
+			<xs:element name="Formato" type="xs:string" />
+			<xs:element name="URI" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Ricevuta" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="DocumentoUfficiale" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RicevutadiDenunciaInizioAttivita">
+		<xs:complexContent>
+			<xs:extension base="Ricevuta" />
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="ente_index" extends=".main">
+        <put-attribute name="title"         value="Elenco enti censiti" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/ente/lista.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Elenco enti censiti" type="string" />
+          <put-attribute name="operazioneRiuscita"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ente/ricerca.jsp"/>
+    </definition>
+    
+    <definition name="ente_aggiungi" extends=".main">
+        <put-attribute name="title"         value="Aggiungi un Ente" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value="Aggiungi un Ente"  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/ente/aggiungi.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Aggiungi un Ente" type="string" />
+    </definition>
+    
+    <definition name="ente_modifica" extends=".main">
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value="Aggiorna Ente"  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/ente/modifica.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+         <put-attribute name="operazioneRiuscita"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+        <put-attribute name="infopath"      cascade="true"  value="Aggiorna Ente" type="string" />
+    </definition>
+    
+    <definition name="ente_aggiungi_padre" extends=".main">
+        <put-attribute name="title"         value="Collega ente padre" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value="Collega ente padre"  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/ente/padre.jsp" />
+        <put-attribute name="body_footer"   cascade="true"  value="/themes/default/views/main/body/paginator.jsp"  />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Collega ente padre" type="string" />
+    </definition>
+    
+    <definition name="ente_aggiungi_procedimenti" extends=".main">
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ente/ricerca_procedimenti.jsp"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/ente/procedimenti.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Collega procedimenti" type="string" />
+        <put-attribute name="operazioneRiuscitaAjax" cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscitaAjax.jsp"/>
+    </definition>
+    
+    <definition name="ente_visualizza_comuni" extends=".main">
+        <put-attribute name="title"         value="Visualizza Comune" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/ente/comuni.jsp" />
+        <put-attribute name="body_error"    cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Visualizza Comune" type="string" />
+    </definition>
+    
+    <definition name="ente_ricerca_comuni" extends=".main">
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ente/ricerca_comuni.jsp"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/ente/ricerca_comuni_list.jsp" />
+        <put-attribute name="body_error"    cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Cerca comune" type="string" />
+    </definition>
+    
+    <definition name="ente_seleziona_processo" extends=".main">
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/ente/processi.jsp" />
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ente/ricerca_processi.jsp"/>
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Collega procedimenti" type="string" />
+    </definition>
+    
+    <definition name="ente_gestione_endoprocedimenti" extends=".main">
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/ente/gestione_endoprocedimenti.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Gestisci endoprocedimenti" type="string" />
+    </definition>
+    
+</tiles-definitions>

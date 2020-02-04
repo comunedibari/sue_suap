@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.insiel.it/masterdata/mdas" xmlns:mdap="http://www.insiel.it/masterdata/mdap" xmlns:ns1="http://www.insiel.it/masterdata/mdas" xmlns:atrb="http://www.insiel.it/masterdata/mdap/istanze" xmlns:mdet-ext="http://www.insiel.it/masterdata/mdet-ext" xmlns:ns2="http://www.insiel.it/masterdata/mdet">
+  <xs:import namespace="http://www.insiel.it/masterdata/mdap" schemaLocation="mdap.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdap/istanze" schemaLocation="atrb.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdet" schemaLocation="mdet.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdet-ext" schemaLocation="mdet-ext.xsd"/>
+  <xs:element name="iscrizioneRI">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:numeroRI"/>
+        <xs:element ref="ns1:dataIscrizioneRI"/>
+        <xs:element ref="ns1:sezione"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="numeroRI" type="xs:integer"/>
+  <xs:element name="dataIscrizioneRI" type="xs:date"/>
+  <xs:element name="sezione" type="xs:NCName"/>
+  <xs:element name="listaCaricaPersona">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:caricaPersona"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="caricaPersona">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:personaFisica"/>
+        <xs:element ref="ns1:listaCariche"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="personaFisica">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:personaFisicaBase"/>
+        <xs:element ref="ns1:sesso"/>
+        <xs:element ref="ns1:luogoNascita"/>
+        <xs:element ref="ns1:dataNascita"/>
+        <xs:element ref="ns1:residenza"/>
+        <xs:element ref="ns1:cittadinanza"/>
+        <xs:element ref="ns1:listaRiferimenti"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="personaFisicaBase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:cognome"/>
+        <xs:element ref="ns1:nome"/>
+        <xs:element ref="ns1:codiceFiscale"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cognome" type="xs:NCName"/>
+  <xs:element name="nome" type="xs:NCName"/>
+  <xs:element name="codiceFiscale" type="xs:NCName"/>
+  <xs:element name="sesso" type="xs:NCName"/>
+  <xs:element name="luogoNascita" type="ns2:ns2.comuneItaliano"/>
+  <xs:element name="dataNascita" type="xs:date"/>
+  <xs:element name="residenza">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns2:tipoIndirizzo"/>
+        <xs:element ref="ns2:indirizzo"/>
+        <xs:element ref="ns2:numeroCivico"/>
+        <xs:element ref="ns2:cap"/>
+        <xs:element ref="ns2:luogo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cittadinanza">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns2:id"/>
+        <xs:element ref="ns2:denominazione"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="listaRiferimenti">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="listaCariche">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:carica"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="carica">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:tipologia"/>
+        <xs:element ref="ns1:titolarita"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="titolarita" type="xs:NCName"/>
+  <xs:element name="figuraGiuridicaBase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:denominazione"/>
+        <xs:element ref="ns1:partitaIva"/>
+        <xs:element ref="ns1:tipoFiguraGiuridica"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="denominazione" type="xs:string"/>
+  <xs:element name="partitaIva" type="xs:integer"/>
+  <xs:element name="tipoFiguraGiuridica" type="xs:string"/>
+  <xs:element name="sedeLegale">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:tipologia"/>
+        <xs:element ref="ns1:dataInizioAttivita"/>
+        <xs:element ref="ns1:iscrizioneREA"/>
+        <xs:element ref="ns1:progressivoREA"/>
+        <xs:element ref="ns1:indirizzo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dataInizioAttivita" type="xs:date"/>
+  <xs:element name="iscrizioneREA">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:numeroREA"/>
+        <xs:element ref="ns1:provinciaCCIAA"/>
+        <xs:element ref="ns1:principale"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="numeroREA" type="xs:integer"/>
+  <xs:element name="provinciaCCIAA" type="xs:NCName"/>
+  <xs:element name="principale" type="xs:boolean"/>
+  <xs:element name="progressivoREA" type="xs:integer"/>
+  <xs:element name="indirizzo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns2:tipoIndirizzo"/>
+        <xs:element ref="ns2:indirizzo"/>
+        <xs:element ref="ns2:numeroCivico"/>
+        <xs:element ref="ns2:cap"/>
+        <xs:element ref="ns2:luogo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tipologia" type="xs:string"/>
+</xs:schema>

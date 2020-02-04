@@ -1,0 +1,15 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT forms (form)+>
+
+<!ELEMENT form (field)+>
+<!ATTLIST form type CDATA #REQUIRED>
+
+<!ELEMENT field (label,maxlength,missing?,(invalid,format)?)>
+<!ATTLIST field name CDATA #REQUIRED required (true|false) #REQUIRED>
+
+<!ELEMENT label (#PCDATA)>
+<!ELEMENT maxlength (#PCDATA)>
+<!ELEMENT missing (#PCDATA)>
+<!ELEMENT invalid (#PCDATA)>
+<!ELEMENT format (#PCDATA)>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://suic.invallee.it:8081/SW-INVA/services/OtherServices?wsdl" uri="wsdl/OtherServices.wsdl"/>
+    <system systemId="http://suic.invallee.it:8081/SW-INVA/services/OtherServices?wsdl=1" uri="wsdl/OtherServices.wsdl_1.wsdl"/>
+    <system systemId="http://suic.invallee.it:8081/SW-INVA/services/OtherServices?xsd=1" uri="wsdl/OtherServices.xsd_1.xsd"/>
+</catalog>

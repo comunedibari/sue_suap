@@ -1,0 +1,27 @@
+table.master, table.master td{
+    font:100% Arial, Helvetica, sans-serif;
+}
+table.master{width:100%;border-collapse:collapse;margin:1em 0;}
+table.master th, table.master td{text-align:left;padding:.5em;border:1px solid #CCC;}
+/*table.master th{background:#328aa4 url(tr_back.gif) repeat-x;color:#fff;}
+table.master th{background:#1b1bb3; color:#fff;}*/
+table.master th{background:#eee; color:#000;}
+table.master th a{background:#0067a9; color:#fff;}
+table.master td{background:#FFFFFF;} /* e5f1f4 */
+
+/* tablecloth styles */
+
+table.master tr.even td{background:#e5f1f4;} 
+table.master tr.odd td{background:#f8fbfc;}
+table.master tr.scia td{background:#bce774;}
+
+table.master th.over, table.master tr.even th.over, table.master tr.odd th.over{background:#4a98af;}
+table.master th.down, table.master tr.even th.down, table.master tr.odd th.down{background:#bce774;}
+table.master th.selected, table.master tr.even th.selected, table.master tr.odd th.selected{}
+
+table.master td.over, table.master tr.even td.over, table.master tr.odd td.over{background:#ecfbd4;}
+table.master td.down, table.master tr.even td.down, table.master tr.odd td.down{background:#bce774;color:#fff;}
+table.master td.selected, table.master tr.even td.selected, table.master tr.odd td.selected{background:#bce774;color:#555;}
+
+/* use this if you want to apply different styleing to empty table cells*/
+table.master td.empty, table.master tr.odd td.empty, table.master tr.even td.empty{background:#fff;}

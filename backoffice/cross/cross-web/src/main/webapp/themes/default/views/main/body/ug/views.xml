@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="ug_select_current_view" extends=".main">
+        <put-attribute name="title" value="Seleziona l'Unità di Gestione per cui vuoi lavorare" type="string"/>
+        <put-attribute name="body_center" cascade="true"  value="/themes/default/views/main/body/ug/select_current.jsp" />
+    </definition>
+    
+</tiles-definitions>

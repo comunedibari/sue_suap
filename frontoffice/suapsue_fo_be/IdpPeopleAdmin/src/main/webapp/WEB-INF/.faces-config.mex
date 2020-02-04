@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JSFFlowViewLayout version="1.0">
+  <Drawing gridVisible="true" snapOn="true" />
+  <JSFFlowResource path="/index.jsp" location="21,438" dimension="95,36" />
+  <JSFFlowResource path="/pages/index.jsp" location="3,549" dimension="131,36" />
+  <JSFFlowResource path="/pages/list.jsp" location="491,246" dimension="120,36" />
+  <JSFFlowResource path="/pages/details.jsp" location="483,357" dimension="137,36" />
+  <JSFFlowResource path="/pages/comuni/details.jsp" location="30,30" dimension="183,36" />
+  <JSFFlowResource path="/pages/userdata/details.jsp" location="318,30" dimension="187,36" />
+  <JSFFlowResource path="/pages/qualifiche/details.jsp" location="610,30" dimension="194,36" />
+  <JSFFlowResource path="/pages/accreditamenti/details.jsp" location="909,30" dimension="221,36" />
+  <JSFFlowResource path="/pages/config.jsp" location="0,660" dimension="137,36" />
+  <JSFFlowNavigationCase id="/index.jsp,/pages/index.jsp,list,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="68,474" />
+      <AbsolutePoint location="68,549" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/index.jsp,/pages/config.jsp,config,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="35,585" />
+      <AbsolutePoint location="35,622" />
+      <AbsolutePoint location="34,622" />
+      <AbsolutePoint location="34,660" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/list.jsp,/pages/details.jsp,selected,#{tableManager.select}" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="521,282" />
+      <AbsolutePoint location="521,319" />
+      <AbsolutePoint location="517,319" />
+      <AbsolutePoint location="517,357" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/list.jsp,/pages/details.jsp,insert,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="581,282" />
+      <AbsolutePoint location="581,319" />
+      <AbsolutePoint location="585,319" />
+      <AbsolutePoint location="585,357" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/list.jsp,/pages/list.jsp,reset,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="498,246" />
+      <AbsolutePoint location="498,216" />
+      <AbsolutePoint location="461,216" />
+      <AbsolutePoint location="461,264" />
+      <AbsolutePoint location="491,264" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/comuni/details.jsp,/pages/list.jsp,success,#{tableManager.buttonAction}" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="75,66" />
+      <AbsolutePoint location="75,186" />
+      <AbsolutePoint location="511,186" />
+      <AbsolutePoint location="511,246" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/comuni/details.jsp,/pages/list.jsp,cancel,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="167,66" />
+      <AbsolutePoint location="167,156" />
+      <AbsolutePoint location="525,156" />
+      <AbsolutePoint location="525,246" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/comuni/details.jsp,/pages/comuni/details.jsp,failed,#{tableManager.buttonAction}" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="121,30" />
+      <AbsolutePoint location="121,0" />
+      <AbsolutePoint location="0,0" />
+      <AbsolutePoint location="0,48" />
+      <AbsolutePoint location="30,48" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/userdata/details.jsp,/pages/list.jsp,success,#{tableManager.buttonAction}" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="364,66" />
+      <AbsolutePoint location="364,126" />
+      <AbsolutePoint location="538,126" />
+      <AbsolutePoint location="538,246" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/userdata/details.jsp,/pages/list.jsp,cancel,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="458,66" />
+      <AbsolutePoint location="458,96" />
+      <AbsolutePoint location="551,96" />
+      <AbsolutePoint location="551,246" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/userdata/details.jsp,/pages/userdata/details.jsp,failed,#{tableManager.buttonAction}" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="411,30" />
+      <AbsolutePoint location="411,0" />
+      <AbsolutePoint location="288,0" />
+      <AbsolutePoint location="288,48" />
+      <AbsolutePoint location="318,48" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/qualifiche/details.jsp,/pages/list.jsp,success,#{tableManager.buttonAction}" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="658,66" />
+      <AbsolutePoint location="658,96" />
+      <AbsolutePoint location="565,96" />
+      <AbsolutePoint location="565,246" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/qualifiche/details.jsp,/pages/list.jsp,cancel,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="755,66" />
+      <AbsolutePoint location="755,126" />
+      <AbsolutePoint location="578,126" />
+      <AbsolutePoint location="578,246" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/qualifiche/details.jsp,/pages/qualifiche/details.jsp,failed,#{tableManager.buttonAction}" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="707,30" />
+      <AbsolutePoint location="707,0" />
+      <AbsolutePoint location="580,0" />
+      <AbsolutePoint location="580,48" />
+      <AbsolutePoint location="610,48" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/accreditamenti/details.jsp,/pages/list.jsp,success,#{tableManager.buttonAction}" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="964,66" />
+      <AbsolutePoint location="964,156" />
+      <AbsolutePoint location="591,156" />
+      <AbsolutePoint location="591,246" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/accreditamenti/details.jsp,/pages/list.jsp,cancel,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1074,66" />
+      <AbsolutePoint location="1074,186" />
+      <AbsolutePoint location="605,186" />
+      <AbsolutePoint location="605,246" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/accreditamenti/details.jsp,/pages/accreditamenti/details.jsp,failed,#{tableManager.buttonAction}" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1019,30" />
+      <AbsolutePoint location="1019,0" />
+      <AbsolutePoint location="879,0" />
+      <AbsolutePoint location="879,48" />
+      <AbsolutePoint location="909,48" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/pages/config.jsp,/pages/index.jsp,index,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="102,660" />
+      <AbsolutePoint location="102,622" />
+      <AbsolutePoint location="101,622" />
+      <AbsolutePoint location="101,585" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+</JSFFlowViewLayout>
+

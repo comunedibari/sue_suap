@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/Allegato.java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/Comunicazione.java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/CrossServices.java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/CrossServicesException.java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/CrossServicesImplService.java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/CrossServicesImplServiceLocator.java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/CrossServicesImplServiceSoapBindingStub.java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/Evento.java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/Soggetto.java=UTF-8
+encoding//src/main/java/it/wego/cross/webservices/cxf/interoperability/TipoSoggetto.java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/test/java=UTF-8
+encoding/<project>=UTF-8

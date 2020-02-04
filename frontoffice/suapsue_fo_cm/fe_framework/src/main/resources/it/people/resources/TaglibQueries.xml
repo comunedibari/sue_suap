@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011, Regione Emilia-Romagna, Italy
+   
+  Licensed under the EUPL, Version 1.1 or - as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+  You may not use this work except in compliance with the
+  Licence.
+  
+  For convenience a plain text copy of the English version
+  of the Licence can be found in the file LICENCE.txt in
+  the top-level directory of this software distribution.
+  
+  You may obtain a copy of the Licence in any of 22 European
+  Languages at:
+  
+  http://joinup.ec.europa.eu/software/page/eupl
+  
+  Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+  
+  This product includes software developed by Yale University
+  
+  See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+-->
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>
+	</comment>
+	<entry key="helpContentQuery">
+		SELECT soh.id, soh.help_content, soh.enabled FROM service_online_help soh, service srv WHERE 
+		soh.serviceid = srv.id 
+		AND srv.communeid = ? 
+		AND srv.package = ? 
+		AND soh.viewname = ? 
+		AND soh.activityid = ? 
+		AND soh.stepid = ? 
+	</entry>
+	<entry key="commonHelpContentQuery">
+		SELECT soh.id, soh.help_content, soh.enabled FROM service_online_help soh, service srv WHERE 
+		soh.serviceid is null 
+		AND srv.package = ? 
+		AND soh.viewname = ? 
+		AND soh.activityid = ? 
+		AND soh.stepid = ? 
+	</entry>
+	<entry key="hasOnLineHelpOnDb">
+		SELECT count(soh.help_content) FROM service_online_help soh, service srv WHERE 
+		soh.serviceid = srv.id 
+		AND srv.communeid = ? 
+		AND srv.package = ? 
+		AND soh.viewname = ? 
+		AND soh.activityid = ? 
+		AND soh.stepid = ?
+	</entry>
+	<entry key="hasCommonOnLineHelpOnDb">
+		SELECT count(soh.help_content) FROM service_online_help soh, service srv WHERE 
+		soh.serviceid is null 
+		AND srv.package = ? 
+		AND soh.viewname = ? 
+		AND soh.activityid = ? 
+		AND soh.stepid = ?
+	</entry>
+	<entry key="updateOnLineHelpOnDb">
+		update service_online_help set help_content = ? where 
+		service_online_help.id = ? 
+	</entry>
+	<entry key="insertOnLineHelpOnDb">
+		insert into service_online_help(viewname, activityid, stepid, help_content, enabled, serviceid) values(?,?,?,?,?,?)
+	</entry>
+	<entry key="insertCommonOnLineHelpOnDb">
+		insert into service_online_help(viewname, activityid, stepid, help_content, enabled, serviceid) values(?,?,?,?,?,null)
+	</entry>
+	<entry key="removeOnLineHelpOnDb">
+		delete from service_online_help where service_online_help.id = ? 
+	</entry>
+</properties>

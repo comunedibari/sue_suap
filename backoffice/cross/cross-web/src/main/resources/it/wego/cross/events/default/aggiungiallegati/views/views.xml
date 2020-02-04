@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name="evento_aggiungiallegati" extends=".main">
+        <put-attribute name="title"         value="Comunicazione" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/WEB-INF/classes/it/wego/cross/events/default/aggiungiallegati/views/nuovo_evento.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="comunicazione_file_upload"  cascade="true"  value="/WEB-INF/classes/it/wego/cross/events/default/comunicazione/views/allegati.jsp"/>
+    </definition>
+    
+    <definition name="aggiungiallegati" extends=".main">
+        <put-attribute name="title"         value="Comunicazione" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/WEB-INF/classes/it/wego/cross/events/default/comunicazione/views/dettaglio_evento.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+    
+</tiles-definitions>

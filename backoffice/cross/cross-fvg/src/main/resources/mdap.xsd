@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.insiel.it/masterdata/mdap" xmlns:mdap="http://www.insiel.it/masterdata/mdap" xmlns:ns1="http://www.insiel.it/masterdata/mdas" xmlns:atrb="http://www.insiel.it/masterdata/mdap/istanze" xmlns:mdet-ext="http://www.insiel.it/masterdata/mdet-ext" xmlns:ns2="http://www.insiel.it/masterdata/mdet">
+  <xs:import namespace="http://www.insiel.it/masterdata/mdap/istanze" schemaLocation="atrb.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdas" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdet" schemaLocation="mdet.xsd"/>
+  <xs:import namespace="http://www.insiel.it/masterdata/mdet-ext" schemaLocation="mdet-ext.xsd"/>
+  <xs:element name="procedimentoBase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="mdap:id"/>
+        <xs:element ref="mdap:titolo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="id" type="xs:integer"/>
+  <xs:element name="titolo" type="xs:string"/>
+</xs:schema>

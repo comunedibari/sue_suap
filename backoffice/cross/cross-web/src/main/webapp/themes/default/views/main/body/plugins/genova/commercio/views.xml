@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="invio_bo_commercio" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/invioBoCommercio.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>
+    <definition name="chiusuraforzatasottopratiche" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/chiusuraforzatasottopratiche.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>
+    <definition name="ricezioneEventoChiusuraNegativaCommercioGenova" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/ricezioneEventoChiusuraNegativaCommercio.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition> 
+    <definition name="ricezioneEventoChiusuraPositivaCommercioGenova" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/ricezioneEventoChiusuraPositivaCommercio.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>  
+    <definition name="ricezioneEventoComunicazioneCommercioGenova" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/ricezioneEventoComunicazioneCommercio.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>  
+    <definition name="ricezioneEventoSospensioneCommercioGenova" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/ricezioneEventoSospensioneCommercio.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>   
+     <definition name="chiusuraCommercioGenova" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/chiusuraCommercio.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>
+    <definition name="chiusuraForzataCommercioGenova" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/chiusuraForzataCommercio.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>
+    
+    
+    <definition name="chiusuranegativasottopratiche" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/chiusuraforzatasottopratiche.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>
+    <definition name="chiusurapositivasottopratiche" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/chiusuraforzatasottopratiche.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>
+    <definition name="invioBoCommercioGenova" extends=".main">
+        <put-attribute name="title"         value="Comunicazioni" type="string"/>
+        <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
+        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/plugins/genova/commercio/chiusuraforzatasottopratiche.jsp" />
+        <put-attribute name="body_inner_footer"   cascade="true"  value="we"   type="string"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="infopath"      cascade="true"  value="Comunicazioni" type="string" />
+    </definition>
+    
+</tiles-definitions>

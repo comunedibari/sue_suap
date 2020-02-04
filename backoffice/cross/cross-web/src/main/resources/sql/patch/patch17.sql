@@ -1,0 +1,1 @@
+ALTER TABLE `errori` CHANGE COLUMN `descrizione` `descrizione` TEXT NULL DEFAULT NULL  ;

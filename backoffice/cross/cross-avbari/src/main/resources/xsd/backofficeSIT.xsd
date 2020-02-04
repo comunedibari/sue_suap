@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid XML Studio 1.0.8.0 (http://www.liquid-technologies.com) -->
+<xs:schema xmlns="http://www.wego.it/cross" elementFormDefault="qualified" targetNamespace="http://www.wego.it/cross" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="praticaSIT" type="praticaSIT" />
+  <xs:complexType name="dati_catastaliSIT">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="unbounded" name="dato_catastaleSIT" type="dato_catastaleSIT" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="dato_catastaleSIT">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_immobile" type="xs:integer" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codice_sit" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="cod_tipo_unita">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="T" />
+            <xs:enumeration value="F" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="des_tipo_unita" type="xs:string" />
+      <xs:element minOccurs="0" name="sezione" type="xs:string" />
+      <xs:element minOccurs="0" name="foglio" type="xs:string" />
+      <xs:element minOccurs="0" name="mappale" type="xs:string" />
+      <xs:element minOccurs="0" name="subalterno" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="indirizzi_interventoSIT">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="unbounded" name="indirizzo_interventoSIT" type="indirizzo_interventoSIT" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="indirizzo_interventoSIT">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_indirizzo_intervento" type="xs:integer" />
+      <xs:element minOccurs="0" name="codice_sit" type="xs:string" />
+      <xs:element minOccurs="0" name="localita" type="xs:string" />
+      <xs:element minOccurs="0" name="indirizzo" type="xs:string" />
+      <xs:element minOccurs="0" name="civico" type="xs:string" />
+      <xs:element minOccurs="0" name="cap" type="xs:string" />
+      <xs:element minOccurs="0" name="interno_numero" type="xs:string" />
+      <xs:element minOccurs="0" name="interno_lettera" type="xs:string" />
+      <xs:element minOccurs="0" name="interno_scala" type="xs:string" />
+      <xs:element minOccurs="0" name="piano" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="anagraficaSIT">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_anagrafica" type="xs:integer" />
+      <xs:element minOccurs="0" name="cod_tipo_ruolo">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="R" />
+            <xs:enumeration value="B" />
+            <xs:enumeration value="0" />
+            <xs:enumeration value="1" />
+            <xs:enumeration value="2" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="des_tipo_ruolo" type="xs:string" />
+      <xs:element minOccurs="0" name="cognome" type="xs:string" />
+      <xs:element minOccurs="0" name="nome" type="xs:string" />
+      <xs:element minOccurs="0" name="denominazione" type="xs:string" />
+      <xs:element minOccurs="0" name="codice_fiscale" type="xs:string" />
+      <xs:element minOccurs="0" name="partita_iva" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="tipo_anagrafica">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="F" />
+            <xs:enumeration value="G" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="praticaSIT">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_pratica" type="xs:integer">
+        <xs:annotation>
+          <xs:documentation>Identificativo pratica. Viene utilizzato nel ws di creazione di un evento</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="1" name="operazione">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="I" />
+            <xs:enumeration value="M" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>      
+      <xs:element minOccurs="0" name="identificativo_pratica" type="xs:string" />
+      <xs:element minOccurs="0" name="id_sportello" type="xs:integer" />
+      <xs:element minOccurs="0" name="des_sportello" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="id_procedimento_suap" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="des_procedimento_suap" type="xs:string" />
+      <xs:element minOccurs="0" name="oggetto" type="xs:string" />
+      <xs:element minOccurs="0" name="responsabile_procedimento" type="xs:string" />
+      <xs:element minOccurs="0" name="istruttore" type="xs:string" />
+      <xs:element minOccurs="0" name="cod_catastale_comune" type="xs:string" />
+      <xs:element minOccurs="0" name="des_comune" type="xs:string" />
+      <xs:element name="segnatura_protocollo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="registro" type="xs:string" />
+            <xs:element minOccurs="0" name="anno" type="xs:string" />
+            <xs:element minOccurs="0" name="protocollo" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="data_protocollo" type="xs:date" />
+      <xs:element minOccurs="0" name="data_ricezione" type="xs:date" />
+      <xs:element name="anagraficheSIT" type="anagraficheSIT" />        
+      <xs:element minOccurs="0" name="dati_catastali" type="dati_catastaliSIT" />
+      <xs:element minOccurs="0" name="indirizzi_interventoSIT" type="indirizzi_interventoSIT" />
+      <xs:element minOccurs="1" name="procedimentiSIT" type="procedimentiSIT" />
+      <xs:element minOccurs="0" maxOccurs="1" name="cod_stato_pratica">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="A" />
+            <xs:enumeration value="C" />
+            <xs:enumeration value="E" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="des_stato_pratica" type="xs:string" />
+      <xs:element minOccurs="0" name="data_chiusura" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="data_inizio_lavori" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="data_fine_lavori_presunta" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="data_fine_lavori" type="xs:date" />
+      <xs:element minOccurs="0" maxOccurs="1" name="flg_sanatoria" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="flg_deroga" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="procedimentiSIT">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="procedimentoSIT" type="procedimentoSIT" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="procedimentoSIT">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_procedimento" type="xs:int" />
+      <xs:element minOccurs="0" name="cod_procedimento" type="xs:string" />
+      <xs:element minOccurs="0" name="des_procedimento" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="anagraficheSIT">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="unbounded" name="anagraficaSIT" type="anagraficaSIT" />
+    </xs:sequence>
+  </xs:complexType>  
+</xs:schema>

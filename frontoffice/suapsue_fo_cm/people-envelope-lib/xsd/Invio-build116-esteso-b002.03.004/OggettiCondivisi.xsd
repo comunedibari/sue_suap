@@ -1,0 +1,1763 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Administrator (Bubble) -->
+<xs:schema xmlns:ServiziCondivisi="http://egov.diviana.it/b116/ServiziCondivisi" xmlns:CNIPA="http://egov.diviana.it/b116/CNIPA" xmlns:Infrastruttura="http://egov.diviana.it/b116/Infrastruttura" xmlns="http://egov.diviana.it/b116/OggettiCondivisi" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://egov.diviana.it/b116/OggettiCondivisi" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			<Copyright xmlns="">Copyright Diviana 2002-2005 - Produced By Diviana - Rome - Italy per conto di Progetto People - Tutti i diritti riservati</Copyright>
+			<Modello xmlns="" Versione="People-v1.7-Release - 21/04/2005" Build="116" Data="03/08/2006"/>
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://egov.diviana.it/b116/ServiziCondivisi" schemaLocation="ServiziCondivisi.xsd"/>
+	<xs:import namespace="http://egov.diviana.it/b116/CNIPA" schemaLocation="CNIPA.xsd"/>
+	<xs:import namespace="http://egov.diviana.it/b116/Infrastruttura" schemaLocation="Infrastruttura.xsd"/>
+	<xs:complexType name="Busta">
+		<xs:sequence>
+			<xs:element name="Contenuto" type="SceltaContenuto"/>
+			<xs:element name="NomeServizio" type="Testo"/>
+			<xs:element name="InformazioniValidazione" type="SceltaInformazioniValidazione" minOccurs="0"/>
+			<xs:element name="IdentificatorediRichiesta" type="IdentificatorediRichiesta"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaContenuto">
+		<xs:choice>
+			<xs:element name="anyType" type="Infrastruttura:anyType"/>
+			<xs:element name="Eccezione" type="Eccezione"/>
+		</xs:choice>
+		<xs:attribute name="Scelta"/>
+	</xs:complexType>
+	<xs:complexType name="DocumentoXML" abstract="true"/>
+	<xs:complexType name="Documento" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="DocumentoXML"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Risposta" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">E' una risposta sincrona restituita da un sistema applicativo di Back End verso il VSL o dal VSL verso un'applicazione di Front End, in replica ad una Richiesta.</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Documento">
+				<xs:sequence>
+					<xs:element name="IdentificatorediRichiesta" type="IdentificatorediRichiesta"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IdentificatorediRichiesta">
+		<xs:sequence>
+			<xs:element name="IdentificatoreUnivoco" type="IdentificatoreUnivoco"/>
+			<xs:element name="IdentificatorediProtocollo" type="IdentificatorediProtocollo" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IdentificatoreUnivoco">
+		<xs:sequence>
+			<xs:element name="CodiceProgetto" type="CodiceProgetto"/>
+			<xs:element name="CodiceSistema" type="CodiceSistema"/>
+			<xs:element name="DatadiRegistrazione" type="FrazionediSecondo"/>
+			<xs:element name="CodiceIdentificativoOperazione" type="CodiceIdentificativoOperazione"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Testo">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\S[\S|\s]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceProgetto">
+		<xs:restriction base="Testo"/>
+	</xs:simpleType>
+	<xs:complexType name="CodiceSistema">
+		<xs:sequence>
+			<xs:element name="NomeServer" type="NomeServer"/>
+			<xs:element name="CodiceAmministrazione" type="CodiceAmministrazione"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NomeServer">
+		<xs:restriction base="Testo"/>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceAmministrazione">
+		<xs:restriction base="Testo">
+			<xs:pattern value="[0-9A-Za-z\-]{1,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FrazionediSecondo">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">Alcuni esempi di "Frazione di Secondo":
+2005-12-23T11:24:37.234+01:00
+2005-12-23T11:24:37.234Z</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime">
+			<xs:pattern value="\d{4}-\d{2}\-\d{2}[T]\d{2}[:]\d{2}[:]\d{2}[.]\d+(([+|\-]\d{2}:\d{2})|Z)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceIdentificativoOperazione">
+		<xs:restriction base="Testo"/>
+	</xs:simpleType>
+	<xs:complexType name="IdentificatorediProtocollo">
+		<xs:sequence>
+			<xs:element name="CodiceAOO" type="CodiceAmministrazione"/>
+			<xs:element name="NumerodiRegistrazione" type="InteroNonNegativo"/>
+			<xs:element name="DatadiRegistrazione" type="Data"/>
+			<xs:element name="CodiceAmministrazione" type="CodiceAmministrazione"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="InteroNonNegativo">
+		<xs:restriction base="xs:nonNegativeInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="Data">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:complexType name="Eccezione">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">E' un oggetto relativo alla gestione di errori e condizioni eccezionali che possono verificarsi nel corso dell'erogazione dei servizi.</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Risposta">
+				<xs:sequence>
+					<xs:element name="Nota" type="Nota" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Tipo">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Applicativa"/>
+								<xs:enumeration value="Infrastrutturale"/>
+								<xs:enumeration value="Comunicazione"/>
+								<xs:enumeration value="Altro"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Codice" type="Intero"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Nota">
+		<xs:sequence>
+			<xs:element name="DocBook" type="DocBook" minOccurs="0"/>
+			<xs:element name="Descrizione" type="Testo" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="AllegatoFirmatoDigitalmente" type="AllegatoFirmatoDigitalmente"/>
+				<xs:element name="AllegatononFirmato" type="AllegatononFirmato"/>
+				<xs:element name="AllegatoIncorporato" type="AllegatoIncorporato"/>
+				<xs:element name="FileAllegato" type="FileAllegato"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocBook">
+		<xs:complexContent>
+			<xs:extension base="Documento">
+				<xs:sequence>
+					<xs:element name="URI" type="URI"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="URI">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">Universal Resource Identifier
+</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI"/>
+	</xs:simpleType>
+	<xs:complexType name="SceltaAllegato">
+		<xs:choice>
+			<xs:element name="AllegatoFirmatoDigitalmente" type="AllegatoFirmatoDigitalmente"/>
+			<xs:element name="AllegatononFirmato" type="AllegatononFirmato"/>
+			<xs:element name="AllegatoIncorporato" type="AllegatoIncorporato"/>
+			<xs:element name="FileAllegato" type="FileAllegato"/>
+		</xs:choice>
+		<xs:attribute name="Scelta"/>
+	</xs:complexType>
+	<xs:complexType name="AllegatononFirmato">
+		<xs:sequence>
+			<xs:element name="NomeFile" type="Testo"/>
+			<xs:element name="Descrizione" type="Testo"/>
+			<xs:element name="Contenuto" type="Contenuto"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Contenuto">
+		<xs:restriction base="xs:base64Binary"/>
+	</xs:simpleType>
+	<xs:complexType name="AllegatoFirmatoDigitalmente">
+		<xs:complexContent>
+			<xs:extension base="AllegatononFirmato"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AllegatoIncorporato">
+		<xs:sequence>
+			<xs:element name="Contenuto" type="Contenuto"/>
+			<xs:element name="Descrizione" type="Testo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FileAllegato">
+		<xs:sequence>
+			<xs:element name="URI" type="URI"/>
+			<xs:element name="Descrizione" type="Testo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Intero">
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	<xs:complexType name="SceltaInformazioniValidazione">
+		<xs:choice>
+			<xs:element name="XSDURI" type="XSDURI"/>
+			<xs:element name="InformazioniProgetto" type="InformazioniProgetto"/>
+		</xs:choice>
+		<xs:attribute name="Scelta"/>
+	</xs:complexType>
+	<xs:simpleType name="XSDURI">
+		<xs:restriction base="URI"/>
+	</xs:simpleType>
+	<xs:complexType name="InformazioniProgetto">
+		<xs:sequence>
+			<xs:element name="XSDURI" type="XSDURI" minOccurs="0"/>
+			<xs:element name="Progetto" type="Testo"/>
+			<xs:element name="Build" type="Testo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BustaSpedizione">
+		<xs:complexContent>
+			<xs:extension base="Busta">
+				<xs:sequence>
+					<xs:element name="TipoComunicazione" type="SceltaTipoComunicazione"/>
+					<xs:element name="InformazioniperProtocollazione" type="CNIPA:InformazioniperProtocollazione" minOccurs="0"/>
+					<xs:element name="InformazioniperVerificaDelega" type="ServiziCondivisi:InformazioniperVerificaDelega" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SceltaTipoComunicazione">
+		<xs:choice>
+			<xs:element name="RichiestaC2G" type="RichiestaC2G"/>
+		</xs:choice>
+		<xs:attribute name="Scelta"/>
+	</xs:complexType>
+	<xs:complexType name="RichiestaC2G">
+		<xs:sequence>
+			<xs:element name="Destinatario" type="CodiceAmministrazione"/>
+			<xs:element name="Mittente" type="CredenzialiUtenteCertificate"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CredenzialiUtente">
+		<xs:sequence>
+			<xs:element name="CodiceFiscale" type="CodiceFiscale"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CodiceFiscale">
+		<xs:restriction base="Testo">
+			<xs:minLength value="16"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CredenzialiUtenteCertificate">
+		<xs:complexContent>
+			<xs:extension base="CredenzialiUtente">
+				<xs:sequence>
+					<xs:element name="CredenzialiFirmate" type="AllegatoFirmatoDigitalmente">
+						<xs:annotation>
+							<xs:documentation>
+								<Documentazione xmlns="">Sono le credenziali fornite dal richiedente di un servizio firmate da una CA.</Documentazione>
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EstremidellaPersona">
+		<xs:sequence>
+			<xs:element name="Cognome" type="Testo"/>
+			<xs:element name="Nome" type="Testo"/>
+			<xs:element name="CodiceFiscale" type="CodiceFiscale"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Enumeratore">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="Recapito">
+		<xs:sequence>
+			<xs:element name="Tipo" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Istituzionale"/>
+						<xs:enumeration value="Personale"/>
+						<xs:enumeration value="Professionale"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Nota" type="Nota" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Referente" type="Testo"/>
+			<xs:element name="Priorita">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Principale"/>
+						<xs:enumeration value="Alternativo"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Indirizzoemail" type="Indirizzoemail"/>
+				<xs:element name="RecapitoPostale" type="RecapitoPostale"/>
+				<xs:element name="RecapitoTelefonico" type="RecapitoTelefonico"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaTipodiRecapito">
+		<xs:choice>
+			<xs:element name="Indirizzoemail" type="Indirizzoemail"/>
+			<xs:element name="RecapitoPostale" type="RecapitoPostale"/>
+			<xs:element name="RecapitoTelefonico" type="RecapitoTelefonico"/>
+		</xs:choice>
+		<xs:attribute name="Scelta"/>
+	</xs:complexType>
+	<xs:simpleType name="Indirizzoemail">
+		<xs:restriction base="xs:anyURI"/>
+	</xs:simpleType>
+	<xs:complexType name="IndirizzoStrutturato">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="CivicoChilometrico" type="CivicoChilometrico"/>
+				<xs:element name="CivicoEsternoNumerico" type="CivicoEsternoNumerico"/>
+			</xs:choice>
+			<xs:element name="Toponimo" type="Toponimo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaCivicoEsterno">
+		<xs:choice>
+			<xs:element name="CivicoChilometrico" type="CivicoChilometrico"/>
+			<xs:element name="CivicoEsternoNumerico" type="CivicoEsternoNumerico"/>
+		</xs:choice>
+		<xs:attribute name="Scelta"/>
+	</xs:complexType>
+	<xs:simpleType name="Decimale">
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	<xs:simpleType name="CivicoChilometrico">
+		<xs:restriction base="Decimale"/>
+	</xs:simpleType>
+	<xs:complexType name="CivicoEsternoNumerico">
+		<xs:sequence>
+			<xs:element name="Numero" type="InteroPositivo"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="Lettera" type="Lettera"/>
+				<xs:element name="Esponente" type="Esponente"/>
+			</xs:choice>
+			<xs:element name="Colore" type="Colore" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="InteroPositivo">
+		<xs:restriction base="xs:positiveInteger"/>
+	</xs:simpleType>
+	<xs:complexType name="SceltaLetteraoEsponente">
+		<xs:choice>
+			<xs:element name="Lettera" type="Lettera"/>
+			<xs:element name="Esponente" type="Esponente"/>
+		</xs:choice>
+		<xs:attribute name="Scelta"/>
+	</xs:complexType>
+	<xs:simpleType name="Lettera">
+		<xs:restriction base="Testo">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Esponente">
+		<xs:restriction base="Testo">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Colore">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Rosso"/>
+			<xs:enumeration value="Nero"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Toponimo">
+		<xs:sequence>
+			<xs:element name="DUG" type="DUG"/>
+			<xs:element name="Denominazione" type="Testo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DUG">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">Definizione Urbana Generalizzata.
+Descrizione della tipologia circolatoria della via (Via, Piazza, Largo, etc) come da codifica della Agenzia del Territorio
+Sinonimi: Area Toponimo</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Accesso"/>
+			<xs:enumeration value="Accesso a Corso"/>
+			<xs:enumeration value="Accesso alla Piazza"/>
+			<xs:enumeration value="Accesso alla Via"/>
+			<xs:enumeration value="Accesso Privato"/>
+			<xs:enumeration value="Accesso Strada"/>
+			<xs:enumeration value="Accesso Traversa"/>
+			<xs:enumeration value="Accesso Viale"/>
+			<xs:enumeration value="Allee"/>
+			<xs:enumeration value="Alveo"/>
+			<xs:enumeration value="Alzaia"/>
+			<xs:enumeration value="Alzata"/>
+			<xs:enumeration value="Androna"/>
+			<xs:enumeration value="Androne"/>
+			<xs:enumeration value="Angiporto"/>
+			<xs:enumeration value="Archivolto"/>
+			<xs:enumeration value="Arco"/>
+			<xs:enumeration value="Argine"/>
+			<xs:enumeration value="Argine Destro"/>
+			<xs:enumeration value="Argine di Canale"/>
+			<xs:enumeration value="Argine Sinistro"/>
+			<xs:enumeration value="Ascensore"/>
+			<xs:enumeration value="Atrio"/>
+			<xs:enumeration value="Autostrada"/>
+			<xs:enumeration value="Avenue"/>
+			<xs:enumeration value="Bacino"/>
+			<xs:enumeration value="Baglio"/>
+			<xs:enumeration value="Baluardo"/>
+			<xs:enumeration value="Banchina"/>
+			<xs:enumeration value="Barriera"/>
+			<xs:enumeration value="Bastione"/>
+			<xs:enumeration value="Bastioni di Porta"/>
+			<xs:enumeration value="Batteria"/>
+			<xs:enumeration value="Bisagno"/>
+			<xs:enumeration value="Bocca"/>
+			<xs:enumeration value="Borgata"/>
+			<xs:enumeration value="Borghetto"/>
+			<xs:enumeration value="Borgo"/>
+			<xs:enumeration value="Boulevard"/>
+			<xs:enumeration value="Ca'"/>
+			<xs:enumeration value="Cala"/>
+			<xs:enumeration value="Calata"/>
+			<xs:enumeration value="Caletta"/>
+			<xs:enumeration value="Calle"/>
+			<xs:enumeration value="Calle Destra"/>
+			<xs:enumeration value="Calle Larga"/>
+			<xs:enumeration value="Calle Litoranea"/>
+			<xs:enumeration value="Calle Sinistra"/>
+			<xs:enumeration value="Calle Stretta"/>
+			<xs:enumeration value="Callesella"/>
+			<xs:enumeration value="Callesella Destra"/>
+			<xs:enumeration value="Callesella Larga"/>
+			<xs:enumeration value="Callesella Sinistra"/>
+			<xs:enumeration value="Calleselle"/>
+			<xs:enumeration value="Calleselle Larghe"/>
+			<xs:enumeration value="Calleselle Strette"/>
+			<xs:enumeration value="Campasso"/>
+			<xs:enumeration value="Campazzo"/>
+			<xs:enumeration value="Campiello"/>
+			<xs:enumeration value="Campo"/>
+			<xs:enumeration value="Canale"/>
+			<xs:enumeration value="Canale Largo"/>
+			<xs:enumeration value="Canto"/>
+			<xs:enumeration value="Cantone"/>
+			<xs:enumeration value="Capo"/>
+			<xs:enumeration value="Carrara"/>
+			<xs:enumeration value="Carrugio"/>
+			<xs:enumeration value="Casale"/>
+			<xs:enumeration value="Cascina"/>
+			<xs:enumeration value="Case"/>
+			<xs:enumeration value="Case Sparse"/>
+			<xs:enumeration value="Cava"/>
+			<xs:enumeration value="Cavalcavia"/>
+			<xs:enumeration value="Cavalcavia Destro"/>
+			<xs:enumeration value="Cavalcavia Sinistro"/>
+			<xs:enumeration value="Cavone"/>
+			<xs:enumeration value="Chiassetto"/>
+			<xs:enumeration value="Chiasso"/>
+			<xs:enumeration value="Chiassuolo"/>
+			<xs:enumeration value="Circonvallazione"/>
+			<xs:enumeration value="Circonvallazione Destra"/>
+			<xs:enumeration value="Circonvallazione Esterna"/>
+			<xs:enumeration value="Circonvallazione Estramurale"/>
+			<xs:enumeration value="Circonvallazione Interna"/>
+			<xs:enumeration value="Circonvallazione Sinistra"/>
+			<xs:enumeration value="Claustro"/>
+			<xs:enumeration value="Clivio"/>
+			<xs:enumeration value="Clivo"/>
+			<xs:enumeration value="Colle"/>
+			<xs:enumeration value="Comunale"/>
+			<xs:enumeration value="Contra'"/>
+			<xs:enumeration value="Contrada"/>
+			<xs:enumeration value="Coro"/>
+			<xs:enumeration value="Corsetto"/>
+			<xs:enumeration value="Corsia"/>
+			<xs:enumeration value="Corsia Destra"/>
+			<xs:enumeration value="Corsia Sinistra"/>
+			<xs:enumeration value="Corso"/>
+			<xs:enumeration value="Corso Parallelo"/>
+			<xs:enumeration value="Corte"/>
+			<xs:enumeration value="Corticella"/>
+			<xs:enumeration value="Cortile"/>
+			<xs:enumeration value="Cortina"/>
+			<xs:enumeration value="Costa"/>
+			<xs:enumeration value="Costarella"/>
+			<xs:enumeration value="Crosa"/>
+			<xs:enumeration value="Crosino"/>
+			<xs:enumeration value="Cupa"/>
+			<xs:enumeration value="Darsena"/>
+			<xs:enumeration value="Diramazione"/>
+			<xs:enumeration value="Diramazione del Corso"/>
+			<xs:enumeration value="Diramazione del Viale"/>
+			<xs:enumeration value="Diramazione di Via"/>
+			<xs:enumeration value="Dirupo"/>
+			<xs:enumeration value="Discesa"/>
+			<xs:enumeration value="Distacco"/>
+			<xs:enumeration value="Dorso"/>
+			<xs:enumeration value="Emiciclo"/>
+			<xs:enumeration value="Erta"/>
+			<xs:enumeration value="Fondaco"/>
+			<xs:enumeration value="Fondamenta"/>
+			<xs:enumeration value="Fondo"/>
+			<xs:enumeration value="Foro"/>
+			<xs:enumeration value="Forte"/>
+			<xs:enumeration value="Fossa"/>
+			<xs:enumeration value="Fossato"/>
+			<xs:enumeration value="Fosso"/>
+			<xs:enumeration value="Frazione"/>
+			<xs:enumeration value="Galleria"/>
+			<xs:enumeration value="Galleria di Corso"/>
+			<xs:enumeration value="Giardino"/>
+			<xs:enumeration value="Gradinata"/>
+			<xs:enumeration value="Gradinata Destra"/>
+			<xs:enumeration value="Gradinata Sinistra"/>
+			<xs:enumeration value="Gradinata Superiore"/>
+			<xs:enumeration value="Gradinate"/>
+			<xs:enumeration value="Gradinate Superiori"/>
+			<xs:enumeration value="Gradini"/>
+			<xs:enumeration value="Gradoni"/>
+			<xs:enumeration value="Granviale"/>
+			<xs:enumeration value="Interrato"/>
+			<xs:enumeration value="Larghetto"/>
+			<xs:enumeration value="Largo"/>
+			<xs:enumeration value="Laterale di Corso"/>
+			<xs:enumeration value="Laterale di Via"/>
+			<xs:enumeration value="Laterale di Viale"/>
+			<xs:enumeration value="Lido"/>
+			<xs:enumeration value="Lista"/>
+			<xs:enumeration value="Localita'"/>
+			<xs:enumeration value="Logge"/>
+			<xs:enumeration value="Loggia"/>
+			<xs:enumeration value="Lungadige"/>
+			<xs:enumeration value="Lungadige Destro"/>
+			<xs:enumeration value="Lungadige Sinistro"/>
+			<xs:enumeration value="Lungargine"/>
+			<xs:enumeration value="Lungargine Destro"/>
+			<xs:enumeration value="Lungargine Sinistro"/>
+			<xs:enumeration value="Lungarno"/>
+			<xs:enumeration value="Lungarno Destro"/>
+			<xs:enumeration value="Lungarno Sinistro"/>
+			<xs:enumeration value="Lungo"/>
+			<xs:enumeration value="Lungobisagno"/>
+			<xs:enumeration value="Lungobisagno Destro"/>
+			<xs:enumeration value="Lungobisagno Sinistro"/>
+			<xs:enumeration value="Lungocrati"/>
+			<xs:enumeration value="Lungocrati Destro"/>
+			<xs:enumeration value="Lungocrati Sinistro"/>
+			<xs:enumeration value="Lungodora"/>
+			<xs:enumeration value="Lungodora Destro"/>
+			<xs:enumeration value="Lungodora Sinistro"/>
+			<xs:enumeration value="Lungofiume"/>
+			<xs:enumeration value="Lungofrigido"/>
+			<xs:enumeration value="Lungofrigido Destro"/>
+			<xs:enumeration value="Lungofrigido Sinistro"/>
+			<xs:enumeration value="Lungogesso"/>
+			<xs:enumeration value="Lungogesso Destro"/>
+			<xs:enumeration value="Lungogesso Sinistro"/>
+			<xs:enumeration value="Lungoisarco"/>
+			<xs:enumeration value="Lungoisarco Destro"/>
+			<xs:enumeration value="Lungoisarco Sinistro"/>
+			<xs:enumeration value="Lungolago"/>
+			<xs:enumeration value="Lungolago Destro"/>
+			<xs:enumeration value="Lungolago Sinistro"/>
+			<xs:enumeration value="Lungolario"/>
+			<xs:enumeration value="Lungolario Destro"/>
+			<xs:enumeration value="Lungolario Sinistro"/>
+			<xs:enumeration value="Lungomallero"/>
+			<xs:enumeration value="Lungomallero Destro"/>
+			<xs:enumeration value="Lungomare"/>
+			<xs:enumeration value="Lungoparco"/>
+			<xs:enumeration value="Lungopo"/>
+			<xs:enumeration value="Lungopo Destro"/>
+			<xs:enumeration value="Lungopo Sinistro"/>
+			<xs:enumeration value="Lungostura"/>
+			<xs:enumeration value="Lungostura Destro"/>
+			<xs:enumeration value="Lungostura Sinistro"/>
+			<xs:enumeration value="Lungotalvere"/>
+			<xs:enumeration value="Lungotalvere Destro"/>
+			<xs:enumeration value="Lungotalvere Sinistro"/>
+			<xs:enumeration value="Lungotevere"/>
+			<xs:enumeration value="Lungotevere Destro"/>
+			<xs:enumeration value="Lungotevere Sinistro"/>
+			<xs:enumeration value="Lungoticino"/>
+			<xs:enumeration value="Lungoticino Destro"/>
+			<xs:enumeration value="Lungoticino Sinistro"/>
+			<xs:enumeration value="Lungotorrente"/>
+			<xs:enumeration value="Lungotorrente Destro"/>
+			<xs:enumeration value="Lungotorrente Sinistro"/>
+			<xs:enumeration value="Lungotronto"/>
+			<xs:enumeration value="Lungotronto Destro"/>
+			<xs:enumeration value="Lungotronto Sinistro"/>
+			<xs:enumeration value="Marzaria"/>
+			<xs:enumeration value="Masseria"/>
+			<xs:enumeration value="Masseria Vecchia"/>
+			<xs:enumeration value="Mercato"/>
+			<xs:enumeration value="Merceria"/>
+			<xs:enumeration value="Molo"/>
+			<xs:enumeration value="Molo Antico"/>
+			<xs:enumeration value="Mulattiera"/>
+			<xs:enumeration value="Mura"/>
+			<xs:enumeration value="Murazzi"/>
+			<xs:enumeration value="Mure"/>
+			<xs:enumeration value="Parallela Destra"/>
+			<xs:enumeration value="Parallela Sinistra"/>
+			<xs:enumeration value="Parco"/>
+			<xs:enumeration value="Passaggio"/>
+			<xs:enumeration value="Passeggiata"/>
+			<xs:enumeration value="Passeggio"/>
+			<xs:enumeration value="Passetto"/>
+			<xs:enumeration value="Passo"/>
+			<xs:enumeration value="Passo Privato"/>
+			<xs:enumeration value="Pendice"/>
+			<xs:enumeration value="Pendio"/>
+			<xs:enumeration value="Penninato"/>
+			<xs:enumeration value="Piaggia"/>
+			<xs:enumeration value="Piano"/>
+			<xs:enumeration value="Piattaforma"/>
+			<xs:enumeration value="Piazza"/>
+			<xs:enumeration value="Piazza Belvedere"/>
+			<xs:enumeration value="Piazza Chiusa"/>
+			<xs:enumeration value="Piazza Comunale"/>
+			<xs:enumeration value="Piazza Inferiore"/>
+			<xs:enumeration value="Piazzale"/>
+			<xs:enumeration value="Piazzetta"/>
+			<xs:enumeration value="Piazzola"/>
+			<xs:enumeration value="Piscina"/>
+			<xs:enumeration value="Place"/>
+			<xs:enumeration value="Podere"/>
+			<xs:enumeration value="Poggio"/>
+			<xs:enumeration value="Ponte"/>
+			<xs:enumeration value="Pontile"/>
+			<xs:enumeration value="Porta"/>
+			<xs:enumeration value="Portella"/>
+			<xs:enumeration value="Porticato"/>
+			<xs:enumeration value="Porticciolo"/>
+			<xs:enumeration value="Portichetti"/>
+			<xs:enumeration value="Portici"/>
+			<xs:enumeration value="Portico"/>
+			<xs:enumeration value="Porto"/>
+			<xs:enumeration value="Prato"/>
+			<xs:enumeration value="Prolungamento"/>
+			<xs:enumeration value="Prolungamento del Viale"/>
+			<xs:enumeration value="Prolungamento della Via"/>
+			<xs:enumeration value="Prolungamento di Corso"/>
+			<xs:enumeration value="Promenade"/>
+			<xs:enumeration value="Provinciale"/>
+			<xs:enumeration value="Quadrato"/>
+			<xs:enumeration value="Quartiere"/>
+			<xs:enumeration value="Raccordo"/>
+			<xs:enumeration value="Rami"/>
+			<xs:enumeration value="Ramo"/>
+			<xs:enumeration value="Rampa"/>
+			<xs:enumeration value="Rampa del Corso"/>
+			<xs:enumeration value="Rampa del Viale"/>
+			<xs:enumeration value="Rampa Destra"/>
+			<xs:enumeration value="Rampa Piazza"/>
+			<xs:enumeration value="Rampa Sinistra"/>
+			<xs:enumeration value="Rampa Strada"/>
+			<xs:enumeration value="Rampa Via"/>
+			<xs:enumeration value="Rampe"/>
+			<xs:enumeration value="Recinto"/>
+			<xs:enumeration value="Regione"/>
+			<xs:enumeration value="Rialto"/>
+			<xs:enumeration value="Rigaste"/>
+			<xs:enumeration value="Rio"/>
+			<xs:enumeration value="Rio Terra'"/>
+			<xs:enumeration value="Rione"/>
+			<xs:enumeration value="Ripa"/>
+			<xs:enumeration value="Riparto"/>
+			<xs:enumeration value="Riva"/>
+			<xs:enumeration value="Rivetta"/>
+			<xs:enumeration value="Riviera"/>
+			<xs:enumeration value="Ronco"/>
+			<xs:enumeration value="Rondo"/>
+			<xs:enumeration value="Rotonda"/>
+			<xs:enumeration value="Route"/>
+			<xs:enumeration value="Rua"/>
+			<xs:enumeration value="Rue"/>
+			<xs:enumeration value="Ruga"/>
+			<xs:enumeration value="Ruga Destra"/>
+			<xs:enumeration value="Ruga Sinistra"/>
+			<xs:enumeration value="Rughetta"/>
+			<xs:enumeration value="Rughetta Destra"/>
+			<xs:enumeration value="Rughetta Sinistra"/>
+			<xs:enumeration value="Salita"/>
+			<xs:enumeration value="Salita Destra"/>
+			<xs:enumeration value="Salita per Corso"/>
+			<xs:enumeration value="Salita per Piazza"/>
+			<xs:enumeration value="Salita per Via"/>
+			<xs:enumeration value="Salita per Viale"/>
+			<xs:enumeration value="Salita Sinistra"/>
+			<xs:enumeration value="Salita Superiore"/>
+			<xs:enumeration value="Salizada Sinistra"/>
+			<xs:enumeration value="Salizzata"/>
+			<xs:enumeration value="Salizzata Destra"/>
+			<xs:enumeration value="Sbarcatoio"/>
+			<xs:enumeration value="Scala"/>
+			<xs:enumeration value="Scala Destra"/>
+			<xs:enumeration value="Scala Sinistra"/>
+			<xs:enumeration value="Scale"/>
+			<xs:enumeration value="Scalea"/>
+			<xs:enumeration value="Scaleo"/>
+			<xs:enumeration value="Scaletta"/>
+			<xs:enumeration value="Scaletta Destra"/>
+			<xs:enumeration value="Scaletta Sinistra"/>
+			<xs:enumeration value="Scalette"/>
+			<xs:enumeration value="Scali"/>
+			<xs:enumeration value="Scalinata"/>
+			<xs:enumeration value="Scalinata Destra"/>
+			<xs:enumeration value="Scalinata Sinistra"/>
+			<xs:enumeration value="Scalo"/>
+			<xs:enumeration value="Scalone"/>
+			<xs:enumeration value="Scesa"/>
+			<xs:enumeration value="Scese"/>
+			<xs:enumeration value="Sdrucciolo"/>
+			<xs:enumeration value="Selciato"/>
+			<xs:enumeration value="Sentiero"/>
+			<xs:enumeration value="Sentiero Panoramico"/>
+			<xs:enumeration value="Sestiere"/>
+			<xs:enumeration value="Sestrieri"/>
+			<xs:enumeration value="Sito"/>
+			<xs:enumeration value="Sl"/>
+			<xs:enumeration value="Sobborgo"/>
+			<xs:enumeration value="Sottopassaggi"/>
+			<xs:enumeration value="Sottopassaggio"/>
+			<xs:enumeration value="Sottopasso"/>
+			<xs:enumeration value="Sottoportico"/>
+			<xs:enumeration value="Sottovia"/>
+			<xs:enumeration value="Spalto"/>
+			<xs:enumeration value="Spiaggia"/>
+			<xs:enumeration value="Spianata"/>
+			<xs:enumeration value="Spiazzo"/>
+			<xs:enumeration value="Statale"/>
+			<xs:enumeration value="Stazzo"/>
+			<xs:enumeration value="Strada"/>
+			<xs:enumeration value="Strada Accorciatoia"/>
+			<xs:enumeration value="Strada Alta"/>
+			<xs:enumeration value="Strada Antica"/>
+			<xs:enumeration value="Strada Arginale"/>
+			<xs:enumeration value="Strada Bassa"/>
+			<xs:enumeration value="Strada Cantoniera"/>
+			<xs:enumeration value="Strada Chiusa"/>
+			<xs:enumeration value="Strada Cieca"/>
+			<xs:enumeration value="Strada Circolare"/>
+			<xs:enumeration value="Strada Comunale"/>
+			<xs:enumeration value="Strada Consorziale"/>
+			<xs:enumeration value="Strada Destra"/>
+			<xs:enumeration value="Strada Di Levante"/>
+			<xs:enumeration value="Strada Di Ponente"/>
+			<xs:enumeration value="Strada Esterna"/>
+			<xs:enumeration value="Strada Extramurale"/>
+			<xs:enumeration value="Strada Inferiore"/>
+			<xs:enumeration value="Strada Intercomunale"/>
+			<xs:enumeration value="Strada Interna"/>
+			<xs:enumeration value="Strada Interpoderale"/>
+			<xs:enumeration value="Strada Larga"/>
+			<xs:enumeration value="Strada Laterale"/>
+			<xs:enumeration value="Strada Litoranea"/>
+			<xs:enumeration value="Strada Mulattiera"/>
+			<xs:enumeration value="Strada Nuova"/>
+			<xs:enumeration value="Strada Panoramica"/>
+			<xs:enumeration value="Strada Parallela"/>
+			<xs:enumeration value="Strada Pedemontana"/>
+			<xs:enumeration value="Strada Privata"/>
+			<xs:enumeration value="Strada Provinciale"/>
+			<xs:enumeration value="Strada Romana"/>
+			<xs:enumeration value="Strada Rotabile"/>
+			<xs:enumeration value="Strada Rurale"/>
+			<xs:enumeration value="Strada Sinistra"/>
+			<xs:enumeration value="Strada Statale"/>
+			<xs:enumeration value="Strada Storta"/>
+			<xs:enumeration value="Strada Stretta"/>
+			<xs:enumeration value="Strada Superiore"/>
+			<xs:enumeration value="Strada Tangenziale"/>
+			<xs:enumeration value="Strada Trasversale"/>
+			<xs:enumeration value="Strada Traversa"/>
+			<xs:enumeration value="Strada Vecchia"/>
+			<xs:enumeration value="Strada Vicinale"/>
+			<xs:enumeration value="Stradale"/>
+			<xs:enumeration value="Stradella"/>
+			<xs:enumeration value="Stradella Destra"/>
+			<xs:enumeration value="Stradella Sinistra"/>
+			<xs:enumeration value="Stradone"/>
+			<xs:enumeration value="Stretto"/>
+			<xs:enumeration value="Strettoia"/>
+			<xs:enumeration value="Strettoia Destra"/>
+			<xs:enumeration value="Strettoia Sinistra"/>
+			<xs:enumeration value="Strettola"/>
+			<xs:enumeration value="Stura"/>
+			<xs:enumeration value="Superstrada"/>
+			<xs:enumeration value="Supportico"/>
+			<xs:enumeration value="Svincolo"/>
+			<xs:enumeration value="Tangenziale"/>
+			<xs:enumeration value="Terrazza"/>
+			<xs:enumeration value="Trasversale Del Corso"/>
+			<xs:enumeration value="Trasversale Di Viale"/>
+			<xs:enumeration value="Trasversale Provinciale"/>
+			<xs:enumeration value="Trasversale Via"/>
+			<xs:enumeration value="Tratto"/>
+			<xs:enumeration value="Tratturo"/>
+			<xs:enumeration value="Traversa"/>
+			<xs:enumeration value="Traversa Corso"/>
+			<xs:enumeration value="Traversa Del Viale"/>
+			<xs:enumeration value="Traversa Del Villaggio"/>
+			<xs:enumeration value="Traversa Della Localita'"/>
+			<xs:enumeration value="Traversa Di Via"/>
+			<xs:enumeration value="Traversa Privata"/>
+			<xs:enumeration value="Traversa Strada"/>
+			<xs:enumeration value="Traversa Via"/>
+			<xs:enumeration value="Traversale Privata"/>
+			<xs:enumeration value="Traversale Strada"/>
+			<xs:enumeration value="Tresanda"/>
+			<xs:enumeration value="Tronco"/>
+			<xs:enumeration value="Valco"/>
+			<xs:enumeration value="Valico"/>
+			<xs:enumeration value="Valle"/>
+			<xs:enumeration value="Vallone"/>
+			<xs:enumeration value="Varco"/>
+			<xs:enumeration value="Via"/>
+			<xs:enumeration value="Via Accorciatoia"/>
+			<xs:enumeration value="Via Alta"/>
+			<xs:enumeration value="Via Antica"/>
+			<xs:enumeration value="Via Arginale"/>
+			<xs:enumeration value="Via Bassa"/>
+			<xs:enumeration value="Via Belvedere"/>
+			<xs:enumeration value="Via Cantoniera"/>
+			<xs:enumeration value="Via Chiusa"/>
+			<xs:enumeration value="Via Cieca"/>
+			<xs:enumeration value="Via Circolare"/>
+			<xs:enumeration value="Via Circumvallazione"/>
+			<xs:enumeration value="Via Comunale"/>
+			<xs:enumeration value="Via Consorziale"/>
+			<xs:enumeration value="Via Destra"/>
+			<xs:enumeration value="Via Di Levante"/>
+			<xs:enumeration value="Via Di Ponente"/>
+			<xs:enumeration value="Via Esterna"/>
+			<xs:enumeration value="Via Estramurale"/>
+			<xs:enumeration value="Via Inferiore"/>
+			<xs:enumeration value="Via Intercomunale"/>
+			<xs:enumeration value="Via Interna"/>
+			<xs:enumeration value="Via Interpoderale"/>
+			<xs:enumeration value="Via Larga"/>
+			<xs:enumeration value="Via Laterale"/>
+			<xs:enumeration value="Via Litoranea"/>
+			<xs:enumeration value="Via Lungomare"/>
+			<xs:enumeration value="Via Mulattiera"/>
+			<xs:enumeration value="Via Nuova"/>
+			<xs:enumeration value="Via Panoramica"/>
+			<xs:enumeration value="Via Parallela"/>
+			<xs:enumeration value="Via Pedemontana"/>
+			<xs:enumeration value="Via Privata"/>
+			<xs:enumeration value="Via Provinciale"/>
+			<xs:enumeration value="Via Romana"/>
+			<xs:enumeration value="Via Rotabile"/>
+			<xs:enumeration value="Via Rurale"/>
+			<xs:enumeration value="Via Sinistra"/>
+			<xs:enumeration value="Via Statale"/>
+			<xs:enumeration value="Via Storta"/>
+			<xs:enumeration value="Via Stretta"/>
+			<xs:enumeration value="Via Superiore"/>
+			<xs:enumeration value="Via Tangenziale"/>
+			<xs:enumeration value="Via Trasversale"/>
+			<xs:enumeration value="Via Traversa"/>
+			<xs:enumeration value="Via Vecchia"/>
+			<xs:enumeration value="Via Vicinale"/>
+			<xs:enumeration value="Viadotto"/>
+			<xs:enumeration value="Vial"/>
+			<xs:enumeration value="Viale"/>
+			<xs:enumeration value="Viale Belvedere"/>
+			<xs:enumeration value="Viale Litoraneo"/>
+			<xs:enumeration value="Viale Lungomare"/>
+			<xs:enumeration value="Vialetto"/>
+			<xs:enumeration value="Vialone"/>
+			<xs:enumeration value="Vico"/>
+			<xs:enumeration value="Vico Alto"/>
+			<xs:enumeration value="Vico Basso"/>
+			<xs:enumeration value="Vico Belvedere"/>
+			<xs:enumeration value="Vico Chiuso"/>
+			<xs:enumeration value="Vico Cieco"/>
+			<xs:enumeration value="Vico Dritto"/>
+			<xs:enumeration value="Vico Inferiore"/>
+			<xs:enumeration value="Vico Lungo"/>
+			<xs:enumeration value="Vico Nuovo"/>
+			<xs:enumeration value="Vico Privato"/>
+			<xs:enumeration value="Vico Storto"/>
+			<xs:enumeration value="Vico Stretto"/>
+			<xs:enumeration value="Vico Vecchio"/>
+			<xs:enumeration value="Vicoletto"/>
+			<xs:enumeration value="Vicoletto Chiuso"/>
+			<xs:enumeration value="Vicoletto Cieco"/>
+			<xs:enumeration value="Vicoletto Dritto"/>
+			<xs:enumeration value="Vicoletto Inferiore"/>
+			<xs:enumeration value="Vicoletto Lungo"/>
+			<xs:enumeration value="Vicoletto Nuovo"/>
+			<xs:enumeration value="Vicoletto Privato"/>
+			<xs:enumeration value="Vicoletto Storto"/>
+			<xs:enumeration value="Vicoletto Stretto"/>
+			<xs:enumeration value="Vicoletto Vecchio"/>
+			<xs:enumeration value="Vicolo"/>
+			<xs:enumeration value="Vicolo Alto"/>
+			<xs:enumeration value="Vicolo Basso"/>
+			<xs:enumeration value="Vicolo Belvedere"/>
+			<xs:enumeration value="Vicolo Chiuso"/>
+			<xs:enumeration value="Vicolo Cieco"/>
+			<xs:enumeration value="Vicolo Dritto"/>
+			<xs:enumeration value="Vicolo Inferiore"/>
+			<xs:enumeration value="Vicolo Lungo"/>
+			<xs:enumeration value="Vicolo Nuovo"/>
+			<xs:enumeration value="Vicolo Privato"/>
+			<xs:enumeration value="Vicolo Storto"/>
+			<xs:enumeration value="Vicolo Stretto"/>
+			<xs:enumeration value="Vicolo Vecchio"/>
+			<xs:enumeration value="Viella"/>
+			<xs:enumeration value="Vietta"/>
+			<xs:enumeration value="Villaggio"/>
+			<xs:enumeration value="Viottola"/>
+			<xs:enumeration value="Viottolo"/>
+			<xs:enumeration value="Viuzza"/>
+			<xs:enumeration value="Viuzzo"/>
+			<xs:enumeration value="Vo"/>
+			<xs:enumeration value="Vo'"/>
+			<xs:enumeration value="Vocabolo"/>
+			<xs:enumeration value="Volta"/>
+			<xs:enumeration value="Volte"/>
+			<xs:enumeration value="Volto"/>
+			<xs:enumeration value="Voltone"/>
+			<xs:enumeration value="Zipa"/>
+			<xs:enumeration value="Zona"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IndirizzoStrutturatoCompleto">
+		<xs:complexContent>
+			<xs:extension base="IndirizzoStrutturato">
+				<xs:sequence>
+					<xs:element name="CAP" type="CAP" minOccurs="0"/>
+					<xs:element name="Comune" type="Comune"/>
+					<xs:element name="FrazioneComunale" type="FrazioneComunale" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="CAP">
+		<xs:restriction base="InteroPositivo">
+			<xs:pattern value="[0-9]{5,5}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Comune">
+		<xs:sequence>
+			<xs:element name="Nome" type="Testo"/>
+			<xs:element name="SigladiProvinciaISTAT" type="SigladiProvinciaISTAT" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SigladiProvinciaISTAT">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AG">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="AGRIGENTO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AL">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="ALESSANDRIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AN">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="ANCONA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="AOSTA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AP">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="ASCOLI PICENO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AQ">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="L'AQUILA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="AREZZO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AT">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="ASTI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AV">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="AVELLINO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BA">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="BARI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BG">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="BERGAMO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BI">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="BIELLA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BL">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="BELLUNO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BN">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="BENEVENTO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="BOLOGNA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="BRINDISI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BS">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="BRESCIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BZ">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="BOLZANO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CA">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CAGLIARI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CB">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CAMPOBASSO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CE">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CASERTA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CH">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CHIETI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CL">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CALTANISSETTA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CN">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CUNEO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="COMO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CREMONA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CS">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="COSENZA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CT">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CATANIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CZ">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CATANZARO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EN">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="ENNA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FE">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="FERRARA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FG">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="FOGGIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FI">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="FIRENZE"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="FORLI'"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="FROSINONE"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GE">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="GENOVA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="GORIZIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="GROSSETO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IM">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="IMPERIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IS">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="ISERNIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="CROTONE"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LC">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="LECCO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LE">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="LECCE"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LI">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="LIVORNO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="LODI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LT">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="LATINA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LU">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="LUCCA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MC">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="MACERATA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ME">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="MESSINA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MI">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="MILANO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MN">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="MANTOVA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="MODENA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MS">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="MASSA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MT">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="MATERA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NA">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="NAPOLI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="NOVARA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NU">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="NUORO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="ORISTANO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PA">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PALERMO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PC">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PIACENZA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PD">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PADOVA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PE">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PESCARA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PG">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PERUGIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PI">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PISA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PN">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PORDENONE"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PRATO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PARMA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PS">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PESARO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PT">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PISTOIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PV">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="PAVIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PZ">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="POTENZA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RA">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="RAVENNA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RC">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="REGGIO CALABRIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RE">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="REGGIO EMILIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RG">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="RAGUSA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RI">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="RIETI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RM">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="ROMA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RN">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="RIMINI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="ROVIGO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SA">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="SALERNO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SI">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="SIENA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="SONDRIO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SP">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="LA SPEZIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="SIRACUSA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SS">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="SASSARI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SV">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="SAVONA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TA">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="TARANTO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TE">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="TERAMO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TN">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="TRENTO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TO">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="TORINO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TP">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="TRAPANI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="TERNI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TS">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="TRIESTE"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TV">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="TREVISO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UD">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="UDINE"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VA">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="VARESE"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VB">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="VERBANO-CUSIO-OSSOLA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VC">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="VERCELLI"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VE">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="VENEZIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VI">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="VICENZA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VR">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="VERONA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VT">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="VITERBO"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VV">
+				<xs:annotation>
+					<xs:documentation>
+						<Codice xmlns="" Valore="VIBO VALENTIA"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FrazioneComunale">
+		<xs:annotation>
+			<xs:documentation>
+				<Documentazione xmlns="">Questa classe permette di indicare la Frazione, una Località specifica all'interno di un comune, la circoscrizione o il municipio.</Documentazione>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="Testo"/>
+	</xs:simpleType>
+	<xs:complexType name="RecapitoPostale">
+		<xs:complexContent>
+			<xs:extension base="IndirizzoStrutturatoCompleto"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RecapitoTelefonico">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="NumeroTelefonicoEstero" type="NumeroTelefonicoEstero"/>
+				<xs:element name="NumeroTelefonicoNazionale" type="NumeroTelefonicoNazionale"/>
+			</xs:choice>
+			<xs:element name="Modalita">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Telefonata"/>
+						<xs:enumeration value="SMS"/>
+						<xs:enumeration value="Fax"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SceltaNumeroTelefonico">
+		<xs:choice>
+			<xs:element name="NumeroTelefonicoEstero" type="NumeroTelefonicoEstero"/>
+			<xs:element name="NumeroTelefonicoNazionale" type="NumeroTelefonicoNazionale"/>
+		</xs:choice>
+		<xs:attribute name="Scelta"/>
+	</xs:complexType>
+	<xs:complexType name="NumeroTelefonicoEstero">
+		<xs:sequence>
+			<xs:element name="PrefissoInternazionale" type="Testo"/>
+			<xs:element name="Numero" type="Testo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NumeroTelefonicoNazionale">
+		<xs:sequence>
+			<xs:element name="Prefisso" type="Testo"/>
+			<xs:element name="Numero" type="Testo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EstremiPersonaGiuridica">
+		<xs:sequence>
+			<xs:element name="DenominazioneoRagioneSociale" type="DenominazioneoRagioneSociale"/>
+			<xs:element name="CodiceFiscalePersonaGiuridica" type="CodiceFiscalePersonaGiuridica"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DenominazioneoRagioneSociale">
+		<xs:restriction base="Testo"/>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceFiscalePersonaGiuridica">
+		<xs:restriction base="Testo">
+			<xs:minLength value="11"/>
+			<xs:maxLength value="11"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SceltaRisposta">
+		<xs:choice>
+			<xs:element name="Eccezione" type="Eccezione"/>
+			<xs:element name="Risposta" type="Risposta"/>
+		</xs:choice>
+		<xs:attribute name="Scelta"/>
+	</xs:complexType>
+</xs:schema>
