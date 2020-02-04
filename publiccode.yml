@@ -1,0 +1,69 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+categories:
+  - erp
+description:
+  it:
+    features:
+      - >-
+        creazione e gestione di istanze sue e suap, protocollazione automatica
+        delle operazioni desiderate
+    genericName: SUE-SUAP
+    longDescription: >
+      **FRONT OFFICE**
+
+
+      Il modulo di front office è una web application che permette ad un
+      cittadino di generare un'istanza di SUE o di SUAP e di inviarla all'ente
+      preposto alla sua gestione.
+
+
+      **BACK OFFICE**
+
+
+      Il modulo di back office è una web application, ad uso esclusivo dell'ente
+      SUE o SUAP, riceve le istanze create dal cittadino, e ne permette la
+      gestione dell'istruttoria.
+
+
+      Il back office permette la gestione simultanea, di più enti e ne consente
+      una propria personalizzazione.
+
+
+      Permette inoltre l'interfacciamento a sistemi di protocollo esterni e
+      permette la scelta di protocollare in automatico le operazioni desiderate.
+    shortDescription: Creazione e gestione di istanze di SUE e SUAP
+developmentStatus: stable
+it:
+  conforme:
+    gdpr: false
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: false
+    modelloInteroperabilita: false
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: true
+legal:
+  license: GPL-3.0-or-later
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: false
+maintenance:
+  contractors:
+    - name: CLE Bari
+      until: '2021-12-31'
+      website: 'http://www.clebari.com/'
+  type: contract
+name: SUE-SUAP
+platforms:
+  - web
+releaseDate: '2020-02-04'
+softwareType: standalone/web
+url: 'http://github.com/comunedibari/sue_suap'
