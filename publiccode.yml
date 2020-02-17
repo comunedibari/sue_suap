@@ -4,7 +4,7 @@
 
 publiccodeYmlVersion: '0.2'
 categories:
-  - erp
+  - document-management
 description:
   it:
     features:
@@ -13,12 +13,24 @@ description:
         delle operazioni desiderate
     genericName: SUE-SUAP
     longDescription: >
+      Questa soluzione si compone di due applicazioni web che mettono in
+      comunicazione i cittadini, che hanno necessità di presentare un'istanza
+      agli enti di sportello unico per l'edilizia **(SUE)**e di sportello unico
+      per le attività produttive **(SUAP).**
+
+
       **FRONT OFFICE**
 
 
       Il modulo di front office è una web application che permette ad un
       cittadino di generare un'istanza di SUE o di SUAP e di inviarla all'ente
       preposto alla sua gestione.
+
+      L'amministrazione può scegliere quali sono le informazioni che il
+      richiedente deve inserire per la compilazione dell'istanza e quali
+      documenti allegare.
+
+      E' previsto un controllo della firma digitale sui file di tipo pdf e p7m.
 
 
       **BACK OFFICE**
@@ -28,10 +40,8 @@ description:
       SUE o SUAP, riceve le istanze create dal cittadino, e ne permette la
       gestione dell'istruttoria.
 
-
       Il back office permette la gestione simultanea, di più enti e ne consente
       una propria personalizzazione.
-
 
       Permette inoltre l'interfacciamento a sistemi di protocollo esterni e
       permette la scelta di protocollare in automatico le operazioni desiderate.
@@ -67,3 +77,8 @@ platforms:
 releaseDate: '2020-02-04'
 softwareType: standalone/web
 url: 'http://github.com/comunedibari/sue_suap'
+usedBy:
+  - SUE Comune di Bari
+  - SUE Comune di Bitonto
+  - SUE Comune di Gioia del Colle
+  - SUAP Comune di Gioia del Colle
