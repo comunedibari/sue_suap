@@ -1,6 +1,9 @@
-# SUAPSUE AREA VASTA
+# Gestione sportelli SUAP SUE
 ## INTRODUZIONE
 Il seguente readme ha l'obiettivo di descrivere brevemente i moduli che compongono l'applicazione SUAPSUE per Area Vasta Metropoli Terra di Bari e descrivere i prerequisiti e gli step necessari alla costruzione dell'artefatto
+
+## Licenza
+Il software è rilasciato con licenza aperta ai sensi dell'art. 69 comma 1 del <a href="https://cad.readthedocs.io/" rel="nofollow">Codice dell’Amministrazione Digitale</a> con una licenza GPL 3.0
  
 ## INFORMAZIONI GENERALI
 Per Area Vasta Metropoli Terra di Bari SUAPSUE si compone di un modulo di Front Office e di un modulo di Back Office aventi le finalità di seguito riportate:
