@@ -48,6 +48,9 @@ description:
     shortDescription: Creazione e gestione di istanze di SUE e SUAP
 developmentStatus: stable
 it:
+  countryExtensionVersion: "0.2"
+  riuso:
+    codiceIPA: c_a662
   conforme:
     gdpr: false
     lineeGuidaDesign: false
