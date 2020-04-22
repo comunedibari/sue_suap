@@ -79,7 +79,7 @@ platforms:
   - web
 releaseDate: '2020-02-04'
 softwareType: standalone/web
-url: 'http://github.com/comunedibari/sue_suap'
+url: 'https://github.com/comunedibari/sue_suap'
 usedBy:
   - SUE Comune di Bari
   - SUE Comune di Bitonto
