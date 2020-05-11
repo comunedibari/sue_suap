@@ -17,6 +17,8 @@
     <jaxws:endpoint id="cripalPraticheEndpoint" implementor="#cripalPraticheService" address="/CripalPraticheService" />
     <jaxws:endpoint id="utils" implementor="#utilService" address="/CrossServices" />
     
+    <!-- <jaxws:endpoint id="infocamereEndpoint" implementor="#infocamereService" address="/InfocamereService" /> -->
+    
     
     <!-- webservice commercio genova inizio -->
     
@@ -25,6 +27,11 @@
     <jaxws:endpoint id="aggiornaSuapSoap" implementor="#aggiorna" address="/AggiornaSuap" />
     
     <!-- webservice commercio genova fine -->
+    
+    <!-- webservice infocamere -->
+    <bean id="infocamere" class="it.wego.cross.webservices.cxf.infocamere.PddServiceEnteWS" />
+    <jaxws:endpoint id="infocamereService" implementor="#infocamere" address="/PddServiceEnte" />
+    <!-- webservice infocamere fine -->
     
     <bean id="abstractLoggingInterceptor" abstract="true">
         <property name="prettyLogging" value="true"/>

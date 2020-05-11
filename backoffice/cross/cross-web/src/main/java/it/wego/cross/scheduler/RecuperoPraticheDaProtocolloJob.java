@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.PraticheAction;
 import it.wego.cross.actions.SchedulerAction;
+import it.wego.cross.beans.AttoriComunicazione;
+import it.wego.cross.beans.EventoBean;
 import it.wego.cross.constants.AnaTipiEvento;
 import it.wego.cross.constants.ConfigurationConstants;
 import it.wego.cross.constants.Constants;
@@ -34,9 +36,12 @@ import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.PraticheEventiAllegati;
 import it.wego.cross.entity.PraticheEventiAnagrafiche;
+import it.wego.cross.entity.PraticheEventiAnagrafichePK;
 import it.wego.cross.entity.PraticheProtocollo;
 import it.wego.cross.entity.ProcessiEventi;
+import it.wego.cross.entity.ProcessiEventiAnagrafica;
 import it.wego.cross.events.comunicazione.bean.ComunicazioneBean;
+import it.wego.cross.events.comunicazionerea.bean.AnagraficaPraticaDTO;
 import it.wego.cross.plugins.protocollo.GestioneProtocollo;
 import it.wego.cross.plugins.protocollo.beans.DocumentoProtocolloResponse;
 import it.wego.cross.plugins.protocollo.beans.FilterProtocollo;
@@ -98,9 +103,14 @@ public class RecuperoPraticheDaProtocolloJob implements Job {
         /* Requisito R9 */
         protocollaPraticheSenzaProtocollo();
         /* Fine Requisito R9 */
+        
+        //protocolla eventi senza protocollo
+        //protocollaEventiSenzaProtocollo();
     }
 
-    private void sincronizzaPratiche(@Nullable Integer idEnte) throws JobExecutionException {
+   
+
+	private void sincronizzaPratiche(@Nullable Integer idEnte) throws JobExecutionException {
         try {
             //Cerco sempre le pratiche e i documenti degli ultimi 5 giorni
             String giorniSincronizzazione = configurationService.getCachedConfiguration(ConfigurationConstants.GIORNI_SINCRONIZZA_PROTOCOLLO, idEnte, null);
@@ -378,8 +388,37 @@ public class RecuperoPraticheDaProtocolloJob implements Job {
     
     /* Fine Requisito R9 */
     
-
+    private void protocollaEventiSenzaProtocollo() throws JobExecutionException {
+		// findEventiSenzaProtocollo
+    	List<PraticheEventi> listPraticheEventi = praticheService.findPraticheEventiDaRiprotocollare();
     	
+//    	Integer idPraticaEvento = 28637;
+    	for (PraticheEventi praticaEvento : listPraticheEventi) {
+//    		idPraticaEvento = evento.getIdPraticaEvento();
+//    		PraticheEventi praticaEvento = praticaDao.getDettaglioPraticaEvento(idPraticaEvento); 
+        	try {
+    			EventoBean eb = new EventoBean();
+    			Pratica pratica = praticaEvento.getIdPratica();
+    			eb.setIdPratica(pratica.getIdPratica());
+    			eb.setDataEvento(praticaEvento.getDataEvento());
+    			ProcessiEventi pe = praticaEvento.getIdEvento();
+    			eb.setIdEventoProcesso(pe.getIdEvento());
+    			ComunicazioneBean cb = new ComunicazioneBean(eb) ;
+    			cb.setIdEventoPratica(praticaEvento.getIdPraticaEvento());
+    			AttoriComunicazione destinatari = praticheAction.getAttoriComunicazione(pratica.getPraticaAnagraficaList());;
+    			cb.setDestinatari(destinatari);
+    			
+                praticheService.startCommunicationProcess(praticaEvento.getIdPratica(), praticaEvento, cb);
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			Log.SCHEDULER.error("Errore nella protocollazione della pratica", e);
+    			throw new JobExecutionException("Errore update pratica", e);
+    		}
+		}
+    	
+    	
+		
+	}
 
     private void eseguiSincronizzazione(Integer idEnte) throws JobExecutionException {
         String sincronizzaProtocolloValue = configurationService.getCachedConfiguration(ConfigurationConstants.SINCRONIZZA_PROTOCOLLO, idEnte, null);

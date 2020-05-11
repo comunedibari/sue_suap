@@ -93,7 +93,8 @@ public class PraticaDao extends Paginator {
 
     public void insert(PraticheEventiAnagrafiche eventoPraticaAnagrafica) throws Exception {
         Log.SQL.info("CHIAMATO PraticaDao.insert PraticheEventiAnagrafiche ");
-        em.persist(eventoPraticaAnagrafica);
+        //em.persist(eventoPraticaAnagrafica);
+        em.merge(eventoPraticaAnagrafica);
     }
 
     public void update(Pratica pratica) throws Exception {
@@ -760,6 +761,7 @@ public class PraticaDao extends Paginator {
         ParameterExpression<String> civicoParameter = null;
         ParameterExpression<Integer> idPraticaParameter = null;
         ParameterExpression<String> oggettoParameter = null;
+        ParameterExpression<String> protSuapParameter = null;
 
         List<Predicate> predicates = new ArrayList<Predicate>();
         if (filter.getDataInizio() != null) {
@@ -804,10 +806,12 @@ public class PraticaDao extends Paginator {
             Predicate p = cb.equal(joinRuoli.get("idUtente").get("idUtente"), filter.getConnectedUser().getIdUtente());
             predicates.add(p);
         }
+        
+        Expression<String> ident = c.get("identificativoPratica");
 
         if (!Utils.e(filter.getIdentificativoPratica())) {
             identificativoPraticheParameter = cb.parameter(String.class);
-            predicates.add(cb.equal(c.get("identificativoPratica"), identificativoPraticheParameter));
+            predicates.add(cb.like(ident, identificativoPraticheParameter));
         }
         if (!Utils.e(filter.getIdComune())) {
             comuneParameter = cb.parameter(LkComuni.class);
@@ -901,6 +905,11 @@ public class PraticaDao extends Paginator {
             Expression<String> path = c.get("oggettoPratica");
             predicates.add(cb.like(path, oggettoParameter));
         }
+        
+        if (filter.getProtocolloSuap() != null) {
+        	protSuapParameter = cb.parameter(String.class);
+            predicates.add(cb.equal(c.get("prot_suap"), protSuapParameter));
+        }
 
         String orderCol = filter.getOrderColumn();
         Path path;
@@ -975,7 +984,7 @@ public class PraticaDao extends Paginator {
         }
 
         if (!Utils.e(filter.getIdentificativoPratica())) {
-            query.setParameter(identificativoPraticheParameter, filter.getIdentificativoPratica());
+            query.setParameter(identificativoPraticheParameter, "%"+ filter.getIdentificativoPratica() +"%");
         }
         if (filter.getPraticheDaEscludere() != null) {
             List<Integer> daEscludere = new ArrayList<Integer>();
@@ -1022,6 +1031,9 @@ public class PraticaDao extends Paginator {
         }
         if (!Utils.e(filter.getOggetto())) {
             query.setParameter(oggettoParameter, "%" + filter.getOggetto() + "%");
+        }
+        if (!Utils.e(filter.getProtocolloSuap())) {
+            query.setParameter(protSuapParameter, filter.getProtocolloSuap());
         }
 
         List<Pratica> pratiche = query.getResultList();
@@ -3529,7 +3541,9 @@ public class PraticaDao extends Paginator {
 		List<ProcessiEventi> resultList = new ArrayList<ProcessiEventi>();
 
 		try {
-			if (idProcesso.equals(11) || idProcesso.equals(15)) {
+			// Gestione utente archivio per SUE Bari. 11 Edilizia Automatizzata, 15 Edilizia Ordinaria, Da 16 a 25 Processi personalizzati SAL 4 - Progetto MEV SUE
+			if ((idProcesso.equals(11) || idProcesso.equals(15)) || (idProcesso>15 && idProcesso<26)) {
+//			if (idProcesso.equals(11) || idProcesso.equals(15)) {
 				String sqlString = "SELECT s FROM ProcessiEventi s WHERE s.idProcesso.idProcesso = :idProcesso AND s.statoPost.idStatoPratica in (2,5);";
 				Query query = em.createQuery(sqlString);
 				query.setParameter("idProcesso", idProcesso);
@@ -3547,6 +3561,20 @@ public class PraticaDao extends Paginator {
 	@Transactional
 	public void aggiornaPraticaArchivio(Pratica pratica) {
 		em.merge(pratica);
+	}
+
+	public List<PraticheEventi> listPraticheEventi() {
+		String sql = "SELECT * " + 
+				"FROM opencross.pratiche_eventi " + 
+				"INNER JOIN opencross.processi_eventi on opencross.processi_eventi.id_evento = opencross.pratiche_eventi.id_evento " + 
+				"INNER JOIN opencross.pratica on opencross.pratica.id_pratica = opencross.pratiche_eventi.id_pratica " + 
+				"WHERE (opencross.pratiche_eventi.protocollo is null or opencross.pratiche_eventi.protocollo = '') " + 
+				"AND opencross.processi_eventi.flg_protocollazione = 'S' " + 
+				"AND opencross.pratiche_eventi.descrizione_evento <> 'Ricezione pratica' and opencross.pratiche_eventi.data_evento > '2020-03-01'";
+		Query query = em.createQuery(sql);
+       
+		List<PraticheEventi> lista = query.getResultList();
+		return lista;
 	}
 	
 	

@@ -47,8 +47,28 @@ public class PraticaDTO implements Serializable {
     private String esistenzaStradario;
     private String identificativoEsterno;
     private String esistenzaRicercaCatasto;
+    private String integrazione;
+    private String prot_suap;
+    
+    
 
-    public String getEsistenzaRicercaCatasto() {
+	public String getProt_suap() {
+		return prot_suap;
+	}
+
+	public void setProt_suap(String prot_suap) {
+		this.prot_suap = prot_suap;
+	}
+
+	public String getIntegrazione() {
+		return integrazione;
+	}
+
+	public void setIntegrazione(String integrazione) {
+		this.integrazione = integrazione;
+	}
+
+	public String getEsistenzaRicercaCatasto() {
         return esistenzaRicercaCatasto;
     }
 

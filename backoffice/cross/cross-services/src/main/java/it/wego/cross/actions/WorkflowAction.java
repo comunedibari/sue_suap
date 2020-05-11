@@ -260,7 +260,9 @@ public class WorkflowAction {
                 praticheProtocolloService.aggiorna(praticaProtocollo);
             }
             ProcessiEventi processoEvento = praticheService.findProcessiEventi(eb.getIdEventoProcesso());
-            String funzioneApplicativaEvento = processoEvento.getFunzioneApplicativa();
+            String funzioneApplicativaEvento = null;
+            if(processoEvento != null)
+            	funzioneApplicativaEvento = processoEvento.getFunzioneApplicativa();
             if (eb.getDataEvento() == null) {
                 eb.setDataEvento(Utils.now());
             }

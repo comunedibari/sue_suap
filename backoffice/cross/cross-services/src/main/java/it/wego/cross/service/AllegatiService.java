@@ -5,10 +5,18 @@
 package it.wego.cross.service;
 
 import it.wego.cross.dto.AllegatoDTO;
+import it.wego.cross.dto.dozer.forms.ComunicazioneDTO;
 import it.wego.cross.entity.Allegati;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.Pratica;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -41,6 +49,8 @@ public interface AllegatiService {
     public void deleteFileMap();
     
     public it.wego.cross.plugins.commons.beans.Allegato getAllegatoDaProtocollo(String idFile, Enti ente) throws Exception;
+
+	public AllegatoDTO creaFileSuapEnte(Pratica pratica, ComunicazioneDTO comunicazione) throws DatatypeConfigurationException, FileNotFoundException, UnsupportedEncodingException, IOException, Exception;
    
     
 }

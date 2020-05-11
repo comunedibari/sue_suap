@@ -192,6 +192,7 @@
         	$("#search_des_comune_catasto").val("");
         	$("#search_id_comune_catasto").val("");
         	$("#search_civico").val("");
+        	$("#search_protocollo_suap").val('');
         	
         });
 
@@ -340,6 +341,7 @@
                                     <option value="gestionale generico" ><spring:message code="ricerca.gestionale.generico"/></option>
                                     <option value="scia alternativa" ><spring:message code="ricerca.scia.alternativa"/></option>
                                     <option value="scia pubblicit" >Scia pubblicita'</option>
+                                    <option value="PAS" >PAS</option>
                                 </select>
                                 <p class="formHint"></p>
                                 <p class="formHint"></p>
@@ -427,6 +429,20 @@
                                 <p class="formHint"></p>
                             </div>
                             
+                        </fieldset>
+                        
+                        <fieldset id="suapField">
+                            <legend>Protocollo Suap</legend>
+                            
+                            <div class="ctrlHolder" id="divSearch_protocollo_suap>
+                                <label for="search_id_pratica">
+                                    Protocollo Suap
+                                </label>
+                                <p class="formHint"></p>
+                                <input id="search_protocollo_suap" name="search_protocollo_suap" size="35" maxlength="10" type="text" class="textInput" value="${filtroRicerca.protocolloSuap}">
+                                <p class="formHint"></p>
+                            </div>
+
                         </fieldset>
 
                         <fieldset id="CatastoField" class="fieldsettop">

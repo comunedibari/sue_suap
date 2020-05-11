@@ -983,6 +983,11 @@ public class Utils {
     	File file = new File(dirPath);
     	
     	 File[] files = file.listFiles();
+    	 if(files.length== 1) {
+     		dirPath = files[0].getPath();
+     		file = new File(dirPath);
+     		files = file.listFiles();
+     	 }
     	 for (File fileXml : files) {
 				if (fileXml.isDirectory()) {
 					getFolderFile(fileXml.getAbsolutePath());
@@ -1061,7 +1066,7 @@ public class Utils {
     	
     
     
-    private static final int BUFFER_SIZE = 4096;
+    private static final int BUFFER_SIZE = 65536;
     /**
      * Extracts a zip folder specified by the zipFilePath to a directory specified by
      * destDirectory (will be created if does not exists)
@@ -1129,14 +1134,18 @@ public class Utils {
     }
 
     private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
-        byte[] bytesIn = new byte[BUFFER_SIZE];
-        int read = 0;
-        while ((read = zipIn.read(bytesIn)) != -1) {
-            bos.write(bytesIn, 0, read);
-        }
-        bos.close();
-    }
+    	try {
+    		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
+            byte[] bytesIn = new byte[BUFFER_SIZE];
+            int read = 0;
+            while ((read = zipIn.read(bytesIn)) != -1) {
+                bos.write(bytesIn, 0, read);
+            }
+            bos.close();
+		} catch (Exception e) {
+			System.out.println("Error extractFile"+ e.getMessage());
+		}
+            }
 
     public static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
         File destFile = new File(destinationDir, zipEntry.getName());

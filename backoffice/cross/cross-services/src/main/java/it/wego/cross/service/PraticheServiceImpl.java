@@ -653,7 +653,7 @@ public class PraticheServiceImpl implements PraticheService {
         }
         dettaglio.setNotePratica(notepratica);
         dettaglio.setProcedimenti(procedimenti);
-        List<AllegatoDTO> allegati = getAllegatiPratica(pratica);
+        List<AllegatoDTO> allegati = new ArrayList<AllegatoDTO>(); // getAllegatiPratica(pratica);
         dettaglio.setAllegati(allegati);
         List<ScadenzaDTO> scadenze = new ArrayList<ScadenzaDTO>();
         Log.APP.info("Ci sono scadenze? " + (pratica.getScadenzeList() != null));
@@ -665,7 +665,7 @@ public class PraticheServiceImpl implements PraticheService {
             }
         }
         dettaglio.setScadenze(scadenze);
-        List<EventoDTO> eventi = getEventiPratica(pratica);
+        List<EventoDTO> eventi = new ArrayList<EventoDTO>(); // getEventiPratica(pratica);
         dettaglio.setEventi(eventi);
         dettaglio.setEsistenzaStradario(gp.getEsistenzaStradario(pratica));
         dettaglio.setEsistenzaRicercaCatasto(gp.getEsistenzaRicercaCatasto(pratica));
@@ -1145,6 +1145,17 @@ public class PraticheServiceImpl implements PraticheService {
 		}
 		return praticheResult ;
 	}
+
+	@Override
+	public List<PraticheEventi> findPraticheEventiDaRiprotocollare() {
+		// TODO Auto-generated method stub
+		List<PraticheEventi> result = new ArrayList<PraticheEventi>();
+		result = praticaDao.listPraticheEventi();
+		
+		return result;
+	}
+	
+	
 	
 	
 }

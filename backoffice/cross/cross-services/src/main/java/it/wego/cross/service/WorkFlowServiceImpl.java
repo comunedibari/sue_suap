@@ -117,9 +117,9 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 	public Processi getProcessToUse(Integer idEnte, Integer idProcedimento) throws Exception {
 		//        ProcedimentiEnti procedimentiEnti = procedimentiDao.findProcedimentiEntiByProcedimentoEnte(idEnte, idProcedimento);
 		ProcedimentiEnti procedimentiEnti = procedimentiService.requireProcedimentoEnte(idProcedimento, idEnte, null, null);
-		//        if (procedimentiEnti == null) {
-		//            return null;
-		//        }
+		        if (procedimentiEnti == null) {
+		            return null;
+		        }
 		return procedimentiEnti.getIdProcesso();
 	}
 

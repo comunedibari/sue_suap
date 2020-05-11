@@ -337,6 +337,9 @@ public class CaricamentoManualeAction {
             praticaDaSalvare.setIdentificativoPratica(cb.getNumeroProtocollo());
             usefulService.flush();
         }
+        praticaDaSalvare.setProtocollo("");//Intini
+        praticaDaSalvare.setCodRegistro(null);
+        //praticaDaSalvare.setAnnoRiferimento(null);
         praticaDao.update(praticaDaSalvare);
         workflowService.gestisciProcessoEvento(cb);
         

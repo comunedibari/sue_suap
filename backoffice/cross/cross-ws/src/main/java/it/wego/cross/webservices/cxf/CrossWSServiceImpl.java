@@ -5,7 +5,6 @@ package it.wego.cross.webservices.cxf;
 
 import java.io.File;
 import java.io.StringReader;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,20 +25,16 @@ import it.wego.cross.actions.PraticheAction;
 import it.wego.cross.constants.AnaTipiEvento;
 import it.wego.cross.constants.Constants;
 import it.wego.cross.constants.Error;
-import it.wego.cross.constants.StatoPratica;
 import it.wego.cross.dao.LookupDao;
-import it.wego.cross.dao.PraticaDao;
 import it.wego.cross.dao.ProcedimentiDao;
 import it.wego.cross.dao.ProcessiDao;
 import it.wego.cross.dao.TemplateDao;
 import it.wego.cross.dto.AllegatoRicezioneDTO;
 import it.wego.cross.dto.ErroreDTO;
-import it.wego.cross.dto.PraticaDTO;
 import it.wego.cross.entity.Allegati;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.EventiTemplate;
 import it.wego.cross.entity.LkComuni;
-import it.wego.cross.entity.LkStatoPratica;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.Procedimenti;
@@ -193,7 +188,7 @@ public class CrossWSServiceImpl implements CrossWSService {
                     allegati.add(a);
                 }
             }
-
+            
             //4. Salvo l'xml nell'area di staging
             Log.WS.info("Preparo i dati per salvare l'area di staging");
             Date dataRicezione = new Date();
@@ -315,7 +310,7 @@ public class CrossWSServiceImpl implements CrossWSService {
         }
     }
 
-    private LkComuni getComune(String codiceCatastale) {
+	private LkComuni getComune(String codiceCatastale) {
         LkComuni comune = lookupDao.findComuneByCodCatastale(codiceCatastale);
         return comune;
     }

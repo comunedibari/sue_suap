@@ -175,7 +175,8 @@ public class ComunicaController extends AbstractController {
     private ConfigurationService configurationService;
     @Autowired
     private RisultatoCaricamentoPraticheAction risultatoCaricamentoPraticheAction;
-    private static long maxsize = 2097152;
+    //private static long maxsize = 2097152;
+    private static long maxsize = 209715200;
 
     @RequestMapping("/comunica/index")
     public String nuove(Model model, HttpServletRequest request, HttpServletResponse response) {

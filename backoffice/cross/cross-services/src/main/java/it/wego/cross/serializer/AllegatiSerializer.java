@@ -5,6 +5,8 @@
 package it.wego.cross.serializer;
 
 import com.google.common.base.Strings;
+
+import it.gov.impresainungiorno.schema.suap.ente.AllegatoCooperazione;
 import it.wego.cross.dto.AllegatoDTO;
 import it.wego.cross.dto.AllegatoRicezioneDTO;
 import it.wego.cross.entity.Allegati;
@@ -16,9 +18,17 @@ import it.wego.cross.plugins.commons.beans.Allegato;
 import it.wego.cross.utils.FileUtils;
 import it.wego.cross.utils.Utils;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 
 /**
  *
@@ -102,13 +112,16 @@ public class AllegatiSerializer {
         return a;
     }
 
-    public static AllegatoDTO serialize(Allegati allegato) {
+    public static AllegatoDTO serialize(Allegati allegato) throws Exception {
         AllegatoDTO dto = new AllegatoDTO();
         dto.setDescrizione(allegato.getDescrizione());
         dto.setIdAllegato(allegato.getId());
         dto.setIdFileEsterno(allegato.getIdFileEsterno());
         dto.setNomeFile(allegato.getNomeFile());
+        dto.setNomeFileB64(Utils.encodeB64(allegato.getNomeFile()));
         dto.setTipoFile(allegato.getTipoFile());
+        dto.setPathFile(allegato.getPathFile());
+        dto.setFile(new MockMultipartFile(allegato.getNomeFile(), allegato.getFile()));
         return dto;
     }
 
@@ -215,4 +228,18 @@ public class AllegatiSerializer {
         dto.setFileContent(paw.getFile());
         return dto;
     }
+
+	public static AllegatoCooperazione serializeAllegatoCooperazione(it.wego.cross.dto.dozer.AllegatoDTO allegato) throws IOException {
+		AllegatoCooperazione ac = new AllegatoCooperazione();
+		ac.setCod("ALLEG");
+		ac.setDescrizione(allegato.getDescrizione());
+		File f = new File(allegato.getPathFile());
+		if(f != null) {
+			ac.setDimensione(BigInteger.valueOf(f.length()));
+		}
+		ac.setMime(allegato.getTipoFile());
+		ac.setNomeFile(allegato.getNomeFile());
+		ac.setNomeFileOriginale(allegato.getNomeFile());
+		return ac;
+	}
 }

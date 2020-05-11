@@ -6,6 +6,8 @@ package it.wego.cross.actions;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+
+import it.gov.impresainungiorno.schema.suap.ente.CooperazioneSUAPEnte;
 import it.gov.impresainungiorno.schema.suap.pratica.RiepilogoPraticaSUAP;
 import it.wego.cross.beans.AnagraficaRecapito;
 import it.wego.cross.beans.AttoriComunicazione;
@@ -469,7 +471,7 @@ public class PraticheAction {
             //Crea avento assegnazione pratica
             systemEventAction.assegnaPratica(pratica, utente, utenteConnesso);
             //Riassegna task collegati alla pratica
-            workflowAction.riassegnaTaskAssociatiAllaPratica(idPratica, utente);
+            //workflowAction.riassegnaTaskAssociatiAllaPratica(idPratica, utente);
         } else {
             throw new Exception("Non è stato possibile associare l'utente alla pratica");
         }
@@ -689,6 +691,8 @@ public class PraticheAction {
             PraticaProcedimenti praticaProcedimenti = new PraticaProcedimenti();
             //Presuppongo che coincida con l'ID inserito nell'anagrafica enti di CROSS
             Enti ente = entiDao.findByCodEnte(procedimento.getCodEnteDestinatario());
+            if(ente == null)
+            	ente = entiDao.findByIdEnte(procedimento.getIdEnteDestinatario().intValue());
             PraticaProcedimentiPK key = new PraticaProcedimentiPK();
             key.setIdEnte(ente.getIdEnte());
             key.setIdPratica(pratica.getIdPratica());
@@ -1702,6 +1706,7 @@ public class PraticheAction {
 			datiCatastali.setMappale(immobile.getMappale());
 			datiCatastali.setSezione(immobile.getSezione());
 			datiCatastali.setSubalterno(immobile.getSubalterno());
+			datiCatastali.setFoglio(immobile.getFoglio());
 			datiCatastali.setIdPratica(pratica);
 			praticaDao.insert(datiCatastali);
 			usefulService.flush();
@@ -1875,6 +1880,82 @@ public class PraticheAction {
         pratica.setPraticaProcedimentiList(praticaProcedimentiList);
         praticaDao.update(pratica);
     }
+
+	@Transactional(rollbackFor = Exception.class)
+	public ComunicazioneBean inserisciEventoAggiornamentoSuap(it.wego.cross.xml.Pratica praticaCross,
+			Pratica pratica, ProcessiEventi eventoProcesso, List<String> destinatariEmail,
+			List<AllegatoRicezioneDTO> allegati, CooperazioneSUAPEnte cooperazioneSUAPEnte) throws Exception {
+		 try {
+//	            String ricTuttiAllegati = configuration.getCachedConfiguration(SessionConstants.EVENTO_RICEZIONE_ALLEGA_TUTTO, pratica.getIdProcEnte().getIdEnte().getIdEnte(), pratica.getIdComune().getIdComune());
+
+	            ComunicazioneBean cb = new ComunicazioneBean();
+	            Log.WS.info("Cerco evento di ricezione");
+	            Log.WS.info("Setto la pratica");
+	            cb.setIdPratica(pratica.getIdPratica());
+	            Log.WS.info("Setto l'evento");
+	            cb.setIdEventoProcesso(eventoProcesso.getIdEvento());
+	            if (eventoProcesso.getFlgMail().equalsIgnoreCase("S")) {
+	                Log.WS.info("Deve essere inviata la comunicazione");
+	                cb.setInviaMail(Boolean.TRUE);
+	                cb.setNumeroProtocollo(pratica.getProtocollo());
+	                cb.setDataProtocollo(pratica.getDataProtocollazione());
+	                Log.WS.info("Setto i destinatari: " + destinatariEmail);
+	                cb.setDestinatariEmail(destinatariEmail);
+	            }
+	            AttoriComunicazione attori = getAttoriComunicazione(pratica.getPraticaAnagraficaList());
+	            cb.setMittenti(attori);
+	            cb.setVisibilitaCross(Boolean.TRUE);
+	            cb.setVisibilitaUtente(Boolean.TRUE);
+	            AllegatoRicezioneDTO allegatoPratica = new AllegatoRicezioneDTO();
+	            if (allegati != null && allegati.size() > 0) {
+	                for (AllegatoRicezioneDTO allegato : allegati) {
+	                    Log.WS.info("Aggiungo il file " + allegato.getAllegato().getNomeFile() + " all'evento");
+	                    Allegato a = AllegatiSerializer.serializeAllegato(allegato);
+	                    if (eventoProcesso.getFlgProtocollazione().equalsIgnoreCase("S")) {
+	                        a.setProtocolla(Boolean.TRUE);
+	                    } else {
+	                        a.setProtocolla(Boolean.FALSE);
+	                    }
+
+	                    if (allegato.isModelloDomanda()) {
+	                        allegatoPratica = allegato;
+	                        a.setFileOrigine(Boolean.TRUE);
+	                        a.setSpedisci(Boolean.TRUE);
+	                    } else {
+//	                        if ("TRUE".equalsIgnoreCase(ricTuttiAllegati)) {
+	                            a.setSpedisci(Boolean.TRUE);
+//	                        } else {
+//	                            a.setSpedisci(Boolean.FALSE);
+//	                        }
+	                    }
+
+	                    cb.addAllegato(a);
+	                }
+	            }
+//	            cb.setOggettoProtocollo(pratica.getOggettoPratica());
+	            cb.setOggettoProtocollo(cooperazioneSUAPEnte.getIntestazione().getOggettoComunicazione().getValue());
+	            cb.setNote(cooperazioneSUAPEnte.getIntestazione().getTestoComunicazione());
+	            aggiornaPratica(pratica);
+	            Log.WS.info("Gestisco l'evento");
+	            workFlowService.gestisciProcessoEvento(cb);
+	            Log.WS.info("Salvo il modello della pratica");
+	            for (Integer idAllegato : cb.getIdAllegati()) {
+	                Allegati allegato = allegatiService.findAllegatoById(idAllegato);
+	                if (allegato != null && allegatoPratica.getAllegato() != null && allegato.getNomeFile().equals(allegatoPratica.getAllegato().getNomeFile())) {
+	                    pratica.setIdModello(allegato);
+	                    praticaDao.update(pratica);
+	                    usefulService.flush();
+	                    break;
+	                }
+	            }
+
+	            return cb;
+
+	        } catch (Exception ex) {
+	            Log.APP.error("Si è verificato un errore cercando di inserire l'evento", ex);
+	            throw ex;
+	        }
+	}
 	
 	
 }

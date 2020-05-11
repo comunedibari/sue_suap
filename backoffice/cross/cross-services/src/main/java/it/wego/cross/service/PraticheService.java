@@ -231,4 +231,7 @@ public interface PraticheService {
 	public PraticheEventiAllegati findPraticheEventiAllegatiByIdAllegato(Integer idAllegato);
 
 	public List<EstrazioniCilaDTO> listPraticheCILAToDo(Filter filter) throws Exception;
+
+	public List<PraticheEventi> findPraticheEventiDaRiprotocollare();
+
 }

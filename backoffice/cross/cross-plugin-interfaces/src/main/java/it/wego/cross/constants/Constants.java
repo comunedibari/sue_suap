@@ -34,6 +34,7 @@ public class Constants {
     public static final String ANAGRAFICA_NOTIFICA = "Notifica pratica";
 
     public static final String WEBSERVICE_AEC = "AEC";
+    public static final String WEBSERVICE_CSE = "Cooperazione_Suap_Ente";
     public static final String COMUNICA = "COMUNICA";
     public static final String CARICAMENTO_MANUALE = "CARICAMENTO_MANUALE";
     public static final String CARICAMENTO_MODALITA_MANUALE = "MANUALE";

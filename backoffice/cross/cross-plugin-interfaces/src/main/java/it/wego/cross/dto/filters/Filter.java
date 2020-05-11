@@ -94,10 +94,18 @@ public class Filter {
     private Integer idPraticaOrganiCollegiali;
     private Integer idPratica;
     private Integer idOperatoreSelezionato;
+    private String protocolloSuap;
     
     
+    public String getProtocolloSuap() {
+		return protocolloSuap;
+	}
 
-    public Integer getIdOperatoreSelezionato() {
+	public void setProtocolloSuap(String protocolloSuap) {
+		this.protocolloSuap = protocolloSuap;
+	}
+
+	public Integer getIdOperatoreSelezionato() {
 		return idOperatoreSelezionato;
 	}
 

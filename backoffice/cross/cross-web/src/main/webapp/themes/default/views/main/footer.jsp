@@ -1,7 +1,7 @@
 <div id="footer">
 	<div style="float: left">
 		<ul>
-			<li><span>Versione 1.0</span></li>
+			<li><span>Versione 1.4</span></li>
 		</ul>
 	</div>
 	<div style="float: right; margin: 10px 5px; padding: 5px 0; font-size: 12px; font-weight: bold">

@@ -3138,5 +3138,37 @@ public class Pratiche extends AbstractController {
 			}
 		}
 	}
+	
+	
+    @RequestMapping("pratiche/integrazione/lavorata")
+    public ModelAndView integrazioneLavorata(Model model,
+            HttpServletRequest request,
+            HttpServletResponse response, @ModelAttribute("currentTab") String tab) throws Exception {
+        String idPraticaString = request.getParameter("id_pratica");
+        HttpSession session = request.getSession();
+        Integer idPratica;
+        Utente utente = utentiService.getUtenteConnesso(request);
+        Pratica pratica = null;
+        if (idPraticaString != null) {
+            idPratica = getIdPratica(idPraticaString);
+            session.setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
+        } else {
+            idPratica = (Integer) session.getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+        }
+        try {
+            pratica = praticheService.getPratica(idPratica);
+            pratica.setIntegrazione("N");
+            praticheAction.aggiornaPratica(pratica);
+        } catch (Exception ex) {
+            Message error = new Message();
+            error.setMessages(Arrays.asList("Si sono verificati degli errori"));
+            request.setAttribute("message", errori);
+            Log.APP.error("Si sono verificati degli errori", ex);
+            ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICHE_DETTAGLIO, "Errore nell'esecuzione del controller pratiche/integrazione/lavorata", ex, pratica, utente);
+            erroriAction.saveError(errore);
+        }
+        
+        return new ModelAndView(REDIRECT_DETTAGLIO_PRATICA);
+    }
 
 }

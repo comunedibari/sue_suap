@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 (http://www.altova.com) by Administrator (Metaware) -->
+<xs:schema xmlns:ps="http://www.impresainungiorno.gov.it/schema/suap/pratica" xmlns:cs="http://www.impresainungiorno.gov.it/schema/suap/comunicazione" xmlns:pi="http://www.impresainungiorno.gov.it/schema/base" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.impresainungiorno.gov.it/schema/suap/comunicazione" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.1.0">
+	<xs:import namespace="http://www.impresainungiorno.gov.it/schema/base" schemaLocation="impresainungiorno.gov_tipi_elementari-1.0.0.xsd"/>
+	<xs:import namespace="http://www.impresainungiorno.gov.it/schema/suap/pratica" schemaLocation="pratica_suap-2.0.0.xsd"/>
+	<!-- 
+        Modello di comunicazione SUAP verso l'impresa richiedente
+    -->
+	<xs:element name="comunicazione-pratica-suap" type="cs:ComunicazionePraticaSUAP"/>
+	<!--  
+        
+        Definizione della comunicazione relativa ad una pratica SUAP - Art. 6 Allegato tecnico DPR160/2010 - Altre comunicazioni
+        
+    -->
+	<xs:complexType name="ComunicazionePraticaSUAP">
+		<xs:sequence>
+			<xs:element name="info-schema">
+				<xs:complexType>
+					<xs:attribute name="versione" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:pattern value="(\d+.)?\d+.\d+(-beta)?"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="data" type="xs:date" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="intestazione" type="cs:IntestazioneComunicazione"/>
+			<xs:element name="allegato" type="cs:AllegatoComunicazione" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 
+        
+        Definizione dei componenti dell'intestazione della Comunicazione 
+        
+    -->
+	<xs:complexType name="IntestazioneComunicazione">
+		<xs:sequence>
+			<xs:element name="ufficio-emittente" type="ps:EstremiSuap"/>
+			<xs:element name="impresa" type="ps:AnagraficaImpresa"/>
+			<xs:element name="destinatario" type="ps:EstremiDichiarante"/>
+			<xs:element name="oggetto-pratica" type="ps:OggettoComunicazione"/>
+			<xs:element name="codice-pratica" type="pi:Stringa">
+				<xs:annotation>
+					<xs:documentation>Questo elemento, se presente, e' un codice identificativo univoco della pratica valido
+                        nel dominio del SUAP competente.
+                        Si suggerisce di utilizzare la codifica dello stardard naming dei file CF-GGMMAAAA-HHMM.NNN
+                        Es: DPRTNT00A01A012T-08072010-1730
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="oggetto-comunicazione" type="cs:OggettoProvvedimento"/>
+			<xs:element name="testo-comunicazione" type="pi:Stringa" minOccurs="0"/>
+			<xs:element name="responsabile" type="pi:Anagrafica">
+				<xs:annotation>
+					<xs:documentation>Estremi del responsabile del procedimento</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="protocollo" type="ps:ProtocolloSUAP"/>
+		</xs:sequence>
+		<xs:attribute name="progressivo" type="xs:int"/>
+		<xs:attribute name="totale" type="xs:int"/>
+	</xs:complexType>
+	<!--  
+		Testo della comunicazione/provvedimento
+    -->
+	<xs:complexType name="OggettoProvvedimento">
+		<xs:simpleContent>
+			<xs:extension base="pi:Stringa">
+				<xs:attribute name="tipo-provvedimento" type="pi:Stringa">
+					<xs:annotation>
+						<xs:documentation>Il tipo di provvedimento puo' assumere i seguenti valori:
+							"richiesta-integrazione" - richiesta di integrazione documentale/comformazione dell'attivita'
+							"divieto-prosecuzione" - invio del divieto di prosecuzione/avviso di chiusura negativa della pratica
+							"rilascio-provvedimento" - rilascio del provvedimento finale
+							"conferenza-servizi" - convocazione della conferenza dei servizi
+							"altro" - comunicazione generica
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--  
+		Allegato generico - permette qualunque nome e controlla solo il tipo di allegato
+    -->
+	<xs:complexType name="AllegatoComunicazione">
+		<xs:complexContent>
+			<xs:extension base="ps:BaseAllegatoSUAP">
+				<xs:attribute name="nome-file" type="cs:TipoFileAllegatoComunicazione" use="required"/>
+				<xs:attribute name="cod" type="pi:Stringa"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--  
+    -->
+	<xs:simpleType name="TipoFileAllegatoComunicazione">
+		<xs:annotation>
+			<xs:documentation>
+            CF-GGMMAAAA-HHMM.NNN.PDF.P7M   o   CF-GGMMAAAA-HHMM.NNN.PDF 
+            Es: DPRTNT00A01A012T-08072010-1733.01243.pdf.p7m
+            Formati ammessi: pdf; pdf.p7m; xml; dwf; svg; jpg
+        </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\.\dA-Za-z\-]*\.(([Pp][Dd][Ff])|([Pp][Dd][Ff]\.[Pp]7[Mm])|([Xx][Mm][Ll])|([Dd][Ww][Ff])|([Ss][Vv][Gg])|([Jj][Pp][Gg]))"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

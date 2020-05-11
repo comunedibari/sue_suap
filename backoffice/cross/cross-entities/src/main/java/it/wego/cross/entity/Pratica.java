@@ -157,6 +157,11 @@ public class Pratica implements Serializable {
     private String identificativoEsterno;
     @Column(name = "integrazione")
     private String integrazione;
+    @Column(name = "data_prot_suap")
+    @Temporal(TemporalType.DATE)
+    private Date data_prot_suap;
+    @Column(name = "prot_suap")
+    private String prot_suap;
     
 
     @JoinTable(name = "pratica_pratica", joinColumns = {
@@ -566,6 +571,22 @@ public class Pratica implements Serializable {
 
 	public void setIntegrazione(String integrazione) {
 		this.integrazione = integrazione;
+	}
+
+	public Date getData_prot_suap() {
+		return data_prot_suap;
+	}
+
+	public void setData_prot_suap(Date data_prot_suap) {
+		this.data_prot_suap = data_prot_suap;
+	}
+
+	public String getProt_suap() {
+		return prot_suap;
+	}
+
+	public void setProt_suap(String prot_suap) {
+		this.prot_suap = prot_suap;
 	}
     
     

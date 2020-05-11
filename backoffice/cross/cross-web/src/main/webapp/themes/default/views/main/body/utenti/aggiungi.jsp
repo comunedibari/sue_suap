@@ -67,7 +67,7 @@
         </div>
         
         <div class="ctrlHolder" >
-            <label for="superuser" class="required">Utente per estrazioni cila to do</label>
+            <label for="superuser" class="required">Utente per estrazioni cila 20%</label>
             <input type="checkbox" name="superusercheckcila" id="superusercheckcila"  class="textInput" onclick="aggiornacheckboxcila()"/>   
             <input type="hidden"  id="estrazioniCilaTodoUser" name="estrazioniCilaTodoUser" value="N"/>
         </div>

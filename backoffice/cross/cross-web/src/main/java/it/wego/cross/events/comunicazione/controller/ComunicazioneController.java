@@ -27,6 +27,7 @@ import it.wego.cross.dto.dozer.ProcessoEventoDTO;
 import it.wego.cross.dto.dozer.forms.ComunicazioneDTO;
 import it.wego.cross.dto.search.DestinatariDTO;
 import it.wego.cross.entity.Allegati;
+import it.wego.cross.entity.LkTipiAttore;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticaProcedimenti;
 import it.wego.cross.entity.PraticheEventi;
@@ -354,13 +355,24 @@ public class ComunicazioneController extends AbstractController {
 			if(comunicazione.getAllegatiPresenti() != null) {
 				List<AllegatoDTO> lista = new ArrayList<AllegatoDTO>();
 				for (AllegatoDTO alleg : comunicazione.getAllegatiPresenti()) {
-					if(alleg.isPrincipale()) {
-						alleg = allegatiService.findAllegatoByIdNullSafe(alleg.getIdAllegato(), pratica.getIdProcEnte().getIdEnte());
-						MultipartFile filea = new MockMultipartFile(alleg.getNomeFile(), alleg.getNomeFile(), alleg.getTipoFile(), alleg.getFileContent());
-						//MultipartFile filea = fileUtils.getMultipartFile(alleg.getNomeFile(), alleg.getPathFile(), "allegatoOriginale.file", alleg.getTipoFile(), false, 1024);
-						alleg.setFile(filea);
-						comunicazione.setAllegatoOriginale(alleg);
-						i++;
+					if (alleg.isPrincipale()) {
+						AllegatoDTO findAllegatoByIdNullSafe = allegatiService
+								.findAllegatoByIdNullSafe(alleg.getIdAllegato(), pratica.getIdProcEnte().getIdEnte());
+						if (findAllegatoByIdNullSafe != null) {
+							alleg = allegatiService.findAllegatoByIdNullSafe(alleg.getIdAllegato(),
+									pratica.getIdProcEnte().getIdEnte());
+							MultipartFile filea = new MockMultipartFile(alleg.getNomeFile(), alleg.getNomeFile(),
+									alleg.getTipoFile(), alleg.getFileContent());
+							// MultipartFile filea = fileUtils.getMultipartFile(alleg.getNomeFile(),
+							// alleg.getPathFile(), "allegatoOriginale.file", alleg.getTipoFile(), false,
+							// 1024);
+							alleg.setFile(filea);
+							comunicazione.setAllegatoOriginale(alleg);
+							i++;
+						}
+						else {
+							errors.add(messageSource.getMessage("error.comunicazione.allegatoNonSpuntato", null, Locale.getDefault()));
+						}
 					}
 					else {
 						lista.add(alleg);
@@ -385,12 +397,20 @@ public class ComunicazioneController extends AbstractController {
 				List<AllegatoDTO> lista = new ArrayList<AllegatoDTO>();
 				for (AllegatoDTO alleg : comunicazione.getAllegatiDaProtocollo()) {
 					if(alleg.isPrincipale()) {
-						alleg = allegatiService.findAllegatoByIdNullSafe(alleg.getIdAllegato(), pratica.getIdProcEnte().getIdEnte());
-						MultipartFile filea = new MockMultipartFile(alleg.getNomeFile(), alleg.getNomeFile(), alleg.getTipoFile(), alleg.getFileContent());
-						//MultipartFile filea = fileUtils.getMultipartFile(alleg.getNomeFile(), alleg.getPathFile(), "allegatoOriginale.file", alleg.getTipoFile(), false, 1024);
-						alleg.setFile(filea);
-						comunicazione.setAllegatoOriginale(alleg);
-						i++;
+						AllegatoDTO findAllegatoByIdNullSafe = allegatiService.findAllegatoByIdNullSafe(alleg.getIdAllegato(), pratica.getIdProcEnte().getIdEnte());
+						if (findAllegatoByIdNullSafe != null) {
+							alleg = allegatiService.findAllegatoByIdNullSafe(alleg.getIdAllegato(),	pratica.getIdProcEnte().getIdEnte());
+							MultipartFile filea = new MockMultipartFile(alleg.getNomeFile(), alleg.getNomeFile(), alleg.getTipoFile(), alleg.getFileContent());
+							// MultipartFile filea = fileUtils.getMultipartFile(alleg.getNomeFile(),
+							// alleg.getPathFile(), "allegatoOriginale.file", alleg.getTipoFile(), false,
+							// 1024);
+							alleg.setFile(filea);
+							comunicazione.setAllegatoOriginale(alleg);
+							i++;
+						}
+						else {
+							errors.add(messageSource.getMessage("error.comunicazione.allegatoNonSpuntato", null, Locale.getDefault()));
+						}
 					}
 					else {
 						lista.add(alleg);
@@ -398,6 +418,26 @@ public class ComunicazioneController extends AbstractController {
 				}
 				comunicazione.setAllegatiDaProtocollo(lista);
 			}
+			
+			// MEV - Comunicazione SUAP ENTE
+			//il processo evento per cui creare la comunicazione deve essere di tipo 'COMAE' e l'ente deve essere SUAP
+			LkTipiAttore ta = new LkTipiAttore("ENTE");
+			if (eventoProcesso.getIdTipoDestinatario() != null) {
+				if (eventoProcesso.getIdTipoDestinatario().equals(ta)
+						&& pratica.getIdProcEnte().getIdEnte().getDescrizione().contains("SUAP")
+						&& eventoProcesso.getCodEvento().contains("COMAE")
+						&& eventoProcesso.getFlgMail().equalsIgnoreCase("S")) {
+
+					AllegatoDTO comunicazioneSuapEnte = allegatiService.creaFileSuapEnte(pratica, comunicazione);
+
+					List<AllegatoDTO> allegatiManuali = new ArrayList<AllegatoDTO>();
+					if (comunicazione.getAllegatiManuali() != null)
+						allegatiManuali.addAll(comunicazione.getAllegatiManuali());
+					allegatiManuali.add(comunicazioneSuapEnte);
+					comunicazione.setAllegatiManuali(allegatiManuali);
+				}
+			}
+			// MEV - Comunicazione SUAP ENTE - Fine
 
 			Log.APP.info("Dump Submit Evento:\n " + gson.toJson(comunicazione));
 			List<ProcessiEventi> steps = workflowService.findAvailableEvents(pratica.getIdPratica());
@@ -587,12 +627,12 @@ public class ComunicazioneController extends AbstractController {
 					allegato.setTipoFileCode(FileTypes.myMap.get("default"));
 				}
 			}
-			model.addAttribute("evento", evento);
+			//model.addAttribute("evento", evento);
 			model.addAttribute("id_pratica", pratica.getIdPratica());
 			model.addAttribute("pratica", pratica);
 			boolean couldCreateNewEvent = utentiService.couldCreateNewEvent(utente, pratica);
 			model.addAttribute("couldCreateNewEvent", couldCreateNewEvent);
-			evento = praticheService.getDettaglioPraticaEvento(idPraticaEvento);
+			//evento = praticheService.getDettaglioPraticaEvento(idPraticaEvento);
 			if (evento.getPubblicazionePortale() == null) {
 				evento.setPubblicazionePortale("S");
 			}

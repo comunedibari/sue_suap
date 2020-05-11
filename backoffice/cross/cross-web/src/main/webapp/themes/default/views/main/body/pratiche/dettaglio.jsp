@@ -43,7 +43,16 @@
 
                 ${pratica.oggettoPratica}
                 <p><strong><spring:message code="pratica.comunicazione.dettaglio.protocollo"/></strong> ${pratica.identificatoreProtocolloIstanza}</p>
-                <p><strong><spring:message code="pratica.comunicazione.dettaglio.dataricezione"/></strong> <fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.dataRicezione}" /></p>
+				<c:choose>
+					<c:when test="${not empty pratica.prot_suap}">
+						<p>
+							<strong>Numero protocollo Suap</strong> ${pratica.prot_suap}
+						</p>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>
+				<p><strong><spring:message code="pratica.comunicazione.dettaglio.dataricezione"/></strong> <fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.dataRicezione}" /></p>
                 <p><strong><spring:message code="pratica.comunicazione.dettaglio.statopratica"/></strong> ${pratica.idStatoPratica.descrizione}</p>
                 <p><strong>In carico a </strong> ${pratica.idUtente.cognome} ${pratica.idUtente.nome}</p>
 
@@ -57,6 +66,17 @@
                     </c:when>
                     <c:otherwise>
                         <span class="value"><spring:message code="pratica.comunicazione.evento.pratica.nofile"/></span>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${pratica.integrazione eq 'S' and pratica.idComune.idComune eq 5440}">
+                        <p style="margin-top:20px;">
+                            <a href="${path}/pratiche/integrazione/lavorata.htm" class="deletegenerico" title="Rimuovi flag integrazione">
+                                <spring:message code="pratica.comunicazione.integrazione.lavorata"/>
+                            </a>
+                        </p>
+                    </c:when>
+                    <c:otherwise>
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -88,6 +88,8 @@ public class FilterSerializer {
         String identificativoPratica = request.getParameter("search_identificativo_pratica");
         String idPratica = request.getParameter("search_idpratica");
         String idOperatoreSelezionato = request.getParameter("search_operatore");
+        String protocolloSuap = request.getParameter("search_protocollo_suap");
+       
         Filter filter = new Filter();
         filter.setConnectedUser(utenteConnesso);
         Date dataInizio = null;
@@ -237,6 +239,9 @@ public class FilterSerializer {
         }
         if (!Utils.e(idOperatoreSelezionato)) {
             filter.setIdOperatoreSelezionato(Integer.parseInt(idOperatoreSelezionato)); 
+        }
+        if (!Utils.e(protocolloSuap)) {
+            filter.setProtocolloSuap(protocolloSuap); 
         }
         return filter;
     }
