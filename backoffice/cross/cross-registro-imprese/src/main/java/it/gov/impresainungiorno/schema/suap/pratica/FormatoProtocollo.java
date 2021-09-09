@@ -1,12 +1,7 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
+
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -28,22 +23,22 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="FormatoProtocollo">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="codice-amministrazione" use="required" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAmministrazione" />
- *       &lt;attribute name="codice-aoo" use="required" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAOO" />
- *       &lt;attribute name="data-registrazione" use="required" type="{http://www.w3.org/2001/XMLSchema}date" />
- *       &lt;attribute name="numero-registrazione" use="required">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;pattern value="\d{7}"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="FormatoProtocollo"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;attribute name="codice-amministrazione" use="required" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAmministrazione" /&gt;
+ *       &lt;attribute name="codice-aoo" use="required" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAOO" /&gt;
+ *       &lt;attribute name="data-registrazione" use="required" type="{http://www.w3.org/2001/XMLSchema}date" /&gt;
+ *       &lt;attribute name="numero-registrazione" use="required"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *             &lt;pattern value="\d{7}"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -61,7 +56,7 @@ public class FormatoProtocollo {
     protected String codiceAoo;
     @XmlAttribute(name = "data-registrazione", required = true)
     @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar dataRegistrazione;
+    protected Date dataRegistrazione;
     @XmlAttribute(name = "numero-registrazione", required = true)
     protected String numeroRegistrazione;
 
@@ -121,7 +116,7 @@ public class FormatoProtocollo {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getDataRegistrazione() {
+    public Date getDataRegistrazione() {
         return dataRegistrazione;
     }
 
@@ -133,7 +128,7 @@ public class FormatoProtocollo {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setDataRegistrazione(XMLGregorianCalendar value) {
+    public void setDataRegistrazione(Date value) {
         this.dataRegistrazione = value;
     }
 

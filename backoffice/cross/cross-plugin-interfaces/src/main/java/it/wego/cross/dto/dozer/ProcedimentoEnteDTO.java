@@ -15,6 +15,7 @@ public class ProcedimentoEnteDTO {
     private EnteDTO ente;
     private ProcessoDTO processo;
     private PraticaDTO pratica;
+    private EnteDTO ufficio;
 
     public Integer getIdProcEnte() {
         return idProcEnte;
@@ -55,5 +56,13 @@ public class ProcedimentoEnteDTO {
     public void setPratica(PraticaDTO pratica) {
         this.pratica = pratica;
     }
+
+	public EnteDTO getUfficio() {
+		return ufficio;
+	}
+
+	public void setUfficio(EnteDTO ufficio) {
+		this.ufficio = ufficio;
+	}
 
 }

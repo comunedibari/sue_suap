@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2020.02.19 alle 06:34:54 PM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.ente;
 
@@ -21,13 +14,13 @@ import javax.xml.bind.annotation.XmlValue;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="OggettoCooperazione">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
- *       &lt;attribute name="tipo-cooperazione" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="OggettoCooperazione"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+ *       &lt;attribute name="tipo-cooperazione" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -56,7 +49,7 @@ public class OggettoCooperazione {
     }
 
     /**
-     * Imposta il valore della propriet value.
+     * Imposta il valore della proprietà value.
      * 
      * @param value
      *     allowed object is
@@ -68,7 +61,7 @@ public class OggettoCooperazione {
     }
 
     /**
-     * Recupera il valore della propriet tipoCooperazione.
+     * Recupera il valore della proprietà tipoCooperazione.
      * 
      * @return
      *     possible object is
@@ -80,7 +73,7 @@ public class OggettoCooperazione {
     }
 
     /**
-     * Imposta il valore della propriet tipoCooperazione.
+     * Imposta il valore della proprietà tipoCooperazione.
      * 
      * @param value
      *     allowed object is

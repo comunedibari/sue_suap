@@ -236,6 +236,7 @@ public class ComunicazioniServiceImpl implements ComunicazioniService {
         } else {
             attoriComunicazione = workFlowService.getDestinatariDefaultEvento(pratica, processoEvento, null);
         }
+        
         List<DestinatariDTO> dest = searchService.serializeDestinatari(pratica, attoriComunicazione);
         for (DestinatariDTO d : dest) {
             if (!Utils.e(d.getEmail())) {

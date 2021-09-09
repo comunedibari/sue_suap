@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://stampsign.wsdl.avtmb.tz.eng.it"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="stampsign"
+	targetNamespace="http://stampsign.wsdl.avtmb.tz.eng.it"
+	xmlns:ssd="http://stampsign.xsd.avtmb.tz.eng.it">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			attributeFormDefault="unqualified" elementFormDefault="qualified">
+			<xs:import namespace="http://stampsign.xsd.avtmb.tz.eng.it"
+				schemaLocation="stampsignxsd.xsd"></xs:import>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="documentStampSignIn">
+		<wsdl:part element="ssd:stampSignRequest"
+			name="documentStampSignInPart" />
+	</wsdl:message>
+	<wsdl:message name="documentStampSignOut">
+		<wsdl:part element="ssd:stampSignResponse"
+			name="documentStampSignOutPart" />
+	</wsdl:message>
+
+
+	<wsdl:message name="documentStampSignAuthIn">
+		<wsdl:part element="ssd:stampSignAuthRequest"
+				   name="documentStampSignInAuthPart" />
+	</wsdl:message>
+	<wsdl:message name="documentStampSignAuthOut">
+		<wsdl:part element="ssd:stampSignAuthResponse"
+				   name="documentStampSignOutPart" />
+	</wsdl:message>
+
+
+
+
+
+
+
+	<wsdl:portType name="documentStampSignPt">
+		<wsdl:operation name="documentStampSign">
+			<wsdl:input message="tns:documentStampSignIn" />
+			<wsdl:output message="tns:documentStampSignOut" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+
+	<wsdl:portType name="documentStampSignAuthPt">
+		<wsdl:operation name="documentStampSignAuth">
+			<wsdl:input message="tns:documentStampSignAuthIn" />
+			<wsdl:output message="tns:documentStampSignAuthOut" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+
+	<wsdl:binding name="documentStampSignBinding"
+		type="tns:documentStampSignPt">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="documentStampSign">
+<!--			<wsdl:annotation>
+				<wsdl:documentation>
+					SOAP Operation per richiedere la timbratura del documento
+				</wsdl:documentation>
+			</wsdl:annotation>-->
+			<soap:operation
+				soapAction="http://stampsign.wsdl.avtmb.tz.eng.it/documentStampSign" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+
+	<wsdl:binding name="documentStampSignAuthBinding"
+				  type="tns:documentStampSignAuthPt">
+		<soap:binding style="document"
+					  transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="documentStampSignAuth">
+<!--			<wsdl:annotation>
+				<wsdl:documentation>
+					SOAP Operation per recuperare il Token di esecuzione del servizio specifico
+				</wsdl:documentation>
+			</wsdl:annotation>-->
+			<soap:operation
+					soapAction="http://stampsign.wsdl.avtmb.tz.eng.it/documentStampSignAuth" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+
+
+
+	<wsdl:service name="stampsign">
+		<wsdl:port binding="tns:documentStampSignBinding"
+			name="documentStampSignBinding">
+			<soap:address
+				location="http://localhost:8090/ressvr/soap/stampsign" />
+		</wsdl:port>
+		<wsdl:port binding="tns:documentStampSignAuthBinding"
+				   name="documentStampSignAuthBinding">
+			<soap:address
+					location="http://localhost:8090/ressvr/soap/stampsignauth" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

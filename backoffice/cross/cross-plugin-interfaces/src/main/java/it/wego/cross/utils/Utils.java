@@ -8,6 +8,8 @@ package it.wego.cross.utils;
 //import it.gov.impresainungiorno.schema.suap.ricevuta.RicevutaPraticaSUAP;
 //import it.wego.cross.beans.ErroreBean;
 import it.wego.cross.constants.SessionConstants;
+import it.wego.cross.entity.Configuration;
+
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -1066,7 +1068,7 @@ public class Utils {
     	
     
     
-    private static final int BUFFER_SIZE = 65536;
+    private static final int BUFFER_SIZE = 66560;
     /**
      * Extracts a zip folder specified by the zipFilePath to a directory specified by
      * destDirectory (will be created if does not exists)
@@ -1135,17 +1137,17 @@ public class Utils {
 
     private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
     	try {
-    		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
-            byte[] bytesIn = new byte[BUFFER_SIZE];
-            int read = 0;
-            while ((read = zipIn.read(bytesIn)) != -1) {
-                bos.write(bytesIn, 0, read);
-            }
-            bos.close();
-		} catch (Exception e) {
-			System.out.println("Error extractFile"+ e.getMessage());
-		}
-            }
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
+        byte[] bytesIn = new byte[BUFFER_SIZE];
+        int read = 0;
+        while ((read = zipIn.read(bytesIn)) != -1) {
+            bos.write(bytesIn, 0, read);
+        }
+        bos.close();
+        }catch(Exception e) {
+        	Log.APP.info("estrazione file "+e.getMessage());
+        }
+    }
 
     public static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
         File destFile = new File(destinationDir, zipEntry.getName());
@@ -1329,6 +1331,51 @@ public class Utils {
     public static byte[] fileToByteArray(File file) throws IOException {
 		return Files.readAllBytes(file.toPath());
 	 }
+    
+    public static String encodingXml(String xml) {
+    	
+    	if(xml.indexOf("&")!=-1) {
+    		xml = xml.replace("&", "&amp;");
+    	}
+    	return xml;
+    }
+    
+    public static File getFilefromDataHandler(String destDirectory,DataHandler dataHandler,String identificativoPratica,String nomeFile) throws Exception {
+    	String pathFile = "";
+        
+        InputStream inputStream = dataHandler.getInputStream();
+		File destDir = new File(destDirectory);
+		if (!destDir.exists()) {
+            if (destDir.mkdir()) {
+                System.out.println("Directory is created!");
+            } else {
+                System.out.println("Failed to create directory!");
+            }
+        }
+		File f = new File(destDirectory+ File.separator+nomeFile);
+		 
+		FileUtils.copyInputStreamToFile(inputStream, f);
+		
+        return f;
+        
+    }
+    
+    public static String convertFileToString(File f) throws IOException {
+    	String xmlString = "";
+    	BufferedReader br = new BufferedReader(new FileReader(f));
+    	String line;
+    	StringBuilder sb = new StringBuilder();
+
+    	while((line=br.readLine())!= null){
+    	    sb.append(line.trim());
+    	}
+    	
+    	xmlString = sb.toString();
+		return xmlString;
+    }
+    
+    
+    
 }
 	 
 	

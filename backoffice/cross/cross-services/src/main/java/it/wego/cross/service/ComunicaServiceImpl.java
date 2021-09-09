@@ -4,7 +4,6 @@
  */
 package it.wego.cross.service;
 
-import it.gov.impresainungiorno.schema.suap.pratica.RiepilogoPraticaSUAP;
 import it.wego.cross.dto.ComboDTO;
 import it.wego.cross.dto.comunica.ComuneRiferimentoDTO;
 import it.wego.cross.dto.comunica.SportelloDTO;
@@ -97,7 +96,7 @@ public class ComunicaServiceImpl implements ComunicaService {
         return combos;
     }
     
-    public ComuneRiferimentoDTO getComuneRiferimento(RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception {
+    public ComuneRiferimentoDTO getComuneRiferimento(it.gov.impresainungiorno.schema.suap.pratica.RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception {
         String codiceAmministrazione = riepilogoPraticaSuap.getIntestazione().getUfficioDestinatario().getCodiceAmministrazione();
         //Il codice amministrazione è nella forma C_D969
         String codiceCatastaleComune = codiceAmministrazione.split("C_")[1];
@@ -113,8 +112,8 @@ public class ComunicaServiceImpl implements ComunicaService {
             throw e;
         }
     }
-
-    public SportelloDTO getSportelloDestinazione(RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception {
+    
+    public SportelloDTO getSportelloDestinazione(it.gov.impresainungiorno.schema.suap.pratica.RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception {
         Integer identificativoSuap = Utils.ib(riepilogoPraticaSuap.getIntestazione().getUfficioDestinatario().getIdentificativoSuap());
         Enti ente = entiService.findByIdentificativoSuap(String.valueOf(identificativoSuap));
         if (ente != null) {

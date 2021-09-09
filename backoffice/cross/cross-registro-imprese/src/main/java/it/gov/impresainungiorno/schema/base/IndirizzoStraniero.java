@@ -10,21 +10,21 @@ import javax.xml.bind.annotation.XmlType;
 /**
  * Identificazione di indirizzo straniero, per i casi in cui un indirizzo italiano non e' valido 
  * 
- * <p>Java class for IndirizzoStraniero complex type.
+ * <p>Classe Java per IndirizzoStraniero complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="IndirizzoStraniero">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}CittaStraniera"/>
- *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzo"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="IndirizzoStraniero"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}CittaStraniera"/&gt;
+ *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzo"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -47,7 +47,7 @@ public class IndirizzoStraniero {
     protected String frazione;
 
     /**
-     * Gets the value of the cittaStraniera property.
+     * Recupera il valore della proprietà cittaStraniera.
      * 
      * @return
      *     possible object is
@@ -59,7 +59,7 @@ public class IndirizzoStraniero {
     }
 
     /**
-     * Sets the value of the cittaStraniera property.
+     * Imposta il valore della proprietà cittaStraniera.
      * 
      * @param value
      *     allowed object is
@@ -71,7 +71,7 @@ public class IndirizzoStraniero {
     }
 
     /**
-     * Gets the value of the denominazioneStradale property.
+     * Recupera il valore della proprietà denominazioneStradale.
      * 
      * @return
      *     possible object is
@@ -83,7 +83,7 @@ public class IndirizzoStraniero {
     }
 
     /**
-     * Sets the value of the denominazioneStradale property.
+     * Imposta il valore della proprietà denominazioneStradale.
      * 
      * @param value
      *     allowed object is
@@ -95,7 +95,7 @@ public class IndirizzoStraniero {
     }
 
     /**
-     * Gets the value of the numeroCivico property.
+     * Recupera il valore della proprietà numeroCivico.
      * 
      * @return
      *     possible object is
@@ -107,7 +107,7 @@ public class IndirizzoStraniero {
     }
 
     /**
-     * Sets the value of the numeroCivico property.
+     * Imposta il valore della proprietà numeroCivico.
      * 
      * @param value
      *     allowed object is
@@ -119,7 +119,7 @@ public class IndirizzoStraniero {
     }
 
     /**
-     * Gets the value of the frazione property.
+     * Recupera il valore della proprietà frazione.
      * 
      * @return
      *     possible object is
@@ -131,7 +131,7 @@ public class IndirizzoStraniero {
     }
 
     /**
-     * Sets the value of the frazione property.
+     * Imposta il valore della proprietà frazione.
      * 
      * @param value
      *     allowed object is

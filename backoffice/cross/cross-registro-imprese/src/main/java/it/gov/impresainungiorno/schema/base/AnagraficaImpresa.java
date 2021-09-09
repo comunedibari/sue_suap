@@ -12,23 +12,23 @@ import javax.xml.bind.annotation.XmlType;
  * Questo elemento contiene i dati identificativi di un'impresa. Forma-giuridica: contiene come attributo il codice della forma
  *         giuridica, come contenuto il nome esteso. 
  * 
- * <p>Java class for AnagraficaImpresa complex type.
+ * <p>Classe Java per AnagraficaImpresa complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="AnagraficaImpresa">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="forma-giuridica" type="{http://www.impresainungiorno.gov.it/schema/base}FormaGiuridica" minOccurs="0"/>
- *         &lt;element name="ragione-sociale" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/>
- *         &lt;element name="codice-fiscale" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceFiscale"/>
- *         &lt;element name="partita-iva" type="{http://www.impresainungiorno.gov.it/schema/base}PartitaIVA" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="AnagraficaImpresa"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="forma-giuridica" type="{http://www.impresainungiorno.gov.it/schema/base}FormaGiuridica" minOccurs="0"/&gt;
+ *         &lt;element name="ragione-sociale" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/&gt;
+ *         &lt;element name="codice-fiscale" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceFiscale"/&gt;
+ *         &lt;element name="partita-iva" type="{http://www.impresainungiorno.gov.it/schema/base}PartitaIVA" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -55,7 +55,7 @@ public class AnagraficaImpresa {
     protected String partitaIva;
 
     /**
-     * Gets the value of the formaGiuridica property.
+     * Recupera il valore della propriet formaGiuridica.
      * 
      * @return
      *     possible object is
@@ -67,7 +67,7 @@ public class AnagraficaImpresa {
     }
 
     /**
-     * Sets the value of the formaGiuridica property.
+     * Imposta il valore della propriet formaGiuridica.
      * 
      * @param value
      *     allowed object is
@@ -79,7 +79,7 @@ public class AnagraficaImpresa {
     }
 
     /**
-     * Gets the value of the ragioneSociale property.
+     * Recupera il valore della propriet ragioneSociale.
      * 
      * @return
      *     possible object is
@@ -91,7 +91,7 @@ public class AnagraficaImpresa {
     }
 
     /**
-     * Sets the value of the ragioneSociale property.
+     * Imposta il valore della propriet ragioneSociale.
      * 
      * @param value
      *     allowed object is
@@ -103,7 +103,7 @@ public class AnagraficaImpresa {
     }
 
     /**
-     * Gets the value of the codiceFiscale property.
+     * Recupera il valore della propriet codiceFiscale.
      * 
      * @return
      *     possible object is
@@ -115,7 +115,7 @@ public class AnagraficaImpresa {
     }
 
     /**
-     * Sets the value of the codiceFiscale property.
+     * Imposta il valore della propriet codiceFiscale.
      * 
      * @param value
      *     allowed object is
@@ -127,7 +127,7 @@ public class AnagraficaImpresa {
     }
 
     /**
-     * Gets the value of the partitaIva property.
+     * Recupera il valore della propriet partitaIva.
      * 
      * @return
      *     possible object is
@@ -139,7 +139,7 @@ public class AnagraficaImpresa {
     }
 
     /**
-     * Sets the value of the partitaIva property.
+     * Imposta il valore della propriet partitaIva.
      * 
      * @param value
      *     allowed object is

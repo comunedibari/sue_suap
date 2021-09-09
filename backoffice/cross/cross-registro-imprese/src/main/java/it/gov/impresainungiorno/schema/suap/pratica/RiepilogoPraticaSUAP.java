@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -21,17 +14,17 @@ import javax.xml.bind.annotation.XmlType;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="RiepilogoPraticaSUAP">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="info-schema" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}VersioneSchema"/>
- *         &lt;element name="intestazione" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}Intestazione"/>
- *         &lt;element name="struttura" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}Struttura"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="RiepilogoPraticaSUAP"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="info-schema" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}VersioneSchema"/&gt;
+ *         &lt;element name="intestazione" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}Intestazione"/&gt;
+ *         &lt;element name="struttura" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}Struttura"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -53,7 +46,7 @@ public class RiepilogoPraticaSUAP {
     protected Struttura struttura;
 
     /**
-     * Recupera il valore della propriet infoSchema.
+     * Recupera il valore della proprietà infoSchema.
      * 
      * @return
      *     possible object is
@@ -65,7 +58,7 @@ public class RiepilogoPraticaSUAP {
     }
 
     /**
-     * Imposta il valore della propriet infoSchema.
+     * Imposta il valore della proprietà infoSchema.
      * 
      * @param value
      *     allowed object is
@@ -77,7 +70,7 @@ public class RiepilogoPraticaSUAP {
     }
 
     /**
-     * Recupera il valore della propriet intestazione.
+     * Recupera il valore della proprietà intestazione.
      * 
      * @return
      *     possible object is
@@ -89,7 +82,7 @@ public class RiepilogoPraticaSUAP {
     }
 
     /**
-     * Imposta il valore della propriet intestazione.
+     * Imposta il valore della proprietà intestazione.
      * 
      * @param value
      *     allowed object is
@@ -101,7 +94,7 @@ public class RiepilogoPraticaSUAP {
     }
 
     /**
-     * Recupera il valore della propriet struttura.
+     * Recupera il valore della proprietà struttura.
      * 
      * @return
      *     possible object is
@@ -113,7 +106,7 @@ public class RiepilogoPraticaSUAP {
     }
 
     /**
-     * Imposta il valore della propriet struttura.
+     * Imposta il valore della proprietà struttura.
      * 
      * @param value
      *     allowed object is

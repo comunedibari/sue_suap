@@ -1,10 +1,3 @@
-//
-// Questo file stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2020.02.19 alle 06:34:54 PM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.ente;
 
@@ -31,47 +24,47 @@ import it.gov.impresainungiorno.schema.suap.pratica.ProtocolloSUAP;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="CooperazioneEnteSUAP">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="info-schema">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;attribute name="versione" use="required">
- *                   &lt;simpleType>
- *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                       &lt;pattern value="(\d+.)?\d+.\d+(-beta)?"/>
- *                     &lt;/restriction>
- *                   &lt;/simpleType>
- *                 &lt;/attribute>
- *                 &lt;attribute name="data" use="required" type="{http://www.w3.org/2001/XMLSchema}date" />
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;element name="intestazione">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="ente-mittente" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiEnte"/>
- *                   &lt;element name="suap-competente" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiSuap"/>
- *                   &lt;group ref="{http://www.impresainungiorno.gov.it/schema/suap/ente}RiferimentoPratica"/>
- *                   &lt;group ref="{http://www.impresainungiorno.gov.it/schema/suap/ente}ComunicazioneEnte"/>
- *                 &lt;/sequence>
- *                 &lt;attribute name="progressivo" type="{http://www.w3.org/2001/XMLSchema}int" />
- *                 &lt;attribute name="totale" type="{http://www.w3.org/2001/XMLSchema}int" />
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;element name="allegato" type="{http://www.impresainungiorno.gov.it/schema/suap/ente}AllegatoCooperazione" maxOccurs="unbounded" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="CooperazioneEnteSUAP"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="info-schema"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;attribute name="versione" use="required"&gt;
+ *                   &lt;simpleType&gt;
+ *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                       &lt;pattern value="(\d+.)?\d+.\d+(-beta)?"/&gt;
+ *                     &lt;/restriction&gt;
+ *                   &lt;/simpleType&gt;
+ *                 &lt;/attribute&gt;
+ *                 &lt;attribute name="data" use="required" type="{http://www.w3.org/2001/XMLSchema}date" /&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *         &lt;element name="intestazione"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence&gt;
+ *                   &lt;element name="ente-mittente" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiEnte"/&gt;
+ *                   &lt;element name="suap-competente" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiSuap"/&gt;
+ *                   &lt;group ref="{http://www.impresainungiorno.gov.it/schema/suap/ente}RiferimentoPratica"/&gt;
+ *                   &lt;group ref="{http://www.impresainungiorno.gov.it/schema/suap/ente}ComunicazioneEnte"/&gt;
+ *                 &lt;/sequence&gt;
+ *                 &lt;attribute name="progressivo" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *                 &lt;attribute name="totale" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *         &lt;element name="allegato" type="{http://www.impresainungiorno.gov.it/schema/suap/ente}AllegatoCooperazione" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -91,7 +84,7 @@ public class CooperazioneEnteSUAP {
     protected List<AllegatoCooperazione> allegato;
 
     /**
-     * Recupera il valore della propriet infoSchema.
+     * Recupera il valore della proprietà infoSchema.
      * 
      * @return
      *     possible object is
@@ -103,7 +96,7 @@ public class CooperazioneEnteSUAP {
     }
 
     /**
-     * Imposta il valore della propriet infoSchema.
+     * Imposta il valore della proprietà infoSchema.
      * 
      * @param value
      *     allowed object is
@@ -115,7 +108,7 @@ public class CooperazioneEnteSUAP {
     }
 
     /**
-     * Recupera il valore della propriet intestazione.
+     * Recupera il valore della proprietà intestazione.
      * 
      * @return
      *     possible object is
@@ -127,7 +120,7 @@ public class CooperazioneEnteSUAP {
     }
 
     /**
-     * Imposta il valore della propriet intestazione.
+     * Imposta il valore della proprietà intestazione.
      * 
      * @param value
      *     allowed object is
@@ -174,20 +167,20 @@ public class CooperazioneEnteSUAP {
      * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;attribute name="versione" use="required">
-     *         &lt;simpleType>
-     *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *             &lt;pattern value="(\d+.)?\d+.\d+(-beta)?"/>
-     *           &lt;/restriction>
-     *         &lt;/simpleType>
-     *       &lt;/attribute>
-     *       &lt;attribute name="data" use="required" type="{http://www.w3.org/2001/XMLSchema}date" />
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;attribute name="versione" use="required"&gt;
+     *         &lt;simpleType&gt;
+     *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *             &lt;pattern value="(\d+.)?\d+.\d+(-beta)?"/&gt;
+     *           &lt;/restriction&gt;
+     *         &lt;/simpleType&gt;
+     *       &lt;/attribute&gt;
+     *       &lt;attribute name="data" use="required" type="{http://www.w3.org/2001/XMLSchema}date" /&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -203,7 +196,7 @@ public class CooperazioneEnteSUAP {
         protected XMLGregorianCalendar data;
 
         /**
-         * Recupera il valore della propriet versione.
+         * Recupera il valore della proprietà versione.
          * 
          * @return
          *     possible object is
@@ -215,7 +208,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet versione.
+         * Imposta il valore della proprietà versione.
          * 
          * @param value
          *     allowed object is
@@ -227,7 +220,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet data.
+         * Recupera il valore della proprietà data.
          * 
          * @return
          *     possible object is
@@ -239,7 +232,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet data.
+         * Imposta il valore della proprietà data.
          * 
          * @param value
          *     allowed object is
@@ -259,20 +252,20 @@ public class CooperazioneEnteSUAP {
      * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="ente-mittente" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiEnte"/>
-     *         &lt;element name="suap-competente" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiSuap"/>
-     *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/suap/ente}RiferimentoPratica"/>
-     *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/suap/ente}ComunicazioneEnte"/>
-     *       &lt;/sequence>
-     *       &lt;attribute name="progressivo" type="{http://www.w3.org/2001/XMLSchema}int" />
-     *       &lt;attribute name="totale" type="{http://www.w3.org/2001/XMLSchema}int" />
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;element name="ente-mittente" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiEnte"/&gt;
+     *         &lt;element name="suap-competente" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiSuap"/&gt;
+     *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/suap/ente}RiferimentoPratica"/&gt;
+     *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/suap/ente}ComunicazioneEnte"/&gt;
+     *       &lt;/sequence&gt;
+     *       &lt;attribute name="progressivo" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+     *       &lt;attribute name="totale" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -318,7 +311,7 @@ public class CooperazioneEnteSUAP {
         protected Integer totale;
 
         /**
-         * Recupera il valore della propriet enteMittente.
+         * Recupera il valore della proprietà enteMittente.
          * 
          * @return
          *     possible object is
@@ -330,7 +323,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet enteMittente.
+         * Imposta il valore della proprietà enteMittente.
          * 
          * @param value
          *     allowed object is
@@ -342,7 +335,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet suapCompetente.
+         * Recupera il valore della proprietà suapCompetente.
          * 
          * @return
          *     possible object is
@@ -354,7 +347,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet suapCompetente.
+         * Imposta il valore della proprietà suapCompetente.
          * 
          * @param value
          *     allowed object is
@@ -366,7 +359,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet codicePratica.
+         * Recupera il valore della proprietà codicePratica.
          * 
          * @return
          *     possible object is
@@ -378,7 +371,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet codicePratica.
+         * Imposta il valore della proprietà codicePratica.
          * 
          * @param value
          *     allowed object is
@@ -390,7 +383,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet impresa.
+         * Recupera il valore della proprietà impresa.
          * 
          * @return
          *     possible object is
@@ -402,7 +395,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet impresa.
+         * Imposta il valore della proprietà impresa.
          * 
          * @param value
          *     allowed object is
@@ -414,7 +407,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet oggettoPratica.
+         * Recupera il valore della proprietà oggettoPratica.
          * 
          * @return
          *     possible object is
@@ -426,7 +419,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet oggettoPratica.
+         * Imposta il valore della proprietà oggettoPratica.
          * 
          * @param value
          *     allowed object is
@@ -438,7 +431,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet protocolloPraticaSuap.
+         * Recupera il valore della proprietà protocolloPraticaSuap.
          * 
          * @return
          *     possible object is
@@ -450,7 +443,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet protocolloPraticaSuap.
+         * Imposta il valore della proprietà protocolloPraticaSuap.
          * 
          * @param value
          *     allowed object is
@@ -462,7 +455,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet protocolloRi.
+         * Recupera il valore della proprietà protocolloRi.
          * 
          * @return
          *     possible object is
@@ -474,7 +467,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet protocolloRi.
+         * Imposta il valore della proprietà protocolloRi.
          * 
          * @param value
          *     allowed object is
@@ -486,7 +479,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet oggettoComunicazione.
+         * Recupera il valore della proprietà oggettoComunicazione.
          * 
          * @return
          *     possible object is
@@ -498,7 +491,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet oggettoComunicazione.
+         * Imposta il valore della proprietà oggettoComunicazione.
          * 
          * @param value
          *     allowed object is
@@ -510,7 +503,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet testoComunicazione.
+         * Recupera il valore della proprietà testoComunicazione.
          * 
          * @return
          *     possible object is
@@ -522,7 +515,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet testoComunicazione.
+         * Imposta il valore della proprietà testoComunicazione.
          * 
          * @param value
          *     allowed object is
@@ -534,7 +527,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet protocollo.
+         * Recupera il valore della proprietà protocollo.
          * 
          * @return
          *     possible object is
@@ -546,7 +539,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet protocollo.
+         * Imposta il valore della proprietà protocollo.
          * 
          * @param value
          *     allowed object is
@@ -558,7 +551,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet progressivo.
+         * Recupera il valore della proprietà progressivo.
          * 
          * @return
          *     possible object is
@@ -570,7 +563,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet progressivo.
+         * Imposta il valore della proprietà progressivo.
          * 
          * @param value
          *     allowed object is
@@ -582,7 +575,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Recupera il valore della propriet totale.
+         * Recupera il valore della proprietà totale.
          * 
          * @return
          *     possible object is
@@ -594,7 +587,7 @@ public class CooperazioneEnteSUAP {
         }
 
         /**
-         * Imposta il valore della propriet totale.
+         * Imposta il valore della proprietà totale.
          * 
          * @param value
          *     allowed object is

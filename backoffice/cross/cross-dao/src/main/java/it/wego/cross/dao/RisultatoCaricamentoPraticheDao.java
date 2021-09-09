@@ -45,7 +45,7 @@ public class RisultatoCaricamentoPraticheDao {
     public List<RisultatoCaricamentoPratiche> findAll() {
         Query query = em.createQuery("SELECT e "
                 + "FROM RisultatoCaricamentoPratiche e "
-                + "ORDER BY e.idRisultatoCaricamento ASC");
+                + "ORDER BY e.idRisultatoCaricamento DESC");
         List<RisultatoCaricamentoPratiche> RisultatoCaricamentoPratiche = query.getResultList();
         return RisultatoCaricamentoPratiche;
     }

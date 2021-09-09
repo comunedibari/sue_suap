@@ -17,6 +17,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -68,7 +70,7 @@ public class Procedimenti implements Serializable {
     private List<ProcedimentiTesti> procedimentiTestiList;
     @OneToMany(mappedBy = "idProcedimentoRiferimento")
     private List<ProcessiEventi> processiEventiList;
-
+    
     public Procedimenti() {
     }
 

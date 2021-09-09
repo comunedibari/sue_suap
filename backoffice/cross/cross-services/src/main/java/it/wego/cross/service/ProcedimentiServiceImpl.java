@@ -27,6 +27,8 @@ import it.wego.cross.serializer.FilterSerializer;
 import it.wego.cross.serializer.ProcedimentiSerializer;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -426,5 +428,11 @@ public class ProcedimentiServiceImpl implements ProcedimentiService {
         ProcedimentiEnti procedimentoEnte = procedimentiDao.findProcedimentoEnteById(idProcedimentoEnte);
         return requireProcedimentoEnte(procedimentoEnte.getIdProc().getIdProc(), procedimentoEnte.getIdEnte().getIdEnte(), entePratica, comunePratica);
     }
+
+	@Override
+	public ProcedimentiEnti findIdUfficioByIdProcIdEnte(Integer idProcedimento, BigInteger idEnteDestinatario) {
+		ProcedimentiEnti ufficio = procedimentiDao.findUfficiByProcEnte(idProcedimento, idEnteDestinatario.intValue());
+		return ufficio;
+	}
 
 }

@@ -193,6 +193,11 @@
         	$("#search_id_comune_catasto").val("");
         	$("#search_civico").val("");
         	$("#search_protocollo_suap").val('');
+        	$("#search_tipoProcedimentoSUAP").val("");
+        	$("#search_tipoInterventoSUAP").val("");
+        	$("#search_data_inizio_prot_suap").val("");
+        	$("#search_data_fine_prot_suap").val("");
+        	$("#search_tipoClassificazioneProcedimento").val("");
         	
         });
 
@@ -201,6 +206,12 @@
         });
 
         $("#search_data_to").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+        $("#search_data_inizio_prot_suap").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+        $("#search_data_fine_prot_suap").datepicker({
             dateFormat: 'dd/mm/yy'
         });
 
@@ -432,17 +443,80 @@
                         </fieldset>
                         
                         <fieldset id="suapField">
-                            <legend>Protocollo Suap</legend>
+                            <legend>Dati Suap</legend>
                             
-                            <div class="ctrlHolder" id="divSearch_protocollo_suap>
+                            <div class="ctrlHolder" id="divSearch_protocollo_suap">
                                 <label for="search_id_pratica">
                                     Protocollo Suap
                                 </label>
                                 <p class="formHint"></p>
-                                <input id="search_protocollo_suap" name="search_protocollo_suap" size="35" maxlength="10" type="text" class="textInput" value="${filtroRicerca.protocolloSuap}">
+                                <input id="search_protocollo_suap" name="search_protocollo_suap" type="text" class="textInput" value="${filtroRicerca.protocolloSuap}">
                                 <p class="formHint"></p>
                             </div>
-
+                            <div class="ctrlHolder" id="divSearch_tipo_procedimento_suap">
+								 <label for="search_id_pratica">
+	                                    Tipo classificazione procedimento
+	                             </label>
+	                             
+	                             <select id="search_tipoClassificazioneProcedimento" name="search_tipoClassificazioneProcedimento" class="textInput" >
+                                    <option  value="" ><spring:message code="ricerca.inizio.tipoClassificazioneProcedimento"/></option>
+                                    <c:forEach items="${lkTipoClassificazioneProcedimento}" var="tipoClassificazioneProcedimento" begin="0">
+                                        <c:set var="selected" value=""/> 
+                                        <c:if test="${tipoClassificazioneProcedimento.idClassificazioneProcedimento != null &&  filtroRicerca.idClassificazioneProcedimento == tipoClassificazioneProcedimento.idClassificazioneProcedimento}">
+                                            <c:set var="selected" value="selected=\"selected\""/>     
+                                        </c:if>
+                                        <option  value="${tipoClassificazioneProcedimento.idClassificazioneProcedimento}" ${selected}>${tipoClassificazioneProcedimento.descrizioneClassificazioneProcedimento}</option>
+                                    </c:forEach>
+                                </select>
+	                             <p class="formHint"></p>
+							</div>
+							<div class="ctrlHolder" id="divSearch_tipo_procedimento_suap">
+								 <label for="search_id_pratica">
+	                                    Tipo procedimento SUAP
+	                             </label>
+	                             
+	                             <select id="search_tipoProcedimentoSUAP" name="search_tipoProcedimentoSUAP" class="textInput"  type="text" >
+                                    <option  value="" ><spring:message code="ricerca.inizio.tipoProcedimento"/></option>
+                                    <c:forEach items="${lkTipoProcedimentoSUAP}" var="tipoProcedimentoSUAP" begin="0">
+                                        <c:set var="selected" value=""/> 
+                                        <c:if test="${tipoProcedimentoSUAP.idTipoProcedimentoSuap != null &&  filtroRicerca.idTipoProcedimentoSuap == tipoProcedimentoSUAP.idTipoProcedimentoSuap}">
+                                            <c:set var="selected" value="selected=\"selected\""/>     
+                                        </c:if>
+                                        <option  value="${tipoProcedimentoSUAP.idTipoProcedimentoSuap}" ${selected}>${tipoProcedimentoSUAP.descrizioneCrossSuap}</option>
+                                    </c:forEach>
+                                </select>
+	                             <p class="formHint"></p>
+							</div>
+							<div class="ctrlHolder" id="divSearch_tipo_intervento_suap">
+								 <label for="search_id_pratica">
+	                                    Tipo intervento SUAP
+	                             </label>
+	                             
+	                             <select id="search_tipoInterventoSUAP" name="search_tipoInterventoSUAP" class="textInput" >
+                                    <option  value="" ><spring:message code="ricerca.inizio.tipoIntervento"/></option>
+                                    <c:forEach items="${lkTipoInterventoSUAP}" var="tipoInterventoSUAP" begin="0">
+                                        <c:set var="selected" value=""/> 
+                                        <c:if test="${tipoInterventoSUAP.idTipoInterventoSuap != null &&  filtroRicerca.idTipoInterventoSuap == tipoInterventoSUAP.idTipoInterventoSuap}">
+                                            <c:set var="selected" value="selected=\"selected\""/>     
+                                        </c:if>
+                                        <option  value="${tipoInterventoSUAP.idTipoInterventoSuap}" ${selected}>${tipoInterventoSUAP.descrizioneTipoInterventoSuap}</option>
+                                    </c:forEach>
+                                </select>
+	                            <p class="formHint"></p>
+                                <p class="formHint"></p>
+							</div>
+							
+							
+							<div class="ctrlHolder" id="divSearch_data_inizio_prot_suap">
+								<label for="search_data_inizio_prot_suap"><spring:message code="ricerca.dataInizioprotsuap"/></label>
+                                <input id="search_data_inizio_prot_suap" name="search_data_inizio_prot_suap" size="35" maxlength="50" type="text" class="textInput" value="<fmt:formatDate pattern="dd/MM/yyyy"   value="${filtroRicerca.dataInizioProtSuap}"/>">
+                                <p class="formHint"></p>
+                            </div>
+                            <div class="ctrlHolder" id="divSearch_data_fine_prot_suap">
+                                <label for="search_data_fine_prot_suap"><spring:message code="ricerca.dataFineprotsuap"/></label>
+                                <input id="search_data_fine_prot_suap" name="search_data_fine_prot_suap" size="35" maxlength="50" type="text" class="textInput" value="<fmt:formatDate pattern="dd/MM/yyyy"   value="${filtroRicerca.dataFineProtSuap}"/>">
+                                <p class="formHint"></p>
+                            </div>
                         </fieldset>
 
                         <fieldset id="CatastoField" class="fieldsettop">

@@ -11,27 +11,27 @@ import javax.xml.bind.annotation.XmlValue;
 /**
  * TODO: rinominare in RecapitoTelefonico
  * 
- * <p>Java class for Telefono complex type.
+ * <p>Classe Java per Telefono complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="Telefono">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>NumeroTelefono">
- *       &lt;attribute name="tipo" default="Ufficio">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;enumeration value="Ufficio"/>
- *             &lt;enumeration value="Abitazione"/>
- *             &lt;enumeration value="Fax"/>
- *             &lt;enumeration value="Cellulare"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="Telefono"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;NumeroTelefono"&gt;
+ *       &lt;attribute name="tipo" default="Ufficio"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *             &lt;enumeration value="Ufficio"/&gt;
+ *             &lt;enumeration value="Abitazione"/&gt;
+ *             &lt;enumeration value="Fax"/&gt;
+ *             &lt;enumeration value="Cellulare"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -60,7 +60,7 @@ public class Telefono {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della proprietà value.
      * 
      * @param value
      *     allowed object is
@@ -72,7 +72,7 @@ public class Telefono {
     }
 
     /**
-     * Gets the value of the tipo property.
+     * Recupera il valore della proprietà tipo.
      * 
      * @return
      *     possible object is
@@ -88,7 +88,7 @@ public class Telefono {
     }
 
     /**
-     * Sets the value of the tipo property.
+     * Imposta il valore della proprietà tipo.
      * 
      * @param value
      *     allowed object is

@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -21,22 +14,23 @@ import javax.xml.bind.annotation.XmlValue;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="OggettoComunicazione">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
- *       &lt;attribute name="tipo-procedimento">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;enumeration value="SCIA"/>
- *             &lt;enumeration value="silenzio-assenso"/>
- *             &lt;enumeration value="ordinario"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="tipo-intervento" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}TipoIntervento" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="OggettoComunicazione"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+ *       &lt;attribute name="tipo-procedimento"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *             &lt;enumeration value="SCIA"/&gt;
+ *             &lt;enumeration value="silenzio-assenso"/&gt;
+ *             &lt;enumeration value="ordinario"/&gt;
+ *             &lt;enumeration value="comunicazione"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *       &lt;attribute name="tipo-intervento" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}TipoIntervento" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -67,7 +61,7 @@ public class OggettoComunicazione {
     }
 
     /**
-     * Imposta il valore della propriet value.
+     * Imposta il valore della proprietà value.
      * 
      * @param value
      *     allowed object is
@@ -79,7 +73,7 @@ public class OggettoComunicazione {
     }
 
     /**
-     * Recupera il valore della propriet tipoProcedimento.
+     * Recupera il valore della proprietà tipoProcedimento.
      * 
      * @return
      *     possible object is
@@ -91,7 +85,7 @@ public class OggettoComunicazione {
     }
 
     /**
-     * Imposta il valore della propriet tipoProcedimento.
+     * Imposta il valore della proprietà tipoProcedimento.
      * 
      * @param value
      *     allowed object is
@@ -103,7 +97,7 @@ public class OggettoComunicazione {
     }
 
     /**
-     * Recupera il valore della propriet tipoIntervento.
+     * Recupera il valore della proprietà tipoIntervento.
      * 
      * @return
      *     possible object is
@@ -115,7 +109,7 @@ public class OggettoComunicazione {
     }
 
     /**
-     * Imposta il valore della propriet tipoIntervento.
+     * Imposta il valore della proprietà tipoIntervento.
      * 
      * @param value
      *     allowed object is

@@ -70,7 +70,10 @@ public class ProcedimentiEnti implements Serializable {
     private List<Enti> entiList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "procedimentiEnti")
     private List<PraticaEventiProcedimenti> praticaEventiProcedimentiList;
-
+    @JoinColumn(name = "id_ufficio", referencedColumnName = "id_ente")
+    @ManyToOne(optional = false)
+    private Enti idUfficio;
+    
     public ProcedimentiEnti() {
     }
 
@@ -109,6 +112,15 @@ public class ProcedimentiEnti implements Serializable {
     public void setIdEnte(Enti idEnte) {
         this.idEnte = idEnte;
     }
+    
+    public Enti getIdUfficio() {
+        return idUfficio;
+    }
+
+    public void setIdUfficio(Enti idUfficio) {
+        this.idUfficio = idUfficio;
+    }
+
 
     @XmlTransient
     public List<Pratica> getPraticaList() {

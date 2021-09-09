@@ -20,31 +20,31 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         l'adempimento, il portale permette all'utente di tentare l'invio dell'adempimento.
  *         Tutti gli invii falliti vengono memorizzati
  * 
- * <p>Java class for InvioAdempimento complex type.
+ * <p>Classe Java per InvioAdempimento complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="InvioAdempimento">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="esito" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/>
- *         &lt;element name="messaggio" maxOccurs="unbounded" minOccurs="0">
- *           &lt;complexType>
- *             &lt;simpleContent>
- *               &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
- *                 &lt;attribute name="titolo" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" />
- *                 &lt;attribute name="attributo" type="{http://www.w3.org/2001/XMLSchema}string" />
- *               &lt;/extension>
- *             &lt;/simpleContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/sequence>
- *       &lt;attribute name="tempo-invio" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="InvioAdempimento"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="esito" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/&gt;
+ *         &lt;element name="messaggio" maxOccurs="unbounded" minOccurs="0"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;simpleContent&gt;
+ *               &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+ *                 &lt;attribute name="titolo" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" /&gt;
+ *                 &lt;attribute name="attributo" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *               &lt;/extension&gt;
+ *             &lt;/simpleContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name="tempo-invio" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -64,7 +64,7 @@ public class InvioAdempimento {
     protected XMLGregorianCalendar tempoInvio;
 
     /**
-     * Gets the value of the esito property.
+     * Recupera il valore della propriet esito.
      * 
      * @return
      *     possible object is
@@ -76,7 +76,7 @@ public class InvioAdempimento {
     }
 
     /**
-     * Sets the value of the esito property.
+     * Imposta il valore della propriet esito.
      * 
      * @param value
      *     allowed object is
@@ -117,7 +117,7 @@ public class InvioAdempimento {
     }
 
     /**
-     * Gets the value of the tempoInvio property.
+     * Recupera il valore della propriet tempoInvio.
      * 
      * @return
      *     possible object is
@@ -129,7 +129,7 @@ public class InvioAdempimento {
     }
 
     /**
-     * Sets the value of the tempoInvio property.
+     * Imposta il valore della propriet tempoInvio.
      * 
      * @param value
      *     allowed object is
@@ -142,19 +142,19 @@ public class InvioAdempimento {
 
 
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>Classe Java per anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;simpleContent>
-     *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
-     *       &lt;attribute name="titolo" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" />
-     *       &lt;attribute name="attributo" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *     &lt;/extension>
-     *   &lt;/simpleContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;simpleContent&gt;
+     *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+     *       &lt;attribute name="titolo" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" /&gt;
+     *       &lt;attribute name="attributo" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+     *     &lt;/extension&gt;
+     *   &lt;/simpleContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -185,7 +185,7 @@ public class InvioAdempimento {
         }
 
         /**
-         * Sets the value of the value property.
+         * Imposta il valore della propriet value.
          * 
          * @param value
          *     allowed object is
@@ -197,7 +197,7 @@ public class InvioAdempimento {
         }
 
         /**
-         * Gets the value of the titolo property.
+         * Recupera il valore della propriet titolo.
          * 
          * @return
          *     possible object is
@@ -209,7 +209,7 @@ public class InvioAdempimento {
         }
 
         /**
-         * Sets the value of the titolo property.
+         * Imposta il valore della propriet titolo.
          * 
          * @param value
          *     allowed object is
@@ -221,7 +221,7 @@ public class InvioAdempimento {
         }
 
         /**
-         * Gets the value of the attributo property.
+         * Recupera il valore della propriet attributo.
          * 
          * @return
          *     possible object is
@@ -233,7 +233,7 @@ public class InvioAdempimento {
         }
 
         /**
-         * Sets the value of the attributo property.
+         * Imposta il valore della propriet attributo.
          * 
          * @param value
          *     allowed object is

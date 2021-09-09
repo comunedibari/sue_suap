@@ -9,25 +9,25 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for EMail complex type.
+ * <p>Classe Java per EMail complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="EMail">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>EMailIndirizzo">
- *       &lt;attribute name="tipo" default="Standard">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;enumeration value="Standard"/>
- *             &lt;enumeration value="PEC"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="EMail"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;EMailIndirizzo"&gt;
+ *       &lt;attribute name="tipo" default="Standard"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *             &lt;enumeration value="Standard"/&gt;
+ *             &lt;enumeration value="PEC"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -44,7 +44,7 @@ public class EMail {
     protected String tipo;
 
     /**
-     * Gets the value of the value property.
+     * Recupera il valore della propriet value.
      * 
      * @return
      *     possible object is
@@ -56,7 +56,7 @@ public class EMail {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della propriet value.
      * 
      * @param value
      *     allowed object is
@@ -68,7 +68,7 @@ public class EMail {
     }
 
     /**
-     * Gets the value of the tipo property.
+     * Recupera il valore della propriet tipo.
      * 
      * @return
      *     possible object is
@@ -84,7 +84,7 @@ public class EMail {
     }
 
     /**
-     * Sets the value of the tipo property.
+     * Imposta il valore della propriet tipo.
      * 
      * @param value
      *     allowed object is

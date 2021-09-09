@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -41,6 +34,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ProcuraSpeciale }
+     * 
+     */
+    public ProcuraSpeciale createProcuraSpeciale() {
+        return new ProcuraSpeciale();
+    }
+
+    /**
      * Create an instance of {@link ModelloAttivita }
      * 
      */
@@ -65,11 +66,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ProcuraSpeciale }
+     * Create an instance of {@link AnagraficaPersona }
      * 
      */
-    public ProcuraSpeciale createProcuraSpeciale() {
-        return new ProcuraSpeciale();
+    public AnagraficaPersona createAnagraficaPersona() {
+        return new AnagraficaPersona();
     }
 
     /**
@@ -81,6 +82,46 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Intestazione }
+     * 
+     */
+    public Intestazione createIntestazione() {
+        return new Intestazione();
+    }
+
+    /**
+     * Create an instance of {@link EstremiSuap }
+     * 
+     */
+    public EstremiSuap createEstremiSuap() {
+        return new EstremiSuap();
+    }
+
+    /**
+     * Create an instance of {@link EstremiEnte }
+     * 
+     */
+    public EstremiEnte createEstremiEnte() {
+        return new EstremiEnte();
+    }
+
+    /**
+     * Create an instance of {@link AnagraficaImpresa }
+     * 
+     */
+    public AnagraficaImpresa createAnagraficaImpresa() {
+        return new AnagraficaImpresa();
+    }
+
+    /**
+     * Create an instance of {@link AnagraficaRappresentante }
+     * 
+     */
+    public AnagraficaRappresentante createAnagraficaRappresentante() {
+        return new AnagraficaRappresentante();
+    }
+
+    /**
      * Create an instance of {@link EstremiDichiarante }
      * 
      */
@@ -89,11 +130,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Struttura }
+     * Create an instance of {@link Anagrafica }
      * 
      */
-    public Struttura createStruttura() {
-        return new Struttura();
+    public Anagrafica createAnagrafica() {
+        return new Anagrafica();
+    }
+
+    /**
+     * Create an instance of {@link RiferimentoSUAP }
+     * 
+     */
+    public RiferimentoSUAP createRiferimentoSUAP() {
+        return new RiferimentoSUAP();
+    }
+
+    /**
+     * Create an instance of {@link ProtocolloSUAP }
+     * 
+     */
+    public ProtocolloSUAP createProtocolloSUAP() {
+        return new ProtocolloSUAP();
     }
 
     /**
@@ -113,59 +170,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AnagraficaRappresentante }
+     * Create an instance of {@link Struttura }
      * 
      */
-    public AnagraficaRappresentante createAnagraficaRappresentante() {
-        return new AnagraficaRappresentante();
-    }
-
-    /**
-     * Create an instance of {@link Intestazione }
-     * 
-     */
-    public Intestazione createIntestazione() {
-        return new Intestazione();
-    }
-
-    /**
-     * Create an instance of {@link AnagraficaImpresa }
-     * 
-     */
-    public AnagraficaImpresa createAnagraficaImpresa() {
-        return new AnagraficaImpresa();
-    }
-
-    /**
-     * Create an instance of {@link FormaGiuridica }
-     * 
-     */
-    public FormaGiuridica createFormaGiuridica() {
-        return new FormaGiuridica();
-    }
-
-    /**
-     * Create an instance of {@link AllegatoGenerico }
-     * 
-     */
-    public AllegatoGenerico createAllegatoGenerico() {
-        return new AllegatoGenerico();
-    }
-
-    /**
-     * Create an instance of {@link OggettoComunicazione }
-     * 
-     */
-    public OggettoComunicazione createOggettoComunicazione() {
-        return new OggettoComunicazione();
-    }
-
-    /**
-     * Create an instance of {@link EstremiEnte }
-     * 
-     */
-    public EstremiEnte createEstremiEnte() {
-        return new EstremiEnte();
+    public Struttura createStruttura() {
+        return new Struttura();
     }
 
     /**
@@ -177,11 +186,51 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link EstremiSuap }
+     * Create an instance of {@link TipoAdempimento }
      * 
      */
-    public EstremiSuap createEstremiSuap() {
-        return new EstremiSuap();
+    public TipoAdempimento createTipoAdempimento() {
+        return new TipoAdempimento();
+    }
+
+    /**
+     * Create an instance of {@link TipoAllegato }
+     * 
+     */
+    public TipoAllegato createTipoAllegato() {
+        return new TipoAllegato();
+    }
+
+    /**
+     * Create an instance of {@link AllegatoGenerico }
+     * 
+     */
+    public AllegatoGenerico createAllegatoGenerico() {
+        return new AllegatoGenerico();
+    }
+
+    /**
+     * Create an instance of {@link FormaGiuridica }
+     * 
+     */
+    public FormaGiuridica createFormaGiuridica() {
+        return new FormaGiuridica();
+    }
+
+    /**
+     * Create an instance of {@link Carica }
+     * 
+     */
+    public Carica createCarica() {
+        return new Carica();
+    }
+
+    /**
+     * Create an instance of {@link OggettoComunicazione }
+     * 
+     */
+    public OggettoComunicazione createOggettoComunicazione() {
+        return new OggettoComunicazione();
     }
 
     /**
@@ -193,19 +242,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ProtocolloSUAP }
+     * Create an instance of {@link ProcuraSpeciale.TracciatoXml }
      * 
      */
-    public ProtocolloSUAP createProtocolloSUAP() {
-        return new ProtocolloSUAP();
-    }
-
-    /**
-     * Create an instance of {@link Carica }
-     * 
-     */
-    public Carica createCarica() {
-        return new Carica();
+    public ProcuraSpeciale.TracciatoXml createProcuraSpecialeTracciatoXml() {
+        return new ProcuraSpeciale.TracciatoXml();
     }
 
     /**
@@ -225,16 +266,20 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ProcuraSpeciale.TracciatoXml }
+     * Create an instance of {@link AnagraficaPersona.Nascita }
      * 
      */
-    public ProcuraSpeciale.TracciatoXml createProcuraSpecialeTracciatoXml() {
-        return new ProcuraSpeciale.TracciatoXml();
+    public AnagraficaPersona.Nascita createAnagraficaPersonaNascita() {
+        return new AnagraficaPersona.Nascita();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link RiepilogoPraticaSUAP }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link RiepilogoPraticaSUAP }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link RiepilogoPraticaSUAP }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/schema/suap/pratica", name = "riepilogo-pratica-suap")
     public JAXBElement<RiepilogoPraticaSUAP> createRiepilogoPraticaSuap(RiepilogoPraticaSUAP value) {

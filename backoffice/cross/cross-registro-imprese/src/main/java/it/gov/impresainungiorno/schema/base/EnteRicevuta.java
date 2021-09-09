@@ -11,22 +11,22 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for EnteRicevuta complex type.
+ * <p>Classe Java per EnteRicevuta complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="EnteRicevuta">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="delegante" type="{http://www.impresainungiorno.gov.it/schema/base}UtentePortale" minOccurs="0"/>
- *         &lt;element name="invio" type="{http://www.impresainungiorno.gov.it/schema/base}InvioAdempimento" maxOccurs="unbounded"/>
- *       &lt;/sequence>
- *       &lt;attribute name="nome" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="EnteRicevuta"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="delegante" type="{http://www.impresainungiorno.gov.it/schema/base}UtentePortale" minOccurs="0"/&gt;
+ *         &lt;element name="invio" type="{http://www.impresainungiorno.gov.it/schema/base}InvioAdempimento" maxOccurs="unbounded"/&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name="nome" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -45,7 +45,7 @@ public class EnteRicevuta {
     protected String nome;
 
     /**
-     * Gets the value of the delegante property.
+     * Recupera il valore della proprietà delegante.
      * 
      * @return
      *     possible object is
@@ -57,7 +57,7 @@ public class EnteRicevuta {
     }
 
     /**
-     * Sets the value of the delegante property.
+     * Imposta il valore della proprietà delegante.
      * 
      * @param value
      *     allowed object is
@@ -98,7 +98,7 @@ public class EnteRicevuta {
     }
 
     /**
-     * Gets the value of the nome property.
+     * Recupera il valore della proprietà nome.
      * 
      * @return
      *     possible object is
@@ -110,7 +110,7 @@ public class EnteRicevuta {
     }
 
     /**
-     * Sets the value of the nome property.
+     * Imposta il valore della proprietà nome.
      * 
      * @param value
      *     allowed object is

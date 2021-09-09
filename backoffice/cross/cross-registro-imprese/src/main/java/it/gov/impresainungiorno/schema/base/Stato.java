@@ -9,45 +9,45 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for Stato complex type.
+ * <p>Classe Java per Stato complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="Stato">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
- *       &lt;attribute name="codice" use="required">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa">
- *             &lt;pattern value="[A-Za-z0-9]{1,4}"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="codice-istat">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa">
- *             &lt;pattern value="\d{3}"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="codice-catastale">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa">
- *             &lt;pattern value="[A-Z]\d{3}"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="iso">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa">
- *             &lt;pattern value="[A-Z]{3}"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="Stato"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+ *       &lt;attribute name="codice" use="required"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+ *             &lt;pattern value="[A-Za-z0-9]{1,4}"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *       &lt;attribute name="codice-istat"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+ *             &lt;pattern value="\d{3}"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *       &lt;attribute name="codice-catastale"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+ *             &lt;pattern value="[A-Z]\d{3}"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *       &lt;attribute name="iso"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+ *             &lt;pattern value="[A-Z]{3}"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -82,7 +82,7 @@ public class Stato {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della propriet value.
      * 
      * @param value
      *     allowed object is
@@ -94,7 +94,7 @@ public class Stato {
     }
 
     /**
-     * Gets the value of the codice property.
+     * Recupera il valore della propriet codice.
      * 
      * @return
      *     possible object is
@@ -106,7 +106,7 @@ public class Stato {
     }
 
     /**
-     * Sets the value of the codice property.
+     * Imposta il valore della propriet codice.
      * 
      * @param value
      *     allowed object is
@@ -118,7 +118,7 @@ public class Stato {
     }
 
     /**
-     * Gets the value of the codiceIstat property.
+     * Recupera il valore della propriet codiceIstat.
      * 
      * @return
      *     possible object is
@@ -130,7 +130,7 @@ public class Stato {
     }
 
     /**
-     * Sets the value of the codiceIstat property.
+     * Imposta il valore della propriet codiceIstat.
      * 
      * @param value
      *     allowed object is
@@ -142,7 +142,7 @@ public class Stato {
     }
 
     /**
-     * Gets the value of the codiceCatastale property.
+     * Recupera il valore della propriet codiceCatastale.
      * 
      * @return
      *     possible object is
@@ -154,7 +154,7 @@ public class Stato {
     }
 
     /**
-     * Sets the value of the codiceCatastale property.
+     * Imposta il valore della propriet codiceCatastale.
      * 
      * @param value
      *     allowed object is
@@ -166,7 +166,7 @@ public class Stato {
     }
 
     /**
-     * Gets the value of the iso property.
+     * Recupera il valore della propriet iso.
      * 
      * @return
      *     possible object is
@@ -178,7 +178,7 @@ public class Stato {
     }
 
     /**
-     * Sets the value of the iso property.
+     * Imposta il valore della propriet iso.
      * 
      * @param value
      *     allowed object is

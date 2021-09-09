@@ -49,8 +49,9 @@ public class PraticaDTO implements Serializable {
     private String esistenzaRicercaCatasto;
     private String integrazione;
     private String prot_suap;
-    
-    
+    private String tipoInterventoSuap;
+    private String tipoProcedimentoSuap;
+    private Date data_prot_suap;
 
 	public String getProt_suap() {
 		return prot_suap;
@@ -333,5 +334,29 @@ public class PraticaDTO implements Serializable {
     public void setNumGiorniPrimaScadenza(Integer numGiorniPrimaScadenza) {
         this.numGiorniPrimaScadenza = numGiorniPrimaScadenza;
     }
+
+	public String getTipoInterventoSuap() {
+		return tipoInterventoSuap;
+	}
+
+	public void setTipoInterventoSuap(String tipoInterventoSuap) {
+		this.tipoInterventoSuap = tipoInterventoSuap;
+	}
+
+	public String getTipoProcedimentoSuap() {
+		return tipoProcedimentoSuap;
+	}
+
+	public void setTipoProcedimentoSuap(String tipoProcedimentoSuap) {
+		this.tipoProcedimentoSuap = tipoProcedimentoSuap;
+	}
+
+	public Date getData_prot_suap() {
+		return data_prot_suap;
+	}
+
+	public void setData_prot_suap(Date data_prot_suap) {
+		this.data_prot_suap = data_prot_suap;
+	}
 
 }

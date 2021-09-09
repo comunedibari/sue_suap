@@ -1,0 +1,105 @@
+
+<wsdl:definitions xmlns:axis2="http://it.reporter.dynamicodt" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:urn="http://it.reporter.dynamicodt/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://it.reporter.dynamicodt" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:fi="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service" xmlns:tcp="http://java.sun.com/xml/ns/wsit/2006/09/policy/soaptcp/service">
+    <wsdl:documentation>
+    	    Dynamic Odt generation from Odt template to several outputs
+    </wsdl:documentation>
+    <wsdl:types>
+        <xs:schema xmlns:axis2="http://it.reporter.dynamicodt/" xmlns:ns="http://it.reporter.dynamicodt/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://it.reporter.dynamicodt/xsd">
+            <xs:element name="generateDocument">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="odtTemplate" type="xs:base64Binary" />
+                        <xs:element name="xmlData" type="xs:base64Binary" />
+                        <xs:element name="xmlStaticData" type="xs:base64Binary" />
+                        <xs:element name="xmlParams" type="xs:base64Binary" />
+                        <xs:element name="docOutputType" type="xs:base64Binary" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="generateDocumentResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" nillable="true" type="xs:base64Binary" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="generateDocumentRequest">
+        <wsdl:part name="part1" element="urn:generateDocument" />
+    </wsdl:message>
+    <wsdl:message name="generateDocumentResponse">
+        <wsdl:part name="part1" element="urn:generateDocumentResponse" />
+    </wsdl:message>
+    <wsdl:portType name="ReporterPortType">
+        <wsdl:operation name="generateDocument">
+            <wsdl:input message="axis2:generateDocumentRequest" wsaw:Action="urn:generateDocument" />
+            <wsdl:output message="axis2:generateDocumentResponse" wsaw:Action="generateDocumentResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ReporterSOAP11Binding" type="axis2:ReporterPortType">
+        <wsp:PolicyReference URI="#ReporterSOAP11BindingPolicy"/>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="generateDocument">
+            <soap:operation soapAction="urn:generateDocument" style="document" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ReporterSOAP12Binding" type="axis2:ReporterPortType">
+        <wsp:PolicyReference URI="#ReporterSOAP12BindingPolicy"/>
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+        <wsdl:operation name="generateDocument">
+            <soap12:operation soapAction="urn:generateDocument" style="document" />
+            <wsdl:input>
+                <soap12:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ReporterHttpBinding" type="axis2:ReporterPortType">
+        <wsp:PolicyReference URI="#ReporterHttpBindingPolicy"/>
+        <http:binding verb="POST" />
+        <wsdl:operation name="generateDocument">
+            <http:operation location="generateDocument" />
+            <wsdl:input>
+                <mime:content type="text/xml" />
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="text/xml" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Reporter">
+        <wsdl:port name="ReporterSOAP11port_http" binding="axis2:ReporterSOAP11Binding">
+            <soap:address location="http://demo.reporter.it:8000/Reporter/services/Reporter" />
+        </wsdl:port>
+        <wsdl:port name="ReporterSOAP12port_http" binding="axis2:ReporterSOAP12Binding">
+            <soap12:address location="http://demo.reporter.it:8000/Reporter/services/Reporter" />
+        </wsdl:port>
+        <wsdl:port name="ReporterHttpport1" binding="axis2:ReporterHttpBinding">
+            <http:address location="http://demo.reporter.it:8000/Reporter/rest/Reporter" />
+        </wsdl:port>
+    </wsdl:service>
+    <wsp:Policy wsu:Id="ReporterSOAP11BindingPolicy">
+        <wsp:ExactlyOne>
+            <wsp:All/>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="ReporterHttpBindingPolicy">
+        <wsp:ExactlyOne>
+            <wsp:All/>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="ReporterSOAP12BindingPolicy">
+        <wsp:ExactlyOne>
+            <wsp:All/>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</wsdl:definitions>

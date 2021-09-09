@@ -262,7 +262,7 @@
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <c:choose>
-                                                                    <c:when test="${email.stato=='C'}">
+                                                                    <c:when test="${email.stato=='C' || email.stato=='I'}">
                                                                         <img title="${email.stato}" alt="${email.stato}" src="<%=path%>/themes/default/images/icons/accept.png" width="18">
                                                                     </c:when>
                                                                     <c:otherwise>

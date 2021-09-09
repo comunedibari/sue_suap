@@ -114,13 +114,13 @@ public class AnagraficheSerializer {
         it.wego.cross.xml.Anagrafica axml = xml.getAnagrafica();
         Anagrafica a = serializeAnagrafica(axml);
         anagraficheDao.insert(a);
-        
+        usefulDao.flush();
         //Se ho una nuova anagrafica gli aggiungo il recapito
         if (a.getIdAnagrafica() == null
                 && axml.getRecapiti() != null
                 && axml.getRecapiti().getRecapito() != null
                 && !axml.getRecapiti().getRecapito().isEmpty()) {
-            usefulDao.flush();
+            //usefulDao.flush();
             for (it.wego.cross.xml.Recapito recapito : axml.getRecapiti().getRecapito()) {
                 Recapiti r = recapitiSerializer.serializeEntity(recapito);
                 anagraficheDao.insert(r);
@@ -134,8 +134,8 @@ public class AnagraficheSerializer {
             }
         }
         //04/09/2019 inseriti flush e refresh per committare l'inserimento dell'anagrafica
-        usefulDao.flush();
-        usefulDao.refresh(a);
+        //usefulDao.flush();
+        //usefulDao.refresh(a);
         PraticaAnagrafica p = new PraticaAnagrafica();
         PraticaAnagraficaPK key = new PraticaAnagraficaPK();
         key.setIdPratica(pratica.getIdPratica());
@@ -232,14 +232,21 @@ public class AnagraficheSerializer {
             if (!Utils.e(x.getSesso())) {
                 a.setSesso(x.getSesso().charAt(0));
             }
-            a.setTipoAnagrafica(x.getTipoAnagrafica().charAt(0));
+            if(x.getTipoAnagrafica()!=null) {
+            	 a.setTipoAnagrafica(x.getTipoAnagrafica().charAt(0));
+            }
+           
             a.setVarianteAnagrafica(x.getVarianteAnagrafica());
             a.setFlgIndividuale(!Strings.isNullOrEmpty(x.getFlgIndividuale()) ? x.getFlgIndividuale().charAt(0) : 'N');
             if (x.isFlgAttesaIscrizioneRi() != null) {
-                a.setFlgAttesaIscrizioneRi(x.isFlgAttesaIscrizioneRi() ? 'S' : 'N');
+            	/*Patch produzione RI e REA */
+                //a.setFlgAttesaIscrizioneRi(x.isFlgAttesaIscrizioneRi() ? 'S' : 'N');
+            	a.setFlgAttesaIscrizioneRi('S');
             }
             if (x.isFlgAttesaIscrizioneRea() != null) {
-                a.setFlgAttesaIscrizioneRea(x.isFlgAttesaIscrizioneRea() ? 'S' : 'N');
+            	/*Patch produzione RI e REA */
+                //a.setFlgAttesaIscrizioneRea(x.isFlgAttesaIscrizioneRea() ? 'S' : 'N');
+            	a.setFlgAttesaIscrizioneRea('S');
             }
 
             a.setFlgObbligoIscrizioneRi('N');
@@ -401,7 +408,9 @@ public class AnagraficheSerializer {
                         anagraficaXml.setDesProvinciaCciaa(anagrafica.getIdProvinciaCciaa().getDescrizione());
                     }
                     if (anagrafica.getFlgAttesaIscrizioneRi() != null) {
-                        anagraficaXml.setFlgAttesaIscrizioneRi(String.valueOf(anagrafica.getFlgAttesaIscrizioneRi()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
+                    	/*Patch produzione RI e REA */
+                        //anagraficaXml.setFlgAttesaIscrizioneRi(String.valueOf(anagrafica.getFlgAttesaIscrizioneRi()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
+                    	anagraficaXml.setFlgAttesaIscrizioneRi(true);
                     }
                     if (anagrafica.getFlgObbligoIscrizioneRi() != null) {
                         anagraficaXml.setFlgObbligoIscrizioneRi(String.valueOf(anagrafica.getFlgObbligoIscrizioneRi()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
@@ -409,7 +418,9 @@ public class AnagraficheSerializer {
                     anagraficaXml.setDataIscrizioneRi(Utils.dateToXmlGregorianCalendar(anagrafica.getDataIscrizioneRi()));
                     anagraficaXml.setNIscrizioneRi(anagrafica.getNIscrizioneRi());
                     if (anagrafica.getFlgAttesaIscrizioneRea() != null) {
-                        anagraficaXml.setFlgAttesaIscrizioneRea(String.valueOf(anagrafica.getFlgAttesaIscrizioneRea()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
+                    	/*Patch produzione RI e REA */
+                        //anagraficaXml.setFlgAttesaIscrizioneRea(String.valueOf(anagrafica.getFlgAttesaIscrizioneRea()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
+                    	anagraficaXml.setFlgAttesaIscrizioneRea(true);
                     }
                     anagraficaXml.setDataIscrizioneRea(Utils.dateToXmlGregorianCalendar(anagrafica.getDataIscrizioneRea()));
                     anagraficaXml.setNIscrizioneRea(anagrafica.getNIscrizioneRea());
@@ -631,7 +642,9 @@ public class AnagraficheSerializer {
         if (!Strings.isNullOrEmpty(a.getFlgAttesaIscrizioneRi())) {
             r.setFlgAttesaIscrizioneRi(a.getFlgAttesaIscrizioneRi().charAt(0));
         } else {
-            r.setFlgAttesaIscrizioneRi('N');
+            /*Patch produzione RI e REA */
+        	//r.setFlgAttesaIscrizioneRi('N');
+            r.setFlgAttesaIscrizioneRi('S');
         }
         if (a.getFlgObbligoIscrizioneRi() != null) {
             r.setFlgObbligoIscrizioneRi(a.getFlgObbligoIscrizioneRi().charAt(0));
@@ -639,7 +652,9 @@ public class AnagraficheSerializer {
         if (!Strings.isNullOrEmpty(a.getFlgAttesaIscrizioneRea())) {
             r.setFlgAttesaIscrizioneRea(a.getFlgAttesaIscrizioneRea().charAt(0));
         } else {
-            r.setFlgAttesaIscrizioneRea('N');
+        	/*Patch produzione RI e REA */
+            //r.setFlgAttesaIscrizioneRea('N');
+            r.setFlgAttesaIscrizioneRea('S');
         }
         r.setDataIscrizioneRi(a.getDataIscrizioneRi());
         r.setNIscrizioneRi(a.getnIscrizioneRi());
@@ -1036,5 +1051,54 @@ public class AnagraficheSerializer {
         dto.setVariante(anagrafica.getVarianteAnagrafica());
         dto.setIdAnagrafica(anagrafica.getIdAnagrafica());
         return dto;
+    }
+    
+    public PraticaAnagrafica serializePraticaSUAP(it.wego.cross.xml.Anagrafiche xml, Pratica pratica) throws Exception {
+        it.wego.cross.xml.Anagrafica axml = xml.getAnagrafica();
+        Anagrafica a = serializeAnagrafica(axml);
+        anagraficheDao.insert(a);
+        usefulDao.flush();
+        //Se ho una nuova anagrafica gli aggiungo il recapito
+        //eliminato controllo sell'anagrafica è null per la pratica suap a.getIdAnagrafica() == null && 
+        if (axml.getRecapiti() != null
+                && axml.getRecapiti().getRecapito() != null
+                && !axml.getRecapiti().getRecapito().isEmpty()) {
+            //usefulDao.flush();
+            for (it.wego.cross.xml.Recapito recapito : axml.getRecapiti().getRecapito()) {
+                Recapiti r = recapitiSerializer.serializeEntity(recapito);
+                anagraficheDao.insert(r);
+                usefulDao.flush();
+                AnagraficaRecapiti ar = new AnagraficaRecapiti();
+                ar.setIdAnagrafica(a);
+                ar.setIdRecapito(r);
+                LkTipoIndirizzo tipoIndirizzo = lookupDao.findTipoIndirizzoById(Utils.ib(recapito.getIdTipoIndirizzo()));
+                ar.setIdTipoIndirizzo(tipoIndirizzo);
+                anagraficheDao.insert(ar);
+            }
+        }
+        //04/09/2019 inseriti flush e refresh per committare l'inserimento dell'anagrafica
+        //usefulDao.flush();
+        //usefulDao.refresh(a);
+        PraticaAnagrafica p = new PraticaAnagrafica();
+        PraticaAnagraficaPK key = new PraticaAnagraficaPK();
+        key.setIdPratica(pratica.getIdPratica());
+        if(a.getIdAnagrafica()!=null) {
+        	key.setIdAnagrafica(a.getIdAnagrafica());
+        }
+        LkTipoRuolo ruolo = lookupDao.findTipoRuoloByCodRuolo(xml.getCodTipoRuolo());
+        //se il ruolo non esiste nel file xml si inserisce ruolo 1 che significa richiedente
+        if(ruolo!=null)
+        	key.setIdTipoRuolo(ruolo.getIdTipoRuolo());
+        else
+        	key.setIdTipoRuolo(1);
+        p.setPraticaAnagraficaPK(key);
+        p.setLkTipoRuolo(ruolo);
+        p.setAnagrafica(a);
+        p.setFlgDittaIndividuale(axml.getFlgIndividuale());
+        if (xml.getIdTipoQualifica() != null) {
+            LkTipoQualifica qualifica = lookupDao.findTipoQualificaById(Utils.ib(xml.getIdTipoQualifica()));
+            p.setIdTipoQualifica(qualifica);
+        }
+        return p;
     }
 }

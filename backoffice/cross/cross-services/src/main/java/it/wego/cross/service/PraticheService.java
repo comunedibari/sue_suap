@@ -22,8 +22,11 @@ import it.wego.cross.entity.DatiCatastali;
 import it.wego.cross.entity.Email;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.IndirizziIntervento;
+import it.wego.cross.entity.LkClassificazioneProcedimento;
 import it.wego.cross.entity.LkStatiScadenze;
 import it.wego.cross.entity.LkStatoPratica;
+import it.wego.cross.entity.LkTipoInterventoSuap;
+import it.wego.cross.entity.LkTipoProcedimentoSuap;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticaAnagrafica;
 import it.wego.cross.entity.PraticaProcedimenti;
@@ -233,5 +236,11 @@ public interface PraticheService {
 	public List<EstrazioniCilaDTO> listPraticheCILAToDo(Filter filter) throws Exception;
 
 	public List<PraticheEventi> findPraticheEventiDaRiprotocollare();
+
+	public LkTipoProcedimentoSuap findLookupProcedimentoSUAP(Integer idProcedimentoSuap);
+
+	public LkTipoInterventoSuap findLookupInterventoSUAP(Integer idInterventoSuap);
+
+	public LkClassificazioneProcedimento findLookupClassificazioneProcedimento(Integer idClassificazioneProcedimento);
 
 }

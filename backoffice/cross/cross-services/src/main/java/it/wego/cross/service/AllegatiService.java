@@ -52,5 +52,6 @@ public interface AllegatiService {
 
 	public AllegatoDTO creaFileSuapEnte(Pratica pratica, ComunicazioneDTO comunicazione) throws DatatypeConfigurationException, FileNotFoundException, UnsupportedEncodingException, IOException, Exception;
    
+	public Allegati findByNomeFile(String nomeFile,Integer idPratica) throws Exception ;
     
 }

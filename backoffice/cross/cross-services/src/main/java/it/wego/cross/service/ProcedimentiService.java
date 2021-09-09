@@ -20,6 +20,8 @@ import it.wego.cross.entity.ProcedimentiEnti;
 import it.wego.cross.entity.ProcedimentiTesti;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.entity.view.ProcedimentiLocalizzatiView;
+
+import java.math.BigInteger;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
@@ -130,4 +132,6 @@ public interface ProcedimentiService {
     public ProcedimentiEnti requireProcedimentoEnte(Integer idProcedimento, Integer idEnte, Enti entePratica, LkComuni comunePratica) throws Exception;
     
     public ProcedimentiEnti requireProcedimentoEnte(Integer idProcedimentoEnte, Enti entePratica, LkComuni comunePratica) throws Exception;
+
+	public ProcedimentiEnti findIdUfficioByIdProcIdEnte(Integer idProcedimento, BigInteger idEnteDestinatario);
 }

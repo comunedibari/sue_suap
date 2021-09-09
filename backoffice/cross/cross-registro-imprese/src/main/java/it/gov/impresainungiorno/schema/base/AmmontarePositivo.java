@@ -7,17 +7,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for AmmontarePositivo complex type.
+ * <p>Classe Java per AmmontarePositivo complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="AmmontarePositivo">
- *   &lt;simpleContent>
- *     &lt;restriction base="&lt;http://www.impresainungiorno.gov.it/schema/base>Ammontare">
- *     &lt;/restriction>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="AmmontarePositivo"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;restriction base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Ammontare"&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 

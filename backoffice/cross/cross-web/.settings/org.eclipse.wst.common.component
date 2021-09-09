@@ -61,6 +61,12 @@
         <dependent-module archiveName="cross-services-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-services/cross-services">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="cross-client-doc-protocollo-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-client-doc-protocollo/cross-client-doc-protocollo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cross-firma-online-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-firma-online/cross-firma-online">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="cross-filters-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/cross-filters/cross-filters">
             <dependency-type>uses</dependency-type>
         </dependent-module>

@@ -10,23 +10,23 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Errore complex type.
+ * <p>Classe Java per Errore complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="Errore">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="causa" type="{http://www.impresainungiorno.gov.it/schema/base}Errore" minOccurs="0"/>
- *         &lt;element name="parametro" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
- *       &lt;/sequence>
- *       &lt;attribute name="codice" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" />
- *       &lt;attribute name="gravita" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" default="GRAVE" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="Errore"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="causa" type="{http://www.impresainungiorno.gov.it/schema/base}Errore" minOccurs="0"/&gt;
+ *         &lt;element name="parametro" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name="codice" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" /&gt;
+ *       &lt;attribute name="gravita" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" default="GRAVE" /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -46,7 +46,7 @@ public class Errore {
     protected String gravita;
 
     /**
-     * Gets the value of the causa property.
+     * Recupera il valore della proprietà causa.
      * 
      * @return
      *     possible object is
@@ -58,7 +58,7 @@ public class Errore {
     }
 
     /**
-     * Sets the value of the causa property.
+     * Imposta il valore della proprietà causa.
      * 
      * @param value
      *     allowed object is
@@ -99,7 +99,7 @@ public class Errore {
     }
 
     /**
-     * Gets the value of the codice property.
+     * Recupera il valore della proprietà codice.
      * 
      * @return
      *     possible object is
@@ -111,7 +111,7 @@ public class Errore {
     }
 
     /**
-     * Sets the value of the codice property.
+     * Imposta il valore della proprietà codice.
      * 
      * @param value
      *     allowed object is
@@ -123,7 +123,7 @@ public class Errore {
     }
 
     /**
-     * Gets the value of the gravita property.
+     * Recupera il valore della proprietà gravita.
      * 
      * @return
      *     possible object is
@@ -139,7 +139,7 @@ public class Errore {
     }
 
     /**
-     * Sets the value of the gravita property.
+     * Imposta il valore della proprietà gravita.
      * 
      * @param value
      *     allowed object is

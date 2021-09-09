@@ -17,10 +17,14 @@ import it.wego.cross.dto.EstrazioniSciaDTO;
 import it.wego.cross.dto.ComuneDTO;
 import it.wego.cross.dto.AnagraficaDTO;
 import it.wego.cross.dto.PraticaDTO;
+import it.wego.cross.dto.ProcedimentiTestiDTO;
 import it.wego.cross.dto.RecapitoDTO;
 import it.wego.cross.dto.dozer.DatiCatastaliDTO;
+import it.wego.cross.dto.dozer.EnteDTO;
 import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
 import it.wego.cross.dto.dozer.PraticaEventoDTO;
+import it.wego.cross.dto.dozer.ProcedimentoDTO;
+import it.wego.cross.dto.dozer.ProcedimentoEnteDTO;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -51,7 +55,9 @@ import it.wego.cross.constants.ConfigurationConstants;
 import it.wego.cross.constants.Constants;
 import it.wego.cross.constants.SessionConstants;
 import it.wego.cross.constants.StatoPratica;
+import it.wego.cross.dao.EntiDao;
 import it.wego.cross.dao.LookupDao;
+import it.wego.cross.dao.ProcedimentiDao;
 import it.wego.cross.dto.AllegatoDTO;
 import it.wego.cross.dto.TipoIndirizzoDTO;
 import it.wego.cross.dto.UtenteRuoloEnteDTO;
@@ -62,8 +68,11 @@ import it.wego.cross.dto.filters.Filter;
 import it.wego.cross.entity.Allegati;
 import it.wego.cross.entity.Anagrafica;
 import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.LkClassificazioneProcedimento;
 import it.wego.cross.entity.LkStatoPratica;
+import it.wego.cross.entity.LkTipoInterventoSuap;
 import it.wego.cross.entity.LkTipoParticella;
+import it.wego.cross.entity.LkTipoProcedimentoSuap;
 import it.wego.cross.entity.LkTipoQualifica;
 import it.wego.cross.entity.LkTipoRuolo;
 import it.wego.cross.entity.LkTipoSistemaCatastale;
@@ -74,7 +83,10 @@ import it.wego.cross.entity.PraticaAnagrafica;
 import it.wego.cross.entity.PraticaProcedimenti;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.PraticheEventiAllegati;
+import it.wego.cross.entity.Procedimenti;
 import it.wego.cross.entity.ProcedimentiEnti;
+import it.wego.cross.entity.ProcedimentiTesti;
+import it.wego.cross.entity.ProcedimentiTestiPK;
 import it.wego.cross.entity.ProcessiEventi;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.entity.view.ProcedimentiLocalizzatiView;
@@ -97,6 +109,7 @@ import it.wego.cross.validator.impl.AlphabeticValidatorImpl;
 import it.wego.cross.validator.impl.CodiceFiscaleValidatorImpl;
 import it.wego.cross.validator.IsValid;
 import it.wego.cross.validator.impl.PartitaIvaValidatorImpl;
+import it.wego.cross.xml.Ente;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -202,6 +215,10 @@ public class Pratiche extends AbstractController {
     private AllegatiAction allegatiAction;
     @Autowired
     private FilterSerializer filterSerializer;
+    @Autowired
+    private EntiDao entiDao;
+    @Autowired
+    private ProcedimentiDao procedimentiDao;
     //Pages
     private static final String AJAX_PAGE = "ajax";
     private static final String PRATICHE_NUOVE = "pratiche_nuove";
@@ -1126,6 +1143,9 @@ public class Pratiche extends AbstractController {
             List<LkTipoUnita> lkTipoUnita = lookupDao.findAllLkTipoUnita();
             List<LkTipoParticella> lkTipoParticella = lookupDao.findAllLkTipoParticella();
             List<LkTipoSistemaCatastale> lkTipoSistemaCatastale = lookupDao.findAllTipoCatastale();
+            List<LkTipoProcedimentoSuap> lkTipoProcedimentoSUAP = lookupDao.findAllTipoProcedimentoSuap();
+            List<LkTipoInterventoSuap> lkTipoInterventoSuap = lookupDao.findAllTipoInterventoSuap();
+            List<LkClassificazioneProcedimento> lkClassificazioneProcedimento = lookupDao.findAllClassificazioneProcedimento();
             List<String> anniRiferimento = praticheService.popolaListaAnni();
             model.addAttribute("utenteConnesso", connectedUser);
             model.addAttribute("statoPraticaRicerca", lookup);
@@ -1133,6 +1153,9 @@ public class Pratiche extends AbstractController {
             model.addAttribute("lkTipiCatasto", lkTipoSistemaCatastale);
             model.addAttribute("lkTipiUnita", lkTipoUnita);
             model.addAttribute("lkTipiParticella", lkTipoParticella);
+            model.addAttribute("lkTipoProcedimentoSUAP", lkTipoProcedimentoSUAP);
+            model.addAttribute("lkTipoInterventoSUAP", lkTipoInterventoSuap);
+            model.addAttribute("lkTipoClassificazioneProcedimento", lkClassificazioneProcedimento);
 //            connectedUser.getUtenteRuoloEnte();
             Integer enteAcasoPerColumnModel = null;
             for (UtenteRuoloEnteDTO ruoloEnte : connectedUser.getUtenteRuoloEnte()) {
@@ -1268,9 +1291,46 @@ public class Pratiche extends AbstractController {
                 	allegatNuovo.setDescrizioneEvento(praticheEventi.getDescrizioneEvento());
                 	listaAllegatiNuovo.add(allegatNuovo);
 				}
+                // gestione con prot_suap
+               if (pratica.getProt_suap() !=null && !(pratica.getProt_suap()).isEmpty()) {
+            	   if(praticaDTO.getEndoProcedimentiList()!=null) {
+            		   praticaDTO.getEndoProcedimentiList().clear();
+            	   }
+            	   if (pratica.getPraticaProcedimentiList()!=null){
+               	   	
+                   	int numeroProcedimenti = pratica.getPraticaProcedimentiList().size();
+                   	for (int i=0;i<numeroProcedimenti;i++) {
+                   		
+                   		Procedimenti procedimenti = procedimentiDao.findProcedimentoByIdProc(pratica.getPraticaProcedimentiList().get(i).getProcedimenti().getIdProc());
+                   		ProcedimentoDTO procedimento = new ProcedimentoDTO();
+                   		procedimento.setTermini(procedimenti.getTermini());
+                   		ProcedimentoEnteDTO endoProcedimento = new ProcedimentoEnteDTO();
+                   		EnteDTO ente = new EnteDTO();
+                   		Enti e = entiDao.findByIdEnte(pratica.getPraticaProcedimentiList().get(i).getEnti().getIdEnte());
+                   		ente.setIdEnte(pratica.getPraticaProcedimentiList().get(i).getEnti().getIdEnte());
+                   		ente.setDescrizione(e.getDescrizione());
+                   		
+                   		procedimento.setIdProc(pratica.getPraticaProcedimentiList().get(i).getProcedimenti().getIdProc());
+                   		ProcedimentiTesti pt = procedimentiDao.findProcedimentiTestiByPK(pratica.getPraticaProcedimentiList().get(i).getProcedimenti().getIdProc(), 1);
+                   		procedimento.setDescrizione(pt.getDesProc());
+                   		
+                   		endoProcedimento.setProcedimento(procedimento);
+                   		endoProcedimento.setEnte(ente);
+                   		
+                   		praticaDTO.getEndoProcedimentiList().add(endoProcedimento);
+                   	}
+                   }
+            	   if(pratica.getIdTipoInterventoSuap()!=null) {
+                	   praticaDTO.setTipoInterventoSuap(pratica.getIdTipoInterventoSuap().getDescrizioneTipoInterventoSuap());
+                	   praticaDTO.setOggettoPratica(pratica.getOggettoPratica() + "-"+pratica.getIdTipoInterventoSuap().getDescrizioneTipoInterventoSuap());
+            	   }
+                   if(pratica.getIdTipoProcedimentoSuap()!=null)
+                   		praticaDTO.setTipoProcedimentoSuap(pratica.getIdTipoProcedimentoSuap().getDescrizioneCrossSuap());
+               }
+               	
                 praticaDTO.setAllegati(listaAllegatiNuovo);
                 //fine inserimento
-                
+               
                 model.addAttribute("pratica", praticaDTO);
                 model.addAttribute("couldCreateNewEvent", couldCreateNewEvent);
                 model.addAttribute("dettaglio", dettaglio);

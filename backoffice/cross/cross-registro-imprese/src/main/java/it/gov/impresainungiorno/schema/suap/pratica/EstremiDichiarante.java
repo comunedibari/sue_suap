@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -12,7 +5,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-import it.gov.impresainungiorno.schema.base.Anagrafica;
 
 
 /**
@@ -21,37 +13,37 @@ import it.gov.impresainungiorno.schema.base.Anagrafica;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="EstremiDichiarante">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Anagrafica">
- *       &lt;sequence>
- *         &lt;element name="pec" type="{http://www.impresainungiorno.gov.it/schema/base}EMailIndirizzo" minOccurs="0"/>
- *         &lt;element name="telefono" type="{http://www.impresainungiorno.gov.it/schema/base}NumeroTelefono" minOccurs="0"/>
- *       &lt;/sequence>
- *       &lt;attribute name="qualifica" use="required">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;enumeration value="ALTRO PREVISTO DALLA VIGENTE NORMATIVA"/>
- *             &lt;enumeration value="AMMINISTRATORE"/>
- *             &lt;enumeration value="ASSOCIAZIONE DI CATEGORIA"/>
- *             &lt;enumeration value="CENTRO ELABORAZIONE DATI"/>
- *             &lt;enumeration value="COMMISSARIO GIUDIZIARIO"/>
- *             &lt;enumeration value="CONSULENTE"/>
- *             &lt;enumeration value="CURATORE FALLIMENTARE"/>
- *             &lt;enumeration value="DELEGATO"/>
- *             &lt;enumeration value="LEGALE RAPPRESENTANTE"/>
- *             &lt;enumeration value="LIQUIDATORE"/>
- *             &lt;enumeration value="NOTAIO"/>
- *             &lt;enumeration value="PROFESSIONISTA INCARICATO"/>
- *             &lt;enumeration value="SOCIO"/>
- *             &lt;enumeration value="STUDIO ASSOCIATO"/>
- *             &lt;enumeration value="TITOLARE"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="EstremiDichiarante"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/suap/pratica}Anagrafica"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="pec" type="{http://www.impresainungiorno.gov.it/schema/base}EMailIndirizzo" minOccurs="0"/&gt;
+ *         &lt;element name="telefono" type="{http://www.impresainungiorno.gov.it/schema/base}NumeroTelefono" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name="qualifica" use="required"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *             &lt;enumeration value="ALTRO PREVISTO DALLA VIGENTE NORMATIVA"/&gt;
+ *             &lt;enumeration value="AMMINISTRATORE"/&gt;
+ *             &lt;enumeration value="ASSOCIAZIONE DI CATEGORIA"/&gt;
+ *             &lt;enumeration value="CENTRO ELABORAZIONE DATI"/&gt;
+ *             &lt;enumeration value="COMMISSARIO GIUDIZIARIO"/&gt;
+ *             &lt;enumeration value="CONSULENTE"/&gt;
+ *             &lt;enumeration value="CURATORE FALLIMENTARE"/&gt;
+ *             &lt;enumeration value="DELEGATO"/&gt;
+ *             &lt;enumeration value="LEGALE RAPPRESENTANTE"/&gt;
+ *             &lt;enumeration value="LIQUIDATORE"/&gt;
+ *             &lt;enumeration value="NOTAIO"/&gt;
+ *             &lt;enumeration value="PROFESSIONISTA INCARICATO"/&gt;
+ *             &lt;enumeration value="SOCIO"/&gt;
+ *             &lt;enumeration value="STUDIO ASSOCIATO"/&gt;
+ *             &lt;enumeration value="TITOLARE"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -71,7 +63,7 @@ public class EstremiDichiarante
     protected String qualifica;
 
     /**
-     * Recupera il valore della propriet pec.
+     * Recupera il valore della proprietà pec.
      * 
      * @return
      *     possible object is
@@ -83,7 +75,7 @@ public class EstremiDichiarante
     }
 
     /**
-     * Imposta il valore della propriet pec.
+     * Imposta il valore della proprietà pec.
      * 
      * @param value
      *     allowed object is
@@ -95,7 +87,7 @@ public class EstremiDichiarante
     }
 
     /**
-     * Recupera il valore della propriet telefono.
+     * Recupera il valore della proprietà telefono.
      * 
      * @return
      *     possible object is
@@ -107,7 +99,7 @@ public class EstremiDichiarante
     }
 
     /**
-     * Imposta il valore della propriet telefono.
+     * Imposta il valore della proprietà telefono.
      * 
      * @param value
      *     allowed object is
@@ -119,7 +111,7 @@ public class EstremiDichiarante
     }
 
     /**
-     * Recupera il valore della propriet qualifica.
+     * Recupera il valore della proprietà qualifica.
      * 
      * @return
      *     possible object is
@@ -131,7 +123,7 @@ public class EstremiDichiarante
     }
 
     /**
-     * Imposta il valore della propriet qualifica.
+     * Imposta il valore della proprietà qualifica.
      * 
      * @param value
      *     allowed object is

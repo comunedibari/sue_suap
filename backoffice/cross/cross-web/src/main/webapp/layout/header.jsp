@@ -219,6 +219,7 @@
                             <li>
                                 <a title="<spring:message code="menu.nuovaGrafica.console"/>" href="${path}/console/index.htm"><spring:message code="menu.nuovaGrafica.console"/></a>
                             </li>
+                            <li><a title="<spring:message code="menu.nuovaGrafica.caricamentopratiche"/>" href="${path}/caricamentopratiche/index.htm"><spring:message code="menu.nuovaGrafica.caricamentopratiche"/></a></li>
                             <c:if test="${enableTasklist}">
                                 <li>
                                     <a title="<spring:message code="menu.nuovaGrafica.tasklist"/>" href="${path}/workflow/tasklist.htm"><spring:message code="menu.nuovaGrafica.tasklist"/></a>

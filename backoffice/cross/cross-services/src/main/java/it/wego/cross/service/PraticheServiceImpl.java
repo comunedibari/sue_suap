@@ -1154,7 +1154,22 @@ public class PraticheServiceImpl implements PraticheService {
 		
 		return result;
 	}
-	
+
+	@Override
+	public LkTipoProcedimentoSuap findLookupProcedimentoSUAP(Integer idProcedimentoSuap) {
+		LkTipoProcedimentoSuap lookup = lookupDao.findLkTipoProcedimentoSUAPbyIdProcedimento(idProcedimentoSuap);
+	        return lookup;
+	}
+
+	@Override
+	public LkTipoInterventoSuap findLookupInterventoSUAP(Integer idInterventoSuap) {
+		LkTipoInterventoSuap lookup = lookupDao.findLkTipoInterventoSUAPbyIdIntervento(idInterventoSuap);
+	        return lookup;
+	}
+	public LkClassificazioneProcedimento findLookupClassificazioneProcedimento(Integer idClassificazioneProcedimento) {
+		LkClassificazioneProcedimento lookup = lookupDao.findClassificazioneProcedimentobyId(idClassificazioneProcedimento);
+		return lookup;
+	}
 	
 	
 	

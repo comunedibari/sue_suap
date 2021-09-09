@@ -80,6 +80,7 @@ public class PraticaComunicaSerializer {
             dto.setProvinciaRea(impresa.getCodiceREA().getProvincia());
             dto.setProvinciaReaOrigine(impresa.getCodiceREA().getProvincia());
             if (impresa.getCodiceREA().getDataIscrizione() != null) {
+//                Date data = impresa.getCodiceREA().getDataIscrizione();
                 Date data = Utils.xmlGregorianCalendarToDate(impresa.getCodiceREA().getDataIscrizione());
                 String dataIscrizione = Utils.convertDataToString(data);
                 dto.setDataIscrizione(dataIscrizione);

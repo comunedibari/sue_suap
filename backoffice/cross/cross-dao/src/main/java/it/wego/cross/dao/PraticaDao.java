@@ -734,7 +734,10 @@ public class PraticaDao extends Paginator {
         CriteriaQuery<Pratica> q = cb.createQuery(Pratica.class);
         Root<Pratica> c = q.from(Pratica.class);
         Join joinDatiCatastali = c.join("datiCatastaliList", JoinType.LEFT);
-        q.select(c).distinct(true);
+        Join joinProcedimentoSuap = c.join("idTipoProcedimentoSuap",JoinType.LEFT);
+        Join joinInterventoSuap = c.join("idTipoInterventoSuap",JoinType.LEFT);
+        
+        
         ParameterExpression<Date> dataAperturaParameter = null;
         ParameterExpression<Date> dataChiusuraParameter = null;
         ParameterExpression<String> protocolloParameter = null;
@@ -762,7 +765,13 @@ public class PraticaDao extends Paginator {
         ParameterExpression<Integer> idPraticaParameter = null;
         ParameterExpression<String> oggettoParameter = null;
         ParameterExpression<String> protSuapParameter = null;
-
+        ParameterExpression<LkTipoInterventoSuap> idInterventoSuapParameter = null;
+        ParameterExpression<LkTipoProcedimentoSuap> idProcedimentoSuapParameter = null;
+        ParameterExpression<Date> dataInizioProtSuapParameter = null;
+        ParameterExpression<Date> dataFineProtSuapParameter = null;
+        ParameterExpression<LkClassificazioneProcedimento> classificazioneProcedimentoParameter = null;
+        ParameterExpression<List> praticheDaIncludereParameter = null;
+        ParameterExpression<Integer> praticheIds = null;
         List<Predicate> predicates = new ArrayList<Predicate>();
         if (filter.getDataInizio() != null) {
             dataAperturaParameter = cb.parameter(Date.class);
@@ -910,7 +919,55 @@ public class PraticaDao extends Paginator {
         	protSuapParameter = cb.parameter(String.class);
             predicates.add(cb.equal(c.get("prot_suap"), protSuapParameter));
         }
-
+        if (filter.getIdTipoProcedimentoSuap() != null) {
+        	idProcedimentoSuapParameter = cb.parameter(LkTipoProcedimentoSuap.class);
+        	predicates.add(cb.equal(c.get("idTipoProcedimentoSuap"), idProcedimentoSuapParameter));
+           
+        }
+        if(filter.getIdTipoInterventoSuap()!=null) {
+        	idInterventoSuapParameter = cb.parameter(LkTipoInterventoSuap.class);
+            predicates.add(cb.equal(c.get("idTipoInterventoSuap"), idInterventoSuapParameter));
+        }
+        
+        if (filter.getDataInizioProtSuap() != null) {
+            dataInizioProtSuapParameter = cb.parameter(Date.class);
+            predicates.add(cb.greaterThanOrEqualTo(c.<Date>get("data_prot_suap"), dataInizioProtSuapParameter));
+        }
+        
+        if (filter.getDataFineProtSuap() != null) {
+        	dataFineProtSuapParameter = cb.parameter(Date.class);
+            predicates.add(cb.lessThanOrEqualTo(c.<Date>get("data_prot_suap"), dataFineProtSuapParameter));
+        }
+        if(filter.getIdClassificazioneProcedimento()!=null) {
+        	praticheDaIncludereParameter = cb.parameter(List.class);
+        	praticheIds = cb.parameter(Integer.class);
+        	classificazioneProcedimentoParameter = cb.parameter(LkClassificazioneProcedimento.class);
+        	List<LkTipoEndoProcedimentoSuap> listEndoProcedimenti =  lookupDao.findTipoEndoProcedimentoSuapByTipolgia(filter.getIdClassificazioneProcedimento().getCodiceClassificazioneProcedimento());
+        	List<String> listCodProcedimenti = null;
+        	listCodProcedimenti = new ArrayList<String>();
+        	for(LkTipoEndoProcedimentoSuap lk: listEndoProcedimenti) {
+        		
+        		listCodProcedimenti.add(lk.getCodProcedimento());
+        	}
+        	List<PraticaProcedimenti> praticaProcedimenti = listPraticaProcedimentibyCodProc(listCodProcedimenti);
+        	Path<PraticaProcedimenti> praticaProcPath = c.get("praticaProcedimentiList").get("praticaProcedimentiPK");
+            Expression<Integer> idPraticaExp = praticaProcPath.get("idPratica");
+           
+            List<Pratica> listaPraticheIn = new ArrayList<Pratica>();
+            for(PraticaProcedimenti pp : praticaProcedimenti) {
+            	listaPraticheIn.add(pp.getPratica());
+            }
+            filter.setListaPraticheIn(listaPraticheIn);
+            List<Integer> idp = new ArrayList<Integer>();
+            for (Pratica pratica : listaPraticheIn) {
+            	idp.add(pratica.getIdPratica());
+            	//predicates.add(cb.equal(idPraticaExp,pratica.getIdPratica()));
+            }
+            predicates.add(idPraticaExp.in(idp));
+        }
+            
+        	
+        
         String orderCol = filter.getOrderColumn();
         Path path;
         if (orderCol.equalsIgnoreCase("idStatoPratica")) {
@@ -934,9 +991,11 @@ public class PraticaDao extends Paginator {
         } else {
             q.orderBy(cb.desc(path));
         }
+        q.groupBy(c.get("idPratica"));
+        q.distinct(true);
         predicates.add(cb.isNotNull(c.get("idUtente")));
         q.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
-
+     
         TypedQuery<Pratica> query = em.createQuery(q);
         if (filter.getDataInizio() != null) {
             query.setParameter(dataAperturaParameter, filter.getDataInizio());
@@ -1035,6 +1094,30 @@ public class PraticaDao extends Paginator {
         if (!Utils.e(filter.getProtocolloSuap())) {
             query.setParameter(protSuapParameter, filter.getProtocolloSuap());
         }
+        
+        if (!Utils.e(filter.getIdTipoProcedimentoSuap())) {
+            query.setParameter(idProcedimentoSuapParameter, filter.getIdTipoProcedimentoSuap());
+        }
+        if (!Utils.e(filter.getIdTipoInterventoSuap())) {
+            query.setParameter(idInterventoSuapParameter, filter.getIdTipoInterventoSuap());
+        }
+        if (filter.getDataInizioProtSuap() != null) {
+            query.setParameter(dataInizioProtSuapParameter, filter.getDataInizioProtSuap());
+        }
+        if (filter.getDataFineProtSuap() != null) {
+            query.setParameter(dataFineProtSuapParameter, filter.getDataFineProtSuap());
+        }
+        if (filter.getListaPraticheIn() != null) {
+        	 List<Integer> daIncludere = new ArrayList<Integer>();
+             
+        	for (Pratica p : filter.getListaPraticheIn()) {
+        		daIncludere.add(p.getIdPratica());
+            	
+            }
+        	query.setParameter(praticheDaIncludereParameter, daIncludere);
+           
+        }
+       
 
         List<Pratica> pratiche = query.getResultList();
         String sql = query.unwrap(JpaQuery.class).getDatabaseQuery().getSQLString();
@@ -3361,12 +3444,19 @@ public class PraticaDao extends Paginator {
 
 		try {
 		String sqlString = EstrazioniPratiche.estrazionePdcSQL;
+		
+/*		List<Integer> listaProcessi = new ArrayList<Integer>();
+		listaProcessi.add(8); //vecchio processo pdc altri comuni
+		listaProcessi.add(15); //vecchio processo pdc Bari
+		listaProcessi.add(17); //nuovo processo pdc Bari
+		listaProcessi.add(27); //nuovo processo pdc altri comuni
+*/		
 		Query query = em.createNativeQuery(sqlString);
-		query.setParameter(3, filter.getDataInizio());
-		query.setParameter(4, filter.getDataFine());
+		query.setParameter(2, filter.getDataInizio());
+		query.setParameter(3, filter.getDataFine());
 //		query.setParameter(2, 893);
-		query.setParameter(2, filter.getEnteSelezionato().getIdEnte());
-		query.setParameter(1, 15);
+		query.setParameter(1, filter.getEnteSelezionato().getIdEnte());
+		//query.setParameter(1, listaProcessi);
 		if (filter.getLimit() != null && filter.getOffset() != null) {
             query.setMaxResults(filter.getLimit());
             query.setFirstResult(filter.getOffset());
@@ -3411,12 +3501,19 @@ public class PraticaDao extends Paginator {
 
 		try {
 			String sqlString = EstrazioniPratiche.estrazionePdcSQL;
+			
+/*			List<Integer> listaProcessi = new ArrayList<Integer>();
+			listaProcessi.add(8); //vecchio processo pdc altri comuni
+			listaProcessi.add(15); //vecchio processo pdc Bari
+			listaProcessi.add(17); //nuovo processo pdc Bari
+			listaProcessi.add(27); //nuovo processo pdc altri comuni
+*/			
 			Query query = em.createNativeQuery(sqlString);
-			query.setParameter(3, filter.getDataInizio());
-			query.setParameter(4, filter.getDataFine());
+			query.setParameter(2, filter.getDataInizio());
+			query.setParameter(3, filter.getDataFine());
 //			query.setParameter(2, 893);
-			query.setParameter(2, filter.getEnteSelezionato().getIdEnte());
-			query.setParameter(1, 15);
+			query.setParameter(1, filter.getEnteSelezionato().getIdEnte());
+			//query.setParameter(1, listaProcessi);
 
 			list = query.getResultList();
 			if (list.size() != 0) {
@@ -3576,6 +3673,19 @@ public class PraticaDao extends Paginator {
 		List<PraticheEventi> lista = query.getResultList();
 		return lista;
 	}
+	
+	public List<PraticaProcedimenti> listPraticaProcedimentibyCodProc(List<String> codProcedimenti){
+		String sql = "SELECT s "
+                + "FROM PraticaProcedimenti s inner join s.procedimenti p "
+                + "WHERE p.codProc in :codProc";
+		
+		Query query = em.createQuery(sql);
+		query.setParameter("codProc", codProcedimenti);
+		List<PraticaProcedimenti> lista  = query.getResultList();
+		return lista;
+	}
+	
+	
 	
 	
 	}

@@ -405,7 +405,18 @@ public class PraticheSerializer {
         }
         nuova.setIdentificativoPratica(pratica.getIdentificativoPratica());
         nuova.setIdentificativoEsterno(pratica.getIdentificativoEsterno());
-        nuova.setOggettoPratica(pratica.getOggettoPratica());
+        if (pratica.getProt_suap() !=null && !(pratica.getProt_suap()).isEmpty()) {
+        	if(pratica.getIdTipoInterventoSuap()!=null) {
+        		
+        		nuova.setOggettoPratica(pratica.getOggettoPratica() + "-"+ pratica.getIdTipoInterventoSuap().getDescrizioneTipoInterventoSuap());
+        	}else {
+        		nuova.setOggettoPratica(pratica.getOggettoPratica());
+        	}
+        	
+        }else {
+        	nuova.setOggettoPratica(pratica.getOggettoPratica());
+        }
+        
         if (pratica.getIdStatoPratica() != null) {
             nuova.setStatoPratica(pratica.getIdStatoPratica().getDescrizione());
         } else {
@@ -890,7 +901,7 @@ public class PraticheSerializer {
             for (Anagrafiche anagrafica : anagrafiche) {
                 //TODO: non posso avere anagrafiche null o tipo anagrafica non valorizzata
                 if (anagrafica.getAnagrafica() != null && anagrafica.getAnagrafica().getTipoAnagrafica() != null && anagrafica.getAnagrafica().getTipoAnagrafica().equalsIgnoreCase("F")) {
-                    if (anagrafica.getCodTipoRuolo() != null && anagrafica.getCodTipoRuolo().equals(TipoRuolo.BENEFICIARIO) || anagrafica.getDesTipoRuolo().equalsIgnoreCase("BENEFICIARIO")) {
+                    if ((anagrafica.getCodTipoRuolo() != null && anagrafica.getCodTipoRuolo().equals(TipoRuolo.BENEFICIARIO)) || (anagrafica.getDesTipoRuolo() != null && anagrafica.getDesTipoRuolo().equalsIgnoreCase("BENEFICIARIO"))) {
                         if (anagrafica.getAnagrafica().getVarianteAnagrafica() == null) {
                             anagrafica.getAnagrafica().setVarianteAnagrafica("F");
                         }

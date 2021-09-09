@@ -24,22 +24,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import it.gov.impresainungiorno.schema.base.Comune;
-import it.gov.impresainungiorno.schema.base.IndirizzoConRecapiti;
-import it.gov.impresainungiorno.schema.base.Provincia;
-import it.gov.impresainungiorno.schema.base.Stato;
-import it.gov.impresainungiorno.schema.suap.ente.AllegatoCooperazione;
-import it.gov.impresainungiorno.schema.suap.ente.CooperazioneSUAPEnte;
-import it.gov.impresainungiorno.schema.suap.ente.OggettoCooperazione;
-import it.gov.impresainungiorno.schema.suap.pratica.AnagraficaImpresa;
-import it.gov.impresainungiorno.schema.suap.pratica.AnagraficaRappresentante;
-import it.gov.impresainungiorno.schema.suap.pratica.Carica;
-import it.gov.impresainungiorno.schema.suap.pratica.EstremiEnte;
-import it.gov.impresainungiorno.schema.suap.pratica.EstremiSuap;
-import it.gov.impresainungiorno.schema.suap.pratica.FormaGiuridica;
-import it.gov.impresainungiorno.schema.suap.pratica.OggettoComunicazione;
-import it.gov.impresainungiorno.schema.suap.pratica.ProtocolloSUAP;
-import it.gov.impresainungiorno.schema.suap.pratica.TipoIntervento;
 import it.wego.cross.dao.AllegatiDao;
 import it.wego.cross.dao.PraticaDao;
 import it.wego.cross.dto.AllegatoDTO;
@@ -60,6 +44,25 @@ import it.wego.cross.plugins.documenti.GestioneAllegati;
 import it.wego.cross.plugins.documenti.GestioneAllegatiDB;
 import it.wego.cross.plugins.documenti.GestioneAllegatiFS;
 import it.wego.cross.serializer.AllegatiSerializer;
+import it.gov.impresainungiorno.schema.base.CodiceREA;
+import it.gov.impresainungiorno.schema.base.Comune;
+import it.gov.impresainungiorno.schema.base.IndirizzoConRecapiti;
+import it.gov.impresainungiorno.schema.base.Provincia;
+import it.gov.impresainungiorno.schema.base.Stato;
+import it.gov.impresainungiorno.schema.suap.ente.AllegatoCooperazione;
+import it.gov.impresainungiorno.schema.suap.ente.CooperazioneEnteSUAP;
+import it.gov.impresainungiorno.schema.suap.ente.CooperazioneSUAPEnte;
+import it.gov.impresainungiorno.schema.suap.ente.OggettoCooperazione;
+import it.gov.impresainungiorno.schema.suap.ente.CooperazioneEnteSUAP.Intestazione;
+import it.gov.impresainungiorno.schema.suap.pratica.AnagraficaImpresa;
+import it.gov.impresainungiorno.schema.suap.pratica.AnagraficaRappresentante;
+import it.gov.impresainungiorno.schema.suap.pratica.Carica;
+import it.gov.impresainungiorno.schema.suap.pratica.EstremiEnte;
+import it.gov.impresainungiorno.schema.suap.pratica.EstremiSuap;
+import it.gov.impresainungiorno.schema.suap.pratica.FormaGiuridica;
+import it.gov.impresainungiorno.schema.suap.pratica.OggettoComunicazione;
+import it.gov.impresainungiorno.schema.suap.pratica.ProtocolloSUAP;
+import it.gov.impresainungiorno.schema.suap.pratica.TipoIntervento;
 import it.wego.cross.utils.Utils;
 
 /**
@@ -229,7 +232,8 @@ public class AllegatiServiceImpl implements AllegatiService {
     		//Info-Schema
     	CooperazioneSUAPEnte.InfoSchema is = new CooperazioneSUAPEnte.InfoSchema();
     	is.setVersione("1.1.0");
-		is.setData(Utils.dateToXmlGregorianCalendar(pratica.getDataRicezione()));
+		//is.setData(Utils.dateToXmlGregorianCalendar(pratica.getDataRicezione()));
+		is.setData(pratica.getDataRicezione());
     	comunicazioneXml.setInfoSchema(is);
     	
     		//Intestazione
@@ -278,10 +282,11 @@ public class AllegatiServiceImpl implements AllegatiService {
 		
 		intestazione.setOggettoPratica(oc);
 		
-		it.gov.impresainungiorno.schema.suap.pratica.ProtocolloSUAP protocolloPraticaSuap = new ProtocolloSUAP();
+		ProtocolloSUAP protocolloPraticaSuap = new ProtocolloSUAP();
 		protocolloPraticaSuap.setCodiceAmministrazione(enteSuap.getCodiceAmministrazione());
 		protocolloPraticaSuap.setCodiceAoo(enteSuap.getCodiceAoo());
-		protocolloPraticaSuap.setDataRegistrazione(Utils.dateToXmlGregorianCalendar(pratica.getDataProtocollazione()));
+//		protocolloPraticaSuap.setDataRegistrazione(Utils.dateToXmlGregorianCalendar(pratica.getDataProtocollazione()));
+		protocolloPraticaSuap.setDataRegistrazione(pratica.getDataProtocollazione());
 		protocolloPraticaSuap.setNumeroRegistrazione(pratica.getProtocollo());
 		
 		intestazione.setProtocolloPraticaSuap(protocolloPraticaSuap);
@@ -311,12 +316,22 @@ public class AllegatiServiceImpl implements AllegatiService {
 
 			indirizzo.setStato(stato);
 			Provincia pr = new Provincia();
-			pr.setSigla(recapiti.getIdComune().getIdProvincia().getCodCatastale());
-			pr.setValue(recapiti.getIdComune().getIdProvincia().getDescrizione());
+			if(recapiti.getIdComune()!=null) {
+				pr.setSigla(recapiti.getIdComune().getIdProvincia().getCodCatastale());
+				pr.setValue(recapiti.getIdComune().getIdProvincia().getDescrizione());
+			} else {
+				pr.setSigla("");
+				pr.setValue("");
+			}
 			indirizzo.setProvincia(pr);
 			Comune c = new Comune();
-			c.setCodiceCatastale(recapiti.getIdComune().getCodCatastale());
-			c.setValue(recapiti.getIdComune().getDescrizione());
+			if(recapiti.getIdComune()!=null) {
+				c.setCodiceCatastale(recapiti.getIdComune().getCodCatastale());
+				c.setValue(recapiti.getIdComune().getDescrizione());
+			} else {
+				c.setCodiceCatastale("");
+				c.setValue("");
+			}
 			indirizzo.setComune(c);
 			indirizzo.setCap(recapiti.getCap());
 			indirizzo.setDenominazioneStradale(recapiti.getIndirizzo());
@@ -368,11 +383,12 @@ public class AllegatiServiceImpl implements AllegatiService {
 				"Pertanto sia i documenti che gli uffici SUAP allegano a comunicazioni effettuate tramite la Scrivania Virtuale, sia i documenti trasmessi da imprese, intermediari ed enti terzi ai SUAP tramite PEC, devono rispettare tali formati.");
     	
 		
-		it.gov.impresainungiorno.schema.suap.pratica.ProtocolloSUAP protocollo = new ProtocolloSUAP();
+		ProtocolloSUAP protocollo = new ProtocolloSUAP();
 		protocollo.setCodiceAmministrazione(enteSuap.getCodiceAmministrazione());
 		protocollo.setCodiceAoo(enteSuap.getCodiceAoo());
 		if (comunicazione.getDataDiProtocollo() != null)
-			protocollo.setDataRegistrazione(Utils.dateToXmlGregorianCalendar(comunicazione.getDataDiProtocollo()));
+//			protocollo.setDataRegistrazione(Utils.dateToXmlGregorianCalendar(comunicazione.getDataDiProtocollo()));
+		protocollo.setDataRegistrazione(comunicazione.getDataDiProtocollo());
 		else
 			protocollo.setDataRegistrazione(null);
 		if (comunicazione.getNumeroDiProtocollo() != null)
@@ -389,7 +405,7 @@ public class AllegatiServiceImpl implements AllegatiService {
 		List<AllegatoCooperazione> temp = new ArrayList<AllegatoCooperazione>();
 		List<it.wego.cross.dto.dozer.AllegatoDTO> allegatiPratica = praticaDTO.getAllegati();
 		for (it.wego.cross.dto.dozer.AllegatoDTO allegato : allegatiPratica) {
-    		AllegatoCooperazione e = AllegatiSerializer.serializeAllegatoCooperazione(allegato);
+    		AllegatoCooperazione e = AllegatiSerializer.serializeAllegatoCooperazioneSuapEnteXML(allegato);
     		temp.add(e);
         }
     	comunicazioneXml.getAllegato().addAll(temp);
@@ -420,5 +436,16 @@ public class AllegatiServiceImpl implements AllegatiService {
 		suapEnte.setAllegaAllaMail("true");
 		return suapEnte;
 	}
+	
+	
+	public Allegati findByNomeFile(String nomeFile,Integer idPratica) throws Exception {
+        Allegati allegato = allegatiDao.findAllegatoByNomeFile(nomeFile,idPratica);
+        return allegato;
+    }
+	
     
+	
+	
+	
+	
 }

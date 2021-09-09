@@ -35,14 +35,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AnagraficaCompleta }
-     * 
-     */
-    public AnagraficaCompleta createAnagraficaCompleta() {
-        return new AnagraficaCompleta();
-    }
-
-    /**
      * Create an instance of {@link InvioAdempimento }
      * 
      */
@@ -51,11 +43,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Ricevuta }
+     * Create an instance of {@link AnagraficaCompleta }
      * 
      */
-    public Ricevuta createRicevuta() {
-        return new Ricevuta();
+    public AnagraficaCompleta createAnagraficaCompleta() {
+        return new AnagraficaCompleta();
     }
 
     /**
@@ -67,147 +59,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link IndirizzoStraniero }
+     * Create an instance of {@link Ricevuta }
      * 
      */
-    public IndirizzoStraniero createIndirizzoStraniero() {
-        return new IndirizzoStraniero();
-    }
-
-    /**
-     * Create an instance of {@link DatiPersona }
-     * 
-     */
-    public DatiPersona createDatiPersona() {
-        return new DatiPersona();
-    }
-
-    /**
-     * Create an instance of {@link FormaGiuridica }
-     * 
-     */
-    public FormaGiuridica createFormaGiuridica() {
-        return new FormaGiuridica();
-    }
-
-    /**
-     * Create an instance of {@link Ammontare }
-     * 
-     */
-    public Ammontare createAmmontare() {
-        return new Ammontare();
-    }
-
-    /**
-     * Create an instance of {@link Provincia }
-     * 
-     */
-    public Provincia createProvincia() {
-        return new Provincia();
-    }
-
-    /**
-     * Create an instance of {@link AttivitaISTAT }
-     * 
-     */
-    public AttivitaISTAT createAttivitaISTAT() {
-        return new AttivitaISTAT();
-    }
-
-    /**
-     * Create an instance of {@link IndirizzoItalianoRI }
-     * 
-     */
-    public IndirizzoItalianoRI createIndirizzoItalianoRI() {
-        return new IndirizzoItalianoRI();
-    }
-
-    /**
-     * Create an instance of {@link LegaleRappresentante }
-     * 
-     */
-    public LegaleRappresentante createLegaleRappresentante() {
-        return new LegaleRappresentante();
-    }
-
-    /**
-     * Create an instance of {@link IndirizzoConRecapiti }
-     * 
-     */
-    public IndirizzoConRecapiti createIndirizzoConRecapiti() {
-        return new IndirizzoConRecapiti();
-    }
-
-    /**
-     * Create an instance of {@link IndirizzoItalianoConRecapiti }
-     * 
-     */
-    public IndirizzoItalianoConRecapiti createIndirizzoItalianoConRecapiti() {
-        return new IndirizzoItalianoConRecapiti();
-    }
-
-    /**
-     * Create an instance of {@link AmmontarePositivo }
-     * 
-     */
-    public AmmontarePositivo createAmmontarePositivo() {
-        return new AmmontarePositivo();
-    }
-
-    /**
-     * Create an instance of {@link IndirizzoConRecapitiRI }
-     * 
-     */
-    public IndirizzoConRecapitiRI createIndirizzoConRecapitiRI() {
-        return new IndirizzoConRecapitiRI();
-    }
-
-    /**
-     * Create an instance of {@link ProvinciaRI }
-     * 
-     */
-    public ProvinciaRI createProvinciaRI() {
-        return new ProvinciaRI();
-    }
-
-    /**
-     * Create an instance of {@link AttivitaEsercitata }
-     * 
-     */
-    public AttivitaEsercitata createAttivitaEsercitata() {
-        return new AttivitaEsercitata();
-    }
-
-    /**
-     * Create an instance of {@link IndirizzoRI }
-     * 
-     */
-    public IndirizzoRI createIndirizzoRI() {
-        return new IndirizzoRI();
-    }
-
-    /**
-     * Create an instance of {@link ComuneRI }
-     * 
-     */
-    public ComuneRI createComuneRI() {
-        return new ComuneRI();
-    }
-
-    /**
-     * Create an instance of {@link IndirizzoConRecapitiObbligatori }
-     * 
-     */
-    public IndirizzoConRecapitiObbligatori createIndirizzoConRecapitiObbligatori() {
-        return new IndirizzoConRecapitiObbligatori();
-    }
-
-    /**
-     * Create an instance of {@link Comune }
-     * 
-     */
-    public Comune createComune() {
-        return new Comune();
+    public Ricevuta createRicevuta() {
+        return new Ricevuta();
     }
 
     /**
@@ -219,83 +75,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Telefono }
+     * Create an instance of {@link Ammontare }
      * 
      */
-    public Telefono createTelefono() {
-        return new Telefono();
-    }
-
-    /**
-     * Create an instance of {@link DocumentoAllegato }
-     * 
-     */
-    public DocumentoAllegato createDocumentoAllegato() {
-        return new DocumentoAllegato();
-    }
-
-    /**
-     * Create an instance of {@link CodiceREA }
-     * 
-     */
-    public CodiceREA createCodiceREA() {
-        return new CodiceREA();
-    }
-
-    /**
-     * Create an instance of {@link Anagrafica }
-     * 
-     */
-    public Anagrafica createAnagrafica() {
-        return new Anagrafica();
-    }
-
-    /**
-     * Create an instance of {@link AnagraficaRappresentante }
-     * 
-     */
-    public AnagraficaRappresentante createAnagraficaRappresentante() {
-        return new AnagraficaRappresentante();
-    }
-
-    /**
-     * Create an instance of {@link IndirizzoItaliano }
-     * 
-     */
-    public IndirizzoItaliano createIndirizzoItaliano() {
-        return new IndirizzoItaliano();
-    }
-
-    /**
-     * Create an instance of {@link EnteRicevuta }
-     * 
-     */
-    public EnteRicevuta createEnteRicevuta() {
-        return new EnteRicevuta();
-    }
-
-    /**
-     * Create an instance of {@link AnagraficaImpresa }
-     * 
-     */
-    public AnagraficaImpresa createAnagraficaImpresa() {
-        return new AnagraficaImpresa();
-    }
-
-    /**
-     * Create an instance of {@link Errore }
-     * 
-     */
-    public Errore createErrore() {
-        return new Errore();
-    }
-
-    /**
-     * Create an instance of {@link Indirizzo }
-     * 
-     */
-    public Indirizzo createIndirizzo() {
-        return new Indirizzo();
+    public Ammontare createAmmontare() {
+        return new Ammontare();
     }
 
     /**
@@ -307,27 +91,179 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DettaglioImpresa }
+     * Create an instance of {@link AmmontarePositivo }
      * 
      */
-    public DettaglioImpresa createDettaglioImpresa() {
-        return new DettaglioImpresa();
+    public AmmontarePositivo createAmmontarePositivo() {
+        return new AmmontarePositivo();
     }
 
     /**
-     * Create an instance of {@link Carica }
+     * Create an instance of {@link Anagrafica }
      * 
      */
-    public Carica createCarica() {
-        return new Carica();
+    public Anagrafica createAnagrafica() {
+        return new Anagrafica();
     }
 
     /**
-     * Create an instance of {@link EntitaComposta }
+     * Create an instance of {@link AnagraficaImpresa }
      * 
      */
-    public EntitaComposta createEntitaComposta() {
-        return new EntitaComposta();
+    public AnagraficaImpresa createAnagraficaImpresa() {
+        return new AnagraficaImpresa();
+    }
+
+    /**
+     * Create an instance of {@link AttivitaEsercitata }
+     * 
+     */
+    public AttivitaEsercitata createAttivitaEsercitata() {
+        return new AttivitaEsercitata();
+    }
+
+    /**
+     * Create an instance of {@link AttivitaISTAT }
+     * 
+     */
+    public AttivitaISTAT createAttivitaISTAT() {
+        return new AttivitaISTAT();
+    }
+
+    /**
+     * Create an instance of {@link CodiceREA }
+     * 
+     */
+    public CodiceREA createCodiceREA() {
+        return new CodiceREA();
+    }
+
+    /**
+     * Create an instance of {@link Comune }
+     * 
+     */
+    public Comune createComune() {
+        return new Comune();
+    }
+
+    /**
+     * Create an instance of {@link ComuneRI }
+     * 
+     */
+    public ComuneRI createComuneRI() {
+        return new ComuneRI();
+    }
+
+    /**
+     * Create an instance of {@link DatiPersona }
+     * 
+     */
+    public DatiPersona createDatiPersona() {
+        return new DatiPersona();
+    }
+
+    /**
+     * Create an instance of {@link Errore }
+     * 
+     */
+    public Errore createErrore() {
+        return new Errore();
+    }
+
+    /**
+     * Create an instance of {@link FormaGiuridica }
+     * 
+     */
+    public FormaGiuridica createFormaGiuridica() {
+        return new FormaGiuridica();
+    }
+
+    /**
+     * Create an instance of {@link Indirizzo }
+     * 
+     */
+    public Indirizzo createIndirizzo() {
+        return new Indirizzo();
+    }
+
+    /**
+     * Create an instance of {@link IndirizzoRI }
+     * 
+     */
+    public IndirizzoRI createIndirizzoRI() {
+        return new IndirizzoRI();
+    }
+
+    /**
+     * Create an instance of {@link IndirizzoConRecapiti }
+     * 
+     */
+    public IndirizzoConRecapiti createIndirizzoConRecapiti() {
+        return new IndirizzoConRecapiti();
+    }
+
+    /**
+     * Create an instance of {@link IndirizzoConRecapitiRI }
+     * 
+     */
+    public IndirizzoConRecapitiRI createIndirizzoConRecapitiRI() {
+        return new IndirizzoConRecapitiRI();
+    }
+
+    /**
+     * Create an instance of {@link IndirizzoConRecapitiObbligatori }
+     * 
+     */
+    public IndirizzoConRecapitiObbligatori createIndirizzoConRecapitiObbligatori() {
+        return new IndirizzoConRecapitiObbligatori();
+    }
+
+    /**
+     * Create an instance of {@link IndirizzoItaliano }
+     * 
+     */
+    public IndirizzoItaliano createIndirizzoItaliano() {
+        return new IndirizzoItaliano();
+    }
+
+    /**
+     * Create an instance of {@link IndirizzoItalianoRI }
+     * 
+     */
+    public IndirizzoItalianoRI createIndirizzoItalianoRI() {
+        return new IndirizzoItalianoRI();
+    }
+
+    /**
+     * Create an instance of {@link IndirizzoItalianoConRecapiti }
+     * 
+     */
+    public IndirizzoItalianoConRecapiti createIndirizzoItalianoConRecapiti() {
+        return new IndirizzoItalianoConRecapiti();
+    }
+
+    /**
+     * Create an instance of {@link IndirizzoStraniero }
+     * 
+     */
+    public IndirizzoStraniero createIndirizzoStraniero() {
+        return new IndirizzoStraniero();
+    }
+
+    /**
+     * Create an instance of {@link Provincia }
+     * 
+     */
+    public Provincia createProvincia() {
+        return new Provincia();
+    }
+
+    /**
+     * Create an instance of {@link ProvinciaRI }
+     * 
+     */
+    public ProvinciaRI createProvinciaRI() {
+        return new ProvinciaRI();
     }
 
     /**
@@ -339,11 +275,67 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AnagraficaCompleta.Nascita }
+     * Create an instance of {@link Telefono }
      * 
      */
-    public AnagraficaCompleta.Nascita createAnagraficaCompletaNascita() {
-        return new AnagraficaCompleta.Nascita();
+    public Telefono createTelefono() {
+        return new Telefono();
+    }
+
+    /**
+     * Create an instance of {@link Carica }
+     * 
+     */
+    public Carica createCarica() {
+        return new Carica();
+    }
+
+    /**
+     * Create an instance of {@link LegaleRappresentante }
+     * 
+     */
+    public LegaleRappresentante createLegaleRappresentante() {
+        return new LegaleRappresentante();
+    }
+
+    /**
+     * Create an instance of {@link AnagraficaRappresentante }
+     * 
+     */
+    public AnagraficaRappresentante createAnagraficaRappresentante() {
+        return new AnagraficaRappresentante();
+    }
+
+    /**
+     * Create an instance of {@link EntitaComposta }
+     * 
+     */
+    public EntitaComposta createEntitaComposta() {
+        return new EntitaComposta();
+    }
+
+    /**
+     * Create an instance of {@link DettaglioImpresa }
+     * 
+     */
+    public DettaglioImpresa createDettaglioImpresa() {
+        return new DettaglioImpresa();
+    }
+
+    /**
+     * Create an instance of {@link EnteRicevuta }
+     * 
+     */
+    public EnteRicevuta createEnteRicevuta() {
+        return new EnteRicevuta();
+    }
+
+    /**
+     * Create an instance of {@link DocumentoAllegato }
+     * 
+     */
+    public DocumentoAllegato createDocumentoAllegato() {
+        return new DocumentoAllegato();
     }
 
     /**
@@ -355,11 +347,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Ricevuta.ListaAdempimenti }
+     * Create an instance of {@link AnagraficaCompleta.Nascita }
      * 
      */
-    public Ricevuta.ListaAdempimenti createRicevutaListaAdempimenti() {
-        return new Ricevuta.ListaAdempimenti();
+    public AnagraficaCompleta.Nascita createAnagraficaCompletaNascita() {
+        return new AnagraficaCompleta.Nascita();
     }
 
     /**
@@ -371,8 +363,20 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Ricevuta }{@code >}}
+     * Create an instance of {@link Ricevuta.ListaAdempimenti }
      * 
+     */
+    public Ricevuta.ListaAdempimenti createRicevutaListaAdempimenti() {
+        return new Ricevuta.ListaAdempimenti();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Ricevuta }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link Ricevuta }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/schema/base", name = "ricevuta")
     public JAXBElement<Ricevuta> createRicevuta(Ricevuta value) {
@@ -380,8 +384,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UtentePortale }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link UtentePortale }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link UtentePortale }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/schema/base", name = "dati-mittente")
     public JAXBElement<UtentePortale> createDatiMittente(UtentePortale value) {

@@ -651,4 +651,15 @@ public class ProcedimentiDao {
         List<ProcedimentiEnti> res = query.getResultList();
         return res;
     }
+    
+    public ProcedimentiEnti findUfficiByProcEnte( int idProc,int idEnte) {
+        Query query = em.createQuery("SELECT p "
+                + "FROM ProcedimentiEnti p "
+                + "WHERE p.idEnte.idEnte = :idEnte "
+                + "AND p.idProc.idProc = :idProc");
+        query.setParameter("idEnte", idEnte);
+        query.setParameter("idProc", idProc);
+        ProcedimentiEnti pe = (ProcedimentiEnti) Utils.getSingleResult(query);
+        return pe;
+    }
 }

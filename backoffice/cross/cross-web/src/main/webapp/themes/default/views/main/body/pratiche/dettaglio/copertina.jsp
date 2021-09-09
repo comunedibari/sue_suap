@@ -116,20 +116,47 @@
         <a href="#" id="pratica_oggetto" class="x-editable-text" name="pratica_oggetto">${pratica.oggettoPratica}</a>
     </div>
 <!--     Tipologia intervento -->
-    <div class="ctrlHolder">
-        <label for="pratica_stato" class="required"><spring:message code="pratica.tipologia.intervento.label"/></label>
-        <a href="#" id="pratica_tipologia_intervento" class="" name="pratica_tipologia_intervento" data-type="select">${pratica.idStatoPratica.descrizione}</a>
-    </div>
+    <c:choose>
+		<c:when test="${not empty pratica.prot_suap}">
+			<div class="ctrlHolder">
+		        <label for="pratica_procedimento" class="required"><spring:message code="pratica.copertina.procedimento.label"/></label>
+		        <a href="#" id="pratica_procedimento" class="" name="pratica_procedimento">${pratica.tipoProcedimentoSuap}</a>
+		    </div>
+		    
+			<div class="ctrlHolder">
+        		<label for="pratica_stato" class="required"><spring:message code="pratica.tipologia.intervento.label"/></label>
+        		<a href="#" id="pratica_tipologia_intervento" class="" name="pratica_tipologia_intervento" data-type="select">${pratica.tipoInterventoSuap}</a>
+    		</div>
+    		
+    		<div class="ctrlHolder">
+        		<label for="numero_protocollo_suap" class="required"><spring:message code="pratica.prot_suap.label"/></label>
+        		<a href="#" id="numero_protocollo_suap" class="" name="numero_protocollo_suap" data-type="select">${pratica.prot_suap}</a>
+    		</div>
+    		
+    		<div class="ctrlHolder">
+        		<label for="data_protocollo_suap" class="required"><spring:message code="pratica.data_prot_suap.label"/></label>
+        		<a href="#" id="data_protocollo_suap" class="x-editable-text" data-type="date" data-format="dd/mm/yyyy" name="data_protocollo_suap"><fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.data_prot_suap}" /></a>
+    		</div>
+    		
+		</c:when>
+		<c:otherwise>
+			<div class="ctrlHolder">
+		        <label for="pratica_stato" class="required"><spring:message code="pratica.tipologia.intervento.label"/></label>
+		        <a href="#" id="pratica_tipologia_intervento" class="" name="pratica_tipologia_intervento" data-type="select">${pratica.idStatoPratica.descrizione}</a>
+		    </div>
+		    <div class="ctrlHolder">
+		        <label for="pratica_procedimento" class="required"><spring:message code="pratica.copertina.procedimento.label"/></label>
+		        <a href="#" id="pratica_procedimento" class="" name="pratica_procedimento">${pratica.procedimento.descrizione}</a>
+		    </div>
+		    
+		    <div class="ctrlHolder">
+		        <label for="pratica_processo" class="required">Processo</label>
+		        <a href="#" id="pratica_processo" class="" name="pratica_processo">${pratica.idProcesso.desProcesso}</a>
+		    </div>
+		</c:otherwise>
+	</c:choose>
     
-    <div class="ctrlHolder">
-        <label for="pratica_procedimento" class="required"><spring:message code="pratica.copertina.procedimento.label"/></label>
-        <a href="#" id="pratica_procedimento" class="" name="pratica_procedimento">${pratica.procedimento.descrizione}</a>
-    </div>
     
-    <div class="ctrlHolder">
-        <label for="pratica_processo" class="required">Processo</label>
-        <a href="#" id="pratica_processo" class="" name="pratica_processo">${pratica.idProcesso.desProcesso}</a>
-    </div>
     
     <div class="ctrlHolder">
         <label for="pratica_ricezione_data" class="required"><spring:message code="pratica.copertina.ricezione.data.label"/></label>

@@ -168,7 +168,7 @@ public class EstrazioniPratiche {
 			"		prt.data_chiusura		    " + 
 			"FROM opencross.pratica prt, opencross.utente u, opencross.lk_stato_pratica sp, opencross.procedimenti_enti proc_e  " + 
 			"where UPPER(oggetto_pratica) like '%PERMESSO%' " + 
-			"and prt.id_processo = ? " + 
+			"and prt.id_processo in (8,15,17,27) " + 
 			"and prt.id_utente=u.id_utente " + 
 			"and prt.id_proc_ente = proc_e.id_proc_ente " +
 			"and prt.id_stato_pratica = sp.id_stato_pratica " +

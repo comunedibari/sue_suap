@@ -78,6 +78,7 @@ public class ComunicazioneReaSerializer {
         RiIntegrazioneRea integrazioneRea = comunicazioneReaService.getIntegrazioneRea(pratica);
 
         VersioneSchema versionSchemaComunicazioneRea = new VersioneSchema();
+//        versionSchemaComunicazioneRea.setData(Calendar.getInstance().getTime());
         versionSchemaComunicazioneRea.setData(Utils.dateToXmlGregorianCalendar(Calendar.getInstance().getTime()));
         versionSchemaComunicazioneRea.setVersione("1.0.0");
         comunicazioneRea.setInfoSchema(versionSchemaComunicazioneRea);
@@ -205,6 +206,7 @@ public class ComunicazioneReaSerializer {
 
         VersioneSchema versionSchemaRiepilogoPraticaSuap = new VersioneSchema();
         versionSchemaRiepilogoPraticaSuap.setData(Utils.dateToXmlGregorianCalendar(Calendar.getInstance().getTime()));
+//        versionSchemaRiepilogoPraticaSuap.setData(Calendar.getInstance().getTime());
         versionSchemaRiepilogoPraticaSuap.setVersione("1.0.0");
         riepilogoPraticaSuap.setInfoSchema(versionSchemaRiepilogoPraticaSuap);
 
@@ -496,12 +498,14 @@ public class ComunicazioneReaSerializer {
             Protocollo protocolloPraticaDbBean = gestioneProtocollo.getProtocolloBean(evento);
             protocolloPraticaSuap.setCodiceAmministrazione(protocolloPraticaDbBean.getCodiceAmministrazione());
             protocolloPraticaSuap.setCodiceAoo(protocolloPraticaDbBean.getCodiceAoo());
-            protocolloPraticaSuap.setDataRegistrazione(Utils.dateToXmlGregorianCalendar(protocolloPraticaDbBean.getDataRegistrazione()));
+            protocolloPraticaSuap.setDataRegistrazione(protocolloPraticaDbBean.getDataRegistrazione());
+//            protocolloPraticaSuap.setDataRegistrazione(Utils.dateToXmlGregorianCalendar(protocolloPraticaDbBean.getDataRegistrazione()));
             protocolloPraticaSuap.setNumeroRegistrazione(Utils.leadingDigitString(protocolloPraticaDbBean.getNumeroRegistrazione(), 0, 7));
         } else {
             protocolloPraticaSuap.setCodiceAmministrazione(evento.getIdPratica().getIdProcEnte().getIdEnte().getCodiceAmministrazione());
             protocolloPraticaSuap.setCodiceAoo(evento.getIdPratica().getIdProcEnte().getIdEnte().getCodiceAoo());
-            protocolloPraticaSuap.setDataRegistrazione(Utils.dateToXmlGregorianCalendar(evento.getDataEvento()));
+            protocolloPraticaSuap.setDataRegistrazione(evento.getDataEvento());
+//            protocolloPraticaSuap.setDataRegistrazione(Utils.dateToXmlGregorianCalendar(evento.getDataEvento()));
             String[] numeroRegistrazione = evento.getProtocollo().split("/");
             protocolloPraticaSuap.setNumeroRegistrazione(numeroRegistrazione[numeroRegistrazione.length - 1]);
         }

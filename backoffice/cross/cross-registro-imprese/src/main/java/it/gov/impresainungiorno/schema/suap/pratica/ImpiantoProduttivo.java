@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -25,62 +18,62 @@ import it.gov.impresainungiorno.schema.base.Indirizzo;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="ImpiantoProduttivo">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="indirizzo" type="{http://www.impresainungiorno.gov.it/schema/base}Indirizzo"/>
- *         &lt;element name="dati-catastali" maxOccurs="unbounded" minOccurs="0">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="sezione" minOccurs="0">
- *                     &lt;complexType>
- *                       &lt;simpleContent>
- *                         &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
- *                           &lt;attribute name="tipo">
- *                             &lt;simpleType>
- *                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                                 &lt;enumeration value="amministrativa"/>
- *                                 &lt;enumeration value="censuaria"/>
- *                                 &lt;enumeration value="urbana"/>
- *                               &lt;/restriction>
- *                             &lt;/simpleType>
- *                           &lt;/attribute>
- *                         &lt;/extension>
- *                       &lt;/simpleContent>
- *                     &lt;/complexType>
- *                   &lt;/element>
- *                   &lt;element name="foglio" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/>
- *                   &lt;element name="mappale" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" maxOccurs="unbounded"/>
- *                   &lt;element name="subalterno" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" maxOccurs="unbounded" minOccurs="0"/>
- *                 &lt;/sequence>
- *                 &lt;attribute name="tipo">
- *                   &lt;simpleType>
- *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *                       &lt;enumeration value="fabbricati"/>
- *                       &lt;enumeration value="terreni"/>
- *                     &lt;/restriction>
- *                   &lt;/simpleType>
- *                 &lt;/attribute>
- *                 &lt;attribute name="comune-catastale">
- *                   &lt;simpleType>
- *                     &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa">
- *                       &lt;pattern value="[A-Z]{1}\d{3}"/>
- *                     &lt;/restriction>
- *                   &lt;/simpleType>
- *                 &lt;/attribute>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;element name="disponibilita-immobile" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/>
- *         &lt;element name="destinazione-uso" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="ImpiantoProduttivo"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="indirizzo" type="{http://www.impresainungiorno.gov.it/schema/base}Indirizzo"/&gt;
+ *         &lt;element name="dati-catastali" maxOccurs="unbounded" minOccurs="0"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence&gt;
+ *                   &lt;element name="sezione" minOccurs="0"&gt;
+ *                     &lt;complexType&gt;
+ *                       &lt;simpleContent&gt;
+ *                         &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+ *                           &lt;attribute name="tipo"&gt;
+ *                             &lt;simpleType&gt;
+ *                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                 &lt;enumeration value="amministrativa"/&gt;
+ *                                 &lt;enumeration value="censuaria"/&gt;
+ *                                 &lt;enumeration value="urbana"/&gt;
+ *                               &lt;/restriction&gt;
+ *                             &lt;/simpleType&gt;
+ *                           &lt;/attribute&gt;
+ *                         &lt;/extension&gt;
+ *                       &lt;/simpleContent&gt;
+ *                     &lt;/complexType&gt;
+ *                   &lt;/element&gt;
+ *                   &lt;element name="foglio" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/&gt;
+ *                   &lt;element name="mappale" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" maxOccurs="unbounded"/&gt;
+ *                   &lt;element name="subalterno" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *                 &lt;/sequence&gt;
+ *                 &lt;attribute name="tipo"&gt;
+ *                   &lt;simpleType&gt;
+ *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                       &lt;enumeration value="fabbricati"/&gt;
+ *                       &lt;enumeration value="terreni"/&gt;
+ *                     &lt;/restriction&gt;
+ *                   &lt;/simpleType&gt;
+ *                 &lt;/attribute&gt;
+ *                 &lt;attribute name="comune-catastale"&gt;
+ *                   &lt;simpleType&gt;
+ *                     &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+ *                       &lt;pattern value="[A-Z]{1}\d{3}"/&gt;
+ *                     &lt;/restriction&gt;
+ *                   &lt;/simpleType&gt;
+ *                 &lt;/attribute&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *         &lt;element name="disponibilita-immobile" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/&gt;
+ *         &lt;element name="destinazione-uso" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -104,7 +97,7 @@ public class ImpiantoProduttivo {
     protected String destinazioneUso;
 
     /**
-     * Recupera il valore della propriet indirizzo.
+     * Recupera il valore della proprietà indirizzo.
      * 
      * @return
      *     possible object is
@@ -116,7 +109,7 @@ public class ImpiantoProduttivo {
     }
 
     /**
-     * Imposta il valore della propriet indirizzo.
+     * Imposta il valore della proprietà indirizzo.
      * 
      * @param value
      *     allowed object is
@@ -157,7 +150,7 @@ public class ImpiantoProduttivo {
     }
 
     /**
-     * Recupera il valore della propriet disponibilitaImmobile.
+     * Recupera il valore della proprietà disponibilitaImmobile.
      * 
      * @return
      *     possible object is
@@ -169,7 +162,7 @@ public class ImpiantoProduttivo {
     }
 
     /**
-     * Imposta il valore della propriet disponibilitaImmobile.
+     * Imposta il valore della proprietà disponibilitaImmobile.
      * 
      * @param value
      *     allowed object is
@@ -181,7 +174,7 @@ public class ImpiantoProduttivo {
     }
 
     /**
-     * Recupera il valore della propriet destinazioneUso.
+     * Recupera il valore della proprietà destinazioneUso.
      * 
      * @return
      *     possible object is
@@ -193,7 +186,7 @@ public class ImpiantoProduttivo {
     }
 
     /**
-     * Imposta il valore della propriet destinazioneUso.
+     * Imposta il valore della proprietà destinazioneUso.
      * 
      * @param value
      *     allowed object is
@@ -211,49 +204,49 @@ public class ImpiantoProduttivo {
      * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="sezione" minOccurs="0">
-     *           &lt;complexType>
-     *             &lt;simpleContent>
-     *               &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
-     *                 &lt;attribute name="tipo">
-     *                   &lt;simpleType>
-     *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *                       &lt;enumeration value="amministrativa"/>
-     *                       &lt;enumeration value="censuaria"/>
-     *                       &lt;enumeration value="urbana"/>
-     *                     &lt;/restriction>
-     *                   &lt;/simpleType>
-     *                 &lt;/attribute>
-     *               &lt;/extension>
-     *             &lt;/simpleContent>
-     *           &lt;/complexType>
-     *         &lt;/element>
-     *         &lt;element name="foglio" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/>
-     *         &lt;element name="mappale" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" maxOccurs="unbounded"/>
-     *         &lt;element name="subalterno" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" maxOccurs="unbounded" minOccurs="0"/>
-     *       &lt;/sequence>
-     *       &lt;attribute name="tipo">
-     *         &lt;simpleType>
-     *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-     *             &lt;enumeration value="fabbricati"/>
-     *             &lt;enumeration value="terreni"/>
-     *           &lt;/restriction>
-     *         &lt;/simpleType>
-     *       &lt;/attribute>
-     *       &lt;attribute name="comune-catastale">
-     *         &lt;simpleType>
-     *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa">
-     *             &lt;pattern value="[A-Z]{1}\d{3}"/>
-     *           &lt;/restriction>
-     *         &lt;/simpleType>
-     *       &lt;/attribute>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;element name="sezione" minOccurs="0"&gt;
+     *           &lt;complexType&gt;
+     *             &lt;simpleContent&gt;
+     *               &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+     *                 &lt;attribute name="tipo"&gt;
+     *                   &lt;simpleType&gt;
+     *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                       &lt;enumeration value="amministrativa"/&gt;
+     *                       &lt;enumeration value="censuaria"/&gt;
+     *                       &lt;enumeration value="urbana"/&gt;
+     *                     &lt;/restriction&gt;
+     *                   &lt;/simpleType&gt;
+     *                 &lt;/attribute&gt;
+     *               &lt;/extension&gt;
+     *             &lt;/simpleContent&gt;
+     *           &lt;/complexType&gt;
+     *         &lt;/element&gt;
+     *         &lt;element name="foglio" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/&gt;
+     *         &lt;element name="mappale" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" maxOccurs="unbounded"/&gt;
+     *         &lt;element name="subalterno" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" maxOccurs="unbounded" minOccurs="0"/&gt;
+     *       &lt;/sequence&gt;
+     *       &lt;attribute name="tipo"&gt;
+     *         &lt;simpleType&gt;
+     *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *             &lt;enumeration value="fabbricati"/&gt;
+     *             &lt;enumeration value="terreni"/&gt;
+     *           &lt;/restriction&gt;
+     *         &lt;/simpleType&gt;
+     *       &lt;/attribute&gt;
+     *       &lt;attribute name="comune-catastale"&gt;
+     *         &lt;simpleType&gt;
+     *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+     *             &lt;pattern value="[A-Z]{1}\d{3}"/&gt;
+     *           &lt;/restriction&gt;
+     *         &lt;/simpleType&gt;
+     *       &lt;/attribute&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -279,7 +272,7 @@ public class ImpiantoProduttivo {
         protected String comuneCatastale;
 
         /**
-         * Recupera il valore della propriet sezione.
+         * Recupera il valore della proprietà sezione.
          * 
          * @return
          *     possible object is
@@ -291,7 +284,7 @@ public class ImpiantoProduttivo {
         }
 
         /**
-         * Imposta il valore della propriet sezione.
+         * Imposta il valore della proprietà sezione.
          * 
          * @param value
          *     allowed object is
@@ -303,7 +296,7 @@ public class ImpiantoProduttivo {
         }
 
         /**
-         * Recupera il valore della propriet foglio.
+         * Recupera il valore della proprietà foglio.
          * 
          * @return
          *     possible object is
@@ -315,7 +308,7 @@ public class ImpiantoProduttivo {
         }
 
         /**
-         * Imposta il valore della propriet foglio.
+         * Imposta il valore della proprietà foglio.
          * 
          * @param value
          *     allowed object is
@@ -385,7 +378,7 @@ public class ImpiantoProduttivo {
         }
 
         /**
-         * Recupera il valore della propriet tipo.
+         * Recupera il valore della proprietà tipo.
          * 
          * @return
          *     possible object is
@@ -397,7 +390,7 @@ public class ImpiantoProduttivo {
         }
 
         /**
-         * Imposta il valore della propriet tipo.
+         * Imposta il valore della proprietà tipo.
          * 
          * @param value
          *     allowed object is
@@ -409,7 +402,7 @@ public class ImpiantoProduttivo {
         }
 
         /**
-         * Recupera il valore della propriet comuneCatastale.
+         * Recupera il valore della proprietà comuneCatastale.
          * 
          * @return
          *     possible object is
@@ -421,7 +414,7 @@ public class ImpiantoProduttivo {
         }
 
         /**
-         * Imposta il valore della propriet comuneCatastale.
+         * Imposta il valore della proprietà comuneCatastale.
          * 
          * @param value
          *     allowed object is
@@ -439,21 +432,21 @@ public class ImpiantoProduttivo {
          * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
          * 
          * <pre>
-         * &lt;complexType>
-         *   &lt;simpleContent>
-         *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
-         *       &lt;attribute name="tipo">
-         *         &lt;simpleType>
-         *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
-         *             &lt;enumeration value="amministrativa"/>
-         *             &lt;enumeration value="censuaria"/>
-         *             &lt;enumeration value="urbana"/>
-         *           &lt;/restriction>
-         *         &lt;/simpleType>
-         *       &lt;/attribute>
-         *     &lt;/extension>
-         *   &lt;/simpleContent>
-         * &lt;/complexType>
+         * &lt;complexType&gt;
+         *   &lt;simpleContent&gt;
+         *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+         *       &lt;attribute name="tipo"&gt;
+         *         &lt;simpleType&gt;
+         *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *             &lt;enumeration value="amministrativa"/&gt;
+         *             &lt;enumeration value="censuaria"/&gt;
+         *             &lt;enumeration value="urbana"/&gt;
+         *           &lt;/restriction&gt;
+         *         &lt;/simpleType&gt;
+         *       &lt;/attribute&gt;
+         *     &lt;/extension&gt;
+         *   &lt;/simpleContent&gt;
+         * &lt;/complexType&gt;
          * </pre>
          * 
          * 
@@ -482,7 +475,7 @@ public class ImpiantoProduttivo {
             }
 
             /**
-             * Imposta il valore della propriet value.
+             * Imposta il valore della proprietà value.
              * 
              * @param value
              *     allowed object is
@@ -494,7 +487,7 @@ public class ImpiantoProduttivo {
             }
 
             /**
-             * Recupera il valore della propriet tipo.
+             * Recupera il valore della proprietà tipo.
              * 
              * @return
              *     possible object is
@@ -506,7 +499,7 @@ public class ImpiantoProduttivo {
             }
 
             /**
-             * Imposta il valore della propriet tipo.
+             * Imposta il valore della proprietà tipo.
              * 
              * @param value
              *     allowed object is

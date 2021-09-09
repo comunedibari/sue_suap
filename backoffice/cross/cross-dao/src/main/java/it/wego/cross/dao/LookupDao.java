@@ -794,4 +794,76 @@ public class LookupDao {
         List<LkRuoliCommissione> resultList = query.getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
     }
+    
+    public LkTipoProcedimentoSuap findTipoProcedimentoSuapByDescSuap(String descrizioneTipoSuap) {
+        Query query = em.createNamedQuery("LkTipoProcedimentoSuap.findByDescrizioneTipoProcedimentoSuap");
+        query.setParameter("descrizioneTipoProcedimentoSuap", descrizioneTipoSuap);
+
+        LkTipoProcedimentoSuap tipoProcedimentoSuap = (LkTipoProcedimentoSuap) Utils.getSingleResult(query);
+        return tipoProcedimentoSuap;
+    }
+    
+    public LkTipoInterventoSuap findTipoInterventoSuapByDescrizione(String descrizioneTipoIntervento) {
+        Query query = em.createNamedQuery("LkTipoInterventoSuap.findByDescrizioneTipoInterventoSuap");
+        query.setParameter("descrizioneTipoInterventoSuap", descrizioneTipoIntervento);
+
+        LkTipoInterventoSuap tipoInterventoSuap = (LkTipoInterventoSuap) Utils.getSingleResult(query);
+        return tipoInterventoSuap;
+    }
+    public LkTipoEndoProcedimentoSuap findTipoEndoProcedimentoSuapByCod(String codEndoProcedimento) {
+        Query query = em.createNamedQuery("LkTipoEndoProcedimentoSuap.findByCodTipoEndoProcedimento");
+        query.setParameter("codEndoProcedimento", codEndoProcedimento);
+
+        LkTipoEndoProcedimentoSuap tipoEndoProcedimentoSuap = (LkTipoEndoProcedimentoSuap) Utils.getSingleResult(query);
+        return tipoEndoProcedimentoSuap;
+    }
+    
+   
+    public List<LkTipoInterventoSuap> findAllTipoInterventoSuap() {
+        Query query = em.createQuery("SELECT l FROM LkTipoInterventoSuap l order by l.descrizioneTipoInterventoSuap ASC");
+        List<LkTipoInterventoSuap> result = query.getResultList();
+        return result;
+    }
+    
+    public List<LkTipoProcedimentoSuap> findAllTipoProcedimentoSuap() {
+        Query query = em.createQuery("SELECT l FROM LkTipoProcedimentoSuap l order by l.descrizioneTipoProcedimentoSuap ASC");
+        List<LkTipoProcedimentoSuap> result = query.getResultList();
+        return result;
+    }
+    public List<LkClassificazioneProcedimento> findAllClassificazioneProcedimento() {
+        Query query = em.createQuery("SELECT l FROM LkClassificazioneProcedimento l order by l.descrizioneClassificazioneProcedimento ASC");
+        List<LkClassificazioneProcedimento> result = query.getResultList();
+        return result;
+    }
+	public LkTipoProcedimentoSuap findLkTipoProcedimentoSUAPbyIdProcedimento(Integer idProcedimentoSuap) {
+		Query query = em.createNamedQuery("LkTipoProcedimentoSuap.findByIdTipoProcedimentoSuap");
+        query.setParameter("idTipoProcedimentoSuap", idProcedimentoSuap);
+
+        LkTipoProcedimentoSuap lookup = (LkTipoProcedimentoSuap) Utils.getSingleResult(query);
+        return lookup;
+	}
+
+	public LkTipoInterventoSuap findLkTipoInterventoSUAPbyIdIntervento(Integer idInterventoSuap) {
+		Query query = em.createNamedQuery("LkTipoInterventoSuap.findByIdTipoInterventoSuap");
+        query.setParameter("idTipoInterventoSuap", idInterventoSuap);
+
+        LkTipoInterventoSuap lookup = (LkTipoInterventoSuap) Utils.getSingleResult(query);
+        return lookup;
+	}
+
+	public LkClassificazioneProcedimento findClassificazioneProcedimentobyId(Integer idClassificazioneProcedimento) {
+		Query query = em.createNamedQuery("LkClassificazioneProcedimento.findByIdClassificazioneProcedimento");
+        query.setParameter("idClassificazioneProcedimento", idClassificazioneProcedimento);
+
+        LkClassificazioneProcedimento lookup = (LkClassificazioneProcedimento) Utils.getSingleResult(query);
+        return  lookup;
+	}
+	
+	 public List<LkTipoEndoProcedimentoSuap> findTipoEndoProcedimentoSuapByTipolgia(String tipologia){
+	    	Query query = em.createNamedQuery("LkTipoEndoProcedimentoSuap.findByTipologiaClassificazione");
+	        query.setParameter("tipologia", tipologia);
+	        return (List<LkTipoEndoProcedimentoSuap>)  query.getResultList();
+
+	    }
+	    
 }

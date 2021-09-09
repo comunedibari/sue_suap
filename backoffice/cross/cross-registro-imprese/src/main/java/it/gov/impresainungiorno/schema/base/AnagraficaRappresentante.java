@@ -10,20 +10,20 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for AnagraficaRappresentante complex type.
+ * <p>Classe Java per AnagraficaRappresentante complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="AnagraficaRappresentante">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Anagrafica">
- *       &lt;sequence>
- *         &lt;element name="carica" type="{http://www.impresainungiorno.gov.it/schema/base}Carica" maxOccurs="unbounded"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="AnagraficaRappresentante"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Anagrafica"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="carica" type="{http://www.impresainungiorno.gov.it/schema/base}Carica" maxOccurs="unbounded"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 

@@ -12,21 +12,21 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for DatiPersona complex type.
+ * <p>Classe Java per DatiPersona complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="DatiPersona">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}AnagraficaCompleta">
- *       &lt;sequence>
- *         &lt;element name="residenza" type="{http://www.impresainungiorno.gov.it/schema/base}Indirizzo"/>
- *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Recapiti"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="DatiPersona"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}AnagraficaCompleta"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="residenza" type="{http://www.impresainungiorno.gov.it/schema/base}Indirizzo"/&gt;
+ *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Recapiti"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -55,7 +55,7 @@ public class DatiPersona
     protected List<String> sitoWeb;
 
     /**
-     * Gets the value of the residenza property.
+     * Recupera il valore della propriet residenza.
      * 
      * @return
      *     possible object is
@@ -67,7 +67,7 @@ public class DatiPersona
     }
 
     /**
-     * Sets the value of the residenza property.
+     * Imposta il valore della propriet residenza.
      * 
      * @param value
      *     allowed object is

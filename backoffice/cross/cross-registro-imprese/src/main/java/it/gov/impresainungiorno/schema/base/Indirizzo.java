@@ -11,22 +11,22 @@ import javax.xml.bind.annotation.XmlType;
 /**
  * Identificazione di indirizzo, italiano o straniera
  * 
- * <p>Java class for Indirizzo complex type.
+ * <p>Classe Java per Indirizzo complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="Indirizzo">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Citta"/>
- *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzoItaliano" minOccurs="0"/>
- *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzo"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="Indirizzo"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Citta"/&gt;
+ *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzoItaliano" minOccurs="0"/&gt;
+ *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzo"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -44,8 +44,8 @@ import javax.xml.bind.annotation.XmlType;
     "frazione"
 })
 @XmlSeeAlso({
-    IndirizzoConRecapitiObbligatori.class,
-    IndirizzoConRecapiti.class
+    IndirizzoConRecapiti.class,
+    IndirizzoConRecapitiObbligatori.class
 })
 public class Indirizzo {
 
@@ -64,7 +64,7 @@ public class Indirizzo {
     protected String frazione;
 
     /**
-     * Gets the value of the stato property.
+     * Recupera il valore della propriet stato.
      * 
      * @return
      *     possible object is
@@ -76,7 +76,7 @@ public class Indirizzo {
     }
 
     /**
-     * Sets the value of the stato property.
+     * Imposta il valore della propriet stato.
      * 
      * @param value
      *     allowed object is
@@ -88,7 +88,7 @@ public class Indirizzo {
     }
 
     /**
-     * Gets the value of the provincia property.
+     * Recupera il valore della propriet provincia.
      * 
      * @return
      *     possible object is
@@ -100,7 +100,7 @@ public class Indirizzo {
     }
 
     /**
-     * Sets the value of the provincia property.
+     * Imposta il valore della propriet provincia.
      * 
      * @param value
      *     allowed object is
@@ -112,7 +112,7 @@ public class Indirizzo {
     }
 
     /**
-     * Gets the value of the comune property.
+     * Recupera il valore della propriet comune.
      * 
      * @return
      *     possible object is
@@ -124,7 +124,7 @@ public class Indirizzo {
     }
 
     /**
-     * Sets the value of the comune property.
+     * Imposta il valore della propriet comune.
      * 
      * @param value
      *     allowed object is
@@ -136,7 +136,7 @@ public class Indirizzo {
     }
 
     /**
-     * Gets the value of the cittaStraniera property.
+     * Recupera il valore della propriet cittaStraniera.
      * 
      * @return
      *     possible object is
@@ -148,7 +148,7 @@ public class Indirizzo {
     }
 
     /**
-     * Sets the value of the cittaStraniera property.
+     * Imposta il valore della propriet cittaStraniera.
      * 
      * @param value
      *     allowed object is
@@ -160,7 +160,7 @@ public class Indirizzo {
     }
 
     /**
-     * Gets the value of the cap property.
+     * Recupera il valore della propriet cap.
      * 
      * @return
      *     possible object is
@@ -172,7 +172,7 @@ public class Indirizzo {
     }
 
     /**
-     * Sets the value of the cap property.
+     * Imposta il valore della propriet cap.
      * 
      * @param value
      *     allowed object is
@@ -184,7 +184,7 @@ public class Indirizzo {
     }
 
     /**
-     * Gets the value of the toponimo property.
+     * Recupera il valore della propriet toponimo.
      * 
      * @return
      *     possible object is
@@ -196,7 +196,7 @@ public class Indirizzo {
     }
 
     /**
-     * Sets the value of the toponimo property.
+     * Imposta il valore della propriet toponimo.
      * 
      * @param value
      *     allowed object is
@@ -208,7 +208,7 @@ public class Indirizzo {
     }
 
     /**
-     * Gets the value of the denominazioneStradale property.
+     * Recupera il valore della propriet denominazioneStradale.
      * 
      * @return
      *     possible object is
@@ -220,7 +220,7 @@ public class Indirizzo {
     }
 
     /**
-     * Sets the value of the denominazioneStradale property.
+     * Imposta il valore della propriet denominazioneStradale.
      * 
      * @param value
      *     allowed object is
@@ -232,7 +232,7 @@ public class Indirizzo {
     }
 
     /**
-     * Gets the value of the numeroCivico property.
+     * Recupera il valore della propriet numeroCivico.
      * 
      * @return
      *     possible object is
@@ -244,7 +244,7 @@ public class Indirizzo {
     }
 
     /**
-     * Sets the value of the numeroCivico property.
+     * Imposta il valore della propriet numeroCivico.
      * 
      * @param value
      *     allowed object is
@@ -256,7 +256,7 @@ public class Indirizzo {
     }
 
     /**
-     * Gets the value of the frazione property.
+     * Recupera il valore della propriet frazione.
      * 
      * @return
      *     possible object is
@@ -268,7 +268,7 @@ public class Indirizzo {
     }
 
     /**
-     * Sets the value of the frazione property.
+     * Imposta il valore della propriet frazione.
      * 
      * @param value
      *     allowed object is

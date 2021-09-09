@@ -24,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _InviaSUAPEnteResponse_QNAME = new QName("http://www.impresainungiorno.gov.it/suap/scrivania", "inviaSUAPEnteResponse");
-    private final static QName _InviaSUAPEnte_QNAME = new QName("http://www.impresainungiorno.gov.it/suap/scrivania", "inviaSUAPEnte");
+    private final static QName _InviaEnteSUAP_QNAME = new QName("http://www.impresainungiorno.gov.it/suap/scrivania", "inviaEnteSUAP");
+    private final static QName _InviaEnteSUAPResponse_QNAME = new QName("http://www.impresainungiorno.gov.it/suap/scrivania", "inviaEnteSUAPResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: it.gov.impresainungiorno.suap.scrivania
@@ -35,37 +35,45 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link InviaSUAPEnte }
+     * Create an instance of {@link InviaEnteSUAP }
      * 
      */
-    public InviaSUAPEnte createInviaSUAPEnte() {
-        return new InviaSUAPEnte();
+    public InviaEnteSUAP createInviaEnteSUAP() {
+        return new InviaEnteSUAP();
     }
 
     /**
-     * Create an instance of {@link InviaSUAPEnteResponse }
+     * Create an instance of {@link InviaEnteSUAPResponse }
      * 
      */
-    public InviaSUAPEnteResponse createInviaSUAPEnteResponse() {
-        return new InviaSUAPEnteResponse();
+    public InviaEnteSUAPResponse createInviaEnteSUAPResponse() {
+        return new InviaEnteSUAPResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link InviaSUAPEnteResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link InviaEnteSUAP }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link InviaEnteSUAP }{@code >}
      */
-    @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/suap/scrivania", name = "inviaSUAPEnteResponse")
-    public JAXBElement<InviaSUAPEnteResponse> createInviaSUAPEnteResponse(InviaSUAPEnteResponse value) {
-        return new JAXBElement<InviaSUAPEnteResponse>(_InviaSUAPEnteResponse_QNAME, InviaSUAPEnteResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/suap/scrivania", name = "inviaEnteSUAP")
+    public JAXBElement<InviaEnteSUAP> createInviaEnteSUAP(InviaEnteSUAP value) {
+        return new JAXBElement<InviaEnteSUAP>(_InviaEnteSUAP_QNAME, InviaEnteSUAP.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link InviaSUAPEnte }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link InviaEnteSUAPResponse }{@code >}
      * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link InviaEnteSUAPResponse }{@code >}
      */
-    @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/suap/scrivania", name = "inviaSUAPEnte")
-    public JAXBElement<InviaSUAPEnte> createInviaSUAPEnte(InviaSUAPEnte value) {
-        return new JAXBElement<InviaSUAPEnte>(_InviaSUAPEnte_QNAME, InviaSUAPEnte.class, null, value);
+    @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/suap/scrivania", name = "inviaEnteSUAPResponse")
+    public JAXBElement<InviaEnteSUAPResponse> createInviaEnteSUAPResponse(InviaEnteSUAPResponse value) {
+        return new JAXBElement<InviaEnteSUAPResponse>(_InviaEnteSUAPResponse_QNAME, InviaEnteSUAPResponse.class, null, value);
     }
 
 }

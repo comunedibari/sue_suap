@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -21,15 +14,15 @@ import javax.xml.bind.annotation.XmlValue;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="EstremiEnte">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
- *       &lt;attribute name="codice-amministrazione" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAmministrazione" />
- *       &lt;attribute name="codice-aoo" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAOO" />
- *       &lt;attribute name="pec" type="{http://www.impresainungiorno.gov.it/schema/base}EMailIndirizzo" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="EstremiEnte"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+ *       &lt;attribute name="codice-amministrazione" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAmministrazione" /&gt;
+ *       &lt;attribute name="codice-aoo" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAOO" /&gt;
+ *       &lt;attribute name="pec" type="{http://www.impresainungiorno.gov.it/schema/base}EMailIndirizzo" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -62,7 +55,7 @@ public class EstremiEnte {
     }
 
     /**
-     * Imposta il valore della propriet value.
+     * Imposta il valore della  value.
      * 
      * @param value
      *     allowed object is
@@ -74,7 +67,7 @@ public class EstremiEnte {
     }
 
     /**
-     * Recupera il valore della propriet codiceAmministrazione.
+     * Recupera il valore della  codiceAmministrazione.
      * 
      * @return
      *     possible object is
@@ -86,7 +79,7 @@ public class EstremiEnte {
     }
 
     /**
-     * Imposta il valore della propriet codiceAmministrazione.
+     * Imposta il valore della  codiceAmministrazione.
      * 
      * @param value
      *     allowed object is
@@ -98,7 +91,7 @@ public class EstremiEnte {
     }
 
     /**
-     * Recupera il valore della propriet codiceAoo.
+     * Recupera il valore della  codiceAoo.
      * 
      * @return
      *     possible object is
@@ -110,7 +103,7 @@ public class EstremiEnte {
     }
 
     /**
-     * Imposta il valore della propriet codiceAoo.
+     * Imposta il valore della  codiceAoo.
      * 
      * @param value
      *     allowed object is
@@ -122,7 +115,7 @@ public class EstremiEnte {
     }
 
     /**
-     * Recupera il valore della propriet pec.
+     * Recupera il valore della  pec.
      * 
      * @return
      *     possible object is
@@ -134,7 +127,7 @@ public class EstremiEnte {
     }
 
     /**
-     * Imposta il valore della propriet pec.
+     * Imposta il valore della  pec.
      * 
      * @param value
      *     allowed object is

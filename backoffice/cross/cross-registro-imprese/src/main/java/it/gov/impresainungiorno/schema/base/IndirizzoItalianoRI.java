@@ -10,22 +10,22 @@ import javax.xml.bind.annotation.XmlType;
 /**
  * E' la versione con tutti i dati opzionali cosi' come possono arrivare dal R.I.
  * 
- * <p>Java class for IndirizzoItalianoRI complex type.
+ * <p>Classe Java per IndirizzoItalianoRI complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="IndirizzoItalianoRI">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}CittaItalianaRI"/>
- *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzoItalianoRI"/>
- *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzoRI"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="IndirizzoItalianoRI"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}CittaItalianaRI"/&gt;
+ *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzoItalianoRI"/&gt;
+ *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}DatiIndirizzoRI"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -53,7 +53,7 @@ public class IndirizzoItalianoRI {
     protected String frazione;
 
     /**
-     * Gets the value of the provincia property.
+     * Recupera il valore della proprietà provincia.
      * 
      * @return
      *     possible object is
@@ -65,7 +65,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Sets the value of the provincia property.
+     * Imposta il valore della proprietà provincia.
      * 
      * @param value
      *     allowed object is
@@ -77,7 +77,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Gets the value of the comune property.
+     * Recupera il valore della proprietà comune.
      * 
      * @return
      *     possible object is
@@ -89,7 +89,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Sets the value of the comune property.
+     * Imposta il valore della proprietà comune.
      * 
      * @param value
      *     allowed object is
@@ -101,7 +101,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Gets the value of the cap property.
+     * Recupera il valore della proprietà cap.
      * 
      * @return
      *     possible object is
@@ -113,7 +113,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Sets the value of the cap property.
+     * Imposta il valore della proprietà cap.
      * 
      * @param value
      *     allowed object is
@@ -125,7 +125,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Gets the value of the toponimo property.
+     * Recupera il valore della proprietà toponimo.
      * 
      * @return
      *     possible object is
@@ -137,7 +137,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Sets the value of the toponimo property.
+     * Imposta il valore della proprietà toponimo.
      * 
      * @param value
      *     allowed object is
@@ -149,7 +149,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Gets the value of the denominazioneStradale property.
+     * Recupera il valore della proprietà denominazioneStradale.
      * 
      * @return
      *     possible object is
@@ -161,7 +161,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Sets the value of the denominazioneStradale property.
+     * Imposta il valore della proprietà denominazioneStradale.
      * 
      * @param value
      *     allowed object is
@@ -173,7 +173,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Gets the value of the numeroCivico property.
+     * Recupera il valore della proprietà numeroCivico.
      * 
      * @return
      *     possible object is
@@ -185,7 +185,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Sets the value of the numeroCivico property.
+     * Imposta il valore della proprietà numeroCivico.
      * 
      * @param value
      *     allowed object is
@@ -197,7 +197,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Gets the value of the frazione property.
+     * Recupera il valore della proprietà frazione.
      * 
      * @return
      *     possible object is
@@ -209,7 +209,7 @@ public class IndirizzoItalianoRI {
     }
 
     /**
-     * Sets the value of the frazione property.
+     * Imposta il valore della proprietà frazione.
      * 
      * @param value
      *     allowed object is

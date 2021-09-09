@@ -1,13 +1,8 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -20,23 +15,27 @@ import javax.xml.bind.annotation.XmlType;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="Intestazione">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="ufficio-destinatario" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiSuap"/>
- *         &lt;element name="impresa" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}AnagraficaImpresa"/>
- *         &lt;element name="oggetto-comunicazione" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}OggettoComunicazione"/>
- *         &lt;element name="codice-pratica" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/>
- *         &lt;element name="procura-speciale" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}ProcuraSpeciale" minOccurs="0"/>
- *         &lt;element name="dichiarante" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiDichiarante"/>
- *         &lt;element name="domicilio-elettronico" type="{http://www.impresainungiorno.gov.it/schema/base}EMailIndirizzo" minOccurs="0"/>
- *         &lt;element name="impianto-produttivo" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}ImpiantoProduttivo" minOccurs="0"/>
- *         &lt;element name="protocollo" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}ProtocolloSUAP" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="Intestazione"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="ufficio-destinatario" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiSuap"/&gt;
+ *         &lt;choice&gt;
+ *           &lt;element name="impresa" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}AnagraficaImpresa"/&gt;
+ *           &lt;element name="richiedente" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}AnagraficaPersona"/&gt;
+ *         &lt;/choice&gt;
+ *         &lt;element name="oggetto-comunicazione" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}OggettoComunicazione"/&gt;
+ *         &lt;element name="codice-pratica" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/&gt;
+ *         &lt;element name="procura-speciale" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}ProcuraSpeciale" minOccurs="0"/&gt;
+ *         &lt;element name="dichiarante" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}EstremiDichiarante"/&gt;
+ *         &lt;element name="domicilio-elettronico" type="{http://www.impresainungiorno.gov.it/schema/base}EMailIndirizzo" minOccurs="0"/&gt;
+ *         &lt;element name="impianto-produttivo" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}ImpiantoProduttivo" minOccurs="0"/&gt;
+ *         &lt;element name="protocollo" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}ProtocolloSUAP" minOccurs="0"/&gt;
+ *         &lt;element name="riferimento" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}RiferimentoSUAP" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -45,20 +44,22 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Intestazione", propOrder = {
     "ufficioDestinatario",
     "impresa",
+    "richiedente",
     "oggettoComunicazione",
     "codicePratica",
     "procuraSpeciale",
     "dichiarante",
     "domicilioElettronico",
     "impiantoProduttivo",
-    "protocollo"
+    "protocollo",
+    "riferimento"
 })
 public class Intestazione {
 
     @XmlElement(name = "ufficio-destinatario", required = true)
     protected EstremiSuap ufficioDestinatario;
-    @XmlElement(required = true)
     protected AnagraficaImpresa impresa;
+    protected AnagraficaPersona richiedente;
     @XmlElement(name = "oggetto-comunicazione", required = true)
     protected OggettoComunicazione oggettoComunicazione;
     @XmlElement(name = "codice-pratica")
@@ -72,6 +73,7 @@ public class Intestazione {
     @XmlElement(name = "impianto-produttivo")
     protected ImpiantoProduttivo impiantoProduttivo;
     protected ProtocolloSUAP protocollo;
+    protected List<RiferimentoSUAP> riferimento;
 
     /**
      * Recupera il valore della propriet ufficioDestinatario.
@@ -119,6 +121,30 @@ public class Intestazione {
      */
     public void setImpresa(AnagraficaImpresa value) {
         this.impresa = value;
+    }
+
+    /**
+     * Recupera il valore della propriet richiedente.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AnagraficaPersona }
+     *     
+     */
+    public AnagraficaPersona getRichiedente() {
+        return richiedente;
+    }
+
+    /**
+     * Imposta il valore della propriet richiedente.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AnagraficaPersona }
+     *     
+     */
+    public void setRichiedente(AnagraficaPersona value) {
+        this.richiedente = value;
     }
 
     /**
@@ -287,6 +313,35 @@ public class Intestazione {
      */
     public void setProtocollo(ProtocolloSUAP value) {
         this.protocollo = value;
+    }
+
+    /**
+     * Gets the value of the riferimento property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the riferimento property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getRiferimento().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link RiferimentoSUAP }
+     * 
+     * 
+     */
+    public List<RiferimentoSUAP> getRiferimento() {
+        if (riferimento == null) {
+            riferimento = new ArrayList<RiferimentoSUAP>();
+        }
+        return this.riferimento;
     }
 
 }

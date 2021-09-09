@@ -16,29 +16,29 @@ import javax.xml.bind.annotation.XmlValue;
  *         nome e cognome, cosi' da poter creare l'utente di scrivania (non Archeometra)
  *         nel caso l'utente sia sconosciuto al sistema 
  * 
- * <p>Java class for UtentePortale complex type.
+ * <p>Classe Java per UtentePortale complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="UtentePortale">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Anagrafica">
- *       &lt;sequence>
- *         &lt;element name="delegato" maxOccurs="unbounded" minOccurs="0">
- *           &lt;complexType>
- *             &lt;simpleContent>
- *               &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>CodiceFiscalePersona">
- *                 &lt;attribute name="ente" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" />
- *               &lt;/extension>
- *             &lt;/simpleContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;element name="domicilio" type="{http://www.impresainungiorno.gov.it/schema/base}IndirizzoConRecapiti" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="UtentePortale"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Anagrafica"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="delegato" maxOccurs="unbounded" minOccurs="0"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;simpleContent&gt;
+ *               &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;CodiceFiscalePersona"&gt;
+ *                 &lt;attribute name="ente" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" /&gt;
+ *               &lt;/extension&gt;
+ *             &lt;/simpleContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *         &lt;element name="domicilio" type="{http://www.impresainungiorno.gov.it/schema/base}IndirizzoConRecapiti" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -85,7 +85,7 @@ public class UtentePortale
     }
 
     /**
-     * Gets the value of the domicilio property.
+     * Recupera il valore della proprietà domicilio.
      * 
      * @return
      *     possible object is
@@ -97,7 +97,7 @@ public class UtentePortale
     }
 
     /**
-     * Sets the value of the domicilio property.
+     * Imposta il valore della proprietà domicilio.
      * 
      * @param value
      *     allowed object is
@@ -110,18 +110,18 @@ public class UtentePortale
 
 
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>Classe Java per anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;simpleContent>
-     *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>CodiceFiscalePersona">
-     *       &lt;attribute name="ente" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" />
-     *     &lt;/extension>
-     *   &lt;/simpleContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;simpleContent&gt;
+     *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;CodiceFiscalePersona"&gt;
+     *       &lt;attribute name="ente" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" /&gt;
+     *     &lt;/extension&gt;
+     *   &lt;/simpleContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -150,7 +150,7 @@ public class UtentePortale
         }
 
         /**
-         * Sets the value of the value property.
+         * Imposta il valore della proprietà value.
          * 
          * @param value
          *     allowed object is
@@ -162,7 +162,7 @@ public class UtentePortale
         }
 
         /**
-         * Gets the value of the ente property.
+         * Recupera il valore della proprietà ente.
          * 
          * @return
          *     possible object is
@@ -174,7 +174,7 @@ public class UtentePortale
         }
 
         /**
-         * Sets the value of the ente property.
+         * Imposta il valore della proprietà ente.
          * 
          * @param value
          *     allowed object is

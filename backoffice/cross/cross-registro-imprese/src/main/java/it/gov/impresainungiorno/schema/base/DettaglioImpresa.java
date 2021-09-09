@@ -13,25 +13,25 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Java class for DettaglioImpresa complex type.
+ * <p>Classe Java per DettaglioImpresa complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="DettaglioImpresa">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}AnagraficaImpresa">
- *       &lt;sequence>
- *         &lt;element name="codice-REA" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceREA" minOccurs="0"/>
- *         &lt;element name="indirizzo" type="{http://www.impresainungiorno.gov.it/schema/base}IndirizzoConRecapiti" minOccurs="0"/>
- *         &lt;element name="legale-rappresentante" type="{http://www.impresainungiorno.gov.it/schema/base}LegaleRappresentante" minOccurs="0"/>
- *         &lt;element name="rappresentante" type="{http://www.impresainungiorno.gov.it/schema/base}AnagraficaRappresentante" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="attivita" type="{http://www.impresainungiorno.gov.it/schema/base}AttivitaISTAT" maxOccurs="unbounded" minOccurs="0"/>
- *       &lt;/sequence>
- *       &lt;attribute name="data-inizio-attivita" type="{http://www.w3.org/2001/XMLSchema}date" />
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="DettaglioImpresa"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}AnagraficaImpresa"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="codice-REA" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceREA" minOccurs="0"/&gt;
+ *         &lt;element name="indirizzo" type="{http://www.impresainungiorno.gov.it/schema/base}IndirizzoConRecapiti" minOccurs="0"/&gt;
+ *         &lt;element name="legale-rappresentante" type="{http://www.impresainungiorno.gov.it/schema/base}LegaleRappresentante" minOccurs="0"/&gt;
+ *         &lt;element name="rappresentante" type="{http://www.impresainungiorno.gov.it/schema/base}AnagraficaRappresentante" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="attivita" type="{http://www.impresainungiorno.gov.it/schema/base}AttivitaISTAT" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name="data-inizio-attivita" type="{http://www.w3.org/2001/XMLSchema}date" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -60,7 +60,7 @@ public class DettaglioImpresa
     protected XMLGregorianCalendar dataInizioAttivita;
 
     /**
-     * Gets the value of the codiceREA property.
+     * Recupera il valore della proprietà codiceREA.
      * 
      * @return
      *     possible object is
@@ -72,7 +72,7 @@ public class DettaglioImpresa
     }
 
     /**
-     * Sets the value of the codiceREA property.
+     * Imposta il valore della proprietà codiceREA.
      * 
      * @param value
      *     allowed object is
@@ -84,7 +84,7 @@ public class DettaglioImpresa
     }
 
     /**
-     * Gets the value of the indirizzo property.
+     * Recupera il valore della proprietà indirizzo.
      * 
      * @return
      *     possible object is
@@ -96,7 +96,7 @@ public class DettaglioImpresa
     }
 
     /**
-     * Sets the value of the indirizzo property.
+     * Imposta il valore della proprietà indirizzo.
      * 
      * @param value
      *     allowed object is
@@ -108,7 +108,7 @@ public class DettaglioImpresa
     }
 
     /**
-     * Gets the value of the legaleRappresentante property.
+     * Recupera il valore della proprietà legaleRappresentante.
      * 
      * @return
      *     possible object is
@@ -120,7 +120,7 @@ public class DettaglioImpresa
     }
 
     /**
-     * Sets the value of the legaleRappresentante property.
+     * Imposta il valore della proprietà legaleRappresentante.
      * 
      * @param value
      *     allowed object is
@@ -190,7 +190,7 @@ public class DettaglioImpresa
     }
 
     /**
-     * Gets the value of the dataInizioAttivita property.
+     * Recupera il valore della proprietà dataInizioAttivita.
      * 
      * @return
      *     possible object is
@@ -202,7 +202,7 @@ public class DettaglioImpresa
     }
 
     /**
-     * Sets the value of the dataInizioAttivita property.
+     * Imposta il valore della proprietà dataInizioAttivita.
      * 
      * @param value
      *     allowed object is

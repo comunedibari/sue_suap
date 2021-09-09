@@ -9,19 +9,19 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for FormaGiuridica complex type.
+ * <p>Classe Java per FormaGiuridica complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="FormaGiuridica">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attribute name="codice" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" />
- *       &lt;attribute name="categoria" type="{http://www.impresainungiorno.gov.it/schema/base}StringaLunga" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="FormaGiuridica"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema&gt;string"&gt;
+ *       &lt;attribute name="codice" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve" /&gt;
+ *       &lt;attribute name="categoria" type="{http://www.impresainungiorno.gov.it/schema/base}StringaLunga" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -40,7 +40,7 @@ public class FormaGiuridica {
     protected String categoria;
 
     /**
-     * Gets the value of the value property.
+     * Recupera il valore della propriet value.
      * 
      * @return
      *     possible object is
@@ -52,7 +52,7 @@ public class FormaGiuridica {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della propriet value.
      * 
      * @param value
      *     allowed object is
@@ -64,7 +64,7 @@ public class FormaGiuridica {
     }
 
     /**
-     * Gets the value of the codice property.
+     * Recupera il valore della propriet codice.
      * 
      * @return
      *     possible object is
@@ -76,7 +76,7 @@ public class FormaGiuridica {
     }
 
     /**
-     * Sets the value of the codice property.
+     * Imposta il valore della propriet codice.
      * 
      * @param value
      *     allowed object is
@@ -88,7 +88,7 @@ public class FormaGiuridica {
     }
 
     /**
-     * Gets the value of the categoria property.
+     * Recupera il valore della propriet categoria.
      * 
      * @return
      *     possible object is
@@ -100,7 +100,7 @@ public class FormaGiuridica {
     }
 
     /**
-     * Sets the value of the categoria property.
+     * Imposta il valore della propriet categoria.
      * 
      * @param value
      *     allowed object is

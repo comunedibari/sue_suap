@@ -13,41 +13,41 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Java class for Ricevuta complex type.
+ * <p>Classe Java per Ricevuta complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="Ricevuta">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="operazione" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/>
- *         &lt;element name="codice-fiscale-impresa" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceFiscale" minOccurs="0"/>
- *         &lt;element name="ragione-sociale-impresa" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/>
- *         &lt;element name="operatore" type="{http://www.impresainungiorno.gov.it/schema/base}UtentePortale" form="qualified"/>
- *         &lt;choice>
- *           &lt;element name="ente" type="{http://www.impresainungiorno.gov.it/schema/base}EnteRicevuta" maxOccurs="unbounded"/>
- *           &lt;element name="errore" type="{http://www.impresainungiorno.gov.it/schema/base}Errore" maxOccurs="unbounded"/>
- *         &lt;/choice>
- *         &lt;element name="lista-adempimenti" maxOccurs="unbounded" minOccurs="0">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="ente" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve"/>
- *                   &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/sequence>
- *       &lt;attribute name="riferimento-portale" type="{http://www.impresainungiorno.gov.it/schema/base}RiferimentoPortale" />
- *       &lt;attribute name="tempo-invio" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="Ricevuta"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="operazione" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/&gt;
+ *         &lt;element name="codice-fiscale-impresa" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceFiscale" minOccurs="0"/&gt;
+ *         &lt;element name="ragione-sociale-impresa" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/&gt;
+ *         &lt;element name="operatore" type="{http://www.impresainungiorno.gov.it/schema/base}UtentePortale" form="qualified"/&gt;
+ *         &lt;choice&gt;
+ *           &lt;element name="ente" type="{http://www.impresainungiorno.gov.it/schema/base}EnteRicevuta" maxOccurs="unbounded"/&gt;
+ *           &lt;element name="errore" type="{http://www.impresainungiorno.gov.it/schema/base}Errore" maxOccurs="unbounded"/&gt;
+ *         &lt;/choice&gt;
+ *         &lt;element name="lista-adempimenti" maxOccurs="unbounded" minOccurs="0"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence&gt;
+ *                   &lt;element name="ente" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve"/&gt;
+ *                   &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                 &lt;/sequence&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name="riferimento-portale" type="{http://www.impresainungiorno.gov.it/schema/base}RiferimentoPortale" /&gt;
+ *       &lt;attribute name="tempo-invio" use="required" type="{http://www.w3.org/2001/XMLSchema}dateTime" /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -83,7 +83,7 @@ public class Ricevuta {
     protected XMLGregorianCalendar tempoInvio;
 
     /**
-     * Gets the value of the operazione property.
+     * Recupera il valore della proprietà operazione.
      * 
      * @return
      *     possible object is
@@ -95,7 +95,7 @@ public class Ricevuta {
     }
 
     /**
-     * Sets the value of the operazione property.
+     * Imposta il valore della proprietà operazione.
      * 
      * @param value
      *     allowed object is
@@ -107,7 +107,7 @@ public class Ricevuta {
     }
 
     /**
-     * Gets the value of the codiceFiscaleImpresa property.
+     * Recupera il valore della proprietà codiceFiscaleImpresa.
      * 
      * @return
      *     possible object is
@@ -119,7 +119,7 @@ public class Ricevuta {
     }
 
     /**
-     * Sets the value of the codiceFiscaleImpresa property.
+     * Imposta il valore della proprietà codiceFiscaleImpresa.
      * 
      * @param value
      *     allowed object is
@@ -131,7 +131,7 @@ public class Ricevuta {
     }
 
     /**
-     * Gets the value of the ragioneSocialeImpresa property.
+     * Recupera il valore della proprietà ragioneSocialeImpresa.
      * 
      * @return
      *     possible object is
@@ -143,7 +143,7 @@ public class Ricevuta {
     }
 
     /**
-     * Sets the value of the ragioneSocialeImpresa property.
+     * Imposta il valore della proprietà ragioneSocialeImpresa.
      * 
      * @param value
      *     allowed object is
@@ -155,7 +155,7 @@ public class Ricevuta {
     }
 
     /**
-     * Gets the value of the operatore property.
+     * Recupera il valore della proprietà operatore.
      * 
      * @return
      *     possible object is
@@ -167,7 +167,7 @@ public class Ricevuta {
     }
 
     /**
-     * Sets the value of the operatore property.
+     * Imposta il valore della proprietà operatore.
      * 
      * @param value
      *     allowed object is
@@ -266,7 +266,7 @@ public class Ricevuta {
     }
 
     /**
-     * Gets the value of the riferimentoPortale property.
+     * Recupera il valore della proprietà riferimentoPortale.
      * 
      * @return
      *     possible object is
@@ -278,7 +278,7 @@ public class Ricevuta {
     }
 
     /**
-     * Sets the value of the riferimentoPortale property.
+     * Imposta il valore della proprietà riferimentoPortale.
      * 
      * @param value
      *     allowed object is
@@ -290,7 +290,7 @@ public class Ricevuta {
     }
 
     /**
-     * Gets the value of the tempoInvio property.
+     * Recupera il valore della proprietà tempoInvio.
      * 
      * @return
      *     possible object is
@@ -302,7 +302,7 @@ public class Ricevuta {
     }
 
     /**
-     * Sets the value of the tempoInvio property.
+     * Imposta il valore della proprietà tempoInvio.
      * 
      * @param value
      *     allowed object is
@@ -315,21 +315,21 @@ public class Ricevuta {
 
 
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>Classe Java per anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="ente" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve"/>
-     *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;element name="ente" type="{http://www.impresainungiorno.gov.it/schema/base}StringaBreve"/&gt;
+     *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *       &lt;/sequence&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -347,7 +347,7 @@ public class Ricevuta {
         protected String id;
 
         /**
-         * Gets the value of the ente property.
+         * Recupera il valore della proprietà ente.
          * 
          * @return
          *     possible object is
@@ -359,7 +359,7 @@ public class Ricevuta {
         }
 
         /**
-         * Sets the value of the ente property.
+         * Imposta il valore della proprietà ente.
          * 
          * @param value
          *     allowed object is
@@ -371,7 +371,7 @@ public class Ricevuta {
         }
 
         /**
-         * Gets the value of the id property.
+         * Recupera il valore della proprietà id.
          * 
          * @return
          *     possible object is
@@ -383,7 +383,7 @@ public class Ricevuta {
         }
 
         /**
-         * Sets the value of the id property.
+         * Imposta il valore della proprietà id.
          * 
          * @param value
          *     allowed object is

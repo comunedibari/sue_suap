@@ -11,18 +11,18 @@ import javax.xml.bind.annotation.XmlValue;
 /**
  * @deprecated: utilizzare AttivitaISTAT
  * 
- * <p>Java class for AttivitaEsercitata complex type.
+ * <p>Classe Java per AttivitaEsercitata complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="AttivitaEsercitata">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
- *       &lt;attribute name="codice-istat" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceISTATAttivita" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="AttivitaEsercitata"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+ *       &lt;attribute name="codice-istat" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceISTATAttivita" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -51,7 +51,7 @@ public class AttivitaEsercitata {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della proprietà value.
      * 
      * @param value
      *     allowed object is
@@ -63,7 +63,7 @@ public class AttivitaEsercitata {
     }
 
     /**
-     * Gets the value of the codiceIstat property.
+     * Recupera il valore della proprietà codiceIstat.
      * 
      * @return
      *     possible object is
@@ -75,7 +75,7 @@ public class AttivitaEsercitata {
     }
 
     /**
-     * Sets the value of the codiceIstat property.
+     * Imposta il valore della proprietà codiceIstat.
      * 
      * @param value
      *     allowed object is

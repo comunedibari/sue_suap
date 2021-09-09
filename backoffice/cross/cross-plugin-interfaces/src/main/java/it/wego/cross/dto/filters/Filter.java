@@ -1,8 +1,11 @@
 package it.wego.cross.dto.filters;
 
 import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.LkClassificazioneProcedimento;
 import it.wego.cross.entity.LkStatiScadenze;
 import it.wego.cross.entity.LkStatoPratica;
+import it.wego.cross.entity.LkTipoInterventoSuap;
+import it.wego.cross.entity.LkTipoProcedimentoSuap;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.Utente;
 import java.util.ArrayList;
@@ -95,6 +98,15 @@ public class Filter {
     private Integer idPratica;
     private Integer idOperatoreSelezionato;
     private String protocolloSuap;
+	private LkTipoInterventoSuap idTipoInterventoSuap;
+	private LkTipoProcedimentoSuap idTipoProcedimentoSuap;
+	private LkClassificazioneProcedimento idClassificazioneProcedimento;
+    private String desProcedimentoSuap;
+    private String desInterventoSuap;
+    private Date dataInizioProtSuap;
+    private Date dataFineProtSuap;
+    private String desClassificazioneProcedimento;
+    private List<Pratica> listaPraticheIn;
     
     
     public String getProtocolloSuap() {
@@ -1025,4 +1037,80 @@ public class Filter {
 	public void setIdPratica(Integer idPratica) {
 		this.idPratica = idPratica;
 	}
+
+	public String getDesProcedimentoSuap() {
+		return desProcedimentoSuap;
+	}
+
+	public void setDesProcedimentoSuap(String desProcedimentoSuap) {
+		this.desProcedimentoSuap = desProcedimentoSuap;
+	}
+
+	public String getDesInterventoSuap() {
+		return desInterventoSuap;
+	}
+
+	public void setDesInterventoSuap(String desInterventoSuap) {
+		this.desInterventoSuap = desInterventoSuap;
+	}
+	public LkTipoInterventoSuap getIdTipoInterventoSuap() {
+		return idTipoInterventoSuap;
+	}
+
+	public void setIdTipoInterventoSuap(LkTipoInterventoSuap idTipoInterventoSuap) {
+		this.idTipoInterventoSuap = idTipoInterventoSuap;
+	}
+
+	public LkTipoProcedimentoSuap getIdTipoProcedimentoSuap() {
+		return idTipoProcedimentoSuap;
+	}
+
+	public void setIdTipoProcedimentoSuap(LkTipoProcedimentoSuap idTipoProcedimentoSuap) {
+		this.idTipoProcedimentoSuap = idTipoProcedimentoSuap;
+	}
+
+
+	public Date getDataInizioProtSuap() {
+		return dataInizioProtSuap;
+	}
+
+	public void setDataInizioProtSuap(Date dataInizioProtSuap) {
+		this.dataInizioProtSuap = dataInizioProtSuap;
+	}
+
+	public Date getDataFineProtSuap() {
+		return dataFineProtSuap;
+	}
+
+	public void setDataFineProtSuap(Date dataFineProtSuap) {
+		this.dataFineProtSuap = dataFineProtSuap;
+	}
+
+	public LkClassificazioneProcedimento getIdClassificazioneProcedimento() {
+		return idClassificazioneProcedimento;
+	}
+
+	public void setIdClassificazioneProcedimento(LkClassificazioneProcedimento idClassificazioneProcedimento) {
+		this.idClassificazioneProcedimento = idClassificazioneProcedimento;
+	}
+
+	public String getDesClassificazioneProcedimento() {
+		return desClassificazioneProcedimento;
+	}
+
+	public void setDesClassificazioneProcedimento(String desClassificazioneProcedimento) {
+		this.desClassificazioneProcedimento = desClassificazioneProcedimento;
+	}
+
+	public List<Pratica> getListaPraticheIn() {
+		return listaPraticheIn;
+	}
+
+	public void setListaPraticheIn(List<Pratica> listaPraticheIn) {
+		this.listaPraticheIn = listaPraticheIn;
+	}
+
+	
+	
+	
 }

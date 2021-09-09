@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -19,16 +12,16 @@ import javax.xml.bind.annotation.XmlType;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * <p>
  * <pre>
- * &lt;simpleType name="TipoIntervento">
- *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="apertura"/>
- *     &lt;enumeration value="subentro"/>
- *     &lt;enumeration value="trasformazione"/>
- *     &lt;enumeration value="modifiche"/>
- *     &lt;enumeration value="cessazione"/>
- *     &lt;enumeration value="altro"/>
- *   &lt;/restriction>
- * &lt;/simpleType>
+ * &lt;simpleType name="TipoIntervento"&gt;
+ *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *     &lt;enumeration value="apertura"/&gt;
+ *     &lt;enumeration value="subentro"/&gt;
+ *     &lt;enumeration value="trasformazione"/&gt;
+ *     &lt;enumeration value="modifiche"/&gt;
+ *     &lt;enumeration value="cessazione"/&gt;
+ *     &lt;enumeration value="altro"/&gt;
+ *   &lt;/restriction&gt;
+ * &lt;/simpleType&gt;
  * </pre>
  * 
  */
@@ -74,8 +67,7 @@ public enum TipoIntervento {
 
     /**
      * Altre esigenze non riconducibili ai casi precedenti
-     *                     
-     *                     
+     * 					
      * 
      */
     @XmlEnumValue("altro")

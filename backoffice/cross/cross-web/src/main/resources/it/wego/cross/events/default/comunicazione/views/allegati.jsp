@@ -85,7 +85,6 @@
     </script>
 
 
-
     <c:if test="${processo_evento.flgFirmato}">
         <h4 class="alertFileFirmati"><spring:message code="pratica.comunicazione.evento.filefirmato"/></h4>    
     </c:if>
@@ -127,6 +126,7 @@
                 <th><spring:message code="pratica.comunicazione.evento.file.download"/></th>
                 <th><input type="checkbox" id="seleziona_tutti_allegati"/>&nbsp;<spring:message code="pratica.comunicazione.evento.allega"/></th>
                 <th><spring:message code="pratica.comunicazione.evento.allega.principale"/></th>
+                <th><spring:message code="pratica.comunicazione.evento.allega.firma"/></th>
             </tr>
 
             <c:set var="countAllegatiPresenti" value="0" scope="page" />
@@ -157,6 +157,11 @@
                                 <form:checkbox path="allegatiPresenti[${countAllegatiPresenti}].principale" value="true" class="documenti_allegati_principale" />
                             </span>
                    		</c:if> 
+                    </td>
+                    <td>
+                      	<a class="scarica cursor_pointer showEmailDetail" id="${email.idEmail}">
+	                    	<spring:message code="pratica.comunicazione.evento.allega.firma"/>
+                        </a>
                     </td>
                 </tr>
                 <c:set var="countAllegatiPresenti" value="${countAllegatiPresenti + 1}" scope="page"/>

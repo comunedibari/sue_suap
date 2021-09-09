@@ -11,18 +11,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for IndirizzoItalianoConRecapiti complex type.
+ * <p>Classe Java per IndirizzoItalianoConRecapiti complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="IndirizzoItalianoConRecapiti">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}IndirizzoItaliano">
- *       &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Recapiti"/>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="IndirizzoItalianoConRecapiti"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}IndirizzoItaliano"&gt;
+ *       &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Recapiti"/&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 

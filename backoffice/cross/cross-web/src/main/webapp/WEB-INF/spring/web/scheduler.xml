@@ -68,8 +68,8 @@
         <!-- 2 volte al giorno, alle 13.15 e alle 20.15 -->
         <!--<property name="cronExpression" value="0 15 13,20 * * ?"/>-->
 <!--        <property name="cronExpression" value="0 0 0 31 12 ?"/>-->
-         <property name="cronExpression" value="0 0 0 * * ?" /> 
-        <!-- <property name="cronExpression" value="0 0/5 * 1/1 * ? *" /> -->
+<!--          <property name="cronExpression" value="0 0 0 * * ?" />  -->
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *" />
     </bean>
 
     <bean id="recuperoPraticheDaProtocolloJob" class="it.wego.cross.scheduler.RecuperoPraticheDaProtocolloJob"/>

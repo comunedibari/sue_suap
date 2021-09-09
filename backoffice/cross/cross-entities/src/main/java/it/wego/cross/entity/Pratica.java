@@ -162,7 +162,12 @@ public class Pratica implements Serializable {
     private Date data_prot_suap;
     @Column(name = "prot_suap")
     private String prot_suap;
-    
+    @JoinColumn(name = "id_tipo_procedimento_suap", referencedColumnName = "id_tipo_procedimento_suap")
+    @ManyToOne
+    private LkTipoProcedimentoSuap idTipoProcedimentoSuap;
+    @JoinColumn(name = "id_tipo_intervento_suap", referencedColumnName = "id_tipo_intervento_suap")
+    @ManyToOne
+    private LkTipoInterventoSuap idTipoInterventoSuap;
 
     @JoinTable(name = "pratica_pratica", joinColumns = {
         @JoinColumn(name = "id_pratica_a", referencedColumnName = "id_pratica", nullable = false)}, inverseJoinColumns = {
@@ -587,6 +592,22 @@ public class Pratica implements Serializable {
 
 	public void setProt_suap(String prot_suap) {
 		this.prot_suap = prot_suap;
+	}
+
+	public LkTipoProcedimentoSuap getIdTipoProcedimentoSuap() {
+		return idTipoProcedimentoSuap;
+	}
+
+	public void setIdTipoProcedimentoSuap(LkTipoProcedimentoSuap idTipoProcedimentoSuap) {
+		this.idTipoProcedimentoSuap = idTipoProcedimentoSuap;
+	}
+
+	public LkTipoInterventoSuap getIdTipoInterventoSuap() {
+		return idTipoInterventoSuap;
+	}
+
+	public void setIdTipoInterventoSuap(LkTipoInterventoSuap idTipoInterventoSuap) {
+		this.idTipoInterventoSuap = idTipoInterventoSuap;
 	}
     
     

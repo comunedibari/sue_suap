@@ -54,27 +54,34 @@ public class RisultatoCaricamentoPraticheAction {
 	public GridRisultatoCaricamentoPraticaBean getListaCaricamentoPratiche(HttpServletRequest request, JqgridPaginator paginator) throws Exception {
 		GridRisultatoCaricamentoPraticaBean json = new GridRisultatoCaricamentoPraticaBean();
         try {
-		Integer maxResult = Integer.parseInt(paginator.getRows());
-        Integer page = Integer.parseInt(paginator.getPage());
-        String column = paginator.getSidx();
-        String order = paginator.getSord();
-        Integer firstRecord = (page * maxResult) - maxResult;
+		
+        	String sord = paginator.getSord();
+            Boolean order = true;
+            if ("asc".equals(sord)) {
+                order = false;
+            }
+            Integer maxResult = Integer.parseInt(paginator.getRows());
+            Integer page = Integer.parseInt(paginator.getPage());
+            Integer firstRecord = (page * maxResult) - maxResult;
+        	
         
         //request.getSession().setAttribute("praticheGestisci", filter);
         Long countRighe = risultatoCaricamentoPraticheDao.countAllRisultatoCaricamentoPratiche();
         List<RisultatoCaricamentoPraticheDTO> praticheInserite = new ArrayList<RisultatoCaricamentoPraticheDTO>();
-        List<RisultatoCaricamentoPratiche> rPraticheInserite  = risultatoCaricamentoPraticheDao.findAll();//praticheService.findFiltrate(filter);
-        for(RisultatoCaricamentoPratiche risultatoCaricamentoPratiche : rPraticheInserite) {
-        	RisultatoCaricamentoPraticheDTO dto = new RisultatoCaricamentoPraticheDTO();
-        	dto = risultatoCaricamentoPraticheSerializer.serialize(risultatoCaricamentoPratiche);
-        	praticheInserite.add(dto);
-        }
-        
+        Integer lastRecord = (int) ((firstRecord + maxResult < countRighe) ? firstRecord + maxResult : countRighe);
         Integer totalRecords = countRighe.intValue();
         totalRecords = (totalRecords / maxResult == 0) ? 1 : ((totalRecords % maxResult == 0) ? (totalRecords / maxResult) : (totalRecords / maxResult + 1));
         json.setPage(page);
         json.setRecords(countRighe.intValue());
         json.setTotal(totalRecords);
+        List<RisultatoCaricamentoPratiche> rPraticheInserite  = risultatoCaricamentoPraticheDao.findAll();//praticheService.findFiltrate(filter);
+        for (Integer i = firstRecord; i < lastRecord; i++) {
+        	RisultatoCaricamentoPraticheDTO dto = new RisultatoCaricamentoPraticheDTO();
+        	dto = risultatoCaricamentoPraticheSerializer.serialize(rPraticheInserite.get(i));
+        	praticheInserite.add(dto);
+        }
+        
+        
         json.setRows(praticheInserite);
         
         

@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -23,15 +16,22 @@ import javax.xml.bind.annotation.XmlValue;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="EstremiSuap">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attribute name="codice-amministrazione" use="required" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAmministrazione" />
- *       &lt;attribute name="codice-aoo" use="required" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAOO" />
- *       &lt;attribute name="identificativo-suap" use="required" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="EstremiSuap"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema&gt;string"&gt;
+ *       &lt;attribute name="codice-amministrazione" use="required" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAmministrazione" /&gt;
+ *       &lt;attribute name="codice-aoo" use="required" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}CodiceAOO" /&gt;
+ *       &lt;attribute name="identificativo-suap" use="required" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" /&gt;
+ *       &lt;attribute name="codice-catastale"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+ *             &lt;pattern value="[A-Z]{1}\d{3}"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -51,9 +51,11 @@ public class EstremiSuap {
     @XmlAttribute(name = "identificativo-suap", required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger identificativoSuap;
+    @XmlAttribute(name = "codice-catastale")
+    protected String codiceCatastale;
 
     /**
-     * Recupera il valore della propriet value.
+     * Recupera il valore della proprietà value.
      * 
      * @return
      *     possible object is
@@ -65,7 +67,7 @@ public class EstremiSuap {
     }
 
     /**
-     * Imposta il valore della propriet value.
+     * Imposta il valore della proprietà value.
      * 
      * @param value
      *     allowed object is
@@ -77,7 +79,7 @@ public class EstremiSuap {
     }
 
     /**
-     * Recupera il valore della propriet codiceAmministrazione.
+     * Recupera il valore della proprietà codiceAmministrazione.
      * 
      * @return
      *     possible object is
@@ -89,7 +91,7 @@ public class EstremiSuap {
     }
 
     /**
-     * Imposta il valore della propriet codiceAmministrazione.
+     * Imposta il valore della proprietà codiceAmministrazione.
      * 
      * @param value
      *     allowed object is
@@ -101,7 +103,7 @@ public class EstremiSuap {
     }
 
     /**
-     * Recupera il valore della propriet codiceAoo.
+     * Recupera il valore della proprietà codiceAoo.
      * 
      * @return
      *     possible object is
@@ -113,7 +115,7 @@ public class EstremiSuap {
     }
 
     /**
-     * Imposta il valore della propriet codiceAoo.
+     * Imposta il valore della proprietà codiceAoo.
      * 
      * @param value
      *     allowed object is
@@ -125,7 +127,7 @@ public class EstremiSuap {
     }
 
     /**
-     * Recupera il valore della propriet identificativoSuap.
+     * Recupera il valore della proprietà identificativoSuap.
      * 
      * @return
      *     possible object is
@@ -137,7 +139,7 @@ public class EstremiSuap {
     }
 
     /**
-     * Imposta il valore della propriet identificativoSuap.
+     * Imposta il valore della proprietà identificativoSuap.
      * 
      * @param value
      *     allowed object is
@@ -146,6 +148,30 @@ public class EstremiSuap {
      */
     public void setIdentificativoSuap(BigInteger value) {
         this.identificativoSuap = value;
+    }
+
+    /**
+     * Recupera il valore della proprietà codiceCatastale.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCodiceCatastale() {
+        return codiceCatastale;
+    }
+
+    /**
+     * Imposta il valore della proprietà codiceCatastale.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCodiceCatastale(String value) {
+        this.codiceCatastale = value;
     }
 
 }

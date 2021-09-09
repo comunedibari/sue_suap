@@ -11,25 +11,25 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Java class for CodiceREA complex type.
+ * <p>Classe Java per CodiceREA complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="CodiceREA">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>NumeroREA">
- *       &lt;attribute name="provincia" use="required">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;pattern value="[A-Z]{2}"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="data-iscrizione" type="{http://www.w3.org/2001/XMLSchema}date" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="CodiceREA"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;NumeroREA"&gt;
+ *       &lt;attribute name="provincia" use="required"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *             &lt;pattern value="[A-Z]{2}"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *       &lt;attribute name="data-iscrizione" type="{http://www.w3.org/2001/XMLSchema}date" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -49,7 +49,7 @@ public class CodiceREA {
     protected XMLGregorianCalendar dataIscrizione;
 
     /**
-     * Gets the value of the value property.
+     * Recupera il valore della propriet value.
      * 
      * @return
      *     possible object is
@@ -61,7 +61,7 @@ public class CodiceREA {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della propriet value.
      * 
      * @param value
      *     allowed object is
@@ -73,7 +73,7 @@ public class CodiceREA {
     }
 
     /**
-     * Gets the value of the provincia property.
+     * Recupera il valore della propriet provincia.
      * 
      * @return
      *     possible object is
@@ -85,7 +85,7 @@ public class CodiceREA {
     }
 
     /**
-     * Sets the value of the provincia property.
+     * Imposta il valore della propriet provincia.
      * 
      * @param value
      *     allowed object is
@@ -97,7 +97,7 @@ public class CodiceREA {
     }
 
     /**
-     * Gets the value of the dataIscrizione property.
+     * Recupera il valore della propriet dataIscrizione.
      * 
      * @return
      *     possible object is
@@ -109,7 +109,7 @@ public class CodiceREA {
     }
 
     /**
-     * Sets the value of the dataIscrizione property.
+     * Imposta il valore della propriet dataIscrizione.
      * 
      * @param value
      *     allowed object is

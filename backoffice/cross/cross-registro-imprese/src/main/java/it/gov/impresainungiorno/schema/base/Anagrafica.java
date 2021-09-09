@@ -9,24 +9,24 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Anagrafica complex type.
+ * <p>Classe Java per Anagrafica complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="Anagrafica">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="cognome" type="{http://www.impresainungiorno.gov.it/schema/base}StringaLunga"/>
- *         &lt;element name="nome" type="{http://www.impresainungiorno.gov.it/schema/base}StringaLunga"/>
- *         &lt;element name="codice-fiscale" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceFiscalePersona"/>
- *         &lt;element name="nazionalita" type="{http://www.impresainungiorno.gov.it/schema/base}Stato" minOccurs="0"/>
- *         &lt;element name="partita-iva" type="{http://www.impresainungiorno.gov.it/schema/base}PartitaIVA" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="Anagrafica"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="cognome" type="{http://www.impresainungiorno.gov.it/schema/base}StringaLunga"/&gt;
+ *         &lt;element name="nome" type="{http://www.impresainungiorno.gov.it/schema/base}StringaLunga"/&gt;
+ *         &lt;element name="codice-fiscale" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceFiscalePersona"/&gt;
+ *         &lt;element name="nazionalita" type="{http://www.impresainungiorno.gov.it/schema/base}Stato" minOccurs="0"/&gt;
+ *         &lt;element name="partita-iva" type="{http://www.impresainungiorno.gov.it/schema/base}PartitaIVA" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -57,7 +57,7 @@ public class Anagrafica {
     protected String partitaIva;
 
     /**
-     * Gets the value of the cognome property.
+     * Recupera il valore della propriet cognome.
      * 
      * @return
      *     possible object is
@@ -69,7 +69,7 @@ public class Anagrafica {
     }
 
     /**
-     * Sets the value of the cognome property.
+     * Imposta il valore della propriet cognome.
      * 
      * @param value
      *     allowed object is
@@ -81,7 +81,7 @@ public class Anagrafica {
     }
 
     /**
-     * Gets the value of the nome property.
+     * Recupera il valore della propriet nome.
      * 
      * @return
      *     possible object is
@@ -93,7 +93,7 @@ public class Anagrafica {
     }
 
     /**
-     * Sets the value of the nome property.
+     * Imposta il valore della propriet nome.
      * 
      * @param value
      *     allowed object is
@@ -105,7 +105,7 @@ public class Anagrafica {
     }
 
     /**
-     * Gets the value of the codiceFiscale property.
+     * Recupera il valore della propriet codiceFiscale.
      * 
      * @return
      *     possible object is
@@ -117,7 +117,7 @@ public class Anagrafica {
     }
 
     /**
-     * Sets the value of the codiceFiscale property.
+     * Imposta il valore della propriet codiceFiscale.
      * 
      * @param value
      *     allowed object is
@@ -129,7 +129,7 @@ public class Anagrafica {
     }
 
     /**
-     * Gets the value of the nazionalita property.
+     * Recupera il valore della propriet nazionalita.
      * 
      * @return
      *     possible object is
@@ -141,7 +141,7 @@ public class Anagrafica {
     }
 
     /**
-     * Sets the value of the nazionalita property.
+     * Imposta il valore della propriet nazionalita.
      * 
      * @param value
      *     allowed object is
@@ -153,7 +153,7 @@ public class Anagrafica {
     }
 
     /**
-     * Gets the value of the partitaIva property.
+     * Recupera il valore della propriet partitaIva.
      * 
      * @return
      *     possible object is
@@ -165,7 +165,7 @@ public class Anagrafica {
     }
 
     /**
-     * Sets the value of the partitaIva property.
+     * Imposta il valore della propriet partitaIva.
      * 
      * @param value
      *     allowed object is

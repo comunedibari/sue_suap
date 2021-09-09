@@ -11,18 +11,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for IndirizzoConRecapitiObbligatori complex type.
+ * <p>Classe Java per IndirizzoConRecapitiObbligatori complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="IndirizzoConRecapitiObbligatori">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Indirizzo">
- *       &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}RecapitiObbligatori"/>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="IndirizzoConRecapitiObbligatori"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Indirizzo"&gt;
+ *       &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}RecapitiObbligatori"/&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -75,7 +75,7 @@ public class IndirizzoConRecapitiObbligatori
     }
 
     /**
-     * Gets the value of the telefono property.
+     * Recupera il valore della proprietà telefono.
      * 
      * @return
      *     possible object is
@@ -87,7 +87,7 @@ public class IndirizzoConRecapitiObbligatori
     }
 
     /**
-     * Sets the value of the telefono property.
+     * Imposta il valore della proprietà telefono.
      * 
      * @param value
      *     allowed object is

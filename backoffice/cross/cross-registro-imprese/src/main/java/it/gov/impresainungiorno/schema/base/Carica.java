@@ -9,18 +9,18 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for Carica complex type.
+ * <p>Classe Java per Carica complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="Carica">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
- *       &lt;attribute name="codice" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceCaricaSocietaria" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="Carica"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+ *       &lt;attribute name="codice" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceCaricaSocietaria" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -49,7 +49,7 @@ public class Carica {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della propriet value.
      * 
      * @param value
      *     allowed object is
@@ -61,7 +61,7 @@ public class Carica {
     }
 
     /**
-     * Gets the value of the codice property.
+     * Recupera il valore della propriet codice.
      * 
      * @return
      *     possible object is
@@ -73,7 +73,7 @@ public class Carica {
     }
 
     /**
-     * Sets the value of the codice property.
+     * Imposta il valore della propriet codice.
      * 
      * @param value
      *     allowed object is

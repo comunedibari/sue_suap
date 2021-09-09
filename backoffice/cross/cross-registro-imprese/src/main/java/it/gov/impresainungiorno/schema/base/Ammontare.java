@@ -11,18 +11,18 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for Ammontare complex type.
+ * <p>Classe Java per Ammontare complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="Ammontare">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Decimale">
- *       &lt;attribute name="valuta" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" default="EUR" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="Ammontare"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Decimale"&gt;
+ *       &lt;attribute name="valuta" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" default="EUR" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlValue;
     "value"
 })
 @XmlSeeAlso({
-    AmmontarePositivo.class,
-    AmmontareNonNegativo.class
+    AmmontareNonNegativo.class,
+    AmmontarePositivo.class
 })
 public class Ammontare {
 
@@ -43,7 +43,7 @@ public class Ammontare {
     protected String valuta;
 
     /**
-     * Gets the value of the value property.
+     * Recupera il valore della  value.
      * 
      * @return
      *     possible object is
@@ -55,7 +55,7 @@ public class Ammontare {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della  value.
      * 
      * @param value
      *     allowed object is
@@ -67,7 +67,7 @@ public class Ammontare {
     }
 
     /**
-     * Gets the value of the valuta property.
+     * Recupera il valore della  valuta.
      * 
      * @return
      *     possible object is
@@ -83,7 +83,7 @@ public class Ammontare {
     }
 
     /**
-     * Sets the value of the valuta property.
+     * Imposta il valore della  valuta.
      * 
      * @param value
      *     allowed object is

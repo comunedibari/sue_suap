@@ -30,8 +30,37 @@
     
     <!-- webservice infocamere -->
     <bean id="infocamere" class="it.wego.cross.webservices.cxf.infocamere.PddServiceEnteWS" />
-    <jaxws:endpoint id="infocamereService" implementor="#infocamere" address="/PddServiceEnte" />
-    <!-- webservice infocamere fine -->
+    <jaxws:endpoint id="infocamereService" implementor="#infocamere" address="/PddServiceEnte" >
+	     <jaxws:inInterceptors>
+			 <ref bean="inboundAttachment" />
+			 <ref bean="inboundSecurity" />
+		</jaxws:inInterceptors>
+	   
+	    <jaxws:properties>
+      		<entry key="mtom-enabled" value="true"/>
+    	</jaxws:properties>
+    	
+    </jaxws:endpoint>
+      <bean  id="inboundAttachment"  class="it.wego.cross.webservices.cxf.infocamere.PDDServiceAttachmentInterceptor"/>
+      <bean id="inboundSecurity" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+		         <constructor-arg>
+		            <map>
+		               <entry key="action" value="Timestamp Signature"/>
+		               <entry key="passwordType" value="PasswordDigest"/>
+		               <entry key="signaturePropFile" value="signprop.properties"/>
+		               <entry key="passwordCallbackRef">
+		                  <ref bean="myPasswordCallback"/>
+		               </entry>
+		              
+		            </map>
+		         </constructor-arg>
+		      </bean>
+       <bean id="myPasswordCallback"
+      class="it.wego.cross.webservices.cxf.infocamere.ServerPasswordCallback"/> 
+
+      <!-- webservice infocamere fine -->
+    
+    <!-- 
     
     <bean id="abstractLoggingInterceptor" abstract="true">
         <property name="prettyLogging" value="true"/>
@@ -53,5 +82,5 @@
             <ref bean="loggingInInterceptor"/>
         </cxf:inFaultInterceptors>
     </cxf:bus>
-
+  -->
 </beans>

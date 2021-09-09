@@ -13,6 +13,7 @@ import it.wego.cross.entity.LkFormeGiuridiche;
 import it.wego.cross.entity.LkNazionalita;
 import it.wego.cross.entity.LkProvincie;
 import it.wego.cross.entity.view.ProcedimentiLocalizzatiView;
+
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public interface ComunicaService {
     public List<ComboDTO> serializeEnti(List<Enti> enti);
 
     public List<ComboDTO> serializeProcedimenti(List<ProcedimentiLocalizzatiView> procedimentiSportello);
-
+    
     public ComuneRiferimentoDTO getComuneRiferimento(RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception;
 
     public SportelloDTO getSportelloDestinazione(RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception;

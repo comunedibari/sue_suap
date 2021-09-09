@@ -11,24 +11,24 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for DocumentoAllegato complex type.
+ * <p>Classe Java per DocumentoAllegato complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="DocumentoAllegato">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="nome" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/>
- *         &lt;element name="dimensione" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger"/>
- *         &lt;element name="uri" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
- *         &lt;element name="tipologia" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/>
- *       &lt;/sequence>
- *       &lt;attribute name="mime" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="DocumentoAllegato"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="nome" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa"/&gt;
+ *         &lt;element name="dimensione" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger"/&gt;
+ *         &lt;element name="uri" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/&gt;
+ *         &lt;element name="tipologia" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name="mime" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -54,7 +54,7 @@ public class DocumentoAllegato {
     protected String mime;
 
     /**
-     * Gets the value of the nome property.
+     * Recupera il valore della propriet nome.
      * 
      * @return
      *     possible object is
@@ -66,7 +66,7 @@ public class DocumentoAllegato {
     }
 
     /**
-     * Sets the value of the nome property.
+     * Imposta il valore della propriet nome.
      * 
      * @param value
      *     allowed object is
@@ -78,7 +78,7 @@ public class DocumentoAllegato {
     }
 
     /**
-     * Gets the value of the dimensione property.
+     * Recupera il valore della propriet dimensione.
      * 
      * @return
      *     possible object is
@@ -90,7 +90,7 @@ public class DocumentoAllegato {
     }
 
     /**
-     * Sets the value of the dimensione property.
+     * Imposta il valore della propriet dimensione.
      * 
      * @param value
      *     allowed object is
@@ -102,7 +102,7 @@ public class DocumentoAllegato {
     }
 
     /**
-     * Gets the value of the uri property.
+     * Recupera il valore della propriet uri.
      * 
      * @return
      *     possible object is
@@ -114,7 +114,7 @@ public class DocumentoAllegato {
     }
 
     /**
-     * Sets the value of the uri property.
+     * Imposta il valore della propriet uri.
      * 
      * @param value
      *     allowed object is
@@ -126,7 +126,7 @@ public class DocumentoAllegato {
     }
 
     /**
-     * Gets the value of the tipologia property.
+     * Recupera il valore della propriet tipologia.
      * 
      * @return
      *     possible object is
@@ -138,7 +138,7 @@ public class DocumentoAllegato {
     }
 
     /**
-     * Sets the value of the tipologia property.
+     * Imposta il valore della propriet tipologia.
      * 
      * @param value
      *     allowed object is
@@ -150,7 +150,7 @@ public class DocumentoAllegato {
     }
 
     /**
-     * Gets the value of the mime property.
+     * Recupera il valore della propriet mime.
      * 
      * @return
      *     possible object is
@@ -162,7 +162,7 @@ public class DocumentoAllegato {
     }
 
     /**
-     * Sets the value of the mime property.
+     * Imposta il valore della propriet mime.
      * 
      * @param value
      *     allowed object is

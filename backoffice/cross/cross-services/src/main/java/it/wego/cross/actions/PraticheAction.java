@@ -4,32 +4,54 @@
  */
 package it.wego.cross.actions;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+
+import org.activiti.engine.delegate.DelegateExecution;
+import org.apache.commons.collections.CollectionUtils;
+import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import it.gov.impresainungiorno.schema.suap.ente.CooperazioneSUAPEnte;
 import it.gov.impresainungiorno.schema.suap.pratica.RiepilogoPraticaSUAP;
-import it.wego.cross.beans.AnagraficaRecapito;
 import it.wego.cross.beans.AttoriComunicazione;
 import it.wego.cross.beans.grid.GridAssociaUtentiBean;
 import it.wego.cross.beans.grid.GridDatiCatastaliBean;
 import it.wego.cross.beans.grid.GridDatoCatastaleBean;
 import it.wego.cross.beans.grid.GridEstrazioniAGIBBean;
 import it.wego.cross.beans.grid.GridEstrazioniCILABean;
-import it.wego.cross.beans.grid.GridEstrazioniPDCBean;
 import it.wego.cross.beans.grid.GridEstrazioniSCIABean;
 import it.wego.cross.beans.grid.GridIndirizziInterventoBean;
 import it.wego.cross.beans.grid.GridIndirizzoInterventoBean;
 import it.wego.cross.beans.grid.GridPraticaEventoBean;
 import it.wego.cross.beans.grid.GridPraticaNuovaBean;
-import it.wego.cross.beans.grid.GridRisultatoCaricamentoPraticaBean;
 import it.wego.cross.beans.layout.JqgridPaginator;
 import it.wego.cross.constants.Constants;
 import it.wego.cross.constants.SessionConstants;
 import it.wego.cross.constants.StatoPratica;
 import it.wego.cross.dao.AnagraficheDao;
 import it.wego.cross.dao.EntiDao;
-import it.wego.cross.dao.ErroriDao;
 import it.wego.cross.dao.LookupDao;
 import it.wego.cross.dao.PraticaDao;
 import it.wego.cross.dao.ProcedimentiDao;
@@ -37,7 +59,6 @@ import it.wego.cross.dao.ProcessiDao;
 import it.wego.cross.dao.StagingDao;
 import it.wego.cross.dao.UtentiDao;
 import it.wego.cross.dto.AllegatoRicezioneDTO;
-import it.wego.cross.dto.dozer.DatiCatastaliDTO;
 import it.wego.cross.dto.ErroreDTO;
 import it.wego.cross.dto.EstrazioniAgibDTO;
 import it.wego.cross.dto.EstrazioniCilaDTO;
@@ -50,6 +71,7 @@ import it.wego.cross.dto.PraticaNuova;
 import it.wego.cross.dto.PraticheEventiRidDTO;
 import it.wego.cross.dto.ScadenzaDTO;
 import it.wego.cross.dto.UtenteDTO;
+import it.wego.cross.dto.dozer.DatiCatastaliDTO;
 import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
 import it.wego.cross.dto.dozer.PraticaEventoDTO;
 import it.wego.cross.dto.filters.Filter;
@@ -61,7 +83,6 @@ import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.IndirizziIntervento;
 import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.LkDug;
-import it.wego.cross.entity.LkStatiPraticaOrganiCollegiali;
 import it.wego.cross.entity.LkStatiScadenze;
 import it.wego.cross.entity.LkStatoPratica;
 import it.wego.cross.entity.LkTipoQualifica;
@@ -75,7 +96,6 @@ import it.wego.cross.entity.Procedimenti;
 import it.wego.cross.entity.ProcedimentiEnti;
 import it.wego.cross.entity.ProcessiEventi;
 import it.wego.cross.entity.ProcessiEventiScadenze;
-import it.wego.cross.entity.RisultatoCaricamentoPratiche;
 import it.wego.cross.entity.Scadenze;
 import it.wego.cross.entity.Staging;
 import it.wego.cross.entity.Utente;
@@ -94,12 +114,10 @@ import it.wego.cross.service.AnagraficheService;
 import it.wego.cross.service.ConfigurationService;
 import it.wego.cross.service.DatiCatastaliService;
 import it.wego.cross.service.IndirizziInterventoService;
-import it.wego.cross.service.IndirizziInterventoServiceImpl;
 import it.wego.cross.service.LookupService;
 import it.wego.cross.service.PluginService;
 import it.wego.cross.service.PraticheService;
 import it.wego.cross.service.ProcedimentiService;
-import it.wego.cross.service.RisultatoCaricamentoPraticheService;
 import it.wego.cross.service.UsefulService;
 import it.wego.cross.service.UtentiService;
 import it.wego.cross.service.WorkFlowService;
@@ -110,55 +128,6 @@ import it.wego.cross.utils.RecapitoUtils;
 import it.wego.cross.utils.Utils;
 import it.wego.cross.xml.Anagrafiche;
 import it.wego.cross.xml.Immobile;
-
-import java.io.StringWriter;
-import java.math.BigInteger;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import org.activiti.engine.delegate.DelegateExecution;
-import org.apache.commons.collections.CollectionUtils;
-import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.math.BigInteger;
-import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import javax.activation.MimetypesFileTypeMap;
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import org.activiti.engine.delegate.DelegateExecution;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -471,7 +440,7 @@ public class PraticheAction {
             //Crea avento assegnazione pratica
             systemEventAction.assegnaPratica(pratica, utente, utenteConnesso);
             //Riassegna task collegati alla pratica
-            //workflowAction.riassegnaTaskAssociatiAllaPratica(idPratica, utente);
+            workflowAction.riassegnaTaskAssociatiAllaPratica(idPratica, utente);
         } else {
             throw new Exception("Non è stato possibile associare l'utente alla pratica");
         }
@@ -691,28 +660,41 @@ public class PraticheAction {
             PraticaProcedimenti praticaProcedimenti = new PraticaProcedimenti();
             //Presuppongo che coincida con l'ID inserito nell'anagrafica enti di CROSS
             Enti ente = entiDao.findByCodEnte(procedimento.getCodEnteDestinatario());
-            if(ente == null)
-            	ente = entiDao.findByIdEnte(procedimento.getIdEnteDestinatario().intValue());
             PraticaProcedimentiPK key = new PraticaProcedimentiPK();
-            key.setIdEnte(ente.getIdEnte());
-            key.setIdPratica(pratica.getIdPratica());
-            Procedimenti proc = procedimentiService.getProcedimento(procedimento.getCodProcedimento());
-            if (proc == null) {
-                Log.WS.warn("ATTENZIONE! Procedimento con codice '" + procedimento.getCodProcedimento() + "' non trovato.");
+            if(ente!=null) {
+            	key.setIdEnte(ente.getIdEnte()!=null ? ente.getIdEnte() : Integer.parseInt(ente.getCodEnte()) );
+            }else {
+            	Log.WS.warn("ATTENZIONE! Codice procedimento non esistente nella pratica con identificativo '" + praticaCross.getIdentificativoPratica());
             }
-            key.setIdProcedimento(proc.getIdProc());
-            praticaProcedimenti.setPraticaProcedimentiPK(key);
-            praticaDao.insert(praticaProcedimenti);
-            usefulService.flush();
-            usefulService.refresh(praticaProcedimenti);
-            praticaProcedimentiList.add(praticaProcedimenti);
+            key.setIdPratica(pratica.getIdPratica());
+            String codiceProcedimento = "";
+            Procedimenti proc = null;
+            //rivedere questo passaggio cioè non solo quando cod procedimento è vuoto controllare con id procedimento suap
+            if(procedimento.getCodProcedimento().isEmpty()) {
+            	codiceProcedimento = praticaCross.getIdProcedimentoSuap();
+            	proc = procedimentiService.findProcedimentoByIdProc(new Integer(codiceProcedimento));
+            }else {
+             proc = procedimentiService.getProcedimento(procedimento.getCodProcedimento());
+            }
+             if (proc == null) {
+                Log.WS.warn("ATTENZIONE! Procedimento con codice '" + procedimento.getCodProcedimento() + "' non trovato.");
+            }else {
+            	if(ente!=null) {
+	            key.setIdProcedimento(proc.getIdProc());
+	            praticaProcedimenti.setPraticaProcedimentiPK(key);
+	            praticaDao.insert(praticaProcedimenti);
+	            usefulService.flush();
+	            usefulService.refresh(praticaProcedimenti);
+	            praticaProcedimentiList.add(praticaProcedimenti);
+            	}
+	           }
+            //TODO: INSERIRE ERRORE PER MANCANZA DI PRATICA PROCEDIMENTI capire se lanciare exception o no
+           
         }
         pratica.setPraticaProcedimentiList(praticaProcedimentiList);
         praticaDao.update(pratica);
     }
     
-   
-
     @Transactional(rollbackFor = Exception.class)
     public ComunicazioneBean inserisciEventoRicezione(it.wego.cross.xml.Pratica praticaCross, Pratica pratica, ProcessiEventi eventoProcesso, List<String> destinatariEmail, List<AllegatoRicezioneDTO> allegati) throws Exception {
         try {
@@ -855,10 +837,18 @@ public class PraticheAction {
         for (Anagrafiche anagrafica : anagrafiche) {
             PraticaAnagrafica pa = anagraficheSerializer.serialize(anagrafica, pratica);
             if (!anagraficheInserite.contains(pa)) {
-                praticaDao.insert(pa);
-                anagrafica.getAnagrafica().setIdAnagrafica(Utils.bi(pa.getAnagrafica().getIdAnagrafica()));
-                pratica.getPraticaAnagraficaList().add(pa);
-                anagraficheInserite.add(pa);
+            	/*04/09/2019 INSERITO CONTROLLO IN QUANTO MANCAVANO IN UN'ANAGRAFICA ID TIPO RUOLO*/
+            //	if(pa.getLkTipoRuolo()!=null && pa.getPraticaAnagraficaPK().getIdAnagrafica()!=0) {
+	                praticaDao.insert(pa);
+	                usefulService.flush();
+	                usefulService.refresh(pa);
+	                anagrafica.getAnagrafica().setIdAnagrafica(Utils.bi(pa.getAnagrafica().getIdAnagrafica()));
+	                pratica.getPraticaAnagraficaList().add(pa);
+	                anagraficheInserite.add(pa);
+	           // }else {
+	            //	Log.WS.error("Non è stato possibile salvare l'anagrafica per mancanza del cod tipo ruolo");
+	            		
+	            //	}
             }
         }
     }
@@ -1650,7 +1640,8 @@ public class PraticheAction {
 
 	public List<AllegatoRicezioneDTO> gestioneAllegatiFuoriXml(it.wego.cross.xml.Pratica praticaCross,String path) throws IOException {
 		//leggi nella cartella di ogni pratica in formato pdf,rtf e doc
-		
+		it.wego.cross.xml.Allegati allegatiXml = praticaCross.getAllegati();
+		List<it.wego.cross.xml.Allegato> listaAllegatiXml = allegatiXml.getAllegato();
 		File[] arrayFile = Utils.getFileAllegatiStampe(path);
 		byte[] documentBody = null;
 		List<AllegatoRicezioneDTO> allegati  = new ArrayList<AllegatoRicezioneDTO>();
@@ -1658,13 +1649,22 @@ public class PraticheAction {
 		//MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
 		for(File file:arrayFile) {
 			documentBody = Utils.fileToByteArray(file);
-			
+			String descrizioneFile = "";
+			for(it.wego.cross.xml.Allegato allegatoXml:listaAllegatiXml) {
+				if(allegatoXml.getNomeFile().equals(file.getName())) {
+					descrizioneFile = allegatoXml.getDescrizione();
+					break;
+				}else {
+					descrizioneFile = file.getName();
+				}
+			}
 			AllegatoRicezioneDTO allegato = new AllegatoRicezioneDTO();
 			Allegati a = new Allegati();
-			String fileNameWithOutExt = FilenameUtils.removeExtension(file.getName());
-			a.setDescrizione(file.getName());
 			
-			a.setNomeFile(fileNameWithOutExt);
+			a.setDescrizione(descrizioneFile);
+			
+			//a.setNomeFile(fileNameWithOutExt);
+			a.setNomeFile(file.getName());
 			a.setFile(documentBody);
 			String mimeType = Files.probeContentType(Paths.get(file.toURI()));
 			a.setTipoFile(mimeType);
@@ -1909,27 +1909,30 @@ public class PraticheAction {
 	            AllegatoRicezioneDTO allegatoPratica = new AllegatoRicezioneDTO();
 	            if (allegati != null && allegati.size() > 0) {
 	                for (AllegatoRicezioneDTO allegato : allegati) {
-	                    Log.WS.info("Aggiungo il file " + allegato.getAllegato().getNomeFile() + " all'evento");
-	                    Allegato a = AllegatiSerializer.serializeAllegato(allegato);
-	                    if (eventoProcesso.getFlgProtocollazione().equalsIgnoreCase("S")) {
-	                        a.setProtocolla(Boolean.TRUE);
-	                    } else {
-	                        a.setProtocolla(Boolean.FALSE);
-	                    }
-
-	                    if (allegato.isModelloDomanda()) {
-	                        allegatoPratica = allegato;
-	                        a.setFileOrigine(Boolean.TRUE);
-	                        a.setSpedisci(Boolean.TRUE);
-	                    } else {
-//	                        if ("TRUE".equalsIgnoreCase(ricTuttiAllegati)) {
-	                            a.setSpedisci(Boolean.TRUE);
-//	                        } else {
-//	                            a.setSpedisci(Boolean.FALSE);
-//	                        }
-	                    }
-
-	                    cb.addAllegato(a);
+	                	Allegati allegatoDb = allegatiService.findByNomeFile(allegato.getAllegato().getNomeFile(), pratica.getIdPratica());
+	                	if(allegatoDb==null) {
+		                	Log.WS.info("Aggiungo il file " + allegato.getAllegato().getNomeFile() + " all'evento");
+		                    Allegato a = AllegatiSerializer.serializeAllegato(allegato);
+		                    if (eventoProcesso.getFlgProtocollazione().equalsIgnoreCase("S")) {
+		                        a.setProtocolla(Boolean.TRUE);
+		                    } else {
+		                        a.setProtocolla(Boolean.FALSE);
+		                    }
+	
+		                    if (allegato.isModelloDomanda()) {
+		                        allegatoPratica = allegato;
+		                        a.setFileOrigine(Boolean.TRUE);
+		                        a.setSpedisci(Boolean.TRUE);
+		                    } else {
+	//	                        if ("TRUE".equalsIgnoreCase(ricTuttiAllegati)) {
+		                            a.setSpedisci(Boolean.TRUE);
+	//	                        } else {
+	//	                            a.setSpedisci(Boolean.FALSE);
+	//	                        }
+		                    }
+	
+		                    cb.addAllegato(a);
+	                	}
 	                }
 	            }
 //	            cb.setOggettoProtocollo(pratica.getOggettoPratica());
@@ -1956,6 +1959,115 @@ public class PraticheAction {
 	            throw ex;
 	        }
 	}
+	
+	 @Transactional(rollbackFor = Exception.class)
+	    public void insertAnagraficheSUAP(List<Anagrafiche> anagrafiche, Pratica pratica) throws Exception {
+	        List<PraticaAnagrafica> anagraficheInserite = new ArrayList<PraticaAnagrafica>();
+	        for (Anagrafiche anagrafica : anagrafiche) {
+	            PraticaAnagrafica pa = anagraficheSerializer.serializePraticaSUAP(anagrafica, pratica);
+	            if (!anagraficheInserite.contains(pa)) {
+	            	/*04/09/2019 INSERITO CONTROLLO IN QUANTO MANCAVANO IN UN'ANAGRAFICA ID TIPO RUOLO*/
+	            //	if(pa.getLkTipoRuolo()!=null && pa.getPraticaAnagraficaPK().getIdAnagrafica()!=0) {
+		                praticaDao.insert(pa);
+		                usefulService.flush();
+		                usefulService.refresh(pa);
+		                anagrafica.getAnagrafica().setIdAnagrafica(Utils.bi(pa.getAnagrafica().getIdAnagrafica()));
+		                pratica.getPraticaAnagraficaList().add(pa);
+		                anagraficheInserite.add(pa);
+		           // }else {
+		            //	Log.WS.error("Non è stato possibile salvare l'anagrafica per mancanza del cod tipo ruolo");
+		            		
+		            //	}
+	            }
+	        }
+	    }
+	 @Transactional(rollbackFor = Exception.class)
+	 public void popolaIndirizziInterventoSUAP(Pratica praticaEntity,it.wego.cross.xml.Pratica praticaXML) throws Exception {
+		 List<IndirizziIntervento> datiIndirizziIntervento = praticaEntity.getIndirizziInterventoList();
+	        if (praticaXML.getIndirizziIntervento() != null && praticaXML.getIndirizziIntervento().getIndirizzoIntervento() != null) {
+	            for (it.wego.cross.xml.IndirizzoIntervento indirizzoIntervento : praticaXML.getIndirizziIntervento().getIndirizzoIntervento()) {
+	                if (indirizzoIntervento.getIdIndirizzoIntervento() == null) {
+	                    if (indirizzoIntervento.getIndirizzo() != null) {
+	                        IndirizziIntervento indirizzoInterventoEntity = mapper.map(indirizzoIntervento, it.wego.cross.entity.IndirizziIntervento.class);
+	                        indirizzoInterventoEntity.setIdPratica(praticaEntity);
+
+	                        if (indirizzoIntervento.getIdDug() != null) {
+	                            indirizzoInterventoEntity.setIdDug(lookupDao.findDugById(Utils.ib(indirizzoIntervento.getIdDug())));
+	                        }
+	                       
+	                        praticheService.saveIndirizzoIntervento(indirizzoInterventoEntity);
+		        			usefulService.flush();
+		                    usefulService.refresh(indirizzoInterventoEntity);
+		                    datiIndirizziIntervento.add(indirizzoInterventoEntity);
+	                      //  usefulService.flush();
+	                        //indirizzoIntervento.setIdIndirizzoIntervento(BigInteger.valueOf(indirizzoInterventoEntity.getIdIndirizzoIntervento().intValue()));
+	                    }
+	                   
+	                    
+	                }
+	            }
+	        }
+	        praticaEntity.setIndirizziInterventoList(datiIndirizziIntervento);
+	        
+	        praticaDao.update(praticaEntity);
+	 }
+	 
+	 @Transactional(rollbackFor = Exception.class)
+	    public void popolaProcedimentiSUAP(Pratica pratica, it.wego.cross.xml.Pratica praticaCross) throws Exception {
+	        List<it.wego.cross.xml.Procedimento> procedimentiPratica = praticaCross.getProcedimenti().getProcedimento();
+	        List<PraticaProcedimenti> praticaProcedimentiList = new ArrayList<PraticaProcedimenti>();
+	        for (it.wego.cross.xml.Procedimento procedimento : procedimentiPratica) {
+	            PraticaProcedimenti praticaProcedimenti = new PraticaProcedimenti();
+	            //Presuppongo che coincida con l'ID inserito nell'anagrafica enti di CROSS
+	            //Enti ente = entiDao.findByCodEnte(procedimento.getCodEnteDestinatario());
+	            ProcedimentiEnti procedimentiEnti = procedimentiService.findIdUfficioByIdProcIdEnte(procedimento.getIdProcedimento(),procedimento.getIdEnteDestinatario());
+	            PraticaProcedimentiPK key = new PraticaProcedimentiPK();
+	            if(procedimentiEnti!=null) {
+		            if(procedimentiEnti.getIdUfficio()!=null) {
+		            	key.setIdEnte(procedimentiEnti.getIdUfficio().getIdEnte());
+		            }else {
+		            	key.setIdEnte((procedimento.getIdEnteDestinatario()).intValue());
+		            }
+	            }
+		            //TODO: PRELEVARE ID_UFFICIO SE NON NULL DELLA TABELLA PROCEDIMENTI_ENTI E SETTARLO NELL'ID_ENTE,ALTRIMENTI METTI ID_ENTE
+		           /* if(ente!=null) {
+		            	key.setIdEnte(ente.getIdEnte()!=null ? ente.getIdEnte() : Integer.parseInt(ente.getCodEnte()) );
+		            }else {
+		            	Log.WS.warn("ATTENZIONE! Codice procedimento non esistente nella pratica con identificativo '" + praticaCross.getIdentificativoPratica());
+		            }*/
+		            key.setIdPratica(pratica.getIdPratica());
+		            String codiceProcedimento = "";
+		            Procedimenti proc = null;
+		            //rivedere questo passaggio cioè non solo quando cod procedimento è vuoto controllare con id procedimento suap
+		            if(procedimento.getCodProcedimento().isEmpty()) {
+		            	codiceProcedimento = praticaCross.getIdProcedimentoSuap();
+		            	proc = procedimentiService.findProcedimentoByIdProc(new Integer(codiceProcedimento));
+		            }else {
+		             proc = procedimentiService.getProcedimento(procedimento.getCodProcedimento());
+		            }
+		             if (proc == null) {
+		                Log.WS.warn("ATTENZIONE! Procedimento con codice '" + procedimento.getCodProcedimento() + "' non trovato.");
+		            }else {
+		            	//if(ente!=null) {
+				            key.setIdProcedimento(proc.getIdProc());
+				            praticaProcedimenti.setPraticaProcedimentiPK(key);
+				            praticheService.salvaPraticaProcedimento(praticaProcedimenti);
+				            String descProc = procedimentiService.getDescrizioneProcedimentoLingua(1, proc.getIdProc());
+				            Log.WS.warn("pratica.endoprocedimenti.aggiungi.note" + descProc);
+				          //  salvaEventoGenerico(pratica, COLLEGA_ENDOPROCEDIMENTO, msg, utenteConnesso);
+	//			            praticaDao.insert(praticaProcedimenti);
+	//			            usefulService.flush();
+	//			            usefulService.refresh(praticaProcedimenti);
+				            praticaProcedimentiList.add(praticaProcedimenti);
+		            	//}
+			           }
+		            //TODO: INSERIRE ERRORE PER MANCANZA DI PRATICA PROCEDIMENTI capire se lanciare exception o no
+		           
+		        }
+		        pratica.setPraticaProcedimentiList(praticaProcedimentiList);
+		        praticaDao.update(pratica);
+	    }
+	    
 	
 	
 }

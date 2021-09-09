@@ -35,9 +35,13 @@
         <class>it.wego.cross.entity.LkTipiAttore</class>
         <class>it.wego.cross.entity.LkTipoCollegio</class>
         <class>it.wego.cross.entity.LkTipoIndirizzo</class>
+        <class>it.wego.cross.entity.LkTipoEndoProcedimentoSuap</class>
         <class>it.wego.cross.entity.LkTipoLegameAnagrafica</class>
         <class>it.wego.cross.entity.LkTipoOggetto</class>
         <class>it.wego.cross.entity.LkTipoParticella</class>
+        <class>it.wego.cross.entity.LkTipoProcedimentoSuap</class>
+        <class>it.wego.cross.entity.LkTipoInterventoSuap</class>
+        <class>it.wego.cross.entity.LkClassificazioneProcedimento</class>
         <class>it.wego.cross.entity.LkTipoQualifica</class>
         <class>it.wego.cross.entity.LkTipoRuolo</class>
         <class>it.wego.cross.entity.LkTipoSistemaCatastale</class>

@@ -9,28 +9,28 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for AttivitaISTAT complex type.
+ * <p>Classe Java per AttivitaISTAT complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="AttivitaISTAT">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attribute name="codice-istat" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceISTATAttivita" />
- *       &lt;attribute name="catalogo" use="required">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa">
- *             &lt;enumeration value="ATECO2002"/>
- *             &lt;enumeration value="ATECO2004"/>
- *             &lt;enumeration value="ATECO2007"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="principale" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="AttivitaISTAT"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema&gt;string"&gt;
+ *       &lt;attribute name="codice-istat" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}CodiceISTATAttivita" /&gt;
+ *       &lt;attribute name="catalogo" use="required"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+ *             &lt;enumeration value="ATECO2002"/&gt;
+ *             &lt;enumeration value="ATECO2004"/&gt;
+ *             &lt;enumeration value="ATECO2007"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *       &lt;attribute name="principale" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -51,7 +51,7 @@ public class AttivitaISTAT {
     protected Boolean principale;
 
     /**
-     * Gets the value of the value property.
+     * Recupera il valore della proprietà value.
      * 
      * @return
      *     possible object is
@@ -63,7 +63,7 @@ public class AttivitaISTAT {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della proprietà value.
      * 
      * @param value
      *     allowed object is
@@ -75,7 +75,7 @@ public class AttivitaISTAT {
     }
 
     /**
-     * Gets the value of the codiceIstat property.
+     * Recupera il valore della proprietà codiceIstat.
      * 
      * @return
      *     possible object is
@@ -87,7 +87,7 @@ public class AttivitaISTAT {
     }
 
     /**
-     * Sets the value of the codiceIstat property.
+     * Imposta il valore della proprietà codiceIstat.
      * 
      * @param value
      *     allowed object is
@@ -99,7 +99,7 @@ public class AttivitaISTAT {
     }
 
     /**
-     * Gets the value of the catalogo property.
+     * Recupera il valore della proprietà catalogo.
      * 
      * @return
      *     possible object is
@@ -111,7 +111,7 @@ public class AttivitaISTAT {
     }
 
     /**
-     * Sets the value of the catalogo property.
+     * Imposta il valore della proprietà catalogo.
      * 
      * @param value
      *     allowed object is
@@ -123,7 +123,7 @@ public class AttivitaISTAT {
     }
 
     /**
-     * Gets the value of the principale property.
+     * Recupera il valore della proprietà principale.
      * 
      * @return
      *     possible object is
@@ -135,7 +135,7 @@ public class AttivitaISTAT {
     }
 
     /**
-     * Sets the value of the principale property.
+     * Imposta il valore della proprietà principale.
      * 
      * @param value
      *     allowed object is

@@ -10,8 +10,11 @@ import it.wego.cross.dto.filters.ComunicazioneFilter;
 import it.wego.cross.dto.filters.Filter;
 import it.wego.cross.dto.filters.GestioneDatiEstesiFilter;
 import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.LkClassificazioneProcedimento;
 import it.wego.cross.entity.LkStatiScadenze;
 import it.wego.cross.entity.LkStatoPratica;
+import it.wego.cross.entity.LkTipoInterventoSuap;
+import it.wego.cross.entity.LkTipoProcedimentoSuap;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.service.EntiService;
 import it.wego.cross.service.PraticheService;
@@ -89,7 +92,11 @@ public class FilterSerializer {
         String idPratica = request.getParameter("search_idpratica");
         String idOperatoreSelezionato = request.getParameter("search_operatore");
         String protocolloSuap = request.getParameter("search_protocollo_suap");
-       
+        String tipoProcedimentoSUAPString = request.getParameter("search_tipoProcedimentoSUAP");
+        String tipoInterventoSUAPString = request.getParameter("search_tipoInterventoSUAP");
+        String dataInizioProtSuapString = request.getParameter("search_data_inizio_prot_suap");
+        String dataFineProtSuapString = request.getParameter("search_data_fine_prot_suap");
+        String classificazioneProcedimentoString = request.getParameter("search_tipoClassificazioneProcedimento");
         Filter filter = new Filter();
         filter.setConnectedUser(utenteConnesso);
         Date dataInizio = null;
@@ -243,6 +250,48 @@ public class FilterSerializer {
         if (!Utils.e(protocolloSuap)) {
             filter.setProtocolloSuap(protocolloSuap); 
         }
+        LkTipoProcedimentoSuap procedimentoSUAP = null;
+        if (!Utils.e(tipoProcedimentoSUAPString)) {
+            if (Utils.isInteger(tipoProcedimentoSUAPString)) {
+                Integer idProcedimentoSUAP = Integer.valueOf(tipoProcedimentoSUAPString);
+                procedimentoSUAP = praticheService.findLookupProcedimentoSUAP(idProcedimentoSUAP);
+            } else {
+                filter.setDesProcedimentoSuap(tipoProcedimentoSUAPString);
+            }
+        }
+        filter.setIdTipoProcedimentoSuap(procedimentoSUAP);
+        
+        LkTipoInterventoSuap tipoInterventoSUAP = null;
+        if (!Utils.e(tipoInterventoSUAPString)) {
+            if (Utils.isInteger(tipoInterventoSUAPString)) {
+                Integer idInterventoSUAP = Integer.valueOf(tipoInterventoSUAPString);
+                tipoInterventoSUAP = praticheService.findLookupInterventoSUAP(idInterventoSUAP);
+            } else {
+                filter.setDesProcedimentoSuap(tipoProcedimentoSUAPString);
+            }
+        }
+        filter.setIdTipoInterventoSuap(tipoInterventoSUAP);
+        Date dataInizioprotsuap = null;
+        if (!Utils.e(dataInizioProtSuapString)) {
+        	dataInizioprotsuap = df.parse(dataInizioProtSuapString);
+        }
+        filter.setDataInizioProtSuap(dataInizioprotsuap);
+        
+        Date dataFineprotsuap = null;
+        if (!Utils.e(dataFineProtSuapString)) {
+        	dataFineprotsuap = df.parse(dataFineProtSuapString);
+        }
+        filter.setDataFineProtSuap(dataFineprotsuap);
+        LkClassificazioneProcedimento classificazioneProcedimento = null;
+        if (!Utils.e(classificazioneProcedimentoString)) {
+            if (Utils.isInteger(classificazioneProcedimentoString)) {
+                Integer idClassificazioneProcedimento = Integer.valueOf(classificazioneProcedimentoString);
+                classificazioneProcedimento = praticheService.findLookupClassificazioneProcedimento(idClassificazioneProcedimento);
+            } else {
+                filter.setDesClassificazioneProcedimento(classificazioneProcedimentoString);
+            }
+        }
+        filter.setIdClassificazioneProcedimento(classificazioneProcedimento);
         return filter;
     }
 

@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -25,89 +18,91 @@ import javax.xml.bind.annotation.XmlValue;
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="FormaGiuridica">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attribute name="codice" use="required">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;enumeration value="XX"/>
- *             &lt;enumeration value="SZ"/>
- *             &lt;enumeration value="SV"/>
- *             &lt;enumeration value="SU"/>
- *             &lt;enumeration value="ST"/>
- *             &lt;enumeration value="SS"/>
- *             &lt;enumeration value="SR"/>
- *             &lt;enumeration value="SP"/>
- *             &lt;enumeration value="SO"/>
- *             &lt;enumeration value="SN"/>
- *             &lt;enumeration value="SM"/>
- *             &lt;enumeration value="SL"/>
- *             &lt;enumeration value="SI"/>
- *             &lt;enumeration value="SG"/>
- *             &lt;enumeration value="SF"/>
- *             &lt;enumeration value="SE"/>
- *             &lt;enumeration value="SD"/>
- *             &lt;enumeration value="SC"/>
- *             &lt;enumeration value="SA"/>
- *             &lt;enumeration value="PS"/>
- *             &lt;enumeration value="PC"/>
- *             &lt;enumeration value="PA"/>
- *             &lt;enumeration value="OS"/>
- *             &lt;enumeration value="OO"/>
- *             &lt;enumeration value="OC"/>
- *             &lt;enumeration value="MA"/>
- *             &lt;enumeration value="LL"/>
- *             &lt;enumeration value="IR"/>
- *             &lt;enumeration value="IF"/>
- *             &lt;enumeration value="ID"/>
- *             &lt;enumeration value="IC"/>
- *             &lt;enumeration value="GE"/>
- *             &lt;enumeration value="FO"/>
- *             &lt;enumeration value="FI"/>
- *             &lt;enumeration value="ES"/>
- *             &lt;enumeration value="ER"/>
- *             &lt;enumeration value="EP"/>
- *             &lt;enumeration value="EN"/>
- *             &lt;enumeration value="EM"/>
- *             &lt;enumeration value="EL"/>
- *             &lt;enumeration value="EI"/>
- *             &lt;enumeration value="EE"/>
- *             &lt;enumeration value="ED"/>
- *             &lt;enumeration value="EC"/>
- *             &lt;enumeration value="DI"/>
- *             &lt;enumeration value="CZ"/>
- *             &lt;enumeration value="CS"/>
- *             &lt;enumeration value="CR"/>
- *             &lt;enumeration value="CO"/>
- *             &lt;enumeration value="CN"/>
- *             &lt;enumeration value="CM"/>
- *             &lt;enumeration value="CL"/>
- *             &lt;enumeration value="CI"/>
- *             &lt;enumeration value="CF"/>
- *             &lt;enumeration value="CE"/>
- *             &lt;enumeration value="CC"/>
- *             &lt;enumeration value="AZ"/>
- *             &lt;enumeration value="AU"/>
- *             &lt;enumeration value="AT"/>
- *             &lt;enumeration value="AS"/>
- *             &lt;enumeration value="AR"/>
- *             &lt;enumeration value="AP"/>
- *             &lt;enumeration value="AN"/>
- *             &lt;enumeration value="AM"/>
- *             &lt;enumeration value="AL"/>
- *             &lt;enumeration value="AI"/>
- *             &lt;enumeration value="AF"/>
- *             &lt;enumeration value="AE"/>
- *             &lt;enumeration value="AC"/>
- *             &lt;enumeration value="AA"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="categoria" type="{http://www.impresainungiorno.gov.it/schema/base}StringaLunga" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="FormaGiuridica"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema&gt;string"&gt;
+ *       &lt;attribute name="codice" use="required"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *             &lt;enumeration value="XX"/&gt;
+ *             &lt;enumeration value="SZ"/&gt;
+ *             &lt;enumeration value="SV"/&gt;
+ *             &lt;enumeration value="SU"/&gt;
+ *             &lt;enumeration value="ST"/&gt;
+ *             &lt;enumeration value="SS"/&gt;
+ *             &lt;enumeration value="SR"/&gt;
+ *             &lt;enumeration value="SP"/&gt;
+ *             &lt;enumeration value="SO"/&gt;
+ *             &lt;enumeration value="SN"/&gt;
+ *             &lt;enumeration value="SM"/&gt;
+ *             &lt;enumeration value="SL"/&gt;
+ *             &lt;enumeration value="SI"/&gt;
+ *             &lt;enumeration value="SG"/&gt;
+ *             &lt;enumeration value="SF"/&gt;
+ *             &lt;enumeration value="SE"/&gt;
+ *             &lt;enumeration value="SD"/&gt;
+ *             &lt;enumeration value="SC"/&gt;
+ *             &lt;enumeration value="SA"/&gt;
+ *             &lt;enumeration value="RS"/&gt;
+ *             &lt;enumeration value="RR"/&gt;
+ *             &lt;enumeration value="PS"/&gt;
+ *             &lt;enumeration value="PC"/&gt;
+ *             &lt;enumeration value="PA"/&gt;
+ *             &lt;enumeration value="OS"/&gt;
+ *             &lt;enumeration value="OO"/&gt;
+ *             &lt;enumeration value="OC"/&gt;
+ *             &lt;enumeration value="MA"/&gt;
+ *             &lt;enumeration value="LL"/&gt;
+ *             &lt;enumeration value="IR"/&gt;
+ *             &lt;enumeration value="IF"/&gt;
+ *             &lt;enumeration value="ID"/&gt;
+ *             &lt;enumeration value="IC"/&gt;
+ *             &lt;enumeration value="GE"/&gt;
+ *             &lt;enumeration value="FO"/&gt;
+ *             &lt;enumeration value="FI"/&gt;
+ *             &lt;enumeration value="ES"/&gt;
+ *             &lt;enumeration value="ER"/&gt;
+ *             &lt;enumeration value="EP"/&gt;
+ *             &lt;enumeration value="EN"/&gt;
+ *             &lt;enumeration value="EM"/&gt;
+ *             &lt;enumeration value="EL"/&gt;
+ *             &lt;enumeration value="EI"/&gt;
+ *             &lt;enumeration value="EE"/&gt;
+ *             &lt;enumeration value="ED"/&gt;
+ *             &lt;enumeration value="EC"/&gt;
+ *             &lt;enumeration value="DI"/&gt;
+ *             &lt;enumeration value="CZ"/&gt;
+ *             &lt;enumeration value="CS"/&gt;
+ *             &lt;enumeration value="CR"/&gt;
+ *             &lt;enumeration value="CO"/&gt;
+ *             &lt;enumeration value="CN"/&gt;
+ *             &lt;enumeration value="CM"/&gt;
+ *             &lt;enumeration value="CL"/&gt;
+ *             &lt;enumeration value="CI"/&gt;
+ *             &lt;enumeration value="CF"/&gt;
+ *             &lt;enumeration value="CE"/&gt;
+ *             &lt;enumeration value="CC"/&gt;
+ *             &lt;enumeration value="AZ"/&gt;
+ *             &lt;enumeration value="AU"/&gt;
+ *             &lt;enumeration value="AT"/&gt;
+ *             &lt;enumeration value="AS"/&gt;
+ *             &lt;enumeration value="AR"/&gt;
+ *             &lt;enumeration value="AP"/&gt;
+ *             &lt;enumeration value="AN"/&gt;
+ *             &lt;enumeration value="AM"/&gt;
+ *             &lt;enumeration value="AL"/&gt;
+ *             &lt;enumeration value="AI"/&gt;
+ *             &lt;enumeration value="AF"/&gt;
+ *             &lt;enumeration value="AE"/&gt;
+ *             &lt;enumeration value="AC"/&gt;
+ *             &lt;enumeration value="AA"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *       &lt;attribute name="categoria" type="{http://www.impresainungiorno.gov.it/schema/base}StringaLunga" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 

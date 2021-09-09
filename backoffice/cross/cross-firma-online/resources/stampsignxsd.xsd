@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://stampsign.xsd.avtmb.tz.eng.it"
+    xmlns:ssd="http://stampsign.xsd.avtmb.tz.eng.it"
+    xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+    elementFormDefault="qualified">
+    <xs:simpleType name="tipoDocumento">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="principale"/>
+            <xs:enumeration value="allegato"/>
+            <xs:enumeration value="estratto"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="composizioneDocumento">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="paginaSingola"/>
+            <xs:enumeration value="paginaMultipla"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="documentInResponseType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SI"/>
+            <xs:enumeration value="NO"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="posizioneTimbro">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="header"/>
+            <xs:enumeration value="footer"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="errore">
+        <xs:sequence>
+            <xs:element name="codice" type="xs:string" />
+            <xs:element name="messaggio" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="risultato">
+        <xs:sequence>
+            <xs:element name="iriDownload" type="xs:anyURI" minOccurs="0"/>
+            <xs:element name="downloadFileName" type="xs:string" minOccurs="0"/>
+            <xs:element name="downloadFileContent" type="xs:base64Binary" xmime:expectedContentTypes="application/pdf"  minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="extraMeta">
+        <xs:sequence>
+            <xs:element name="titoloAmministrazioneProdotto" type="xs:string" minOccurs="1" />
+            <xs:element name="iriAmministrazioneConservato" type="xs:anyURI" minOccurs="0" />
+            <xs:element name="titoloAmministrazioneConservato" type="xs:string" minOccurs="0" />
+            <xs:element name="modalitaVerifica" type="xs:string" minOccurs="0" />
+            <xs:element name="dataFineValidita" type="xs:dateTime" minOccurs="0" />
+            <xs:element name="dataFineVerifica" type="xs:dateTime" minOccurs="0" />
+            <xs:element name="dataProtocolloRicevuto" type="xs:dateTime"  minOccurs="0" />
+            <xs:element name="numeroProtocolloRicevuto" type="xs:normalizedString"  minOccurs="0" />
+            <xs:element name="posizioneTimbro" type="ssd:posizioneTimbro"  minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="infoDoc">
+        <xs:sequence>
+            <xs:element name="infoDocKey" type="xs:normalizedString" />
+            <xs:element name="infoDocValue" type="xs:normalizedString" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="singleStampSizeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="VENTI"/>
+            <xs:enumeration value="QUARANTA"/>
+            <xs:enumeration value="SESSANTA"/>
+            <xs:enumeration value="OTTANTA"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="requestType">
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="STAMP"/>
+                <xs:enumeration value="SIGN"/>
+                <xs:enumeration value="BOTH"/>
+            </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="stampSignRequest">
+        <xs:complexType>
+                <xs:choice>
+                    <xs:element name="stamp" type="ssd:stamp" minOccurs="0"/>
+                    <xs:element name="sign" type="ssd:sign" minOccurs="0" />
+                    <xs:element name="stampSign" type="ssd:stampSign" minOccurs="0" />
+                </xs:choice>
+            <xs:attribute name="requestType" type="ssd:requestType" use="required"/>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="stampSign">
+        <xs:sequence>
+            <xs:element name="clientId" type="xs:normalizedString" minOccurs="1"  maxOccurs="1"  />
+            <xs:element name="authority" type="xs:normalizedString" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="identificativoDocumento" type="xs:normalizedString"  minOccurs="1" maxOccurs="1"/>
+            <xs:element name="composizioneDocumento" type="ssd:composizioneDocumento"  minOccurs="1" maxOccurs="1"/>
+            <xs:element name="dataDocumento" type="xs:dateTime"  minOccurs="1" maxOccurs="1"/>
+            <xs:element name="iriAmministrazione" type="xs:anyURI"  minOccurs="1" maxOccurs="1"/>
+            <xs:element name="oggettoDocumento" type="xs:normalizedString"  minOccurs="1" maxOccurs="1"/>
+            <xs:element name="tipoDocumento" type="ssd:tipoDocumento"  minOccurs="1" maxOccurs="1"/>
+            <xs:choice minOccurs="1" maxOccurs="1">
+                <xs:element name="fileDocumento" type="xs:base64Binary" xmime:expectedContentTypes="application/pdf"/>
+                <xs:element name="iriDocumento" type="xs:anyURI" />
+            </xs:choice>
+            <xs:element name="infoDoc" type="ssd:infoDoc" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="extraMetaDoc" type="ssd:extraMeta" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="documentInResponse" type="ssd:documentInResponseType"  minOccurs="0" default="NO"/>
+            <xs:element name="transactionId" type="xs:normalizedString" minOccurs="1"  maxOccurs="1" />
+            <xs:element name="signer" type="xs:normalizedString" minOccurs="1" maxOccurs="1" />
+            <xs:element name="otp" type="xs:string" minOccurs="0"  maxOccurs="1" />
+            <xs:element name="tipoFirma" type="xs:string" minOccurs="0"  maxOccurs="1" />
+            <xs:element name="singleStampSize" type="ssd:singleStampSizeType" minOccurs="0"  maxOccurs="1" default="QUARANTA"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="sign">
+        <xs:sequence>
+            <xs:element name="clientId" type="xs:normalizedString" minOccurs="1"  maxOccurs="1" />
+            <xs:element name="transactionId" type="xs:normalizedString" minOccurs="1"  maxOccurs="1" />
+            <xs:element name="signer" type="xs:normalizedString" minOccurs="1" maxOccurs="1" />
+            <xs:element name="otp" type="xs:string" minOccurs="0"  maxOccurs="1" />
+            <xs:element name="tipoFirma" type="xs:string" minOccurs="0"  maxOccurs="1" />
+            <xs:element name="fileDocumento" type="xs:base64Binary" xmime:expectedContentTypes="application/pdf" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="stamp">
+            <xs:sequence>
+                <xs:element name="authority" type="xs:normalizedString" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="identificativoDocumento" type="xs:normalizedString"  minOccurs="1" maxOccurs="1"/>
+                <xs:element name="composizioneDocumento" type="ssd:composizioneDocumento"  minOccurs="1" maxOccurs="1"/>
+                <xs:element name="dataDocumento" type="xs:dateTime"  minOccurs="1" maxOccurs="1"/>
+                <xs:element name="iriAmministrazione" type="xs:anyURI"  minOccurs="1" maxOccurs="1"/>
+                <xs:element name="oggettoDocumento" type="xs:normalizedString"  minOccurs="1" maxOccurs="1"/>
+                <xs:element name="tipoDocumento" type="ssd:tipoDocumento"  minOccurs="1" maxOccurs="1"/>
+                <xs:choice minOccurs="1" maxOccurs="1">
+                    <xs:element name="fileDocumento" type="xs:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+                    <xs:element name="iriDocumento" type="xs:anyURI" />
+                </xs:choice>
+                <xs:element name="infoDoc" type="ssd:infoDoc" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="extraMetaDoc" type="ssd:extraMeta" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="documentInResponse" type="ssd:documentInResponseType"  minOccurs="0" default="NO" />
+            <xs:element name="singleStampSize" type="ssd:singleStampSizeType" minOccurs="0"  maxOccurs="1" default="QUARANTA"/>
+            </xs:sequence>
+    </xs:complexType>
+    <xs:element name="stampSignResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice>
+                    <xs:element name="errore" type="ssd:errore" />
+                    <xs:element name="risultato" type="ssd:risultato" />
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="token">
+        <xs:sequence>
+            <xs:element name="accessToken" type="xs:normalizedString" />
+            <xs:element name="tokenType" type="xs:normalizedString" />
+            <xs:element name="expiresIn" type="xs:normalizedString" />
+            <xs:element name="scope" type="xs:normalizedString" />
+            <xs:element name="organization" type="xs:normalizedString" />
+            <xs:element name="jti" type="xs:normalizedString" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="client">
+        <xs:sequence>
+            <xs:element name="aoo" type="xs:normalizedString" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="clientId" type="xs:normalizedString" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="stampSignAuthRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="client" type="ssd:client"  minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="stampSignAuthResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice>
+                    <xs:element name="errore" type="ssd:errore" />
+                    <xs:element name="token" type="ssd:token" />
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2020.02.19 alle 06:34:54 PM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.ente;
 
@@ -31,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CooperazioneSuapEnte_QNAME = new QName("http://www.impresainungiorno.gov.it/schema/suap/ente", "cooperazione-suap-ente");
     private final static QName _CooperazioneEnteSuap_QNAME = new QName("http://www.impresainungiorno.gov.it/schema/suap/ente", "cooperazione-ente-suap");
+    private final static QName _CooperazioneSuapEnte_QNAME = new QName("http://www.impresainungiorno.gov.it/schema/suap/ente", "cooperazione-suap-ente");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: it.gov.impresainungiorno.schema.suap.ente
@@ -106,21 +99,29 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CooperazioneSUAPEnte }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CooperazioneEnteSUAP }{@code >}
      * 
-     */
-    @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/schema/suap/ente", name = "cooperazione-suap-ente")
-    public JAXBElement<CooperazioneSUAPEnte> createCooperazioneSuapEnte(CooperazioneSUAPEnte value) {
-        return new JAXBElement<CooperazioneSUAPEnte>(_CooperazioneSuapEnte_QNAME, CooperazioneSUAPEnte.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CooperazioneEnteSUAP }{@code >}}
-     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link CooperazioneEnteSUAP }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/schema/suap/ente", name = "cooperazione-ente-suap")
     public JAXBElement<CooperazioneEnteSUAP> createCooperazioneEnteSuap(CooperazioneEnteSUAP value) {
         return new JAXBElement<CooperazioneEnteSUAP>(_CooperazioneEnteSuap_QNAME, CooperazioneEnteSUAP.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CooperazioneSUAPEnte }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link CooperazioneSUAPEnte }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://www.impresainungiorno.gov.it/schema/suap/ente", name = "cooperazione-suap-ente")
+    public JAXBElement<CooperazioneSUAPEnte> createCooperazioneSuapEnte(CooperazioneSUAPEnte value) {
+        return new JAXBElement<CooperazioneSUAPEnte>(_CooperazioneSuapEnte_QNAME, CooperazioneSUAPEnte.class, null, value);
     }
 
 }

@@ -9,31 +9,31 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for ComuneRI complex type.
+ * <p>Classe Java per ComuneRI complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="ComuneRI">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attribute name="codice-catastale">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa">
- *             &lt;pattern value="[A-Z]{1}\d{3}"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="codice-istat">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa">
- *             &lt;pattern value="\d{6}"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="ComuneRI"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema&gt;string"&gt;
+ *       &lt;attribute name="codice-catastale"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+ *             &lt;pattern value="[A-Z]{1}\d{3}"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *       &lt;attribute name="codice-istat"&gt;
+ *         &lt;simpleType&gt;
+ *           &lt;restriction base="{http://www.impresainungiorno.gov.it/schema/base}Stringa"&gt;
+ *             &lt;pattern value="\d{6}"/&gt;
+ *           &lt;/restriction&gt;
+ *         &lt;/simpleType&gt;
+ *       &lt;/attribute&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -52,7 +52,7 @@ public class ComuneRI {
     protected String codiceIstat;
 
     /**
-     * Gets the value of the value property.
+     * Recupera il valore della proprietà value.
      * 
      * @return
      *     possible object is
@@ -64,7 +64,7 @@ public class ComuneRI {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della proprietà value.
      * 
      * @param value
      *     allowed object is
@@ -76,7 +76,7 @@ public class ComuneRI {
     }
 
     /**
-     * Gets the value of the codiceCatastale property.
+     * Recupera il valore della proprietà codiceCatastale.
      * 
      * @return
      *     possible object is
@@ -88,7 +88,7 @@ public class ComuneRI {
     }
 
     /**
-     * Sets the value of the codiceCatastale property.
+     * Imposta il valore della proprietà codiceCatastale.
      * 
      * @param value
      *     allowed object is
@@ -100,7 +100,7 @@ public class ComuneRI {
     }
 
     /**
-     * Gets the value of the codiceIstat property.
+     * Recupera il valore della proprietà codiceIstat.
      * 
      * @return
      *     possible object is
@@ -112,7 +112,7 @@ public class ComuneRI {
     }
 
     /**
-     * Sets the value of the codiceIstat property.
+     * Imposta il valore della proprietà codiceIstat.
      * 
      * @param value
      *     allowed object is

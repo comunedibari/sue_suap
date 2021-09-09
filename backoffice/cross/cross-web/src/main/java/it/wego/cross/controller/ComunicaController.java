@@ -175,8 +175,7 @@ public class ComunicaController extends AbstractController {
     private ConfigurationService configurationService;
     @Autowired
     private RisultatoCaricamentoPraticheAction risultatoCaricamentoPraticheAction;
-    //private static long maxsize = 2097152;
-    private static long maxsize = 209715200;
+    private static long maxsize = 1073741824;
 
     @RequestMapping("/comunica/index")
     public String nuove(Model model, HttpServletRequest request, HttpServletResponse response) {
@@ -266,7 +265,7 @@ public class ComunicaController extends AbstractController {
 				throw new Exception("Vengono accettati solo file zip!");
 			}
 			if (file.getSize() > this.maxsize) {
-				throw new Exception("Superato limite massimo consentito per un file (2 mb)!");
+				throw new Exception("Superato limite massimo consentito per un file (500 MB)!");
 			}
 			nomeFileCaricato = file.getOriginalFilename();
 			File fileConv = Utils.convert(file);
@@ -277,6 +276,7 @@ public class ComunicaController extends AbstractController {
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			String identificativoFolder = timestamp.getTime() + "";
 			pathZipCaricato = attachmentsFolder + "/unzip" + identificativoFolder;
+			//Utils.copyFile(fileConv, dest);
 			Utils.unzip(fileConv.getAbsolutePath(), pathZipCaricato);
 			/*
 			 * 26/08/2019 vengono letti i file xml presenti sotto la cartella unzip e
@@ -310,20 +310,24 @@ public class ComunicaController extends AbstractController {
 							byte[] bytesArray = Utils.readByteArrayFromFile(fileXml);
 							String xmlPratica = new String(bytesArray);
 							identificativoPratica = fileXml.getName();
-							
+							xmlPratica = Utils.encodingXml(xmlPratica);
 							JAXBContext context = JAXBContext.newInstance(it.wego.cross.xml.Pratica.class);
 							Unmarshaller unmarshaller = context.createUnmarshaller();
 							StringReader reader = new StringReader(xmlPratica);
-							it.wego.cross.xml.Pratica praticaCross = (it.wego.cross.xml.Pratica) unmarshaller.unmarshal(reader);
+							
+							it.wego.cross.xml.Pratica praticaCross = null;
+							
+							praticaCross = (it.wego.cross.xml.Pratica) unmarshaller.unmarshal(reader);
+							
 							// it.wego.cross.xml.Pratica praticaCross = getPratica(gp, xmlPratica);
 							identificativoPratica = praticaCross.getIdentificativoPratica();
 							identificativiPraticaXml.add(identificativoPratica);
 		
 							if (praticaCross == null) {
 								Log.WS.error(
-										"Non � stato possibile generare la pratica a partire dall'XML ricevuto il cui nome e': "
+										"Non e' stato possibile generare la pratica a partire dall'XML ricevuto il cui nome e': "
 												+ file.getOriginalFilename());
-								throw new IOException("Non � stato possibile generare la pratica");
+								throw new IOException("Non e' stato possibile generare la pratica");
 							}
 							XPath xpath = XPathFactory.newInstance().newXPath();
 							InputSource source = new InputSource(new StringReader(xmlPratica));
@@ -340,14 +344,14 @@ public class ComunicaController extends AbstractController {
 							
 							  if (praticaEsistente != null) { 
 								  //Pratica già inbviata: traccio l'evento ma ritorno success all'utente 
-								  Log.WS.warn("La pratica � gi� presente in CROSS, la ignoro silenziosamente...");
+								  Log.WS.warn("La pratica e' gia' presente in CROSS, la ignoro silenziosamente...");
 								  ErroreDTO errore = erroriAction.getError(Error.ERRORE_PARSING_PRATICA,
 								  "La pratica '" + identificativoPratica + "' inviata è già presente in CROSS",
 								  null, praticaEsistente, null); 
 								  erroriAction.saveError(errore); 
 								  //xmlDump.delete();
 								  
-								  throw new IOException("La pratica � gi� presente in CROSS"); 
+								  throw new IOException("WARNING:La pratica e' gia' presente in CROSS"); 
 							  }
 							  
 							/*if(praticaCross.getCodStatoPratica()==null || praticaCross.getCodStatoPratica().isEmpty())
@@ -510,7 +514,8 @@ public class ComunicaController extends AbstractController {
 							Log.WS.info("Salvo la pratica");
 							praticheAction.salvaPratica(pratica);
 							Log.WS.info("Popolo i procedimenti");
-							praticheAction.popolaProcedimentiUpload(pratica, praticaCross);
+							//praticheAction.popolaProcedimentiUpload(pratica, praticaCross);
+							praticheAction.popolaProcedimenti(pratica, praticaCross);
 							// Dati catastali
 							Log.WS.info("Popolo i dati catastali");
 							praticheAction.popolaDatiCatastali(pratica, praticaCross);
@@ -581,7 +586,7 @@ public class ComunicaController extends AbstractController {
 	    				}
 					} catch (JAXBException ex) {
 						esitoPositivo = false;
-						String msgError = "Errore cercando di generare l'oggetto dall'XML: " + ex.getCause().getMessage();
+						String msgError = "Errore cercando di generare l'oggetto dall'XML: " + ex.getMessage();
 						Log.APP.error("Errore cercando di generare l'oggetto dall'XML con pratica identificativo "
 								+ identificativoPratica, ex);
 						/*
@@ -596,7 +601,9 @@ public class ComunicaController extends AbstractController {
 						// return INDEX;
 					} catch (IOException ex) {
 						esitoPositivo = false;
-						String msgError = "Errore cercando di inserire la pratica:\n " + ex.getMessage();
+						String msgError = ex.getMessage();
+						if(msgError.indexOf("WARNING")==-1)
+							msgError ="Errore cercando di inserire la pratica:\n " + ex.getMessage();
 						Log.APP.error(
 								"Si è verificato un errore cercando di recuperare l'XML della pratica con identificativo "
 										+ identificativoPratica,

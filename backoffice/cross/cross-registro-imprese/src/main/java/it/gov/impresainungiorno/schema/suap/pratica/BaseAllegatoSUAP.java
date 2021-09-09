@@ -1,10 +1,3 @@
-//
-// Questo file  stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
-// Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2012.11.27 alle 11:16:28 AM CET 
-//
-
 
 package it.gov.impresainungiorno.schema.suap.pratica;
 
@@ -15,31 +8,33 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import it.gov.impresainungiorno.schema.suap.ente.AllegatoCooperazione;
 
 
 /**
  * 
  *             Descrive il singolo file allegato. Tipo astratto, non istanziabile
- *         
+ * 			
  * 
  * <p>Classe Java per BaseAllegatoSUAP complex type.
  * 
  * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="BaseAllegatoSUAP">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="descrizione" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/>
- *         &lt;element name="nome-file-originale" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/>
- *         &lt;element name="mime" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}MimeType"/>
- *         &lt;element name="mime-base" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}MimeType" minOccurs="0"/>
- *         &lt;element name="dimensione" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="BaseAllegatoSUAP"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="descrizione" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/&gt;
+ *         &lt;element name="nome-file-originale" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" minOccurs="0"/&gt;
+ *         &lt;element name="mime" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}MimeType"/&gt;
+ *         &lt;element name="mime-base" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}MimeType" minOccurs="0"/&gt;
+ *         &lt;element name="dimensione" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" minOccurs="0"/&gt;
+ *         &lt;element name="tipo" type="{http://www.impresainungiorno.gov.it/schema/suap/pratica}TipoAllegato" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -50,15 +45,16 @@ import javax.xml.bind.annotation.XmlType;
     "nomeFileOriginale",
     "mime",
     "mimeBase",
-    "dimensione"
+    "dimensione",
+    "tipo"
 })
 @XmlSeeAlso({
-    it.gov.impresainungiorno.schema.suap.rea.AllegatoGenerico.class,
-    it.gov.impresainungiorno.schema.suap.pratica.AllegatoGenerico.class,
+    AllegatoCooperazione.class,
+    ModelloAttivita.TracciatoXml.class,
+    ModelloAttivita.class,
     ProcuraSpeciale.TracciatoXml.class,
     ProcuraSpeciale.class,
-    ModelloAttivita.TracciatoXml.class,
-    ModelloAttivita.class
+    AllegatoGenerico.class
 })
 public abstract class BaseAllegatoSUAP {
 
@@ -71,9 +67,10 @@ public abstract class BaseAllegatoSUAP {
     protected String mimeBase;
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger dimensione;
+    protected TipoAllegato tipo;
 
     /**
-     * Recupera il valore della propriet descrizione.
+     * Recupera il valore della proprietà descrizione.
      * 
      * @return
      *     possible object is
@@ -85,7 +82,7 @@ public abstract class BaseAllegatoSUAP {
     }
 
     /**
-     * Imposta il valore della propriet descrizione.
+     * Imposta il valore della proprietà descrizione.
      * 
      * @param value
      *     allowed object is
@@ -97,7 +94,7 @@ public abstract class BaseAllegatoSUAP {
     }
 
     /**
-     * Recupera il valore della propriet nomeFileOriginale.
+     * Recupera il valore della proprietà nomeFileOriginale.
      * 
      * @return
      *     possible object is
@@ -109,7 +106,7 @@ public abstract class BaseAllegatoSUAP {
     }
 
     /**
-     * Imposta il valore della propriet nomeFileOriginale.
+     * Imposta il valore della proprietà nomeFileOriginale.
      * 
      * @param value
      *     allowed object is
@@ -121,7 +118,7 @@ public abstract class BaseAllegatoSUAP {
     }
 
     /**
-     * Recupera il valore della propriet mime.
+     * Recupera il valore della proprietà mime.
      * 
      * @return
      *     possible object is
@@ -133,7 +130,7 @@ public abstract class BaseAllegatoSUAP {
     }
 
     /**
-     * Imposta il valore della propriet mime.
+     * Imposta il valore della proprietà mime.
      * 
      * @param value
      *     allowed object is
@@ -145,7 +142,7 @@ public abstract class BaseAllegatoSUAP {
     }
 
     /**
-     * Recupera il valore della propriet mimeBase.
+     * Recupera il valore della proprietà mimeBase.
      * 
      * @return
      *     possible object is
@@ -157,7 +154,7 @@ public abstract class BaseAllegatoSUAP {
     }
 
     /**
-     * Imposta il valore della propriet mimeBase.
+     * Imposta il valore della proprietà mimeBase.
      * 
      * @param value
      *     allowed object is
@@ -169,7 +166,7 @@ public abstract class BaseAllegatoSUAP {
     }
 
     /**
-     * Recupera il valore della propriet dimensione.
+     * Recupera il valore della proprietà dimensione.
      * 
      * @return
      *     possible object is
@@ -181,7 +178,7 @@ public abstract class BaseAllegatoSUAP {
     }
 
     /**
-     * Imposta il valore della propriet dimensione.
+     * Imposta il valore della proprietà dimensione.
      * 
      * @param value
      *     allowed object is
@@ -190,6 +187,30 @@ public abstract class BaseAllegatoSUAP {
      */
     public void setDimensione(BigInteger value) {
         this.dimensione = value;
+    }
+
+    /**
+     * Recupera il valore della proprietà tipo.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TipoAllegato }
+     *     
+     */
+    public TipoAllegato getTipo() {
+        return tipo;
+    }
+
+    /**
+     * Imposta il valore della proprietà tipo.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TipoAllegato }
+     *     
+     */
+    public void setTipo(TipoAllegato value) {
+        this.tipo = value;
     }
 
 }

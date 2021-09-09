@@ -105,4 +105,8 @@ public class SessionConstants {
 	public static final String ATTACHMENTS_FOLDER = "attachment.tmp.folder";
 	public static final String DOCUMENTS_FOLDER = "documenti.fs.folder";
 
+	public static final String KEYSTORE_PATH = "keystore.path";
+	public static final String KEYSTORE_PASSWORD = "keystore.password";
+	public static final String SUAP_ENDPOINT = "suap.endpoint";
+	public static final String KEYSTORE_ALIAS = "keystore.alias";
 }

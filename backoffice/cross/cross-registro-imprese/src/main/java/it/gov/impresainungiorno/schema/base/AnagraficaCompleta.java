@@ -13,32 +13,32 @@ import javax.xml.datatype.XMLGregorianCalendar;
 /**
  * Anagrafica completa, contiene i dati sufficienti e necessari a validare un cf
  * 
- * <p>Java class for AnagraficaCompleta complex type.
+ * <p>Classe Java per AnagraficaCompleta complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="AnagraficaCompleta">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Anagrafica">
- *       &lt;sequence>
- *         &lt;element name="sesso" type="{http://www.impresainungiorno.gov.it/schema/base}Sesso"/>
- *         &lt;element name="nascita">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Citta"/>
- *                   &lt;element name="data" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="AnagraficaCompleta"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Anagrafica"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="sesso" type="{http://www.impresainungiorno.gov.it/schema/base}Sesso"/&gt;
+ *         &lt;element name="nascita"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence&gt;
+ *                   &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Citta"/&gt;
+ *                   &lt;element name="data" type="{http://www.w3.org/2001/XMLSchema}date"/&gt;
+ *                 &lt;/sequence&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -56,12 +56,13 @@ public class AnagraficaCompleta
 {
 
     @XmlElement(required = true)
+    @XmlSchemaType(name = "string")
     protected Sesso sesso;
     @XmlElement(required = true)
     protected AnagraficaCompleta.Nascita nascita;
 
     /**
-     * Gets the value of the sesso property.
+     * Recupera il valore della propriet sesso.
      * 
      * @return
      *     possible object is
@@ -73,7 +74,7 @@ public class AnagraficaCompleta
     }
 
     /**
-     * Sets the value of the sesso property.
+     * Imposta il valore della propriet sesso.
      * 
      * @param value
      *     allowed object is
@@ -85,7 +86,7 @@ public class AnagraficaCompleta
     }
 
     /**
-     * Gets the value of the nascita property.
+     * Recupera il valore della propriet nascita.
      * 
      * @return
      *     possible object is
@@ -97,7 +98,7 @@ public class AnagraficaCompleta
     }
 
     /**
-     * Sets the value of the nascita property.
+     * Imposta il valore della propriet nascita.
      * 
      * @param value
      *     allowed object is
@@ -110,21 +111,21 @@ public class AnagraficaCompleta
 
 
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>Classe Java per anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Citta"/>
-     *         &lt;element name="data" type="{http://www.w3.org/2001/XMLSchema}date"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Citta"/&gt;
+     *         &lt;element name="data" type="{http://www.w3.org/2001/XMLSchema}date"/&gt;
+     *       &lt;/sequence&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -150,7 +151,7 @@ public class AnagraficaCompleta
         protected XMLGregorianCalendar data;
 
         /**
-         * Gets the value of the stato property.
+         * Recupera il valore della propriet stato.
          * 
          * @return
          *     possible object is
@@ -162,7 +163,7 @@ public class AnagraficaCompleta
         }
 
         /**
-         * Sets the value of the stato property.
+         * Imposta il valore della propriet stato.
          * 
          * @param value
          *     allowed object is
@@ -174,7 +175,7 @@ public class AnagraficaCompleta
         }
 
         /**
-         * Gets the value of the provincia property.
+         * Recupera il valore della propriet provincia.
          * 
          * @return
          *     possible object is
@@ -186,7 +187,7 @@ public class AnagraficaCompleta
         }
 
         /**
-         * Sets the value of the provincia property.
+         * Imposta il valore della propriet provincia.
          * 
          * @param value
          *     allowed object is
@@ -198,7 +199,7 @@ public class AnagraficaCompleta
         }
 
         /**
-         * Gets the value of the comune property.
+         * Recupera il valore della propriet comune.
          * 
          * @return
          *     possible object is
@@ -210,7 +211,7 @@ public class AnagraficaCompleta
         }
 
         /**
-         * Sets the value of the comune property.
+         * Imposta il valore della propriet comune.
          * 
          * @param value
          *     allowed object is
@@ -222,7 +223,7 @@ public class AnagraficaCompleta
         }
 
         /**
-         * Gets the value of the cittaStraniera property.
+         * Recupera il valore della propriet cittaStraniera.
          * 
          * @return
          *     possible object is
@@ -234,7 +235,7 @@ public class AnagraficaCompleta
         }
 
         /**
-         * Sets the value of the cittaStraniera property.
+         * Imposta il valore della propriet cittaStraniera.
          * 
          * @param value
          *     allowed object is
@@ -246,7 +247,7 @@ public class AnagraficaCompleta
         }
 
         /**
-         * Gets the value of the data property.
+         * Recupera il valore della propriet data.
          * 
          * @return
          *     possible object is
@@ -258,7 +259,7 @@ public class AnagraficaCompleta
         }
 
         /**
-         * Sets the value of the data property.
+         * Imposta il valore della propriet data.
          * 
          * @param value
          *     allowed object is

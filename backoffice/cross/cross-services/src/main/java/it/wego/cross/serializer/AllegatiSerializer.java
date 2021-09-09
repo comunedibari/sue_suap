@@ -6,7 +6,6 @@ package it.wego.cross.serializer;
 
 import com.google.common.base.Strings;
 
-import it.gov.impresainungiorno.schema.suap.ente.AllegatoCooperazione;
 import it.wego.cross.dto.AllegatoDTO;
 import it.wego.cross.dto.AllegatoRicezioneDTO;
 import it.wego.cross.entity.Allegati;
@@ -15,6 +14,7 @@ import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.PraticheEventiAllegati;
 import it.wego.cross.entity.view.PraticheAllegatiView;
 import it.wego.cross.plugins.commons.beans.Allegato;
+import it.gov.impresainungiorno.schema.suap.ente.AllegatoCooperazione;
 import it.wego.cross.utils.FileUtils;
 import it.wego.cross.utils.Utils;
 import java.io.File;
@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.activation.DataHandler;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
@@ -67,6 +69,9 @@ public class AllegatiSerializer {
     public static AllegatoRicezioneDTO serializeAllegatoRicezione(it.wego.cross.xml.Allegato allegato) {
         AllegatoRicezioneDTO allegatoRicezione = new AllegatoRicezioneDTO();
         Allegati a = new Allegati();
+        if(allegato.getDescrizione().equals("Riepilogo Pratica SUAP")) {
+        	allegatoRicezione.setModelloDomanda("S");
+        }
         a.setDescrizione(allegato.getDescrizione());
         a.setNomeFile(allegato.getNomeFile());
         if (allegato.getIdFileEsterno() != null) {
@@ -240,6 +245,43 @@ public class AllegatiSerializer {
 		ac.setMime(allegato.getTipoFile());
 		ac.setNomeFile(allegato.getNomeFile());
 		ac.setNomeFileOriginale(allegato.getNomeFile());
+		ac.setEmbeddedFileRef(getDataHandler(allegato.getPathFile()));
+		return ac;
+	}
+	
+	public static AllegatoCooperazione serializeAllegatoCooperazioneSuapEnteXML(it.wego.cross.dto.dozer.AllegatoDTO allegato) throws IOException {
+		AllegatoCooperazione ac = new AllegatoCooperazione();
+		ac.setCod("ALLEG");
+		ac.setDescrizione(allegato.getDescrizione());
+		File f = new File(allegato.getPathFile());
+		if(f != null) {
+			ac.setDimensione(BigInteger.valueOf(f.length()));
+		}
+		ac.setMime(allegato.getTipoFile());
+		ac.setNomeFile(allegato.getNomeFile());
+		ac.setNomeFileOriginale(allegato.getNomeFile());
+		//ac.setEmbeddedFileRef(getDataHandler(allegato.getPathFile()));
+		return ac;
+	}
+	
+	 public static DataHandler getDataHandler(String filePath) {
+		 javax.activation.FileDataSource fileDataSource =new javax.activation.FileDataSource(filePath);
+		 javax.activation.DataHandler dataHandler = new javax.activation.DataHandler(fileDataSource);
+		 return dataHandler;
+	 }
+
+	public static AllegatoCooperazione serializeAllegatoCooperazione(Allegati allegato) {
+		AllegatoCooperazione ac = new AllegatoCooperazione();
+		ac.setCod("ALLEG");
+		ac.setDescrizione(allegato.getDescrizione());
+		File f = new File(allegato.getPathFile());
+		if(f != null) {
+			ac.setDimensione(BigInteger.valueOf(f.length()));
+		}
+		ac.setMime(allegato.getTipoFile());
+		ac.setNomeFile(allegato.getNomeFile());
+		ac.setNomeFileOriginale(allegato.getNomeFile());
+		ac.setEmbeddedFileRef(getDataHandler(allegato.getPathFile()));
 		return ac;
 	}
 }

@@ -10,20 +10,20 @@ import javax.xml.bind.annotation.XmlType;
 /**
  * @deprecated
  * 
- * <p>Java class for LegaleRappresentante complex type.
+ * <p>Classe Java per LegaleRappresentante complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="LegaleRappresentante">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}DatiPersona">
- *       &lt;sequence>
- *         &lt;element name="carica" type="{http://www.impresainungiorno.gov.it/schema/base}Carica"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="LegaleRappresentante"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}DatiPersona"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="carica" type="{http://www.impresainungiorno.gov.it/schema/base}Carica"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -40,7 +40,7 @@ public class LegaleRappresentante
     protected Carica carica;
 
     /**
-     * Gets the value of the carica property.
+     * Recupera il valore della proprietà carica.
      * 
      * @return
      *     possible object is
@@ -52,7 +52,7 @@ public class LegaleRappresentante
     }
 
     /**
-     * Sets the value of the carica property.
+     * Imposta il valore della proprietà carica.
      * 
      * @param value
      *     allowed object is

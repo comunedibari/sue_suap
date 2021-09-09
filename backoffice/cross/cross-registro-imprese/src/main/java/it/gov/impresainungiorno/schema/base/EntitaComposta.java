@@ -11,18 +11,18 @@ import javax.xml.bind.annotation.XmlValue;
 /**
  * Tipo generico da usare in caso di entita' composta da un codice e da una descrizione
  * 
- * <p>Java class for EntitaComposta complex type.
+ * <p>Classe Java per EntitaComposta complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="EntitaComposta">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base>Stringa">
- *       &lt;attribute name="codice" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name="EntitaComposta"&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base="&lt;http://www.impresainungiorno.gov.it/schema/base&gt;Stringa"&gt;
+ *       &lt;attribute name="codice" use="required" type="{http://www.impresainungiorno.gov.it/schema/base}Stringa" /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -51,7 +51,7 @@ public class EntitaComposta {
     }
 
     /**
-     * Sets the value of the value property.
+     * Imposta il valore della propriet
      * 
      * @param value
      *     allowed object is
@@ -63,7 +63,7 @@ public class EntitaComposta {
     }
 
     /**
-     * Gets the value of the codice property.
+     * Recupera il valore della propriet
      * 
      * @return
      *     possible object is
@@ -75,7 +75,7 @@ public class EntitaComposta {
     }
 
     /**
-     * Sets the value of the codice property.
+     * Imposta il valore della propriet
      * 
      * @param value
      *     allowed object is

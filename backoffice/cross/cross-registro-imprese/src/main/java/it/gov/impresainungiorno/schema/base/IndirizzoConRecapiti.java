@@ -7,24 +7,22 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import it.gov.impresainungiorno.schema.suap.ri.spc.UnitaLocale;
 
 
 /**
- * <p>Java class for IndirizzoConRecapiti complex type.
+ * <p>Classe Java per IndirizzoConRecapiti complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
  * 
  * <pre>
- * &lt;complexType name="IndirizzoConRecapiti">
- *   &lt;complexContent>
- *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Indirizzo">
- *       &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Recapiti"/>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="IndirizzoConRecapiti"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://www.impresainungiorno.gov.it/schema/base}Indirizzo"&gt;
+ *       &lt;group ref="{http://www.impresainungiorno.gov.it/schema/base}Recapiti"/&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -34,9 +32,6 @@ import it.gov.impresainungiorno.schema.suap.ri.spc.UnitaLocale;
     "eMail",
     "telefono",
     "sitoWeb"
-})
-@XmlSeeAlso({
-    UnitaLocale.class
 })
 public class IndirizzoConRecapiti
     extends Indirizzo

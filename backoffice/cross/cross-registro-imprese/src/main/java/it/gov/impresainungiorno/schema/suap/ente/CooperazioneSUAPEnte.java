@@ -1,28 +1,31 @@
 //
-// Questo file stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andr persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2020.02.19 alle 06:34:54 PM CET 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2020.05.18 alle 05:15:06 PM CEST 
 //
 
 
 package it.gov.impresainungiorno.schema.suap.ente;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import it.gov.impresainungiorno.schema.suap.pratica.AnagraficaImpresa;
 import it.gov.impresainungiorno.schema.suap.pratica.EstremiEnte;
 import it.gov.impresainungiorno.schema.suap.pratica.EstremiSuap;
 import it.gov.impresainungiorno.schema.suap.pratica.OggettoComunicazione;
 import it.gov.impresainungiorno.schema.suap.pratica.ProtocolloRI;
 import it.gov.impresainungiorno.schema.suap.pratica.ProtocolloSUAP;
+import org.w3._2001.xmlschema.Adapter1;
 
 
 /**
@@ -82,6 +85,7 @@ import it.gov.impresainungiorno.schema.suap.pratica.ProtocolloSUAP;
     "intestazione",
     "allegato"
 })
+@XmlRootElement(name = "CooperazioneSUAPEnte")
 public class CooperazioneSUAPEnte {
 
     @XmlElement(name = "info-schema", required = true)
@@ -91,7 +95,7 @@ public class CooperazioneSUAPEnte {
     protected List<AllegatoCooperazione> allegato;
 
     /**
-     * Recupera il valore della propriet infoSchema.
+     * Recupera il valore della propriet� infoSchema.
      * 
      * @return
      *     possible object is
@@ -103,7 +107,7 @@ public class CooperazioneSUAPEnte {
     }
 
     /**
-     * Imposta il valore della propriet infoSchema.
+     * Imposta il valore della propriet� infoSchema.
      * 
      * @param value
      *     allowed object is
@@ -115,7 +119,7 @@ public class CooperazioneSUAPEnte {
     }
 
     /**
-     * Recupera il valore della propriet intestazione.
+     * Recupera il valore della propriet� intestazione.
      * 
      * @return
      *     possible object is
@@ -127,7 +131,7 @@ public class CooperazioneSUAPEnte {
     }
 
     /**
-     * Imposta il valore della propriet intestazione.
+     * Imposta il valore della propriet� intestazione.
      * 
      * @param value
      *     allowed object is
@@ -199,11 +203,12 @@ public class CooperazioneSUAPEnte {
         @XmlAttribute(name = "versione", required = true)
         protected String versione;
         @XmlAttribute(name = "data", required = true)
+        @XmlJavaTypeAdapter(Adapter1 .class)
         @XmlSchemaType(name = "date")
-        protected XMLGregorianCalendar data;
+        protected Date data;
 
         /**
-         * Recupera il valore della propriet versione.
+         * Recupera il valore della propriet� versione.
          * 
          * @return
          *     possible object is
@@ -215,7 +220,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet versione.
+         * Imposta il valore della propriet� versione.
          * 
          * @param value
          *     allowed object is
@@ -227,26 +232,26 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet data.
+         * Recupera il valore della propriet� data.
          * 
          * @return
          *     possible object is
-         *     {@link XMLGregorianCalendar }
+         *     {@link String }
          *     
          */
-        public XMLGregorianCalendar getData() {
+        public Date getData() {
             return data;
         }
 
         /**
-         * Imposta il valore della propriet data.
+         * Imposta il valore della propriet� data.
          * 
          * @param value
          *     allowed object is
-         *     {@link XMLGregorianCalendar }
+         *     {@link String }
          *     
          */
-        public void setData(XMLGregorianCalendar value) {
+        public void setData(Date value) {
             this.data = value;
         }
 
@@ -318,7 +323,7 @@ public class CooperazioneSUAPEnte {
         protected Integer totale;
 
         /**
-         * Recupera il valore della propriet suapCompetente.
+         * Recupera il valore della propriet� suapCompetente.
          * 
          * @return
          *     possible object is
@@ -330,7 +335,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet suapCompetente.
+         * Imposta il valore della propriet� suapCompetente.
          * 
          * @param value
          *     allowed object is
@@ -371,7 +376,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet codicePratica.
+         * Recupera il valore della propriet� codicePratica.
          * 
          * @return
          *     possible object is
@@ -383,7 +388,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet codicePratica.
+         * Imposta il valore della propriet� codicePratica.
          * 
          * @param value
          *     allowed object is
@@ -395,7 +400,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet impresa.
+         * Recupera il valore della propriet� impresa.
          * 
          * @return
          *     possible object is
@@ -407,7 +412,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet impresa.
+         * Imposta il valore della propriet� impresa.
          * 
          * @param value
          *     allowed object is
@@ -419,7 +424,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet oggettoPratica.
+         * Recupera il valore della propriet� oggettoPratica.
          * 
          * @return
          *     possible object is
@@ -431,7 +436,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet oggettoPratica.
+         * Imposta il valore della propriet� oggettoPratica.
          * 
          * @param value
          *     allowed object is
@@ -443,7 +448,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet protocolloPraticaSuap.
+         * Recupera il valore della propriet� protocolloPraticaSuap.
          * 
          * @return
          *     possible object is
@@ -455,7 +460,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet protocolloPraticaSuap.
+         * Imposta il valore della propriet� protocolloPraticaSuap.
          * 
          * @param value
          *     allowed object is
@@ -467,7 +472,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet protocolloRi.
+         * Recupera il valore della propriet� protocolloRi.
          * 
          * @return
          *     possible object is
@@ -479,7 +484,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet protocolloRi.
+         * Imposta il valore della propriet� protocolloRi.
          * 
          * @param value
          *     allowed object is
@@ -491,7 +496,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet oggettoComunicazione.
+         * Recupera il valore della propriet� oggettoComunicazione.
          * 
          * @return
          *     possible object is
@@ -503,7 +508,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet oggettoComunicazione.
+         * Imposta il valore della propriet� oggettoComunicazione.
          * 
          * @param value
          *     allowed object is
@@ -515,7 +520,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet testoComunicazione.
+         * Recupera il valore della propriet� testoComunicazione.
          * 
          * @return
          *     possible object is
@@ -527,7 +532,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet testoComunicazione.
+         * Imposta il valore della propriet� testoComunicazione.
          * 
          * @param value
          *     allowed object is
@@ -539,7 +544,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet protocollo.
+         * Recupera il valore della propriet� protocollo.
          * 
          * @return
          *     possible object is
@@ -551,7 +556,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet protocollo.
+         * Imposta il valore della propriet� protocollo.
          * 
          * @param value
          *     allowed object is
@@ -563,7 +568,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet progressivo.
+         * Recupera il valore della propriet� progressivo.
          * 
          * @return
          *     possible object is
@@ -575,7 +580,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet progressivo.
+         * Imposta il valore della propriet� progressivo.
          * 
          * @param value
          *     allowed object is
@@ -587,7 +592,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Recupera il valore della propriet totale.
+         * Recupera il valore della propriet� totale.
          * 
          * @return
          *     possible object is
@@ -599,7 +604,7 @@ public class CooperazioneSUAPEnte {
         }
 
         /**
-         * Imposta il valore della propriet totale.
+         * Imposta il valore della propriet� totale.
          * 
          * @param value
          *     allowed object is
