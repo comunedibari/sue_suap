@@ -107,7 +107,7 @@ public class UtentiServiceImpl implements UtentiService {
         List<UtenteDTO> utentiDto = new ArrayList<UtenteDTO>();
         if (isAdministrator(pratica, connectedUser)) {
             String orderColumn = filter.getOrderColumn();
-            if (filter.getOrderColumn().equals("nominativo")) {
+            if ("nominativo".equals(filter.getOrderColumn())) {
                 orderColumn = "cognome";
             }
             filter.setOrderColumn(orderColumn);
@@ -235,7 +235,8 @@ public class UtentiServiceImpl implements UtentiService {
         
         //Aggiunto 13/01/2016
         boolean flagPraticheAssegnazione=false;
-        
+        boolean flgabilitazioneConsultazione=false;
+
         for (UtenteRuoloEnte utenteRuoloEnte : utente.getUtenteRuoloEnteList()) {
 
             Integer idEnte = utenteRuoloEnte.getIdEnte().getIdEnte();
@@ -250,49 +251,53 @@ public class UtentiServiceImpl implements UtentiService {
             String tmpFlgTaskListEnabled = configurationService.getCachedConfiguration(SessionConstants.TASKLIST_ENABLED, idEnte, null);
 //            String tmpFlgCdstEnabled = configurationService.getCachedConfiguration(SessionConstants.CDS_ENABLED, idEnte, null);
 
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaProtocollo)) {
-                enablePraticheDaProtocollo = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaManuale)) {
-                enablePraticheManuali = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaComunica)) {
-                enablePraticheComunica = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaSuapFvg)) {
-                enablePraticheSuapFvg = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaProtocolloRicerca)) {
-                enablePraticheProtocolloRicerca = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaDocumentiDaProtocollo)) {
-                flgAperturaPraticaDocumentiDaProtocollo = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgPraticaMessaggiEnabled)) {
-                enablePraticaMessaggi = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgEnableDirittiSegreteriaEnabled)) {
-                enableDirittiSegreteria = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgTaskListEnabled)) {
-                flgTaskListEnabled = true;
-            }
-//            if ("TRUE".equalsIgnoreCase(tmpFlgCdstEnabled)) {
-//                flgCdstEnabled = true;
-//            }
-            
-            //Aggiunto il 13/01/2016
-            if(PermissionConstans.AMMINISTRATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())){
-            	flagPraticheAssegnazione=true;
-            }
-            
-            if (utenteRuoloEnte.getCodPermesso() != null && PermissionConstans.SEGRETERIA.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())) {
-                flgCdstEnabled = true;
-            }
-            if (PermissionConstans.AMMINISTRATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())
-                    || PermissionConstans.OPERATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())
-                    || PermissionConstans.UTENTE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())) {
-                esistenzaRuoloGestione = true;
+            if(PermissionConstans.CONSULTAZIONE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())){
+            	flgabilitazioneConsultazione=true;
+            } else {
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaProtocollo)) {
+	                enablePraticheDaProtocollo = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaManuale)) {
+	                enablePraticheManuali = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaComunica)) {
+	                enablePraticheComunica = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaSuapFvg)) {
+	                enablePraticheSuapFvg = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaProtocolloRicerca)) {
+	                enablePraticheProtocolloRicerca = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaDocumentiDaProtocollo)) {
+	                flgAperturaPraticaDocumentiDaProtocollo = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgPraticaMessaggiEnabled)) {
+	                enablePraticaMessaggi = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgEnableDirittiSegreteriaEnabled)) {
+	                enableDirittiSegreteria = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgTaskListEnabled)) {
+	                flgTaskListEnabled = true;
+	            }
+	//            if ("TRUE".equalsIgnoreCase(tmpFlgCdstEnabled)) {
+	//                flgCdstEnabled = true;
+	//            }
+	            
+	            //Aggiunto il 13/01/2016
+	            if(PermissionConstans.AMMINISTRATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())){
+	            	flagPraticheAssegnazione=true;
+	            }
+	
+	            if (utenteRuoloEnte.getCodPermesso() != null && PermissionConstans.SEGRETERIA.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())) {
+	                flgCdstEnabled = true;
+	            }
+	            if (PermissionConstans.AMMINISTRATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())
+	                    || PermissionConstans.OPERATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())
+	                    || PermissionConstans.UTENTE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())) {
+	                esistenzaRuoloGestione = true;
+	            }
             }
         }
 
@@ -321,9 +326,8 @@ public class UtentiServiceImpl implements UtentiService {
         session.setAttribute(SessionConstants.TASKLIST_ENABLED, flgTaskListEnabled);
         session.setAttribute(SessionConstants.CDS_ENABLED, flgCdstEnabled);
         session.setAttribute(SessionConstants.RUOLO_GESTIONE_PRATICHE, esistenzaRuoloGestione);
-       
-        //Aggiunto il 13/01/2016
         session.setAttribute(SessionConstants.ABILITA_ASSEGNAZIONE_PRATICHE, flagPraticheAssegnazione);
+        session.setAttribute(SessionConstants.ABILITAZIONE_CONSULTAZIONE, flgabilitazioneConsultazione);
     }
 
     @Override

@@ -37,6 +37,12 @@ public class ProcedimentiDao {
     @PersistenceContext
     private EntityManager em;
 
+    public ProcedimentiDao(){}
+
+    public ProcedimentiDao(EntityManager em){
+    	this.em = em;
+    }
+
     public void flush() throws Exception {
         em.flush();
     }

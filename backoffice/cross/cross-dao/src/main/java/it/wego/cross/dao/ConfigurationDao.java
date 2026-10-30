@@ -33,7 +33,7 @@ public class ConfigurationDao {
     }
     
     public List<Configuration> findByName(String name, Integer idEnte, Integer idComune) {
-        Query query = em.createQuery("SELECT c FROM Configuration c WHERE c.name = :name and c.id_ente.id_ente=:idComune and c.id_comune.id_comune=:idComune");
+    	Query query = em.createNamedQuery("Configuration.findByTownAndInstitution");
         query.setParameter("name", name);
         query.setParameter("idEnte", idEnte);
         query.setParameter("idComune", idComune);

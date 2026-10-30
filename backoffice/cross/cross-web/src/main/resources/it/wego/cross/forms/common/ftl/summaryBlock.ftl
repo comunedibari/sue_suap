@@ -14,7 +14,7 @@
             </a>
         </div>
     [/#if]
-    <div class="container-${config.prefix}">
+    <div id="summaryTable" class="container-${config.prefix}">
         <table cellpadding="0" cellspacing="0">
             <tbody>
                 <tr>

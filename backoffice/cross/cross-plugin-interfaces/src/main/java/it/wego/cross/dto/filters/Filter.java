@@ -1,20 +1,24 @@
 package it.wego.cross.dto.filters;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkClassificazioneProcedimento;
 import it.wego.cross.entity.LkStatiScadenze;
 import it.wego.cross.entity.LkStatoPratica;
 import it.wego.cross.entity.LkTipoInterventoSuap;
+import it.wego.cross.entity.LkTipoPratica;
 import it.wego.cross.entity.LkTipoProcedimentoSuap;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.Utente;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Filter {
 
-    private Integer limit;
+	private boolean changed;
+	
+	private Integer limit;
     private Integer offset;
     private Integer totale;
     private String orderDirection;
@@ -24,6 +28,7 @@ public class Filter {
     //Solo per ricerca pratica
     private Integer annoRiferimento;
     private String numeroProtocollo;
+    private String registerNumberByEvent;
     private String desComune;
     private Integer idComune;
     private Enti enteSelezionato;
@@ -107,13 +112,30 @@ public class Filter {
     private Date dataFineProtSuap;
     private String desClassificazioneProcedimento;
     private List<Pratica> listaPraticheIn;
+    private List<String> listTree;
+    private Identifications identifications;
+    private CadastralDataList cadastralDataList;
+    private CadastralAddresses cadastralAddresses;
+    private LkTipoPratica idTipoPratica;
+    private List<LkTipoPratica> idTipoPratiche;
+    private Integer annoPratica;
+    private Integer numeroPratica;
+    private String interventionDescription;
     
-    
+    public boolean isChanged() {
+		return changed;
+	}
+
+	private void setChanged(Object object) {
+		this.changed = changed || object != null;
+	}
+	
     public String getProtocolloSuap() {
 		return protocolloSuap;
 	}
 
 	public void setProtocolloSuap(String protocolloSuap) {
+		setChanged(protocolloSuap);
 		this.protocolloSuap = protocolloSuap;
 	}
 
@@ -122,6 +144,7 @@ public class Filter {
 	}
 
 	public void setIdOperatoreSelezionato(Integer idOperatoreSelezionato) {
+		setChanged(idOperatoreSelezionato);
 		this.idOperatoreSelezionato = idOperatoreSelezionato;
 	}
 
@@ -130,6 +153,7 @@ public class Filter {
     }
 
     public void setComuneCensuario(String comuneCensuario) {
+		setChanged(comuneCensuario);
         this.comuneCensuario = comuneCensuario;
     }
 
@@ -138,6 +162,7 @@ public class Filter {
     }
 
     public void setIdUtente(Integer idUtente) {
+		setChanged(idUtente);
         this.idUtente = idUtente;
     }
 
@@ -147,6 +172,7 @@ public class Filter {
     }
 
     public void setStatoProcedimentoUtente(String statoProcedimentoUtente) {
+		setChanged(statoProcedimentoUtente);
         this.statoProcedimentoUtente = statoProcedimentoUtente;
     }
 
@@ -155,6 +181,7 @@ public class Filter {
     }
 
     public void setAnnoRiferimento(Integer annoRiferimento) {
+		setChanged(annoRiferimento);
         this.annoRiferimento = annoRiferimento;
     }
 
@@ -163,6 +190,7 @@ public class Filter {
     }
 
     public void setIdTipoUnita(Integer idTipoUnita) {
+		setChanged(idTipoUnita);
         this.idTipoUnita = idTipoUnita;
     }
 
@@ -171,6 +199,7 @@ public class Filter {
     }
 
     public void setIndirizzo(String indirizzo) {
+		setChanged(indirizzo);
         this.indirizzo = indirizzo;
     }
 
@@ -179,6 +208,7 @@ public class Filter {
     }
 
     public void setCivico(String civico) {
+		setChanged(civico);
         this.civico = civico;
     }
     
@@ -188,6 +218,7 @@ public class Filter {
     }
 
     public void setSuperuser(String superuser) {
+		setChanged(superuser);
         this.superuser = superuser;
     }
 
@@ -197,6 +228,7 @@ public class Filter {
     }
 
     public void setUsername(String username) {
+		setChanged(username);
         this.username = username;
     }
  
@@ -255,6 +287,7 @@ public class Filter {
      * @param numeroProtocollo
      */
     public void setNumeroProtocollo(String numeroProtocollo) {
+		setChanged(numeroProtocollo);
         this.numeroProtocollo = numeroProtocollo;
     }
 
@@ -268,6 +301,7 @@ public class Filter {
      * Da utilizzare solo per la ricerca di pratiche
      */
 //    public void setProcedimentiEnti(List<ProcedimentiEnti> procedimentiEnti) {
+//		  setChanged(procedimentiEnti);
 //        this.procedimentiEnti = procedimentiEnti;
 //    }
     /**
@@ -285,6 +319,7 @@ public class Filter {
      * @param enteSelezionato
      */
     public void setEnteSelezionato(Enti enteSelezionato) {
+		setChanged(enteSelezionato);
         this.enteSelezionato = enteSelezionato;
     }
 
@@ -303,6 +338,7 @@ public class Filter {
      * @param dataInizio
      */
     public void setDataInizio(Date dataInizio) {
+		setChanged(dataInizio);
         this.dataInizio = dataInizio;
     }
 
@@ -321,6 +357,7 @@ public class Filter {
      * @param dataFine
      */
     public void setDataFine(Date dataFine) {
+		setChanged(dataFine);
         this.dataFine = dataFine;
     }
 
@@ -339,6 +376,7 @@ public class Filter {
      * @param idStatoPratica
      */
     public void setIdStatoPratica(LkStatoPratica idStatoPratica) {
+		setChanged(idStatoPratica);
         this.idStatoPratica = idStatoPratica;
     }
 
@@ -357,6 +395,7 @@ public class Filter {
      * @param desStatoPratica
      */
     public void setDesStatoPratica(String desStatoPratica) {
+		setChanged("ALL".equals(desStatoPratica)? null: desStatoPratica);
         this.desStatoPratica = desStatoPratica;
     }
 
@@ -393,6 +432,7 @@ public class Filter {
      * @param foglio
      */
     public void setFoglio(String foglio) {
+		setChanged(foglio);
         this.foglio = foglio;
     }
 
@@ -411,6 +451,7 @@ public class Filter {
      * @param idComune
      */
     public void setIdComune(Integer idComune) {
+		setChanged(idComune);
         this.idComune = idComune;
     }
 
@@ -429,6 +470,7 @@ public class Filter {
      * @param desComune
      */
     public void setDesComune(String desComune) {
+		setChanged(desComune);
         this.desComune = desComune;
     }
 
@@ -447,6 +489,7 @@ public class Filter {
      * @param mappale
      */
     public void setMappale(String mappale) {
+		setChanged(mappale);
         this.mappale = mappale;
     }
 
@@ -465,6 +508,7 @@ public class Filter {
      * @param subalterno
      */
     public void setSubalterno(String subalterno) {
+		setChanged(subalterno);
         this.subalterno = subalterno;
     }
 
@@ -483,6 +527,7 @@ public class Filter {
      * @param idStatoScadenza
      */
     public void setIdStatoScadenza(LkStatiScadenze idStatoScadenza) {
+		setChanged(idStatoScadenza);
         this.idStatoScadenza = idStatoScadenza;
     }
 
@@ -501,6 +546,7 @@ public class Filter {
      * @param userStatus
      */
     public void setUserStatus(String userStatus) {
+		setChanged(userStatus);
         this.userStatus = userStatus;
     }
 
@@ -519,6 +565,7 @@ public class Filter {
      * @param descrizioneComune
      */
     public void setDescrizioneComune(String descrizioneComune) {
+		setChanged(descrizioneComune);
         this.descrizioneComune = descrizioneComune;
     }
 
@@ -537,6 +584,7 @@ public class Filter {
      * @param codiceCatastale
      */
     public void setCodiceCatastale(String codiceCatastale) {
+		setChanged(codiceCatastale);
         this.codiceCatastale = codiceCatastale;
     }
 
@@ -555,6 +603,7 @@ public class Filter {
      * @param praticheDaEscludere
      */
     public void setPraticheDaEscludere(List<LkStatoPratica> praticheDaEscludere) {
+		setChanged(praticheDaEscludere);
         this.praticheDaEscludere = praticheDaEscludere;
     }
 
@@ -573,6 +622,7 @@ public class Filter {
      * @param numeroFascicolo
      */
     public void setNumeroFascicolo(String numeroFascicolo) {
+		setChanged(numeroFascicolo);
         this.numeroFascicolo = numeroFascicolo;
     }
 
@@ -591,6 +641,7 @@ public class Filter {
      * @param oggetto
      */
     public void setOggetto(String oggetto) {
+		setChanged(oggetto);
         this.oggetto = oggetto;
     }
 
@@ -609,6 +660,7 @@ public class Filter {
      * @param enteRiferimento
      */
     public void setEnteRiferimento(String enteRiferimento) {
+		setChanged(enteRiferimento);
         this.enteRiferimento = enteRiferimento;
     }
 
@@ -627,6 +679,7 @@ public class Filter {
      * @param statoPratica
      */
     public void setStatoPratica(String statoPratica) {
+		setChanged(statoPratica);
         this.statoPratica = statoPratica;
     }
 
@@ -645,6 +698,7 @@ public class Filter {
      * @param praticaCrossRiferimento
      */
     public void setPraticaCrossRiferimento(Pratica praticaCrossRiferimento) {
+		setChanged(praticaCrossRiferimento);
         this.praticaCrossRiferimento = praticaCrossRiferimento;
     }
 
@@ -663,6 +717,7 @@ public class Filter {
      * @param identificativoPratica
      */
     public void setIdentificativoPratica(String identificativoPratica) {
+		setChanged(identificativoPratica);
         this.identificativoPratica = identificativoPratica;
     }
 
@@ -671,6 +726,7 @@ public class Filter {
     }
 
     public void setTipiDocumentiProtocollo(List<String> tipiDocumentiProtocollo) {
+		setChanged(tipiDocumentiProtocollo);
         this.tipiDocumentiProtocollo = tipiDocumentiProtocollo;
     }
 
@@ -689,6 +745,7 @@ public class Filter {
      * @param nome
      */
     public void setNome(String nome) {
+		setChanged(nome);
         this.nome = nome;
     }
 
@@ -707,6 +764,7 @@ public class Filter {
      * @param cognome
      */
     public void setCognome(String cognome) {
+		setChanged(cognome);
         this.cognome = cognome;
     }
 
@@ -725,6 +783,7 @@ public class Filter {
      * @param denominazione
      */
     public void setDenominazione(String denominazione) {
+		setChanged(denominazione);
         this.denominazione = denominazione;
     }
 
@@ -743,6 +802,7 @@ public class Filter {
      * @param partitaIva
      */
     public void setPartitaIva(String partitaIva) {
+		setChanged(partitaIva);
         this.partitaIva = partitaIva;
     }
 
@@ -761,6 +821,7 @@ public class Filter {
      * @param codiceFiscale
      */
     public void setCodiceFiscale(String codiceFiscale) {
+		setChanged(codiceFiscale);
         this.codiceFiscale = codiceFiscale;
     }
 
@@ -779,6 +840,7 @@ public class Filter {
      * @param tipoAnagrafica
      */
     public void setTipoAnagrafica(String tipoAnagrafica) {
+		setChanged(tipoAnagrafica);
         this.tipoAnagrafica = tipoAnagrafica;
     }
 
@@ -797,6 +859,7 @@ public class Filter {
      * @param idTemplate
      */
     public void setIdTemplate(Integer idTemplate) {
+		setChanged(idTemplate);
         this.idTemplate = idTemplate;
     }
 
@@ -815,6 +878,7 @@ public class Filter {
      * @param idEventoTemplate
      */
     public void setIdEventoTemplate(Integer idEventoTemplate) {
+		setChanged(idEventoTemplate);
         this.idEventoTemplate = idEventoTemplate;
     }
 
@@ -823,6 +887,7 @@ public class Filter {
     }
 
     public void setIdEnte(Integer idEnte) {
+		setChanged(idEnte);
         this.idEnte = idEnte;
     }
 
@@ -831,6 +896,7 @@ public class Filter {
     }
 
     public void setIdEvento(Integer idEvento) {
+		setChanged(idEvento);
         this.idEvento = idEvento;
     }
 
@@ -839,6 +905,7 @@ public class Filter {
     }
 
     public void setIdProcedimento(Integer idProcedimento) {
+		setChanged(idProcedimento);
         this.idProcedimento = idProcedimento;
     }
 
@@ -847,6 +914,7 @@ public class Filter {
     }
 
     public void setDescrizioneTemplate(String descrizioneTemplate) {
+		setChanged(descrizioneTemplate);
         this.descrizioneTemplate = descrizioneTemplate;
     }
 
@@ -855,6 +923,7 @@ public class Filter {
     }
 
     public void setTotale(Integer totale) {
+		setChanged(totale);
         this.totale = totale;
     }
 
@@ -863,6 +932,7 @@ public class Filter {
     }
 
     public void setDescEvento(String descEvento) {
+		setChanged(descEvento);
         this.descEvento = descEvento;
     }
 
@@ -871,6 +941,7 @@ public class Filter {
     }
 
     public void setRicercaAnagraficaCF(String ricercaAnagraficaCF) {
+		setChanged(ricercaAnagraficaCF);
         this.ricercaAnagraficaCF = ricercaAnagraficaCF;
     }
 
@@ -879,6 +950,7 @@ public class Filter {
     }
 
     public void setRicercaAnagraficaNome(String ricercaAnagraficaNome) {
+		setChanged(ricercaAnagraficaNome);
         this.ricercaAnagraficaNome = ricercaAnagraficaNome;
     }
 
@@ -887,6 +959,7 @@ public class Filter {
     }
 
     public void setProcedimento(String procedimento) {
+		setChanged(procedimento);
         this.procedimento = procedimento;
     }
 
@@ -909,10 +982,12 @@ public class Filter {
      * @param tipoProcedimento
      */
     public void setTipoProcedimento(String tipoProcedimento) {
+		setChanged(tipoProcedimento);
         this.tipoProcedimento = tipoProcedimento;
     }
 
     public void setProcesso(String processo) {
+		setChanged(processo);
         this.processo = processo;
     }
 
@@ -921,6 +996,7 @@ public class Filter {
     }
 
     public void setTipoFiltro(String tipoFiltro) {
+		setChanged(tipoFiltro);
         this.tipoFiltro = tipoFiltro;
     }
 
@@ -929,7 +1005,7 @@ public class Filter {
     }
 
     public void setPage(Integer page) {
-        this.page = page;
+		this.page = page;
     }
 
     public String getDescrizione() {
@@ -937,6 +1013,7 @@ public class Filter {
     }
 
     public void setDescrizione(String descrizione) {
+		setChanged(descrizione);
         this.descrizione = descrizione;
     }
 
@@ -955,6 +1032,7 @@ public class Filter {
      * @param statoProcedimento
      */
     public void setStatoProcedimento(String statoProcedimento) {
+		setChanged(statoProcedimento);
         this.statoProcedimento = statoProcedimento;
     }
 
@@ -963,6 +1041,7 @@ public class Filter {
     }
 
     public void setIdTipoSistemaCatastale(Integer idTipoSistemaCatastale) {
+		setChanged(idTipoSistemaCatastale);
         this.idTipoSistemaCatastale = idTipoSistemaCatastale;
     }
 
@@ -971,6 +1050,7 @@ public class Filter {
     }
 
     public void setIdTipoParticella(Integer idTipoParticella) {
+		setChanged(idTipoParticella);
         this.idTipoParticella = idTipoParticella;
     }
 
@@ -979,6 +1059,7 @@ public class Filter {
     }
 
     public void setEstensioneParticella(String estensioneParticella) {
+		setChanged(estensioneParticella);
         this.estensioneParticella = estensioneParticella;
     }
 
@@ -987,6 +1068,7 @@ public class Filter {
     }
 
     public void setSezione(String sezione) {
+		setChanged(sezione);
         this.sezione = sezione;
     }
 
@@ -995,6 +1077,7 @@ public class Filter {
     }
 
     public void setListaEnti(List<Integer> listaEnti) {
+		setChanged(listaEnti);
         this.listaEnti = listaEnti;
     }
 
@@ -1003,6 +1086,7 @@ public class Filter {
     }
 
     public void setIdOrganiCollegiali(Integer idOrganiCollegiali) {
+		setChanged(idOrganiCollegiali);
         this.idOrganiCollegiali = idOrganiCollegiali;
     }
 
@@ -1011,6 +1095,7 @@ public class Filter {
     }
 
     public void setIdSeduta(Integer idSeduta) {
+		setChanged(idSeduta);
         this.idSeduta = idSeduta;
     }
 
@@ -1019,6 +1104,7 @@ public class Filter {
     }
 
     public void setIdSedutaPratica(Integer idSedutaPratica) {
+		setChanged(idSedutaPratica);
         this.idSedutaPratica = idSedutaPratica;
     }
 
@@ -1027,6 +1113,7 @@ public class Filter {
     }
 
     public void setIdPraticaOrganiCollegiali(Integer idPraticaOrganiCollegiali) {
+		setChanged(idPraticaOrganiCollegiali);
         this.idPraticaOrganiCollegiali = idPraticaOrganiCollegiali;
     }
 
@@ -1035,6 +1122,7 @@ public class Filter {
 	}
 
 	public void setIdPratica(Integer idPratica) {
+		setChanged(idPratica);
 		this.idPratica = idPratica;
 	}
 
@@ -1043,6 +1131,7 @@ public class Filter {
 	}
 
 	public void setDesProcedimentoSuap(String desProcedimentoSuap) {
+		setChanged(desProcedimentoSuap);
 		this.desProcedimentoSuap = desProcedimentoSuap;
 	}
 
@@ -1051,6 +1140,7 @@ public class Filter {
 	}
 
 	public void setDesInterventoSuap(String desInterventoSuap) {
+		setChanged(desInterventoSuap);
 		this.desInterventoSuap = desInterventoSuap;
 	}
 	public LkTipoInterventoSuap getIdTipoInterventoSuap() {
@@ -1058,6 +1148,7 @@ public class Filter {
 	}
 
 	public void setIdTipoInterventoSuap(LkTipoInterventoSuap idTipoInterventoSuap) {
+		setChanged(idTipoInterventoSuap);
 		this.idTipoInterventoSuap = idTipoInterventoSuap;
 	}
 
@@ -1066,6 +1157,7 @@ public class Filter {
 	}
 
 	public void setIdTipoProcedimentoSuap(LkTipoProcedimentoSuap idTipoProcedimentoSuap) {
+		setChanged(idTipoProcedimentoSuap);
 		this.idTipoProcedimentoSuap = idTipoProcedimentoSuap;
 	}
 
@@ -1075,6 +1167,7 @@ public class Filter {
 	}
 
 	public void setDataInizioProtSuap(Date dataInizioProtSuap) {
+		setChanged(dataInizioProtSuap);
 		this.dataInizioProtSuap = dataInizioProtSuap;
 	}
 
@@ -1083,6 +1176,7 @@ public class Filter {
 	}
 
 	public void setDataFineProtSuap(Date dataFineProtSuap) {
+		setChanged(dataFineProtSuap);
 		this.dataFineProtSuap = dataFineProtSuap;
 	}
 
@@ -1091,6 +1185,7 @@ public class Filter {
 	}
 
 	public void setIdClassificazioneProcedimento(LkClassificazioneProcedimento idClassificazioneProcedimento) {
+		setChanged(idClassificazioneProcedimento);
 		this.idClassificazioneProcedimento = idClassificazioneProcedimento;
 	}
 
@@ -1099,6 +1194,7 @@ public class Filter {
 	}
 
 	public void setDesClassificazioneProcedimento(String desClassificazioneProcedimento) {
+		setChanged(desClassificazioneProcedimento);
 		this.desClassificazioneProcedimento = desClassificazioneProcedimento;
 	}
 
@@ -1107,10 +1203,98 @@ public class Filter {
 	}
 
 	public void setListaPraticheIn(List<Pratica> listaPraticheIn) {
+		setChanged(listaPraticheIn);
 		this.listaPraticheIn = listaPraticheIn;
 	}
 
-	
+	public List<String> getListTree() {
+		return listTree;
+	}
+
+	public void setListTree(List<String> listTree) {
+		setChanged(listTree);
+		this.listTree = listTree;
+	}
+
+	public Identifications getIdentifications() {
+		return identifications;
+	}
+
+	public void setIdentifications(Identifications identifications) {
+		setChanged(identifications);
+		this.identifications = identifications;
+	}
+
+	public CadastralDataList getCadastralDataList() {
+		return cadastralDataList;
+	}
+
+	public void setCadastralDataList(CadastralDataList cadastralDataList) {
+		setChanged(cadastralDataList);
+		this.cadastralDataList = cadastralDataList;
+	}
+
+	public CadastralAddresses getCadastralAddresses() {
+		return cadastralAddresses;
+	}
+
+	public void setCadastralAddresses(CadastralAddresses cadastralAddresses) {
+		setChanged(cadastralAddresses);
+		this.cadastralAddresses = cadastralAddresses;
+	}
+
+	public LkTipoPratica getIdTipoPratica() {
+		return idTipoPratica;
+	}
+
+	public void setIdTipoPratica(LkTipoPratica idTipoPratica) {
+		setChanged(idTipoPratica);
+		this.idTipoPratica = idTipoPratica;
+	}
+
+	public Integer getAnnoPratica() {
+		return annoPratica;
+	}
+
+	public void setAnnoPratica(Integer annoPratica) {
+		setChanged(annoPratica);
+		this.annoPratica = annoPratica;
+	}
+
+	public Integer getNumeroPratica() {
+		return numeroPratica;
+	}
+
+	public void setNumeroPratica(Integer numeroPratica) {
+		setChanged(numeroPratica);
+		this.numeroPratica = numeroPratica;
+	}
+
+	public String getRegisterNumberByEvent() {
+		return registerNumberByEvent;
+	}
+
+	public void setRegisterNumberByEvent(String registerNumberByEvent) {
+		setChanged(registerNumberByEvent);
+		this.registerNumberByEvent = registerNumberByEvent;
+	}
+
+	public String getInterventionDescription() {
+		return interventionDescription;
+	}
+
+	public void setInterventionDescription(String interventionDescription) {
+		setChanged(interventionDescription);
+		this.interventionDescription = interventionDescription;
+	}
+
+	public List<LkTipoPratica> getIdTipoPratiche() {
+		return idTipoPratiche;
+	}
+
+	public void setIdTipoPratiche(List<LkTipoPratica> idTipoPratiche) {
+		this.idTipoPratiche = idTipoPratiche;
+	}
 	
 	
 }

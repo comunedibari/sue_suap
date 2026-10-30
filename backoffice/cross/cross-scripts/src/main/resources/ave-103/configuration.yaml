@@ -1,0 +1,6 @@
+files:
+  - name: Template allegato PEC evento PECMPT.odt
+    mimetype: application/msword
+    output: PDF
+    idEnte: 2293
+    descrizione: template PECMPT

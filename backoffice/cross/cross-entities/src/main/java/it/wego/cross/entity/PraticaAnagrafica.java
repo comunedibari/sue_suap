@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -65,9 +66,32 @@ public class PraticaAnagrafica implements Serializable {
     @JoinColumn(name = "id_anagrafica", referencedColumnName = "id_anagrafica", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Anagrafica anagrafica;
-
-    public PraticaAnagrafica() {
+    @Column(name = "id_pratica", insertable = false, updatable = false)
+    private Integer idPratica;
+    
+    @Column(name = "id_etichetta")
+    private Integer idEtichetta = 0;    
+    @Transient
+    private String descrizione_etichetta;
+       	
+	public PraticaAnagrafica() {
     }
+
+	public String getDescrizione_etichetta() {
+		return descrizione_etichetta;
+	}
+
+	public void setDescrizione_etichetta(String descrizione_etichetta) {
+		this.descrizione_etichetta = descrizione_etichetta;
+	}
+	
+	public Integer getIdEtichetta() {
+		return idEtichetta;
+	}
+
+	public void setIdEtichetta(Integer idEtichetta) {
+		this.idEtichetta = idEtichetta;
+	}
 
     public PraticaAnagrafica(PraticaAnagraficaPK praticaAnagraficaPK) {
         this.praticaAnagraficaPK = praticaAnagraficaPK;
@@ -164,7 +188,14 @@ public class PraticaAnagrafica implements Serializable {
     public void setAnagrafica(Anagrafica anagrafica) {
         this.anagrafica = anagrafica;
     }
+	
+    public Integer getIdPratica() {
+		return idPratica;
+	}
 
+	public void setIdPratica(Integer idPratica) {
+		this.idPratica = idPratica;
+	}
     @Override
     public int hashCode() {
         int hash = 0;
@@ -189,5 +220,4 @@ public class PraticaAnagrafica implements Serializable {
     public String toString() {
         return "it.wego.cross.entity.PraticaAnagrafica[ praticaAnagraficaPK=" + praticaAnagraficaPK + " ]";
     }
-    
 }

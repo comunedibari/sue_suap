@@ -30,9 +30,9 @@
 		<mailapi>1.3.2</mailapi>
 		<saaj>1.0</saaj>
 		<jsr173>1.0api</jsr173>
-		<bcprov-jdk14>1.34.0</bcprov-jdk14>
+		<bcprov-jdk16>1.45.0</bcprov-jdk16>
 		<commons-discovery>0.2.dev</commons-discovery>
-		<bcmail-jdk14>1.34.0</bcmail-jdk14>
+		<bcmail-jdk16>1.45.0</bcmail-jdk16>
 		<axis>1.0</axis>
 		<dtdparser119>1.0</dtdparser119>
 		<intermediari-comunicazione>1.0</intermediari-comunicazione>
@@ -300,8 +300,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle.bcprovider</groupId>
-			<artifactId>bcprov-jdk14</artifactId>
-			<version>${bcprov-jdk14}</version>
+			<artifactId>bcprov-jdk16</artifactId>
+			<version>${bcprov-jdk16}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>*</artifactId>
@@ -322,8 +322,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle.bcmail</groupId>
-			<artifactId>bcmail-jdk14</artifactId>
-			<version>${bcmail-jdk14}</version>
+			<artifactId>bcmail-jdk16</artifactId>
+			<version>${bcmail-jdk16}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>*</artifactId>

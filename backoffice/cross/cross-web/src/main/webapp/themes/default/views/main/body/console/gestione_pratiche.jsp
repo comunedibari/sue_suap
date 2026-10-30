@@ -122,7 +122,7 @@
                 }
             });
         } else if (azione === 'xml') {
-            var url = '<%= request.getContextPath()%>/console/pratiche/gestisci/generaxmlcross.htm?idPratica=' + idPratica;
+            var url = '<%= request.getContextPath()%>/console/pratiche/gestisci/generaxmlcross.htm?idPratica=' + idPratica + "&s_code="+window.name;
             window.open(url, '_blank');
         } else if (azione === 'delete') {
             var confirmDialog = $('<div />').attr({

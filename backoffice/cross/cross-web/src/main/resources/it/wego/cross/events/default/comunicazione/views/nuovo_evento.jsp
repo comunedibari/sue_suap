@@ -10,7 +10,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@ page import="it.wego.cross.constants.AnaTipiEvento" %>
+<%@ page import="it.wego.cross.constants.CartiglioConstants" %>
 
 <c:url value="/download/pratica.htm" var="downloadPraticaUrl">
     <c:param name="id_pratica" value="${pratica.idPratica}"/>
@@ -21,7 +22,32 @@
 
 <tiles:insertAttribute name="body_error" />
 
-<script>
+<script type="text/javascript" src="${path}/javascript/attachmentsManager.js"></script>
+
+<script type="text/javascript">
+
+	var maxNumber = null;
+	var maxSize = null;
+
+	<c:if test="${not empty maxNumberConstraint }">
+		maxNumber =${maxNumberConstraint};
+	</c:if>
+	<c:if test="${not empty maxSizeConstraint }">
+		maxSize =${maxSizeConstraint};
+	</c:if>
+	
+	var loadedAttachmentsCounter  = 0;
+
+	function errorMessage(type){
+		if(type === "N")
+			alert('<spring:message code="error.attachments.max.number" arguments="${maxNumberConstraint}" htmlEscape="false"/>'.replace("[0]", this.currentNumber))
+		if(type === "S"){
+			alert('<spring:message code="error.attachments.max.size" arguments="${maxSizeConstraint}" htmlEscape="false"/>'.replace("[0]", this.currentSize.toLocaleString()))
+		}
+	}
+
+	var attachmentsManager = new AttachmentsManager(maxNumber, maxSize, errorMessage);
+
     $(document).bind('dragover', function(e) {
         var dropZoneall = $('#dropzoneall'),
                 timeout = window.dropZoneTimeout;
@@ -54,12 +80,10 @@
             dropZoneall.removeClass('in hover');
         }, 100);
     });
-</script>
 
-
-<script>
     var idPratica = '${pratica.idPratica}';
     var idEvento = '${processo_evento.idEvento}';
+    var codEvento = '${processo_evento.codEvento}';
 
     function isGiorniScadenzaValid(value) {
         if (value.length === 0) {
@@ -74,40 +98,29 @@
         }
         return true;
     }
+
     $(document).ready(function() {
         $(".collapsibleContent").hide();
-        /*$(".collapsibleContentHeader").click(function() {
-         $(this).next(".collapsibleContent").toggle('blind');
-         });*/
+
         $("#creazioneEventoForm").submit(function() {
             var obbligatori = $('.obbligatorio').length;
             errorfile = false;
             for (var i = 0; i < obbligatori; i++) {
                 var ob = $('.obbligatorio')[i];
-                //^^CS AGGIUNTA
-                //******************************************************************************************************
-                //AGGIUNTO DA GAB MON 
-                //******************************************************************************************************
                 //e' stato necessario modificare sensibilmente questo messaggio di errore in modo che non controllasse che i file venissero caricati   
 //                var file = $('.fileObbligatorio')[i].value;
-                if ((ob.value == undefined || ob.value == ''))
-                        // come era prima // || (file== undefined || file== ''))
-                        {
-                            errorfile = true;
-                        }
+                if ((ob.value == undefined || ob.value == '')) {
+                    errorfile = true;
+                }
             }
-            if (errorfile)
-            {
-                //Per ogni file immattere una descrizione e caricare il file
-                alert("Per ogni file caricato è obbligatorio immettere una descrizione.");//TODO: ^^CS message
+            if (errorfile) {
+                alert("Per ogni file caricato è obbligatorio immettere una descrizione.");
                 return false;
             }
             if ($('#giorniScadenzaCustom').length == 1) {
                 if (!isGiorniScadenzaValid($('#giorniScadenzaCustom').val())) {
                     alert("Inserire un valore corretto per i giorni scadenza");
                     return false;
-
-
                 }
             }
         });
@@ -133,7 +146,6 @@
         return false;
     }
 
-
     function enableSubmit()
     {
         var submit = document.getElementById("creaEvento");
@@ -146,55 +158,54 @@
 
 <div class="content_sidebar">
     <div class="sidebar_left">
-        <h3><spring:message code="pratica.comunicazione.dettaglio.identificativo"/> <strong>${pratica.identificativoPratica}</strong></h3>
-        <div class="sidebar_elemento">
-            ${pratica.oggettoPratica}
-            <p><strong><spring:message code="pratica.comunicazione.evento.pratica.dataricezione"/>:</strong> <fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.dataRicezione}" /></p>
-            <p><strong><spring:message code="pratica.comunicazione.evento.pratica.stato"/>:</strong> ${pratica.idStatoPratica.descrizione}</p>
-            <c:choose>
-                <c:when test="${not empty pratica.idModello}">
-                    <p style="margin-top:20px;">
-                        <a href="${downloadPraticaUrl}" class="scarica" target="_blank">
-                            <spring:message code="pratica.comunicazione.evento.pratica.download"/>
-                        </a>
-                    </p>
-                </c:when>
-                <c:otherwise>
-                    <span class="value"><spring:message code="pratica.comunicazione.evento.pratica.nofile"/></span>
-                </c:otherwise>
-            </c:choose>
-        </div>
+        <c:set var="cartiglio" value="${pratica.cartiglio}" scope="request"/>
+    	<c:set var="from" value="${CartiglioConstants.FROM_DETAIL }" scope="request"/>
+		<c:import url="/themes/default/views/main/body/pratiche/cartiglio.jsp"/>
     </div>
 
     <div class="sidebar_center">
         <form:form id="creazioneEventoForm" action="${submitEventoUrl}" class="uniForm inlineLabels comunicazione" method="post" enctype="multipart/form-data" commandName="comunicazione">
+            <form:hidden path="codEvento" value="${processo_evento.codEvento}"/>
             <div class="page-control" data-role="page-control">
                 <span class="menu-pull"></span> 
                 <div class="menu-pull-bar"></div>
                 <!-- Etichette cartelle -->
-                <ul>  
+                <ul>   
                     <c:if test="${processo_evento.verso=='I'}">
                         <li <c:if test="${comunicazione.activeTab == '#frame4'}">class="active"</c:if>><a href="#frame4"><spring:message code="pratica.comunicazione.evento.mittenti"/></a></li>
                     </c:if>
                     <c:if test="${processo_evento.flgMail == 'S'}">
                         <li <c:if test="${comunicazione.activeTab == '#frame1'}">class="active"</c:if>><a href="#frame1"><spring:message code="pratica.comunicazione.evento.title"/></a></li>
                     </c:if>                        
-                    	<li <c:if test="${comunicazione.activeTab == '#frame7'}">class="active"</c:if>><a href="#frame7"><spring:message code="pratica.comunicazione.template"/></a></li>
+						<c:if test="${processo_evento.codEvento != AnaTipiEvento.RIASSEGNAZIONE_TEMPORIZZATA && processo_evento.nascondiTabTemplate != 'S'}">
+	                    	<li <c:if test="${comunicazione.activeTab == '#frame7'}">class="active"</c:if>>
+								<a href="#frame7"><spring:message code="pratica.comunicazione.template"/></a>
+							</li>
+						</c:if>
                     <c:if test="${processo_evento.flgProtocollazione == 'S'}">
                         <!--<li <c:if test="${comunicazione.activeTab == '#frame6'}">class="active"</c:if>><a href="#frame6"><spring:message code="pratica.comunicazione.evento.allegatoOriginale"/></a></li>-->
                     </c:if>
-                    	<li <c:if test="${comunicazione.activeTab == '#frame5'}">class="active"</c:if>>
-                        	<a href="#frame5"><spring:message code="pratica.comunicazione.evento.documento"/></a>
-                    </li>
+                    <c:if test="${processo_evento.codEvento != AnaTipiEvento.RIASSEGNAZIONE_TEMPORIZZATA && processo_evento.nascondiTabDocumenti != 'S'}">
+	                   	<li <c:if test="${comunicazione.activeTab == '#frame5'}">class="active"</c:if>>
+	                       	<a href="#frame5"><spring:message code="pratica.comunicazione.evento.documento"/></a>
+	                    </li>
+	                </c:if>
                     <c:if test="${processo_evento.flgScadenzeCustom == 'S'}">
                         <li <c:if test="${comunicazione.activeTab == '#frame2'}">class="active"</c:if>><a href="#frame2"><spring:message code="pratica.comunicazione.evento.scadenze"/></a></li>
-                        </c:if>
-                        <c:if test="${not empty scadenze_da_chiudere}">
+                    </c:if>
+                    <c:if test="${not empty scadenze_da_chiudere}">
                         <li <c:if test="${comunicazione.activeTab == '#frame3'}">class="active"</c:if>><a href="#frame3"><spring:message code="pratica.comunicazione.evento.scadenze"/></a></li>
-                        </c:if>
-                    <li <c:if test="${comunicazione.activeTab == '#frame8'}">class="active"</c:if>>
-                        <a href="#frame8"><spring:message code="pratica.comunicazione.evento.altreazioni"/></a>
-                    </li>
+                    </c:if>
+                    <c:if test="${empty reassignmentData.defaultDays }">
+	                    <li <c:if test="${comunicazione.activeTab == '#frame9'}">class="active"</c:if>>
+	                        <a href="#frame9"><spring:message code="pratica.comunicazione.evento.riassegnazione.temporizzata"/></a>
+	                    </li>
+                    </c:if>
+                    <c:if test="${processo_evento.codEvento != AnaTipiEvento.RIASSEGNAZIONE_TEMPORIZZATA }">
+	                    <li <c:if test="${comunicazione.activeTab == '#frame8'}">class="active"</c:if>>
+	                        <a href="#frame8"><spring:message code="pratica.comunicazione.evento.altreazioni"/></a>
+	                    </li>
+                    </c:if>
                 </ul>
                 <!-- Contenuto cartelle -->
                 <div class="frames">
@@ -277,100 +288,100 @@
                         </div>
                     </div>
                 </c:if>
-
-                <div class="frame <c:if test="${comunicazione.activeTab == '#frame5'}">active</c:if>"  id="frame5">
-                        <div>
-
-                        <tiles:insertAttribute name="comunicazione_file_upload" />
-                    </div>
-                </div>  
+				<c:if test="${processo_evento.codEvento != AnaTipiEvento.RIASSEGNAZIONE_TEMPORIZZATA && processo_evento.nascondiTabDocumenti != 'S'}">
+	                <div class="frame <c:if test="${comunicazione.activeTab == '#frame5'}">active</c:if>"  id="frame5">
+	                        <div>
+	
+	                        <tiles:insertAttribute name="comunicazione_file_upload" />
+	                    </div>
+	                </div>  
+	            </c:if>
 <%--                 <c:if test="${processo_evento.flgProtocollazione=='S'}"> --%>
-                <c:if test="${processo_evento.flgProtocollazione=='Pippo'}">
-                    <div class="frame <c:if test="${comunicazione.activeTab == '#frame6'}">active</c:if>"  id="frame6">
-
-                            <div class="ctrlHolder">
-
-
-
-                                <!-- COME ERA PRIMA--> 
-                                <!--                                Descrizione <br/>                            -->
-                                <!--                                <input type="file" name="allegatoOriginale.file" class=""/><br/>-->
-
-
-
-                                <!--  INSERITO DA GAB MON-->
-                                <!--****************************************************************************************************************************************************************************************************************************-->
-                                <input style="display:none"  id="originalupload" type="file" name="file"  data-url="<%=path%>/ajax_upload.htm" onchange="disableSubmit();
-                                        return false;"/> 
-                            <label>Caricare o sostituire l'allegato originale rilasciando il file nella zona sottostante (Drop zone) o cliccando il pulsante "Aggiungi allegato" per cercarlo nel computer.</label>
-                            <table  class="master" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <th>                                                    </th>
-                                    <th>                       Descrizione                  </th>
-                                    <th>                        Nome                        </th>
-                                    <th>                        Formato                     </th>
-                                </tr>
-                                <tr id="uploaded-files-info"> 
-                                    <td> <b>File originale:</b>              </td>
-                                    <td><form:input path="allegatoOriginale.descrizione" class="fileObbligatorio" style="float:left;width:100%;margin-right:20px" /></td>
-
-
-                                    <td class="loadedfile"> <c:if test="${!empty allegatoOriginale.pathFile}" >  <input style="display:none" type="text" name="allegatoOriginale.pathFile" value="${allegatoOriginale.pathFile}"  class="loadedfile"  /> <input style="display:none" type="text" name="allegatoOriginale.nomeFile" value="${allegatoOriginale.nomeFile}"  class="loadedfile"  /> ${allegatoOriginale.nomeFile}</c:if> </td>
-                                    <td class="loadedfile"> <c:if test="${!empty allegatoOriginale.pathFile}">  <input style="display:none"  type="text" name="allegatoOriginale.tipoFile" value="${allegatoOriginale.tipoFile}"  class="loadedfile"  /> ${allegatoOriginale.tipoFile} </c:if>             </td>                   
-
-                                    </tr>  
-                                </table>
-
-                                <div class="dropzone_container" id="dropzone">DROP ZONE</div>
-                                <br/>
-                                <br/>
-                            </div>
-                            <div class="aggiungiAllegato">
-                                <a onclick="uploadOriginal();
-                                        return false;" class="crea_nuovo_evento">
-                                <spring:message code="pratica.comunicazione.evento.aggiungiallegato"/>
-                            </a> 
-                        </div>
-
-                        <!--****************************************************************************************************************************************************************************************************************************-->
-
-
-                    </div>
-                </c:if>
-                <div class="frame <c:if test="${comunicazione.activeTab == '#frame7'}">active</c:if>"  id="frame7">
-                        <div class="ctrlHolder">
-                        <c:choose>
-                            <c:when test="${(!empty templates) && (processo_evento.flgRicevuta=='S')}">
-                                <c:forEach items="${templates}" begin="0" var="allegato">
-                                    <div class="allegatiGenerati">
-                                        <a href="<%=path%>/download/generated.htm?id_pratica=${pratica.idPratica}&idEventoTemplate=${allegato.idEventoTemplate}" target="_blank" class="scarica" title="${allegato.descrizioneTemplate}" >
-                                            ${allegato.descrizioneTemplate}
-                                        </a>
-                                    </div>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="allegatiGenerati allegatiMessage">
-                                    <spring:message code="pratica.comunicazione.template.notemplate"/>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                </div>
-                <div class="frame <c:if test="${comunicazione.activeTab == '#frame8'}">active</c:if>"  id="frame8">
-                        <div class="">
-                        <c:if test="${processo_evento.flgPortale == 'S'}">
-                            <div class="ctrlHolder form_checkbox_div">
-                                <form:label path="visualizzaEventoPortale" style="font-size: 1em;"><spring:message code="pratica.comunicazione.evento.pubblica"/></form:label>
-                                <form:checkbox path="visualizzaEventoPortale"/>
-                            </div>
-                        </c:if>
-                        <div class="ctrlHolder dettaglio_liv_0" style="display:block;">
-                            <h4 class="readOnlyLabel"><form:label path="contenuto" class="required"><spring:message code="pratica.comunicazione.evento.note"/></form:label></h4>
-                            <form:textarea cols="25" rows="25" path="note" style="width:100%;"/>
-                        </div>           
-                    </div>
-                </div>
+	                <c:if test="${processo_evento.flgProtocollazione=='Pippo'}">
+	                    <div class="frame <c:if test="${comunicazione.activeTab == '#frame6'}">active</c:if>"  id="frame6">
+	
+	                            <div class="ctrlHolder">
+	                                <input style="display:none"  id="originalupload" type="file" name="file"  data-url="<%=path%>/ajax_upload.htm" onchange="disableSubmit();
+	                                        return false;"/> 
+	                            <label>Caricare o sostituire l'allegato originale rilasciando il file nella zona sottostante (Drop zone) o cliccando il pulsante "Aggiungi allegato" per cercarlo nel computer.</label>
+	                            <table  class="master" cellspacing="0" cellpadding="0">
+	                                <tr>
+	                                    <th>                                                    </th>
+	                                    <th>                       Descrizione                  </th>
+	                                    <th>                        Nome                        </th>
+	                                    <th>                        Formato                     </th>
+	                                </tr>
+	                                <tr id="uploaded-files-info"> 
+	                                    <td> <b>File originale:</b>              </td>
+	                                    <td><form:input path="allegatoOriginale.descrizione" class="fileObbligatorio" style="float:left;width:100%;margin-right:20px" /></td>
+	
+	
+	                                    <td class="loadedfile"> <c:if test="${!empty allegatoOriginale.pathFile}" >  <input style="display:none" type="text" name="allegatoOriginale.pathFile" value="${allegatoOriginale.pathFile}"  class="loadedfile"  /> <input style="display:none" type="text" name="allegatoOriginale.nomeFile" value="${allegatoOriginale.nomeFile}"  class="loadedfile"  /> ${allegatoOriginale.nomeFile}</c:if> </td>
+	                                    <td class="loadedfile"> <c:if test="${!empty allegatoOriginale.pathFile}">  <input style="display:none"  type="text" name="allegatoOriginale.tipoFile" value="${allegatoOriginale.tipoFile}"  class="loadedfile"  /> ${allegatoOriginale.tipoFile} </c:if>             </td>                   
+	
+	                                    </tr>  
+	                                </table>
+	
+	                                <div class="dropzone_container" id="dropzone">DROP ZONE</div>
+	                                <br/>
+	                                <br/>
+	                            </div>
+	                            <div class="aggiungiAllegato">
+	                                <a onclick="uploadOriginal();
+	                                        return false;" class="crea_nuovo_evento">
+	                                <spring:message code="pratica.comunicazione.evento.aggiungiallegato"/>
+	                            </a> 
+	                        </div>
+	
+	                        <!--****************************************************************************************************************************************************************************************************************************-->
+	
+	
+	                    </div>
+	                </c:if>
+	                <c:if test="${processo_evento.codEvento != AnaTipiEvento.RIASSEGNAZIONE_TEMPORIZZATA && processo_evento.nascondiTabTemplate != 'S' }">
+		                <div class="frame <c:if test="${comunicazione.activeTab == '#frame7'}">active</c:if>"  id="frame7">
+		                        <div class="ctrlHolder">
+		                        <c:choose>
+		                            <c:when test="${(!empty templates) && (processo_evento.flgRicevuta=='S')}">
+		                                <c:forEach items="${templates}" begin="0" var="allegato">
+		                                    <div class="allegatiGenerati">
+		                                        <a href="<%=path%>/download/generated.htm?id_pratica=${pratica.idPratica}&idEventoTemplate=${allegato.idEventoTemplate}" target="_blank" class="scarica" title="${allegato.descrizioneTemplate}" >
+		                                            ${allegato.descrizioneTemplate}
+		                                        </a>
+		                                    </div>
+		                                </c:forEach>
+		                            </c:when>
+		                            <c:otherwise>
+		                                <div class="allegatiGenerati allegatiMessage">
+		                                    <spring:message code="pratica.comunicazione.template.notemplate"/>
+		                                </div>
+		                            </c:otherwise>
+		                        </c:choose>
+		                    </div>
+		                </div> 
+                	</c:if>
+	                <c:if test="${empty reassignmentData.defaultDays }">
+		                <div class="frame <c:if test="${comunicazione.activeTab == '#frame9'}">active</c:if>"  id="frame9">
+		                	<tiles:insertAttribute name="comunicazione_rias_prat" />
+		                </div>
+	                </c:if>
+	                <c:if test="${not empty reassignmentData.defaultDays }">
+		                <form:input path="giorniRiassegnazione" id="days" type="hidden" value="${reassignmentData.defaultDays }"/>
+	                </c:if>
+	                <div class="frame <c:if test="${comunicazione.activeTab == '#frame8'}">active</c:if>"  id="frame8">
+	                        <div class="">
+	                        <c:if test="${processo_evento.flgPortale == 'S'}">
+	                            <div class="ctrlHolder form_checkbox_div">
+	                                <form:label path="visualizzaEventoPortale" style="font-size: 1em;"><spring:message code="pratica.comunicazione.evento.pubblica"/></form:label>
+	                                <form:checkbox path="visualizzaEventoPortale"/>
+	                            </div>
+	                        </c:if>
+	                        <div class="ctrlHolder dettaglio_liv_0" style="display:block;">
+	                            <h4 class="readOnlyLabel"><form:label path="contenuto" class="required"><spring:message code="pratica.comunicazione.evento.annotazioni"/></form:label></h4>
+	                            <form:textarea cols="25" rows="25" path="note" style="width:100%;"/>
+	                        </div>           
+	                    </div>
+	                </div>
             </div>
         </div>
         <div class="buttonHolder">
@@ -380,8 +391,7 @@
             <form:hidden path="idPratica"/>
             <form:hidden path="idPraticaProtocollo"/>
             <form:hidden path="initialized" value="true"/>
-            <button tipoprotocollo="${tipoprotocollo}" value="<spring:message code="pratica.comunicazione.evento.procedi"/>" id="creaEvento" class="primaryAction" name="submitaction" onclick="triggersubmit();
-                    return false;">
+            <button tipoprotocollo="${tipoprotocollo}" value="<spring:message code="pratica.comunicazione.evento.procedi"/>" id="creaEvento" class="primaryAction" name="submitaction" onclick="triggersubmit(event);return false;">
                 <spring:message code="pratica.comunicazione.evento.procedi"/>
             </button>
         </div>
@@ -401,8 +411,13 @@
     }
 </script>
 <script>
-    function triggersubmit() {
-    	debugger;
+    function triggersubmit(e) {
+    	if(!attachmentsManager.isValid()){
+    		e.preventDefault();
+    		attachmentsManager.printErrorMessage();
+    		return false;
+    	}
+
     	if($('.documenti_allegati_principale:checkbox:checked').length > 1){
     		alert("Inserire un solo allegato principale");
     	}else{

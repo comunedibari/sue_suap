@@ -1,0 +1,11 @@
+CREATE TABLE staging ( id int,
+id_staging int NOT NULL AUTO_INCREMENT,
+data_ricezione date NOT NULL,
+xml_ricevuto longblob,
+xml_pratica longblob,
+oggetto varchar(4000) DEFAULT NULL,
+tipo_messaggio varchar(255) NOT NULL,
+data_apertura date DEFAULT NULL,
+id_utente_apertura int DEFAULT NULL,
+id_ente int NOT NULL,
+identificativo_provenienza varchar(255) DEFAULT NULL)

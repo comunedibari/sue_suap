@@ -14,6 +14,7 @@ public class PraticaProcedimentiPKDTO {
     private Integer idPratica;
     private Integer idProcedimento;
     private Integer idEnte;
+    private Integer idEndoprocedimentoSuap;
 
     public Integer getIdPratica() {
         return idPratica;
@@ -39,4 +40,11 @@ public class PraticaProcedimentiPKDTO {
         this.idEnte = idEnte;
     }
 
+	public Integer getIdEndoprocedimentoSuap() {
+		return idEndoprocedimentoSuap;
+	}
+
+	public void setIdEndoprocedimentoSuap(Integer idEndoprocedimentoSuap) {
+		this.idEndoprocedimentoSuap = idEndoprocedimentoSuap;
+	}
 }

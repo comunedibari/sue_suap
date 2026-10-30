@@ -4,7 +4,21 @@
  */
 package it.wego.cross.events;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Repository;
+
 import com.google.common.base.Strings;
+
+import it.wego.cross.actions.SystemEventAction;
 import it.wego.cross.beans.EventoBean;
 import it.wego.cross.dao.AllegatiDao;
 import it.wego.cross.dao.LookupDao;
@@ -17,8 +31,6 @@ import it.wego.cross.dao.UtentiDao;
 import it.wego.cross.dto.EventoDTO;
 import it.wego.cross.dto.dozer.PraticaProcedimentiPKDTO;
 import it.wego.cross.entity.Allegati;
-import it.wego.cross.entity.Anagrafica;
-import it.wego.cross.entity.AnagraficaRecapiti;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticaEventiProcedimenti;
@@ -26,12 +38,9 @@ import it.wego.cross.entity.PraticaEventiProcedimentiPK;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.PraticheEventiAllegati;
 import it.wego.cross.entity.PraticheEventiAllegatiPK;
-import it.wego.cross.entity.PraticheEventiAnagrafiche;
-import it.wego.cross.entity.PraticheEventiAnagrafichePK;
 import it.wego.cross.entity.ProcedimentiEnti;
 import it.wego.cross.entity.ProcessiEventi;
 import it.wego.cross.entity.Utente;
-import it.wego.cross.entity.UtenteRuoloEnte;
 import it.wego.cross.plugins.commons.beans.Allegato;
 import it.wego.cross.plugins.documenti.GestioneAllegati;
 import it.wego.cross.service.AnagraficheService;
@@ -45,12 +54,6 @@ import it.wego.cross.service.UtentiService;
 import it.wego.cross.service.WorkFlowService;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Repository;
 
 /**
  *
@@ -96,6 +99,11 @@ public abstract class AbstractEvent {
     @Autowired
     private UtentiDao utentiDao;
 
+    private MessageSource messageSource;
+    
+    @Autowired
+    private SystemEventAction systemEventAction;
+    
     public abstract void execute(EventoBean eb) throws Exception;
 
     public PraticheEventi insertEvento(EventoBean eb) throws Exception {
@@ -176,7 +184,7 @@ public abstract class AbstractEvent {
             }
             Log.APP.info("Aggiungi allegato " + allegatoEntity.getNomeFile() + " all'evento " + eventoPratica.getIdEvento().getDesEvento());
             if(gestioneAllegati != null)
-            	gestioneAllegati.add(allegatoEntity, ente, pratica.getIdComune());
+            	gestioneAllegati.add(allegatoEntity, ente, pratica.getIdComune(), eventoPratica.getDataEvento());
             if (allegato.getId() == null) {
                 allegatiDao.insertAllegato(allegatoEntity);
             } else {
@@ -219,6 +227,12 @@ public abstract class AbstractEvent {
         String mimeType = !Strings.isNullOrEmpty(allegato.getTipoFile()) ? allegato.getTipoFile() : MediaType.APPLICATION_OCTET_STREAM_VALUE;
         a.setTipoFile(mimeType);
         a.setPathFile(allegato.getPathFile());
+        a.setDimensione(allegato.getDimensione());
+        if(allegato.getPathFile() != null && allegato.getPathFile().length() > 0) {
+        	File file = new File(allegato.getPathFile());
+        	a.setDimensione(file.length());
+        	
+        }
         return a;
     }
 
@@ -236,43 +250,60 @@ public abstract class AbstractEvent {
 			e.printStackTrace();
 		}
 	}
-	
-	 public Pratica aggiornamentoUtentePratica(EventoBean eb) throws Exception { //inserimento ultimo utente con evento di tipo (istr) più inserimento flag di integrazione
-	        Pratica pratica = praticheService.getPratica(eb.getIdPratica());
-	        Utente procuratore = utentiDao.findUtenteByCodiceFiscale("INTEGRAZIONE");
-	        if (eb.getIdUtente().equals(procuratore.getIdUtente()) ){
-	        	List<EventoDTO> eventiPratica = praticheService.getEventiPratica(pratica);
-	        	EventoDTO eventoIstr = null;
-	        	EventoDTO eventoPos = null;
-	        	for (EventoDTO evento : eventiPratica) {
-					if (evento.getDescrizione().contains("(istr)") || evento.getDescrizione().contains("(ISTR)")) {
-						if (eventoIstr == null)
-							eventoIstr = evento;
-						else {
-							if (eventoIstr.getIdPraticaEvento() > evento.getIdPraticaEvento())
-								eventoIstr = evento;
-						}
-					}
-					if (evento.getDescrizione().contains("(pos)") || evento.getDescrizione().contains("(POS)")) {
-						if (eventoPos == null)
-							eventoPos = evento;
-						else {
-							if (eventoPos.getIdPraticaEvento() > evento.getIdPraticaEvento())
-								eventoPos = evento;
-						}
-					}
-				}
-	        	if(eventoIstr != null) {
-	        		Utente utente = utentiService.findUtenteByIdUtente(eventoIstr.getIdUtente());
-	        		pratica.setIdUtente(utente);
-	        	} else if (eventoPos != null)  {
-	        		Utente utente = utentiService.findUtenteByIdUtente(eventoPos.getIdUtente());
-	        		pratica.setIdUtente(utente);
-	        	}
-	        	
-	        	pratica.setIntegrazione("S");
-	        	praticheService.aggiornaPratica(pratica);
+
+	public Pratica aggiornamentoUtentePratica(EventoBean eb) throws Exception { 
+        Pratica pratica = praticheService.getPratica(eb.getIdPratica());
+        Utente procuratore = utentiDao.findUtenteByCodiceFiscale("INTEGRAZIONE");
+        Utente administrator = utentiDao.findUtenteByIdUtente(1);
+        
+        Log.APP.info("aggiornamentoUtentePratica - procuratore: " + procuratore.getIdUtente().intValue());
+        Log.APP.info("aggiornamentoUtentePratica - Utente evento: " + eb.getIdUtente().intValue());
+
+        if (eb.getIdUtente().equals(procuratore.getIdUtente())){
+	        pratica.setIntegrazione("S");
+	        pratica.setDataUltimoEventoEsterno(new Date());
+	        
+	        List<EventoDTO> eventiPratica = praticheService.getEventiPratica(pratica);
+        	
+        	EventoDTO eventoIstr = null;
+        	List<EventoDTO> archiveEvents = new LinkedList<>();
+
+        	for (EventoDTO evento : eventiPratica) {
+        		String descrizione = evento.getDescrizione();
+				if (descrizione!= null && descrizione.toLowerCase().contains("(istr)") && 
+						(eventoIstr == null || eventoIstr.getIdPraticaEvento() < evento.getIdPraticaEvento()))
+					eventoIstr = evento;
+									
+				String note = evento.getNote();
+				if(note != null && note.toLowerCase().contains(" a archivio") &&
+						(archiveEvents.isEmpty() || archiveEvents.get(archiveEvents.size()-1).getIdPraticaEvento() < evento.getIdPraticaEvento()))
+					archiveEvents.add(evento);
+				
 			}
-	        return pratica;
-	    }
+        	Utente nuovoAssegnatario = null;
+        	if(eventoIstr != null && !pratica.getIdUtente().getCognome().toLowerCase().equals("deposito")) {
+        		Log.APP.info("aggiornamentoUtentePratica - trovato evento ISTR: " + eventoIstr.getIdPraticaEvento());
+        		nuovoAssegnatario = utentiService.findUtenteByIdUtente(eventoIstr.getIdUtente());
+        	}
+        	else if (!archiveEvents.isEmpty() && pratica.getIdUtente().getNome().toLowerCase().contains("archivio")) {
+        		EventoDTO lastEvent = archiveEvents.get(archiveEvents.size()-1);
+        		if(lastEvent.getIdUtente().equals(administrator.getIdUtente()) && archiveEvents.size() > 1)
+        			lastEvent = archiveEvents.get(archiveEvents.size()-2);
+        		Log.APP.info("aggiornamentoUtentePratica - trovato evento archivio: " + lastEvent.getIdPraticaEvento());
+        		nuovoAssegnatario = utentiService.findUtenteByIdUtente(lastEvent.getIdUtente());
+        	}
+
+    		if(nuovoAssegnatario != null) {
+
+    			Utente precedenteAssegnatario = utentiService.findUtenteByIdUtente(pratica.getIdUtente().getIdUtente());
+    			Log.APP.info("aggiornamentoUtentePratica - precedenteAssegnatario:" + precedenteAssegnatario.getIdUtente().intValue());
+        		Log.APP.info("aggiornamentoUtentePratica - nuovoAssegnatario :" + nuovoAssegnatario.getIdUtente().intValue());
+        			        			
+                PraticheEventi riassegnaPratica = systemEventAction.riassegnaPratica(pratica, precedenteAssegnatario, nuovoAssegnatario, null);
+                Log.APP.info(riassegnaPratica.getNote());
+    		}
+        }
+
+        return pratica;
+    }
 }

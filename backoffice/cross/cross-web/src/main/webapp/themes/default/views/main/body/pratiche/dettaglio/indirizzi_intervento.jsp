@@ -12,6 +12,7 @@
     var esistenzaStradario = "${esistenzaStradario}";
     var msgDelete = "<spring:message code='pratica.comunicazione.dettaglio.indirizzo.intervento.cancella'/>";
     $(document).ready(function () {
+        
         $("#dialog-form-indirizzi").dialog({
             autoOpen: false,
             height: $(window).height() * 0.8,
@@ -36,7 +37,7 @@
             $("#dialog-form-indirizzi").dialog("open");
         });
         $('.indirizzoIntervento.box-unlink-indirizzoIntervento').on('click', deleteIndirizzoIntervento);
-        $('.indirizzoIntervento.cerca_lente_rosso.showdetail-indirizzoIntervento').on('click', modificaIndirizzo);
+        $('.indirizzoIntervento.cerca_lente_dettaglio.showdetail-indirizzoIntervento').on('click', modificaIndirizzo);
     });
     var bottoneInserisciIndirizzo = {
         text: "Inserisci",
@@ -151,12 +152,43 @@
                     $("#indirizzoIntervento_" + indirizzoIntervento.idIndirizzoIntervento + " .input_anagrafica_disable.colore").val(indirizzoIntervento.colore);
                     $("#indirizzoIntervento_" + indirizzoIntervento.idIndirizzoIntervento + " .input_anagrafica_disable.piano").val(indirizzoIntervento.piano);
                     $("#indirizzoIntervento_" + indirizzoIntervento.idIndirizzoIntervento + " .input_anagrafica_disable.urlCatasto").val(indirizzoIntervento.urlCatasto);
-
+                  //table operation
+                    if (action == "salvaIndirizzoIntervento") {
+                    	$("#TRindirizzoIntervento_"+indirizzoIntervento.idIndirizzoIntervento).remove();
+                    }
+                    addRowToTableToStreetTable(indirizzoIntervento);
+                    $("#cadastralStreetEmptyRow").remove()
                 }
             }
         });
     }
+    function addRowToTableToStreetTable(indirizzoIntervento){
+    	var tableRow = '<td>'+indirizzoIntervento.localita+'</td>';
+        tableRow += '<td>'+indirizzoIntervento.indirizzo + ' '+ indirizzoIntervento.civico + '</td>';
+        tableRow += '<td>'+indirizzoIntervento.cap+'</td>';
+        tableRow += '<td>'+indirizzoIntervento.lettera+'/'+indirizzoIntervento.colore+'</td>';
+        tableRow += '<td>'+indirizzoIntervento.piano+'/'+indirizzoIntervento.internoNumero+'</td>';
+        tableRow += '<td>'+indirizzoIntervento.latitudine+'/'+indirizzoIntervento.longitudine+'</td>';
+        tableRow += '<td>'+createStreetTableCellAction(indirizzoIntervento)+'</td>';
+        
+		$("#tableStreetsDivTable tbody").append('<tr id="TRindirizzoIntervento_'+indirizzoIntervento.idIndirizzoIntervento+'">'+tableRow+'</tr>');
+        $('#TRindirizzoIntervento_'+indirizzoIntervento.idIndirizzoIntervento+' .indirizzoIntervento.box-unlink-indirizzoIntervento').on('click', deleteIndirizzoIntervento);
+        $('#TRindirizzoIntervento_'+indirizzoIntervento.idIndirizzoIntervento+' .indirizzoIntervento.cerca_lente_dettaglio.showdetail-indirizzoIntervento').on('click', modificaIndirizzo);
+    }
 
+    function createStreetTableCellAction(indirizzo){
+    	action = "";
+    	if (indirizzo.urlCatasto != null)
+        	action += '<a href="${indirizzo.urlCatasto}" target="_blank" title="<spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.link"/>">'+
+            	      '<img src="<%=path%>/themes/default/images/icons/magnifier.png" alt="<spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.link"/>" title="<spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.link"/>"></a>';
+	    
+        action += '<a class="indirizzoIntervento cerca_lente_dettaglio showdetail-indirizzoIntervento" data-holder="'+indirizzo.idIndirizzoIntervento+'" title="<spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.button"/>"></a>'
+
+	    action += '<a class="nascondiutente indirizzoIntervento box-unlink-indirizzoIntervento" data-holder="'+indirizzo.idIndirizzoIntervento+'" title="<spring:message code="datiCatastali.button.eliminaIndirizzo"/>">'+
+       				'<img src="${path}/themes/default/images/icons/link_break.png" data-holder="'+indirizzo.idIndirizzoIntervento+'" alt="<spring:message code="datiCatastali.button.eliminaIndirizzo"/>" title="<spring:message code="datiCatastali.button.eliminaIndirizzo"/>"></a>';
+    	return action;
+    }
+    
     function modificaIndirizzo(event) {
         var idIndirizzoIntervento = $(this).attr('data-holder');
         var idPratica = $("#indirizzoIntervento_idPratica").val();
@@ -207,7 +239,7 @@
         });
     }
     function deleteIndirizzoIntervento(event) {
-        var idIndirizzoIntervento = $(event.target).attr('data-holder');
+        var idIndirizzoIntervento = $(event.target).attr('data-holder') || $(this).attr('data-holder');
         var idPratica = $("#indirizzoIntervento_idPratica").val();
         $('<div></div>').appendTo('body')
                 .html("<div><h6 class='confirm-body-content'>" + msgDelete + "</h6></div>")
@@ -237,6 +269,7 @@
                                         var messaggio = data.messages;
                                         mostraMessaggioAjax(messaggio, "success");
                                         $("#indirizzoIntervento_" + idIndirizzoIntervento).remove();
+                                        $("#TRindirizzoIntervento_" + idIndirizzoIntervento).remove();
                                     }
                                 }
                             });
@@ -415,13 +448,78 @@
 </c:if>
 <div class="IndirizziIntervento imbox_frame ${margine_inbox_frame}">
     <input id="indirizzoIntervento_idPratica" class="indirizzoIntervento idPratica" type="hidden" value="${pratica.idPratica}" name="idPratica"/>
-    <div class="nascondiutente table-add-link" id="aggiungiIndirizzoIntervento">
-        <a href="#" id="add_indirizziIntervento_btn">
-            <spring:message code="datiCatastali.button.aggiungiIndirizzo"/>
-            <img src="<%=path%>/themes/default/images/icons/add.png" alt="<spring:message code="datiCatastali.button.aggiungiIndirizzo"/>" title="<spring:message code="datiCatastali.button.aggiungiIndirizzo"/>">
-        </a>
-    </div>
-    <div class="IndirizziIntervento controllo_sinistra ${mostraFreccie}">
+    <c:if test="${!abilitazioneConsultazione}">
+	    <div class="nascondiutente table-add-link" id="aggiungiIndirizzoIntervento">
+	        <a href="#" id="add_indirizziIntervento_btn">
+	            <spring:message code="datiCatastali.button.aggiungiIndirizzo"/>
+	            <img src="<%=path%>/themes/default/images/icons/add.png" alt="<spring:message code="datiCatastali.button.aggiungiIndirizzo"/>" title="<spring:message code="datiCatastali.button.aggiungiIndirizzo"/>">
+	        </a>
+	    </div>
+    </c:if>
+    <div id="tableStreetsDiv">
+	
+		<table id="tableStreetsDivTable" cellspacing="0" cellpadding="0" class="master">
+		
+			<tr>
+				<th><spring:message	code="pratica.comunicazione.dettaglio.indirizzo.intervento.localita" /></th>
+				<th><spring:message	code="pratica.comunicazione.dettaglio.indirizzo.intervento.indirizzo" /></th>
+				<th><spring:message	code="pratica.comunicazione.dettaglio.indirizzo.intervento.cap" /></th>
+				<th><spring:message	code="pratica.comunicazione.dettaglio.indirizzo.intervento.lettera" />/<spring:message	code="pratica.comunicazione.dettaglio.indirizzo.intervento.colore" /></th>
+				<th><spring:message	code="pratica.comunicazione.dettaglio.indirizzo.intervento.piano" />/<spring:message	code="pratica.comunicazione.dettaglio.indirizzo.intervento.interno" /></th>
+				<th><spring:message	code="pratica.comunicazione.dettaglio.indirizzo.intervento.latitudine" />/<spring:message	code="pratica.comunicazione.dettaglio.indirizzo.intervento.longitudine" /></th>
+				<th class="width10"><spring:message code="pratica.comunicazione.dettaglio.allegati.azioni" /></th>
+			</tr>
+		
+		
+		    	
+		    <c:if test="${!empty pratica.indirizziInterventoList}">
+				<c:forEach items="${pratica.indirizziInterventoList}" begin="0"  var="indirizzo" varStatus="loop">
+					<%String colorIntegrazione = "#FFFFFF"; %>
+					<%String colorCivilia = "#FFF1EF"; %>
+					<%String colorDMS = "#E3F8E5"; %>
+		
+					<c:choose>
+					   <c:when test="${indirizzo.provenienza eq 'CIVILIA'}"><% colorIntegrazione = "#FFF1EF"; %></c:when>
+					   <c:when test="${indirizzo.provenienza eq 'DMS'}"><% colorIntegrazione = "#E3F8E5"; %></c:when>
+					   <c:otherwise><% colorIntegrazione = "#FFFFFF"; %></c:otherwise>
+					</c:choose>
+									
+					
+					<tr id="TRindirizzoIntervento_${indirizzo.idIndirizzoIntervento}">
+						<td style="background-color: <%=colorIntegrazione%>">${indirizzo.localita}</td>
+						<td style="background-color: <%=colorIntegrazione%>">${indirizzo.indirizzo}&nbsp;${indirizzo.civico}</td>
+						<td style="background-color: <%=colorIntegrazione%>">${indirizzo.cap }</td>
+						<td style="background-color: <%=colorIntegrazione%>">${indirizzo.lettera }/${indirizzo.colore }</td>
+						<td style="background-color: <%=colorIntegrazione%>">${indirizzo.piano }/${indirizzo.internoNumero }</td>						
+						<td style="background-color: <%=colorIntegrazione%>">${indirizzo.latitudine }/${indirizzo.longitudine }</td>	
+						<td>
+							<c:if test="${! empty indirizzo.urlCatasto}">
+                                <a href="${indirizzo.urlCatasto}" target="_blank" title="<spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.link"/>">
+                                    <img src="<%=path%>/themes/default/images/icons/magnifier.png" alt="<spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.link"/>" title="<spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.link"/>">
+                                </a>
+                            </c:if>
+                            <a class="indirizzoIntervento cerca_lente_dettaglio showdetail-indirizzoIntervento" data-holder="${indirizzo.idIndirizzoIntervento}" title="<spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.button"/>"></a>
+							
+							<c:if test="${!abilitazioneConsultazione}">
+								<a class="nascondiutente indirizzoIntervento box-unlink-indirizzoIntervento" data-holder="${indirizzo.idIndirizzoIntervento}" title="<spring:message code="datiCatastali.button.eliminaIndirizzo"/>">
+		                            <img src="${path}/themes/default/images/icons/link_break.png" data-holder="${indirizzo.idIndirizzoIntervento}" alt="<spring:message code="datiCatastali.button.eliminaIndirizzo"/>" title="<spring:message code="datiCatastali.button.eliminaIndirizzo"/>" /> 
+		                        </a>
+	                        </c:if>
+	                    </td>				
+					</tr>
+				</c:forEach>
+			</c:if>
+		
+			<c:if test="${empty pratica.indirizziInterventoList}">
+				<tr id="cadastralStreetEmptyRow">
+					<td colspan="10"><spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.noresult" /></td>
+				</tr>
+			</c:if>
+		</table>
+	</div>
+    
+    <div id="timeLineStreetsDiv" class="hidden">
+    	<div class="IndirizziIntervento controllo_sinistra ${mostraFreccie}">
         <div class="controller_box">
             <div id="IndirizziIntervento-box-left" class="box_left" onclick="item_animate('<c:out value="${conto_div}"></c:out>', '#indirizziIntervento_box', '-=277px')"></div>
             </div>
@@ -433,7 +531,14 @@
                 <c:forEach items="${pratica.indirizziInterventoList}" begin="0"  var="indirizzo" varStatus="loop">
                     <td id="TDindirizzoIntervento_${indirizzo.idIndirizzoIntervento}" class="IndirizziInterventoElement">
                         <div id="indirizzoIntervento_${indirizzo.idIndirizzoIntervento}">
-                            <div class="circle <c:if test="${loop.last}">lastCircle</c:if>">
+                            <div class="circle 
+							<c:choose>
+							   <c:when test="${indirizzo.provenienza eq 'CIVILIA'}">sfondorosso</c:when>
+							   <c:when test="${indirizzo.provenienza eq 'DMS'}">sfondoverde</c:when>
+							   <c:otherwise>sfondobianco</c:otherwise>
+							</c:choose>
+                            
+                            <c:if test="${loop.last}">lastCircle</c:if>">
                                     <div class="ctrlHolder">
                                         <label class="required" style="display:inline">
                                         <spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.title"/>
@@ -491,7 +596,7 @@
                                         <spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.link"/>
                                     </a>
                                 </c:if>
-                                <div class="indirizzoIntervento cerca_lente_rosso showdetail-indirizzoIntervento" data-holder="${indirizzo.idIndirizzoIntervento}"><spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.button"/></div>
+                                <div class="indirizzoIntervento cerca_lente_dettaglio showdetail-indirizzoIntervento" data-holder="${indirizzo.idIndirizzoIntervento}"><spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.button"/></div>
                             </div>
                         </div>
                     </td>
@@ -499,7 +604,7 @@
             </tr>
         </table>
     </div>
-    <div class="IndirizziIntervento controllo_destra ${mostraFreccie}">
+    	<div class="IndirizziIntervento controllo_destra ${mostraFreccie}">
         <div class="controller_box">
             <div id="IndirizziIntervento-box-right" class="box_right" onclick="item_animate('<c:out value="${conto_div}"></c:out>', '#indirizziIntervento_box', '+=277px')"></div>
             </div>
@@ -507,98 +612,99 @@
 
         <div class="clear"></div>
         <div id="dialog-form-indirizzi" title="<spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.gestione.title"/>" class="indirizziInterventoDiv uniForm">
-        <div class="modalError"></div>
-        <div class="inlineLabels">
-            <div class="ctrlHolder IndirizziIntervento">
-                <ul id="indirizziIntervento" class="IndirizziInterventoSingle">
-                    <li>
-                        <input name="idIndirizzoIntervento" value="" id="indirizzoIntervento_idIndirizzoIntervento" type="text" class="indirizziIntervento idIndirizzoIntervento hidden" />
-                        <input name="codVia" value="" id="indirizzoIntervento_codVia" type="text" class="indirizziIntervento codVia hidden" />
-                        <input name="codCivico" value="" id="indirizzoIntervento_codCivico" type="text" class="indirizziIntervento codCivico hidden" />
-                    </li>
-
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.indirizzo"/></label>
-                            <input name="indirizzo" value="" id="indirizzoIntervento_indirizzo" type="text" class="indirizziIntervento indirizzo" />
-                        </div>
-                    </li>
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.civico"/></label>
-                            <input name="civico" value="" id="indirizzoIntervento_civico" type="text" class="indirizziIntervento civico" />
-                        </div>
-                    </li>
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.lettera"/></label>
-                            <input name="lettera" value="" id="indirizzoIntervento_lettera" type="text" class="indirizziIntervento lettera" />
-                        </div>
-                    </li> 
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.colore"/></label>
-                            <input name="colore" value="" id="indirizzoIntervento_colore" type="text" class="indirizziIntervento colore" />
-                        </div>
-                    </li>                    
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.piano"/></label>
-                            <input name="piano" value="" id="indirizzoIntervento_piano" type="text" class="indirizziIntervento piano" />
-                        </div> 
-                    </li>
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.scala"/></label>
-                            <input name="internoScala" value="" id="indirizzoIntervento_internoScala" type="text" class="indirizziIntervento internoScala" />
-                        </div> 
-                    </li>
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.interno"/></label>
-                            <input name="internoNumero" value="" id="indirizzoIntervento_internoNumero" type="text" class="indirizziIntervento internoNumero" />
-                        </div> 
-                    </li>
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.letterainterno"/></label>
-                            <input name="internoLettera" value="" id="indirizzoIntervento_internoLettera" type="text" class="indirizziIntervento internoLettera" />
-                        </div> 
-                    </li>
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.localita"/></label>
-                            <input name="localita" value="" id="indirizzoIntervento_localita" type="text" class="indirizziIntervento localita" />
-                        </div>
-                    </li> 
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.cap"/></label>
-                            <input name="cap" value="" id="indirizzoIntervento_cap" type="text" class="indirizziIntervento cap" />
-                        </div>
-                    </li> 
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.latitudine"/></label>
-                            <input name="latitudine" value="" id="indirizzoIntervento_latitudine" type="text" class="indirizziIntervento latitudine" />
-                        </div> 
-                    </li>
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.longitudine"/></label>
-                            <input name="longitudine" value="" id="indirizzoIntervento_longitudine" type="text" class="indirizziIntervento longitudine" />
-                        </div> 
-                    </li>   
-                    <li>
-                        <div class="ctrlHolder distanziatore">
-                            <label class="required"><spring:message code="datiCatastali.altreInformazioniIndirizzo"/></label>
-                            <input name="altreInformazioniIndirizzo" value="" id="indirizzoIntervento_altreInformazioniIndirizzo" type="text" class="indirizziIntervento altreInformazioniIndirizzo" />
-                        </div> 
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+	        <div class="modalError"></div>
+	        <div class="inlineLabels">
+	            <div class="ctrlHolder IndirizziIntervento">
+	                <ul id="indirizziIntervento" class="IndirizziInterventoSingle">
+	                    <li>
+	                        <input name="idIndirizzoIntervento" value="" id="indirizzoIntervento_idIndirizzoIntervento" type="text" class="indirizziIntervento idIndirizzoIntervento hidden" />
+	                        <input name="codVia" value="" id="indirizzoIntervento_codVia" type="text" class="indirizziIntervento codVia hidden" />
+	                        <input name="codCivico" value="" id="indirizzoIntervento_codCivico" type="text" class="indirizziIntervento codCivico hidden" />
+	                    </li>
+	
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.indirizzo"/></label>
+	                            <input name="indirizzo" value="" id="indirizzoIntervento_indirizzo" type="text" class="indirizziIntervento indirizzo" />
+	                        </div>
+	                    </li>
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.civico"/></label>
+	                            <input name="civico" value="" id="indirizzoIntervento_civico" type="text" class="indirizziIntervento civico" />
+	                        </div>
+	                    </li>
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.lettera"/></label>
+	                            <input name="lettera" value="" id="indirizzoIntervento_lettera" type="text" class="indirizziIntervento lettera" />
+	                        </div>
+	                    </li> 
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.colore"/></label>
+	                            <input name="colore" value="" id="indirizzoIntervento_colore" type="text" class="indirizziIntervento colore" />
+	                        </div>
+	                    </li>                    
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.piano"/></label>
+	                            <input name="piano" value="" id="indirizzoIntervento_piano" type="text" class="indirizziIntervento piano" />
+	                        </div> 
+	                    </li>
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.scala"/></label>
+	                            <input name="internoScala" value="" id="indirizzoIntervento_internoScala" type="text" class="indirizziIntervento internoScala" />
+	                        </div> 
+	                    </li>
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.interno"/></label>
+	                            <input name="internoNumero" value="" id="indirizzoIntervento_internoNumero" type="text" class="indirizziIntervento internoNumero" />
+	                        </div> 
+	                    </li>
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.letterainterno"/></label>
+	                            <input name="internoLettera" value="" id="indirizzoIntervento_internoLettera" type="text" class="indirizziIntervento internoLettera" />
+	                        </div> 
+	                    </li>
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.localita"/></label>
+	                            <input name="localita" value="" id="indirizzoIntervento_localita" type="text" class="indirizziIntervento localita" />
+	                        </div>
+	                    </li> 
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.cap"/></label>
+	                            <input name="cap" value="" id="indirizzoIntervento_cap" type="text" class="indirizziIntervento cap" />
+	                        </div>
+	                    </li> 
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.latitudine"/></label>
+	                            <input name="latitudine" value="" id="indirizzoIntervento_latitudine" type="text" class="indirizziIntervento latitudine" />
+	                        </div> 
+	                    </li>
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.longitudine"/></label>
+	                            <input name="longitudine" value="" id="indirizzoIntervento_longitudine" type="text" class="indirizziIntervento longitudine" />
+	                        </div> 
+	                    </li>   
+	                    <li>
+	                        <div class="ctrlHolder distanziatore">
+	                            <label class="required"><spring:message code="datiCatastali.altreInformazioniIndirizzo"/></label>
+	                            <input name="altreInformazioniIndirizzo" value="" id="indirizzoIntervento_altreInformazioniIndirizzo" type="text" class="indirizziIntervento altreInformazioniIndirizzo" />
+	                        </div> 
+	                    </li>
+	                </ul>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </div>
 <div class="hidden">
     <div id="indirizzoIntervento_X">
@@ -660,7 +766,7 @@
                     <spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.link"/>
                 </a>  
             </div>
-            <div class="indirizzoIntervento cerca_lente_rosso showdetail-indirizzoIntervento" data-holder=""><spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.button"/></div>                
+            <div class="indirizzoIntervento cerca_lente_dettaglio showdetail-indirizzoIntervento" data-holder=""><spring:message code="pratica.comunicazione.dettaglio.indirizzo.intervento.button"/></div>                
         </div>
     </div>
 </div> 

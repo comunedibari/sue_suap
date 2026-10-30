@@ -4,6 +4,7 @@
  */
 package it.wego.cross.service;
 
+import it.people.process.config.config;
 import it.wego.cross.constants.Constants;
 import it.wego.cross.constants.SessionConstants;
 import it.wego.cross.dao.ConfigurationDao;
@@ -33,6 +34,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     private ConfigurationDao configurationDao;
     @Autowired
     private PluginConfigurationDao pluginConfigurationDao;
+    
     private Map<String, String> configurationProperties = null;
     private Map<String, String> pluginConfigurationProperties = null;
 
@@ -205,7 +207,32 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
         return dbColumnModel;
 	}
+
+	@Override
+	public Map<String, String> getConfigurationByInstitution(Enti institution) throws Exception {
+		List<PluginConfiguration> customConfigurations = this.pluginConfigurationDao.getPluginConfigurationsByInstitution(institution);
+		Map<String,String> map = new HashMap<>();
+    	for(PluginConfiguration pc: customConfigurations)
+    		map.put(pc.getName(), pc.getValue());
+    	return map;
+	}
+
+	@Override
+	public <T> T findByName(String name, Class<T> valueType) {
+		List<Configuration> configurations = this.findByName(name);
+		T value = null;
+		if(configurations != null && !configurations.isEmpty()) {
+			value = convert(configurations.get(0).getValue(), valueType);
+		}
+		return value;
+	}
 	
-    
-    
+	private <T> T convert(String value, Class<T> valueType) {
+		if("java.lang.Boolean".equalsIgnoreCase(valueType.getName())) {
+			return (T) new Boolean(value);
+		}
+		else {
+			throw new RuntimeException("ConfigurationService: wrong type for conversion");
+		}
+	}
 }

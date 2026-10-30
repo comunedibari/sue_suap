@@ -28,8 +28,8 @@ public class FascicoloServerImplTest {
 	
 //	private static final int ID_UTENTE = 17489; 
 	private static final String WSDL_PATH = "http://web99.linksmt.it/adoc/fascicolo?wsdl";
-	private static final String USERNAME="Exprivia2014"; 
-	private static final String PASSWORD="exprivIa";
+	private static final String USERNAME=""; 
+	private static final String PASSWORD="";
 	
 	@Test
        @Ignore

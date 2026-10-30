@@ -13,5 +13,96 @@
     <groupId>it.wego.cross.plugins</groupId>
     <artifactId>cross-xml</artifactId>
     <packaging>jar</packaging>
+<!--    <properties>-->
+<!--		<commons-io.version>2.15.1</commons-io.version>-->
+<!--        <commons-lang3.version>3.0.1</commons-lang3.version>-->
+<!--        <commons-cli.version>1.6.0</commons-cli.version>-->
+<!--         maven plugins -->
+<!--        <jaxb2-maven-plugin.version>3.1.0</jaxb2-maven-plugin.version>-->
+<!--        <lifecycle-mapping-plugin.version>1.0.0</lifecycle-mapping-plugin.version>-->
+<!--        <jaxb-runtime.version>4.0.0</jaxb-runtime.version>-->
+<!--    </properties>-->
+<!--    <dependencies>-->
+<!--         utils -->
+<!--        <dependency>-->
+<!--            <groupId>commons-io</groupId>-->
+<!--            <artifactId>commons-io</artifactId>-->
+<!--            <version>${commons-io.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.commons</groupId>-->
+<!--            <artifactId>commons-lang3</artifactId>-->
+<!--            <version>${commons-lang3.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jaxb</groupId>-->
+<!--            <artifactId>jaxb-runtime</artifactId>-->
+<!--            <version>${jaxb-runtime.version}</version>-->
+<!--        </dependency>-->
+<!--    </dependencies>-->
 
+<!--    <build>-->
+<!--        <finalName>jaxb</finalName>-->
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>src/main/resources</directory>-->
+<!--                <filtering>true</filtering>-->
+<!--            </resource>-->
+<!--        </resources>-->
+<!--        <pluginManagement>-->
+<!--            <plugins>-->
+<!--                <plugin>-->
+<!--                    <groupId>org.eclipse.m2e</groupId>-->
+<!--                    <artifactId>lifecycle-mapping</artifactId>-->
+<!--                    <version>${lifecycle-mapping-plugin.version}</version>-->
+<!--                    <configuration>-->
+<!--                        <lifecycleMappingMetadata>-->
+<!--                            <pluginExecutions>-->
+<!--                                <pluginExecution>-->
+<!--                                    <pluginExecutionFilter>-->
+<!--                                        <groupId>org.codehaus.mojo</groupId>-->
+<!--                                        <artifactId>jaxb2-maven-plugin</artifactId>-->
+<!--                                        <versionRange>[${jaxb2-maven-plugin.version},)</versionRange>-->
+<!--                                        <goals>-->
+<!--                                            <goal>schemagen</goal>-->
+<!--                                            <goal>xjc</goal>-->
+<!--                                        </goals>-->
+<!--                                    </pluginExecutionFilter>-->
+<!--                                    <action>-->
+<!--                                        <execute/>-->
+<!--                                    </action>-->
+<!--                                </pluginExecution>-->
+<!--                            </pluginExecutions>-->
+<!--                        </lifecycleMappingMetadata>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
+<!--            </plugins>-->
+<!--        </pluginManagement>-->
+<!--        <plugins>-->
+<!--             xjc -->
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>jaxb2-maven-plugin</artifactId>-->
+<!--                <version>${jaxb2-maven-plugin.version}</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>xjc</id>-->
+<!--                        <goals>-->
+<!--                            <goal>xjc</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <xjbSources>-->
+<!--                        <xjbSource>src/main/resources/global.xjb</xjbSource>-->
+<!--                    </xjbSources>-->
+<!--                    <sources>-->
+<!--                        <source>src/main/resources/cross.xsd</source>-->
+<!--                    </sources>-->
+<!--                    <outputDirectory>${basedir}/src/main/java/it/wego/cross/nxml</outputDirectory>-->
+<!--                    <clearOutputDir>true</clearOutputDir>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 </project>

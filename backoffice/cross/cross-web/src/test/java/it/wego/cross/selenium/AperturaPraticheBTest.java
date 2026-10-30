@@ -141,7 +141,7 @@ public class AperturaPraticheBTest {
         tmess.azione("Accedo alla pratica scelta.");
         clickAzione(n, 8);
         SeleniumUtilities.wait_for_ajax_loading(driver, tmess);
-        WebElement table = SeleniumUtilities.safeFind(driver, By.id("frame0"), tmess);
+        WebElement table = SeleniumUtilities.safeFind(driver, By.id("frame1"), tmess);
         List<WebElement> labels = table.findElements(By.tagName("label"));
         List<WebElement> valori = table.findElements(By.tagName("a"));
         tmess.azione("I dati nel dettaglio sono: ");

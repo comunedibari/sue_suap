@@ -3,6 +3,7 @@ package it.wego.cross.controller;
 import it.wego.cross.actions.EntiAction;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.PraticheAction;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.JsonResponse;
 import it.wego.cross.dto.PermessiEnteProcedimentoDTO;
 import it.wego.cross.beans.grid.GridComuneBean;
@@ -176,6 +177,7 @@ public class GestioneEntiController extends AbstractController {
         return HOMEPAGE_ENTI;
     }
 
+    @RequiresGrant
     @RequestMapping("/ente/aggiungi")
     public String add(Model model,
             HttpServletRequest request,
@@ -247,6 +249,7 @@ public class GestioneEntiController extends AbstractController {
         }
     }
 
+    @RequiresGrant
     @RequestMapping("/ente/modifica")
     public String modify(Model model,
             HttpServletRequest request,
@@ -406,6 +409,7 @@ public class GestioneEntiController extends AbstractController {
         return GESTIONE_ENDOPROCEDIMENTI;
     }
 
+    @RequiresGrant
     @RequestMapping("/ente/endoprocedimenti/salva")
     String gestisciEndoprocedimentiAjax(Model model,
             @ModelAttribute("selected") String selected,
@@ -717,6 +721,7 @@ public class GestioneEntiController extends AbstractController {
         return "redirect:/ente/comuni.htm";
     }
 
+    @RequiresGrant
     @RequestMapping("/ente/comuni/cancella")
     public String cancellaComune(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) {
         int codEnte = (Integer) request.getSession().getAttribute(ID_ENTE);
@@ -868,6 +873,7 @@ public class GestioneEntiController extends AbstractController {
         }
     }
 
+    @RequiresGrant
     @RequestMapping("/ente/salvaProcesso")
     public String salvaProcesso(Model model, HttpServletRequest request, HttpServletResponse response) {
         Integer idProcedimento;

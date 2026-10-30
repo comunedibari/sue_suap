@@ -5,7 +5,8 @@
 package it.wego.cross.dto;
 
 import java.util.Date;
-
+import java.util.List;
+import it.wego.cross.dto.dozer.AllegatoDTO;
 /**
  *
  * @author GabrieleM
@@ -13,6 +14,7 @@ import java.util.Date;
 public class PraticheEventiRidDTO {
 
     private Integer idPraticaEvento;
+    private String codEvento;
     private Date dataEvento;
     private String descrizioneEvento;
     private String protocollo;
@@ -23,6 +25,10 @@ public class PraticheEventiRidDTO {
     private Integer idStatoMail;
     private String codStatoMail;
     private String soggetti;
+    private String note;
+    private String flgProtocollazione;
+    private List<AllegatoDTO> allegati;
+    
 
     public Integer getIdPraticaEvento() {
         return idPraticaEvento;
@@ -32,7 +38,15 @@ public class PraticheEventiRidDTO {
         this.idPraticaEvento = idPraticaEvento;
     }
 
-    public Date getDataEvento() {
+    public String getCodEvento() {
+		return codEvento;
+	}
+
+	public void setCodEvento(String codEvento) {
+		this.codEvento = codEvento;
+	}
+
+	public Date getDataEvento() {
         return dataEvento;
     }
 
@@ -112,4 +126,27 @@ public class PraticheEventiRidDTO {
         this.soggetti = soggetti;
     }
 
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public List<AllegatoDTO> getAllegati() {
+		return allegati;
+	}
+
+	public void setAllegati(List<AllegatoDTO> list) {
+		this.allegati = list;
+	}
+
+	public String getFlgProtocollazione() {
+		return flgProtocollazione;
+	}
+
+	public void setFlgProtocollazione(String flgProtocollazione) {
+		this.flgProtocollazione = flgProtocollazione;
+	}
 }

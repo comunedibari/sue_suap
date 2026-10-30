@@ -66,9 +66,7 @@ public class ManagerImportRavenna {
 	private String language;
 	private DBCPManager db;
     
-//    private String driverDB ="com.mysql.jdbc.Driver";
-//    private String urlConnDB="jdbc:mysql://10.10.45.32:3306/people_dati_ravenna?user=people_demo&password=people_demo";
-    
+
 	public final Log logger = LogFactory.getLog(this.getClass());
 	
 	public ManagerImportRavenna(DBCPManager dbString,String language){

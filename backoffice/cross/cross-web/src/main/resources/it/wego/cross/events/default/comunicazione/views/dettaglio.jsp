@@ -364,7 +364,7 @@
             <tr>
                 <th><spring:message code="pratica.comunicazione.dettaglio.allegati.descrizione"/></th>
                 <th><spring:message code="pratica.comunicazione.dettaglio.allegati.nomefile"/></th>
-                <th><spring:message code="pratica.comunicazione.dettaglio.allegati.download"/></th>
+                <th><spring:message code="pratica.comunicazione.dettaglio.allegati.download.file"/></th>
             </tr>
             <c:if test="${!empty dettaglio.allegati}">
                 <c:forEach items="${dettaglio.allegati}" var="allegato" begin="0">
@@ -588,15 +588,15 @@
 
         </div>
     </fieldset>
-    <form action="<%=path%>/pratica/comunicazione/index.htm" class="uniForm inlineLabels page" method="post">
-        <div class="buttonHolder">
-            <%-- ^^CS AGGIUNTA dopo aver premuto vai a pratica origine, do il permesso di rtornare indietro --%>
-            <c:if test="${ritornaAidPratica!=null}">
-                <input type="hidden" id="ritornaAidPratica" name="id_pratica" class="primaryAction" value="${ritornaAidPratica}"/>
-                <input type="submit" id="indietroAidPratica" name="submit" class="primaryAction" value="Indietro" style="margin-right:73%"/>
-            </c:if>
-            <input type="submit" name="submit" class="primaryAction" value="<spring:message code="pratica.button.evento"/>"/>
-        </div>
-    </form>
-
+	    <form action="<%=path%>/pratica/comunicazione/index.htm" class="uniForm inlineLabels page" method="post">
+	        <div class="buttonHolder">
+	            <%-- ^^CS AGGIUNTA dopo aver premuto vai a pratica origine, do il permesso di rtornare indietro --%>
+	            <c:if test="${ritornaAidPratica!=null}">
+	                <input type="hidden" id="ritornaAidPratica" name="id_pratica" class="primaryAction" value="${ritornaAidPratica}"/>
+	                <input type="submit" id="indietroAidPratica" name="submit" class="primaryAction" value="Indietro" style="margin-right:73%"/>
+	            </c:if>
+	            <input type="submit" name="submit" class="primaryAction" value="<spring:message code="pratica.button.evento"/>"/>
+	        </div>
+	    </form>
+	
 </div>

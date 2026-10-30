@@ -20,6 +20,7 @@ import it.wego.cross.dto.TipologiaScadenzeDTO;
 import it.wego.cross.dto.dozer.LkTipoParticellaDTO;
 import it.wego.cross.dto.dozer.LkTipoSistemaCatastaleDTO;
 import it.wego.cross.dto.dozer.LkTipoUnitaDTO;
+import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkCittadinanza;
 import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.LkDug;
@@ -32,6 +33,7 @@ import it.wego.cross.entity.LkTipiAttore;
 import it.wego.cross.entity.LkTipoCollegio;
 import it.wego.cross.entity.LkTipoIndirizzo;
 import it.wego.cross.entity.LkTipoParticella;
+import it.wego.cross.entity.LkTipoPratica;
 import it.wego.cross.entity.LkTipoQualifica;
 import it.wego.cross.entity.LkTipoRuolo;
 import it.wego.cross.entity.LkTipoSistemaCatastale;
@@ -500,5 +502,21 @@ public class LookupServiceImpl implements LookupService {
         LkTipoParticella tipoParticella = lookupDao.findTipoParticellaByCod(codice);
         return tipoParticella;
     }
+
+	@Override
+	public Integer findByIdTipoPraticaProcessiByIdCustom(Integer idProcesso) {
+		return lookupDao.findByIdTipoPraticaProcessiByIdCustom(idProcesso);
+	}
+
+	@Override
+	public LkTipoPratica findLkTipoPraticaByType(String code) {
+		return lookupDao.findLkTipoPraticaByType(code);
+	}
+
+	@Override
+	public Enti findFirstInstitutionSUEInTown(LkComuni comune) {
+		List<Enti> ente = lookupDao.findSueInstitutionInTown(comune);
+		return ente.get(0);
+	}
 
 }

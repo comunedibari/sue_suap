@@ -1,0 +1,7 @@
+i file di partenza sono WORD
+
+converti manualmente i file utilizzando libreoffice.
+il file yaml contiene tutti i file con relativa configurazione 
+per l'inserimento nella tabella templates;
+
+il matching tra i dati nel file yaml e le codifiche in base64 avverranno tramite nome file

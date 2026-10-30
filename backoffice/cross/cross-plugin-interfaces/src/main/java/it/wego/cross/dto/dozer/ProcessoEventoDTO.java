@@ -6,6 +6,8 @@ package it.wego.cross.dto.dozer;
 
 import java.util.List;
 
+import javax.persistence.Column;
+
 /**
  *
  * @author Gabriele
@@ -41,6 +43,9 @@ public class ProcessoEventoDTO {
     private TipoAttoreDTO idTipoDestinatario;
     private StatoPraticaDTO statoPost;
     private String flgScadenzeCustom;
+    private Integer giorniDefault;
+    private String nascondiTabDocumenti;
+    private String nascondiTabTemplate;
 
     public Integer getIdEvento() {
         return idEvento;
@@ -274,7 +279,33 @@ public class ProcessoEventoDTO {
         this.flgScadenzeCustom = flgScadenzeCustom;
     }
 
-    public static class ProcessoEventoScadenzaDTO {
+    
+    public Integer getGiorniDefault() {
+		return giorniDefault;
+	}
+
+	public void setGiorniDefault(Integer giorniDefault) {
+		this.giorniDefault = giorniDefault;
+	}
+
+	public String getNascondiTabDocumenti() {
+		return nascondiTabDocumenti;
+	}
+
+	public void setNascondiTabDocumenti(String nascondiTabDocumenti) {
+		this.nascondiTabDocumenti = nascondiTabDocumenti;
+	}
+
+	public String getNascondiTabTemplate() {
+		return nascondiTabTemplate;
+	}
+
+	public void setNascondiTabTemplate(String nascondiTabTemplate) {
+		this.nascondiTabTemplate = nascondiTabTemplate;
+	}
+
+
+	public static class ProcessoEventoScadenzaDTO {
 
         private Integer terminiScadenza;
         private String scriptScadenza;

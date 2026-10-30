@@ -34,6 +34,7 @@
         <put-attribute name="comunicazione_file_upload"  cascade="true"  value="/WEB-INF/classes/it/wego/cross/events/default/comunicazione/views/allegati.jsp"/>
         <put-attribute name="comunicazione_procedimenti"  cascade="true"  value="/WEB-INF/classes/it/wego/cross/events/default/comunicazione/views/procedimenti.jsp"/>
         <put-attribute name="comunicazione_scadenze"  cascade="true"  value="/WEB-INF/classes/it/wego/cross/events/default/comunicazione/views/scadenze.jsp"/>
+        <put-attribute name="comunicazione_rias_prat"  cascade="true"  value="/WEB-INF/classes/it/wego/cross/events/default/comunicazione/views/timed_reassignment.jsp"/>
     </definition>
     
 </tiles-definitions>

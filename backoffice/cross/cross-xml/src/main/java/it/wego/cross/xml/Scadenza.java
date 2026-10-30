@@ -1,8 +1,8 @@
 //
-// Questo file stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andrpersa durante la ricompilazione dello schema di origine. 
-// Generato il: 2013.06.13 alle 04:27:44 PM CEST 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2024.04.16 alle 09:52:47 AM CEST 
 //
 
 
@@ -105,7 +105,7 @@ public class Scadenza {
     protected String descrizione;
 
     /**
-     * Recupera il valore della proprietidScadenza.
+     * Recupera il valore della propriet� idScadenza.
      * 
      * @return
      *     possible object is
@@ -117,7 +117,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietidScadenza.
+     * Imposta il valore della propriet� idScadenza.
      * 
      * @param value
      *     allowed object is
@@ -129,7 +129,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietidPratica.
+     * Recupera il valore della propriet� idPratica.
      * 
      * @return
      *     possible object is
@@ -141,7 +141,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietidPratica.
+     * Imposta il valore della propriet� idPratica.
      * 
      * @param value
      *     allowed object is
@@ -153,7 +153,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietdataScadenza.
+     * Recupera il valore della propriet� dataScadenza.
      * 
      * @return
      *     possible object is
@@ -165,7 +165,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietdataScadenza.
+     * Imposta il valore della propriet� dataScadenza.
      * 
      * @param value
      *     allowed object is
@@ -177,7 +177,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietidAnaScadenza.
+     * Recupera il valore della propriet� idAnaScadenza.
      * 
      * @return
      *     possible object is
@@ -189,7 +189,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietidAnaScadenza.
+     * Imposta il valore della propriet� idAnaScadenza.
      * 
      * @param value
      *     allowed object is
@@ -201,7 +201,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietdesAnaScadenza.
+     * Recupera il valore della propriet� desAnaScadenza.
      * 
      * @return
      *     possible object is
@@ -213,7 +213,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietdesAnaScadenza.
+     * Imposta il valore della propriet� desAnaScadenza.
      * 
      * @param value
      *     allowed object is
@@ -225,7 +225,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietflgAnaScadenza.
+     * Recupera il valore della propriet� flgAnaScadenza.
      * 
      * @return
      *     possible object is
@@ -237,7 +237,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietflgAnaScadenza.
+     * Imposta il valore della propriet� flgAnaScadenza.
      * 
      * @param value
      *     allowed object is
@@ -249,7 +249,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietidStatoScadenza.
+     * Recupera il valore della propriet� idStatoScadenza.
      * 
      * @return
      *     possible object is
@@ -261,7 +261,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietidStatoScadenza.
+     * Imposta il valore della propriet� idStatoScadenza.
      * 
      * @param value
      *     allowed object is
@@ -273,7 +273,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietdesStatoScadenza.
+     * Recupera il valore della propriet� desStatoScadenza.
      * 
      * @return
      *     possible object is
@@ -285,7 +285,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietdesStatoScadenza.
+     * Imposta il valore della propriet� desStatoScadenza.
      * 
      * @param value
      *     allowed object is
@@ -297,7 +297,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietgrpStatoScadenza.
+     * Recupera il valore della propriet� grpStatoScadenza.
      * 
      * @return
      *     possible object is
@@ -309,7 +309,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietgrpStatoScadenza.
+     * Imposta il valore della propriet� grpStatoScadenza.
      * 
      * @param value
      *     allowed object is
@@ -321,7 +321,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietdataFineScadenza.
+     * Recupera il valore della propriet� dataFineScadenza.
      * 
      * @return
      *     possible object is
@@ -333,7 +333,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietdataFineScadenza.
+     * Imposta il valore della propriet� dataFineScadenza.
      * 
      * @param value
      *     allowed object is
@@ -345,7 +345,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietdataInizioScadenza.
+     * Recupera il valore della propriet� dataInizioScadenza.
      * 
      * @return
      *     possible object is
@@ -357,7 +357,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietdataInizioScadenza.
+     * Imposta il valore della propriet� dataInizioScadenza.
      * 
      * @param value
      *     allowed object is
@@ -369,7 +369,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietidPraticaEvento.
+     * Recupera il valore della propriet� idPraticaEvento.
      * 
      * @return
      *     possible object is
@@ -381,7 +381,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietidPraticaEvento.
+     * Imposta il valore della propriet� idPraticaEvento.
      * 
      * @param value
      *     allowed object is
@@ -393,7 +393,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietgiorniTeoriciScadenza.
+     * Recupera il valore della propriet� giorniTeoriciScadenza.
      * 
      * @return
      *     possible object is
@@ -405,7 +405,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietgiorniTeoriciScadenza.
+     * Imposta il valore della propriet� giorniTeoriciScadenza.
      * 
      * @param value
      *     allowed object is
@@ -417,7 +417,7 @@ public class Scadenza {
     }
 
     /**
-     * Recupera il valore della proprietdescrizione.
+     * Recupera il valore della propriet� descrizione.
      * 
      * @return
      *     possible object is
@@ -429,7 +429,7 @@ public class Scadenza {
     }
 
     /**
-     * Imposta il valore della proprietdescrizione.
+     * Imposta il valore della propriet� descrizione.
      * 
      * @param value
      *     allowed object is

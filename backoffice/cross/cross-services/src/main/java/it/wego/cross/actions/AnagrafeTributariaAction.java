@@ -5,26 +5,33 @@
  */
 package it.wego.cross.actions;
 
-import com.google.common.collect.ImmutableMap;
 import static it.wego.cross.actions.SystemEventAction.SYSTEM_EVENTS;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.google.common.collect.ImmutableMap;
+
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.ProcessiEventi;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.events.anagrafetributaria.bean.AnagrafeTributariaCommercioDTO;
 import it.wego.cross.events.anagrafetributaria.bean.AnagrafeTributariaDTO;
+import it.wego.cross.events.anagrafetributaria.builder.AnagrafeTributariaEdiliziaBuilder;
 import it.wego.cross.events.anagrafetributaria.entity.AtRecordDettaglio;
 import it.wego.cross.events.anagrafetributaria.serializer.AnagraficaTributariaSerializer;
 import it.wego.cross.events.anagrafetributaria.service.AnagrafeTributariaService;
 import it.wego.cross.service.PraticheService;
 import it.wego.cross.service.ProcessiService;
 import it.wego.cross.utils.Utils;
+import it.wego.cross.xml.anagrafetributaria.edilizia.AnagrafeTributariaEdilizia;
 import it.wego.cross.xml.anagrafetributaria.edilizia.IdentificazioneRichiesta;
-import java.util.Calendar;
-import java.util.Date;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -35,6 +42,8 @@ public class AnagrafeTributariaAction {
 
     @Autowired
     private AnagraficaTributariaSerializer serializer;
+    @Autowired
+    private AnagrafeTributariaEdiliziaBuilder builder;
     @Autowired
     private PraticheService praticheService;
     @Autowired
@@ -102,6 +111,12 @@ public class AnagrafeTributariaAction {
         record.setImprese(imprese);
         String recordDettaglio = Utils.marshall(record);
         return recordDettaglio;
+    }
+
+    public String buildAndSerializeRecordDettaglioEdilizia(AnagrafeTributariaDTO anagrafeTributaria, List<Pratica> paperworks) throws Exception {
+    	AnagrafeTributariaEdilizia anagrafeTributariaEdilizia = builder.buildAnagrafeTributariaEdilizia(anagrafeTributaria, paperworks);
+    	String exportAnagrafeTributaria = anagrafeTributariaService.getDocumentoAnagrafeTributariaEdilizia(anagrafeTributariaEdilizia);
+        return exportAnagrafeTributaria;
     }
 
     private PraticheEventi salvaEvento(Pratica pratica, String codEvento, String note, Utente utenteConnesso) throws Exception {

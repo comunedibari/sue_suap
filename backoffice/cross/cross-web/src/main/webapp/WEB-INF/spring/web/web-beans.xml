@@ -57,6 +57,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
         <property name="suffix" value=".jsp" />
     </bean>   
     
+    
     <mvc:interceptors> 
         <mvc:interceptor>
             <mvc:mapping path="/pratiche/nuove/protocollo.htm" />
@@ -67,9 +68,12 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
                 <property name="selectUGUrl" value="/ug/select_current.htm"/>
             </bean>
         </mvc:interceptor>
-    </mvc:interceptors>
-    
-    
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="it.wego.cross.interceptor.CredentialValidatorInterceptor"/>
+        </mvc:interceptor>
+	</mvc:interceptors>
      
     <context:component-scan base-package="it.wego.cross" use-default-filters="false" >
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

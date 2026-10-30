@@ -38,6 +38,12 @@ public class AnagraficheDao extends Paginator {
     @PersistenceContext
     private EntityManager em;
 
+    public AnagraficheDao() {}
+    
+    public AnagraficheDao(EntityManager em) {
+    	this.em = em;
+    }
+    
     public void insert(Anagrafica anagrafica) {
         em.persist(anagrafica);
     }

@@ -4,11 +4,13 @@
  */
 package it.wego.cross.plugins.pratica;
 
+import java.util.List;
+
 import it.wego.cross.dto.dozer.DatiCatastaliDTO;
 import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
+import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.Procedimenti;
-import java.util.List;
 
 /**
  *

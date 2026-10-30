@@ -61,6 +61,7 @@
         <link rel="stylesheet" type="text/css" href="http://www.soliman.nl/test/jqgrid.bootstrap/jqGrid/css/ui.jqgrid.css" media="all"/>-->
 
         <script type="text/javascript">
+    
             if (!window.console) console = {log: function() {}};
             
             function adjustLayout() {
@@ -128,8 +129,39 @@
                 return curDay + "/" + curMonth + "/" + curYear + " " + curHour + ":" + curMinute + ":" + curSeconds;
             }
 
-
+            function addSessionCode(url) {
+            	if(url.indexOf("s_code=") >= 0)
+            		return url;
+           		else
+ 		           	return url+(url.indexOf("?") >= 0?"&":"?")+"s_code="+window.name;
+            }
+			
+            function sessionManager(){
+            	if(!window.name|| window.name.length == 0 ){
+            		$("#mainDiv").html('');
+					$("#returnToMainForm").submit();            		
+            	}
+				
+                $(document).on("click", "a[href*='/cross/']", function(event){
+            		event.currentTarget.href = addSessionCode(event.currentTarget.href);
+				}); 
+                
+            	jQuery.ajaxSetup({
+               		headers: { "s_code": window.name }
+                });
+            	
+            	$("form").append('<input name="s_code" type="hidden" value="'+window.name+'" />');
+            	
+            	$(document).ajaxComplete(function( event, request, settings ) {
+            		$("form").each(function( index, val ){
+                		if($(val).has('input[name="s_code"]').length == 0)
+                			$(val).append('<input name="s_code" type="hidden" value="'+window.name+'" />');
+                	});
+                });
+            }
+            
             $(document).ready(function() {
+            	sessionManager();
 
                 function Arrow_Points()
                 {
@@ -251,10 +283,17 @@
                 });
                 $(document).ajaxSend(function() {
                     $("#loading").show();
+                    $("#errors").hide();
                 });
-
-                $(document).ajaxComplete(function() {
-                    $("#loading").hide();
+                  
+                $(document).ajaxComplete(function( event, request, settings ) {
+                	if(request.status === 200)
+	                    $("#loading, #errors").hide();
+                });
+                
+                $(document).ajaxError(function(event, request, settings) {
+                	$("#loading").hide();
+                    $("#errors").show();
                 });
 
                 $("#banner").slideUp('slow'); //appena carica la pagina appare il banner
@@ -431,16 +470,25 @@
 
 
 
-
+			function showWarningMessage(message){
+				$('#loading_warnings').html(message).show();
+				setTimeout(function() {
+				    $('#loading_warnings').fadeOut('slow');
+				}, 7000);
+			}
         </script>
     </head>
     <body >
-        <div>
+        <div id="mainDiv">
             <div id="wrapper">
                 <div id="header">
-                    <div id="loading" style="display:none"><spring:message code="anagrafica.ri.loading"/></div>
+                    <div id="generic_loading" class="loading_messages_2" style="display:none"></div>
+                    <div id="loading" class="loading_messages" style="display:none"><spring:message code="anagrafica.ri.loading"/></div>
+                    <div id="loading_errors" style="display:none" class="error_div"><spring:message code="ricerca.error"/></div>
+                    <div id="loading_warnings" style="display:none" class="warning_div"><spring:message code="ricerca.validation.error"/></div>
                     <tiles:insertAttribute name="header" />
                     <tiles:insertAttribute name="infobar" />
+                    <tiles:insertAttribute name="customization" />
                 </div>
                 <div id="content">
                     <div id="column-2">
@@ -455,6 +503,7 @@
             <div class="clear"></div>
             <tiles:insertAttribute name="footer" />
         </div>
-
+        <%String path = request.getContextPath();%>
+		<form id="returnToMainForm" action="${path}"></form>
     </body>
 </html>

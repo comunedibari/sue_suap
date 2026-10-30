@@ -53,7 +53,8 @@
         <property name="triggers">
             <list>
                 <ref bean="recuperoPraticheDaProtocolloJobTrigger"/>
-                <ref bean="LeggiMailJobTrigger"/>
+                <ref bean="ReassignPaperworkTrigger"/>
+                <ref bean="RecalculateEmailStatusTrigger"/>
                 <!--<ref bean="SpedisciMailJobTrigger"/>-->
             </list>
         </property>
@@ -67,29 +68,41 @@
         </property>
         <!-- 2 volte al giorno, alle 13.15 e alle 20.15 -->
         <!--<property name="cronExpression" value="0 15 13,20 * * ?"/>-->
-<!--        <property name="cronExpression" value="0 0 0 31 12 ?"/>-->
-<!--          <property name="cronExpression" value="0 0 0 * * ?" />  -->
-        <property name="cronExpression" value="0 0/5 * 1/1 * ? *" />
+		<!--        <property name="cronExpression" value="0 0 0 31 12 ?"/> -->
+		<!-- ogni 3 minuti 
+         <property name="cronExpression" value="0 0/3 * * * ?" />
+		-->         
+		<!-- Ogni giorno alle ore zero -->
+         <property name="cronExpression" value="0 0 0 * * ?" />
+        <!-- <property name="cronExpression" value="0 0/5 * 1/1 * ? *" /> -->
     </bean>
 
     <bean id="recuperoPraticheDaProtocolloJob" class="it.wego.cross.scheduler.RecuperoPraticheDaProtocolloJob"/>
-    
-    <bean id="LeggiMailJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        
+    <bean id="ReassignPaperworkTrigger" 			  class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail">
-            <bean name="LeggiMailJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-                <property name="name" value="LeggiMailJob"/>
-                <property name="jobClass" value="it.wego.cross.scheduler.LeggiMailJob"/>
+            <bean name="reassignPaperworkJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+                <property name="name" value="reassignPaperworkJob"/>
+                <property name="jobClass" value="it.wego.cross.scheduler.ReassignPaperworkJob"/>
             </bean>
         </property>
-       <!-- Ogni giorno alle ore zero -->
         <property name="cronExpression" value="0 0 0 * * ?" />
-         <!-- Ogni 5 min -->
-<!--          <property name="cronExpression" value="0 0/5 * 1/1 * ? *" /> -->
-       
-        <!--<property name="cronExpression" value="0 0 0 * *  ?" />-->
     </bean>
-    <bean id="LeggiMailJob" class="it.wego.cross.scheduler.LeggiMailJob" />
-	<!--
+    <bean id="reassignPaperworkJob" class="it.wego.cross.scheduler.ReassignPaperworkJob" />
+
+        
+    <bean id="RecalculateEmailStatusTrigger" 			  class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <bean name="recalculateEmailStatusJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+                <property name="name" value="recalculateEmailStatusJob"/>
+                <property name="jobClass" value="it.wego.cross.scheduler.RecalculateEmailStatusJob"/>
+            </bean>
+        </property>
+        <property name="cronExpression" value="0 30 0 * * ?" />
+    </bean>
+    <bean id="recalculateEmailStatusJob" class="it.wego.cross.scheduler.RecalculateEmailStatusJob" />
+    
+    <!--
 	<bean id="SpedisciMailJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail">
             <bean name="SpedisciMailJob" class="org.springframework.scheduling.quartz.JobDetailBean">
@@ -103,6 +116,7 @@
     </bean>
     
     <bean id="SpedisciMailJob" class="it.wego.cross.scheduler.SpedisciMailJob" />
+    
     
     <bean id="sincronizzaDocumentiAurigaJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail">

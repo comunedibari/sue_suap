@@ -1,0 +1,307 @@
+
+<html>
+
+<head>
+	
+
+	<link rel="StyleSheet" href="/cross/themes/default/css/dtree.css" type="text/css" />
+	<script type="text/javascript" src="/cross/javascript/dtreeMod.js"></script>
+
+</head>
+
+<body>
+
+
+
+<div class="dtree" name="ricerca_albero">
+
+	<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>
+
+	<script type="text/javascript">
+		<!--
+
+		d = new dTree('d');
+
+		d.add(0,-1,'Albero interventi');
+		d.add(1,0,'COMMERCIO IN SEDE FISSA','');
+		
+		d.add(2,1,'ESERCIZI DI VICINATO','');
+		d.add(7,2,'Affidamento in gestione','161200472');
+		d.add(8,2,'Avvio attività','I85,I86');
+		d.add(9,2,'Cessazione attività','I2012');
+		d.add(10,2,'Liquidazione/Saldi','I1725,I149,I150');
+		d.add(11,2,'Modifica attività','I94,I96,I2115');
+		d.add(12,2,'Sospensione temporanea','I2776,I2777');
+		d.add(13,2,'Subentro in attività','I89,I90');
+		d.add(14,2,'Trasferimento attività','I91,I418');
+
+		d.add(3,1,'MEDIE STRUTTURE DI VENDITA','');
+		d.add(15,3,'Affidamento in gestione','161200473');
+		d.add(16,3,'Avvio attività','I105,I107,I108,I109');
+		d.add(17,3,'Cessazione attività','I2008,I2013');
+		d.add(18,3,'Modifica attività','I119,I120,I121,I123');
+		d.add(19,3,'Sospensione temporanea','I2778,I2779');
+		d.add(20,3,'Subentro in attività','I110,I111,I112,I114');
+		d.add(21,3,'Trasferimento attività','I115,I117,I252,I255');
+		
+		d.add(4,1,'GRANDI STRUTTURE DI VENDITA','');
+		d.add(22,4,'Avvio attività','I737,I741');
+		d.add(23,4,'Cessazione attività','I2009,I2014');
+		d.add(24,4,'Modifica attività','I740,I744');
+		d.add(25,4,'Subentro in attività','I738,I742');
+		d.add(26,4,'Trasferimento attività','I739,I743');
+		
+		d.add(5,1,'SPACCI INTERNI','');
+		d.add(27,5,'Avvio attività','I278');
+		d.add(28,5,'Cessazione attività','I2015');
+		d.add(29,5,'Modifica attività','I287');
+		d.add(30,5,'Subentro in attività','I282');
+		d.add(31,5,'Trasferimento attività','I284');
+		
+		d.add(6,1,'PER MEZZO DI APPARECCHI AUTOMATICI','');
+		d.add(32,6,'Avvio attività','I300');
+		d.add(33,6,'Cessazione attività','I2016');
+		d.add(34,6,'Modifica attività','I2130');
+		d.add(35,6,'Sospensione temporanea','I2792');
+		d.add(36,6,'Subentro in attività','I456');
+		d.add(37,6,'Trasferimento attività','161200477');		
+		
+		d.add(38,0,'COMMERCIO ELETTRONICO','');
+		d.add(39,38,'Avvio attività','I293');
+		d.add(40,38,'Cessazione attività','I2017');
+		d.add(41,38,'Sospensione temporanea','I2794');
+		d.add(42,38,'Subentro in attività','I455');
+		d.add(43,38,'Trasferimento attività','161200476,161200483');
+		
+		d.add(44,0,'COMMERCIO A DOMICILIO','');
+		d.add(45,44,'VENDITA PRESSO IL DOMICILIO DEL CONSUMATORE','');
+
+		d.add(46,45,'Avvio attività','I291');
+		d.add(47,45,'Cessazione attività','I2018');
+		d.add(48,45,'Sospensione temporanea','I2793');
+		
+		d.add(49,0,'PUBBLICI ESERCIZI','');
+		d.add(50,49,'SOMMINISTRAZIONE DI ALIMENTI E BEVANDE','');
+		d.add(54,50,'Avvio attività','I728,161200178');
+		d.add(55,50,'Cessazione attività','I2011,161200169');
+		d.add(56,50,'Modifica attività','I736,I1935,I1936,I1951,I1952,I1954');
+		d.add(57,50,'Sospensione temporanea','I2786');
+		d.add(58,50,'Subentro in attività','I277,161200094');
+		d.add(59,50,'Trasferimento attività','I729,161200481');
+		d.add(51,49,'SOMMINISTRAZIONE DI ALIMENTI E BEVANDE AL DOMICILIO DEL CONSUMATORE','');
+		d.add(60,51,'Avvio attività','I894');
+		d.add(61,51,'Cessazione attività','161200055');
+		d.add(62,51,'Subentro in attività','161200028');
+		d.add(52,49,'SOMMINISTRAZIONE DI ALIMENTI E BEVANDE INTERNO A PARTICOLARI STRUTTURE','');
+		d.add(63,52,'Avvio attività','I901,I904,I2063,I2067,I2070,I2072,I2191,I2192,I2193,I2194,I2628,I2829,I2830,I2831');
+		d.add(64,52,'Cessazione attività','I2287,I2288,I2289,I2632,I2836,I2837,I2838');
+		d.add(65,52,'Modifica attività','I903,I905,I2629,I2832,I2833,I2834');
+		d.add(66,52,'Sospensione temporanea','I2630,I2787,I2789,I2790,I2839,I2840,I2841');
+		d.add(67,52,'Subentro in attività','I2867,I2868,I2869,I2870,161200030');
+		d.add(53,49,'SOMMINISTRAZIONE DI ALIMENTI E BEVANDE PER MEZZO DI APPARECCHI AUTOMATICI','');
+		d.add(68,53,'Avvio attività','161200002');
+		d.add(69,53,'Cessazione attività','161200056');
+		d.add(70,53,'Subentro in attività','161200029');
+		
+		d.add(71,0,'STRUTTURE RICETTIVE','');
+		d.add(72,71,'AFFITTACAMERE','');
+		d.add(81,72,'Avvio attività','161200021');
+		d.add(82,72,'Cessazione attività','161200075');
+		d.add(83,72,'Subentro in attività','161200048');
+		d.add(73,71,'AGRITURISMO','');
+		d.add(84,73,'Avvio attività','161200027');
+		d.add(85,73,'Cessazione attività','161200081');
+		d.add(86,73,'Richiesta iscrizione','161201547');
+		d.add(87,73,'Subentro in attività','161200054');
+		d.add(74,71,'ALBERGHIERE','');
+		d.add(88,74,'Avvio attività','I2057,161200489');
+		d.add(89,74,'Cessazione attività','I2294,161200493');
+		d.add(90,74,'Sospensione temporanea','I2815');
+		d.add(91,74,'Subentro in attività','I2683,161200490');
+		d.add(75,71,'ALL\'AREA APERTA','');
+		d.add(92,75,'Avvio attività','I2062');
+		d.add(93,75,'Cessazione attività','I2295');
+		d.add(94,75,'Sospensione temporanea','I2817');
+		d.add(95,75,'Subentro in attività','I2684');
+		d.add(76,71,'B&B','');
+		d.add(96,76,'Avvio attività','161200020,161200924');
+		d.add(97,76,'Cessazione attività','161200074,161200925');
+		d.add(77,71,'CASE E APPARTAMENTI PER VACANZA','');
+		d.add(98,77,'Avvio attività','161200023');
+		d.add(99,77,'Cessazione attività','161200077');
+		d.add(100,77,'Subentro in attività','161200050');
+		d.add(78,71,'CASE PER FERIE','');
+		d.add(101,78,'Avvio attività','161200024');
+		d.add(102,78,'Cessazione attività','161200078');
+		d.add(103,78,'Subentro in attività','161200051');
+		d.add(79,71,'OSTELLO','');
+		d.add(104,79,'Avvio attività','161200025');
+		d.add(105,79,'Cessazione attività','161200079');
+		d.add(106,79,'Subentro in attività','161200052');
+		d.add(80,71,'RESIDENZE TURISTICHE','');
+		d.add(107,80,'Avvio attività','161200874');
+		d.add(108,80,'Cessazione attività','161200875');
+		d.add(109,80,'Modifica attività','161200877');
+		d.add(110,80,'Subentro in attività','161200876');
+		
+		d.add(111,0,'ARTIGIANATO','');
+		d.add(112,111,'ACCONCIATORE','');
+		d.add(113,111,'AFFITTO POLTRONA','');
+		d.add(114,111,'ESTETISTA','');
+		d.add(115,111,'TATUATORI','');
+		d.add(116,111,'TINTOLAVANDERIE','');
+		
+		d.add(117,112,'Avvio attività','I1989');
+		d.add(118,112,'Cessazione attività','I2004');
+		d.add(119,112,'Modifica attività','I2024');
+		d.add(120,112,'Sospensione temporanea','I2782');
+		d.add(121,112,'Subentro in attività','I1997');
+		d.add(122,112,'Trasferimento attività','I2000');
+		
+		d.add(123,113,'Avvio attività','I857');
+		
+		d.add(124,114,'Avvio attività','I1990');
+		d.add(125,114,'Cessazione attività','I2005');
+		d.add(126,114,'Modifica attività','I2099');
+		d.add(127,114,'Sospensione temporanea','I2783');
+		d.add(128,114,'Subentro in attività','I1998');
+		d.add(129,114,'Trasferimento attività','I2001');
+		
+		d.add(130,115,'Avvio attività','161200014');
+		d.add(131,115,'Sospensione temporanea','I2895');
+		d.add(132,115,'Subentro in attività','161200039');
+		d.add(133,115,'Trasferimento attività','161200090');
+		
+		d.add(134,116,'Avvio attività','I770,I943');
+		d.add(135,116,'Cessazione attività','161200430,161200648');
+		d.add(136,116,'Modifica attività','I2059');
+		d.add(137,116,'Subentro in attività','161200428,161200647');
+		d.add(138,116,'Trasferimento attività','161200652,161200653');
+		
+		d.add(1001,0,'EX-TULPS','I1251,I1270,I1271,I2797,161200043,161200504,161200505,161200507,161200508,161203240,I2588,I2589,161200635,161200586,I1149,I1162,I1158,I1163,I1144,I3059,161200152,I2562,I3058,I3060,161200086,161200591,161200580,161200579,161200451,161200453,161200576,161201599,161200583,161200581,161200582,161200454,161200585,161201037,161201101,161200599,161200573,161200575,161200765,161200206,161200207,161200091,161200321,161200468,I1,161200170,161200465,161200478,161200162,161200471,161201045,161200095,161200469,161200475,161200318,161200624,I2563,I2564,161200320,161200319,I2566,161200832,161200017,161200071,161200151,161201156,161200044,161200087,161201545,161200211,161200525,161200589,161200499,161200503,161200502,I2814,161200500,161200466,I2119,161200684,161200315,161200316,161200686,161200685,161200766,161200209,161200210');
+		
+		d.add(1002,1001,'AGENZIA AFFARI','I1251,I1270,I1271,I2797,161200043');
+		d.add(1024,1002,'Avvio attività','I1251');
+		d.add(1025,1002,'Cessazione attività','I1271');
+		d.add(1026,1002,'Sospensione temporanea','I2797');
+		d.add(1027,1002,'Subentro in attività','161200043');
+		d.add(1028,1002,'Trasferimento attività','I1270');
+		
+		d.add(1003,1001,'AGENZIA VIAGGIO','161200504,161200505,161200507,161200508,161203240,I2588,I2589');
+		d.add(1029,1003,'Avvio attività','161200504,161200505');
+		d.add(1030,1003,'Cessazione attività','161200508');
+		d.add(1031,1003,'Modifica attività','161200507,I2588');
+		d.add(1032,1003,'Trasferimento attività','161203240,I2589');
+		
+		d.add(1004,1001,'ALLESTIMENTI TEMPORANEI','161200635');
+		d.add(1033,1004,'Nulla osta di agibilità','161200635');
+		
+		d.add(1005,1001,'ACQUASCIVOLO / ACQUAPARCO','161200586');
+		d.add(1034,1005,'Licenza / Autorizzazione','161200586');
+		
+		d.add(1006,1001,'ASCENSORI / MONTACARICHI','I1149,I1162,I1158,I1163,I1144');
+		d.add(1035,1006,'Messa in esercizio','I1149');
+		d.add(1036,1006,'Riattivazione esercizio','I1162');
+		d.add(1037,1006,'Sospensione esercizio','I1158');
+		d.add(1038,1006,'Variazione ditta','I1163');
+		d.add(1039,1006,'Variazione incaricato','I1144');
+
+		d.add(1007,1001,'AUTORIMESSA','I3059,161200152,I2562,I3058,I3060,161200086');
+		d.add(1040,1007,'Cessazione attività','I3059');
+		d.add(1041,1007,'Modifica attività','161200152,I2562');
+		d.add(1042,1007,'Sospensione temporanea','I3058');
+		d.add(1043,1007,'Subentro in attività','I3060');
+		d.add(1044,1007,'Trasferimento attività','161200086');
+		
+		d.add(1008,1001,'CINEMA E TEATRO','161200591');
+		d.add(1045,1008,'Cessazione attività','161200591');
+		
+		d.add(1009,1001,'EVENTI E SPETTACOLO','161200580,161200579,161200451,161200453,161200576,161201599,161200583,161200581,161200582,161200454,161200585,161201037,161201101,161200599,161200573,161200575');
+		d.add(1046,1009,'Attività temporanea - Giostre','161200580');
+		d.add(1047,1009,'Attività temporanea - Luna park','161200579');
+		d.add(1048,1009,'Autorizzazione attività temporanea','161200451,161200453');
+		d.add(1049,1009,'Cessazione attività','161200576,161201599');
+		d.add(1050,1009,'Licenza temporanea agibilità anteriore a 2 anni','161200583');
+		d.add(1051,1009,'Licenza temporanea per capienza minore di 200 persone','161200581');
+		d.add(1052,1009,'Licenza temporanea per capienza superiore di 200 persone','161200582');
+		d.add(1053,1009,'Licenza / Autorizzazione','161200454,161200585');
+		d.add(1054,1009,'Manifestazioni Temporanee','161201037,161201101');
+		d.add(1055,1009,'Nulla-osta di agibilità','161200599');
+		d.add(1056,1009,'Registrazione e assegnazione codice identificativo per nuova attrazione','161200573');
+		d.add(1057,1009,'Subentro in attività','161200575');
+		
+		d.add(1010,1001,'FOCHINO','161200765,161200206,161200207');
+		d.add(1058,1010,'Cessazione attività','161200765');
+		d.add(1059,1010,'Licenza / Autorizzazione','161200206');
+		d.add(1060,1010,'Rinnovo licenza / autorizzazione','161200207');
+		
+		d.add(1011,1001,'LUMINARIE','I2003');
+		d.add(1061,1011,'Installazione luminarie','I2003');
+		
+		d.add(1012,1001,'NEW SLOT','161200091,161200321,161200468,I1,161200170,161200465,161200478,161200162,161200471,161201045,161200095,161200469,161200475');
+		d.add(1062,1012,'Avvio attività','161200091,161200321,161200468,I1');
+		d.add(1063,1012,'Cessazione attività','161200170,161200465,161200478');
+		d.add(1064,1012,'Modifica attività','161200162,161200471,161201045');
+		d.add(1065,1012,'Subentro in attività','161200095,161200469');
+		d.add(1066,1012,'Trasferimento attività','161200475');
+		
+		d.add(1013,1001,'NOLEGGIO AUTOBUS CON CONDUCENTE','161200318,161200624,I2563,I2564,161200320,161200319,I2566');
+		d.add(1067,1013,'Avvio attività','161200318');
+		d.add(1068,1013,'Cessazione attività','161200624');
+		d.add(1069,1013,'Modifica attività','I2563,I2564');
+		d.add(1070,1013,'Rinnovo licenza / autorizzazione','161200320');
+		d.add(1071,1013,'Subentro in attività','161200319');
+		d.add(1072,1013,'Trasferimento attività','I2566');
+		
+		d.add(1014,1001,'NOLEGGIO VEICOLI CON CONDUCENTE MEDIANTE AMBULANZA','161200832');
+		d.add(1073,1014,'Avvio attività','161200832');
+		
+		d.add(1015,1001,'NOLEGGIO VEICOLI SENZA CONDUCENTE','161200017,161200071,161200151,161201156,161200044,161200087');
+		d.add(1074,1015,'Avvio attività','161200017');
+		d.add(1075,1015,'Cessazione attività','161200071');
+		d.add(1076,1015,'Modifica attività','161200151,161201156');
+		d.add(1077,1015,'Subentro in attività','161200044');
+		d.add(1078,1015,'Trasferimento attività','161200087');
+
+		d.add(1016,1001,'SALA BALLO / CINEMA / NIGHT CLUB / AUDITORIUM / LOCALE CONCERTI','161201545');
+		d.add(1079,1016,'Subentro in attività','161201545');
+		
+		d.add(1017,1001,'SALA BALLO / CINEMA / TEATRI / ACQUASCIVOLO / ACQUAPARCO','161200211,161200525');
+		d.add(1080,1017,'Avvio attività','161200211');
+		d.add(1081,1017,'Cessazione attività','161200525');
+		
+		d.add(1018,1001,'SALA BALLO / DISCOTECA / TRATTENIMENTI DANZANTI','161200589');
+		d.add(1082,1018,'Cessazione attività','161200589');
+		
+		d.add(1019,1001,'STABILIMENTO BALNEARE','161200499,161200503,161200502,I2814,161200500');
+		d.add(1083,1019,'Avvio attività','161200499');
+		d.add(1084,1019,'Cessazione attività','161200503');
+		d.add(1085,1019,'Modifica attività','161200502');
+		d.add(1086,1019,'Sospensione temporanea','I2814');
+		d.add(1087,1019,'Subentro in attività','161200500');
+		
+		d.add(1020,1001,'TAXI O NOLEGGIO CON CONDUCENTE','161200466,I2119,161200684,161200315,161200316,161200686,161200685');
+		d.add(1088,1020,'Cessazione attività','161200466');
+		d.add(1089,1020,'Comunicare rimesse in altri comuni','I2119');
+		d.add(1090,1020,'Licenza / Autorizzazione','161200684');
+		d.add(1091,1020,'Modifica attività','161200315,161200316,161200686');
+		d.add(1092,1020,'Subentro in attività','161200685');
+		
+		d.add(1021,1001,'TIRO A SEGNO','161200766,161200209,161200210');
+		d.add(1093,1021,'Cessazione attività','161200766');
+		d.add(1094,1021,'Licenza / Autorizzazione','161200209');
+		d.add(1095,1021,'Rinnovo Licenza / Autorizzazione','161200210');
+		
+		document.write(d);
+
+		
+		//-->
+	</script>
+
+</div>
+
+
+
+</body>
+
+</html>

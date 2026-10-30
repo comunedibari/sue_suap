@@ -193,7 +193,7 @@ public class AllegaInterStep extends BaseStep{
 					allegato.setMimeType("application/pkcs7-mime");
 					allegato.setNomeFile("Integrazione_"+attachment.getName());
 					allegato.setIdFileEsterno("");
-					allegato.setPrincipale(true);
+					allegato.setPrincipale(i==0);
 					allegati[i] = allegato;
 					i++;
 				} 
@@ -202,7 +202,7 @@ public class AllegaInterStep extends BaseStep{
 				
 				evento = stub.inserisciEvento(eventoDaInviare);
 				System.out.println(evento);
-				delegate.updateStatoAllegatoInterop(process, request);
+				delegate.deleteAllegatoInterop(process, request);
 				
 			} catch (CrossServicesException e) {
 				logger.error("Errore nell'esecuzione del servizio di integrazione: "+e);

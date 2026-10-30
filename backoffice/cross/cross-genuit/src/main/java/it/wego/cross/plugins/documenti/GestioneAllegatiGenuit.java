@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.axis.attachments.AttachmentPart;
@@ -120,4 +121,12 @@ public class GestioneAllegatiGenuit extends GestioneAbstractGenuit implements it
         //NOT ALREADY SUPPORTED
         return "";
     }
+
+	@Override
+	public void add(Allegati allegato, Enti ente, LkComuni comune, Date date) throws Exception {
+		if (allegato.getIdFileEsterno() != null) {
+            allegato.setPathFile(null);
+            allegato.setFile(null);
+        }
+	}
 }

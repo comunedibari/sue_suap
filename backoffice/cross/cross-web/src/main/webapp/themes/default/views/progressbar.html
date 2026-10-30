@@ -1,0 +1,166 @@
+<html>
+<head>
+<style>
+ .progress-bar { width: 800px; height: 20px; background-color: #f4f4f7; position: relative; align: "center"; }
+ .progress {   height: 100%;  background-color: #1635c0;  position: absolute;  top: 0;  left: 0;  width: 0%;}
+</style>
+<!-- 
+<script type="text/javascript" src="/javascript/jquery-3.7.1.min.js"></script>
+-->
+<script type="text/javascript" src="/cross/javascript/jquery/jquery-1.11.0.min.js"></script>
+
+</head>
+<body>
+<h2>Recupero allegati protocollati timbrati in corso. Attendere prego.....</h2>
+ <!--
+ <button id="escidalpromise">ClickMe</button>
+ -->
+<button id="escidalpromise" hidden>ClickMe</button>
+<div class="progress-bar">
+<div class="progress"></div>
+</div>
+<span class="countdown"></span>
+<span class="countdown"></span>
+<input type="hidden" id="nome_file_zippato" name="nome_file_zippato" value="${nome_file_zippato}">
+
+<script type="text/javascript">
+var timeout = 300000;
+//test var timeout = 30000;
+var messageAlert = "Recupero allegati in corso. Attendere prego... ";
+const countdownEl = document.querySelector(".countdown");
+const progressBarEl = document.querySelector(".progress");
+let remainingTime = (timeout/1000)
+let elapsedTime = (1)
+const totalTime = remainingTime;					 
+
+function allReplace(str, obj) {
+  for (const x in obj) {
+    str = str.replace(new RegExp(x, 'g'), obj[x]);
+  }
+  return str;
+};
+
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+	
+function countdown() {
+  if (remainingTime > 0) {
+	// countdownEl.textContent = " secondi " + remainingTime;
+	countdownEl.textContent = " secondi " + elapsedTime;
+	const progress = ((totalTime - remainingTime) / totalTime) * 100;
+	progressBarEl.style.width = `${progress}%`;
+	remainingTime--;
+	elapsedTime++;
+	setTimeout(countdown, 1000);
+  } else {
+	progressBarEl.style.width = "100%";
+	let text = "Download in corso! Premere Ok per continuare o Annulla per annullare.";
+	if (confirm(text) == true) {
+		location.reload();
+	} else{
+		window.opener = self;
+		window.close();
+	}}}
+	
+function firstFunction() {                                      
+  return new Promise((resolve, reject) => {                     
+      let y = 0                                                 
+      setTimeout(() => {                                        
+        for (i=0; i<4; i++) {				                   
+			//console.log('Loop valore y:' + y)                    
+           y++                                                  
+        }
+		//document.getElementById("escidalpromise").click();                                                                       
+		 console.log('Loop completed.')                            
+         resolve(y)                                             
+      }, 2000)                                                  
+  })                                                            
+}                                                               
+                                                                                              
+async function secondFunction() {                               
+    console.log('Before promise call.')                         
+    const result = await firstFunction()                        
+    console.log('Promise resolved: ' + result)                  
+    console.log('Next step.')                                   
+};                 
+ function getPromiseFromEvent(item, event) {	                   
+ 		return new Promise((resolve) => {                      
+ 			const listener = () => {                           
+ 			item.removeEventListener(event, listener);         
+ 			resolve();                                         
+ 		}                                                      
+ 		item.addEventListener(event, listener);                
+ 	})                                                         
+ }                                                              
+                                                                
+ async function waitForButtonClick(idPratica, idPraticaEvento) {                          
+ 	const div = document.querySelector("div")                
+ 	const button = document.querySelector("button")          
+ 	//div.innerText = "Waiting for you to press the button"  
+ 	await getPromiseFromEvent(button, "click")               
+ 	                
+ 	//alert("Download terminato!");    
+ 	
+ 	//http://localhost:8081/cross/download_from_register_ruvo.htm?id_pratica=1978&id_pratica_evento=11950   
+ 	/*
+ 	$.ajax({
+			url : '/cross/download_from_register_ruvo',
+			data : {
+				id_pratica : idPratica, id_pratica_evento : idPraticaEvento
+			},
+			success : function(responseText) {
+				alert(" responseText:" + responseText);
+				if(responseText === "OK"){
+					document.getElementById("escidalpromise").click();       
+				}
+			}
+		});
+		*/                     
+ 	window.location.href = "/cross/download_from_register_ruvo.htm?id_pratica=" + idPratica + "&id_pratica_evento=" +idPraticaEvento;                                     
+ }                                                              
+    
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function wait_allegati(nome_file_zippato) {
+    for (let i = 0; i < 300; i++) {
+        console.log(`Waiting ${i} seconds...`);
+         $.ajax({
+			url : '/cross/GetAvailableAllegatiTimbrati',
+			data : {
+				nomefile : nome_file_zippato
+			},
+			success : function(responseText) {
+				//alert(" responseText:" + responseText);
+				if(responseText === "OK"){
+					document.getElementById("escidalpromise").click();       
+				}
+			}
+		});
+        /* */
+        await sleep(i * 5000);
+    }
+	console.log('Done');
+}       
+var nomefile_zippato = getUrlVars()['nome_file_zippato'];
+var id_pratica = getUrlVars()['id_pratica'];
+var id_pratica_evento = getUrlVars()['id_pratica_evento'];
+//var nomefile_zippato = <%= request.getParameter("nome_file_zippato") %>;
+nomefile_zippato = allReplace( nomefile_zippato, { '%22': ' ', 'b': 'o' } ); 
+// alert(" VARIABILI DI INPUT:" + nomefile_zippato);
+ waitForButtonClick(id_pratica,id_pratica_evento);
+ wait_allegati(nomefile_zippato);
+ countdown();
+</script>
+
+</body>
+</html>

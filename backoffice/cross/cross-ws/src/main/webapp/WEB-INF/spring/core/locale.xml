@@ -33,6 +33,7 @@
                 <value>locales/mail</value>
                 <value>locales/genova_messages</value>
                 <value>locales/notification</value>
+                <value>locales/messages-pratica</value>
             </list>
         </property>
     </bean>

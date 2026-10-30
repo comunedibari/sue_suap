@@ -7,7 +7,11 @@ package it.wego.cross.service;
 import it.wego.cross.entity.Configuration;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkComuni;
+import it.wego.cross.entity.PluginConfiguration;
+
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,6 +22,8 @@ import org.springframework.stereotype.Service;
 public interface ConfigurationService {
 
     public List<Configuration> findByName(String name);
+
+    public <T> T findByName(String name, Class<T> valueType);
     
     public List<Configuration> findByName(String name, Integer idEnte, Integer idComune);
 
@@ -42,4 +48,6 @@ public interface ConfigurationService {
 	public String getEstrazioniPdcColumnModel(Integer enteAcasoPerColumnModel, Integer idComune) throws Exception;
 
 	public Object getEstrazioniAgibColumnModel(Integer enteAcasoPerColumnModel, Integer idComune) throws Exception;
+
+	public Map<String, String> getConfigurationByInstitution(Enti town) throws Exception;
 }

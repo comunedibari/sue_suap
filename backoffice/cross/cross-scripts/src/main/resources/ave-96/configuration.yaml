@@ -1,0 +1,116 @@
+files:
+  - name: prova.odt
+    mimetype: application/msword
+    output: DOC
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+    descrizione: prova
+  - name: 01.CILA Inefficace - Richiesta integrazioni (MOD.C1-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: 02.CILA con adempimenti SUAP (MOD.SUAP-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: 03.CILA Illegittimità e Divieto (MOD.C2-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: 04.CILA Diritti Segreteria (MOD.CD-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: 05.CILA Efficacia (MOD.CE-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: 06.a.CILA Efficacia con SUAP (MOD.CE_SUAP-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: 06.b.CILA Efficacia con INSEGNE (MOD.CE_INS-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: 06.CILA Efficacia con SUAP (MOD.CE_SUAP-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: 07.CILA Archiviazione (MOD.CA-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Archiviazione (MOD S6-23).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Archiviazione (MOD S6-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Archiviazione per integrazione tardiva (MOD S6-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Comunicazione (MOD S7-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Comunicazione a seguito di controdeduzione sentenza  (MOD S7-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Conferma Divieto (MOD S4-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Conferma Divieto e Archiviazione (MOD S4-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Divieto esecuzione opere (MOD S2-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Notifica SCIA alt.PdC (MOD S5-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Presa atto dimissioni (MOD S6-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Presa atto dimissioni e archiviazione negativa (MOD S6-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Proroga (MOD S8-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Revoca Divieto (MOD S3-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Revoca Divieto (MOD S3-25)_direttore.odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Revoca Divieto + Richiesta Adempimenti (MOD S3-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Revoca Divieto + Richiesta Adempimenti (MOD S3-25)_direttore.odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Richiesta integrazioni (MOD S1-25)_SCIA alt. al PDC_Direttore.odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0
+  - name: SCIA - Richiesta integrazioni (MOD S2-25).odt
+    idEvento: 564
+    idEnte: 2293
+    idProcedimento: 0

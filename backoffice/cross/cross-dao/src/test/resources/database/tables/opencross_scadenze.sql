@@ -1,0 +1,12 @@
+CREATE TABLE scadenze ( id int,
+id_scadenza int NOT NULL AUTO_INCREMENT,
+id_pratica int NOT NULL,
+data_scadenza timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+id_ana_scadenza varchar(4) NOT NULL,
+data_fine_scadenza date DEFAULT NULL,
+data_fine_scadenza_calcolata date DEFAULT NULL,
+id_stato varchar(4) NOT NULL,
+data_inizio_scadenza date NOT NULL,
+id_pratica_evento int NOT NULL COMMENT 'L''evento che ha creato la scadenza',
+giorni_teorici_scadenza int NOT NULL DEFAULT '0',
+descrizione_scadenza varchar(255) DEFAULT NULL)

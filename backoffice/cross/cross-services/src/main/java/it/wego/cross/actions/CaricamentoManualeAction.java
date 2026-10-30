@@ -30,6 +30,7 @@ import it.wego.cross.entity.Allegati;
 import it.wego.cross.entity.Anagrafica;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkComuni;
+import it.wego.cross.entity.LkTipoPratica;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticaProcedimenti;
 import it.wego.cross.entity.PraticaProcedimentiPK;
@@ -42,6 +43,7 @@ import it.wego.cross.entity.Staging;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.events.comunicazione.bean.ComunicazioneBean;
 import it.wego.cross.exception.CrossException;
+import it.wego.cross.cross_tomcat_services.PaperworkNumberManager;
 import it.wego.cross.plugins.commons.beans.Allegato;
 import it.wego.cross.plugins.protocollo.beans.DocumentoProtocolloResponse;
 import it.wego.cross.plugins.protocollo.beans.SoggettoProtocollo;
@@ -73,7 +75,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -128,6 +129,7 @@ public class CaricamentoManualeAction {
     private ProcedimentiDao procedimentiDao;
     @Autowired
     private AnagraficheSerializer anagraficheSerializer;
+    
     private static final String IDENTIFICATIVO_PRATICA_PROTOCOLLO_DOCUMENTO = "identificativoPraticaProtocolloDocumento";
 
     @Transactional
@@ -184,7 +186,6 @@ public class CaricamentoManualeAction {
         //Salvo lo staging
         Log.APP.info("Setto l'XML della pratica");
         praticaXML.setAllegati(new it.wego.cross.xml.Allegati());
-        List<Allegati> allegati = new ArrayList<Allegati>();
         Allegati riepilogoPratica = null;
         if (pratica.getAllegatiList() != null && pratica.getAllegatiList().size() > 0) {
             for (AllegatoDTO allegato : pratica.getAllegatiList()) {
@@ -193,7 +194,6 @@ public class CaricamentoManualeAction {
                 allegatiDao.insertAllegato(allegatoEntityLoop);
                 usefulService.flush();
                 it.wego.cross.xml.Allegato allegatoXml = AllegatiSerializer.serializeXML(allegato);
-                allegati.add(allegatoEntityLoop);
                 if (allegatoXml.getRiepilogoPratica().equalsIgnoreCase("S")) {
                     riepilogoPratica = allegatoEntityLoop;
                 }
@@ -253,6 +253,7 @@ public class CaricamentoManualeAction {
         Log.APP.info("Procedo alla serializzazione della pratica xml");
 
         Pratica praticaDaSalvare = praticheService.serializePratica(praticaProtocollo, staging, praticaXML);
+        
         Log.APP.info("Setto il recapito di notifica alla pratica");
 //        praticaDaSalvare.setIdRecapito(recapitoNotifica);
         Log.APP.info("Setto l'utente che ha in carico la pratica: " + utente.getUsername());
@@ -302,13 +303,18 @@ public class CaricamentoManualeAction {
         usefulService.flush();
 
         praticaDaSalvare.setIdModello(riepilogoPratica);
-        for (Allegati allegato : allegati) {
-            Allegato allegatoPerComunicazione = AllegatiSerializer.serializeAllegato(allegato);
-            allegatoPerComunicazione.setProtocolla((allegato.getIdFileEsterno() != null) ? Boolean.FALSE : Boolean.TRUE);
-            allegatoPerComunicazione.setSpedisci(Boolean.TRUE);
-            allegatoPerComunicazione.setId(allegato.getId());
+        
+        if (pratica.getAllegatiList() != null && pratica.getAllegatiList().size() > 0) {
+            for (AllegatoDTO allegato : pratica.getAllegatiList()) {
+                Allegati allegatoEntityLoop = allegatiService.salvaAllegatoDB(allegato, ente, comune);
+                Allegato allegatoPerComunicazione = AllegatiSerializer.serializeAllegato(allegatoEntityLoop);
+                allegatoPerComunicazione.setProtocolla((allegato.getIdFileEsterno() != null) ? Boolean.FALSE : Boolean.TRUE);
+                allegatoPerComunicazione.setSpedisci(Boolean.TRUE);
+                allegatoPerComunicazione.setId(allegatoEntityLoop.getId());
+                allegatoPerComunicazione.setFileOrigine(allegato.getModelloPratica() != null && allegato.getModelloPratica());
 
-            cb.addAllegato(allegatoPerComunicazione);
+                cb.addAllegato(allegatoPerComunicazione);
+            }
         }
 
         Log.WS.info("Ente SUAP: " + ente.getDescrizione());
@@ -342,7 +348,23 @@ public class CaricamentoManualeAction {
         //praticaDaSalvare.setAnnoRiferimento(null);
         praticaDao.update(praticaDaSalvare);
         workflowService.gestisciProcessoEvento(cb);
-        
+
+        Integer idTipoPratica = lookupService.findByIdTipoPraticaProcessiByIdCustom(praticaDaSalvare.getIdProcEnte().getIdProcesso().getIdProcesso());
+		LkTipoPratica lkTipoPratica = new LkTipoPratica();
+		lkTipoPratica.setIdTipoPratica(idTipoPratica);	
+		Log.APP.info("Setto il tipo pratica: " + lkTipoPratica);
+		praticaDaSalvare.setTipoPratica(lkTipoPratica);
+
+        Integer numeroPratica = -1;
+        try {
+        	numeroPratica = PaperworkNumberManager.getInstance().getNewNumber(praticaDaSalvare.getIdProcEnte().getIdEnte().getIdEnte(), lkTipoPratica.getIdTipoPratica());
+        } catch(Exception e) {
+        	Log.WS.error("Error generating paperwork progressive number", e);
+        }
+        Log.APP.info("Setto il numero pratica: " + numeroPratica);
+        praticaDaSalvare.setNumeroPratica(numeroPratica);
+        praticaDao.update(praticaDaSalvare);
+      
         String myPageSynchronizer = configuration.getCachedConfiguration("MyPageSynchronizer.url", ente.getIdEnte(), comune.getIdComune());
         if (!Utils.e(myPageSynchronizer)) {
             Log.APP.info("Contatto MyPageSynchronizer: " + myPageSynchronizer);

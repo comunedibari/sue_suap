@@ -25,3 +25,7 @@ table.master td.selected, table.master tr.even td.selected, table.master tr.odd 
 
 /* use this if you want to apply different styleing to empty table cells*/
 table.master td.empty, table.master tr.odd td.empty, table.master tr.even td.empty{background:#fff;}
+
+tr.tr_tecnico_procuratore td {
+	font-weight: bold;
+}

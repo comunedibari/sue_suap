@@ -4,32 +4,25 @@
  */
 package it.wego.cross.service;
 
-import com.google.common.base.Strings;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import it.wego.cross.beans.AttoriComunicazione;
-import it.wego.cross.beans.EventoBean;
-import it.wego.cross.beans.MailContentBean;
-import it.wego.cross.comparators.ProcessiEventiComparator;
-import it.wego.cross.constants.AnaTipiDestinatario;
-import it.wego.cross.constants.Constants;
-import it.wego.cross.constants.Workflow;
-import it.wego.cross.dao.*;
-import it.wego.cross.entity.*;
-import it.wego.cross.events.AbstractEvent;
-import it.wego.cross.freemarker.DateDirective;
-import it.wego.cross.plugins.commons.beans.Allegato;
-import it.wego.cross.serializer.PraticheSerializer;
-import it.wego.cross.utils.Log;
-import it.wego.cross.utils.Utils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.activiti.engine.task.Task;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
@@ -38,6 +31,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+
+import com.google.common.base.Strings;
+
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import it.wego.cross.beans.AttoriComunicazione;
+import it.wego.cross.beans.EventoBean;
+import it.wego.cross.beans.MailContentBean;
+import it.wego.cross.comparators.ProcessiEventiComparator;
+import it.wego.cross.constants.AnaTipiDestinatario;
+import it.wego.cross.constants.Workflow;
+import it.wego.cross.dao.PraticaDao;
+import it.wego.cross.dao.ProcessiDao;
+import it.wego.cross.dao.TemplateDao;
+import it.wego.cross.entity.Allegati;
+import it.wego.cross.entity.Anagrafica;
+import it.wego.cross.entity.AnagraficaRecapiti;
+import it.wego.cross.entity.Email;
+import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.EventiTemplate;
+import it.wego.cross.entity.LkComuni;
+import it.wego.cross.entity.Pratica;
+import it.wego.cross.entity.PraticaProcedimenti;
+import it.wego.cross.entity.PraticheEventi;
+import it.wego.cross.entity.ProcedimentiEnti;
+import it.wego.cross.entity.Processi;
+import it.wego.cross.entity.ProcessiEventi;
+import it.wego.cross.entity.ProcessiEventiAnagrafica;
+import it.wego.cross.entity.ProcessiEventiEnti;
+import it.wego.cross.entity.ProcessiSteps;
+import it.wego.cross.entity.Templates;
+import it.wego.cross.entity.Utente;
+import it.wego.cross.events.AbstractEvent;
+import it.wego.cross.freemarker.DateDirective;
+import it.wego.cross.plugins.commons.beans.Allegato;
+import it.wego.cross.serializer.PraticheSerializer;
+import it.wego.cross.utils.Log;
+import it.wego.cross.utils.Utils;
 
 /**
  *
@@ -416,12 +447,31 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 		Document praticaXmlDocument = Utils.marshallToDocument(praticaXml);
 		Document praticaXmlDocumentNoNamespace = Utils.removeNamespacesFromDocument(praticaXmlDocument);
 		MailContentBean bean = new MailContentBean();
+
+		//LOR INIZIO Da eliminare dopo risoluzione anomalia invio pec su eventi PROC_INT
+		UUID idFile = UUID.randomUUID();
+		String nomefiletmpPath =  "/tmp/verifica_template/";
+		String nomefiletmp =  nomefiletmpPath + idFile.toString() + ".xml";
+		String nomefiletmpOggetto =  nomefiletmpPath + idFile.toString() + "_oggetto.xml";
+		String nomefiletmpCorpo =  nomefiletmpPath + idFile.toString() + "_corpo.xml";
+		File idFileTmp = new File(nomefiletmp);
+		FileUtils.writeStringToFile(idFileTmp, Utils.documentToString(praticaXmlDocumentNoNamespace));
+		//LOR FINE
+
 		if (Log.APP.isTraceEnabled()) {
 			FileUtils.writeStringToFile(Utils.getTempFile(".xml"), Utils.documentToString(praticaXmlDocumentNoNamespace));
 		}
 
 		if (eventoProcesso.getCorpoEmail() != null) {
 			byte[] templateCorpoEmail = eventoProcesso.getCorpoEmail().getBytes("UTF-8");
+			
+			//LOR INIZIO Da eliminare dopo risoluzione anomalia invio pec su eventi PROC_INT
+			String s = new String(templateCorpoEmail, StandardCharsets.UTF_8);
+			try (PrintWriter out = new PrintWriter(nomefiletmpCorpo)) {
+			    out.println(s);
+			}			
+			//LOR FINE
+
 			if (templateCorpoEmail != null) {
 				String corpoEmail = getContenutoDaTemplate(praticaXmlDocumentNoNamespace, templateCorpoEmail);
 				bean.setContenuto(corpoEmail);
@@ -431,6 +481,15 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 		}
 		if (eventoProcesso.getOggettoEmail() != null) {
 			byte[] templateOggettoEmail = eventoProcesso.getOggettoEmail().getBytes("UTF-8");
+			
+			//LOR INIZIO Da eliminare dopo risoluzione anomalia invio pec su eventi PROC_INT
+			String s = new String(templateOggettoEmail, StandardCharsets.UTF_8);
+			try (PrintWriter out = new PrintWriter(nomefiletmpOggetto)) {
+			    out.println(s);
+			}			
+			//LOR FINE
+
+			
 			if (templateOggettoEmail != null) {
 				String oggetto = getContenutoDaTemplate(praticaXmlDocumentNoNamespace, templateOggettoEmail);
 				bean.setOggetto(oggetto);

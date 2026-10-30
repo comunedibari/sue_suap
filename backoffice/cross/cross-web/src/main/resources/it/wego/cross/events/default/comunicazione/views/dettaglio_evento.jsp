@@ -5,6 +5,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="it.wego.cross.constants.Constants" %>
+<%@ page import="it.wego.cross.constants.CartiglioConstants" %>
 <%
     String path = request.getContextPath();
 %>
@@ -48,31 +50,16 @@
     });
 </script>
 <script  type="text/javascript" src="<c:url value="/javascript/cross/pratica.evento.dettaglio.js"/>"></script>
-<%-- <tiles:insertAttribute name="body_error" /> --%>
+
 <tiles:insertAttribute name="operazioneRiuscitaAjax" />
 <div class="content_sidebar">
     <c:url value="/download/pratica.htm" var="downloadPraticaUrl">
         <c:param name="id_pratica" value="${pratica.idPratica}"/>
     </c:url>
     <div class="sidebar_left">
-        <h3><spring:message code="pratica.comunicazione.dettaglio.identificativo"/> <strong>${pratica.identificativoPratica}</strong></h3>
-        <div class="sidebar_elemento">
-            ${pratica.oggettoPratica}
-            <p><strong><spring:message code="pratica.comunicazione.evento.pratica.dataricezione"/>:</strong> <fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.dataRicezione}" /></p>
-            <p><strong><spring:message code="pratica.comunicazione.evento.pratica.stato"/>:</strong> ${pratica.idStatoPratica.descrizione}</p>
-            <c:choose>
-                <c:when test="${not empty pratica.idModello}">
-                    <p style="margin-top:20px;">
-                        <a href="${downloadPraticaUrl}" class="scarica" target="_blank">
-                            <spring:message code="pratica.comunicazione.evento.pratica.download"/>
-                        </a>
-                    </p>
-                </c:when>
-                <c:otherwise>
-                    <span class="value"><spring:message code="pratica.comunicazione.evento.pratica.nofile"/></span>
-                </c:otherwise>
-            </c:choose>
-        </div>
+       	<c:set var="cartiglio" value="${evento.cartiglio}" scope="request"/>
+    	<c:set var="from" value="${CartiglioConstants.FROM_EVENT }" scope="request"/>
+		<c:import url="/themes/default/views/main/body/pratiche/cartiglio.jsp"/>
     </div>
 
     <div class="sidebar_center">
@@ -208,14 +195,31 @@
                                 </span>
                             </div>
                         </div>
+
                         <div class="ctrlHolder dettaglio_liv_0">
                             <c:if test="${!empty evento.allegati}">
+                                <div style="text-align: left;">
+                                    <a class="scarica"
+                                        href="<%=path%>/download_attachments.htm?id_pratica=${pratica.idPratica}&amp;id_pratica_evento=${evento.idPraticaEvento}"
+                                        target="_blank"> <spring:message code="pratica.comunicazione.dettaglio.allegati.downloadAllAttachments" /></a>
+                                    <c:if test="${Constants.SUE_BARI.equals(ente.idEnte) && not empty evento.allegatoPrincipale}">
+	                                    <a class="scarica" 
+	                                        href="<%=path%>/download_from_register.htm?id_pratica=${pratica.idPratica}&amp;id_file=${evento.allegatoPrincipale.idAllegato}"
+	                                        target="_blank"> <spring:message code="pratica.comunicazione.dettaglio.allegati.download.main.register" /></a>
+                                     </c:if>
+                                     <c:if test="${Constants.SUE_RUVO.equals(ente.idEnte)}">
+	                                    <a class="scarica" 
+	                                        href="<%=path%>/download_from_register_ruvo.htm?id_pratica=${pratica.idPratica}&amp;id_pratica_evento=${evento.idPraticaEvento}"
+	                                        target="_blank"> <spring:message code="pratica.comunicazione.dettaglio.allegati.download.main.register_ruvo" /></a>
+                                     </c:if>
+                                </div>
                                 <table cellspacing="0" cellpadding="0" class="master">
                                     <tr>
                                         <th style="width: 200px"><spring:message code="pratica.comunicazione.evento.file.descrizione"/></th>
                                         <th><spring:message code="pratica.comunicazione.evento.file.nomefile"/></th>
                                         <th><spring:message code="pratica.comunicazione.evento.file.tipofile"/></th>
-                                        <th></th>
+                                        <th><spring:message code="pratica.comunicazione.dettaglio.allegati.download.file"/></th>
+            							<th><spring:message code="pratica.comunicazione.dettaglio.allegati.preview"/></th>
                                     </tr>
                                     <c:forEach items="${evento.allegati}" var="allegato" begin="0">
                                         <tr>
@@ -232,6 +236,20 @@
                                                     </a>
                                                 </span>
                                             </td>
+                                            <td>
+												<div style="text-align: center;">
+												<c:if test="${allegato.nomeFile.toLowerCase().endsWith('.pdf') || allegato.nomeFile.toLowerCase().endsWith('.doc')
+														|| allegato.nomeFile.toLowerCase().endsWith('.docx') || allegato.nomeFile.toLowerCase().endsWith('.xls')
+														|| allegato.nomeFile.toLowerCase().endsWith('.xlsx') || allegato.nomeFile.toLowerCase().endsWith('.odt')
+														|| allegato.nomeFile.toLowerCase().endsWith('.p7m')  || allegato.nomeFile.toLowerCase().endsWith('.ods')
+														}">
+													<a class="cerca_lente_rosso"
+																href="<%=path%>/preview.htm?id_file=${allegato.idAllegato}"
+																target="_blank"> </a>
+												</c:if>
+													
+												</div>
+											</td>
                                         </tr>
                                     </c:forEach>
                                 </table>
@@ -249,6 +267,7 @@
                                                 <th style=""><spring:message code="pratica.comunicazione.evento.email.dataInvio"/></th>
                                                 <th><spring:message code="pratica.comunicazione.evento.email.destinatario"/></th>
                                                 <th><spring:message code="pratica.comunicazione.evento.email.oggetto"/></th>
+                                                <th><spring:message code="pratica.comunicazione.evento.email.pec"/></th>
                                                 <th><spring:message code="pratica.comunicazione.evento.email.ultimoAggiornamento"/></th>
                                                 <th><spring:message code="pratica.comunicazione.evento.email.esitoSpedizione"/></th>
                                                 <th><spring:message code="pratica.comunicazione.evento.email.azione"/></th>
@@ -276,12 +295,20 @@
                                                     <td>${email.dataInserimento}</td>
                                                     <td>${email.emailDestinatario}</td>
                                                     <td>${email.oggettoEmail}</td>
+                                                    <td>
+                                                    	<c:if test="${email.stato == 'C' || email.stato == 'I'}" >
+															<a class="scarica cursor_pointer showPecEmailDetail" id="${email.idEmail}">
+	                                                            <spring:message code="pratica.comunicazione.evento.email.visualizzaPEC"/>
+	                                                        </a>
+                                                        </c:if>
+                                                    </td>
                                                     <td>${email.dataAggiornamento}</td>
                                                     <td>
-<%--                                                         <p title="${email.corpoRisposta}">${email.oggettoRisposta}</p> --%>
-														<a class="scarica cursor_pointer showEmailRicevuta" id="${email.idEmail}">
-                                                            Verifica Ricevuta
-                                                        </a>
+                                                    	<c:if test="${email.stato == 'C' || email.stato == 'I'}" >
+															<a class="scarica cursor_pointer showEmailRicevuta" id="${email.idEmail}">
+	                                                            <spring:message code="pratica.comunicazione.evento.email.verifica"/>
+	                                                        </a>
+                                                        </c:if>
                                                     </td>
                                                     <td>
                                                         <a class="scarica cursor_pointer showEmailDetail" id="${email.idEmail}">
@@ -326,6 +353,23 @@
         </div>
     </script>
     
+    <script id="template-email-pec" type="text/x-handlebars-template">
+        <div>
+        <form id="email_resend_form">
+        <input type="hidden" name="idEmail" value="{{idEmail}}" />
+        <input type="hidden" name="taskId" value="{{taskId}}" />
+        <div class="ctrlHolder">
+        <label class="required" for="oggettoEmail">Oggetto email</label>
+        <input type="text" name="oggettoEmail" class="textInput required value" style="width: 100%;" value="{{oggettoEmail}}"/>
+        </div>
+        <div class="ctrlHolder">    
+        <label class="required">Corpo email</label>
+        <div class="value text-area">{{corpoEmail}}</div>
+        </div>
+        </form>
+        </div>
+    </script>
+    
     <script id="template-email-ricevuta" type="text/x-handlebars-template">
         <div>
         <form id="email_resend_form">
@@ -345,6 +389,7 @@
 
     <script>
     $(function() {
+    	
         var emailDetailTemplateHtml = $("#template-email-da-rispedire").html();
         var emailDetailTemplate = Handlebars.compile(emailDetailTemplateHtml);
 
@@ -401,15 +446,16 @@
     });
 
     </script>
-     <script>
+     <script type="text/javascript">
     $(function() {
         var emailDetailTemplateHtml = $("#template-email-ricevuta").html();
         var emailDetailTemplate = Handlebars.compile(emailDetailTemplateHtml);
-
         $('.showEmailRicevuta').click(function(event) {
             var emailId = $(this).attr('id');
             var parameters = {};
             parameters.mailId = emailId;
+            parameters.institutionId = ${ente.idEnte};
+            parameters.paperworkEventId = ${evento.idPraticaEvento};
             $.ajax({
                 type: 'POST',
                 url: '${path}/console/mail/detail.htm',
@@ -454,6 +500,59 @@
     });
 
     </script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var emailDetailTemplateHtml = $("#template-email-pec").html();
+        var emailDetailTemplate = Handlebars.compile(emailDetailTemplateHtml);
+        $('.showPecEmailDetail').click(function(event) {
+        	var emailId = $(this).attr('id');
+            var parameters = {};
+            parameters.mailId = emailId;
+            $.ajax({
+                type: 'POST',
+                url: '${path}/console/mail/pec_detail.htm',
+                data: parameters,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.idEmail !== undefined && data.idEmail !== null && data.idEmail !== '') {
+                        var emailDetailTemplateHtml = emailDetailTemplate(data);
+                        var dialog = $('<div />').appendTo('body').dialog({
+                            modal: true,
+                            title: 'PEC',
+                            buttons: [{
+                                    text: "Chiudi",
+                                    click: function() {
+                                        $(this).dialog("close");
+                                    }
+                                }],
+                            width: 800,
+                            position: { my: 'top', at: 'top+20' },
+                            close: function() {
+                                dialog.remove();
+                            }
+                        }).html(emailDetailTemplateHtml || '');
+                    } else {
+                        var dialog = $("<div />").text(data.message);
+                        $(dialog).dialog({
+                            modal: true,
+                            title: "Esito operazione",
+                            width: 350,
+                            height: 300,
+                            closeOnEscape: true,
+                            buttons: {
+                                Ok: function() {
+                                    $(dialog).dialog('close');
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    });
+
+</script>
     <div class="clear"></div>
 </div>
 

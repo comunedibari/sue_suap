@@ -4,23 +4,27 @@
  */
 package it.wego.cross.service;
 
-import it.wego.cross.dto.ProcedimentoDTO;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import it.wego.cross.dto.EnteDTO;
-import it.wego.cross.dto.TemplateDTO;
+import it.wego.cross.dto.EventoDTO;
 import it.wego.cross.dto.EventoTemplateDTO;
+import it.wego.cross.dto.ProcedimentoDTO;
 import it.wego.cross.dto.ProcessoDTO;
 import it.wego.cross.dto.StepDTO;
-import it.wego.cross.dto.EventoDTO;
+import it.wego.cross.dto.TemplateDTO;
 import it.wego.cross.dto.filters.Filter;
 import it.wego.cross.entity.Allegati;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.EventiTemplate;
 import it.wego.cross.entity.Pratica;
+import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.Procedimenti;
 import it.wego.cross.entity.ProcessiEventi;
 import it.wego.cross.plugins.protocollo.beans.DocumentoProtocolloResponse;
-import java.util.List;
-import org.springframework.stereotype.Service;
 
 /**
  * Service per la gestione della pratiche
@@ -80,6 +84,6 @@ public interface EventiService {
     
     public EventoDTO getDettaglioEvento(Integer idEvento, Pratica pratica) throws Exception;
     
-    public void aggiornaAllegatiConRiferimentiProtocollo(Pratica pratica, DocumentoProtocolloResponse protocollo, List<Allegati> allegatiEntity, Integer idEnte) throws Exception;
+    public void aggiornaAllegatiConRiferimentiProtocollo(Pratica pratica, PraticheEventi praticaEvento, DocumentoProtocolloResponse protocollo, List<Allegati> allegatiEntity, Integer idEnte, Date date) throws Exception;
 
 }

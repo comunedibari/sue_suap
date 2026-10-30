@@ -4,6 +4,37 @@
  */
 package it.wego.cross.actions;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+import javax.mail.internet.MimeMessage;
+
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.delegate.DelegateExecution;
+import org.activiti.engine.task.Task;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.google.common.base.Strings;
@@ -11,9 +42,11 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+
 import it.wego.cross.beans.EventoBean;
 import it.wego.cross.beans.MailContentBean;
 import it.wego.cross.constants.AnaTipiEvento;
+import it.wego.cross.constants.AvRuvoConstants;
 import it.wego.cross.constants.SessionConstants;
 import it.wego.cross.constants.StatiEmail;
 import it.wego.cross.constants.Workflow;
@@ -21,6 +54,7 @@ import it.wego.cross.dao.MailDao;
 import it.wego.cross.dao.PraticaDao;
 import it.wego.cross.dto.ErroreDTO;
 import it.wego.cross.entity.Allegati;
+import it.wego.cross.entity.Configuration;
 import it.wego.cross.entity.Email;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.EventiTemplate;
@@ -33,10 +67,10 @@ import it.wego.cross.entity.PraticheProtocollo;
 import it.wego.cross.entity.ProcessiEventi;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.events.AbstractEvent;
-import it.wego.cross.events.comunicazione.bean.ComunicazioneBean;
-import it.wego.cross.factory.EventCreator;
+import it.wego.cross.exception.WorkflowException;
 import it.wego.cross.mail.EmailConfig;
 import it.wego.cross.mail.GestoreMail;
+import it.wego.cross.plugins.GestioneProtocolloRuvo;
 import it.wego.cross.plugins.commons.beans.Allegato;
 import it.wego.cross.plugins.protocollo.GestioneProtocollo;
 import it.wego.cross.plugins.protocollo.beans.DocumentoProtocolloRequest;
@@ -52,32 +86,13 @@ import it.wego.cross.service.MailService;
 import it.wego.cross.service.PluginService;
 import it.wego.cross.service.PraticheProtocolloService;
 import it.wego.cross.service.PraticheService;
+import it.wego.cross.service.ProtocolloService;
 import it.wego.cross.service.UtentiService;
 import it.wego.cross.service.WorkFlowService;
+import it.wego.cross.utils.AllegatiUtils;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import javax.mail.internet.MimeMessage;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
-import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.task.Task;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.MessageSource;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import it.wego.cross.utils.myUtility;
 
 /**
  *
@@ -85,7 +100,17 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 public class WorkflowAction {
+ 
+    private String MAIL_PROTOCOL_MAXSIZE_ATTACHMENTS = "mail.attachments.protocol.maxsize";
+	private String MAIL_ATTACHMENT_MAXNUMBER = "mail.attachments.maxnumber";
+	private String MAIL_ATTACHMENT_MAXSIZE = "mail.attachments.maxsize";
+ 
+	private String RECEIVING_CODE = AnaTipiEvento.RICEZIONE_PRATICA;
+	private String INTEGRATION_CODE = AnaTipiEvento.INTEGRATION_CODE;
+	private String FORWARDING_CODE = "OINOLTRO2";
 
+	private Set<String> externalEvents = new HashSet<>(Arrays.asList(RECEIVING_CODE, FORWARDING_CODE, INTEGRATION_CODE));
+    
     @Autowired
     private PraticaDao praticaDao;
     @Autowired
@@ -119,21 +144,33 @@ public class WorkflowAction {
     @Autowired
     private PraticheService praticheService;
     @Autowired
-    private PraticheProtocolloService praticheProtocolloService;
+    private PraticheProtocolloService praticheProtocolloService;        
+    @Autowired
+	private ProtocolloService protocolloRuvo;    
     @Autowired
     private ApplicationContext appContext;
+    
     private static final List<String> CODICI_ERRORE_PRATICA_CLEAR = Lists.newArrayList("105", "20", "23", "24", "25", "26", "27",
             "28", "29", "30", "32", "33", "106", "107", "111", "206", "207", "1", "2", "209", "205", "34", "109", "110", "112", "208");
     private static final List<String> CODICI_ERRORE_EVENTO_CLEAR = Lists.newArrayList("400", "401", "402", "403", "405", "409", "410",
             "412", "404", "413", "414");
 
+    public WorkflowAction(){}
+
+    public WorkflowAction(ErroriAction erroriAction, ConfigurationService configuration){
+    	this.erroriAction = erroriAction;
+    	this.configuration = configuration;
+    }
+
     @Transactional
     public void protocollaPraticaEvento(DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo protocollaPraticaEvento invocato.");
         Log.WORKFLOW.info("Metodo protocollaPraticaEvento invocato.");
-
+        
         Map<String, Object> variables = execution.getVariables();
         Integer idPraticaEvento = (Integer) variables.get(Workflow.ID_PRATICA_EVENTO);
         PraticheEventi praticaEvento = praticaDao.getDettaglioPraticaEvento(idPraticaEvento);
+
 
         Log.WORKFLOW.info("idPraticaEvento da protocollare: " + praticaEvento.getIdPraticaEvento());
 
@@ -145,14 +182,16 @@ public class WorkflowAction {
             idComune = pratica.getIdComune().getIdComune();
         }
 
-        //L'evento richiede protocollazione
+        //there is a clone of this code in PraticheAction, method register
+        //LOR GestioneProtocolloRuvo protocolloRuvo = new GestioneProtocolloRuvo();
         if (eventoProcesso.getFlgProtocollazione().equalsIgnoreCase("S")) {
             //L'evento non ha una segnatura di protocollo
             if (Utils.e(praticaEvento.getProtocollo())) {
-                GestioneProtocollo gestioneProtocollo = pluginService.getGestioneProtocollo(ente.getIdEnte(), idComune);
+
                 try {
-                    List<Allegato> allegati = new ArrayList<Allegato>();
-                    List<Allegati> allegatiEntity = new ArrayList<Allegati>();
+                	GestioneProtocollo gestioneProtocollo = pluginService.getGestioneProtocollo(ente.getIdEnte(), idComune);
+                    List<Allegato> allegati = new ArrayList<>();
+                    List<Allegati> allegatiEntity = new ArrayList<>();
 
                     for (PraticheEventiAllegati pea : praticaEvento.getPraticheEventiAllegatiList()) {
                         Allegato a = AllegatiSerializer.serializeAllegato(pea.getAllegati());
@@ -161,7 +200,7 @@ public class WorkflowAction {
                         allegatiEntity.add(pea.getAllegati());
                     }
 
-                    List<SoggettoProtocollo> soggettiProtocollo = new ArrayList<SoggettoProtocollo>();
+                    List<SoggettoProtocollo> soggettiProtocollo = new ArrayList<>();
                     for (PraticheEventiAnagrafiche praticaEventoAnagrafica : praticaEvento.getPraticheEventiAnagraficheList()) {
                         soggettiProtocollo.add(ProtocolloSerializer.serialize(praticaEventoAnagrafica.getAnagrafica()));
                     }
@@ -169,11 +208,42 @@ public class WorkflowAction {
                         soggettiProtocollo.add(ProtocolloSerializer.serialize(enteLoop));
                     }
 
+                    DocumentoProtocolloResponse responseProtocollo = null;
+                    
                     DocumentoProtocolloRequest protocolloRequest = gestioneProtocollo.getDocumentoProtocolloDaDatabase(pratica, praticaEvento, allegati, soggettiProtocollo, String.valueOf(eventoProcesso.getVerso()), praticaEvento.getOggetto());
 
                     protocolloRequest.setIdPratica(pratica.getIdPratica());
-                    DocumentoProtocolloResponse responseProtocollo = gestioneProtocollo.protocolla(protocolloRequest);
-                    eventiService.aggiornaAllegatiConRiferimentiProtocollo(pratica, responseProtocollo, allegatiEntity, ente.getIdEnte());
+
+                    //Gestione protocollo Ruvo
+                    
+                    Log.WORKFLOW.info("IdComune da protocollare: " + idComune);
+                    Log.WORKFLOW.info("IdEnte da protocollare: " + ente.getIdEnte());
+                    
+                    if(pratica.getIdComune().getDescrizione().toLowerCase().equals("ruvo di puglia") ) { 
+                		String classificazione = configurationService.getCachedPluginConfiguration(AvRuvoConstants.CLASSIFICAZIONE, ente.getIdEnte(), idComune);
+                		String stringUtenteProtocollazione = configurationService.getCachedPluginConfiguration(AvRuvoConstants.ID_UTENTE_PROTOCOLLATORE, ente.getIdEnte(),  idComune);
+                		
+                		GestioneProtocolloRuvo protocolloRuvo = new GestioneProtocolloRuvo();
+                		protocolloRuvo.setClassificazione(classificazione);
+
+                		protocolloRuvo.setId_utente_protocollatore(stringUtenteProtocollazione);
+                		                		
+                    	responseProtocollo = protocolloRuvo.protocolla(protocolloRequest, pratica, allegatiEntity, praticaEvento);
+                    	if (pratica != null) {
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(responseProtocollo.getDataProtocollo());
+                            pratica.setDataProtocollazione(responseProtocollo.getDataProtocollo());
+                            pratica.setProtocollo(responseProtocollo.getFascicolo());
+                            pratica.setAnnoRiferimento(c.get(Calendar.YEAR));
+                            pratica.setCodRegistro(responseProtocollo.getCodRegistro());
+                            praticheService.aggiornaPratica(pratica);
+                        }
+                    }
+                    else {
+                    	responseProtocollo = gestioneProtocollo.protocolla(protocolloRequest);
+                    }
+                    
+                    eventiService.aggiornaAllegatiConRiferimentiProtocollo(pratica, praticaEvento, responseProtocollo, allegatiEntity, ente.getIdEnte(), praticaEvento.getDataEvento());
                     String riferimentoProtocollo = responseProtocollo.getCodRegistro() + "/" + responseProtocollo.getAnnoProtocollo() + "/" + responseProtocollo.getNumeroProtocollo();
                     praticaEvento.setProtocollo(riferimentoProtocollo);
                     praticaEvento.setDataProtocollo(responseProtocollo.getDataProtocollo());
@@ -181,12 +251,7 @@ public class WorkflowAction {
                     note = note + Strings.nullToEmpty(responseProtocollo.getNote());
                     praticaEvento.setNote(note);
                     praticaDao.update(praticaEvento);
-                    //Aggiorno i dati relativi al protocollo della pratica
-//                    pratica.setProtocollo(responseProtocollo.getFascicolo());
-//                    pratica.setCodRegistro(responseProtocollo.getCodRegistro());
-//                    pratica.setDataProtocollazione(responseProtocollo.getDataCreazioneFascicolo());
-//                    pratica.setAnnoRiferimento(!Strings.isNullOrEmpty(responseProtocollo.getAnnoFascicolo()) ? Integer.valueOf(responseProtocollo.getAnnoFascicolo()) : null);
-//                    praticaDao.update(pratica);
+
                     //La protocollazione automatica è andata bene
                     execution.setVariable(Workflow.MANUAL_PROTOCOL, false);
                 } catch (Exception e) {
@@ -216,7 +281,9 @@ public class WorkflowAction {
 
     @Transactional
     public void aggiornaProtoPraticaEvento(DelegateExecution execution) throws Exception {
-        Log.WORKFLOW.debug("Metodo aggiornaProtoPraticaEvento invocato.");
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo aggiornaProtoPraticaEvento invocato.");
+
+    	Log.WORKFLOW.debug("Metodo aggiornaProtoPraticaEvento invocato.");
         Map<String, Object> variables = execution.getVariables();
         Integer idPraticaEvento = (Integer) variables.get(Workflow.ID_PRATICA_EVENTO);
         String protocolloSegnatura = (String) variables.get("evento_protocollo_segnatura");
@@ -231,6 +298,7 @@ public class WorkflowAction {
 
     @Transactional
     public void aggiornaDocumentoPraticaEvento(DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo aggiornaDocumentoPraticaEvento invocato.");
         Log.WORKFLOW.debug("Metodo aggiornaDocumentoPraticaEvento invocato.");
 
         Log.WORKFLOW.debug("Metodo aggiornaDocumentoPraticaEvento chiamato.");
@@ -238,6 +306,7 @@ public class WorkflowAction {
 
     @Transactional
     public void executeEvent(DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo executeEvent invocato.");
         Log.WORKFLOW.debug("Metodo executeEvent invocato.");
         Map<String, Object> variables = execution.getVariables();
         Integer idPratica = (Integer) variables.get(Workflow.ID_PRATICA);
@@ -295,6 +364,9 @@ public class WorkflowAction {
 
     @Transactional
     public void createAutomaticTasks(DelegateExecution execution) throws Exception {
+    //public void createAutomaticTasks(org.myactiviti.engine.DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo createAutomaticTasks invocato.");
+
         Log.WORKFLOW.debug("Metodo createAutomaticTasks invocato.");
         Map<String, Object> variables = execution.getVariables();
         Integer idPratica = (Integer) variables.get(Workflow.ID_PRATICA);
@@ -329,7 +401,9 @@ public class WorkflowAction {
 
     @Transactional
     public void runAutomaticTasks(DelegateExecution execution) throws Exception {
-        Log.WORKFLOW.debug("Metodo runAutomaticTasks invocato.");
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo runAutomaticTasks invocato.");
+
+    	Log.WORKFLOW.debug("Metodo runAutomaticTasks invocato.");
         Map<String, Object> variables = execution.getVariables();
         List<Integer> automaticEvents = (List<Integer>) variables.get(Workflow.AUTOMATIC_EVENTS_LIST);
         Integer idPratica = (Integer) variables.get(Workflow.ID_PRATICA);
@@ -422,6 +496,8 @@ public class WorkflowAction {
                     PraticheEventi eventoAutomaticoSuPratica = praticheService.getPraticaEvento(eventoBeanAutomatico.getIdEventoPratica());
                     Map<String, Object> variabiliEventoPratica = getVariabiliPratica(eventoBeanAutomatico, eventoAutomaticoSuPratica);
                     Log.WORKFLOW.info("Eseguo il flusso per l'evento automatico " + eventoAutomaticoSuPratica.getDescrizioneEvento());
+                    
+                    //LOR queue
                     runtimeService.startProcessInstanceByKey("cross_communication_process", variabiliEventoPratica);
                 }
             } else {
@@ -443,6 +519,8 @@ public class WorkflowAction {
 
     @Transactional
     public void startProcessClearIntegration(DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo startProcessClearIntegration invocato.");
+
         Log.WORKFLOW.debug("Metodo di sincronizzazione con Clear invocato.");
         Map<String, Object> variables = execution.getVariables();
         Integer idPraticaEvento = (Integer) variables.get(Workflow.ID_PRATICA_EVENTO);
@@ -512,6 +590,8 @@ public class WorkflowAction {
 
     @Transactional
     public void createSottopraticheTask(DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo createSottopraticheTask invocato.");
+	
         Log.WORKFLOW.debug("Metodo di creazione sottopratiche chiamato.");
         Map<String, Object> variables = execution.getVariables();
 
@@ -563,6 +643,8 @@ public class WorkflowAction {
 
     @Transactional
     public void startProcessSendMail(DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo startProcessSendMail invocato.");
+
         Map<String, Object> variables = execution.getVariables();
         Integer idPraticaEvento = (Integer) variables.get(Workflow.ID_PRATICA_EVENTO);
         PraticheEventi praticaEvento = praticaDao.getDettaglioPraticaEvento(idPraticaEvento);
@@ -581,10 +663,14 @@ public class WorkflowAction {
 
     @Transactional(rollbackFor = Exception.class)
     public void sendMailPraticaEvento(DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo sendMailPraticaEvento invocato.");
         Log.WORKFLOW.debug("Metodo sendMailPraticaEvento invocato.");
         Map<String, Object> variables = execution.getVariables();
+        
+  
         Integer idEmail = (Integer) variables.get(Workflow.ID_EMAIL);
         Integer idPraticaEvento = (Integer) variables.get(Workflow.ID_PRATICA_EVENTO);
+
         PraticheEventi praticaEvento = praticaDao.getDettaglioPraticaEvento(idPraticaEvento);
         Email email = mailService.findByIdEmail(idEmail);
         try {
@@ -607,8 +693,8 @@ public class WorkflowAction {
                 String mailBody;
                 String mailSubject;
                 //Se Evento di ricezione, ricalcolo il corpo/oggetto della mail
-                if (AnaTipiEvento.RICEZIONE_PRATICA.equalsIgnoreCase(praticaEvento.getIdEvento().getCodEvento()) || ("PROCINT").equalsIgnoreCase(praticaEvento.getIdEvento().getCodEvento())) {
-                    MailContentBean mailContent = workFlowService.getMailContent(pratica, praticaEvento);
+                if (AnaTipiEvento.RICEZIONE_PRATICA.equalsIgnoreCase(praticaEvento.getIdEvento().getCodEvento()) || (AnaTipiEvento.INTEGRATION_CODE).equalsIgnoreCase(praticaEvento.getIdEvento().getCodEvento())) {
+                	MailContentBean mailContent = workFlowService.getMailContent(pratica, praticaEvento);
                     mailBody = mailContent.getContenuto();
                     mailSubject = mailContent.getOggetto();
                 } else {
@@ -621,40 +707,86 @@ public class WorkflowAction {
                     mailSubject = email.getOggettoEmail();
                 }
 
+                boolean isRuvo = idComune.intValue() == it.wego.cross.constants.Constants.SUE_COMUNE_RUVO_DI_PUGLIA.intValue();
                 try {
-                    EmailConfig emailConfig = mailService.getSmtpProprieties(idEnte, idComune);
-                    List<Allegati> attachmentsToSend = new ArrayList<Allegati>();
+                    List<Allegati> attachmentsToSend = new ArrayList<>();
+                    
                     for (PraticheEventiAllegati a : praticaEvento.getPraticheEventiAllegatiList()) {
-                        if (a.getFlgIsToSend().equalsIgnoreCase("S")) {
-                            attachmentsToSend.add(a.getAllegati());
+                        if (a.getFlgIsToSend().equalsIgnoreCase("S")) { 
+                            //R16 invio allegati timbrati per il comune di Ruvo
+                        	Log.WORKFLOW.info("R16 - IdComune:" + idComune + 
+                            		"\n IdPratica:" + pratica.getIdentificativoPratica() + 
+                            		"\n IdEvento:" + a.getPraticheEventi().getIdEvento().getIdEvento());
+
+							if(isRuvo){
+                            	
+                				Log.WORKFLOW.info("R16 - nomeFileAllegato before:" + a.getAllegati().getNomeFile());
+                        		String nomefileAllegatoOld = a.getAllegati().getNomeFile();
+                        		String nomeFileAllegato = nomefileAllegatoOld.replaceAll("\\s+", "_");
+
+                        		Log.WORKFLOW.info("R16 - nomeFileAllegato after replace:" + nomeFileAllegato);
+                        		
+                				byte[] fileAllegato = protocolloRuvo.getFileProtocollatoTimbratoRuvo(a.getPraticheEventi().getProtocollo(), nomeFileAllegato);
+
+                				Allegati allegatoRuvo = new Allegati();
+                				allegatoRuvo.setDescrizione(a.getAllegati().getDescrizione());
+                				allegatoRuvo.setFile(fileAllegato);
+                				allegatoRuvo.setId(a.getAllegati().getId());
+                				allegatoRuvo.setTipoFile(a.getAllegati().getTipoFile());
+                				                				                				
+                				for(int i=0; i<3; i++) {nomeFileAllegato = myUtility.removeExtension(nomeFileAllegato);}
+                				
+                				nomeFileAllegato = pratica.getIdPratica().intValue() +  "_" + idPraticaEvento + "_" + nomeFileAllegato + ".pdf";
+                				
+                				allegatoRuvo.setNomeFile(nomeFileAllegato);
+                				
+                				String pathFile = a.getAllegati().getPathFile(); 
+                				
+                				Log.WORKFLOW.info("R16: pathFile before:" + pathFile);
+
+                				try {
+                					String filename="";
+	                		        String directoryNew = "";
+	                			    String PathFileNew = "";
+	                			    String fileNameNew = nomeFileAllegato;
+	                		        
+	                			    /** LOR 12/04/2024
+	                			    String[] partsFile = pathFile.split("/");
+	                		        
+	                		        if(partsFile.length>0) {
+	                		            filename= partsFile[partsFile.length-1];
+		                		        for(int i=0;i<partsFile.length-1;i++) {directoryNew = directoryNew + partsFile[i]+"/";}
+	                		        }
+	                		        directoryNew = directoryNew + "filetimbrati/";
+									**/
+	                			    directoryNew = "/tmp/filetimbrati/" + pratica.getIdPratica().intValue() + "/";
+	                			    
+	                			    PathFileNew = directoryNew + fileNameNew;
+	                		        
+	                			    myUtility.creaFileTimbrato(PathFileNew, fileAllegato);
+	            					
+	                			    allegatoRuvo.setPathFile(PathFileNew);
+	                				
+	            					Log.WORKFLOW.info("R16: pathFile after:" + PathFileNew);
+	                				
+	            					attachmentsToSend.add(allegatoRuvo);
+	                				
+                				} catch (Exception e) {
+                					Log.WORKFLOW.error("Errore di scrittura file timbrato:" + e.getMessage());
+	                            	e.printStackTrace();                					
+                				}
+
+                				
+                            } else {                         	                        	
+                            	attachmentsToSend.add(a.getAllegati());
+                            }
                         }
-                    }
-                    emailConfig.setAllegati(attachmentsToSend);
-                    String mittente = pratica.getIdProcEnte().getIdEnte().getPec() != null ? pratica.getIdProcEnte().getIdEnte().getPec() : pratica.getIdProcEnte().getIdEnte().getEmail();
-                    emailConfig.setFrom(mittente);
-                    emailConfig.setTo(email.getEmailDestinatario());
-
-                    emailConfig.setSubject(mailSubject);
-                    emailConfig.setContent(mailBody);
-
-                    if (!Utils.e(email.getPathEml())) {
-                        FileUtils.deleteQuietly(new File(email.getPathEml()));
-                    }
-
-                    MimeMessage emailEml = gestoreMail.preparaMail(emailConfig);
-                    String filepath = gestoreMail.salvaEML(emailEml, emailConfig);
-                    email.setPathEml(filepath);
-
-                    if (mailBody.contains("#ERRORE#")) {
-                        throw new Exception("Il corpo della mail contiene un errore.");
-                    }
-                    if (mailSubject.contains("#ERRORE#")) {
-                        throw new Exception("L'oggetto della mail contiene un errore.");
-                    }
-                    email.setCorpoEmail(mailBody);
-                    email.setOggettoEmail(mailSubject);
-                    mailService.invioSingolaEmail(email);
+                	}
+                    sendEmail(email, pratica, mailBody, mailSubject, attachmentsToSend, isRuvo);
+                	
+                    
                 } catch (Exception ex) {
+                	
                     if (!hasError) {
                         ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_WORKFLOW_MAIL, "Errore nell'invio della mail", ex, pratica, null);
                         errore.setStatus("E");
@@ -702,9 +834,11 @@ public class WorkflowAction {
 
         Log.WORKFLOW.debug("Metodo sendMailPraticaEvento terminato.");
     }
-
+    
     @Transactional
     public void valorizzaDatiPratica(DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo valorizzaDatiPratica invocato.");
+
         Log.WORKFLOW.debug("Metodo valorizzaDatiPratica invocato.");
         Map<String, Object> variables = execution.getVariables();
         Integer idPraticaEvento = (Integer) variables.get(Workflow.ID_PRATICA_EVENTO);
@@ -724,11 +858,15 @@ public class WorkflowAction {
 
     @Transactional
     public void aggiornaMailPraticaPraticaEvento(DelegateExecution execution) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo aggiornaMailPraticaPraticaEvento invocato.");
+
         Log.WORKFLOW.debug("Metodo aggiornaMailPraticaPraticaEvento invocato.");
         Log.WORKFLOW.debug("Metodo aggiornaMailPraticaPraticaEvento terminato.");
     }
 
     public Map<String, Object> getVariabiliPratica(EventoBean eventoBean, PraticheEventi evento) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo getVariabiliPratica invocato.");
+
         Map<String, Object> variabili = getVariabiliPratica(evento);
 //        variabili.put(Workflow.EVENTO_BEAN, eventoBean);
         String json = new Gson().toJson(eventoBean);
@@ -739,6 +877,8 @@ public class WorkflowAction {
     }
 
     public Map<String, Object> getVariabiliPratica(PraticheEventi evento) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo getVariabiliPratica invocato.");
+
         Pratica pratica = evento.getIdPratica();
         Preconditions.checkNotNull(pratica, "L'ID evento è " + evento.getIdEvento());
         Map<String, Object> variabili = new HashMap<String, Object>();
@@ -756,6 +896,8 @@ public class WorkflowAction {
     }
 
     public List<String> getCandidateUsers(PraticheEventi evento, boolean includeAllSuperusers) {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo getCandidateUsers invocato.");
+
         List<String> candidateUser = new ArrayList<String>();
         Utente istruttore = evento.getIdPratica().getIdUtente();
         if (istruttore != null) {
@@ -770,6 +912,8 @@ public class WorkflowAction {
     }
 
     public void riassegnaTaskAssociatiAllaPratica(Integer idPratica, Utente assegnatario) {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo riassegnaTaskAssociatiAllaPratica invocato.");
+
         //Recupero tutti i task non di notifica
         List<Task> taskAssociatiAllaPratica = taskService.createTaskQuery()
                 .includeProcessVariables().active()
@@ -789,4 +933,142 @@ public class WorkflowAction {
             }
         }
     }
+
+    protected List<List<Allegati>> composeListOfAttachments(int idPratica, List<Allegati> listOfAttachments, Integer idEnte, Integer idComune) throws WorkflowException {        
+    	Long maxSize = getLongParameterValue("mail.attachment.maxsize",idEnte, idComune);
+    	Long maxNumber = getLongParameterValue("mail.attachment.maxnumber",idEnte, idComune);
+    	return this.composeListOfAttachments(idPratica, listOfAttachments, idEnte, idComune, maxSize, maxNumber);
+    }
+    
+    protected List<List<Allegati>> composeListOfAttachments(int idPratica, List<? extends Allegati> listOfAttachments, Integer idEnte, Integer idComune, Long maxSize, Long maxNumber) throws WorkflowException {        
+		Log.WORKFLOW.info("WORKFLOW-LOR Metodo composeListOfAttachments invocato.");
+		boolean thereIsLimit = maxSize != null || maxNumber != null;
+		double fileCounter = 0;
+		long sumOfSizes = 0;
+		
+		List<List<Allegati>> attachmentsToSendList = new ArrayList<>();
+		
+		List<Allegati> currentAttachments = new ArrayList<>();
+		attachmentsToSendList.add(currentAttachments);
+		if(thereIsLimit) {
+			if(maxSize != null)
+				Log.WORKFLOW.warn(String.format("Limite dimensione impostato sugli allegati impostato: %d byte", maxSize));
+			if(maxNumber != null)
+				Log.WORKFLOW.warn(String.format("Limite numero massimo allegati impostato: %d", maxNumber));
+			
+		}
+		for (Allegati attachment : listOfAttachments) {
+	    	if(thereIsLimit) {
+	    		fileCounter++;
+	    		
+	    		long currentSize = attachment.getFile()!= null ? attachment.getFile().length : 0;
+	    		if(currentSize == 0) {
+	    			File file = new File(attachment.getPathFile());
+	    			currentSize = file.exists() ?  file.length() : 0;
+	    		}
+	    		
+	    		if(maxSize != null && currentSize > maxSize) {
+					String message = String.format("File %s troppo grande", attachment.getNomeFile());
+					saveError("FILE_TOO_BIG", message, idPratica);
+					throw new WorkflowException(message);
+				} 
+	    		sumOfSizes += currentSize;
+	    		
+	    		if((maxNumber != null && fileCounter > maxNumber) || (maxSize != null && sumOfSizes > maxSize)) {
+	    			Log.WORKFLOW.info("WORKFLOW-LOR Metodo composeListOfAttachments: generata nuova lista");
+	    			fileCounter = 1;
+	    			sumOfSizes = currentSize;
+	    			currentAttachments = new ArrayList<>();
+	            	attachmentsToSendList.add(currentAttachments);
+	    		}
+
+	    		if(currentSize == 0)
+	    			Log.WORKFLOW.warn(String.format("WORKFLOW-LOR Metodo composeListOfAttachments: Dimensione dell'allegato %s non rilevata", attachment.getNomeFile()));
+	    		else
+	    			Log.WORKFLOW.warn(String.format("WORKFLOW-LOR Metodo composeListOfAttachments: Dimensione dell'allegato %s: %d byte", attachment.getNomeFile(), currentSize));
+	    		
+		    }
+	    	currentAttachments.add(attachment);
+	    }
+		
+		return attachmentsToSendList;
+	}
+
+	private void sendEmail(Email email, Pratica pratica, String mailBody,
+		String mailSubject, List<Allegati> attachmentsToSend, boolean isRuvo) throws Exception {
+        Log.WORKFLOW.info("WORKFLOW-LOR Metodo sendEmail invocato.");
+
+		EmailConfig emailConfig = mailService.getSmtpProprieties(pratica.getIdProcEnte().getIdEnte(), pratica.getIdComune());
+		emailConfig.setAllegati(attachmentsToSend);
+		String mittente = pratica.getIdProcEnte().getIdEnte().getPec() != null ? pratica.getIdProcEnte().getIdEnte().getPec() : pratica.getIdProcEnte().getIdEnte().getEmail();
+		emailConfig.setFrom(mittente);
+		emailConfig.setTo(email.getEmailDestinatario());
+
+		emailConfig.setSubject(mailSubject);
+		emailConfig.setContent(mailBody);
+
+		if (!Utils.e(email.getPathEml())) {
+		    FileUtils.deleteQuietly(new File(email.getPathEml()));
+		}
+
+		MimeMessage emailEml = gestoreMail.preparaMail(emailConfig, isRuvo);
+		String filepath = gestoreMail.salvaEML(emailEml, emailConfig);
+		email.setPathEml(filepath);
+
+		if (mailBody.contains("#ERRORE#")) {
+		    throw new Exception("Il corpo della mail contiene un errore.");
+		}
+		if (mailSubject.contains("#ERRORE#")) {
+		    throw new Exception("L'oggetto della mail contiene un errore.");
+		}
+		email.setCorpoEmail(mailBody);
+		email.setOggettoEmail(mailSubject);
+		mailService.invioSingolaEmail(email);
+	}
+
+	protected boolean isValidDimentionOfAttachmentsPerProtocol(List<PraticheEventiAllegati> attachments, Long maxSize){
+    	Log.WORKFLOW.info("WORKFLOW-LOR Metodo isValidDimentionOfAttachments invocato.");
+    	long sumOfSizes = 0;
+    	if(maxSize != null) {
+	    	for(PraticheEventiAllegati attachment:attachments) {
+	    		long currentSize = attachment.getAllegati().getFile()!= null ? attachment.getAllegati().getFile().length : 0;
+	    		if(currentSize == 0) {
+	    			File file = new File(attachment.getAllegati().getPathFile());
+	    			currentSize = file.exists() ?  file.length() : 0;
+	    		}
+	    		sumOfSizes += currentSize;
+	    		
+	    	}
+    	}
+    	return (maxSize == null || sumOfSizes < maxSize) ;
+    }
+	
+	protected boolean isValidDimentionOfAttachments(List<Allegati> attachments, Long maxSize){
+    	Log.WORKFLOW.info("WORKFLOW-LOR Metodo isValidDimentionOfAttachments invocato.");
+    	long sumOfSizes = 0;
+    	if(maxSize != null) {
+	    	for(Allegati attachment:attachments) {
+	    		long currentSize = attachment.getFile()!= null ? attachment.getFile().length : 0;
+	    		if(currentSize == 0) {
+	    			File file = new File(attachment.getPathFile());
+	    			currentSize = file.exists() ?  file.length() : 0;
+	    		}
+	    		sumOfSizes += currentSize;
+	    		
+	    	}
+    	}
+    	return (maxSize == null || sumOfSizes < maxSize) ;
+    }
+
+	private Long getLongParameterValue(String id, int institutionId, int townId) {
+    	List<Configuration> configurationValue = configuration.findByName(id,institutionId,townId);
+    	Long value = configurationValue != null && !configurationValue.isEmpty() ? Long.parseLong(configurationValue.get(0).getValue()): null;
+    	Log.WORKFLOW.info("Parametro: " + id + "(idEnte: "+institutionId+", idComune:" +townId+"); value: "+value);
+    	return value;
+	}
+    
+	private void saveError(String constant, String message, int idPratica) {
+		ErroreDTO err = erroriAction.getError( constant, message, idPratica );
+		erroriAction.saveError(err);
+	}	
 }

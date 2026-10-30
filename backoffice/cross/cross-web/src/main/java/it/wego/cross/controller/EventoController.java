@@ -7,6 +7,7 @@ package it.wego.cross.controller;
 import com.google.common.base.Strings;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.EventiAction;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.EventoBean;
 import it.wego.cross.beans.layout.Message;
 import it.wego.cross.constants.Constants;
@@ -16,9 +17,11 @@ import it.wego.cross.dto.EventoDTO;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.ProcessiEventi;
 import it.wego.cross.entity.Utente;
+import it.wego.cross.service.CartiglioService;
 import it.wego.cross.service.EventiService;
 import it.wego.cross.service.PraticheService;
 import it.wego.cross.service.WorkFlowService;
+import it.wego.cross.session.MultiSubSessionManager;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
 import java.util.ArrayList;
@@ -26,6 +29,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +56,12 @@ public class EventoController extends AbstractController {
     private ErroriAction erroriAction;
     @Autowired
     private EventiAction eventiAction;
-
+    @Autowired
+    private Mapper mapper;
+    @Autowired
+    private CartiglioService cartiglioService;
+    
+    @RequiresGrant
     @RequestMapping("/pratica/evento/index")
     public String nuovaComunicazione(Model model,
             @RequestParam(value = "id_pratica", required = false) Integer idPratica,
@@ -63,16 +73,18 @@ public class EventoController extends AbstractController {
         try {
             HttpSession session = request.getSession();
             if (idPratica == null) {
-                idPratica = (Integer) session.getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+                idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
             }
-            if (session.getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA) == null){
-                session.setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
+            if (MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA) == null){
+                MultiSubSessionManager.setAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
             }
             pratica = praticheService.getPratica(idPratica);
+            it.wego.cross.dto.dozer.PraticaDTO praticaDTO = mapper.map(pratica, it.wego.cross.dto.dozer.PraticaDTO.class);
+            praticaDTO.setCartiglio(cartiglioService.createCartiglio(pratica));
             List<EventoDTO> eventi = eventiService.getListaEventi(pratica.getIdPratica(), verso);
-//            pratica.setProtocollo(pratica.getProtocollo() + "/" + pratica.getAnnoRiferimento());
+
             model.addAttribute("eventi", eventi);
-            model.addAttribute("pratica", pratica);
+            model.addAttribute("pratica", praticaDTO);
             model.addAttribute("verso", verso);
             model.addAttribute("id_protocollo", idProtocollo);
             return EVENTO_SCELTA;
@@ -84,12 +96,13 @@ public class EventoController extends AbstractController {
         }
     }
 
+    @RequiresGrant
     @RequestMapping("/pratica/evento/crea")
     public String creaEvento(Model model, HttpServletRequest request, HttpServletResponse response) {
         Pratica pratica = null;
         Utente utente = utentiService.getUtenteConnesso(request);
         try {
-            Integer idPratica = (Integer) request.getSession().getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+            Integer idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
             Integer idEvento = Integer.valueOf(request.getParameter("id_evento"));
             ProcessiEventi eventoProcesso = workFlowService.findProcessiEventiById(idEvento);
             pratica = praticheService.getPratica(idPratica);

@@ -22,13 +22,40 @@
 	import="it.wego.cross.webservices.cxf.interoperability.TipologiaEventoIntegrazione"%>
 <script type="text/javascript"
 	src="/people/servizi/praticheOnLine/visura/myPage/view/default/html/yetii.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#sendIntegrationBtn").prop("disabled",true);
+		
+		$(document).on("click", '[name$="saveUploadedFile"]',function(e){
+            if($('[id="data.uploadFile"]').get(0).files.length === 0){
+                alert("File allegato obbligatorio");
+                e.preventDefault(e);
+            }else if($('[name="uploadDescription"]').val().length == 0){
+                alert("Campo \"Descrizione File\" obbligatorio");
+                e.preventDefault(e);
+            }else
+				$("#sendIntegrationBtn").prop("disabled",false);
+        })
 
+		$(document).on("click", '[id="sendIntegrationBtn"]',function(e){
+            $(this).prop("disabled",true);
+        })
+	})
+</script>
 <link rel="stylesheet" type="text/css"
 	href="/people/servizi/praticheOnLine/visura/myPage/view/default/css/bookmark.css" />
 <html:xhtml />
 <bean:define id="loopbackStartRicercaDeleganti"
 	value="javascript:executeSubmit('loopBack.do?propertyName=startRicercaDeleganti')" />
 <h1>Invia comunicazione / integrazione</h1>
+<br />
+<p><span><b>Controlli da eseguire prima di inviare l'integrazione: </b>  </span> <br><span>- il numero totale degli allegati inviati non deve eccedere i 10 file</span> <br>
+<span>- l'occupazione di spazio del singolo file inviato non deve eccedere 10 megabyte</span> <br>
+<span>- l'occupazione di spazio dei file inviati non deve eccedere 50 megabyte in totale</span> <br>
+<span>- nel nome dei file inviati non devono essere presenti caratteri speciali e lettere accentate. Per sicurezza, utilizzare solo caratteri a-z A-Z 0-9 e spazi</span> <br>
+<span>- i file devono essere firmati digitalmente p7m</span> <br>
+<span>- dopo la selezione di ogni file cliccare sempre su "submit" per aggiungerlo alla lista in calce</span> <br>
+</p>
 <br />
 <%
 	ProcessData data = (ProcessData) pplProcess.getData();
@@ -59,15 +86,16 @@
 					<td><b>Caricamento allegati</b></td>
 				</tr>
 				<tr>
-					<td>Descrizione file</td>
-					<td colspan="2"><input name="uploadDescription" type="text"
-						value="Descrizione File" size=30/></td>
+					<td>Descrivi il contenuto dell'allegato *</td>
+					<td colspan="2">
+						<input name="uploadDescription" type="text" placeholder="Descrizione" size=30/>
+					</td>
 				</tr>
 				<tr>
-					<td colspan="4"><input type="hidden" name="uploadName" />
+					<td colspan="4">
+						<input type="hidden" name="uploadName" />
  						<html:file	styleId="nomeallegato" property="data.uploadFile" />  
-						<ppl:commandUpload	styleClass="btn" property="data.allegati" indexed="">
- 						</ppl:commandUpload> 
+						<ppl:commandUpload	styleClass="btn" property="data.allegati" indexed=""></ppl:commandUpload> 
 					</td>
 				</tr>
 
@@ -148,7 +176,7 @@
 <table align="center">
 	<tr>
 		<td>
-			<button
+			<button id="sendIntegrationBtn" 
 				href="/people/loopBack.do?propertyName=inviaEventoIntegrazione"
 				title="inviaEventoIntegrazione">Invio comunicazione/integrazione</button>
 		</td>

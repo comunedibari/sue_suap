@@ -12,7 +12,8 @@ public class Allegato {
     private Boolean spedisci = Boolean.TRUE;
     private byte[] file;
     private Boolean fileOrigine = Boolean.FALSE;
-
+    private Long dimensione;
+    
     public Integer getId() {
         return id;
     }
@@ -67,6 +68,8 @@ public class Allegato {
 
     public void setFile(byte[] file) {
         this.file = file;
+        if(dimensione == null && file != null)
+			dimensione = (long) file.length;
     }
 
     public Boolean getProtocolla() {
@@ -92,4 +95,14 @@ public class Allegato {
     public void setSpedisci(Boolean spedisci) {
         this.spedisci = spedisci;
     }
+
+	public Long getDimensione() {
+		if(dimensione == null && file != null)
+			dimensione = (long) file.length;
+		return dimensione;
+	}
+
+	public void setDimensione(long dimensione) {
+		this.dimensione = dimensione;
+	}
 }

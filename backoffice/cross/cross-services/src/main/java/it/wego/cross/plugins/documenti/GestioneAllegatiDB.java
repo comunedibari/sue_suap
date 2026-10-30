@@ -5,6 +5,8 @@ import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.plugins.commons.beans.Allegato;
+
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
@@ -37,4 +39,8 @@ public class GestioneAllegatiDB implements it.wego.cross.plugins.documenti.Gesti
         //NOT SUPPORTED
         return "";
     }
+
+	@Override
+	public void add(Allegati allegato, Enti ente, LkComuni comune, Date date) throws Exception {
+	}
 }

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	  
+ <context:component-scan base-package="it.wego.cross.mailservices"/>
+<!-- --> 
+    <bean id="localContainerEntityManagerFactoryBeanCross"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+        <property name="persistenceUnitName" value="it.wego.cross-opencross" />  
+        <property name="jpaVendorAdapter">
+            <bean id="hibernateJpaVendorAdapterCross"
+                class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+                <property name="generateDdl" value="false" />
+                <property name="showSql" value="false"></property>
+            </bean>
+        </property>
+        <property name="loadTimeWeaver">
+            <bean id="instrumentationLoadTimeWeaverCross"
+                class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+        </property>
+    </bean>
+ 
+  <bean id="configurationDao" class="it.wego.cross.dao.ConfigurationDao" />
+  <bean id="gestoreMail" class="it.wego.cross.mail.GestoreMail" />
+  <bean id="mygestoreMail" class="it.wego.cross.mailservices.component.MyGestoreMail" />
+  <bean id="pluginService" class="it.wego.cross.service.PluginServiceImpl" />
+  <bean id="preConfiguredMessage" class="org.springframework.mail.SimpleMailMessage" />
+  <bean id="pluginConfigurationDao" class="it.wego.cross.dao.PluginConfigurationDao" />
+  <bean id="entiService" class="it.wego.cross.service.EntiServiceImpl" />
+  <bean id="entiDao" class="it.wego.cross.dao.EntiDao" />
+   
+ <!-- -->  
+  <bean id="praticheService" class="it.wego.cross.service.PraticheServiceImpl" />
+  <bean id="emailDao" class="it.wego.cross.dao.MailDao" />
+  <bean id="configuration" class="it.wego.cross.service.ConfigurationServiceImpl" />
+  <bean id="emailSerializer" class="it.wego.cross.serializer.EmailSerializer" />
+  <bean id="notificationEngine" class="it.wego.cross.events.notification.NotificationEngine" />
+  <bean id="mailService" class="it.wego.cross.service.MailServiceImpl" />
+  <bean id="mymailService" class="it.wego.cross.mailservices.MyMailServiceImpl" />
+  
+  <bean id="filterSerializer" class="it.wego.cross.serializer.FilterSerializer" />
+  <bean id="processiDao" class="it.wego.cross.dao.ProcessiDao" />
+  <bean id="procedimentiService" class="it.wego.cross.service.ProcedimentiServiceImpl" />
+  <bean id="procedimentiDao" class="it.wego.cross.dao.ProcedimentiDao" />
+  <bean id="authorizationDao" class="it.wego.cross.dao.AuthorizationDao" />
+  <bean id="utentiService" class="it.wego.cross.service.UtentiServiceImpl" />
+  <bean id="permessiDao" class="it.wego.cross.dao.PermessiDao" />
+  <bean id="utentiSerializer" class="it.wego.cross.serializer.UtentiSerializer" />
+  <bean id="comuniService" class="it.wego.cross.service.ComuniServiceImpl" />
+  <bean id="workFlowService" class="it.wego.cross.service.WorkFlowServiceImpl" />
+  <bean id="docEngineService" class="it.wego.cross.service.DocEngineServiceImpl" />
+  <bean id="anagraficheService" class="it.wego.cross.service.AnagraficheServiceImpl" />
+  <bean id="anagraficheDao" class="it.wego.cross.dao.AnagraficheDao" />
+  <bean id="stagingDao" class="it.wego.cross.dao.StagingDao" />
+  <bean id="anagraficaUtils" class="it.wego.cross.utils.AnagraficaUtils" />
+  <bean id="recapitoUtils" class="it.wego.cross.utils.RecapitoUtils" />
+  <bean id="templateDao" class="it.wego.cross.dao.TemplateDao" />
+  <bean id="praticheSerializer" class="it.wego.cross.serializer.PraticheSerializer" />
+  <bean id="lookupService" class="it.wego.cross.service.LookupServiceImpl" />
+  <bean id="datiCatastaliSerializer" class="it.wego.cross.serializer.DatiCatastaliSerializer" />
+  <bean id="eventiSerializer" class="it.wego.cross.serializer.EventiSerializer" />
+  <bean id="taskService" class="org.activiti.engine.impl.TaskServiceImpl" />
+
+  <bean id="indirizziInterventoService" class="it.wego.cross.service.IndirizziInterventoServiceImpl" />
+  <bean id="civiliaService" class="it.wego.cross.service.CiviliaServiceImpl" />
+  <bean id="risultatoCaricamentoPraticheDao" class="it.wego.cross.dao.RisultatoCaricamentoPraticheDao" />
+  <bean id="praticheProtocolloService" class="it.wego.cross.service.PraticheProtocolloServiceImpl" />
+  <bean id="dettaglioComunicazioneSerializer" class="it.wego.cross.serializer.DettaglioComunicazioneSerializer" />
+  <bean id="comunicazioneReaSerializer" class="it.wego.cross.events.comunicazionerea.serializer.ComunicazioneReaSerializer" />
+   
+   
+  <bean id="runtimeService" class="org.activiti.engine.impl.RuntimeServiceImpl" />
+  <bean id="eventiService" class="it.wego.cross.service.EventiServiceImpl" />
+  <bean id="processiService" class="it.wego.cross.service.ProcessiServiceImpl" />
+  <bean id="allegatiDao" class="it.wego.cross.dao.AllegatiDao" />
+  <bean id="erroriService" class="it.wego.cross.service.ErroriServiceImpl" />
+  <bean id="erroriDao" class="it.wego.cross.dao.ErroriDao" />
+  <bean id="erroriSerializer" class="it.wego.cross.serializer.ErroriSerializer" />
+  <bean id="usefulDao" class="it.wego.cross.dao.UsefulDao" />
+  <bean id="usefulService" class="it.wego.cross.service.UsefulServiceImpl" />
+  
+  <bean id="clearService" class="it.wego.cross.service.ClearServiceImpl" />
+  <bean id="clearSerializer" class="it.wego.cross.serializer.ClearSerializer" />
+  <bean id="protocolloRuvo" class="it.wego.cross.service.ProtocolloServiceImpl" />
+  <bean id="protocolloBari" class="it.wego.cross.plugins.GestioneProtocolloBari" />
+  <bean id="protocolloRuvoGst" class="it.wego.cross.plugins.GestioneProtocolloRuvo" />
+  <bean id="crossBoFo" class="it.wego.cross.people.CrossBoFo" />
+  <bean id="systemEventAction" class="it.wego.cross.actions.SystemEventAction" />
+  <bean id="anagraficheSerializer" class="it.wego.cross.serializer.AnagraficheSerializer" />
+  <bean id="recapitiSerializer" class="it.wego.cross.serializer.RecapitiSerializer" />
+  <bean id="stagingService" class="it.wego.cross.service.StagingServiceImpl" />
+  <bean id="datiCatastaliService" class="it.wego.cross.service.DatiCatastaliServiceImpl" />
+  
+  <bean id="praticheAction" class="it.wego.cross.actions.PraticheAction" />
+  <bean id="workflowAction" class="it.wego.cross.actions.WorkflowAction" />
+  <bean id="erroriAction" class="it.wego.cross.actions.ErroriAction" />
+  <bean id="mailAction" class="it.wego.cross.actions.EmailAction" />
+  <bean id="anagraficaAction" class="it.wego.cross.actions.AnagraficaAction" />
+  <bean id="allegatiService" class="it.wego.cross.service.AllegatiServiceImpl" />
+  <bean id="gestioneAllegatiFS" class="it.wego.cross.plugins.documenti.GestioneAllegatiFS" />
+  <bean id="gestioneAllegatiDB" class="it.wego.cross.plugins.documenti.GestioneAllegatiDB" />
+  <bean id="comunicazioneReaService" class="it.wego.cross.events.comunicazionerea.service.ComunicazioneReaServiceImpl" />
+  <bean id="comunicazioneReaDao" class="it.wego.cross.events.comunicazionerea.dao.ComunicazioneReaDao" />
+  <bean id="registroImpreseService" class="it.wego.cross.service.RegistroImpreseServiceImpl" />  
+  <bean id="praticaDao" class="it.wego.cross.dao.PraticaDao" />
+  <bean id="jobmail" class="it.wego.cross.mailservices.scheduler.JobElaboraMail" />
+  
+</beans>

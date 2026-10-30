@@ -4,7 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:if test="${!abilitazioneConsultazione}">
 <input type="submit" name="submit" class="nascondiutente insersisciNota crea_nuovo_evento" value="<spring:message code="pratica.comunicazione.dettaglio.note.inserisci"/>"/>
+</c:if>
 <table cellspacing="0" cellpadding="0" class="master elencoNote" >
     <tr>
         <th><spring:message code="pratica.comunicazione.dettaglio.note.Data"/></th>

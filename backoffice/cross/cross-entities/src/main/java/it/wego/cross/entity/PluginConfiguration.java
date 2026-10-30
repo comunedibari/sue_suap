@@ -29,8 +29,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PluginConfiguration.findAll", query = "SELECT c FROM PluginConfiguration c"),
     @NamedQuery(name = "PluginConfiguration.findById", query = "SELECT c FROM PluginConfiguration c WHERE c.id = :id"),
     @NamedQuery(name = "PluginConfiguration.findByName", query = "SELECT c FROM PluginConfiguration c WHERE c.name = :name"),
+    @NamedQuery(name = "PluginConfiguration.changeByName", query = "UPDATE PluginConfiguration c SET c.value=:value WHERE c.name = :name"),
     @NamedQuery(name = "PluginConfiguration.findByValue", query = "SELECT c FROM PluginConfiguration c WHERE c.value = :value"),
-    @NamedQuery(name = "PluginConfiguration.findByNote", query = "SELECT c FROM PluginConfiguration c WHERE c.note = :note")})
+    @NamedQuery(name = "PluginConfiguration.findByNote", query = "SELECT c FROM PluginConfiguration c WHERE c.note = :note"),
+    @NamedQuery(name = "PluginConfiguration.findByInstitution", query = "SELECT c FROM PluginConfiguration c WHERE c.idEnte = :institution")
+})
 public class PluginConfiguration implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

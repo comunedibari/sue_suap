@@ -1,0 +1,4 @@
+24-07-31 : the process to extract owner of paperworks has to change:
+	the script will save it in a temporary table
+	
+	change the script for population so that it use the aforementioned temporary table

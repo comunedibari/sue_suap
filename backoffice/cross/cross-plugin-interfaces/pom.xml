@@ -1,33 +1,81 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-<parent>
-        <groupId>it.wego.cross</groupId>
-        <artifactId>cross</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../cross</relativePath>
-</parent>
+	<parent>
+		<groupId>it.wego.cross</groupId>
+		<artifactId>cross</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../cross</relativePath>
+	</parent>
 
-    
-    <groupId>it.wego.cross.plugins</groupId>
-    <artifactId>cross-plugin-interfaces</artifactId>
-    <packaging>jar</packaging>
-    <dependencies>
-         <dependency>
+	<groupId>it.wego.cross.plugins</groupId>
+	<artifactId>cross-plugin-interfaces</artifactId>
+	<packaging>jar</packaging> 
+	
+	<properties>
+	   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    	<java.version>1.8</java.version>
+      	<maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+	</properties>
+	
+  <dependencies>
+	<dependency>
             <groupId>it.wego.cross</groupId>
             <artifactId>cross-entities</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cross-xml</artifactId>
-            <version>${project.version}</version>
+          <groupId>it.wego.cross.plugins</groupId>
+    <artifactId>cross-xml</artifactId>
+     <version>1.0-SNAPSHOT</version>
         </dependency>
-       <!--  <dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-			<version>2.2.7</version>
-		</dependency> -->
-    </dependencies>
+				
+  </dependencies>
+  
+  
+  <build>
+	<resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <includes>
+                <include>**/*.properties</include>
+            </includes>
+        </resource>
+    </resources>       
+<!--  
+    <plugins>
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-codegen-plugin</artifactId>
+        <version>2.7.7</version>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <configuration>
+              <sourceRoot>${basedir}/src/main/java/generated/cxf</sourceRoot>
+              <wsdlOptions>
+                <wsdlOption>
+                  <wsdl>${basedir}/src/main/resources/WSAddUd.wsdl</wsdl>
+                  <extraargs>
+                    <extraarg>-impl</extraarg>
+                    <extraarg>-verbose</extraarg>
+                  </extraargs>
+                </wsdlOption>
+              </wsdlOptions>
+            </configuration>
+            <goals>
+              <goal>wsdl2java</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+ -->
+     
+  </build>
+  
 </project>

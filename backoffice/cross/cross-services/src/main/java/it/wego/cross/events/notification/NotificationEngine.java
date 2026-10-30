@@ -72,6 +72,6 @@ public class NotificationEngine {
         //Rimuove duplicati e null
         List<String> assignee = ImmutableSet.copyOf(Iterables.filter(assigneeList, Predicates.not(Predicates.isNull()))).asList();
         variables.put(Workflow.DESTINATARI_NOTIFICA, assignee);
-        runtimeService.startProcessInstanceByMessage("nuovaNotifica", variables);
+//        runtimeService.startProcessInstanceByMessage("nuovaNotifica", variables);
     }
 }

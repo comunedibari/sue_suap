@@ -10,8 +10,12 @@ package it.wego.cross.constants;
  */
 public class AnaTipiEvento  {
 
+    public static final String MODIFICA_TECNICO_PROCURATORE = "MODPROC";
+    public static final String RIASSEGNAZIONE_TEMPORIZZATA = "RIASPRAT";
     public static final String RICEZIONE_PRATICA = "RIC";
+    public static final String INTEGRATION_CODE = "PROCINT";
     public static final String RICEZIONE_COMUNICAZIONE_DA_SISTEMA = "CROSS_RICPAR";
+    public static final String CHANGE_STATUS = "CNGSTS";
     
     public static final String EVENTO_CHIUSURA_FORZATA_DA_PRATICA_PADRE = "CHIFORZDAPADRE";
     public static final String EVENTO_CHIUSURA_POSITIVA_DA_PRATICA_PADRE = "CHIPOSDAPADRE";

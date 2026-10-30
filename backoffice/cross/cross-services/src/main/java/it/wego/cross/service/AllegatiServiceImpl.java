@@ -128,6 +128,7 @@ public class AllegatiServiceImpl implements AllegatiService {
 				a.setFileContent(allegato.getFile());
 			} else if (!Utils.e(allegato.getPathFile())) {
 				a.setFileContent(gestioneAllegatiFS.getFileContent(allegato, ente, null));
+				a.setPathFile(allegato.getPathFile());
 			} else {
 				GestioneAllegati ga = pluginService.getGestioneAllegati(idEnte, null);
 				a.setFileContent(ga.getFileContent(allegato, ente, null));
@@ -426,7 +427,7 @@ public class AllegatiServiceImpl implements AllegatiService {
 			e.printStackTrace();
 		}
 		
-    	String createTempFile = gestioneAllegatiFS.createTempFile("SUAPENTE.xml", xml.getBytes(), enteSuap, null);
+    	String createTempFile = gestioneAllegatiFS.createTempFile("SUAPENTE.xml", xml.getBytes(), enteSuap, pratica.getIdComune());
     	MultipartFile filea = new MockMultipartFile("SUAPENTE.xml", "SUAPENTE.xml", "application/octet-stream", xml.getBytes());
 		suapEnte.setDescrizione("Comunicazione Suap Ente_" + Utils.convertDataToString(new java.util.Date()));
 		suapEnte.setNomeFile("SUAPENTE.xml");

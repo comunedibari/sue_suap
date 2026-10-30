@@ -4,6 +4,7 @@
  */
 package it.wego.cross.actions;
 
+import it.wego.cross.constants.SessionConstants;
 import it.wego.cross.dao.AllegatiDao;
 import it.wego.cross.dto.AllegatoDTO;
 import it.wego.cross.dto.EventoDTO;
@@ -65,11 +66,16 @@ public class AllegatiAction {
         String desEvento = eventoDaGestire.getDescrizione();
         ProcessiEventi evt = processiService.requireEventoDiSistema(processoEvento.getCodEvento(), desEvento, pratica.getIdProcesso());
         evento.setIdEvento(evt);
-        evento.setDataEvento(new Date());
+        Date date = eventoDaGestire.getDataEvento() != null ? Utils.italianFormatToDate(eventoDaGestire.getDataEvento()): new Date();
+        evento.setDataEvento(date);
         evento.setIdUtente(utenteConnesso);
         evento.setVisibilitaCross("S");
         evento.setVisibilitaUtente("N");
         evento.setDescrizioneEvento(desEvento);
+        if(eventoDaGestire.getCodEvento().equals(SessionConstants.CODICE_EVENTO_CARICA_DOC_PROT)) {
+        	evento.setDataProtocollo(eventoDaGestire.getDataProtocollo());
+        	evento.setProtocollo(eventoDaGestire.getNumProtocollo());
+        }
         evento.setNote("Caricamento allegati su sitema documentale");
         praticheService.saveProcessoEvento(evento);
         usefulService.flush();
@@ -91,9 +97,17 @@ public class AllegatiAction {
             for (AllegatoDTO dto : allegatiDto) {
                 Allegati allegato = new Allegati();
                 allegato.setDescrizione(dto.getDescrizione());
-                allegato.setFile(dto.getFile().getBytes());
+                allegato.setTipoFile(dto.getTipoFile());
+                if(dto.getFile() != null) {
+                	allegato.setFile(dto.getFile().getBytes());
+                	allegato.setTipoFile(dto.getFile().getContentType());
+                }
                 allegato.setNomeFile(Utils.normalizeFileName(dto.getNomeFile()));
-                allegato.setTipoFile(dto.getFile().getContentType());
+                System.out.println("getAllegati :  dto.getNomeFile() " + dto.getNomeFile());
+                System.out.println("getAllegati : dto.getPathFile() " + dto.getPathFile());
+                if (dto.getPathFile() != null) 
+                	allegato.setPathFile(dto.getPathFile());
+                System.out.println("getAllegati : allegato.getPathFile() " + allegato.getPathFile());
                 allegatiDao.insertAllegato(allegato);
                 usefulService.flush();
                 allegati.add(allegato);

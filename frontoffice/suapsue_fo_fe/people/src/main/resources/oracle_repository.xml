@@ -49,8 +49,8 @@
 		protocol="jdbc" 
 		subprotocol="oracle" 
 		dbalias="thin:@fabmi-xp:1521:xe" 
-		username="PEOPLE" 
-		password="PEOPLE" 
+		username="" 
+		password="" 
 		useAutoCommit="1">
 		<connection-pool maxActive="1000" maxIdle="10" whenExhaustedAction="2" 
 			testOnBorrow="true" timeBetweenEvictionRunsMillis="5000"/>

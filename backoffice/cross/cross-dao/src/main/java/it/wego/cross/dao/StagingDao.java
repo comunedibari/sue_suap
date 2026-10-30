@@ -25,6 +25,11 @@ public class StagingDao {
     @PersistenceContext
     private EntityManager em;
 
+    public StagingDao(EntityManager em) {
+    	this.em = em;
+    }
+    public StagingDao() {}
+    
     public void insert(Object object) throws Exception {
         em.persist(object);
     }

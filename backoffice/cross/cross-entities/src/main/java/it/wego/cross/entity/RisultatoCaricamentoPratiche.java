@@ -17,7 +17,9 @@ import java.util.Date;
 @NamedQueries({
 @NamedQuery(name="RisultatoCaricamentoPratiche.findAll", query="SELECT r FROM RisultatoCaricamentoPratiche r"),
 @NamedQuery(name="RisultatoCaricamentoPratiche.findByIdRisultatoCaricamento", query="SELECT r FROM RisultatoCaricamentoPratiche r where r.idRisultatoCaricamento = :idRisultatoCaricamento"),
-@NamedQuery(name="RisultatoCaricamentoPratiche.findByIdentificativoPratiche", query="SELECT r FROM RisultatoCaricamentoPratiche r where r.identificativoPratica = :identificativoPratica")})
+@NamedQuery(name="RisultatoCaricamentoPratiche.findByIdentificativoPratiche", query="SELECT r FROM RisultatoCaricamentoPratiche r where r.identificativoPratica = :identificativoPratica"),
+@NamedQuery(name="RisultatoCaricamentoPratiche.findByPratica", query="SELECT r FROM RisultatoCaricamentoPratiche r where r.idPratica = :idPratica")
+})
 public class RisultatoCaricamentoPratiche implements Serializable {
 	private static final long serialVersionUID = 1L;
 

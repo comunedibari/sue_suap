@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "PraticheEventi.findAll", query = "SELECT p FROM PraticheEventi p"),
     @NamedQuery(name = "PraticheEventi.findByIdPraticaEvento", query = "SELECT p FROM PraticheEventi p WHERE p.idPraticaEvento = :idPraticaEvento"),
+    @NamedQuery(name = "PraticheEventi.findByIdPraticaOrderByDataEventoDesc", query = "SELECT p FROM PraticheEventi p WHERE p.idPratica.idPratica = :idPratica ORDER BY p.dataEvento desc"),
     @NamedQuery(name = "PraticheEventi.findByDataEvento", query = "SELECT p FROM PraticheEventi p WHERE p.dataEvento = :dataEvento"),
     @NamedQuery(name = "PraticheEventi.findByOggetto", query = "SELECT p FROM PraticheEventi p WHERE p.oggetto = :oggetto"),
     @NamedQuery(name = "PraticheEventi.findByNote", query = "SELECT p FROM PraticheEventi p WHERE p.note = :note"),
@@ -45,7 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PraticheEventi.findByVerso", query = "SELECT p FROM PraticheEventi p WHERE p.verso = :verso"),
     @NamedQuery(name = "PraticheEventi.findByVisibilitaCross", query = "SELECT p FROM PraticheEventi p WHERE p.visibilitaCross = :visibilitaCross"),
     @NamedQuery(name = "PraticheEventi.findByVisibilitaUtente", query = "SELECT p FROM PraticheEventi p WHERE p.visibilitaUtente = :visibilitaUtente"),
-    @NamedQuery(name = "PraticheEventi.findByPraticaEventoRef", query = "SELECT p FROM PraticheEventi p WHERE p.praticaEventoRef = :praticaEventoRef")})
+    @NamedQuery(name = "PraticheEventi.findByPraticaEventoRef", query = "SELECT p FROM PraticheEventi p WHERE p.praticaEventoRef = :praticaEventoRef"),
+    @NamedQuery(name = "PraticheEventi.findByDateToReassign", query = "SELECT p FROM PraticheEventi p WHERE p.dataRiassegnazione =  :targetData")
+})
 public class PraticheEventi implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -114,7 +117,13 @@ public class PraticheEventi implements Serializable {
     @JoinColumn(name = "pratica_evento_ref", referencedColumnName = "id_pratica_evento")
     @ManyToOne
     private PraticheEventi praticaEventoRef;
-
+    @JoinColumn(name = "id_utente_riassegnazione", referencedColumnName = "id_utente")
+    @ManyToOne
+    private Utente utenteRiassegnazione;
+    @Column(name = "data_riassegnazione")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataRiassegnazione;
+    
     public PraticheEventi() {
     }
 
@@ -320,7 +329,23 @@ public class PraticheEventi implements Serializable {
         this.praticaEventoRef = praticaEventoRef;
     }
 
-    @XmlTransient
+    public Utente getUtenteRiassegnazione() {
+		return utenteRiassegnazione;
+	}
+
+	public void setUtenteRiassegnazione(Utente utenteRiassegnazione) {
+		this.utenteRiassegnazione = utenteRiassegnazione;
+	}
+
+	public Date getDataRiassegnazione() {
+		return dataRiassegnazione;
+	}
+
+	public void setDataRiassegnazione(Date dataRiassegnazione) {
+		this.dataRiassegnazione = dataRiassegnazione;
+	}
+
+	@XmlTransient
     public List<PraticaEventiProcedimenti> getPraticaEventiProcedimentiList() {
         return praticaEventiProcedimentiList;
     }

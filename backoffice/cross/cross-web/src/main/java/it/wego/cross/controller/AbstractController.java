@@ -75,6 +75,8 @@ import org.xml.sax.SAXException;
 @Controller
 public abstract class AbstractController {
 
+	protected static final String AJAX_PAGE = "ajax";
+			
     public String codEnteSelezionato = null;
     public String codUtenteEnte = null;
     public String selected = null;
@@ -167,7 +169,7 @@ public abstract class AbstractController {
         } else if (authUser == null && !request.getRequestURI().equals(path + "/protected/index.htm")) {
             acl = false;
         } else {
-            if (authUser != null && (authUser.getSuperuser().equals("S") || ((authUser.getUtenteRuoloEnte() != null && !authUser.getUtenteRuoloEnte().isEmpty())))) {
+            if (authUser != null && ("S".equals(authUser.getSuperuser()) || (authUser.getUtenteRuoloEnte() != null && !authUser.getUtenteRuoloEnte().isEmpty()))) {
                 acl = true;
                 model.addAttribute("utenteConnesso", authUser);
             } else {

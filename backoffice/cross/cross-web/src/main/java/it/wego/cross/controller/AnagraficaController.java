@@ -11,10 +11,13 @@ import it.gov.impresainungiorno.schema.suap.ri.spc.IscrizioneImpresaRiSpcRespons
 import it.wego.cross.actions.AnagraficaAction;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.UtentiAction;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.grid.GridAnagraficaBean;
 import it.wego.cross.beans.grid.GridIdStringListBean;
 import it.wego.cross.beans.layout.JqgridPaginator;
 import it.wego.cross.beans.layout.Message;
+import it.wego.cross.civilia.CiviliaMapperDao;
+import it.wego.cross.civilia.Costants;
 import it.wego.cross.constants.Constants;
 import it.wego.cross.dto.AnagraficaDTO;
 import it.wego.cross.dto.ErroreDTO;
@@ -28,6 +31,7 @@ import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.LkProvincie;
 import it.wego.cross.entity.Pratica;
+import it.wego.cross.entity.PraticaAnagrafica;
 import it.wego.cross.exception.CrossException;
 import it.wego.cross.plugins.anagrafe.GestioneAnagrafePersonaFisica;
 import it.wego.cross.serializer.AnagraficheSerializer;
@@ -60,6 +64,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import it.wego.cross.constants.SessionConstants;
+import it.wego.cross.cross_dms.DMSClientDao;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -104,6 +110,12 @@ public class AnagraficaController extends AbstractController {
     private ErroriAction erroriAction;
     @Autowired
     private AnagraficaUtils anagraficaUtils;
+    @Autowired
+    private CiviliaMapperDao civiliaMapper;
+    @Autowired
+    private DMSClientDao dmsClient;
+    
+    
     private static final String AJAX = "ajax";
     private static final String DETTAGLIO_ANAGRAFICA = "anagrafica_dettaglio";
     private static final String DETTAGLIO_AZIENDA = "azienda_dettaglio";
@@ -155,12 +167,14 @@ public class AnagraficaController extends AbstractController {
         }
     }
 
+    @RequiresGrant
     @RequestMapping("/gestione/anagrafiche/nuova")
     public String inserisciAnagrafica(Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("anagrafica", new AnagraficaDTO());
         return NUOVA_ANAGRAFICA;
     }
 
+    @RequiresGrant
     @RequestMapping("/gestione/anagrafiche/salva")
     public String salva(Model model, HttpServletRequest request,
             @ModelAttribute("anagrafica") AnagraficaDTO anagrafica,
@@ -230,10 +244,12 @@ public class AnagraficaController extends AbstractController {
         return result;
     }
 
+    @RequiresGrant
     @RequestMapping("/gestione/anagrafiche/modifica")
     public String modifica(Model model, HttpServletRequest request, HttpServletResponse response) {
         AnagraficaDTO dto = null;
         Map<Integer, String> lista = new HashMap<Integer, String>();
+        String readonly = (String) request.getParameter("readonly");
         try {
             Integer idAnagrafica = Integer.valueOf(request.getParameter("idAnagrafica"));
             Anagrafica anagrafica = anagraficheService.findAnagraficaById(idAnagrafica);
@@ -271,10 +287,12 @@ public class AnagraficaController extends AbstractController {
         }
         model.addAttribute("ListaTipoIndirizzo", lista);
         model.addAttribute("anagrafica", dto);
-
+        if(readonly != null && readonly.length() > 0)
+        	model.addAttribute("readonly", readonly);
         return MODIFICA_ANAGRAFICA;
     }
 
+    @RequiresGrant
     @RequestMapping("/gestione/anagrafiche/modifica/ajax")
     public String modificaAjax(Model model, HttpServletRequest request, HttpServletResponse response,
             @ModelAttribute("anagrafica") AnagraficaDTO anagrafica,
@@ -524,13 +542,35 @@ public class AnagraficaController extends AbstractController {
     @RequestMapping("/pratica/comunicazione/dettaglio/anagrafica")
     public String dettaglioAnagrafica(Model model, HttpServletRequest request, HttpServletResponse response) {
         try {
-            Log.APP.info("ID anagrafica ricevuto " + request.getParameter("id_anagrafica"));
-            Integer idAnagrafica = Integer.valueOf(request.getParameter("id_anagrafica"));
-            Anagrafica anagrafica = anagraficheService.findAnagraficaById(idAnagrafica);
-            AnagraficaDTO ana = AnagraficheSerializer.serializeAnagrafica(anagrafica);
-            List<RecapitoDTO> recapiti = ana.getRecapiti();
+        	String provenienza = request.getParameter("provenienza");
+        	String identificativoPratica = request.getParameter("identificativo_pratica");
+            String idAnagrafica = request.getParameter("id_anagrafica");
+            String idxAnagrafica = request.getParameter("idx");
+            Integer idx_anagrafica = Integer.valueOf(idxAnagrafica == null || idxAnagrafica.length() == 0? "0" : idxAnagrafica );
+        	Log.APP.info("identificativo_pratica: " + identificativoPratica + ", id_anagrafica " + idAnagrafica + ", provenienza: " + provenienza  + ", idx:" + idx_anagrafica);
+  
+            AnagraficaDTO anagraficaDTO = null;
+            Anagrafica anagrafica = null;
+            
+            if(provenienza != null) {
+	            switch(provenienza) {
+	            case Costants.CIVILIA:
+	            	anagrafica = civiliaMapper.findAnagraficaById(Integer.valueOf(idAnagrafica));
+	                break;
+	            case Costants.DMS:
+	            	List<PraticaAnagrafica> praticaAnagraficaDms = dmsClient.getListAnagraficheById(identificativoPratica);
+	            	anagrafica = praticaAnagraficaDms.get(idx_anagrafica).getAnagrafica();
+	            	break;
+	            default:
+	            	anagrafica = anagraficheService.findAnagraficaById(Integer.valueOf(idAnagrafica));
+	            }
+            } else
+            	anagrafica = anagraficheService.findAnagraficaById(Integer.valueOf(idAnagrafica));
+            anagraficaDTO = AnagraficheSerializer.serializeAnagrafica(anagrafica);   
+            
+            List<RecapitoDTO> recapiti = anagraficaDTO.getRecapiti();
             model.addAttribute("recapiti", recapiti);
-            model.addAttribute("anagrafica", ana);
+            model.addAttribute("anagrafica", anagraficaDTO);
         } catch (Exception e) {
             Log.WS.error("Errore nel ricercare l'anagrafica selezionata", e);
             ErroreDTO error = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICA_COMUNICAZIONE_DETTAGLIO_ANAGRAFICA, "Errore nell'esecuzione del controller /pratica/comunicazione/dettaglio/anagrafica", e, null, null);

@@ -120,7 +120,7 @@ Logger logger = LoggerFactory.getLogger("fineInvio.jsp");
 				     result=GetToken .getToken(urlMlf);			
                
 					%>
-					<a id="urlSatisfaction" href="http://opinioni.egov.ba.it/ls/index.php/<bean:message key="cod.servizio"/><%=result%>" target="_blank">Valutazione del grado di soddisfazione dell'utente </a>		
+					<a id="urlSatisfaction" href="https://questionari.comune.bari.it/index.php/388811?token=fstfbAfi5vjtHb5&newtest=Y" target="_blank">Valutazione del grado di soddisfazione dell'utente </a>		
 					
 					<%
 			

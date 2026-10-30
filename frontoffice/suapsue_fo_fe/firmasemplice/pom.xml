@@ -15,12 +15,12 @@
 		<juh>3.0.1</juh>
 		<xstream>1.3.1</xstream>
 		<unoil>3.0.1</unoil>
-		<bcmail-jdk15>1.45.0</bcmail-jdk15>
+		<bcmail-jdk16>1.45.0</bcmail-jdk16>
 		<serializer>1.0</serializer>
 		<jodconverter-core>3.0beta3</jodconverter-core>
 		<commons-logging>1.1.1</commons-logging>
 		<commons-fileupload>1.2.2</commons-fileupload>
-		<bcprov-jdk15>1.45.0</bcprov-jdk15>
+		<bcprov-jdk16>1.45.0</bcprov-jdk16>
 		<jurt>3.0.1</jurt>
 		<commons-cli>1.1</commons-cli>
 		<xalan>1.0</xalan>
@@ -132,8 +132,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle.bcmail</groupId>
-			<artifactId>bcmail-jdk15</artifactId>
-			<version>${bcmail-jdk15}</version>
+			<artifactId>bcmail-jdk16</artifactId>
+			<version>${bcmail-jdk16}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>*</artifactId>
@@ -187,8 +187,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle.bcprovider</groupId>
-			<artifactId>bcprov-jdk15</artifactId>
-			<version>${bcprov-jdk15}</version>
+			<artifactId>bcprov-jdk16</artifactId>
+			<version>${bcprov-jdk16}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>*</artifactId>

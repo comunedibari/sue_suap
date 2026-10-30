@@ -104,10 +104,6 @@ permissions and limitations under the Licence.
 			<%=navBarObject.getCurrentStepName()%>
 		</td>
     		<td align="right" class="path" rowspan="2">
-                        <ppl:userPanelLoopback processName="pplProcess" view="<%=IUserPanel.ViewTypes.bugSignalling.getViewName() %>" 
-                            labelKey="label.userfunctionspanel.sendbug" altKey="" titleKey="" openinNewWindow="false" styleClass="btnLink" />
-                        <ppl:userPanelLoopback processName="pplProcess" view="<%=IUserPanel.ViewTypes.sendSuggestion.getViewName() %>" 
-                            labelKey="label.userfunctionspanel.sendsuggestion" altKey="" titleKey="" openinNewWindow="false" styleClass="btnLink" />
     			<% if (!disabled && showLink) { %>
 				    <html:submit property="<%=ButtonKey.MY_PROCESS%>" styleClass="btnLink">
 						<bean:message key="<%=ButtonKey.MY_PROCESS%>"/>

@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -33,7 +34,7 @@ public class ErroriAction {
     @Autowired
     protected UsefulDao usefulDao;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Integer saveError(ErroreDTO errore) {
         try {
             Log.APP.error(errore.getDescrizione(), errore.getException());
@@ -60,6 +61,16 @@ public class ErroriAction {
         errore.setIdUtente(utente != null ? utente.getIdUtente() : null);
         errore.setException(e);
         return errore;
+    }
+
+    public ErroreDTO getError(String errorCode, String description, int idPratica) {
+    	ErroreDTO errore = new ErroreDTO();
+    	errore.setCodErrore(errorCode);
+    	errore.setData(new Date());
+    	errore.setDescrizione(description);
+    	errore.setStatus("A");
+    	errore.setIdPratica(idPratica);
+    	return errore;
     }
 
     @Transactional

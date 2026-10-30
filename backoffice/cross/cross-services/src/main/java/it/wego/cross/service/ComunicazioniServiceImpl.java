@@ -7,6 +7,8 @@ package it.wego.cross.service;
 import it.wego.cross.beans.AnagraficaRecapito;
 import it.wego.cross.beans.AttoriComunicazione;
 import it.wego.cross.beans.MailContentBean;
+import it.wego.cross.constants.AnaTipiEvento;
+import it.wego.cross.constants.Constants;
 import it.wego.cross.dao.ComunicazioniDao;
 import it.wego.cross.dao.EntiDao;
 import it.wego.cross.dao.ProcedimentiDao;
@@ -193,13 +195,16 @@ public class ComunicazioniServiceImpl implements ComunicazioniService {
         for (ProcessiEventiScadenze pes : processoEvento.getProcessiEventiScadenzeList()) {
             comunicazione.getScadenzeCustom().add(new ScadenzaDTO(pes.getLkScadenze().getIdAnaScadenze(), pes.getLkScadenze().getDesAnaScadenze(), pes.getTerminiScadenza()));
         }
-        if ("I".equalsIgnoreCase(processoEvento.getVerso().toString())) {
+        if (processoEvento.getVerso() != null && "I".equalsIgnoreCase(processoEvento.getVerso().toString())) {
             //Tab Attivo: Mittenti
             comunicazione.setActiveTab("#frame4");
             comunicazione.setInviaEmail(Boolean.FALSE);
         } else {
-            //Tab Attivo: Comuniczione
-            comunicazione.setActiveTab("#frame1");
+        	if(AnaTipiEvento.RIASSEGNAZIONE_TEMPORIZZATA.equals(processoEvento.getCodEvento()))
+        		comunicazione.setActiveTab("#frame9");
+        	else
+        		//Tab Attivo: Comuniczione
+        		comunicazione.setActiveTab("#frame1");
         }
     }
 

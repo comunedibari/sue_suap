@@ -65,7 +65,7 @@ public class IdentificatoreProtocolloIstanzaConverter implements ConfigurableCus
     public static PraticheEventi getEventoRicezionePratica(Pratica praticaCross) throws Exception {
         PraticheEventi eventoRicezione = null;
         for (PraticheEventi eventoPratica : praticaCross.getPraticheEventiList()) {
-            if (eventoPratica.getIdEvento().getCodEvento().equals(AnaTipiEvento.RICEZIONE_PRATICA)) {
+            if (eventoPratica.getIdEvento() != null && AnaTipiEvento.RICEZIONE_PRATICA.equals(eventoPratica.getIdEvento().getCodEvento())) {
                 eventoRicezione = eventoPratica;
             }
         }

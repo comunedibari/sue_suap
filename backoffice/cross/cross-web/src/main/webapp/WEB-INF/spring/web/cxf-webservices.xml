@@ -21,15 +21,14 @@
     <bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" parent="abstractLoggingInterceptor"/>
     <bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" parent="abstractLoggingInterceptor"/>
     
-<!--     <http-conf:conduit name="*.http-conduit">  -->
-<!--         <http-conf:tlsClientParameters disableCNCheck="true" secureSocketProtocol="TLS">  -->
-<!--             <sec:keyManagers keyPassword="cle" >  -->
-<!--                 <sec:keyStore type="jks" password="cle"  -->
-<!--                     file ="/usr/local/apache-tomcat-6.0.41/webapps/cross/WEB-INF/classes/META-INF/suapbari.jks" /> -->
-<!--                     file="C:\SUESUAP\GIT\suap-sue\backoffice\cross\cross-web\src\main\resources\META-INF\suapbari.jks"  -->
-<!--             </sec:keyManagers> </http-conf:tlsClientParameters>  -->
-<!--             <http-conf:client Connection="Keep-Alive" MaxRetransmits="1" AllowChunking="false" />  -->
-<!--         </http-conf:conduit> -->
+    <http-conf:conduit name="*.http-conduit"> 
+        <http-conf:tlsClientParameters disableCNCheck="true" secureSocketProtocol="TLS"> 
+            <sec:keyManagers keyPassword="" > 
+                <sec:keyStore type="jks" password="" 
+                    file ="${suap.sue.cxf.webservices.file}"/>
+            </sec:keyManagers> </http-conf:tlsClientParameters> 
+            <http-conf:client Connection="Keep-Alive" MaxRetransmits="1" AllowChunking="false" /> 
+        </http-conf:conduit>
 
     <cxf:bus>
         <cxf:inInterceptors>

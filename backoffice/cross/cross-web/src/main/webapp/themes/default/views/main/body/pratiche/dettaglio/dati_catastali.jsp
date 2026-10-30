@@ -4,12 +4,19 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="it.wego.cross.civilia.Costants" %>
+
 <script type="text/javascript">
-    var urlDatiCatastali = "${path}/pratiche/dettaglio/formDatiCatastaliAjax.htm";
+	var path = "${path}";
+	var linkgeolocale = '<spring:message code="pratica.comunicazione.dettaglio.immobile.linkgeolocale"/>';
+	var immobileButton = '<spring:message code="pratica.comunicazione.dettaglio.immobile.button"/>';
+	var eliminaCatastale = '<spring:message code="datiCatastali.button.eliminaCatastale"/>';
+	var urlDatiCatastali = "${path}/pratiche/dettaglio/formDatiCatastaliAjax.htm";
     var esistenzaRicercaCatasto = "${esistenzaRicercaCatasto}";
     var urlCercaCatasto = "${path}/pratica/ricercatocatasto.htm";
     var msgDelete = '<spring:message code="pratica.comunicazione.dettaglio.immobile.cancella"/>';
     $(document).ready(function () {
+        
         $("#dialog-form").dialog({
             autoOpen: false,
             height: $(window).height() * 0.8,
@@ -38,7 +45,7 @@
         });
 
         $('.datoCatstale.box-unlink-datoCatastale').on('click', deleteDatoCatastale);
-        $('.datoCatstale.cerca_lente_rosso.showdetail-datoCatastale').on('click', modificaDatoCatastale);
+        $('.datoCatstale.cerca_lente_dettaglio.showdetail-datoCatastale').on('click', modificaDatoCatastale);
     });
 
     function eseguiClick(action) {
@@ -175,10 +182,43 @@
                         $("#datoCatastale_" + datoCatastale.idImmobile + " .box_mappaleTavolare").removeClass("hidden");
                         $("#datoCatastale_" + datoCatastale.idImmobile + " .box_subalternoTavolare").removeClass("hidden");
                     }
+                    
+                    addRowToTableToCadastralData(datoCatastale);
+                    $("#cadastralDataEmptyRow").remove();
                 }
             }
         });
     }
+    
+    function addRowToTableToCadastralData(datoCatastale){
+    	var tableRow = '<td>'+datoCatastale.desSistemaCatastale+'</td>';
+        tableRow += '<td>'+datoCatastale.desTipoUnita+'</td>';
+        tableRow += '<td>'+datoCatastale.sezione+'</td>';
+        tableRow += '<td>'+datoCatastale.foglio+'</td>';
+        tableRow += '<td>'+datoCatastale.mappale+'</td>';
+        tableRow += '<td>'+datoCatastale.subalterno+'</td>';
+        tableRow += '<td>'+createCadastralDataCellAction(datoCatastale)+'</td>';
+        $("#tableCadastralDataTable tbody").append('<tr id="TRdatoCatastale_'+datoCatastale.idImmobile+'">'+tableRow+'</tr>');
+        $('#TRdatoCatastale_'+datoCatastale.idImmobile+' .datoCatstale.box-unlink-datoCatastale').on('click', deleteDatoCatastale);
+        $('#TRdatoCatastale_'+datoCatastale.idImmobile+' .datoCatstale.cerca_lente_dettaglio.showdetail-datoCatastale').on('click', modificaDatoCatastale);
+    }
+
+    function createCadastralDataCellAction(datoCatastale){
+    	action = "";
+    	if(!!datoCatastale.urlCatasto){
+	        action += '<a href="'+datoCatastale.urlCatasto+'" target="_blank" title="'+linkgeolocale+'">'+
+	            	  '<img src="'+path+'/themes/default/images/icons/magnifier.png" alt="'+linkgeolocale+'" title="'+linkgeolocale+'">'+
+	        		  '</a>'
+    	}
+    
+	    if(datoCatastale.provenienza == null)
+    	    action += '<a class="datoCatstale cerca_lente_dettaglio showdetail-datoCatastale" data-holder="'+datoCatastale.idImmobile+'" title="'+immobileButton+'"></a>&nbsp;'
+
+    	action += '<a class="nascondiutente datoCatstale box-unlink-datoCatastale" box-unlink-datoCatastale" data-holder="'+datoCatastale.idImmobile+'" title="'+eliminaCatastale+'">'+
+           		  '<img src="${path}/themes/default/images/icons/link_break.png" alt="'+eliminaCatastale+'" title="'+eliminaCatastale+'"></a>'
+		return action;    
+    }
+
     function cambiaSistemaCatastale(sistema) {
         if (sistema == 1) {
             // ordinario
@@ -312,7 +352,8 @@
     };
 
     function deleteDatoCatastale(event) {
-        var idImmobile = $(event.target).attr('data-holder');
+    	
+        var idImmobile = $(event.target).attr('data-holder') || $(this).attr("data-holder");
         var idPratica = $(".datiCatastali.idPratica").val();
         $('<div></div>').appendTo('body')
                 .html('<div><h6 class="confirm-body-content">' + msgDelete + '</h6></div>')
@@ -539,137 +580,97 @@
 <spring:message code="datiCatastali.select" var="datiCatastaliSelect"/>
 <div class="DatiCatastali imbox_frame ${margine_inbox_frame}">
     <input id="datiCatastali_idPratica" class="datiCatastali idPratica" type="hidden" value="${pratica.idPratica}" name="idPratica"/>    
-    <div class="nascondiutente table-add-link" id="aggiungiDatoCatastale">
-        <a href="#" id="add_datiCatastali_btn">
-            <spring:message code="datiCatastali.button.aggiungi"/>
-            <img src="${path}/themes/default/images/icons/add.png" alt="<spring:message code="datiCatastali.button.aggiungi"/>" title="<spring:message code="datiCatastali.button.aggiungi"/>">
-        </a>
-    </div>
-
-    <div class="DatiCatastali controllo_sinistra ${mostraFreccie}">
-        <div class="controller_box">
-            <div id="DatiCatastali-box-left" class="box_left" onclick="item_animate('<c:out value="${conto_div}"></c:out>', '#datiCatastali_box', '-=277px')"></div>
-            </div>
-        </div>
-
-        <div id="datiCatastali_box">
-            <table cellpadding="0" cellspacing="0">
-                <tr class="DatiCatastali">            
-                <c:forEach items="${dettaglio.datiCatastali}" begin="0"  var="immobile" varStatus="loop">
-                    <c:if test="${immobile.idTipoSistemaCatastale == 1}">
-                        <c:set var="class_dato_catastale_tavolare" value="hidden"/>
-                        <c:set var="class_dato_catastale" value=""/>
-                    </c:if>
-                    <c:if test="${immobile.idTipoSistemaCatastale == 2}">
-                        <c:set var="class_dato_catastale_tavolare" value=""/>
-                        <c:set var="class_dato_catastale" value="hidden"/>
-                    </c:if>
-                    <td id="TDdatoCatastale_${immobile.idImmobile}" class="DatiCatastaliElement">
-                        <div id="datoCatastale_${immobile.idImmobile}">
-                            <div class="circle <c:if test="${loop.last}">lastCircle</c:if>">
-                                    <div class="ctrlHolder">
-                                        <label class="required" style="display:inline">
-                                        <spring:message code="datiCatastali.catasto.title"/>
-                                    </label>
-                                    <a class="nascondiutente datoCatstale box-unlink-datoCatastale" box-unlink-datoCatastale" data-holder="${immobile.idImmobile}">
-                                       <img src="${path}/themes/default/images/icons/link_break.png" alt="<spring:message code="datiCatastali.button.eliminaCatastale"/>" title="<spring:message code="datiCatastali.button.eliminaCatastale"/>">
-                                        <spring:message code="datiCatastali.button.eliminaCatastale"/>
-                                    </a>
-                                </div>
-                                <div class="ctrlHolder">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.tipocatasto"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable tipoCatasto" type="text" disabled="" value="${immobile.desSistemaCatastale}">
-                                </div> 
-                                <div class="box_tipoUnita ctrlHolder ${class_dato_catastale}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.tipoUnita"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable tipoUnita" type="text" disabled="" value="${immobile.desTipoUnita}">
-                                </div>
-                                <div class="box_tipoParticella ctrlHolder ${class_dato_catastale_tavolare}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.tipoParticella"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable tipoParticella" type="text" disabled="" value="${immobile.desTipoParticella}">
-                                </div>                                    
-                                <div class="box_sezione ctrlHolder ${class_dato_catastale}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.sezione"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable sezione" type="text" disabled="" value="${immobile.sezione}">
-                                </div>
-                                <div class="box_comuneCensuario ctrlHolder ${class_dato_catastale_tavolare}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.comuneCensuario"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable comuneCensuario" type="text" disabled="" value="${immobile.comuneCensuario}">
-                                </div>
-                                <div class="box_foglio ctrlHolder ${class_dato_catastale}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.foglio"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable foglio" type="text" disabled="" value="${immobile.foglio}">
-                                </div>
-                                <div class="box_mappaleTavolare ctrlHolder ${class_dato_catastale_tavolare}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.particella"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable mappaleTavolare" type="text" disabled="" value="${immobile.mappale}">
-                                </div>                                    
-                                <div class="box_mappale ctrlHolder ${class_dato_catastale}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.mappale"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable mappale" type="text" disabled="" value="${immobile.mappale}">
-                                </div>
-                                <div class="box_estensioneParticella ctrlHolder ${class_dato_catastale_tavolare}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.estensioneParticella"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable estensioneParticella" type="text" disabled="" value="${immobile.estensioneParticella}">
-                                </div>                                    
-                                <div class="box_subalterno ctrlHolder ${class_dato_catastale}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.subalterno"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable subalterno" type="text" disabled="" value="${immobile.subalterno}">
-                                </div>
-                                <div class="box_subalternoTavolare ctrlHolder ${class_dato_catastale_tavolare}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.subalterno"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable subalternoTavolare" type="text" disabled="" value="${immobile.subalterno}">
-                                </div>
-                                  <div class="box_categoria ctrlHolder ${class_dato_catastale_catastale}">
-                                    <label class="required">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.categoria"/>
-                                    </label>
-                                    <input class="input_anagrafica_disable categoria" type="text" disabled="" value="${immobile.categoria}">
-                                </div>
-                                <c:if test="${! empty immobile.urlCatasto}">
-                                    <a href="${immobile.urlCatasto}" target="_blank">
-                                        <img src="${path}/themes/default/images/icons/magnifier.png" alt="<spring:message code="pratica.comunicazione.dettaglio.immobile.linkgeolocale"/>" title="<spring:message code="pratica.comunicazione.dettaglio.immobile.linkgeolocale"/>">
-                                        <spring:message code="pratica.comunicazione.dettaglio.immobile.linkgeolocale"/>
-                                    </a>
-                                </c:if>
-                                <div class="datoCatstale cerca_lente_rosso showdetail-datoCatastale" data-holder="${immobile.idImmobile}"><spring:message code="pratica.comunicazione.dettaglio.immobile.button"/></div>
-                            </div>
-                        </div>
-                    </td>
-                </c:forEach>
-            </tr>
-        </table>
-    </div>
-
-    <div class="DatiCatastali controllo_destra ${mostraFreccie}">
-        <div class="controller_box">
-            <div id="DatiCatastali-box-right" class="box_right" onclick="item_animate('<c:out value="${conto_div}"></c:out>', '#datiCatastali_box', '+=277px')"></div>
-            </div>
-        </div>
-
-        <div class="clear"></div>
+    <c:if test="${!abilitazioneConsultazione}">
+	    <div class="nascondiutente table-add-link" id="aggiungiDatoCatastale">
+	        <a href="#" id="add_datiCatastali_btn">
+	            <spring:message code="datiCatastali.button.aggiungi"/>
+	            <img src="${path}/themes/default/images/icons/add.png" alt="<spring:message code="datiCatastali.button.aggiungi"/>" title="<spring:message code="datiCatastali.button.aggiungi"/>">
+	        </a>
+	    </div>
+    </c:if>
+	<div id="tableCadastralDataDiv">
+	
+		<table id="tableCadastralDataTable" cellspacing="0" cellpadding="0" class="master">
+			<thead>
+			<tr>
+				<th><spring:message	code="pratica.comunicazione.dettaglio.immobile.tipocatasto" /></th>
+				<th><spring:message	code="pratica.comunicazione.dettaglio.immobile.tipoUnita" /></th>
+				<th><spring:message code="pratica.comunicazione.dettaglio.immobile.sezione" /></th>
+				<th><spring:message code="pratica.comunicazione.dettaglio.immobile.foglio" /></th>
+				<th><spring:message code="pratica.comunicazione.dettaglio.immobile.particella" /></th>
+				<th><spring:message code="pratica.comunicazione.dettaglio.immobile.subalterno" /></th>
+				<th class="width10"><spring:message code="anagrafica.ricerca.grid.azioni"/></th>
+			</tr>
+			</thead>
+			<tbody>
+		    	
+		    <c:if test="${!empty dettaglio.getDatiCatastali()}">
+				<c:forEach items="${dettaglio.getDatiCatastali()}" var="immobile" begin="0">
+					<%String colorIntegrazione = "#FFFFFF"; %>
+					<%String colorCivilia = "#FFF1EF"; %>
+					<%String colorDMS = "#E3F8E5"; %>
+		
+					<c:choose>
+					   <c:when test="${immobile.provenienza eq 'CIVILIA'}"><% colorIntegrazione = "#FFF1EF"; %></c:when>
+					   <c:when test="${immobile.provenienza eq 'DMS'}"><% colorIntegrazione = "#E3F8E5"; %></c:when>
+					   <c:otherwise><% colorIntegrazione = "#FFFFFF"; %></c:otherwise>
+					</c:choose>
+									
+					
+					<tr id="TRdatoCatastale_${immobile.idImmobile}">
+						<td style="background-color: <%=colorIntegrazione%>">${immobile.desSistemaCatastale}</td>
+						<td style="background-color: <%=colorIntegrazione%>">${immobile.desTipoUnita }</td>
+						<td style="background-color: <%=colorIntegrazione%>">${immobile.sezione }</td>
+						<td style="background-color: <%=colorIntegrazione%>">${immobile.foglio }</td>
+						<td style="background-color: <%=colorIntegrazione%>">${immobile.mappale }</td>						
+						<td style="background-color: <%=colorIntegrazione%>">${immobile.subalterno }</td>	
+						<td>
+							<c:if test="${! empty immobile.urlCatasto && !abilitazioneConsultazione}">
+				                <a href="${immobile.urlCatasto}" target="_blank" title="<spring:message code="pratica.comunicazione.dettaglio.immobile.linkgeolocale"/>">
+				                    <img src="${path}/themes/default/images/icons/magnifier.png" alt="<spring:message code="pratica.comunicazione.dettaglio.immobile.linkgeolocale"/>" title="<spring:message code="pratica.comunicazione.dettaglio.immobile.linkgeolocale"/>">
+				                </a>
+				            </c:if>
+				            
+				            <c:if test="${immobile.getProvenienza() == null}">
+					            <a class="datoCatstale cerca_lente_dettaglio showdetail-datoCatastale" data-holder="${immobile.idImmobile}" title="<spring:message code="pratica.comunicazione.dettaglio.immobile.button"/>"></a>
+				  			</c:if>
+							&nbsp;
+							<c:if test="${!abilitazioneConsultazione}">
+								<a class="nascondiutente datoCatstale box-unlink-datoCatastale" box-unlink-datoCatastale" data-holder="${immobile.idImmobile}" title=" <spring:message code="datiCatastali.button.eliminaCatastale"/>">
+				                   <img src="${path}/themes/default/images/icons/link_break.png" alt="<spring:message code="datiCatastali.button.eliminaCatastale"/>" title="<spring:message code="datiCatastali.button.eliminaCatastale"/>" />
+				                </a>
+			                </c:if>
+						</td>				
+					</tr>
+				</c:forEach>
+			</c:if>
+		
+			<c:if test="${empty dettaglio.datiCatastali}">
+				<tr id="cadastralDataEmptyRow">
+					<td colspan="7"><spring:message code="pratica.comunicazione.dettaglio.dati.catastali.noresult" /></td>
+				</tr>
+			</c:if>
+			</tbody>
+		</table>
+	</div>
+	<div id="timeLineCadastralDataDiv" class="hidden">
+		<c:set var="datiCatastaliList" value="${dettaglio.getDatiCatastali().stream().filter(anag-> anag.getProvenienza() == null).toList()}" scope="request"/>
+		<c:set var="provenienza_idx" value="${1}" scope="request"/>
+		<c:import url="/themes/default/views/main/body/pratiche/dettaglio/dati_catastali_table.jsp"/>
+		<div class="clear"></div>
+	
+		<c:set var="datiCatastaliList" value="${dettaglio.getDatiCatastali().stream().filter(anag-> Costants.CIVILIA.equalsIgnoreCase(anag.getProvenienza())).toList()}" scope="request"/>
+		<c:set var="provenienza_idx" value="${2}" scope="request"/>
+		<c:import url="/themes/default/views/main/body/pratiche/dettaglio/dati_catastali_table.jsp"/>
+		<div class="clear"></div>
+		
+		<c:set var="datiCatastaliList" value="${dettaglio.getDatiCatastali().stream().filter(anag-> anag.getProvenienza() != null && !Costants.CIVILIA.equalsIgnoreCase(anag.getProvenienza())).toList()}" scope="request"/>
+		<c:set var="provenienza_idx" value="${3}" scope="request"/>
+		<c:import url="/themes/default/views/main/body/pratiche/dettaglio/dati_catastali_table.jsp"/>
+	</div>
+	<div class="clear"></div>
+	
+    <div class="clear"></div>
         <div id="dialog-form" title="Dato catastale" class="datiCatastaliDiv uniForm">
             <div class="modalError"></div>
             <div class="inlineLabels">
@@ -762,7 +763,7 @@
 </div>
 <div class="hidden">
     <div id="datoCatastale_X">
-        <div class="circle">
+        <div class="circle <c:if test="${immobile.provenienza eq 'CIVILIA'}"> sfondorosso</c:if>">
             <div class="ctrlHolder">
                 <label class="required" style="display:inline">
                     <spring:message code="datiCatastali.catasto.title"/>
@@ -855,7 +856,7 @@
                     <spring:message code="pratica.comunicazione.dettaglio.immobile.linkgeolocale"/>
                 </a>
             </c:if>
-            <div class="datoCatstale cerca_lente_rosso showdetail-datoCatastale" data-holder=""><spring:message code="pratica.comunicazione.dettaglio.immobile.button"/></div>
+            <div class="datoCatstale cerca_lente_dettaglio showdetail-datoCatastale" data-holder=""><spring:message code="pratica.comunicazione.dettaglio.immobile.button"/></div>
         </div>
     </div>
 </div>

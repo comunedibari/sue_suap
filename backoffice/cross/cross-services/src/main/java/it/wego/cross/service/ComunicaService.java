@@ -37,4 +37,6 @@ public interface ComunicaService {
     public ComuneRiferimentoDTO getComuneRiferimento(RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception;
 
     public SportelloDTO getSportelloDestinazione(RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception;
+
+	public ComuneRiferimentoDTO getComuneRiferimentoDaEnte(RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception;
 }

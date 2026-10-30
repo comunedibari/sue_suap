@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient; 
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -45,7 +46,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "IndirizziIntervento.findByLongitudine", query = "SELECT i FROM IndirizziIntervento i WHERE i.longitudine = :longitudine"),
     @NamedQuery(name = "IndirizziIntervento.findByDatoEsteso1", query = "SELECT i FROM IndirizziIntervento i WHERE i.datoEsteso1 = :datoEsteso1"),
     @NamedQuery(name = "IndirizziIntervento.findByDatoEsteso2", query = "SELECT i FROM IndirizziIntervento i WHERE i.datoEsteso2 = :datoEsteso2"),
-    @NamedQuery(name = "IndirizziIntervento.findByPiano", query = "SELECT i FROM IndirizziIntervento i WHERE i.piano = :piano")})
+    @NamedQuery(name = "IndirizziIntervento.findByPiano", query = "SELECT i FROM IndirizziIntervento i WHERE i.piano = :piano"),
+})
 public class IndirizziIntervento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -106,8 +108,19 @@ public class IndirizziIntervento implements Serializable {
     @JoinColumn(name = "id_pratica", referencedColumnName = "id_pratica")
     @ManyToOne(optional = false)
     private Pratica idPratica;
+    @Column(name = "id_pratica", insertable = false, updatable = false)
+    private Integer idPraticaValue;
+    @Transient
+    private String provenienza;
+    public String getProvenienza() {
+		return provenienza;
+	}
 
-    public IndirizziIntervento() {
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+
+	public IndirizziIntervento() {
     }
 
     public IndirizziIntervento(Integer idIndirizzoIntervento) {
@@ -274,6 +287,15 @@ public class IndirizziIntervento implements Serializable {
         this.piano = piano;
     }
 
+
+	public Integer getIdPraticaValue() {
+		return idPraticaValue;
+	}
+
+	public void setIdPraticaValue(Integer idPraticaValue) {
+		this.idPraticaValue = idPraticaValue;
+	}
+	
     @Override
     public int hashCode() {
         int hash = 0;

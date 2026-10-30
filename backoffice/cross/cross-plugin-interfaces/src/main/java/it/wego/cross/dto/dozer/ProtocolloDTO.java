@@ -60,10 +60,9 @@ public class ProtocolloDTO {
     }
 
     public String getSegnatura() {
-        String[] tokens = new String[]{codRegistro, annoRiferimento != null ? String.valueOf(annoRiferimento) : "", numero != null ? String.valueOf(numero) : ""};
+        String[] tokens = new String[]{numero != null ? String.valueOf(numero) : "", annoRiferimento != null ? String.valueOf(annoRiferimento) : ""};
         tokens[0] = StringUtils.isEmpty(tokens[0]) ? "" : tokens[0];
         tokens[1] = StringUtils.isEmpty(tokens[1]) ? "" : tokens[1];
-        tokens[2] = StringUtils.isEmpty(tokens[2]) ? "" : tokens[2];
         return StringUtils.join(tokens, "/");
     }
 }

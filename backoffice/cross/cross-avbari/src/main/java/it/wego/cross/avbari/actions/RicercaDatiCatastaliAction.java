@@ -5,7 +5,27 @@
  */
 package it.wego.cross.avbari.actions;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.handler.MessageContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.google.common.base.Strings;
+
 import it.wego.cross.avbari.catasto.client.Catasto;
 import it.wego.cross.avbari.catasto.client.ICatasto;
 import it.wego.cross.avbari.catasto.client.xsd.Input;
@@ -15,22 +35,12 @@ import it.wego.cross.avbari.constants.AvBariConstants;
 import it.wego.cross.dao.LookupDao;
 import it.wego.cross.dto.dozer.DatiCatastaliDTO;
 import it.wego.cross.entity.LkTipoUnita;
+import it.wego.cross.entity.PluginConfiguration;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.exception.CrossException;
 import it.wego.cross.service.ConfigurationService;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.namespace.QName;
-import javax.xml.ws.BindingProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -43,6 +53,7 @@ public class RicercaDatiCatastaliAction {
     private ConfigurationService configurationService;
     @Autowired
     private LookupDao lookupDao;
+    
     private static final QName SERVICE = new QName("http://tempuri.org/", "Catasto");
 
     public List<DatiCatastaliDTO> RicercaDatiCatastali(DatiCatastaliDTO datiCatastaliDTO, Pratica pratica) throws Exception {
@@ -87,7 +98,20 @@ public class RicercaDatiCatastaliAction {
         ICatasto port = ss.getBasicHttpBindingICatasto();
         ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, address);
         
-       java.lang.String _process_data = Utils.marshall(precompilazioneBean);
+        Map<String, String> customConfigurations = configurationService.getConfigurationByInstitution(pratica.getIdProcEnte().getIdEnte());
+        if(customConfigurations != null) {
+        	String parameter = customConfigurations.get(AvBariConstants.AVB_PARAMETER_KEY);
+        	if(AvBariConstants.AVB_AUTH_VALUE.equals(parameter)) {
+        		String user = customConfigurations.get(AvBariConstants.AVB_USER_KEY);
+	        	String pwd = customConfigurations.get(AvBariConstants.AVB_PASSWORD_KEY);
+	        	String authentication =new String(Base64.getDecoder().decode(user)) +":"+ new String(Base64.getDecoder().decode(pwd));
+	        	Map<String, List<String>> requestHeaders = new HashMap<>();
+	        	requestHeaders.put(parameter, Arrays.asList("Basic " +Base64.getEncoder().encodeToString(authentication.getBytes())));
+	        	((BindingProvider) port).getRequestContext().put(MessageContext.HTTP_REQUEST_HEADERS, requestHeaders);
+	        }
+    	}
+        
+        java.lang.String _process_data = Utils.marshall(precompilazioneBean);
         java.lang.String _process__return = port.process(_process_data);
         PrecompilazioneBean risposta = null;
         InputStream is = null;

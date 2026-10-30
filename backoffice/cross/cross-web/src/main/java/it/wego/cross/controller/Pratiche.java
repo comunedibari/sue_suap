@@ -1,77 +1,174 @@
 package it.wego.cross.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.activation.DataHandler;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.handler.MessageContext;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.dozer.Mapper;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.MessageSource;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-
-import it.wego.cross.dto.AnagraficaDaCollegareDTO;
-import it.wego.cross.dto.MessaggioDTO;
-import it.wego.cross.dto.UtenteDTO;
-import it.wego.cross.dto.CittadinanzaDTO;
-import it.wego.cross.dto.NazionalitaDTO;
-import it.wego.cross.dto.TipoRuoloDTO;
-import it.wego.cross.dto.ErroreDTO;
-import it.wego.cross.dto.EstrazioniAgibDTO;
-import it.wego.cross.dto.EstrazioniCilaDTO;
-import it.wego.cross.dto.EstrazioniPdcDTO;
-import it.wego.cross.dto.EstrazioniSciaDTO;
-import it.wego.cross.dto.ComuneDTO;
-import it.wego.cross.dto.AnagraficaDTO;
-import it.wego.cross.dto.PraticaDTO;
-import it.wego.cross.dto.ProcedimentiTestiDTO;
-import it.wego.cross.dto.RecapitoDTO;
-import it.wego.cross.dto.dozer.DatiCatastaliDTO;
-import it.wego.cross.dto.dozer.EnteDTO;
-import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
-import it.wego.cross.dto.dozer.PraticaEventoDTO;
-import it.wego.cross.dto.dozer.ProcedimentoDTO;
-import it.wego.cross.dto.dozer.ProcedimentoEnteDTO;
-
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
 
+import it.eng.tz.avtmb.wsdl.stampsign.DocumentStampSignAuthPt;
+import it.eng.tz.avtmb.wsdl.stampsign.DocumentStampSignPt;
+import it.eng.tz.avtmb.wsdl.stampsign.Stampsign;
+import it.eng.tz.avtmb.xsd.stampsign.RequestType;
+import it.eng.tz.avtmb.xsd.stampsign.Risultato;
+import it.eng.tz.avtmb.xsd.stampsign.Sign;
+import it.eng.tz.avtmb.xsd.stampsign.StampSignRequest;
+import it.eng.tz.avtmb.xsd.stampsign.StampSignResponse;
+import it.linksmt.protocollo.richiestasoap.Mittente;
+import it.linksmt.protocollo.ws.server.GetProtocollo.ProtocolloInformazioniRequest;
+import it.linksmt.protocollo.ws.server.GetProtocolloResponse.Return;
+import it.linksmt.protocollo.ws.server.ProtocolloServer;
+import it.linksmt.protocollo.ws.server.impl.ProtocolloServerImplService;
 import it.wego.cross.actions.AllegatiAction;
-import it.wego.cross.service.ProcedimentiService;
-import it.wego.cross.service.ComuniService;
-import it.wego.cross.service.WorkFlowService;
-import it.wego.cross.service.ConfigurationService;
-import it.wego.cross.service.EntiService;
-import it.wego.cross.service.LookupService;
-import it.wego.cross.service.PraticheService;
-import it.wego.cross.service.AnagraficheService;
-import it.wego.cross.service.PluginService;
 import it.wego.cross.actions.AnagraficaAction;
 import it.wego.cross.actions.EmailAction;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.MessaggiAction;
 import it.wego.cross.actions.PraticheAction;
-import it.wego.cross.actions.PraticheAction.AttributiPratica;
 import it.wego.cross.actions.SystemEventAction;
 import it.wego.cross.actions.WorkflowAction;
-import it.wego.cross.avbari.constants.AvBariConstants;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.JsonResponse;
-import it.wego.cross.beans.grid.*;
+import it.wego.cross.beans.grid.GridAnagraficaBean;
+import it.wego.cross.beans.grid.GridAssociaUtentiBean;
+import it.wego.cross.beans.grid.GridCittadinanzaBean;
+import it.wego.cross.beans.grid.GridComuneBean;
+import it.wego.cross.beans.grid.GridDatiCatastaliBean;
+import it.wego.cross.beans.grid.GridDatoCatastaleBean;
+import it.wego.cross.beans.grid.GridEntiBean;
+import it.wego.cross.beans.grid.GridEstrazioniAGIBBean;
+import it.wego.cross.beans.grid.GridEstrazioniCILABean;
+import it.wego.cross.beans.grid.GridEstrazioniPDCBean;
+import it.wego.cross.beans.grid.GridEstrazioniSCIABean;
+import it.wego.cross.beans.grid.GridIdStringListBean;
+import it.wego.cross.beans.grid.GridIndirizziInterventoBean;
+import it.wego.cross.beans.grid.GridIndirizzoInterventoBean;
+import it.wego.cross.beans.grid.GridNazionalitaBean;
+import it.wego.cross.beans.grid.GridPraticaEventoBean;
+import it.wego.cross.beans.grid.GridPraticaNuovaBean;
+import it.wego.cross.beans.grid.GridProcedimenti;
 import it.wego.cross.beans.layout.JqgridPaginator;
 import it.wego.cross.beans.layout.Message;
+import it.wego.cross.constants.AnaTipiEvento;
+import it.wego.cross.constants.CartiglioConstants;
 import it.wego.cross.constants.ConfigurationConstants;
 import it.wego.cross.constants.Constants;
 import it.wego.cross.constants.SessionConstants;
 import it.wego.cross.constants.StatoPratica;
+//import it.wego.cross.cross_dms.DMSClientDao;
 import it.wego.cross.dao.EntiDao;
 import it.wego.cross.dao.LookupDao;
+import it.wego.cross.dao.PraticaDao;
 import it.wego.cross.dao.ProcedimentiDao;
 import it.wego.cross.dto.AllegatoDTO;
+import it.wego.cross.dto.AnagraficaDTO;
+import it.wego.cross.dto.AnagraficaDaCollegareDTO;
+import it.wego.cross.dto.CittadinanzaDTO;
+import it.wego.cross.dto.ComuneDTO;
+import it.wego.cross.dto.ErroreDTO;
+import it.wego.cross.dto.EstrazioniAgibDTO;
+import it.wego.cross.dto.EstrazioniCilaDTO;
+import it.wego.cross.dto.EstrazioniPdcDTO;
+import it.wego.cross.dto.EstrazioniSciaDTO;
+import it.wego.cross.dto.EventoDTO;
+import it.wego.cross.dto.MessaggioDTO;
+import it.wego.cross.dto.NazionalitaDTO;
+import it.wego.cross.dto.PraticaDTO;
+import it.wego.cross.dto.PraticaNuova;
+import it.wego.cross.dto.RecapitoDTO;
 import it.wego.cross.dto.TipoIndirizzoDTO;
+import it.wego.cross.dto.TipoRuoloDTO;
+import it.wego.cross.dto.UtenteDTO;
 import it.wego.cross.dto.UtenteRuoloEnteDTO;
 import it.wego.cross.dto.comunicazione.AnagraficaMinifiedDTO;
 import it.wego.cross.dto.comunicazione.DettaglioPraticaDTO;
+import it.wego.cross.dto.dozer.DatiCatastaliDTO;
+import it.wego.cross.dto.dozer.EnteDTO;
+import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
+import it.wego.cross.dto.dozer.PraticaCollegataDTO;
+import it.wego.cross.dto.dozer.ProcedimentoDTO;
+import it.wego.cross.dto.dozer.ProcedimentoEnteDTO;
 import it.wego.cross.dto.dozer.StatoPraticaDTO;
 import it.wego.cross.dto.filters.Filter;
 import it.wego.cross.entity.Allegati;
 import it.wego.cross.entity.Anagrafica;
+import it.wego.cross.entity.Configuration;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkClassificazioneProcedimento;
 import it.wego.cross.entity.LkStatoPratica;
 import it.wego.cross.entity.LkTipoInterventoSuap;
 import it.wego.cross.entity.LkTipoParticella;
+import it.wego.cross.entity.LkTipoPratica;
 import it.wego.cross.entity.LkTipoProcedimentoSuap;
 import it.wego.cross.entity.LkTipoQualifica;
 import it.wego.cross.entity.LkTipoRuolo;
@@ -86,10 +183,10 @@ import it.wego.cross.entity.PraticheEventiAllegati;
 import it.wego.cross.entity.Procedimenti;
 import it.wego.cross.entity.ProcedimentiEnti;
 import it.wego.cross.entity.ProcedimentiTesti;
-import it.wego.cross.entity.ProcedimentiTestiPK;
 import it.wego.cross.entity.ProcessiEventi;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.entity.view.ProcedimentiLocalizzatiView;
+import it.wego.cross.events.comunicazione.controller.ComunicazioneController;
 import it.wego.cross.events.notification.NotificationEngine;
 import it.wego.cross.exception.CrossException;
 import it.wego.cross.plugins.anagrafe.GestioneAnagrafePersonaFisica;
@@ -99,59 +196,30 @@ import it.wego.cross.plugins.views.CustomViews;
 import it.wego.cross.serializer.AnagraficheSerializer;
 import it.wego.cross.serializer.EntiSerializer;
 import it.wego.cross.serializer.FilterSerializer;
+import it.wego.cross.serializer.PraticheSerializer;
 import it.wego.cross.service.AllegatiService;
+import it.wego.cross.service.AnagraficheService;
+import it.wego.cross.service.CartiglioService;
+import it.wego.cross.service.ComuniService;
+import it.wego.cross.service.ConfigurationService;
+import it.wego.cross.service.EntiService;
 import it.wego.cross.service.FormService;
+import it.wego.cross.service.LookupService;
+import it.wego.cross.service.PluginService;
+import it.wego.cross.service.PraticheService;
+import it.wego.cross.service.ProcedimentiService;
+import it.wego.cross.service.ProcessiService;
 import it.wego.cross.service.UsefulService;
+import it.wego.cross.service.WorkFlowService;
+import it.wego.cross.session.MultiSubSessionManager;
+import it.wego.cross.utils.ComponentUtils;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utilities;
 import it.wego.cross.utils.Utils;
+import it.wego.cross.validator.IsValid;
 import it.wego.cross.validator.impl.AlphabeticValidatorImpl;
 import it.wego.cross.validator.impl.CodiceFiscaleValidatorImpl;
-import it.wego.cross.validator.IsValid;
 import it.wego.cross.validator.impl.PartitaIvaValidatorImpl;
-import it.wego.cross.xml.Ente;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -161,6 +229,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class Pratiche extends AbstractController {
 
+	@Autowired
+	private PraticaDao praticaDao;
     @Autowired
     private EntiService entiService;
     @Autowired
@@ -219,6 +289,13 @@ public class Pratiche extends AbstractController {
     private EntiDao entiDao;
     @Autowired
     private ProcedimentiDao procedimentiDao;
+    @Autowired
+    private ProcessiService processiService;
+    @Autowired
+    private CartiglioService cartiglioService;
+    @Autowired
+    private ComponentUtils componentUtils;
+
     //Pages
     private static final String AJAX_PAGE = "ajax";
     private static final String PRATICHE_NUOVE = "pratiche_nuove";
@@ -227,9 +304,10 @@ public class Pratiche extends AbstractController {
     private static final String DETTAGLIO_PRATICA_APERTURA = "pratiche_apertura_nuove_dettaglio";
     private static final String DETTAGLIO_PRATICA = "pratica_dettaglio";
     private static final String REDIRECT_DETTAGLIO_PRATICA = "redirect:/pratiche/dettaglio.htm";
+    private static final String REDIRECT_DETTAGLIO_PRATICA_WITH_SESSION_ID = "redirect:/pratiche/dettaglio.htm?"+MultiSubSessionManager.SESSION_PARAMETER+"=";
+    private static final String REDIRECT_DETTAGLIO_PRATICA_WITH_ID = "redirect:/pratiche/dettaglio.htm?id_pratica=";
     private static final String COLLEGA_ANAGRAFICA = "pratica_collega_anagrafica";
     private static final String COLLEGA_PROCEDIMENTO = "pratica_collega_procedimento";
-    private static final String AGGIUNGI_DATI_CATASTALI = "pratica_aggiungi_dati_catastali";
     private static final String COLLEGA_PROCEDIMENTO_LISTA_ENTI = "pratica_collega_procedimento_lista_enti";
     private static final String REDIRECT_COLLEGA_PROCEDIMENTO_LISTA_ENTI = "redirect:/pratiche/dettaglio/aggiungiProcedimento/listaEnti.htm";
     private static final String ASSEGNA_RUOLO_ANAGRAFICA = "pratica_collega_anagrafica_ruolo";
@@ -242,15 +320,30 @@ public class Pratiche extends AbstractController {
     private static final String ESTRAZIONI_SCIA = "estrazione_scia";
     private static final String ESTRAZIONI_PDC = "estrazione_pdc";
     private static final String ESTRAZIONI_AGIB = "estrazione_agib";
-    private static final String TAB_DEFAULT = "frame0";
+    private static final String TAB_DEFAULT = "frame7";
+    private static final String TAB_DEFAULT_APERTURA = "frame1";
     private static final String TAB_ANAGRAFICHE_APERTURA = "frame1";
     private static final String TAB_ENDOPROCEDIMENTI_APERTURA = "frame2";
     private static final String TAB_ALLEGATI_APERTURA = "frame3";
     private static final String TAB_CATASTALI_APERTURA = "frame4";
     private static final String TAB_INDIRIZZI_APERTURA = "frame5";
     private static final String ESTRAZIONI_CILA_TO_DO = "estrazione_cila_to_do";
+    private static final String ESTRAZIONI_AGIB_TO_DO = "estrazione_agib_to_do";
+    private final String OPERAZIONE_EFFETTUATA = "operazioneeffettuata";
     public static SimpleDateFormat sdfIt = new SimpleDateFormat("dd/MM/yyyy");
     private final Message errori = new Message();
+    private static String TOWN_WITH_GRANTS = "bari";
+    public static Set<Integer> SUAP_INSTITUTION_XML_TECHNICIAN = new HashSet<>();
+    static{
+    	SUAP_INSTITUTION_XML_TECHNICIAN.add(Constants.SUAP_BARI);
+    	SUAP_INSTITUTION_XML_TECHNICIAN.add(Constants.SUAP_GIOIA_DEL_COLLE);
+    }
+    
+    private static DataHandler getDataHandler(String filePath) {
+		 javax.activation.FileDataSource fileDataSource =new javax.activation.FileDataSource(filePath);
+		 javax.activation.DataHandler dataHandler = new javax.activation.DataHandler(fileDataSource);
+		 return dataHandler;
+	 }
 
     @RequestMapping("/pratiche/nuove")
     public String nuove(Model model, HttpServletRequest request, HttpServletResponse response) {
@@ -259,15 +352,32 @@ public class Pratiche extends AbstractController {
             UtenteDTO utente = utentiService.getUtenteConnessoDTO(request);
             List<Enti> enti = entiService.getListaEntiPerRicerca(utente);
             List<String> anniRiferimento = praticheService.popolaListaAnni();
+            List<LkStatoPratica> lookup = praticheService.getLookupsStatoPratica(StatoPratica.RICEVUTA);
+            List<LkTipoUnita> lkTipoUnita = lookupDao.findAllLkTipoUnita();
+            List<LkTipoPratica> lkTipoPratica = lookupDao.findSortedTipoPraticaByFlags(isRequestFrom(enti, TOWN_WITH_GRANTS));
+            List<Utente> operatori = utentiService.findUtentiByEnte(enti);
+            
             model.addAttribute("anniRiferimento", anniRiferimento);
             model.addAttribute("entiRicerca", enti);
-            List<LkStatoPratica> lookup = praticheService.getLookupsStatoPratica(StatoPratica.RICEVUTA);
             model.addAttribute("statoPraticaRicerca", lookup);
+            model.addAttribute("lkTipiUnita", lkTipoUnita);
+            model.addAttribute("lkTipoPratica", lkTipoPratica);
+            model.addAttribute("operatoriRicerca", operatori);
+            
             Filter filter = (Filter) request.getSession().getAttribute("praticheNuoveDaAssegnare");
             if (filter == null) {
                 filter = new Filter();
             }
             model.addAttribute("filtroRicerca", filter);
+            Integer enteAcasoPerColumnModel = null;
+            for (UtenteRuoloEnteDTO ruoloEnte : utente.getUtenteRuoloEnte()) {
+                enteAcasoPerColumnModel = ruoloEnte.getIdEnte();
+                break;
+            }
+            model.addAttribute("gestionePraticheColumnModel", configurationService.getGestionePraticheColumnModel(enteAcasoPerColumnModel, null));
+            Boolean isProd =  configurationService.findByName(SessionConstants.IS_PRODUCTION, Boolean.class);
+            model.addAttribute("isProd", isProd);
+            model.addAttribute("paperworkWithoutProtocol", praticaDao.findPaperworkWithoutProtocolCount());
         } catch (Exception e) {
             Log.APP.error("Errore visualizzando le pratiche  nuove", e);
             ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICHE_NUOVE, "Errore nell'esecuzione del controller /pratiche/nuove", e, null, utenteConnesso);
@@ -295,6 +405,7 @@ public class Pratiche extends AbstractController {
         return AJAX_PAGE;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratiche/nuove/assegna")
     public String assegnaUtente(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) {
         Utente utente = utentiService.getUtenteConnesso(request);
@@ -335,6 +446,7 @@ public class Pratiche extends AbstractController {
         return ASSEGNA_UTENTE;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratiche/nuove/assegna/ajax")
     public String assegnaUtenteAjax(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) {
         Utente utente = utentiService.getUtenteConnesso(request);
@@ -362,16 +474,30 @@ public class Pratiche extends AbstractController {
             UtenteDTO utente = utentiService.getUtenteConnessoDTO(request);
             List<Enti> enti = entiService.getListaEntiPerRicerca(utente);
             List<String> anni = praticheService.popolaListaAnni();
+            List<LkStatoPratica> lookup = praticheService.getLookupsStatoPratica(StatoPratica.RICEVUTA);
+            List<LkTipoUnita> lkTipoUnita = lookupDao.findAllLkTipoUnita();
+            List<LkTipoPratica> lkTipoPratica = lookupDao.findSortedTipoPraticaByFlags(isRequestFrom(enti, TOWN_WITH_GRANTS));
+            List<Utente> operatori = utentiService.findUtentiByEnte(enti);
+            
             model.addAttribute("anniRiferimento", anni);
             model.addAttribute("entiRicerca", enti);
-            List<LkStatoPratica> lookup = praticheService.getLookupsStatoPratica(StatoPratica.RICEVUTA);
             model.addAttribute("statoPraticaRicerca", lookup);
+            model.addAttribute("lkTipiUnita", lkTipoUnita);
+            model.addAttribute("lkTipoPratica", lkTipoPratica);
+            model.addAttribute("operatoriRicerca", operatori);
+            
             Filter filter = (Filter) request.getSession().getAttribute("praticheNuoveApertura");
             if (filter == null) {
                 filter = new Filter();
             }
 
             model.addAttribute("filtroRicerca", filter);
+            Integer enteAcasoPerColumnModel = null;
+            for (UtenteRuoloEnteDTO ruoloEnte : utente.getUtenteRuoloEnte()) {
+                enteAcasoPerColumnModel = ruoloEnte.getIdEnte();
+                break;
+            }
+            model.addAttribute("gestionePraticheColumnModel", configurationService.getGestionePraticheColumnModel(enteAcasoPerColumnModel, null));
         } catch (Exception e) {
             Log.APP.error("Errore nell'apertura delle pratiche", e);
             ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICHE_NUOVE_APERTURA, "Errore nell'esecuzione del controller /pratiche/nuove/apertura", e, null, utenteConnesso);
@@ -416,7 +542,7 @@ public class Pratiche extends AbstractController {
                 if (idPraticaString != null) {
                     idPratica = Integer.valueOf(request.getParameter("id_pratica"));
                 } else {
-                    idPratica = (Integer) request.getSession().getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+                    idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
                 }
             }
             model.addAttribute("fromGestioneEventi", fromGestioneEventi);
@@ -424,6 +550,7 @@ public class Pratiche extends AbstractController {
             PraticaDTO pratica = praticheService.dettaglioXmlPratica(idPratica);
             praticafull = praticheService.getPratica(idPratica);
             it.wego.cross.dto.dozer.PraticaDTO praticaDTO = mapper.map(praticafull, it.wego.cross.dto.dozer.PraticaDTO.class);
+            praticaDTO.setCartiglio(cartiglioService.createCartiglio(praticafull));
             //TODO: Lo mantengo ancora per tracciare le pratiche confermate e le anagrafiche.
             DettaglioPraticaDTO dettaglio = praticheService.getDettaglioPratica(praticafull);
             model.addAttribute("dettaglio", dettaglio);
@@ -440,6 +567,7 @@ public class Pratiche extends AbstractController {
                             an.setIdAnagrafica(anagraficacoll.getIdAnagrafica());
                         }
                         an.setCollegata("yes");
+                        an.setDataInizioValidita(anagraficacoll.getDataInizioValidita());
                     }
                 }
                 if (an.getCollegata() == null || !an.getCollegata().equalsIgnoreCase("yes")) {
@@ -452,7 +580,7 @@ public class Pratiche extends AbstractController {
                     }
                 }
             }
-            request.getSession().setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
+            MultiSubSessionManager.setAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
             List<ProcessiEventi> eventi = workFlowService.findAvailableEvents(idPratica);
 //            Map<Integer, String> data = lookupService.getTipoUnita();
 //            model.addAttribute("TipoUnitaList", data);
@@ -515,17 +643,9 @@ public class Pratiche extends AbstractController {
             	pea = praticheService.findPraticheEventiAllegatiByIdAllegato(idAllegato);
             	PraticheEventi praticheEventi = pea.getPraticheEventi();
             	Date dataEvento = praticheEventi.getDataEvento();
-            	it.wego.cross.dto.dozer.AllegatoDTO allegatNuovo = new it.wego.cross.dto.dozer.AllegatoDTO();
-            	allegatNuovo.setId(allegatoDTO.getId());
-            	allegatNuovo.setDescrizione(allegatoDTO.getDescrizione());
-            	allegatNuovo.setNomeFile(allegatoDTO.getNomeFile());
-            	allegatNuovo.setTipoFile(allegatoDTO.getTipoFile());
-            	allegatNuovo.setPathFile(allegatoDTO.getPathFile());
-            	allegatNuovo.setIdFileEsterno(allegatoDTO.getIdFileEsterno());
-            	allegatNuovo.setFile(allegatoDTO.getFile());          	
-            	allegatNuovo.setDataEvento(dataEvento);
-            	allegatNuovo.setDescrizioneEvento(praticheEventi.getDescrizioneEvento());
-            	listaAllegatiNuovo.add(allegatNuovo);
+            	allegatoDTO.setDataEvento(dataEvento);
+            	allegatoDTO.setDescrizioneEvento(praticheEventi.getDescrizioneEvento());
+            	listaAllegatiNuovo.add(allegatoDTO);
 			}
             praticaDTO.setAllegati(listaAllegatiNuovo);
             //fine inserimento
@@ -569,6 +689,7 @@ public class Pratiche extends AbstractController {
             model.addAttribute("isCoverEditable", "TRUE".equalsIgnoreCase(abilitato) && "TRUE".equalsIgnoreCase(idCoverEditable));
             String isAllegatoModificabile = configurationService.getCachedConfiguration(ConfigurationConstants.IS_DESCRIZIONE_ALLEGATO_MODIFICABILE, praticaDTO.getEnte().getIdEnte(), praticaDTO.getIdComune().getIdComune());
             model.addAttribute("isAllegatoModificabile", "TRUE".equalsIgnoreCase(abilitato) && "TRUE".equalsIgnoreCase(isAllegatoModificabile));
+            model.addAttribute("associatedTechnicianAgentTaxCode", praticheService.readAssociatedTechnicianAgentTaxCode(pratica.getIdPratica()));
         } catch (Exception e) {
             String msgError = messageSource.getMessage("error.pratiche.visualizza.ricevute", null, Locale.getDefault());
             Message error = new Message();
@@ -581,7 +702,7 @@ public class Pratiche extends AbstractController {
         if (!"".equals(tab) && tab != null) {
             model.addAttribute("currentTab", tab);
         } else {
-            model.addAttribute("currentTab", TAB_DEFAULT);
+            model.addAttribute("currentTab", TAB_DEFAULT_APERTURA);
         }
         String azione = request.getParameter("a");
         if (!"".equals(azione) && azione != null) {
@@ -1075,6 +1196,7 @@ public class Pratiche extends AbstractController {
      * @param redirectAttributes
      * @return
      */
+    @RequiresGrant
     @RequestMapping("/pratiche/nuove/apertura/crea")
     public ModelAndView aperturaCrea(
             Model model, HttpServletRequest request, HttpServletResponse response,
@@ -1084,6 +1206,7 @@ public class Pratiche extends AbstractController {
             RedirectAttributes redirectAttributes) {
         Utente utente = utentiService.getUtenteConnesso(request);
         Pratica praticaDb = null;
+        redirectAttributes.addAttribute(MultiSubSessionManager.SESSION_PARAMETER, MultiSubSessionManager.getSessionId(request));
         try {
             praticaDb = praticheService.getPratica(idPratica);
             model.addAttribute("id_pratica", request.getParameter("id_pratica"));
@@ -1093,7 +1216,7 @@ public class Pratiche extends AbstractController {
             LkStatoPratica lkStatoPratica = lookupDao.findStatoPraticaByCodice(Constants.STATO_PRATICA_IN_PROGRESS);
 
             praticheAction.aggiornaPratica(pratica, lkStatoPratica);
-            request.getSession().setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
+            MultiSubSessionManager.setAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
             return new ModelAndView("redirect:/pratica/evento/index.htm");
         } catch (Exception e) {
             Message error = new Message();
@@ -1103,11 +1226,13 @@ public class Pratiche extends AbstractController {
             Log.SQL.error("/pratiche/nuove/apertura/dettaglio/ajax", e);
         }
         redirectAttributes.addAttribute("idPratica", idPratica);
+        
         return new ModelAndView("redirect:/pratiche/nuove/apertura/dettaglio.htm");
 //        return aperturaDettaglio(model, request, response);
     }
 
     //in caso di errore all'apertura della pratica.
+    @RequiresGrant
     @RequestMapping("/pratiche/nuove/apertura/crea/ajax")
     public String aperturaCrea(
             Model model,
@@ -1128,13 +1253,6 @@ public class Pratiche extends AbstractController {
             UtenteDTO connectedUser = utentiService.getUtenteConnessoDTO(request);
             
             List<UtenteRuoloEnteDTO> utenteRuoloEnte = connectedUser.getUtenteRuoloEnte();
-//            List<Integer> idEntiConnectedUser = new ArrayList<Integer>();
-//            for (UtenteRuoloEnteDTO utenteRuoloEnteDTO : utenteRuoloEnte) {
-//            	Integer idEnte = utenteRuoloEnteDTO.getIdEnte();
-//            	if(!idEntiConnectedUser.contains(idEnte))
-//            		idEntiConnectedUser.add(idEnte);
-//			}
-            
             List<Enti> enti = entiService.getListaEntiPerRicerca(connectedUser);
             model.addAttribute("entiRicerca", enti);
             List<Utente> operatori = utentiService.findUtentiByEnte(enti);
@@ -1146,6 +1264,7 @@ public class Pratiche extends AbstractController {
             List<LkTipoProcedimentoSuap> lkTipoProcedimentoSUAP = lookupDao.findAllTipoProcedimentoSuap();
             List<LkTipoInterventoSuap> lkTipoInterventoSuap = lookupDao.findAllTipoInterventoSuap();
             List<LkClassificazioneProcedimento> lkClassificazioneProcedimento = lookupDao.findAllClassificazioneProcedimento();
+            List<LkTipoPratica> lkTipoPratica = lookupDao.findSortedTipoPraticaByFlags(isRequestFrom(enti, TOWN_WITH_GRANTS));
             List<String> anniRiferimento = praticheService.popolaListaAnni();
             model.addAttribute("utenteConnesso", connectedUser);
             model.addAttribute("statoPraticaRicerca", lookup);
@@ -1156,7 +1275,8 @@ public class Pratiche extends AbstractController {
             model.addAttribute("lkTipoProcedimentoSUAP", lkTipoProcedimentoSUAP);
             model.addAttribute("lkTipoInterventoSUAP", lkTipoInterventoSuap);
             model.addAttribute("lkTipoClassificazioneProcedimento", lkClassificazioneProcedimento);
-//            connectedUser.getUtenteRuoloEnte();
+            model.addAttribute("lkTipoPratica", lkTipoPratica);
+
             Integer enteAcasoPerColumnModel = null;
             for (UtenteRuoloEnteDTO ruoloEnte : connectedUser.getUtenteRuoloEnte()) {
                 enteAcasoPerColumnModel = ruoloEnte.getIdEnte();
@@ -1171,7 +1291,8 @@ public class Pratiche extends AbstractController {
                 filter.setOrderColumn("idStatoPratica");
             }
             model.addAttribute("filtroRicerca", filter);
-
+            String back = request.getParameter("back");
+            model.addAttribute("back", back != null && back.length() > 0);
         } catch (Exception e) {
             Log.APP.error("Errore reperendo le pratiche", e);
             ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICHE_GESTISCI, "Errore nell'esecuzione del controller /pratiche/gestisci", e, null, utente);
@@ -1184,9 +1305,42 @@ public class Pratiche extends AbstractController {
     @RequestMapping("/pratiche/gestisci/ajax")
     public String gestioneAjax(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) {
         GridPraticaNuovaBean json = new GridPraticaNuovaBean();
+        //LOR
+      //  Filter filterDMS = new Filter();
+        //END
         Utente utente = utentiService.getUtenteConnesso(request);
         try {
             json = praticheAction.getPraticheDaGestire(request, paginator);
+            
+         //   filterDMS = (Filter) request.getSession().getAttribute("praticheGestisci");
+            
+           // DMSClientDao daoDms = new DMSClientDao();
+            
+            ArrayList<PraticaNuova> rows_Cross_DMS = new ArrayList<PraticaNuova>();
+            
+           //  List<PraticaNuova> rowsPraticheDMS = daoDms.ricercaPratiche(filterDMS);
+            
+            List<PraticaNuova> rowsPraticheCross = json.getRows();
+            
+            rows_Cross_DMS.addAll(rowsPraticheCross);
+
+        	/*for(PraticaNuova praDms : rowsPraticheDMS) {
+
+        		int praticaNuovaDms_gia_esistente_in_cross = 0;
+
+        		for(PraticaNuova praCross : rowsPraticheCross) {
+            		if(praCross.getIdentificativoPratica().toLowerCase() ==  praDms.getIdentificativoPratica().toLowerCase()) {
+            			praticaNuovaDms_gia_esistente_in_cross = 1;
+            		}        			
+        		}
+        		if(praticaNuovaDms_gia_esistente_in_cross == 0) {
+            		rows_Cross_DMS.add(praDms);	
+            	}
+        	}       */     
+            
+            json.setRows(rows_Cross_DMS);
+            
+            
         } catch (Exception e) {
             Log.APP.error("Errore reperendo le pratiche", e);
             String msgError = messageSource.getMessage("error.search.failure", null, Locale.getDefault());
@@ -1195,10 +1349,12 @@ public class Pratiche extends AbstractController {
             request.setAttribute("message", errori);
             ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICHE_GESTISCI_AJAX, "Errore nell'esecuzione del controller /pratiche/gestisci/ajax", e, null, utente);
             erroriAction.saveError(errore);
+            throw new RuntimeException(e);
         }
         model.addAttribute("json", json.toString());
         return AJAX_PAGE;
     }
+
     private Integer getIdPratica(String idPraticaString) throws ParseException
 	{
 		try
@@ -1223,37 +1379,118 @@ public class Pratiche extends AbstractController {
 		}
 		return nf.parse(idPraticaString).intValue();
 	}
+	
+	@RequiresGrant
+    @RequestMapping("/pratica/comunicazione/cambia_tecnico_procuratore")
+    public ModelAndView changeAssociatedTechnicianAgent(Model model, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+    	Pratica pratica = null;
+    	Integer idPratica = null;
+    	Integer idTechnicianAgent = null;
+    	boolean canContinue = true;
+    	PraticheEventi praticheUtenti = null;
+    	String taxCodeTechnicianAgent = request.getParameter("technician_tax_code");
+    	String idTechnicianAgentString = request.getParameter("technician_id");
+		String idPraticaString = request.getParameter("id_pratica");
+		
+		Log.APP.info("ID pratica ricevuto " + idPraticaString);
+        Log.APP.info("Codice fiscale tecnico procuratore associato ricevuto " + taxCodeTechnicianAgent);
+        Log.APP.info("ID anagrafica tecnico procuratore associato ricevuto " + idTechnicianAgentString);
+        
+        try {
+        	idPratica = Integer.parseInt(idPraticaString);
+        	idTechnicianAgent = Integer.parseInt(idTechnicianAgentString);
+        	pratica = praticheService.getPratica(idPratica);
+        	String oldTechnician = praticheService.readAssociatedTechnicianAgentTaxCode(pratica.getIdPratica());
+            Utente utenteConnesso = utentiService.getUtenteConnesso(request);
+        	ProcessiEventi eventoProcesso = processiService.findProcessiEventiByCodEventoIdProcesso(AnaTipiEvento.MODIFICA_TECNICO_PROCURATORE, pratica.getIdProcesso());
+        	
+        	Log.APP.info("add PraticaEvento: " + eventoProcesso);
+        	praticheUtenti = praticheAction.addEvent(utenteConnesso, pratica, eventoProcesso, oldTechnician, taxCodeTechnicianAgent);
+        } catch (Exception e) {
+            Log.APP.error("Errore nella creazione evento per la modifica del tecnico procuratore associato", e);
+            ErroreDTO error = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICA_DETTAGLIO_MESSAGGI, "Errore nell'esecuzione del controller /pratica/comunicazione/cambia_tecnico_procuratore", e, null, null);
+            erroriAction.saveError(error);
+            redirectAttributes.addFlashAttribute(OPERAZIONE_EFFETTUATA, "E#Errore durante la creazione evento per la modifica del tecnico procuratore associato, riprovare; se il problema persiste contattare l'assistenza");
+            canContinue = false;
+        }
+
+        if(canContinue) {
+	    	try { 
+	            praticheService.changeAssociatedTechnicianAgent(pratica.getIdentificativoPratica(), taxCodeTechnicianAgent);
+	            praticheService.changeAssociatedTechnicianAgentBackOffice(pratica.getIdPratica(), idTechnicianAgent);
+	        	redirectAttributes.addFlashAttribute(OPERAZIONE_EFFETTUATA, "O#Modifica del tecnico operatore associato effettuata");
+	        } catch (Exception e) {
+	            Log.APP.error("Errore nella modifica del tecnico procuratore associato", e);
+	            ErroreDTO error = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICA_DETTAGLIO_MESSAGGI, "Errore nell'esecuzione del controller /pratica/comunicazione/cambia_tecnico_procuratore", e, null, null);
+	            erroriAction.saveError(error);
+	            redirectAttributes.addFlashAttribute(OPERAZIONE_EFFETTUATA, "E#Errore durante la modifica del tecnico procuratore associato, riprovare; se il problema persiste contattare l'assistenza");
+	            try {
+					praticheAction.deleteEvent(praticheUtenti);
+				} catch (Exception e1) {
+					Log.APP.error("Errore Cancellazione PraticaEvento: " +e.getMessage());
+				}
+	        }
+        }
+        redirectAttributes.addAttribute(MultiSubSessionManager.SESSION_PARAMETER, MultiSubSessionManager.getSessionId(request));
+        
+    	return new ModelAndView(REDIRECT_DETTAGLIO_PRATICA_WITH_ID + idPratica);
+    }
+
     @RequestMapping("/pratiche/dettaglio")
     public String dettaglio(Model model,
             HttpServletRequest request,
-            HttpServletResponse response, @ModelAttribute("currentTab") String tab) throws Exception {
-        String idPraticaString = request.getParameter("id_pratica");
-		String fromImportXmlString = request.getParameter("fromImportXml");
+            HttpServletResponse response, 
+            @ModelAttribute("currentTab") String tab, 
+            @ModelAttribute(OPERAZIONE_EFFETTUATA) String operazioneEffettuata) throws Exception {
+    	String idPraticaString = request.getParameter("id_pratica");
+    	String fromImportXmlString = request.getParameter("fromImportXml");
         boolean fromImportXml = false;
-        if(fromImportXmlString!=null)
-			fromImportXml=true;																   		  
+		fromImportXml=(fromImportXmlString!=null);																   		  
         HttpSession session = request.getSession();
         Integer idPratica;
         Utente utente = utentiService.getUtenteConnesso(request);
         Pratica pratica = null;
         if (idPraticaString != null) {
             idPratica = getIdPratica(idPraticaString);
-            session.setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
+            MultiSubSessionManager.setAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
         } else {
-            idPratica = (Integer) session.getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+            idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
         }
         try {
             model.addAttribute("idPatica", idPratica);
             pratica = praticheService.getPratica(idPratica);
             if (pratica.getIdStatoPratica().getGrpStatoPratica().equals(StatoPratica.RICEVUTA)) {
                 request.setAttribute("idPratica", idPratica);
-                return "redirect:/pratiche/nuove/apertura/dettaglio.htm?fromGestioneEventi=true";
+                return "redirect:/pratiche/nuove/apertura/dettaglio.htm?fromGestioneEventi=true&"+MultiSubSessionManager.SESSION_PARAMETER+"="+MultiSubSessionManager.getSessionId(request);
             } else {
                 DettaglioPraticaDTO dettaglio = praticheService.getDettaglioPratica(pratica);
                 List<MessaggioDTO> messaggi = messaggiAction.findConnectedMessages(pratica);
                 boolean couldCreateNewEvent = utentiService.couldCreateNewEvent(utente, pratica);
                 
                 it.wego.cross.dto.dozer.PraticaDTO praticaDTO = mapper.map(pratica, it.wego.cross.dto.dozer.PraticaDTO.class);
+                praticaDTO.setCartiglio(cartiglioService.createCartiglio(pratica));
+                /*ArrayList<it.wego.cross.dto.dozer.NotaDTO> praNoteDms = new ArrayList<it.wego.cross.dto.dozer.NotaDTO>();
+                for(NotaDTO note : dettaglio.getNotePratica()) {
+                    it.wego.cross.dto.dozer.NotaDTO notaDozerDTO = mapper.map(note, it.wego.cross.dto.dozer.NotaDTO.class);
+                	praNoteDms.add(notaDozerDTO);
+                }
+                praticaDTO.setNotePratica(praNoteDms);*/
+                
+                //List<ProcedimentoEnteDTO> procedimentoEnteDTO = praticaDTO.getEndoProcedimentiList();
+                
+                List<it.wego.cross.dto.dozer.ProcedimentoEnteDTO> procedimentoEnteDTO = new ArrayList<it.wego.cross.dto.dozer.ProcedimentoEnteDTO>();
+                for (it.wego.cross.dto.ProcedimentoDTO pp : dettaglio.getProcedimenti())
+                {
+                	it.wego.cross.dto.dozer.ProcedimentoEnteDTO procEnteDTO = new ProcedimentoEnteDTO();
+                	it.wego.cross.dto.dozer.ProcedimentoDTO p2dto = new it.wego.cross.dto.dozer.ProcedimentoDTO();
+                	p2dto.setDescrizione(pp.getDesProcedimento());			                
+	                p2dto.setTermini(pp.getTermini());	                
+	                procEnteDTO.setProcedimento(p2dto);
+	                String provenienza = pp.getProvenienza();
+	                procEnteDTO.setProvenienza(provenienza);
+	                procedimentoEnteDTO.add(procEnteDTO);
+                }
+                praticaDTO.setEndoProcedimentiList(procedimentoEnteDTO);
 
                 List<AnagraficaMinifiedDTO> richiedenti = new ArrayList<AnagraficaMinifiedDTO>();
                 List<AnagraficaMinifiedDTO> beneficiari = new ArrayList<AnagraficaMinifiedDTO>();
@@ -1274,23 +1511,59 @@ public class Pratiche extends AbstractController {
                 List<it.wego.cross.dto.dozer.AllegatoDTO> listaAllegatiNuovo = new ArrayList<it.wego.cross.dto.dozer.AllegatoDTO>();
                 List<it.wego.cross.dto.dozer.AllegatoDTO> allegati = praticaDTO.getAllegati();
                 for (it.wego.cross.dto.dozer.AllegatoDTO allegatoDTO : allegati) {
-                	Integer idAllegato = allegatoDTO.getId();
-                	PraticheEventiAllegati pea = new PraticheEventiAllegati();
-                	pea = praticheService.findPraticheEventiAllegatiByIdAllegato(idAllegato);
-                	PraticheEventi praticheEventi = pea.getPraticheEventi();
-                	Date dataEvento = praticheEventi.getDataEvento();
-                	it.wego.cross.dto.dozer.AllegatoDTO allegatNuovo = new it.wego.cross.dto.dozer.AllegatoDTO();
-                	allegatNuovo.setId(allegatoDTO.getId());
-                	allegatNuovo.setDescrizione(allegatoDTO.getDescrizione());
-                	allegatNuovo.setNomeFile(allegatoDTO.getNomeFile());
-                	allegatNuovo.setTipoFile(allegatoDTO.getTipoFile());
-                	allegatNuovo.setPathFile(allegatoDTO.getPathFile());
-                	allegatNuovo.setIdFileEsterno(allegatoDTO.getIdFileEsterno());
-                	allegatNuovo.setFile(allegatoDTO.getFile());          	
-                	allegatNuovo.setDataEvento(dataEvento);
-                	allegatNuovo.setDescrizioneEvento(praticheEventi.getDescrizioneEvento());
-                	listaAllegatiNuovo.add(allegatNuovo);
+                	Boolean isConsultazione = ((boolean) request.getSession().getAttribute(SessionConstants.ABILITAZIONE_CONSULTAZIONE));
+                	if (!isConsultazione || !Utils.e(allegatoDTO.getProtocollo())) {
+	                	Integer idAllegato = allegatoDTO.getId();
+	                	PraticheEventiAllegati pea = new PraticheEventiAllegati();
+	                	pea = praticheService.findPraticheEventiAllegatiByIdAllegato(idAllegato);
+	                	PraticheEventi praticheEventi = pea.getPraticheEventi();
+	                	Date dataEvento = praticheEventi.getDataEvento();
+	                	allegatoDTO.setDataEvento(dataEvento);
+	                	allegatoDTO.setDescrizioneEvento(praticheEventi.getDescrizioneEvento());
+	                	listaAllegatiNuovo.add(allegatoDTO);
+                	}
 				}
+                //Allegati Civilia
+               /* List<AllegatoDTO> allegati_civilia = dettaglio.getAllegati();
+                for (AllegatoDTO allegatoDTO : allegati_civilia) {
+                	if(allegatoDTO.getProvenienza()!=null) {
+                		if(allegatoDTO.getProvenienza().equals(it.wego.cross.civilia.Costants.CIVILIA)) {
+                        	it.wego.cross.dto.dozer.AllegatoDTO allegatNuovo = new it.wego.cross.dto.dozer.AllegatoDTO();
+                        	allegatNuovo.setId(1);
+                        	allegatNuovo.setProvenienza(it.wego.cross.civilia.Costants.CIVILIA);
+                        	allegatNuovo.setDescrizione(allegatoDTO.getDescrizione());
+                        	allegatNuovo.setNomeFile(allegatoDTO.getNomeFile());
+                        	allegatNuovo.setTipoFile(allegatoDTO.getTipoFile());
+                        	allegatNuovo.setPathFile(allegatoDTO.getPathFile());
+                        	allegatNuovo.setIdFileEsterno(allegatoDTO.getIdFileEsterno());
+                        	//allegatNuovo.setFile(allegatoDTO.getFile());          	
+                        	//allegatNuovo.setDataEvento(dataEvento);
+                        	//allegatNuovo.setDescrizioneEvento(praticheEventi.getDescrizioneEvento());
+                        	listaAllegatiNuovo.add(allegatNuovo);                			
+                		}
+                	}
+                }*/
+              //Allegati DMS
+             /*   List<AllegatoDTO> allegati_dms = dettaglio.getAllegati();
+                for (AllegatoDTO allegatoDTO : allegati_dms) {
+                	if(allegatoDTO.getProvenienza()!=null) {
+                		if(allegatoDTO.getProvenienza().equals(it.wego.cross.civilia.Costants.DMS)) {
+                        	it.wego.cross.dto.dozer.AllegatoDTO allegatNuovo = new it.wego.cross.dto.dozer.AllegatoDTO();
+                        	allegatNuovo.setId(allegatoDTO.getIdAllegato());
+                        	allegatNuovo.setProvenienza(it.wego.cross.civilia.Costants.DMS);
+                        	allegatNuovo.setDescrizione(allegatoDTO.getDescrizione());
+                        	allegatNuovo.setNomeFile(allegatoDTO.getNomeFile());
+                        	allegatNuovo.setTipoFile(allegatoDTO.getTipoFile());
+                        	allegatNuovo.setPathFile(allegatoDTO.getPathFile());
+                        	allegatNuovo.setIdFileEsterno(allegatoDTO.getIdFileEsterno());
+                        	//allegatNuovo.setFile(allegatoDTO.getFile());          	
+                        	//allegatNuovo.setDataEvento(dataEvento);
+                        	//allegatNuovo.setDescrizioneEvento(praticheEventi.getDescrizioneEvento());
+                        	listaAllegatiNuovo.add(allegatNuovo);                			
+                		}
+                	}
+                }*/
+                
                 // gestione con prot_suap
                if (pratica.getProt_suap() !=null && !(pratica.getProt_suap()).isEmpty()) {
             	   if(praticaDTO.getEndoProcedimentiList()!=null) {
@@ -1300,8 +1573,8 @@ public class Pratiche extends AbstractController {
                	   	
                    	int numeroProcedimenti = pratica.getPraticaProcedimentiList().size();
                    	for (int i=0;i<numeroProcedimenti;i++) {
-                   		
-                   		Procedimenti procedimenti = procedimentiDao.findProcedimentoByIdProc(pratica.getPraticaProcedimentiList().get(i).getProcedimenti().getIdProc());
+                   		PraticaProcedimenti pp = pratica.getPraticaProcedimentiList().get(i);
+                   		Procedimenti procedimenti = procedimentiDao.findProcedimentoByIdProc(pp.getProcedimenti().getIdProc());
                    		ProcedimentoDTO procedimento = new ProcedimentoDTO();
                    		procedimento.setTermini(procedimenti.getTermini());
                    		ProcedimentoEnteDTO endoProcedimento = new ProcedimentoEnteDTO();
@@ -1316,7 +1589,8 @@ public class Pratiche extends AbstractController {
                    		
                    		endoProcedimento.setProcedimento(procedimento);
                    		endoProcedimento.setEnte(ente);
-                   		
+                   		if(pp.getLkTipoEndoProcedimentoSuap() != null)
+                   			endoProcedimento.setPraticaProcedimentoDescrizione(pp.getLkTipoEndoProcedimentoSuap().getDescrizioneEndoProcedimento());
                    		praticaDTO.getEndoProcedimentiList().add(endoProcedimento);
                    	}
                    }
@@ -1326,11 +1600,12 @@ public class Pratiche extends AbstractController {
             	   }
                    if(pratica.getIdTipoProcedimentoSuap()!=null)
                    		praticaDTO.setTipoProcedimentoSuap(pratica.getIdTipoProcedimentoSuap().getDescrizioneCrossSuap());
-               }
-               	
+                }
+                	
                 praticaDTO.setAllegati(listaAllegatiNuovo);
                 //fine inserimento
                
+                model.addAttribute("associatedTechnicianAgentTaxCode", praticheService.readAssociatedTechnicianAgentTaxCode(pratica.getIdPratica()));
                 model.addAttribute("pratica", praticaDTO);
                 model.addAttribute("couldCreateNewEvent", couldCreateNewEvent);
                 model.addAttribute("dettaglio", dettaglio);
@@ -1373,8 +1648,8 @@ public class Pratiche extends AbstractController {
                 	visualizzaAssegnazione=true;
                 }
                 model.addAttribute("visualizzaAssegnazione", visualizzaAssegnazione);
-                
-
+                Boolean isProd =  configurationService.findByName(SessionConstants.IS_PRODUCTION, Boolean.class);
+                model.addAttribute("isProd", isProd);
             }
         } catch (Exception ex) {
             Message error = new Message();
@@ -1388,7 +1663,9 @@ public class Pratiche extends AbstractController {
         if (!"".equals(ttab) && ttab != null) {
             model.addAttribute("currentTab", ttab);
         } else {
-            if ((!"".equals(tab) && tab != null)) {
+        	if ((boolean) request.getSession().getAttribute(SessionConstants.ABILITAZIONE_CONSULTAZIONE)) {
+        		model.addAttribute("currentTab", TAB_DEFAULT_APERTURA);
+        	}else if ((!"".equals(tab) && tab != null)) {
                 model.addAttribute("currentTab", tab);
             } else {
                 model.addAttribute("currentTab", TAB_DEFAULT);
@@ -1400,23 +1677,26 @@ public class Pratiche extends AbstractController {
             model.addAttribute("messaggiooperazioneeffettuata", messaggio);
         }
         model.addAttribute("id_pratica", idPratica);
+        if(!Utils.e(operazioneEffettuata)) {
+        	Message message = decompileStringMessage(operazioneEffettuata);
+        	if(message.getError()) {
+        		model.addAttribute("message", message);
+        	}
+        	else {
+        		model.addAttribute("messaggiooperazioneeffettuata", message.getMessages().isEmpty()? "": message.getMessages().get(0));
+        	}
+        }
         return DETTAGLIO_PRATICA;
     }
 
     @RequestMapping("/pratiche/dettaglio/eventi/ajax")
     public String listAjax(Model model,
             HttpServletRequest request,
-            HttpServletResponse response,
+            HttpServletResponse response, 
             @ModelAttribute("paginator") JqgridPaginator paginator) {
         GridPraticaEventoBean json = new GridPraticaEventoBean();
-        Utente utente = utentiService.getUtenteConnesso(request);
-        Pratica pratica = null;
         try {
-        	HttpSession session = request.getSession();
-        	Integer idPratica = (Integer) session.getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
-            //Integer idPratica = Integer.parseInt(request.getParameter("idPratica"));
-            pratica = praticheService.getPratica(idPratica);
-            json = praticheAction.getPraticaEventoGrid(request, paginator);
+        	json = praticheAction.getPraticaEventoGrid(request, paginator, MultiSubSessionManager.getSessionId(request));
             String jsonString = json.toString();
             model.addAttribute("json", jsonString);
         } catch (Exception e) {
@@ -1428,10 +1708,12 @@ public class Pratiche extends AbstractController {
         return AJAX_PAGE;
     }
 
+    @RequiresGrant
     @RequestMapping(value = "/pratiche/dettaglio/aggiungiProcedimento/inserisci", method = RequestMethod.POST)
     public String aggiungiProcedimentoInserisci(Model model, HttpServletRequest request, HttpServletResponse response, final RedirectAttributes redirectAttributes) {
         HttpSession session = request.getSession();
-        Integer idPratica = (Integer) session.getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+        redirectAttributes.addAttribute(MultiSubSessionManager.SESSION_PARAMETER, MultiSubSessionManager.getSessionId(request));
+        Integer idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
         Utente utenteConnesso = utentiService.getUtenteConnesso(request);
         String ret = REDIRECT_COLLEGA_PROCEDIMENTO_LISTA_ENTI;
         Pratica pratica = null;
@@ -1475,6 +1757,7 @@ public class Pratiche extends AbstractController {
         return ret;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratiche/dettaglio/aggiungiProcedimento")
     public String aggiungiProcedimento(Model model, HttpServletRequest request, HttpServletResponse response) {
         Filter filter = (Filter) request.getSession().getAttribute("aggiungProcedimentoList");
@@ -1533,6 +1816,7 @@ public class Pratiche extends AbstractController {
         return COLLEGA_PROCEDIMENTO_LISTA_ENTI;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratiche/dettaglio/aggiungiProcedimento/listaEnti/ajax")
     public String aggiungiProcedimentoListaEntiAjax(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) {
         GridEntiBean json;
@@ -1630,6 +1914,7 @@ public class Pratiche extends AbstractController {
         return AJAX_PAGE;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratiche/mail/resend")
     public String rispedisciEmail(
             Model model,
@@ -1716,7 +2001,203 @@ public class Pratiche extends AbstractController {
         return AJAX_PAGE;
     }
 
-    @RequestMapping("/pratiche/dettaglio/formAllegatiAjax")
+    @RequestMapping("/pratiche/dettaglio/formAllegatiProtocolloAjax")
+    public String cercaAllegatiProtocollo(Model model,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = "action", required = true) String azione,
+            @ModelAttribute AllegatoDTO allegatoDTO) {
+    	JsonResponse json = new JsonResponse();
+        try {
+        	Utente utente = utentiService.getUtenteConnesso(request);
+            String anno =request.getParameter("anno");
+       		String idProtocollo = request.getParameter("idProtocollo");
+       		long nProtocollo = Long.parseLong(idProtocollo);
+               
+            File[] allegatiZipF = null;
+            List<String> allegatiZip = new ArrayList<String>();
+            QName SERVICE_NAME = new QName("http://impl.server.ws.protocollo.linksmt.it/", "ProtocolloServerImplService");
+        	URL wsdlURL = new URL("http://10.10.1.4:8081/adoc/protocollo?wsdl");
+    		ProtocolloServerImplService ss = new ProtocolloServerImplService(wsdlURL, SERVICE_NAME);
+    	    ProtocolloServer port = ss.getProtocolloServerImplPort(); 
+    	    Map<String, Object> requestContext2 = ((BindingProvider)port).getRequestContext();
+    	    Map<String,List<String>> headers = new HashMap<String,List<String>>();
+    	    headers.put("Username", Collections.singletonList(""));
+    	    headers.put("Password", Collections.singletonList(""));
+    	    requestContext2.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
+    		ProtocolloInformazioniRequest requestProtocollo = new ProtocolloInformazioniRequest();
+    		
+    		requestProtocollo.setAnno(anno);
+    		requestProtocollo.setNumeroProtocollo(nProtocollo);
+    		Return r = port.getProtocollo(requestProtocollo);
+    		XMLGregorianCalendar dataProtocollo = r.getDataProtocollo();
+    		Mittente mittente = r.getMittente();
+    		Long numeroProtocollo = r.getNumeroProtocollo();
+    		String oggetto = r.getOggetto();
+    		if (r.getErrore() != null) {
+//    			throw new Error(r.getErrore().getDescrizione());
+    			json.setSuccess(Boolean.FALSE);
+                json.setMessage("protocollo non trovato");
+                Log.SQL.error("/pratiche/dettaglio/formAllegatiAjax", r.getErrore().getDescrizione());
+                model.addAttribute("json", json.toString());
+                return AJAX_PAGE;
+    		} else {
+    			if (r.getDocumento() != null) {
+    				byte[] decodedContenuto = r.getDocumento().getContenuto();
+    				File zipFile = new File(r.getDocumento().getNomeFile());
+    				FileUtils.writeByteArrayToFile(zipFile,decodedContenuto);
+    				String attachmentsFolder = getTempFolder();
+    				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    				String identificativoFolder = timestamp.getTime() + "";
+    				String pathZipCaricato = attachmentsFolder + File.separator + Constants.UNZIP_FOLDER + identificativoFolder;
+    				//Utils.copyFile(fileConv, dest);
+    				Utils.unzip(zipFile.getAbsolutePath(), pathZipCaricato);
+    				allegatiZipF = Utils.getFolderFile(pathZipCaricato);
+    				for (File f : allegatiZipF) {
+    					allegatiZip.add(identificativoFolder + ";" + f.getName() + ";" + f.length()/1024);
+    		
+    				}
+    			}
+    		}
+
+    		ObjectMapper mapper = new ObjectMapper();
+    		String allegatiZipJ = mapper.writeValueAsString(allegatiZip);
+    		json.addAttribute("allegati", allegatiZipJ);
+    		json.addAttribute("dataProtocollo", dataProtocollo.getDay() + 
+    				"-" + dataProtocollo.getMonth() + "-" + dataProtocollo.getYear());
+    		json.addAttribute("oggetto", oggetto);
+    		json.addAttribute("numeroProtocollo", numeroProtocollo.toString());
+    		json.addAttribute("ente", mittente.getPersonaGiuridica().getRagioneSociale());
+
+    		json.setSuccess(Boolean.TRUE);
+            model.addAttribute("json", json.toString());
+        } catch (Exception e) {
+            json.setSuccess(Boolean.FALSE);
+            json.setMessage("Protocollo non trovato");
+            Log.SQL.error("/pratiche/dettaglio/formAllegatiAjax", e);
+            model.addAttribute("json", json.toString());
+            return AJAX_PAGE;
+        }
+        
+        return AJAX_PAGE;
+    }
+    
+
+    @RequiresGrant
+    @RequestMapping("/pratiche/dettaglio/formAllegatiProtocolloSalvaAjax")
+    public String salvaAllegatiProtocollo(Model model,
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = "action", required = true) String azione,
+            @ModelAttribute AllegatoDTO allegatoDTO) throws JSONException {
+        Utente utente = utentiService.getUtenteConnesso(request);
+        String praticaId =request.getParameter("pratica");
+        String res = request.getParameter("res");
+		JSONObject resO = new JSONObject(res);
+		JSONArray allegatiPath = resO.getJSONArray("allegati");
+		String numeroProtocollo = resO.getString("numeroProtocollo");
+		String dataProtocollo = resO.getString("dataProtocollo");
+		Integer idPratica = Integer.valueOf(praticaId);
+		 Log.APP.error("numero protocollo " + numeroProtocollo);
+		 Log.APP.error("data protocollo " + dataProtocollo);
+		 Log.APP.error("allegati " + allegatiPath);
+        JsonResponse json = new JsonResponse();
+        String tempFolder = getTempFolder();
+		String cartellaUnzip = tempFolder + Constants.UNZIP_FOLDER;
+        try {
+        	Pratica pratica = praticheService.getPratica(idPratica);
+    		ProcessiEventi processoEvento = praticaDao.getProcessiEventi(pratica.getIdProcesso().getIdProcesso(), SessionConstants.CODICE_EVENTO_CARICA_DOC_PROT);
+    		Integer idEvento = processoEvento.getIdEvento();
+    		String cartellaAllegatiPratica = cartellaUnzip + File.separator + pratica.getIdentificativoPratica();
+        	copiaAllegati(allegatiPath,cartellaUnzip,cartellaAllegatiPratica);
+        	ProcessiEventi pe = praticheService.findProcessiEventi(idEvento);
+        	EventoDTO eventoDTO = new EventoDTO();
+        	eventoDTO.setIdEvento(idEvento);
+        	eventoDTO.setDescrizione(pe.getDesEvento());
+        	SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
+        	Date date1 = dateformat.parse(dataProtocollo);
+        	eventoDTO.setDataProtocollo(date1);
+        	eventoDTO.setNumProtocollo(numeroProtocollo);
+        	eventoDTO.setCodEvento(SessionConstants.CODICE_EVENTO_CARICA_DOC_PROT);
+        	List<AllegatoDTO> allegatiListDTO = caricaListAllegatiDTO(allegatiPath,cartellaAllegatiPratica);
+        	allegatiAction.salvaAllegati(eventoDTO, utente, pratica, allegatiListDTO);
+    		json.setSuccess(Boolean.TRUE);
+            model.addAttribute("json", json.toString());
+        } catch (Exception e) {
+            json.setSuccess(Boolean.FALSE);
+            json.setMessage("Impossibile salvare i dati.");
+            Log.SQL.error("/pratiche/dettaglio/formAllegatiAjax", e);
+            model.addAttribute("json", json.toString());
+        }
+        
+        return AJAX_PAGE;
+    }
+
+    private List<PraticheEventiAllegati> caricaListAllegati(JSONArray allegatiPath,String cartellaAllegatiPratica) throws JSONException, IOException {
+    	List<PraticheEventiAllegati> listPel = new ArrayList<PraticheEventiAllegati>();
+    	for (int i=0; i< allegatiPath.length();i++) {
+    		PraticheEventiAllegati pel = new PraticheEventiAllegati();
+    		Allegati all = new Allegati();
+    		String nomeFile = ((String)allegatiPath.get(i)).split("\\/")[1].replaceAll("%20", " ");
+    		String tipoFile = nomeFile.split("\\.")[1];
+    		String pathFile = cartellaAllegatiPratica + File.separator + nomeFile ;
+        	all.setDescrizione(nomeFile);
+        	all.setFile(FileUtils.readFileToByteArray(new File(pathFile)));
+        	all.setNomeFile(nomeFile);
+        	all.setTipoFile(tipoFile);
+        	all.setPathFile(pathFile); 
+        	pel.setAllegati(all);
+        	listPel.add(pel);
+    	}
+    	return listPel;
+	}
+    
+    
+    private List<AllegatoDTO> caricaListAllegatiDTO(JSONArray allegatiPath,String cartellaAllegatiPratica) throws JSONException, IOException {
+    	List<AllegatoDTO> listPel = new ArrayList<AllegatoDTO>();
+    	for (int i=0; i< allegatiPath.length();i++) {
+    		PraticheEventiAllegati pel = new PraticheEventiAllegati();
+    		String nomeFile = ((String)allegatiPath.get(i)).split("\\/")[1].replaceAll("%20", " ");
+    		String tipoFile = nomeFile.split("\\.")[1];
+    		String pathFile = cartellaAllegatiPratica + File.separator + nomeFile ;
+    		AllegatoDTO allegatoDTO = new AllegatoDTO();
+        	allegatoDTO.setDescrizione(nomeFile);
+        	allegatoDTO.setNomeFile(nomeFile);
+        	allegatoDTO.setPathFile(pathFile);
+        	byte[] content = FileUtils.readFileToByteArray(new File(pathFile));
+        	MultipartFile result = new MockMultipartFile(nomeFile,
+        			nomeFile, tipoFile, content);
+        	allegatoDTO.setFile(result);
+        	allegatoDTO.setFileContent(FileUtils.readFileToByteArray(new File(pathFile)));
+        	listPel.add(allegatoDTO);
+    	}
+    	return listPel;
+	}
+
+
+	private void copiaAllegati(JSONArray allegatiPath, String cartellaUnzip, String cartellaAllegatiPratica) throws IOException, JSONException {
+	    	for (int i=0; i< allegatiPath.length();i++) {
+	    		Utils.copyFile(
+	    				new File(cartellaUnzip + ((String)allegatiPath.get(i)).replaceAll("%20", " ")),
+	    				new File(cartellaAllegatiPratica + File.separator + ((String)allegatiPath.get(i)).split("\\/")[1].replaceAll("%20", " ")));
+	    	}
+	}
+
+	private String getTempFolder() {
+    	List<Configuration> attachmentsFolderConfig = configurationService
+				.findByName(SessionConstants.TEMP_FOLDER);
+		Configuration config = attachmentsFolderConfig.get(0);
+		return config.getValue();
+	}
+
+	private String getAttachmentsFolder() {
+		List<Configuration> attachmentsFolderConfig = configurationService
+				.findByName(SessionConstants.ATTACHMENTS_FOLDER);
+		Configuration config = attachmentsFolderConfig.get(0);
+		return config.getValue();
+	}
+
+	@RequestMapping("/pratiche/dettaglio/formAllegatiAjax")
     public String modificaAllegato(Model model,
             HttpServletRequest request,
             HttpServletResponse response,
@@ -1756,14 +2237,205 @@ public class Pratiche extends AbstractController {
         }
         return AJAX_PAGE;
     }
+    
+	
+	
+	@RequestMapping("/pratiche/dettaglio/formFirmaAllegatoAjax")
+	 public String firmaAllegato(Model model,
+	            HttpServletRequest request,
+	            HttpServletResponse response,
+	            @RequestParam(value = "cades") String cadesS,
+	            @RequestParam(value = "otp") String otp,
+	            @RequestParam(value = "username") String username,
+	            @ModelAttribute AllegatoDTO allegatoDTO) {
+	        Utente utente = utentiService.getUtenteConnesso(request);
+	        System.out.println("cadesS : " + cadesS);
+	        Boolean cades = cadesS.equals("cades") ? true : false;
+	        String praticaId =request.getParameter("pratica");
+	        Integer idPratica = Integer.valueOf(praticaId);
+	        JsonResponse json = new JsonResponse();
+        	Date date = new Date();
 
+	        	
+	        try { 
+	        	 if (Strings.isNullOrEmpty(username)) {
+	                 json.setSuccess(Boolean.FALSE);
+	                 json.setMessage(messageSource.getMessage("error.firma.username", null, Locale.getDefault()));
+	                 model.addAttribute("json", json.toString());
+	        	 }else
+	        	 if (Strings.isNullOrEmpty(otp)) {
+	                 json.setSuccess(Boolean.FALSE);
+	                 json.setMessage(messageSource.getMessage("error.firma.otp", null, Locale.getDefault()));
+	                 model.addAttribute("json", json.toString());
+	        	 }else {
+	        	Pratica pratica = praticheService.getPratica(idPratica);
+	            Allegati allegato = allegatiService.findAllegatoById(allegatoDTO.getIdAllegato());
+	            String folder = configurationService.getCachedConfiguration(SessionConstants.DOCUMENTS_FOLDER, null, null);
+	            folder = componentUtils.generateFilePath(folder, pratica.getIdComune(), date);
+		        String cartellaAllegatiPratica = folder + File.separator + UUID.randomUUID() + "_";
+		        System.out.println("cartella allegati pratica : " + cartellaAllegatiPratica);
+	            //autenticazione al servizio di firma per ottenere il token
+		        System.out.println("VERIFICA id allegato DTO : " + allegatoDTO.getIdAllegato());
+	            System.out.println("VERIFICA allegato pathfile : " + allegato.getPathFile());
+	            System.out.println("VERIFICA nome file : " + allegato.getNomeFile());
+	            System.out.println("VERIFICA descrizione file : " + allegato.getDescrizione());
+	              QName SERVICE_NAME = new QName("http://stampsign.wsdl.avtmb.tz.eng.it", "stampsign");
+	        		  URL url = null;
+//	        	            url = new URL("file:resources/firma/stampsignwsdl.wsdl");
+	        	            url = ComunicazioneController.class.getResource("/wsdl/firma/stampsignwsdl.wsdl");
+	        	            System.out.println("URL LEGGI: " + url);
+	        	            URL   url2 = ComunicazioneController.class.getResource("authentication.properties");
+	        	            System.out.println("URL LEGGI: " + url2);
+	        		 URL wsdlURL = url;
+	        	      
+	        	        Stampsign ss = new Stampsign(wsdlURL, SERVICE_NAME);
+	        	        DocumentStampSignAuthPt port = ss.getDocumentStampSignAuthBinding();  
+	        	        Map<String, Object> requestContext = ((BindingProvider) port).getRequestContext();
+	        	        String endPoint = configurationService
+	        					.findByName(SessionConstants.ENDPOINT_FIRMA_URL).get(0).getValue();
+	        	    	String endPointA = configurationService
+	        					.findByName(SessionConstants.ENDPOINT_FIRMA_URL_AUTH).get(0).getValue();
+	        	    	String endPointU = configurationService
+	        					.findByName(SessionConstants.ENDPOINT_FIRMA_USERNAME).get(0).getValue();
+	        	    	String endPointP = configurationService
+	        					.findByName(SessionConstants.ENDPOINT_FIRMA_PASSWORD).get(0).getValue();
+	        	    	String clientId = configurationService
+	        					.findByName(SessionConstants.ENDPOINT_FIRMA_CLIENTID).get(0).getValue();
+	        	    	String accessToken = configurationService
+	        					.findByName(SessionConstants.ENDPOINT_FIRMA_ACCESSTOKEN).get(0).getValue();
+	        	        requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointA);
+	        	        requestContext.put(BindingProvider.USERNAME_PROPERTY, endPointU);
+	        	        requestContext.put(BindingProvider.PASSWORD_PROPERTY, endPointP);
+	        	        Map<String, List<String>> headers = new HashMap<String, List<String>>();
+	        	        requestContext.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
+	        	        
+	      					 StampSignRequest stampRequest = new StampSignRequest();
+	      				        stampRequest.setRequestType(RequestType.SIGN);
+	      				        stampRequest.setId("id_9c716376-a0d5-4a0b-ac92-4a8987189d96");
+	      				        Sign sign = new Sign();
+	      				        sign.setClientId(clientId);
+	      				        sign.setTransactionId("83247823794");
+	      				        sign.setSigner(username);
+	      				        if (cades)
+	      				        	sign.setTipoFirma("CADES");
+	      				        else
+	      				        	sign.setTipoFirma("PADES");
+	      				        sign.setOtp(otp);
+	      				        DataHandler dh = getDataHandler(allegato.getPathFile());
+	      				        sign.setFileDocumento(dh);
+	      				        stampRequest.setSign(sign);
+	      				        DocumentStampSignPt portSign = ss.getDocumentStampSignBinding();
+	      				        Map<String, Object> requestContext2 = ((BindingProvider) portSign).getRequestContext();
+	      				        Map<String, List<String>> headersSign = new HashMap<String, List<String>>();
+	      				        headersSign.put("Authorization", Collections.singletonList("Bearer " + accessToken));
+	      				        requestContext2.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPoint);
+	      				        requestContext2.put(MessageContext.HTTP_REQUEST_HEADERS, headersSign);
+//	      				        String fileName = allegato.getNomeFile(); 
+//	      				        InputStream is = new FileInputStream(allegato.getPathFile());
+	      				        StampSignResponse stampResponse = portSign.documentStampSign(stampRequest);
+	      				      if (stampResponse.getErrore() != null) {
+	 				        	 json.setSuccess(Boolean.FALSE);
+	         	                 json.setMessage(stampResponse.getErrore().getMessaggio());
+	         	                 model.addAttribute("json", json.toString());
+	         	                Log.SQL.error(stampResponse.getErrore().getMessaggio());
+	 				        }else {
+	      				        Risultato risultato = stampResponse.getRisultato();
+	      				        String fileName = risultato.getDownloadFileName();
+	      				        InputStream is = risultato.getDownloadFileContent().getInputStream(); 
+	      				        OutputStream os;
+	      				        if (cades)
+	      				        	os = new FileOutputStream(new File(cartellaAllegatiPratica +  (allegato.getNomeFile().toLowerCase().endsWith(".p7m") ? allegato.getNomeFile() : allegato.getNomeFile() + ".p7m")));
+	      				        else
+	      				        	os = new FileOutputStream(new File(cartellaAllegatiPratica +  allegato.getNomeFile()));
+	      				        // This will copy the file from the two streams
+	      				        IOUtils.copy(is, os);
+	      				        //salva file firmato nella cartella degli allegati
+	      				        //dovresti salvare evento di firma
+	      				        List<AllegatoDTO> listPel = new ArrayList<AllegatoDTO>();
+	      				    		PraticheEventiAllegati pel = new PraticheEventiAllegati();
+	      				    		String nomeFile = "";
+	      				    		if (cades)
+	      				    			nomeFile =  (allegato.getNomeFile().toLowerCase().endsWith(".p7m") ? allegato.getNomeFile() : allegato.getNomeFile() + ".p7m");
+	      				    		else
+	      				    			nomeFile =  allegato.getNomeFile();
+	      				    		String descFile = allegato.getDescrizione();
+	      				    		if(!descFile.endsWith("(Firmato) "))
+	      				    			descFile = descFile + " (Firmato) ";
+	      				    		String tipoFile = "";
+	      				    		if (cades)
+	      				    			tipoFile = "application/pkcs7-mime";
+	      				    		else
+	      				    			tipoFile = "application/pdf";
+	      				    		String pathFile = cartellaAllegatiPratica  + nomeFile ;
+	      				    		System.out.println("pathFile da salvare " + pathFile);
+	      				    		AllegatoDTO allegatofDTO = new AllegatoDTO();
+	      				        	allegatofDTO.setDescrizione(descFile);
+	      				        	allegatofDTO.setNomeFile(nomeFile);
+	      				        	allegatofDTO.setPathFile(pathFile);
+	      				        	allegatofDTO.setTipoFile(tipoFile);
+	      				        	System.out.println(" allegatofDTO pathFile da salvare " + allegatofDTO.getPathFile());
+//	      				        	byte[] content = org.apache.commons.io.FileUtils.readFileToByteArray(new File(pathFile));
+//	      				        	MultipartFile result = new MockMultipartFile(nomeFile,
+//	      				        			nomeFile, tipoFile, content);
+//	      				        	allegatofDTO.setFile(result);
+//	      				        	allegatofDTO.setFileContent(org.apache.commons.io.FileUtils.readFileToByteArray(new File(pathFile)));
+	      				        	listPel.add(allegatofDTO); 
+	      				        	EventoDTO eventoDTO = new EventoDTO();
+	      				        	//dubbi su come recuperare l id evento credo vada creaton evento nella tipologia associato alla firma
+	      				        	ProcessiEventi processoEvento = praticaDao.getProcessiEventi(pratica.getIdProcesso().getIdProcesso(), SessionConstants.CODICE_EVENTO_FIRMA_ALLEGATO);
+	      				    		Integer idEvento = processoEvento.getIdEvento();
+	      				        	eventoDTO.setDataEvento(Utils.dateTimeItalianFormat(date));
+	      				        	eventoDTO.setIdEvento(idEvento);
+	      				        	ProcessiEventi pe = praticheService.findProcessiEventi(idEvento);
+	      				        	eventoDTO.setDescrizione(pe.getDesEvento());
+	      				        	SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
+	      				        	eventoDTO.setCodEvento(SessionConstants.CODICE_EVENTO_FIRMA_ALLEGATO);
+//	      				    		praticheService.startCommunicationProcess(pratica, praticaEvento, comunicazioneBean);
+	      				        	allegatiAction.salvaAllegati(eventoDTO, utente, pratica, listPel);
+	      				        	List<AllegatoDTO> allegatiPratica = praticheService.getAllegatiPratica(idPratica);
+	      				        	Integer idAllegato =0;
+	      				        	for(AllegatoDTO all : allegatiPratica) {
+	      				        		if (idAllegato < all.getIdAllegato())
+	      				        			idAllegato = all.getIdAllegato();
+	      				        	}
+	      				        	Map<String,String> allegatoF = new HashMap<String,String>();
+	      				        	allegatoF.put("nome", allegatofDTO.getNomeFile());
+	      				        	DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	      				          String today = formatter.format(new Date());
+	      				        	allegatoF.put("data", today);
+	      				        	allegatoF.put("descrizione", allegatofDTO.getDescrizione());
+	      				        	allegatoF.put("id", idAllegato.toString());
+	      				        	if (cades)
+	      				        		allegatoF.put("tipoFileCode","filefirmato");
+	      				        	else
+	      				        		allegatoF.put("tipoFileCode","filepdf");
+	      				        	 json.setSuccess(Boolean.TRUE);
+	      				        	 json.setAttributes(allegatoF);
+	      				        	model.addAttribute("json", json.toString());
+	      				        	 
+	      				}
+	        				}
+//	             }
+//	        	 }
+	        				
+	            
+	        } catch (Exception e) {
+	            json.setSuccess(Boolean.FALSE);
+	            json.setMessage("Impossibile firmare."); 
+	            Log.SQL.error("/pratiche/dettaglio/formFirmaAllegatoAjax", e);
+	            model.addAttribute("json", json.toString());
+	        }
+	        return AJAX_PAGE;
+	    }
+	
+    
     @RequestMapping("/pratica/dettaglio/messaggi")
     public String messaggi(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("messaggio") MessaggioDTO messaggio) {
         Utente utente = utentiService.getUtenteConnesso(request);
         Pratica pratica = null;
         try {
             HttpSession session = request.getSession();
-            Integer idPratica = (Integer) session.getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+            Integer idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
             pratica = praticheService.getPratica(idPratica);
             Messaggio toSave = new Messaggio();
             toSave.setDataMessaggio(new Date());
@@ -1794,6 +2466,7 @@ public class Pratiche extends AbstractController {
         return DETTAGLIO_PRATICA;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratica/dettaglio/collegaAnagrafica")
     public String collegaAnagrafica(Model model,
             HttpServletRequest request,
@@ -1803,7 +2476,7 @@ public class Pratiche extends AbstractController {
         if (filter == null) {
             filter = new Filter();
         }
-        model.addAttribute("idPratica", (Integer) request.getSession().getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA));
+        model.addAttribute("idPratica", (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA));
         model.addAttribute("filtroRicerca", filter);
         if (daPraticaNuova != null) {
             model.addAttribute("daPraticaNuova", daPraticaNuova);
@@ -1813,6 +2486,7 @@ public class Pratiche extends AbstractController {
         return COLLEGA_ANAGRAFICA;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratica/dettaglio/collegaAnagrafica/ajax")
     public String collegaAnagraficaAjax(Model model,
             HttpServletRequest request,
@@ -1838,6 +2512,7 @@ public class Pratiche extends AbstractController {
         }
     }
 
+    @RequiresGrant
     @RequestMapping("/pratica/dettaglio/collegaAnagrafica/seleziona")
     public String collegaAnagrafica(Model model,
             HttpServletRequest request,
@@ -1876,6 +2551,7 @@ public class Pratiche extends AbstractController {
         return ASSEGNA_RUOLO_ANAGRAFICA;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratica/dettaglio/collegaAnagrafica/conferma")
     public ModelAndView salvaCollegamentoAnagrafica(Model model,
             HttpServletRequest request,
@@ -1884,9 +2560,10 @@ public class Pratiche extends AbstractController {
             @ModelAttribute("daPraticaNuova") String daPraticaNuova,
             RedirectAttributes redirectAttributes) {
         Utente utente = utentiService.getUtenteConnesso(request);
+        redirectAttributes.addAttribute(MultiSubSessionManager.SESSION_PARAMETER, MultiSubSessionManager.getSessionId(request));
         Pratica pratica = null;
         try {
-            Integer idPratica = (Integer) request.getSession().getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+            Integer idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
             pratica = praticheService.getPratica(idPratica);
             PraticaAnagrafica collegamentoEsistente = praticheService.findPraticaAnagraficaByKey(idPratica, anagrafica.getIdAnagrafica(), anagrafica.getRuolo());
             Utente utenteConnesso = utentiService.getUtenteConnesso(request);
@@ -1895,9 +2572,10 @@ public class Pratiche extends AbstractController {
             } else {
                 if (daPraticaNuova.equals("si")) {
                     systemEventAction.inserisciCollegamentoPraticaAnagrafica(anagrafica, idPratica, utenteConnesso, true);
-                    redirectAttributes.addAttribute("idPratica", (Integer) request.getSession().getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA));
+                    redirectAttributes.addAttribute("idPratica", (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA));
                     redirectAttributes.addAttribute("currentTab", TAB_ANAGRAFICHE_APERTURA);
                     redirectAttributes.addAttribute("a", "A");
+                    redirectAttributes.addAttribute(MultiSubSessionManager.SESSION_PARAMETER, MultiSubSessionManager.getSessionId(request));
                     return new ModelAndView("redirect:/pratiche/nuove/apertura/dettaglio.htm");
                 } else {
                     systemEventAction.inserisciCollegamentoPraticaAnagrafica(anagrafica, idPratica, utenteConnesso, true);
@@ -1938,6 +2616,7 @@ public class Pratiche extends AbstractController {
         }
     }
 
+    @RequiresGrant
     @RequestMapping("/pratica/dettaglio/collegaAnagrafica/scollega")
     public String scollegaAnagrafica(Model model,
             HttpServletRequest request,
@@ -1947,7 +2626,7 @@ public class Pratiche extends AbstractController {
         Utente utente = utentiService.getUtenteConnesso(request);
         Pratica pratica = null;
         try {
-            Integer idPratica = (Integer) request.getSession().getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+            Integer idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
             pratica = praticheService.getPratica(idPratica);
             PraticaAnagrafica pa = praticheService.findPraticaAnagraficaByKey(idPratica, idAnagrafica, idRuolo);
             Utente utenteConnesso = utentiService.getUtenteConnesso(request);
@@ -1959,6 +2638,7 @@ public class Pratiche extends AbstractController {
         }
         redirectAttributes.addAttribute("currentTab", "frame1");
         redirectAttributes.addAttribute("a", "E");
+        redirectAttributes.addAttribute(MultiSubSessionManager.SESSION_PARAMETER, MultiSubSessionManager.getSessionId(request));
         return "redirect:/pratiche/dettaglio.htm";
     }
 
@@ -1973,16 +2653,24 @@ public class Pratiche extends AbstractController {
             HttpServletResponse response) {
         Map<String, String> result;
         try {
-            result = new HashMap<String, String>();
+        	LkStatoPratica oldStatus = lookupDao.findStatusPraticaFromPratica(idPratica);
+        	result = new HashMap<String, String>();
             result.put("success", "true");
             praticheAction.aggiornaAttributiPratica(idPratica, PraticheAction.AttributiPratica.valueOf(attributeName.toUpperCase()), attributeValue);
-            if (PraticheAction.AttributiPratica.valueOf(attributeName.toUpperCase()).equals(AttributiPratica.PRATICA_STATO)) {
-                LkStatoPratica statoPratica = lookupDao.findLkStatoPraticaByIdStatoPratica(Integer.valueOf(attributeValue));
-                if (!statoPratica.getGrpStatoPratica().equals("C")) {
-                    result.put("bloccaChiusura", "true");
-                } else {
-                    result.put("bloccaChiusura", "false");
-                }
+            switch (PraticheAction.AttributiPratica.valueOf(attributeName.toUpperCase())) {
+            	case PRATICA_STATO:
+	                LkStatoPratica statoPratica = lookupDao.findLkStatoPraticaByIdStatoPratica(Integer.valueOf(attributeValue));
+	            	Pratica pratica = praticheService.getPratica(idPratica);
+
+	                if (!statoPratica.getGrpStatoPratica().equals("C")) {
+	                    result.put("bloccaChiusura", "true");
+	                } else {
+	                    result.put("bloccaChiusura", "false");
+	                }
+	                ProcessiEventi eventoProcesso = processiService.findProcessiEventiByCodEventoIdProcesso(AnaTipiEvento.CHANGE_STATUS, pratica.getIdProcesso());
+	                Utente utenteConnesso = utentiService.getUtenteConnesso(request);
+	                praticheAction.addEvent(utenteConnesso, pratica, eventoProcesso, oldStatus, statoPratica);
+	                
             }
 
         } catch (Exception ex) {
@@ -2084,10 +2772,12 @@ public class Pratiche extends AbstractController {
         return AJAX_PAGE;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratica/riassegna")
     public String riassegnaPratica(Model model,
             @RequestParam(value = "from", required = true) String from,
             @RequestParam(value = "idPratica", required = true) Integer idPratica,
+            @RequestParam(value = "idPraticaEvento", required = false) Integer idPraticaEvento,
             HttpServletRequest request) {
         try {
             request.getSession().removeAttribute("id_pratica");
@@ -2098,6 +2788,7 @@ public class Pratiche extends AbstractController {
             if (isAdminOnProcEnte) {
                 request.getSession().setAttribute("id_pratica", idPratica);
                 model.addAttribute("idPratica", idPratica);
+                model.addAttribute("idPraticaEvento", idPraticaEvento);
                 model.addAttribute("from", from);
                 return SELEZIONE_UTENTE_RIASSEGNAZIONE_PRATICA;
             }
@@ -2117,6 +2808,7 @@ public class Pratiche extends AbstractController {
         return "redirect:/pratiche/" + from + ".htm";
     }
 
+    @RequiresGrant
     @RequestMapping("/pratica/riassegna/ajax")
     public String riassegnaPratica(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) {
         Utente utente = utentiService.getUtenteConnesso(request);
@@ -2140,29 +2832,19 @@ public class Pratiche extends AbstractController {
         return AJAX_PAGE;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratiche/riassegna/selezione")
     public String riassegnaPraticaDaAdmin(Model model,
             @RequestParam(value = "from", required = true) String from,
             @RequestParam(value = "idUtenteAssegnatario", required = true) Integer idUtenteAssegnatario,
             @RequestParam(value = "idPratica", required = true) Integer idPratica,
+            @RequestParam(value = "idPraticaEvento", required = false) Integer idPraticaEvento,
+            RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
         try {
             request.getSession().removeAttribute("id_pratica");
             Utente utenteConnesso = utentiService.getUtenteConnesso(request);
-            Pratica pratica = praticheService.getPratica(idPratica);
-            Utente precedenteAssegnatario = pratica.getIdUtente();
-            Utente utenteAssegnatario = utentiService.findUtenteByIdUtente(idUtenteAssegnatario);
-            PraticheEventi evento = systemEventAction.riassegnaPratica(pratica, precedenteAssegnatario, utenteAssegnatario, utenteConnesso);
-            String notifica = messageSource.getMessage("pratica.riassegna.notifica", new Object[]{
-                pratica.getIdentificativoPratica(),
-                utenteAssegnatario.getNome(),
-                utenteAssegnatario.getCognome()
-            }, Locale.getDefault());
-            workflowAction.riassegnaTaskAssociatiAllaPratica(idPratica, utenteAssegnatario);
-            List<String> notificationUserList = new ArrayList<String>();
-            notificationUserList.add(utenteAssegnatario.getUsername());
-            notificationUserList.add(precedenteAssegnatario.getUsername());
-            notificationEngine.createNotification(evento, notificationUserList, notifica);
+            praticheService.reassignPaperworkFromAdmin(idUtenteAssegnatario, idPratica, utenteConnesso);
         } catch (Exception ex) {
             String msgError = messageSource.getMessage("error.pratiche.assegnazione.utente", null, Locale.getDefault());
             Message error = new Message();
@@ -2172,9 +2854,27 @@ public class Pratiche extends AbstractController {
             Log.SQL.error(msgError, ex);
             Log.APP.error("Si è verificato un errore cercando di riassegnare la pratica", ex);
         }
-        return "redirect:/pratiche/" + from + ".htm";
+        String redirect = "redirect:/pratiche/" + from + ".htm";
+        redirectAttributes.addAttribute(MultiSubSessionManager.SESSION_PARAMETER, MultiSubSessionManager.getSessionId(request));
+        switch (from) {
+        	case CartiglioConstants.FROM_DETAIL:
+        		redirectAttributes.addAttribute("back", true);
+        		redirect = "redirect:/pratiche/gestisci.htm";
+        		break;
+        	case CartiglioConstants.FROM_OPENING:
+        		redirect = "redirect:/pratiche/nuove/apertura.htm";
+	        	break;
+	        case CartiglioConstants.FROM_EVENT:
+	        	redirectAttributes.addAttribute("id_pratica", idPratica);
+	        	redirectAttributes.addAttribute("id_pratica_evento", idPraticaEvento);
+	        	redirect = "redirect:/pratica/" + from + ".htm";
+	        	break;
+	        default:
+	    }
+        return redirect;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratiche/pratiche_collegate/delete")
     public String deletePraticheCollegate(
             Model model,
@@ -2203,6 +2903,7 @@ public class Pratiche extends AbstractController {
         return AJAX_PAGE;
     }
 
+    @RequiresGrant
     @RequestMapping("/pratiche/pratiche_collegate/add")
     public String addPraticheCollegate(
             Model model,
@@ -2225,6 +2926,7 @@ public class Pratiche extends AbstractController {
             json.setSuccess(Boolean.TRUE);
             json.addAttribute("idPraticaCollegata", String.valueOf(praticaCollegata.getIdPratica()));
             json.addAttribute("oggettoPraticaCollegata", praticaCollegata.getOggettoPratica());
+            json.addAttribute("identificativoPraticaCollegata", praticaCollegata.getIdentificativoPratica());
             json.addAttribute("dataRicezionePraticaCollegata", Utils.convertDataToString(praticaCollegata.getDataRicezione()));
             String protocollo = "";
             if (!Strings.isNullOrEmpty(praticaCollegata.getProtocollo())) {
@@ -2233,6 +2935,9 @@ public class Pratiche extends AbstractController {
             }
             json.addAttribute("protocolloPraticaCollegata", protocollo);
             json.addAttribute("statoPraticaCollegata", praticaCollegata.getIdStatoPratica().getDescrizione());
+            PraticaCollegataDTO praticaCollegataDTO = PraticheSerializer.map(praticaCollegata);
+            praticaCollegataDTO.setNumeroProtocollo(protocollo);
+            json.addAttribute("praticaCollegata", (new Gson()).toJson(praticaCollegataDTO));
         } catch (Exception e) {
             Log.APP.error("Errore collegando le pratiche", e);
             json.setSuccess(Boolean.FALSE);
@@ -2261,17 +2966,7 @@ public class Pratiche extends AbstractController {
             UtenteDTO connectedUser = utentiService.getUtenteConnessoDTO(request);
             List<Enti> enti = entiService.getListaEntiPerRicerca(connectedUser);
             model.addAttribute("entiRicerca", enti);
-																						
-																			 
-																							
-																									 
-																			   
-																
-																	 
-																		  
-															 
-																	   
-												 
+									 
             Integer enteAcasoPerColumnModel = null;
             for (UtenteRuoloEnteDTO ruoloEnte : connectedUser.getUtenteRuoloEnte()) {
                 enteAcasoPerColumnModel = ruoloEnte.getIdEnte();
@@ -3122,6 +3817,114 @@ public class Pratiche extends AbstractController {
         return ESTRAZIONI_CILA_TO_DO;
     }
 	
+	@RequestMapping("/estrazioni/agibToDo")
+    public String estrazioniAGIBToDo(Model model, HttpServletRequest request, HttpServletResponse response) {
+        Utente utente = utentiService.getUtenteConnesso(request);
+        try {
+            UtenteDTO connectedUser = utentiService.getUtenteConnessoDTO(request);
+            List<Enti> enti = entiService.getListaEntiPerRicerca(connectedUser);
+            model.addAttribute("entiRicerca", enti);
+            Integer enteAcasoPerColumnModel = null;
+            for (UtenteRuoloEnteDTO ruoloEnte : connectedUser.getUtenteRuoloEnte()) {
+                enteAcasoPerColumnModel = ruoloEnte.getIdEnte();
+                break;
+            }
+            Filter filter = (Filter) request.getSession().getAttribute("estrazioniAgibFilter");
+            if (filter == null) {
+                filter = new Filter();
+            }
+            model.addAttribute("filtroRicerca", filter);
+
+        } catch (Exception e) {
+            Log.APP.error("Errore estrazioni AGIB TODO", e);
+            ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICHE_GESTISCI, "Errore nell'esecuzione del controller /estrazioni/cilaToDo", e, null, utente);
+            erroriAction.saveError(errore);
+
+        }
+        return ESTRAZIONI_AGIB_TO_DO;
+    }
+	
+	  @Transactional
+	    public void salvaEvento(PraticheEventi praticaEvento) throws Exception {
+	        praticaDao.insert(praticaEvento);
+	    }
+	
+	@RequestMapping("/excel/agibToDo")
+	public void exportAGIBToDo(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Utente utente = utentiService.getUtenteConnesso(request);
+		OutputStream out = null;
+		try {
+			UtenteDTO connectedUser = utentiService.getUtenteConnessoDTO(request);
+			String xls = request.getParameter("xls");
+			Filter filter = filterSerializer.getSearchFilter(request);
+			
+			HSSFWorkbook wb = new HSSFWorkbook();
+			HSSFSheet sheet = wb.createSheet("elenco_pratiche");
+
+			// Create a row and put some cells in it. Rows are 0 based.
+			HSSFRow row = sheet.createRow(0);
+
+			// Create a cell and put a value in it.
+			HSSFCell cell = row.createCell(0);
+
+			cell.setCellValue("IdPratica");
+			row.createCell(1).setCellValue("Identificativo Pratica");
+			row.createCell(2).setCellValue("Stato");
+			row.createCell(3).setCellValue("Protocollo");
+			row.createCell(4).setCellValue("In carico a");
+			row.createCell(5).setCellValue("Istruttore");
+			row.createCell(6).setCellValue("Data Ricezione");
+			row.createCell(7).setCellValue("Data Protocollazione");
+			// Write the output
+			
+            List<EstrazioniAgibDTO> listPraticheCILA = praticheService.listPraticheAGIBToDo(filter); 
+            int i = 1;
+            for(EstrazioniAgibDTO cila : listPraticheCILA) {
+            	HSSFRow riga = sheet.createRow(i);
+            	riga.createCell(0).setCellValue(cila.getId_Pratica());
+            	riga.createCell(1).setCellValue(cila.getIdentificativo_pratica());
+            	riga.createCell(2).setCellValue(cila.getStato());
+            	riga.createCell(3).setCellValue(cila.getProtocollo());
+            	riga.createCell(4).setCellValue(cila.getIn_carico_a());
+            	riga.createCell(5).setCellValue(cila.getIstruttore());
+            	riga.createCell(6).setCellValue(Utilities.dateToString(cila.getData_ricezione()));
+            	riga.createCell(7).setCellValue(Utilities.dateToString(cila.getData_protocollazione()));
+            	i++;
+            }
+        	
+			//response.setContentType("application/vnd.ms-excel");
+//			response.setContentType("application/vnd.oasis.opendocument.spreadsheet");
+//			response.addHeader("Content-disposition", "attachment; filename=" + "estrazione_CILA_ToDo.ods");
+            if(xls.equals("1")) {
+    			response.setContentType("application/vnd.ms-excel");
+    			response.addHeader("Content-disposition", "attachment; filename=" + "estrazione_AGIB_ToDo.xls");
+            }
+            else {
+    			response.setContentType("application/vnd.oasis.opendocument.spreadsheet");
+    			response.addHeader("Content-disposition", "attachment; filename=" + "estrazione_AGIB_ToDo.ods");
+            	
+            }
+			out = response.getOutputStream();
+			wb.write(out);
+			wb.close();
+
+			out.flush();
+
+		} catch (Exception e) {
+			Log.APP.error("Errore estrazioni AGIBtodo", e);
+			ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_PRATICHE_GESTISCI,
+					"Errore nell'esecuzione del controller /estrazioni/agibtodo", e, null, utente);
+			erroriAction.saveError(errore);
+
+		}
+
+		finally {
+			if (out != null) {
+				out.close();
+			}
+		}
+	}
+	
 	
 	@RequestMapping("/excel/cilaToDo")
 	public void exportCILAToDo(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -3199,21 +4002,22 @@ public class Pratiche extends AbstractController {
 		}
 	}
 	
-	
     @RequestMapping("pratiche/integrazione/lavorata")
     public ModelAndView integrazioneLavorata(Model model,
             HttpServletRequest request,
-            HttpServletResponse response, @ModelAttribute("currentTab") String tab) throws Exception {
+            HttpServletResponse response, 
+            @ModelAttribute("currentTab") String tab) throws Exception {
         String idPraticaString = request.getParameter("id_pratica");
         HttpSession session = request.getSession();
         Integer idPratica;
         Utente utente = utentiService.getUtenteConnesso(request);
         Pratica pratica = null;
+        
         if (idPraticaString != null) {
             idPratica = getIdPratica(idPraticaString);
-            session.setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
+            MultiSubSessionManager.setAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
         } else {
-            idPratica = (Integer) session.getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+            idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
         }
         try {
             pratica = praticheService.getPratica(idPratica);
@@ -3228,7 +4032,138 @@ public class Pratiche extends AbstractController {
             erroriAction.saveError(errore);
         }
         
-        return new ModelAndView(REDIRECT_DETTAGLIO_PRATICA);
+        return new ModelAndView(REDIRECT_DETTAGLIO_PRATICA_WITH_SESSION_ID+MultiSubSessionManager.getSessionId(request));
     }
 
+
+    @RequestMapping("/pratica/tecnico_procuratore")
+    public String readTechnicianAgent(Model model,
+            @RequestParam(value = "identificativoPratica", required = true) String identifier) throws Exception {
+    	AnagraficaDTO anagraficaDTO  = null;
+    	Pratica pratica = praticaDao.requirePraticaByCodicePratica(identifier);
+    	if(SUAP_INSTITUTION_XML_TECHNICIAN.contains(pratica.getIdProcEnte().getIdEnte().getIdEnte())) 
+    		anagraficaDTO = readTechnicianAgentFromXml(pratica);    		
+    	else 
+    		anagraficaDTO = readTechnicianAgentFromPaperwork(pratica);
+    	
+    	model.addAttribute("json", gson.toJson(anagraficaDTO));
+    	return AJAX_PAGE;
+    }
+
+	@RequestMapping("/pratica/procuratore_per_evento_esterno")
+    public String readExternalOperator(Model model,
+    		@RequestParam(value = "idPratica", required = true) String idPratica,
+    		@RequestParam(value = "idPraticaEvento", required = true) String idPraticaEvento) throws Exception {
+    	
+    	Log.APP.info("Ricerca procuratore evento esterno: idPratica " + idPratica);
+    	Log.APP.info("Ricerca procuratore evento esterno: idPraticaEvento " + idPraticaEvento);
+
+    	Integer paperworkId = Integer.parseInt(idPratica);
+    	Integer paperworkEventId = Integer.parseInt(idPraticaEvento);
+    	
+    	List<PraticheEventi> events = praticheService.findSortedPraticheEventi(paperworkId);
+    	
+    	String taxCode = findTaxCodeTechnicianFromIntegrationEvents(events, paperworkEventId);
+    	AnagraficaDTO anagraficaDTO =null;
+    	
+    	if(taxCode == null) {
+    		Pratica pratica = praticaDao.requirePraticaByIdPratica(paperworkId);
+    		anagraficaDTO = readTechnicianAgentFromPaperwork(pratica);
+    	}else {
+	    	Anagrafica personalData = anagraficheService.findAnagraficaByCodFiscale(taxCode);
+	    	anagraficaDTO = mapper.map(personalData, AnagraficaDTO.class);
+    	}
+
+    	model.addAttribute("json", gson.toJson(anagraficaDTO));
+    	return AJAX_PAGE;
+    }
+    
+	private Message decompileStringMessage(String input) {
+    	Message message = new Message();
+        if (input != null && input.length() != 0) {
+            Matcher m = Pattern.compile("(\\w)#(.+)").matcher(input);
+            if(m.find()) {
+            	String status = m.group(1);
+            	String msg = m.group(2);
+        		message.setError("E".equalsIgnoreCase(status));
+        		message.setMessages(Arrays.asList(msg));
+            }
+        } 
+        return message;
+    }
+    
+    private boolean isRequestFrom(List<Enti> enti, String requestedTown) {
+        boolean isFromGrantedTown = false;
+        int i = 0;
+        while(!isFromGrantedTown && i < enti.size()) {
+        	isFromGrantedTown = requestedTown.equalsIgnoreCase(enti.get(i++).getCitta());
+        }
+        return isFromGrantedTown;
+    }
+    
+    private String findTaxCodeTechnicianFromIntegrationEvents(List<PraticheEventi> events, Integer idPraticaEvento) {
+    	boolean foundTargetEvent = false;
+    	
+    	PraticheEventi modProcAfter = null;
+    	PraticheEventi modProcBefore = null;
+    	PraticheEventi targetEvent = null;
+    	
+    	for(PraticheEventi event: events) {
+    		boolean isModProc = "MODPROC".equals(event.getIdEvento().getCodEvento());
+    		foundTargetEvent = foundTargetEvent || idPraticaEvento.equals(event.getIdPraticaEvento());
+    		targetEvent = targetEvent == null ? (idPraticaEvento.equals(event.getIdPraticaEvento())?event:null): targetEvent;
+    		
+    		if(isModProc) {
+    			if(foundTargetEvent) 
+    				modProcBefore = modProcBefore == null ? event : modProcBefore;
+    			else 
+    				modProcAfter = event;
+    		}
+    	}
+
+    	String note = null; 
+    	String taxCode = null;
+    	if(modProcAfter != null) {
+    		note = modProcAfter.getNote();
+    		Log.APP.debug("Ricerca procuratore evento esterno: modifica procuratore successiva operazione indicata");
+    	}
+    	else if(modProcBefore != null) {
+    		note = modProcBefore.getNote();
+    		Log.APP.debug("Ricerca procuratore evento esterno: modifica procuratore precedente operazione indicata");
+    	}
+    	Log.APP.debug("Ricerca procuratore evento esterno: Nota estratta: " + note);
+    	if(note != null) {
+	    	Matcher m = Pattern.compile("^"+Constants.CHANGE_TECHNICIAN_AGENT_1+"(\\w+?)"+Constants.CHANGE_TECHNICIAN_AGENT_2+"(\\w+)$").matcher(note);
+	    	if(m.find()) {
+	    		if(modProcAfter != null)
+	    			taxCode = m.group(1);  	
+	        	else if(modProcBefore != null)
+	    			taxCode = m.group(2);  	
+	    	}
+	    	Log.APP.debug("Ricerca procuratore evento esterno: Codice fiscale estratto: " + taxCode);
+    	}
+    	return taxCode;
+    	
+	}
+    
+    private AnagraficaDTO readTechnicianAgentFromPaperwork(Pratica pratica) throws Exception {
+    	Anagrafica anagrafica = praticheService.readTechnicianAgentFromPaperwork(pratica);
+    	AnagraficaDTO anagraficaDTO = null; 
+    	if(anagrafica != null)
+    		anagraficaDTO = AnagraficheSerializer.serializeAnagrafica(anagrafica);
+		return anagraficaDTO;
+	}
+    
+    
+    private AnagraficaDTO readTechnicianAgentFromXml(Pratica pratica) throws Exception {
+    	Anagrafica anagrafica = praticheService.readTechnicianAgentFromXml(pratica);
+    	AnagraficaDTO anagraficaDTO = null; 
+    	if(anagrafica != null)
+    		anagraficaDTO = mapper.map(anagrafica, AnagraficaDTO.class);
+		
+		return anagraficaDTO;
+    }
+    
+    
 }
+

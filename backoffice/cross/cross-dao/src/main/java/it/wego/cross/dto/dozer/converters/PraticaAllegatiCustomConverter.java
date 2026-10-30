@@ -41,6 +41,10 @@ public class PraticaAllegatiCustomConverter implements ConfigurableCustomConvert
                     Allegati allegato = allegatoEvento.getAllegati();
                     AllegatoDTO allegatoDto = mapper.map(allegato, AllegatoDTO.class);
                     if (!allegatiList.contains(allegatoDto)) {
+	                    allegatoDto.setIdPraticaEvento(evento.getIdPraticaEvento());
+	                    allegatoDto.setProtocollo(evento.getProtocollo());
+	                    allegatoDto.setDataProtocollo(evento.getDataProtocollo());
+	                    allegatoDto.setOperatore(evento.getIdUtente());
                         allegatiList.add(allegatoDto);
                     }
                 }
@@ -48,7 +52,6 @@ public class PraticaAllegatiCustomConverter implements ConfigurableCustomConvert
         }
 
         return allegatiList;
-
     }
 
     @Override

@@ -50,6 +50,8 @@ import it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.proced
 import it.people.fsl.servizi.concessioniedautorizzazioni.servizicondivisi.procedimentounico.oggetti.AllegatoBean;
 import it.people.gateway.ISignatureFactory;
 import it.people.gateway.SignatureFactory;
+import it.people.pdf.CheckPdfSignature;
+//LOR import it.people.pdf.hcg.check.PDFSignatureInfoParser;
 import it.people.process.common.entity.Attachment;
 import it.people.util.PeopleProperties;
 import it.people.util.ServiceParameters;
@@ -85,7 +87,20 @@ public class ManagerAllegati {
                     request.setAttribute("validitaError", messaggioErrore + " " + allegato.getTipologieAllegati());
                 } else {
                     tmp1 = checkIsSigned(allegato, attach);
+                    /* LOR START 10/11/2023 */
                     if (!tmp1) {
+                    	//LOR PDFSignatureInfoParser checkSgned2 = new PDFSignatureInfoParser();                    	
+                    	//LOR tmp1 = checkSgned2.CheckSignedPDF(attach.getPath());
+                    	CheckPdfSignature checkPdfSign = new CheckPdfSignature();
+                    	try {
+							tmp1 = checkPdfSign.verifyIsSigned(new File(attach.getPath()));
+						} catch (Exception e) {
+							tmp1 = false;
+							e.printStackTrace();
+						}
+                    }
+                    /* LOR END */
+                    if (!tmp1) {                    	                    	                    	
                         messaggioErrore = UtilProperties.getPropertyKey(props[0], props[1], props[2], "error.allegati.firmaNonValida");
                         request.setAttribute("validitaError", (new StringBuilder(String.valueOf(messaggioErrore))).append(" ").append(attach.getName()).toString());
                     } else {

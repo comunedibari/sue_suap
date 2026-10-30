@@ -15,7 +15,7 @@
 
 <tiles:insertAttribute name="body_error" />
 
-<script>
+<script type="text/javascript">
     $(document).bind('dragover', function(e) {
         var dropZoneall = $('#dropzoneall'),
                 timeout = window.dropZoneTimeout;
@@ -48,10 +48,7 @@
             dropZoneall.removeClass('in hover');
         }, 100);
     });
-</script>
 
-
-<script>
     var idPratica = '${pratica.idPratica}';
     var idEvento = '${processo_evento.idEvento}';
 
@@ -161,7 +158,8 @@
                                         $(row.parentNode.parentNode).remove();
                                         var emptyrow = '<tr style="display:none" class="nuovoAllegato"></tr>'
                                         //***********************************************
-                                        //AGGIUNTO DA GAB MON IN MODO CHE IL NUMERO DI OGGETTI "ALLEGATIMAILTABLE" NON DIMINUISCA QUANDO SE NE CANCELLA UNO, QUESTO SERVE PER ESSERE SICURI DI NON CREARE OGGETTI CON LO STESSO NOME DOPO UN ERRORE E LA DISTRUZIONE DI UNO
+                                        //IN MODO CHE IL NUMERO DI OGGETTI "ALLEGATIMAILTABLE" NON DIMINUISCA QUANDO SE NE CANCELLA UNO, 
+                                        //QUESTO SERVE PER ESSERE SICURI DI NON CREARE OGGETTI CON LO STESSO NOME DOPO UN ERRORE E LA DISTRUZIONE DI UNO
                                         $("#allegatiEmailTable > tbody").append(emptyrow);
                                         //***********************************************
                                         j = $('.allegatoEmail').length;
@@ -169,16 +167,12 @@
                                             $('.allegatoEmail')[i].value = i;
                                         }
                                     }
-                                    //**********************************************************************************************************************
-                                    //*******************************************************  AGGIUNTO DA GAB MON  ***************************************************************************************************
-                                    //*********************************************************************************************************************************************************************************************************************************************
                                     $(function() {
                                         $('#uploadallegati').fileupload({
                                             dataType: 'json',
                                             done: function(e, data) {
                                                 enableSubmit();
                                                 $.each(data.result, function(index, file) {
-
                                                     if (file.name === "_ERRORE_ERRORE_") {
 
                                                         alert("Si è verificato un errore nel salvataggio temporaneo di uno o più files. Si prega di controllare nella tabella quali file sono stati caricati correttamente e provvedere a ricaricare quelli mancanti. Contattare l'amministratore qualora il problema dovesse ripresentarsi. ");
@@ -281,17 +275,10 @@
     <div class="clear"></div>
 </div>
 
-
-
-<!--   INSERITO DA GAB MON-->
-<!--****************************************************************************************************************************************************************************************************************************-->
-<!--            attiva il bottone di load di un file-->
-<script>
+<script type="text/javascript">
     function uploadOriginal() {
         $("#originalupload").trigger('click');
     }
-</script>
-<script>
     function triggersubmit() {
         var div = $("<div>");
         var messaggio = "";
@@ -323,17 +310,7 @@
                 });
     }
 </script>
-<!--****************************************************************************************************************************************************************************************************************************-->
-
-
-
-<!--   INSERITO DA GAB MON-->
-<!--****************************************************************************************************************************************************************************************************************************-->
-<!--  SERVE CHE VENGA ESEGUITO ANCHE LO SCRIPT DI JQUERY MA e' GIA' INCLUSO ALTROVE NELLA PAGINA E VENGONO ERRORI SE SI INCLUDE ANCHE QUI
--->
-
 
 <script src="/cross/javascript/jquery.iframe-transport.js"></script>
 <script src="/cross/javascript/jquery.fileupload.js"></script>
 <script src="/cross/javascript/myuploadfunction.js"></script>  
-<!--****************************************************************************************************************************************************************************************************************************-->

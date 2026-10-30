@@ -1,8 +1,8 @@
 //
-// Questo file stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andrpersa durante la ricompilazione dello schema di origine. 
-// Generato il: 2013.05.27 alle 07:27:17 PM CEST 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2024.04.16 alle 12:18:36 PM CEST 
 //
 
 
@@ -63,8 +63,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *           &lt;/simpleType>
  *         &lt;/element>
  *         &lt;element name="allegati" type="{http://www.wego.it/cross}allegati" minOccurs="0"/>
- *         &lt;element name="anagraficheEvento" type="{http://www.w3.org/2001/XMLSchema}anagraficheEvento" minOccurs="0"/>
- *         &lt;element name="entiEvento" type="{http://www.w3.org/2001/XMLSchema}entiEvento" minOccurs="0"/>
+ *         &lt;element name="anagraficheEvento" type="{http://www.wego.it/cross}anagraficheEvento" minOccurs="0"/>
+ *         &lt;element name="entiEvento" type="{http://www.wego.it/cross}entiEvento" minOccurs="0"/>
+ *         &lt;element name="data_protocollo" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -89,7 +90,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "visibilitaUtente",
     "allegati",
     "anagraficheEvento",
-    "entiEvento"
+    "entiEvento",
+    "dataProtocollo"
 })
 public class Evento {
 
@@ -118,9 +120,13 @@ public class Evento {
     protected Allegati allegati;
     protected AnagraficheEvento anagraficheEvento;
     protected EntiEvento entiEvento;
+    @XmlElement(name = "data_protocollo")
+    @XmlSchemaType(name = "date")
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    protected XMLGregorianCalendar dataProtocollo;
 
     /**
-     * Recupera il valore della proprietidPraticaEvento.
+     * Recupera il valore della propriet� idPraticaEvento.
      * 
      * @return
      *     possible object is
@@ -132,7 +138,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietidPraticaEvento.
+     * Imposta il valore della propriet� idPraticaEvento.
      * 
      * @param value
      *     allowed object is
@@ -144,7 +150,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietidEvento.
+     * Recupera il valore della propriet� idEvento.
      * 
      * @return
      *     possible object is
@@ -156,7 +162,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietidEvento.
+     * Imposta il valore della propriet� idEvento.
      * 
      * @param value
      *     allowed object is
@@ -168,7 +174,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietdescrizioneEvento.
+     * Recupera il valore della propriet� descrizioneEvento.
      * 
      * @return
      *     possible object is
@@ -180,7 +186,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietdescrizioneEvento.
+     * Imposta il valore della propriet� descrizioneEvento.
      * 
      * @param value
      *     allowed object is
@@ -192,7 +198,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietdataEvento.
+     * Recupera il valore della propriet� dataEvento.
      * 
      * @return
      *     possible object is
@@ -204,7 +210,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietdataEvento.
+     * Imposta il valore della propriet� dataEvento.
      * 
      * @param value
      *     allowed object is
@@ -216,7 +222,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietidUtente.
+     * Recupera il valore della propriet� idUtente.
      * 
      * @return
      *     possible object is
@@ -228,7 +234,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietidUtente.
+     * Imposta il valore della propriet� idUtente.
      * 
      * @param value
      *     allowed object is
@@ -240,7 +246,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietnome.
+     * Recupera il valore della propriet� nome.
      * 
      * @return
      *     possible object is
@@ -252,7 +258,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietnome.
+     * Imposta il valore della propriet� nome.
      * 
      * @param value
      *     allowed object is
@@ -264,7 +270,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietcognome.
+     * Recupera il valore della propriet� cognome.
      * 
      * @return
      *     possible object is
@@ -276,7 +282,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietcognome.
+     * Imposta il valore della propriet� cognome.
      * 
      * @param value
      *     allowed object is
@@ -288,7 +294,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietnote.
+     * Recupera il valore della propriet� note.
      * 
      * @return
      *     possible object is
@@ -300,7 +306,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietnote.
+     * Imposta il valore della propriet� note.
      * 
      * @param value
      *     allowed object is
@@ -312,7 +318,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietnumeroProtocollo.
+     * Recupera il valore della propriet� numeroProtocollo.
      * 
      * @return
      *     possible object is
@@ -324,7 +330,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietnumeroProtocollo.
+     * Imposta il valore della propriet� numeroProtocollo.
      * 
      * @param value
      *     allowed object is
@@ -336,7 +342,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietverso.
+     * Recupera il valore della propriet� verso.
      * 
      * @return
      *     possible object is
@@ -348,7 +354,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietverso.
+     * Imposta il valore della propriet� verso.
      * 
      * @param value
      *     allowed object is
@@ -360,7 +366,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietvisibilitaCross.
+     * Recupera il valore della propriet� visibilitaCross.
      * 
      * @return
      *     possible object is
@@ -372,7 +378,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietvisibilitaCross.
+     * Imposta il valore della propriet� visibilitaCross.
      * 
      * @param value
      *     allowed object is
@@ -384,7 +390,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietvisibilitaUtente.
+     * Recupera il valore della propriet� visibilitaUtente.
      * 
      * @return
      *     possible object is
@@ -396,7 +402,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietvisibilitaUtente.
+     * Imposta il valore della propriet� visibilitaUtente.
      * 
      * @param value
      *     allowed object is
@@ -408,7 +414,7 @@ public class Evento {
     }
 
     /**
-     * Recupera il valore della proprietallegati.
+     * Recupera il valore della propriet� allegati.
      * 
      * @return
      *     possible object is
@@ -420,7 +426,7 @@ public class Evento {
     }
 
     /**
-     * Imposta il valore della proprietallegati.
+     * Imposta il valore della propriet� allegati.
      * 
      * @param value
      *     allowed object is
@@ -429,6 +435,78 @@ public class Evento {
      */
     public void setAllegati(Allegati value) {
         this.allegati = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� anagraficheEvento.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AnagraficheEvento }
+     *     
+     */
+    public AnagraficheEvento getAnagraficheEvento() {
+        return anagraficheEvento;
+    }
+
+    /**
+     * Imposta il valore della propriet� anagraficheEvento.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AnagraficheEvento }
+     *     
+     */
+    public void setAnagraficheEvento(AnagraficheEvento value) {
+        this.anagraficheEvento = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� entiEvento.
+     * 
+     * @return
+     *     possible object is
+     *     {@link EntiEvento }
+     *     
+     */
+    public EntiEvento getEntiEvento() {
+        return entiEvento;
+    }
+
+    /**
+     * Imposta il valore della propriet� entiEvento.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link EntiEvento }
+     *     
+     */
+    public void setEntiEvento(EntiEvento value) {
+        this.entiEvento = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� dataProtocollo.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getDataProtocollo() {
+        return dataProtocollo;
+    }
+
+    /**
+     * Imposta il valore della propriet� dataProtocollo.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setDataProtocollo(XMLGregorianCalendar value) {
+        this.dataProtocollo = value;
     }
 
 }

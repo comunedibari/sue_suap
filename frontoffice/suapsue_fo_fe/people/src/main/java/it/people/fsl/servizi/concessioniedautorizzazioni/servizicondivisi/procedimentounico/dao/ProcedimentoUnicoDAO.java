@@ -1031,12 +1031,7 @@ public class ProcedimentoUnicoDAO {
             // System.out.println("fine calcolo albero operazioni");
         } catch (Throwable e) {
             log.error(e);
-            try {
-				throw e;
-			} catch (Throwable e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+            throw e;
         } finally {
             try {
                 rs.close();

@@ -2,7 +2,7 @@ var EventManager = {};
 
 function pollNotifiche() {
     setTimeout(function() {
-        aggiornaNotifiche();
+      //  aggiornaNotifiche();
     }, 60000);
 }
 
@@ -51,10 +51,10 @@ $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
             title.text($title);
         }
     }
-}));
+})); 
 
 $(function() {
-    aggiornaNotifiche();
+   // aggiornaNotifiche();
 });
 
 $.extend($.gritter.options, {

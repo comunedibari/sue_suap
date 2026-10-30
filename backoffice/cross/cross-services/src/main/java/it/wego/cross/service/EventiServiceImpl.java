@@ -4,35 +4,52 @@
  */
 package it.wego.cross.service;
 
-import com.google.common.base.Strings;
-import it.wego.cross.dto.ProcedimentoDTO;
-import it.wego.cross.dto.EnteDTO;
-import it.wego.cross.dto.TemplateDTO;
-import it.wego.cross.dto.EventoTemplateDTO;
-import it.wego.cross.dto.ProcessoDTO;
-import it.wego.cross.dto.StepDTO;
-import it.wego.cross.dto.EventoDTO;
-import it.wego.cross.serializer.ProcessiSerializer;
-import it.wego.cross.serializer.ProcedimentiSerializer;
-import it.wego.cross.serializer.EventiTemplateSerializer;
-import it.wego.cross.serializer.TemplateSerializer;
-import it.wego.cross.serializer.PraticheSerializer;
-import it.wego.cross.serializer.EventiSerializer;
-import it.wego.cross.serializer.EntiSerializer;
-import it.wego.cross.beans.MailContentBean;
-import it.wego.cross.dao.*;
-import it.wego.cross.dto.filters.Filter;
-import it.wego.cross.entity.*;
-import it.wego.cross.plugins.documenti.GestioneAllegati;
-import it.wego.cross.plugins.protocollo.beans.DocumentoProtocolloResponse;
-import it.wego.cross.utils.Utils;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.common.base.Strings;
+
+import it.wego.cross.beans.MailContentBean;
+import it.wego.cross.dao.AllegatiDao;
+import it.wego.cross.dao.EntiDao;
+import it.wego.cross.dao.PraticaDao;
+import it.wego.cross.dao.ProcedimentiDao;
+import it.wego.cross.dao.ProcessiDao;
+import it.wego.cross.dao.TemplateDao;
+import it.wego.cross.dto.EnteDTO;
+import it.wego.cross.dto.EventoDTO;
+import it.wego.cross.dto.EventoTemplateDTO;
+import it.wego.cross.dto.ProcedimentoDTO;
+import it.wego.cross.dto.ProcessoDTO;
+import it.wego.cross.dto.StepDTO;
+import it.wego.cross.dto.TemplateDTO;
+import it.wego.cross.dto.filters.Filter;
+import it.wego.cross.entity.Allegati;
+import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.EventiTemplate;
+import it.wego.cross.entity.Pratica;
+import it.wego.cross.entity.PraticheEventi;
+import it.wego.cross.entity.Procedimenti;
+import it.wego.cross.entity.Processi;
+import it.wego.cross.entity.ProcessiEventi;
+import it.wego.cross.entity.Templates;
+import it.wego.cross.plugins.documenti.GestioneAllegati;
+import it.wego.cross.plugins.protocollo.beans.DocumentoProtocolloResponse;
+import it.wego.cross.serializer.EntiSerializer;
+import it.wego.cross.serializer.EventiSerializer;
+import it.wego.cross.serializer.EventiTemplateSerializer;
+import it.wego.cross.serializer.PraticheSerializer;
+import it.wego.cross.serializer.ProcedimentiSerializer;
+import it.wego.cross.serializer.ProcessiSerializer;
+import it.wego.cross.serializer.TemplateSerializer;
+import it.wego.cross.utils.Utils;
 
 /**
  *
@@ -409,7 +426,7 @@ public class EventiServiceImpl implements EventiService {
     }
 
     @Override
-    public void aggiornaAllegatiConRiferimentiProtocollo(Pratica pratica, DocumentoProtocolloResponse protocollo, List<Allegati> allegatiEntity, Integer idEnte) throws Exception {
+    public void aggiornaAllegatiConRiferimentiProtocollo(Pratica pratica, PraticheEventi praticaEvento, DocumentoProtocolloResponse protocollo, List<Allegati> allegatiEntity, Integer idEnte, Date date) throws Exception {
         //TODO: gestire il caso Comune su Ente
         GestioneAllegati ga = pluginService.getGestioneAllegati(idEnte, null);
         //attenzione se si sceglie un allegato  
@@ -423,7 +440,7 @@ public class EventiServiceImpl implements EventiService {
                 //Aggiorno il puntamento solo se idFileEsterno non è valorizzato. Server per fixare il tiket 1495
                 if (Strings.isNullOrEmpty(allegato.getIdFileEsterno())) {
                     allegato.setIdFileEsterno(protocollo.getAllegatoOriginale().getIdEsterno());
-                    ga.add(allegato, pratica.getIdProcEnte().getIdEnte(), pratica.getIdComune());
+                    ga.add(allegato, pratica.getIdProcEnte().getIdEnte(), pratica.getIdComune(), date);
                     allegatiDao.mergeAllegato(allegato);
                     continue;
                 }
@@ -433,7 +450,7 @@ public class EventiServiceImpl implements EventiService {
                     //Aggiorno il puntamento solo se idFileEsterno non è valorizzato. Server per fixare il tiket 1495
                     if (Strings.isNullOrEmpty(allegato.getIdFileEsterno())) {
                         allegato.setIdFileEsterno(a.getIdEsterno());
-                        ga.add(allegato, pratica.getIdProcEnte().getIdEnte(), pratica.getIdComune());
+                        ga.add(allegato, pratica.getIdProcEnte().getIdEnte(), pratica.getIdComune(), praticaEvento.getDataEvento());
                         allegatiDao.mergeAllegato(allegato);
                         break;
                     }

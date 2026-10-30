@@ -5,14 +5,34 @@
  */
 package it.wego.cross.controller;
 
-import com.google.common.base.Function;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.Task;
+import org.apache.commons.validator.EmailValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+
 import it.wego.cross.actions.EmailAction;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.PraticheAction;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.ConsoleBean;
 import it.wego.cross.beans.JsonResponse;
 import it.wego.cross.beans.grid.GridEmailBean;
@@ -24,52 +44,22 @@ import it.wego.cross.constants.StatiEmail;
 import it.wego.cross.constants.Workflow;
 import it.wego.cross.dto.EmailDTO;
 import it.wego.cross.dto.ErroreDTO;
-import it.wego.cross.dto.PraticaDTO;
 import it.wego.cross.dto.filters.Filter;
 import it.wego.cross.entity.Email;
 import it.wego.cross.entity.LkStatiMail;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.Utente;
+import it.wego.cross.mail.Mail;
 import it.wego.cross.serializer.EmailSerializer;
 import it.wego.cross.serializer.PraticheSerializer;
 import it.wego.cross.service.ErroriService;
 import it.wego.cross.service.MailService;
 import it.wego.cross.service.PraticheService;
 import it.wego.cross.service.WorkFlowService;
+import it.wego.cross.session.MultiSubSessionManager;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
-import java.io.ByteArrayInputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import org.activiti.engine.TaskService;
-import org.activiti.engine.task.Task;
-import org.activiti.engine.task.TaskQuery;
-import org.apache.commons.validator.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * s
@@ -78,7 +68,8 @@ import org.xml.sax.helpers.XMLReaderFactory;
 @RequestMapping("/console")
 public class ConsoleController extends AbstractController {
 
-    private static final String INDEX = "console_index";
+    private static final String PEC_RECEIPT = "PEC_RECEIPT";
+	private static final String INDEX = "console_index";
     private static final String PRATICHE = "console_pratiche";
     private static final String EMAIL = "console_email";
     private static final String AJAX = "ajax";
@@ -203,7 +194,7 @@ public class ConsoleController extends AbstractController {
             Integer idPraticaEvento = Integer.valueOf(evento);
             PraticheEventi evt = praticheService.getPraticaEvento(idPraticaEvento);
             Pratica pratica = evt.getIdPratica();
-            request.getSession().setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, pratica.getIdPratica());
+            MultiSubSessionManager.setAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA, pratica.getIdPratica());
             String urlToRedirect = "/pratica/comunicazione/dettaglio_evento.htm?id_pratica_evento=" + String.valueOf(idPraticaEvento) + "&submit=Dettaglio";
             return "redirect:" + urlToRedirect;
         } catch (Exception ex) {
@@ -226,6 +217,7 @@ public class ConsoleController extends AbstractController {
 
     }
 
+    @RequiresGrant
     @RequestMapping(value = "/mail/resend", method = RequestMethod.POST)
     public String markMailToResend(Model model,
             @ModelAttribute("mailId") String mailId,
@@ -289,9 +281,12 @@ public class ConsoleController extends AbstractController {
     @RequestMapping("/mail/detail")
     public String getMailDetail(Model model,
             @RequestParam(value = "mailId", required = true) String mailId,
-            @RequestParam(value = "taskId", required = false) String taskId
+            @RequestParam(value = "taskId", required = false) String taskId,
+            @RequestParam(value = "paperworkEventId", required = false) Integer paperworkEventId,
+            @RequestParam(value = "institutionId", required = false) Integer institutionId
     ) throws Exception {
-        Email email = mailService.findByIdEmail(Integer.valueOf(mailId));
+
+    	Email email = mailService.findByIdEmailRispostaPec(Integer.valueOf(mailId));
         EmailDTO dto = new EmailDTO();
         dto.setIdEmail(email.getIdEmail());
         dto.setEmailDestinatario(email.getEmailDestinatario());
@@ -308,6 +303,21 @@ public class ConsoleController extends AbstractController {
                 dto.setTaskId(task.getId());
             }
         }
+        model.addAttribute("json", gson.toJson(dto));
+        return AJAX;
+
+    }
+    
+    @RequestMapping("/mail/pec_detail")
+    public String getPECMailDetail(Model model,
+            @RequestParam(value = "mailId", required = true) String mailId,
+            @RequestParam(value = "taskId", required = false) String taskId
+    ) throws Exception {
+        Email email = mailService.findByIdEmail(Integer.valueOf(mailId));
+        EmailDTO dto = new EmailDTO();
+        dto.setIdEmail(email.getIdEmail());
+        dto.setOggettoEmail(email.getOggettoEmail());
+        dto.setCorpoEmail(email.getCorpoEmail());
         model.addAttribute("json", gson.toJson(dto));
         return AJAX;
 

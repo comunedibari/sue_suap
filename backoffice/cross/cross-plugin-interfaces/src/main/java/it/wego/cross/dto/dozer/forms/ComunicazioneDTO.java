@@ -4,21 +4,23 @@
  */
 package it.wego.cross.dto.dozer.forms;
 
-import it.wego.cross.dto.AllegatoDTO;
-import it.wego.cross.dto.ScadenzaDTO;
-import it.wego.cross.validator.Protocollo;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-/**
- *
- * @author Gabriele
- */
+import it.wego.cross.dto.AllegatoDTO;
+import it.wego.cross.dto.ScadenzaDTO;
+import it.wego.cross.dto.UtenteDTO;
+import it.wego.cross.validator.Protocollo;
+import it.wego.cross.validator.ReassignmentDays;
+
+@ReassignmentDays(message="Numero giorni non valido")
 public class ComunicazioneDTO extends StandardaFormDTO {
 
     private Integer idEvento;
     private Integer idPratica;
+    private String codEvento;
     private String submit;
     private String activeTab;
     private Boolean visualizzaEventoPortale = Boolean.FALSE;
@@ -42,6 +44,10 @@ public class ComunicazioneDTO extends StandardaFormDTO {
     private AllegatoDTO allegatoOriginale;
     private Integer idPraticaProtocollo;
 
+    private UtenteDTO utenteRiassegnazione;
+    private Integer giorniRiassegnazione;
+    private String noteRiassegnazione;
+    
     public Integer getIdEvento() {
         return idEvento;
     }
@@ -58,7 +64,15 @@ public class ComunicazioneDTO extends StandardaFormDTO {
         this.idPratica = idPratica;
     }
 
-    public String getSubmit() {
+    public String getCodEvento() {
+		return codEvento;
+	}
+
+	public void setCodEvento(String codEvento) {
+		this.codEvento = codEvento;
+	}
+
+	public String getSubmit() {
         return submit;
     }
 
@@ -216,6 +230,29 @@ public class ComunicazioneDTO extends StandardaFormDTO {
     public void setIdPraticaProtocollo(Integer idPraticaProtocollo) {
         this.idPraticaProtocollo = idPraticaProtocollo;
     }
-    
-    
+
+	public UtenteDTO getUtenteRiassegnazione() {
+		return utenteRiassegnazione;
+	}
+
+	public void setUtenteRiassegnazione(UtenteDTO utenteRiassegnazione) {
+		this.utenteRiassegnazione = utenteRiassegnazione;
+	}
+
+	public Integer getGiorniRiassegnazione() {
+		return giorniRiassegnazione;
+	}
+
+	public void setGiorniRiassegnazione(Integer giorniRiassegnazione) {
+		this.giorniRiassegnazione = giorniRiassegnazione;
+	}
+
+	public String getNoteRiassegnazione() {
+		return noteRiassegnazione;
+	}
+
+	public void setNoteRiassegnazione(String noteRiassegnazione) {
+		this.noteRiassegnazione = noteRiassegnazione;
+	}
+	
 }

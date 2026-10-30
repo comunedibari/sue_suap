@@ -99,6 +99,8 @@ public class DettaglioPraticheStep extends BaseStep{
 						Evento[] e = stub.getListaEventi(0, identificativoPratica, "");
 						dataForm.setEventi(e);
 						
+						dataForm.setTecnicoIstruttore(delegate.getTecnicoIstruttore(process, request));
+						
 					} catch (CrossServicesException e) {
 						logger.error("Errore nell'esecuzione del servizio di integrazione: "+e);
 					} catch (RemoteException e) {

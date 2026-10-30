@@ -37,7 +37,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Email.findByIdMessaggio", query = "SELECT e FROM Email e WHERE e.idMessaggio = :idMessaggio"),
     @NamedQuery(name = "Email.findByIdMessaggioPec", query = "SELECT e FROM Email e WHERE e.idMessaggioPec = :idMessaggioPec"),
     @NamedQuery(name = "Email.findByEmailDestinatario", query = "SELECT e FROM Email e WHERE e.emailDestinatario = :emailDestinatario"),
-    @NamedQuery(name = "Email.findByGruppo", query = "SELECT e FROM Email e WHERE e.gruppo = :gruppo")})
+    @NamedQuery(name = "Email.findByGruppo", query = "SELECT e FROM Email e WHERE e.gruppo = :gruppo"),
+    @NamedQuery(name = "Email.findByIdPraticaEvento", query = "SELECT e FROM Email e WHERE e.idPraticaEventoValue = :idPraticaEvento"),
+    })
 public class Email implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -83,6 +85,8 @@ public class Email implements Serializable {
     @JoinColumn(name = "id_pratica_evento", referencedColumnName = "id_pratica_evento")
     @ManyToOne(optional = false)
     private PraticheEventi idPraticaEvento;
+    @Column(name = "id_pratica_evento", updatable = false, insertable = false)
+    private Integer idPraticaEventoValue;
     @Column(name = "tipo_destinazione")
     private String tipoDestinazione;
 

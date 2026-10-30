@@ -101,7 +101,7 @@
         <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
         <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/assegnamento/nuova.jsp"/>
         <put-attribute name="infopath"      cascade="true"  value="Lista pratiche nuove" type="string" />
-        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/assegnamento/ricerca.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ricerca.jsp"/>
         <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
     </definition>
     
@@ -216,7 +216,7 @@
         <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
         <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/list.jsp"/>
         <put-attribute name="infopath"      cascade="true"  value="Apertura pratiche nuove" type="string" />
-        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/ricerca.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ricerca.jsp"/>
         <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
     </definition>
     
@@ -494,7 +494,7 @@
         <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
         <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/list.jsp"/>
         <put-attribute name="infopath"      cascade="true"  value="Apertura pratiche nuove" type="string" />
-        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/ricerca.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ricerca.jsp"/>
         <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
     </definition>
     

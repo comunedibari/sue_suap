@@ -38,8 +38,17 @@ public class IndirizzoInterventoDTO implements Serializable {
     private String piano;
     private String foglio;
     private String mappale;
+    private String provenienza;
 
-    public String getFoglio() {
+    public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+
+	public String getFoglio() {
         return foglio;
     }
 

@@ -253,6 +253,13 @@ public class GestioneProtocolloAvBari implements GestioneProtocollo {
             throw new Exception("Sulla tabella di configurazione non Ã¨ stata valorizzata la chiave '" + AvBariConstants.PROTOCOLLO_PASSWORD + "'");
         }
 
+        String timeout = configurationService.getCachedPluginConfiguration(AvBariConstants.WS_PROTOCOLLO_CLIENT_TIMEOUT, null, null);
+        if (StringUtils.isEmpty(timeout)) {
+            timeout = "90000";
+        }
+
+        Integer timeoutI = Integer.parseInt(timeout);
+        System.out.println("time out settato : " + timeoutI );
         ProtocolloServerImplService service = new ProtocolloServerImplService();
         ProtocolloServer port = service.getProtocolloServerImplPort();
         ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointServizioProtocollo);
@@ -261,9 +268,19 @@ public class GestioneProtocolloAvBari implements GestioneProtocollo {
         headers.put("Username", Collections.singletonList(username));
         headers.put("Password", Collections.singletonList(password));
         ((BindingProvider) port).getRequestContext().put(MessageContext.HTTP_REQUEST_HEADERS, headers);
-
+        //Set timeout until a connection is established
+        //((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.connectionTimeout", 300000);
+        //((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", 300000);
+        //((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.connect.timeout", 300000);
+        //((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.request.timeout", 300000);
+        //Set timeout until the response is received
+        ((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.ws.request.timeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.ws.connect.timeout", timeoutI); 
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.internal.ws.request.timeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.internal.ws.connect.timeout", timeoutI);
         RichiestaProtocolloFasc.ProtocolloFascRequest protocolloRequest = new RichiestaProtocolloFasc.ProtocolloFascRequest();
-
+        
         protocolloRequest.setAmministrazione(amministrazione);
         protocolloRequest.setAreaOrganizzativaOmogenea(documentoProtocollo.getAoo());
         protocolloRequest.setDocumento(new Documento());
@@ -410,6 +427,13 @@ public class GestioneProtocolloAvBari implements GestioneProtocollo {
             throw new Exception("Sulla tabella di configurazione non Ã¨ stata valorizzata la chiave '" + AvBariConstants.PROTOCOLLO_PASSWORD + "'");
         }
 
+        String timeout = configurationService.getCachedPluginConfiguration(AvBariConstants.WS_PROTOCOLLO_CLIENT_TIMEOUT, null, null);
+        if (StringUtils.isEmpty(timeout)) {
+            timeout = "90000";
+        }
+
+        Integer timeoutI = Integer.parseInt(timeout);
+        System.out.println("time out settato : " + timeoutI );
         ProtocolloServerImplService service = new ProtocolloServerImplService();
         ProtocolloServer port = service.getProtocolloServerImplPort();
         ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointServizioProtocollo);
@@ -418,6 +442,17 @@ public class GestioneProtocolloAvBari implements GestioneProtocollo {
         headers.put("Username", Collections.singletonList(username));
         headers.put("Password", Collections.singletonList(password));
         ((BindingProvider) port).getRequestContext().put(MessageContext.HTTP_REQUEST_HEADERS, headers);
+        //Set timeout until a connection is established
+        //((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.connectionTimeout", 300000);
+        //((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", 300000);
+        //((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.connect.timeout", 300000);
+        //((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.request.timeout", 300000);
+        //Set timeout until the response is received
+        ((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.ws.request.timeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.ws.connect.timeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.internal.ws.request.timeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.internal.ws.connect.timeout", timeoutI);
 
         RichiestaProtocolloUscitaFasc.ProtocolloUscitaFascRequest request = new RichiestaProtocolloUscitaFasc.ProtocolloUscitaFascRequest();
         request.setAmministrazione(amministrazione);
@@ -510,6 +545,12 @@ public class GestioneProtocolloAvBari implements GestioneProtocollo {
             throw new Exception("Sulla tabella di configurazione non Ã¨ stata valorizzata la chiave '" + AvBariConstants.PROTOCOLLO_PASSWORD + "'");
         }
 
+        String timeout = configurationService.getCachedPluginConfiguration(AvBariConstants.WS_PROTOCOLLO_CLIENT_TIMEOUT, null, null);
+        if (StringUtils.isEmpty(timeout)) {
+            timeout = "90000";
+        }
+        Integer timeoutI = Integer.parseInt(timeout);
+        System.out.println("time out settato : " + timeoutI );
         String stringUtenteProtocollazione = configurationService.getCachedPluginConfiguration(AvBariConstants.ID_UTENTE_PROTOCOLLATORE, idEnte, idComune);
         if (StringUtils.isEmpty(stringUtenteProtocollazione)) {
             throw new Exception("Sulla tabella di configurazione non Ã¨ stata valorizzata la chiave '" + AvBariConstants.ID_UTENTE_PROTOCOLLATORE + "'");
@@ -542,6 +583,17 @@ public class GestioneProtocolloAvBari implements GestioneProtocollo {
         headers.put("Username", Collections.singletonList(username));
         headers.put("Password", Collections.singletonList(password));
         ((BindingProvider) port).getRequestContext().put(MessageContext.HTTP_REQUEST_HEADERS, headers);
+        //Set timeout until a connection is established
+        //((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.connectionTimeout", 300000);
+        //((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.receiveTimeout", 300000);
+        //((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.connect.timeout", 300000);
+        //((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.request.timeout", 300000);
+        //Set timeout until the response is received
+        ((BindingProvider) port).getRequestContext().put("javax.xml.ws.client.receiveTimeout",timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.ws.request.timeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.ws.connect.timeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.internal.ws.request.timeout", timeoutI);
+        ((BindingProvider)port).getRequestContext().put("com.sun.xml.internal.ws.connect.timeout", timeoutI);
 
         CreazioneFascicolo.NuovoFascicoloRequest creazioneRequest = new CreazioneFascicolo.NuovoFascicoloRequest();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

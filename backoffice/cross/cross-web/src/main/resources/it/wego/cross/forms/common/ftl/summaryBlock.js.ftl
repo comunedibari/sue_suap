@@ -6,7 +6,7 @@
         $(elementToRemove).remove();
     }
     function ${confirmDeleteCallbackFunction}(event){
-        var idRecord = event.target.getAttribute('data-holder');
+        var idRecord = event.target.getAttribute('data-holder') || $(this).attr('data-holder') ;
         $('<div></div>').appendTo('body').html('<div><h6 class="confirm-body-content">Sei sicuro di voler scollegare il record?</h6></div>').dialog({
             title: 'Conferma cancellazione',
             modal: true,
@@ -29,6 +29,8 @@
         });
         return false;
     }
+    
+   
 $(function() {
     
     [#if component.attributes.config.handlers.detail?? && component.attributes.config.handlers.detail!=""]

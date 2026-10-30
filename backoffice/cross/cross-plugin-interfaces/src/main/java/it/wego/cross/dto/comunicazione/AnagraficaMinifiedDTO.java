@@ -5,6 +5,11 @@
 package it.wego.cross.dto.comunicazione;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import it.wego.cross.dto.RecapitoDTO;
 
 /**
  *
@@ -23,8 +28,13 @@ public class AnagraficaMinifiedDTO implements Serializable {
     private String tipoAnagrafica;
     private String varianteAnagrafica;
     private Boolean isDittaIndividuale;
+    private String provenienza;
+    private String ruoloCivilia;
+    private List<RecapitoDTO> recapiti;
+    private Date dataInizioValidita;
 
-    public Integer getIdAnagrafica() {
+
+	public Integer getIdAnagrafica() {
         return idAnagrafica;
     }
 
@@ -88,7 +98,7 @@ public class AnagraficaMinifiedDTO implements Serializable {
         this.tipoAnagrafica = tipoAnagrafica;
     }
 
-    public String getVarianteAnagrafica() {
+	public String getVarianteAnagrafica() {
         return varianteAnagrafica;
     }
 
@@ -111,4 +121,38 @@ public class AnagraficaMinifiedDTO implements Serializable {
     public void setIdRuolo(Integer idRuolo) {
         this.idRuolo = idRuolo;
     }
+
+	public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+
+	public String getRuolo_civilia() {
+		return ruoloCivilia;
+	}
+	
+	public void setRuolo_civilia(String ruolo_civilia) {
+		this.ruoloCivilia = ruolo_civilia;
+	}
+
+	public List<RecapitoDTO> getRecapiti() {
+		if(recapiti == null)
+			recapiti = new ArrayList<>();
+		return recapiti;
+	}
+
+	public void setRecapiti(List<RecapitoDTO> recapiti) {
+		this.recapiti = recapiti;
+	}
+
+	public Date getDataInizioValidita() {
+		return dataInizioValidita;
+	}
+
+	public void setDataInizioValidita(Date dataInizioValidita) {
+		this.dataInizioValidita = dataInizioValidita;
+	}
 }

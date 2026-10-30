@@ -1,0 +1,4 @@
+CREATE TABLE qrtz_scheduler_state ( id int,
+INSTANCE_NAME varchar(200) NOT NULL,
+LAST_CHECKIN_TIME bigint NOT NULL,
+CHECKIN_INTERVAL bigint NOT NULL)

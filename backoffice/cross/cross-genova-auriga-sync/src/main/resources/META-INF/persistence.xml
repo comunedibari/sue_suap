@@ -42,6 +42,7 @@
     <class>it.wego.cross.entity.LkTipoRuolo</class>
     <class>it.wego.cross.entity.LkTipoSistemaCatastale</class>
     <class>it.wego.cross.entity.LkTipoUnita</class>
+    <class>it.wego.cross.entity.LkTipoPratica</class>
     <class>it.wego.cross.entity.Messaggio</class>
     <class>it.wego.cross.entity.NotePratica</class>
     <class>it.wego.cross.entity.OcPraticaCommissione</class>

@@ -6,6 +6,7 @@ package it.wego.cross.controller;
 
 import com.google.common.base.Strings;
 import it.wego.cross.actions.CdsAction;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.grid.GridOrganiCollegiali;
 import it.wego.cross.beans.grid.GridOrganiCollegialiCommissione;
 import it.wego.cross.beans.grid.GridOrganiCollegialiSedute;
@@ -158,6 +159,7 @@ public class CdsController extends AbstractController {
         return AJAX;
     }
 
+    @RequiresGrant
     @RequestMapping("/cds/organicollegiali/commissione/delete")
     public @ResponseBody
     Object organiCollegialiCommissioneDelete(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) throws Exception {
@@ -173,6 +175,7 @@ public class CdsController extends AbstractController {
         return JsonBuilder.newInstance().withSuccess(result).withMessage(message).buildResponse();
     }
 
+    @RequiresGrant
     @RequestMapping("/cds/organicollegiali/sedute/delete")
     public @ResponseBody
     Object organiCollegialiSeduteDelete(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) throws Exception {
@@ -216,6 +219,7 @@ public class CdsController extends AbstractController {
         return AJAX;
     }
 
+    @RequiresGrant
     @RequestMapping("/cds/organicollegiali/sedute/commissione/delete")
     public @ResponseBody
     Object organiCollegialiSeduteCommissioneDelete(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) throws Exception {
@@ -257,6 +261,7 @@ public class CdsController extends AbstractController {
         return AJAX;
     }
 
+    @RequiresGrant
     @RequestMapping("/cds/organicollegiali/commissione/pratiche/delete")
     public @ResponseBody
     Object organiCollegialiCommissionePraticheSeduteDelete(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) throws Exception {
@@ -303,6 +308,7 @@ public class CdsController extends AbstractController {
         return AJAX;
     }
 
+    @RequiresGrant
     @RequestMapping("/cds/organicollegiali/delete")
     public @ResponseBody
     Object organiCollegialiDelete(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("paginator") JqgridPaginator paginator) throws Exception {

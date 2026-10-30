@@ -96,6 +96,7 @@ public class SystemEventAction {
     private MessageSource messageSource;
 
     public static final String COLLEGA_ANAGRAFICA = "ANAG";
+    public static final String MODIFICA_PROCURATORE = "MODPROC";
     public static final String RIMUOVI_ANAGRAFICA = "RANAG";
     public static final String COLLEGA_ENDOPROCEDIMENTO = "ENDO";
     public static final String RIMUOVI_ENDOPROCEDIMENTO = "RENDO";
@@ -106,6 +107,8 @@ public class SystemEventAction {
     public static final String MODIFICA_INDIRIZZO_INTERVENTO = "MODINDINT";
     public static final String RIMUOVI_INDIRIZZO_INTERVENTO = "DELINDINT";
     public static final String RIASSEGNA_PRATICA = "REASPRAT";
+    public static final String RIASSEGNA_PRATICA_TEMPORIZZATA = "RIASPRAT";
+    public static final String RIASSEGNA_PRATICA_AUTOMATICO = "RIASPRATAUTO";
     public static final String ASSEGNA_PRATICA = "ASPRAT";
     public static final String MARCA_MAIL_COME_CONSEGNATA = "SENTMAIL";
     public static final String MAIL_REINVIATA = "RESENTMAIL";
@@ -115,6 +118,7 @@ public class SystemEventAction {
     public static final ImmutableMap<String, String> SYSTEM_EVENTS
             = new ImmutableMap.Builder<String, String>()
             .put(COLLEGA_ANAGRAFICA, "Collegamento nuova anagrafica")
+            .put(MODIFICA_PROCURATORE, "Cambio tecnico procuratore")
             .put(RIMUOVI_ANAGRAFICA, "Rimozione anagrafica")
             .put(COLLEGA_ENDOPROCEDIMENTO, "Collegamento nuovo endoprocedimento")
             .put(RIMUOVI_ENDOPROCEDIMENTO, "Rimozione endoprocedimento")
@@ -125,6 +129,8 @@ public class SystemEventAction {
             .put(MODIFICA_DATO_CATASTALE, "Modifica dato catastale")
             .put(MODIFICA_INDIRIZZO_INTERVENTO, "Modifica indirizzo intervento")
             .put(RIASSEGNA_PRATICA, "Riassegnazione pratica")
+            .put(RIASSEGNA_PRATICA_TEMPORIZZATA, "Riassegnazione temporizzata")
+            .put(RIASSEGNA_PRATICA_AUTOMATICO, "Riassegnazione automatizzata")
             .put(ASSEGNA_PRATICA, "Assegnazione pratica")
             .put(MARCA_MAIL_COME_CONSEGNATA, "Email marcata forzatamente come consegnata")
             .put(MAIL_REINVIATA, "Email rispedita")
@@ -249,7 +255,7 @@ public class SystemEventAction {
         return salvaEventoGenerico(pratica, codEvento, null, utenteConnesso);
     }
 
-    private PraticheEventi salvaEventoGenerico(Pratica pratica, String codEvento, String note, Utente utenteConnesso) throws Exception {
+    public PraticheEventi salvaEventoGenerico(Pratica pratica, String codEvento, String note, Utente utenteConnesso) throws Exception {
         PraticheEventi evento = new PraticheEventi();
         evento.setIdPratica(pratica);
         String desEvento = SYSTEM_EVENTS.get(codEvento);
@@ -400,6 +406,7 @@ public class SystemEventAction {
             it.wego.cross.xml.Immobile datiXML = new it.wego.cross.xml.Immobile();
             Log.APP.info("Creo l'oggetto per l'xml");
             datiCatastaliSerializer.serialize(datiDB, datiXML);
+            datiXML.setConfermato("true");
             // datiXML.setCounter(Utils.bi(datiCatastaliDTO.getCounter()));
             praticaXML.setDatiCatastali(new it.wego.cross.xml.DatiCatastali());
             Log.APP.info("Aggiungo il dato catastale nell'xml");
@@ -648,6 +655,7 @@ public class SystemEventAction {
             Log.APP.info("Creo l'oggetto per l'xml");
             it.wego.cross.xml.IndirizzoIntervento datiXML = new it.wego.cross.xml.IndirizzoIntervento();
             indirizziInterventoService.serializzaEntityXmlindirizzoIntervento(datiDB, datiXML);
+            datiXML.setConfermato("true");
             praticaXML.setIndirizziIntervento(new it.wego.cross.xml.IndirizziIntervento());
             Log.APP.info("Aggiungo il indirizzo intervento nell'xml");
             praticaXML.getIndirizziIntervento().getIndirizzoIntervento().add(datiXML);
@@ -819,6 +827,20 @@ public class SystemEventAction {
         return erroriList;
     }
 
+    @Transactional
+    public PraticheEventi riassegnaPraticaAutomatico(Pratica pratica, Utente precedenteAssegnatario, Utente nuovoAssegnatario, Utente utenteConnesso) throws Exception {
+    	pratica.setIdUtente(nuovoAssegnatario);
+    	praticheService.aggiornaPratica(pratica);
+    	String msg = messageSource.getMessage("pratica.riassegna.note", new Object[]{
+    			Strings.nullToEmpty(precedenteAssegnatario.getNome()),
+    			Strings.nullToEmpty(precedenteAssegnatario.getCognome()),
+    			Strings.nullToEmpty(nuovoAssegnatario.getNome()),
+    			Strings.nullToEmpty(nuovoAssegnatario.getCognome())},
+    			Locale.getDefault());
+    	PraticheEventi salvaEventoGenerico = salvaEventoGenerico(pratica, RIASSEGNA_PRATICA_AUTOMATICO, msg, utenteConnesso);
+    	return salvaEventoGenerico;
+    }
+    
     @Transactional
     public PraticheEventi riassegnaPratica(Pratica pratica, Utente precedenteAssegnatario, Utente nuovoAssegnatario, Utente utenteConnesso) throws Exception {
         pratica.setIdUtente(nuovoAssegnatario);

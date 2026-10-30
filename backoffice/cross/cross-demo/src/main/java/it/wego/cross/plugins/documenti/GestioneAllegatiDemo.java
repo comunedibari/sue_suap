@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.rpc.ServiceException;
@@ -43,6 +44,11 @@ public class GestioneAllegatiDemo implements GestioneAllegati {
 //        }
     }
 
+	@Override
+	public void add(Allegati allegato, Enti ente, LkComuni comune, Date date) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
     @Override
     public byte[] getFileContent(Allegati allegato, Enti ente, LkComuni comune) throws Exception {
         if (!Utils.e(allegato.getIdFileEsterno())) {

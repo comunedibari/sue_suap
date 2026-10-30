@@ -64,6 +64,8 @@ import it.wego.cross.utils.Utils;
  */
 public class RecuperoPraticheDaProtocolloJob implements Job {
 
+	private static int MAX_PRATICHE_DA_PROTOCOLLARE = 5;
+	
     @Autowired
     private ConfigurationService configurationService;
     @Autowired
@@ -267,15 +269,27 @@ public class RecuperoPraticheDaProtocolloJob implements Job {
     
     /* Requisito R9 */
     private void protocollaPraticheSenzaProtocollo () throws JobExecutionException {
+    	int max_pratiche_da_protocollare = MAX_PRATICHE_DA_PROTOCOLLARE;
     	
     	Log.SCHEDULER.info("Recupero elenco delle pratiche non protocollate");
     	
     	//List<Pratica> listPratiche = praticheService.findByRegistroFascicoloAnno("", "", 0);
     	List<Pratica> listPratiche = praticheService.findPraticheDaRiprotocollare("");
     	
-    	Log.SCHEDULER.info("Numero di pratiche da protocollare: "+listPratiche.size());
+    	//Log.SCHEDULER.info("Numero di pratiche da protocollare: "+listPratiche.size());
     	
-    	for (int i =0; i<listPratiche.size(); i++) {
+    	if(listPratiche != null && listPratiche.size()>0){
+    		if(listPratiche.size()> MAX_PRATICHE_DA_PROTOCOLLARE) {
+    			max_pratiche_da_protocollare = MAX_PRATICHE_DA_PROTOCOLLARE;
+    		} else {max_pratiche_da_protocollare = listPratiche.size();}
+    		
+    	} else {
+    		max_pratiche_da_protocollare = 0;
+    	}
+
+    	Log.SCHEDULER.info("Numero di pratiche da protocollare:" + max_pratiche_da_protocollare);
+    	//for (int i =0; i<listPratiche.size(); i++) {
+    	for (int i=0; i<max_pratiche_da_protocollare; i++) { //patch produzione protocollo solo le prime 10
             
 			
 	    	Log.SCHEDULER.info("Recupero la lista degli eventi");

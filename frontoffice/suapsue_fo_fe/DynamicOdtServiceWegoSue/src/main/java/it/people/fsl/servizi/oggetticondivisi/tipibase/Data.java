@@ -226,7 +226,7 @@ public class Data extends AbstractEntity {
 
 	protected void initMarshallingDate() {
 		if (marshallingYear != null && marshallingMonth != null && marshallingDay != null ) {
-			// sono state impostate tutte le propriet� della data
+			// sono state impostate tutte le propriet della data
 			this.setAnno(marshallingYear);
 			this.setMese(marshallingMonth);
 			this.setGiorno(marshallingDay);

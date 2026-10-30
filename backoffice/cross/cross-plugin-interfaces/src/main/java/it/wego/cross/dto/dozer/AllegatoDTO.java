@@ -7,6 +7,8 @@ package it.wego.cross.dto.dozer;
 
 import java.util.Date;
 
+import it.wego.cross.entity.Utente;
+
 /**
  *
  * @author Giuseppe
@@ -22,8 +24,23 @@ public class AllegatoDTO {
     private byte[] file;
     private Date dataEvento;
     private String descrizioneEvento;
+    private String provenienza;
+    private Integer idPraticaEvento;
+    private String protocollo;
+    private Date dataProtocollo;
+    private Utente operatore;
+    private String principale;
+    private Long dimensione;
 
-    public Integer getId() {
+    public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -94,6 +111,57 @@ public class AllegatoDTO {
 	public void setDescrizioneEvento(String descrizioneEvento) {
 		this.descrizioneEvento = descrizioneEvento;
 	}
-	
 
+
+	public Integer getIdPraticaEvento() {
+		return idPraticaEvento;
+	}
+
+	public void setIdPraticaEvento(Integer idPraticaEvento) {
+		this.idPraticaEvento = idPraticaEvento;
+	}
+
+	public String getPrincipale() {
+		return principale;
+	}
+
+	public String getProtocollo() {
+		return protocollo;
+	}
+
+	public void setProtocollo(String protocollo) {
+		this.protocollo = protocollo;
+	}
+
+	public Date getDataProtocollo() {
+		return dataProtocollo;
+	}
+
+	public void setDataProtocollo(Date dataProtocollo) {
+		this.dataProtocollo = dataProtocollo;
+	}
+
+	public Utente getOperatore() {
+		return operatore;
+	}
+
+	public void setOperatore(Utente operatore) {
+		this.operatore = operatore;
+	}
+
+	public String isPrincipale() {
+		return principale;
+	}
+
+	public void setPrincipale(String principale) {
+		this.principale = principale;
+	}
+
+	public Long getDimensione() {
+		return dimensione;
+	}
+
+	public void setDimensione(Long dimensione) {
+		this.dimensione = dimensione;
+	}
 }

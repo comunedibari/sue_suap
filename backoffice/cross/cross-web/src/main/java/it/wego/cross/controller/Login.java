@@ -11,6 +11,7 @@ import it.wego.cross.entity.UtenteRuoloEnte;
 import it.wego.cross.serializer.UtentiSerializer;
 import it.wego.cross.service.ConfigurationService;
 import it.wego.cross.service.UtentiService;
+import it.wego.cross.session.MultiSubSessionManager;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -98,8 +99,10 @@ public class Login extends AbstractController {
         session.setAttribute(SessionConstants.ESTRAZIONIUSER, isEstrazioniUser);
         boolean isEstrazioniCilaTodoUser = user.getEstrazioniCilaTodoUser() == 'S';
         session.setAttribute(SessionConstants.ESTRAZIONICILATODOUSER, isEstrazioniCilaTodoUser);
-        setSessionPermissions(session, user);
-        String URL_TO_REDIRECT = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        setSessionPermissions(session, user);        
+        session.setAttribute(SessionConstants.FROM_LOGIN, true);
+        
+        String URL_TO_REDIRECT = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();       
         return REDIRECT + URL_TO_REDIRECT + INDEX;
 
     }
@@ -120,6 +123,7 @@ public class Login extends AbstractController {
         
         //Aggiunto 13/01/2016
         boolean flagPraticheAssegnazione=false;
+        boolean flgabilitazioneConsultazione=false;
         
         for (UtenteRuoloEnte utenteRuoloEnte : utente.getUtenteRuoloEnteList()) {
 
@@ -134,50 +138,52 @@ public class Login extends AbstractController {
             String tmpFlgEnableDirittiSegreteriaEnabled = configurationService.getCachedConfiguration(SessionConstants.PRATICA_DIRITTI_SEGRETERIA, idEnte, null);
             String tmpFlgTaskListEnabled = configurationService.getCachedConfiguration(SessionConstants.TASKLIST_ENABLED, idEnte, null);
 //            String tmpFlgCdstEnabled = configurationService.getCachedConfiguration(SessionConstants.CDS_ENABLED, idEnte, null);
-
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaProtocollo)) {
-                enablePraticheDaProtocollo = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaManuale)) {
-                enablePraticheManuali = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaComunica)) {
-                enablePraticheComunica = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaSuapFvg)) {
-                enablePraticheSuapFvg = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaProtocolloRicerca)) {
-                enablePraticheProtocolloRicerca = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaDocumentiDaProtocollo)) {
-                flgAperturaPraticaDocumentiDaProtocollo = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgPraticaMessaggiEnabled)) {
-                enablePraticaMessaggi = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgEnableDirittiSegreteriaEnabled)) {
-                enableDirittiSegreteria = true;
-            }
-            if ("TRUE".equalsIgnoreCase(tmpFlgTaskListEnabled)) {
-                flgTaskListEnabled = true;
-            }
-//            if ("TRUE".equalsIgnoreCase(tmpFlgCdstEnabled)) {
-//                flgCdstEnabled = true;
-//            }
-            
-            //Aggiunto il 13/01/2016
-            if(PermissionConstans.AMMINISTRATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())){
-            	flagPraticheAssegnazione=true;
-            }
-            
-            if (utenteRuoloEnte.getCodPermesso() != null && PermissionConstans.SEGRETERIA.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())) {
-                flgCdstEnabled = true;
-            }
-            if (PermissionConstans.AMMINISTRATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())
-                    || PermissionConstans.OPERATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())
-                    || PermissionConstans.UTENTE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())) {
-                esistenzaRuoloGestione = true;
+            if(PermissionConstans.CONSULTAZIONE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())){
+            	flgabilitazioneConsultazione=true;
+            } else {
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaProtocollo)) {
+	                enablePraticheDaProtocollo = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaManuale)) {
+	                enablePraticheManuali = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaComunica)) {
+	                enablePraticheComunica = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaSuapFvg)) {
+	                enablePraticheSuapFvg = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaProtocolloRicerca)) {
+	                enablePraticheProtocolloRicerca = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgAperturaPraticaDocumentiDaProtocollo)) {
+	                flgAperturaPraticaDocumentiDaProtocollo = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgPraticaMessaggiEnabled)) {
+	                enablePraticaMessaggi = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgEnableDirittiSegreteriaEnabled)) {
+	                enableDirittiSegreteria = true;
+	            }
+	            if ("TRUE".equalsIgnoreCase(tmpFlgTaskListEnabled)) {
+	                flgTaskListEnabled = true;
+	            }
+	//            if ("TRUE".equalsIgnoreCase(tmpFlgCdstEnabled)) {
+	//                flgCdstEnabled = true;
+	//            }
+	            
+	            //Aggiunto il 13/01/2016
+	            if(PermissionConstans.AMMINISTRATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())){
+	            	flagPraticheAssegnazione=true;
+	            }
+	            if (utenteRuoloEnte.getCodPermesso() != null && PermissionConstans.SEGRETERIA.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())) {
+	                flgCdstEnabled = true;
+	            }
+	            if (PermissionConstans.AMMINISTRATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())
+	                    || PermissionConstans.OPERATORE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())
+	                    || PermissionConstans.UTENTE.equals(utenteRuoloEnte.getCodPermesso().getCodPermesso())) {
+	                esistenzaRuoloGestione = true;
+	            }
             }
         }
 
@@ -209,5 +215,6 @@ public class Login extends AbstractController {
        
         //Aggiunto il 13/01/2016
         session.setAttribute(SessionConstants.ABILITA_ASSEGNAZIONE_PRATICHE, flagPraticheAssegnazione);
+        session.setAttribute(SessionConstants.ABILITAZIONE_CONSULTAZIONE, flgabilitazioneConsultazione);
     }
 }

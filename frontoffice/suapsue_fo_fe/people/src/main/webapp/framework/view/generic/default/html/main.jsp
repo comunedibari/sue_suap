@@ -217,6 +217,11 @@ permissions and limitations under the Licence.
 		        	</td>
 	        	<% } %>
 	        </tr>
+			<tr><td colspan="<%=colspan %>" style="text-align:center;">
+	        	<people:include rootPath="/framework/view/generic" 
+        			nestedPath="/html" 
+        			elementName="footer.jsp" />	       			
+        	</td></tr>
 	    </table>
     </html:form>
 </body>

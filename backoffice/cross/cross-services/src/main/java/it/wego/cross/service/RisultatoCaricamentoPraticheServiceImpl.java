@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import it.wego.cross.dao.RisultatoCaricamentoPraticheDao;
 import it.wego.cross.dto.RisultatoCaricamentoPraticheDTO;
+import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.RisultatoCaricamentoPratiche;
 import it.wego.cross.serializer.RisultatoCaricamentoPraticheSerializer;
 
@@ -57,12 +58,6 @@ public class RisultatoCaricamentoPraticheServiceImpl implements RisultatoCaricam
         return dtos;
     }
 
-//    @Override
-//    public Long countRisultatoCaricamentoPraticheAttivi() {
-//        Long result;
-//        result = RisultatoCaricamentoPraticheDao.countAllRisultatoCaricamentoPraticheAttivi();
-//        return result;
-//    }
     @Override
     public RisultatoCaricamentoPraticheDTO findRisultatoCaricamentoPraticheByIdentificativoPratica(Integer id) {
         RisultatoCaricamentoPratiche risultato = risultatoCaricamentoPraticheDao.findByIdRisultatoCaricamentoPratiche(id);
@@ -72,6 +67,17 @@ public class RisultatoCaricamentoPraticheServiceImpl implements RisultatoCaricam
         } else {
             return null;
         }
+    }
+    
+    @Override
+    public RisultatoCaricamentoPraticheDTO findRisultatoCaricamentoPraticheByPratica(Pratica pratica) {
+    	RisultatoCaricamentoPratiche risultato = risultatoCaricamentoPraticheDao.findRisultatoByPratica(pratica);
+    	if (risultato != null) {
+    		RisultatoCaricamentoPraticheDTO  dto = RisultatoCaricamentoPraticheSerializer.serialize(risultato);
+    		return dto;
+    	} else {
+    		return null;
+    	}
     }
 
 	@Override

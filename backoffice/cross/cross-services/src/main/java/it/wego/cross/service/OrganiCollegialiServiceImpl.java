@@ -46,6 +46,7 @@ import it.wego.cross.entity.PraticaProcedimenti;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.PraticheEventiAllegati;
 import it.wego.cross.entity.Templates;
+import it.wego.cross.session.MultiSubSessionManager;
 import it.wego.utils.json.JsonBuilder;
 import it.wego.utils.json.JsonMapTransformer;
 import static it.wego.utils.json.JsonMapTransformer.LABEL;
@@ -959,7 +960,7 @@ public class OrganiCollegialiServiceImpl implements OrganiCollegialiService {
                 }
             }
         }
-        request.getSession().setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, p.getIdPratica());
+        MultiSubSessionManager.setAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA, p.getIdPratica());
         String listAllegati = "<div class=\"wgf-fieldWrapper wgf-component\"><label class=\"wgf-label\">Documenti : </label>";
         for (Integer idAllegato : allegati) {
             Allegati a = allegatiDao.getAllegato(idAllegato);

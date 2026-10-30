@@ -156,6 +156,8 @@ public class AnagraficheSerializer {
             LkTipoQualifica qualifica = lookupDao.findTipoQualificaById(Utils.ib(xml.getIdTipoQualifica()));
             p.setIdTipoQualifica(qualifica);
         }
+        if (xml.getDataInizioValidita() != null)
+        	p.setDataInizioValidita(xml.getDataInizioValidita().toGregorianCalendar().getTime());
         return p;
     }
 
@@ -239,14 +241,10 @@ public class AnagraficheSerializer {
             a.setVarianteAnagrafica(x.getVarianteAnagrafica());
             a.setFlgIndividuale(!Strings.isNullOrEmpty(x.getFlgIndividuale()) ? x.getFlgIndividuale().charAt(0) : 'N');
             if (x.isFlgAttesaIscrizioneRi() != null) {
-            	/*Patch produzione RI e REA */
-                //a.setFlgAttesaIscrizioneRi(x.isFlgAttesaIscrizioneRi() ? 'S' : 'N');
-            	a.setFlgAttesaIscrizioneRi('S');
+                a.setFlgAttesaIscrizioneRi(x.isFlgAttesaIscrizioneRi() ? 'S' : 'N');
             }
             if (x.isFlgAttesaIscrizioneRea() != null) {
-            	/*Patch produzione RI e REA */
-                //a.setFlgAttesaIscrizioneRea(x.isFlgAttesaIscrizioneRea() ? 'S' : 'N');
-            	a.setFlgAttesaIscrizioneRea('S');
+                a.setFlgAttesaIscrizioneRea(x.isFlgAttesaIscrizioneRea() ? 'S' : 'N');
             }
 
             a.setFlgObbligoIscrizioneRi('N');
@@ -408,9 +406,7 @@ public class AnagraficheSerializer {
                         anagraficaXml.setDesProvinciaCciaa(anagrafica.getIdProvinciaCciaa().getDescrizione());
                     }
                     if (anagrafica.getFlgAttesaIscrizioneRi() != null) {
-                    	/*Patch produzione RI e REA */
-                        //anagraficaXml.setFlgAttesaIscrizioneRi(String.valueOf(anagrafica.getFlgAttesaIscrizioneRi()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
-                    	anagraficaXml.setFlgAttesaIscrizioneRi(true);
+                        anagraficaXml.setFlgAttesaIscrizioneRi(String.valueOf(anagrafica.getFlgAttesaIscrizioneRi()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
                     }
                     if (anagrafica.getFlgObbligoIscrizioneRi() != null) {
                         anagraficaXml.setFlgObbligoIscrizioneRi(String.valueOf(anagrafica.getFlgObbligoIscrizioneRi()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
@@ -418,9 +414,7 @@ public class AnagraficheSerializer {
                     anagraficaXml.setDataIscrizioneRi(Utils.dateToXmlGregorianCalendar(anagrafica.getDataIscrizioneRi()));
                     anagraficaXml.setNIscrizioneRi(anagrafica.getNIscrizioneRi());
                     if (anagrafica.getFlgAttesaIscrizioneRea() != null) {
-                    	/*Patch produzione RI e REA */
-                        //anagraficaXml.setFlgAttesaIscrizioneRea(String.valueOf(anagrafica.getFlgAttesaIscrizioneRea()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
-                    	anagraficaXml.setFlgAttesaIscrizioneRea(true);
+                        anagraficaXml.setFlgAttesaIscrizioneRea(String.valueOf(anagrafica.getFlgAttesaIscrizioneRea()).equalsIgnoreCase("S") ? Boolean.TRUE : Boolean.FALSE);
                     }
                     anagraficaXml.setDataIscrizioneRea(Utils.dateToXmlGregorianCalendar(anagrafica.getDataIscrizioneRea()));
                     anagraficaXml.setNIscrizioneRea(anagrafica.getNIscrizioneRea());
@@ -642,9 +636,7 @@ public class AnagraficheSerializer {
         if (!Strings.isNullOrEmpty(a.getFlgAttesaIscrizioneRi())) {
             r.setFlgAttesaIscrizioneRi(a.getFlgAttesaIscrizioneRi().charAt(0));
         } else {
-            /*Patch produzione RI e REA */
-        	//r.setFlgAttesaIscrizioneRi('N');
-            r.setFlgAttesaIscrizioneRi('S');
+            r.setFlgAttesaIscrizioneRi('N');
         }
         if (a.getFlgObbligoIscrizioneRi() != null) {
             r.setFlgObbligoIscrizioneRi(a.getFlgObbligoIscrizioneRi().charAt(0));
@@ -652,9 +644,7 @@ public class AnagraficheSerializer {
         if (!Strings.isNullOrEmpty(a.getFlgAttesaIscrizioneRea())) {
             r.setFlgAttesaIscrizioneRea(a.getFlgAttesaIscrizioneRea().charAt(0));
         } else {
-        	/*Patch produzione RI e REA */
-            //r.setFlgAttesaIscrizioneRea('N');
-            r.setFlgAttesaIscrizioneRea('S');
+            r.setFlgAttesaIscrizioneRea('N');
         }
         r.setDataIscrizioneRi(a.getDataIscrizioneRi());
         r.setNIscrizioneRi(a.getnIscrizioneRi());

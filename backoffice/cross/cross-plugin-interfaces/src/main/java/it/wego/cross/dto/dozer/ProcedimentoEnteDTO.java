@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.wego.cross.dto.dozer;
 
-/**
- *
- * @author Gabriele
- */
 public class ProcedimentoEnteDTO {
 
     private Integer idProcEnte;
@@ -16,8 +8,17 @@ public class ProcedimentoEnteDTO {
     private ProcessoDTO processo;
     private PraticaDTO pratica;
     private EnteDTO ufficio;
+    private String provenienza;
+    private String praticaProcedimentoDescrizione;
+    
+    public String getProvenienza() {
+		return provenienza;
+	}
 
-    public Integer getIdProcEnte() {
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+	public Integer getIdProcEnte() {
         return idProcEnte;
     }
 
@@ -65,4 +66,11 @@ public class ProcedimentoEnteDTO {
 		this.ufficio = ufficio;
 	}
 
+	public String getPraticaProcedimentoDescrizione() {
+		return praticaProcedimentoDescrizione;
+	}
+
+	public void setPraticaProcedimentoDescrizione(String praticaProcedimentoDescrizione) {
+		this.praticaProcedimentoDescrizione = praticaProcedimentoDescrizione;
+	}
 }

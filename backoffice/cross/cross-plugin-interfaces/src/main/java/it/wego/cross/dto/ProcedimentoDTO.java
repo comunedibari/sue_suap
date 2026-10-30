@@ -7,9 +7,13 @@ package it.wego.cross.dto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import it.wego.cross.xml.Procedimento;
 
 /**
  * ProcedimentoCS del veccio cross
@@ -56,8 +60,18 @@ public class ProcedimentoDTO extends AbstractDTO implements Serializable {
     List<ProcedimentiTestiDTO> procedimentiTestiList = new ArrayList<ProcedimentiTestiDTO>();
     //^^CS AGGIUNTA Serve per la jsp di gestione template
     private Boolean checked = false;
+    private String provenienza;
+    
+    
+    public String getProvenienza() {
+		return provenienza;
+	}
 
-    public ProcedimentoDTO() {
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+
+	public ProcedimentoDTO() {
     }
 
     public ProcedimentoDTO(Integer idProcedimento) {
@@ -176,7 +190,7 @@ public class ProcedimentoDTO extends AbstractDTO implements Serializable {
         this.procedimentiTestiList = procedimentiTestiList;
     }
 
-    public void fromXML(it.wego.cross.xml.Procedimento procedimento) {
+    public void fromXML(Procedimento procedimento) {
 
         this.codEnteDestinatario = procedimento.getCodEnteDestinatario();
         this.codLang = procedimento.getCodLang();

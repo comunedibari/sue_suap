@@ -1,6 +1,7 @@
 package it.wego.cross.controller;
 
 
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.layout.Message;
 import it.wego.cross.service.ConfigurationService;
 import it.wego.cross.service.FormService;
@@ -28,6 +29,7 @@ public class ResetConfigurazione extends AbstractController {
     @Autowired
     private FormService formService;
 
+    @RequiresGrant
     @RequestMapping("/resetConfigurazione")
     public String resetConfigurazione(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         configurationService.resetCachedConfiguration();

@@ -1,8 +1,8 @@
 //
-// Questo file stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andrpersa durante la ricompilazione dello schema di origine. 
-// Generato il: 2013.06.13 alle 04:27:44 PM CEST 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2024.04.16 alle 09:52:47 AM CEST 
 //
 
 
@@ -149,7 +149,7 @@ public class Recapito {
     protected String desTipoIndirizzo;
 
     /**
-     * Recupera il valore della proprietcounter.
+     * Recupera il valore della propriet� counter.
      * 
      * @return
      *     possible object is
@@ -161,7 +161,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietcounter.
+     * Imposta il valore della propriet� counter.
      * 
      * @param value
      *     allowed object is
@@ -173,7 +173,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietidRecapito.
+     * Recupera il valore della propriet� idRecapito.
      * 
      * @return
      *     possible object is
@@ -185,7 +185,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietidRecapito.
+     * Imposta il valore della propriet� idRecapito.
      * 
      * @param value
      *     allowed object is
@@ -197,7 +197,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietpresso.
+     * Recupera il valore della propriet� presso.
      * 
      * @return
      *     possible object is
@@ -209,7 +209,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietpresso.
+     * Imposta il valore della propriet� presso.
      * 
      * @param value
      *     allowed object is
@@ -221,7 +221,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietidComune.
+     * Recupera il valore della propriet� idComune.
      * 
      * @return
      *     possible object is
@@ -233,7 +233,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietidComune.
+     * Imposta il valore della propriet� idComune.
      * 
      * @param value
      *     allowed object is
@@ -245,7 +245,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietdesComune.
+     * Recupera il valore della propriet� desComune.
      * 
      * @return
      *     possible object is
@@ -257,7 +257,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietdesComune.
+     * Imposta il valore della propriet� desComune.
      * 
      * @param value
      *     allowed object is
@@ -269,7 +269,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietlocalita.
+     * Recupera il valore della propriet� localita.
      * 
      * @return
      *     possible object is
@@ -281,7 +281,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietlocalita.
+     * Imposta il valore della propriet� localita.
      * 
      * @param value
      *     allowed object is
@@ -293,7 +293,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietidProvincia.
+     * Recupera il valore della propriet� idProvincia.
      * 
      * @return
      *     possible object is
@@ -305,7 +305,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietidProvincia.
+     * Imposta il valore della propriet� idProvincia.
      * 
      * @param value
      *     allowed object is
@@ -317,7 +317,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietdesProvincia.
+     * Recupera il valore della propriet� desProvincia.
      * 
      * @return
      *     possible object is
@@ -329,7 +329,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietdesProvincia.
+     * Imposta il valore della propriet� desProvincia.
      * 
      * @param value
      *     allowed object is
@@ -341,7 +341,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietidStato.
+     * Recupera il valore della propriet� idStato.
      * 
      * @return
      *     possible object is
@@ -353,7 +353,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietidStato.
+     * Imposta il valore della propriet� idStato.
      * 
      * @param value
      *     allowed object is
@@ -365,7 +365,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietdesStato.
+     * Recupera il valore della propriet� desStato.
      * 
      * @return
      *     possible object is
@@ -377,7 +377,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietdesStato.
+     * Imposta il valore della propriet� desStato.
      * 
      * @param value
      *     allowed object is
@@ -389,7 +389,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietidDug.
+     * Recupera il valore della propriet� idDug.
      * 
      * @return
      *     possible object is
@@ -401,7 +401,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietidDug.
+     * Imposta il valore della propriet� idDug.
      * 
      * @param value
      *     allowed object is
@@ -413,7 +413,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietindirizzo.
+     * Recupera il valore della propriet� indirizzo.
      * 
      * @return
      *     possible object is
@@ -425,7 +425,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietindirizzo.
+     * Imposta il valore della propriet� indirizzo.
      * 
      * @param value
      *     allowed object is
@@ -437,7 +437,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietcodiceVia.
+     * Recupera il valore della propriet� codiceVia.
      * 
      * @return
      *     possible object is
@@ -449,7 +449,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietcodiceVia.
+     * Imposta il valore della propriet� codiceVia.
      * 
      * @param value
      *     allowed object is
@@ -461,7 +461,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietnCivico.
+     * Recupera il valore della propriet� nCivico.
      * 
      * @return
      *     possible object is
@@ -473,7 +473,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietnCivico.
+     * Imposta il valore della propriet� nCivico.
      * 
      * @param value
      *     allowed object is
@@ -485,7 +485,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietcodiceCivico.
+     * Recupera il valore della propriet� codiceCivico.
      * 
      * @return
      *     possible object is
@@ -497,7 +497,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietcodiceCivico.
+     * Imposta il valore della propriet� codiceCivico.
      * 
      * @param value
      *     allowed object is
@@ -509,7 +509,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietinternoNumero.
+     * Recupera il valore della propriet� internoNumero.
      * 
      * @return
      *     possible object is
@@ -521,7 +521,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietinternoNumero.
+     * Imposta il valore della propriet� internoNumero.
      * 
      * @param value
      *     allowed object is
@@ -533,7 +533,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietinternoLettera.
+     * Recupera il valore della propriet� internoLettera.
      * 
      * @return
      *     possible object is
@@ -545,7 +545,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietinternoLettera.
+     * Imposta il valore della propriet� internoLettera.
      * 
      * @param value
      *     allowed object is
@@ -557,7 +557,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietinternoScala.
+     * Recupera il valore della propriet� internoScala.
      * 
      * @return
      *     possible object is
@@ -569,7 +569,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietinternoScala.
+     * Imposta il valore della propriet� internoScala.
      * 
      * @param value
      *     allowed object is
@@ -581,7 +581,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietlettera.
+     * Recupera il valore della propriet� lettera.
      * 
      * @return
      *     possible object is
@@ -593,7 +593,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietlettera.
+     * Imposta il valore della propriet� lettera.
      * 
      * @param value
      *     allowed object is
@@ -605,7 +605,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietcolore.
+     * Recupera il valore della propriet� colore.
      * 
      * @return
      *     possible object is
@@ -617,7 +617,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietcolore.
+     * Imposta il valore della propriet� colore.
      * 
      * @param value
      *     allowed object is
@@ -629,7 +629,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietcap.
+     * Recupera il valore della propriet� cap.
      * 
      * @return
      *     possible object is
@@ -641,7 +641,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietcap.
+     * Imposta il valore della propriet� cap.
      * 
      * @param value
      *     allowed object is
@@ -653,7 +653,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietcasellaPostale.
+     * Recupera il valore della propriet� casellaPostale.
      * 
      * @return
      *     possible object is
@@ -665,7 +665,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietcasellaPostale.
+     * Imposta il valore della propriet� casellaPostale.
      * 
      * @param value
      *     allowed object is
@@ -677,7 +677,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietaltreInfoIndirizzo.
+     * Recupera il valore della propriet� altreInfoIndirizzo.
      * 
      * @return
      *     possible object is
@@ -689,7 +689,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietaltreInfoIndirizzo.
+     * Imposta il valore della propriet� altreInfoIndirizzo.
      * 
      * @param value
      *     allowed object is
@@ -701,7 +701,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della propriettelefono.
+     * Recupera il valore della propriet� telefono.
      * 
      * @return
      *     possible object is
@@ -713,7 +713,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della propriettelefono.
+     * Imposta il valore della propriet� telefono.
      * 
      * @param value
      *     allowed object is
@@ -725,7 +725,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietcellulare.
+     * Recupera il valore della propriet� cellulare.
      * 
      * @return
      *     possible object is
@@ -737,7 +737,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietcellulare.
+     * Imposta il valore della propriet� cellulare.
      * 
      * @param value
      *     allowed object is
@@ -749,7 +749,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietfax.
+     * Recupera il valore della propriet� fax.
      * 
      * @return
      *     possible object is
@@ -761,7 +761,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietfax.
+     * Imposta il valore della propriet� fax.
      * 
      * @param value
      *     allowed object is
@@ -773,7 +773,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietemail.
+     * Recupera il valore della propriet� email.
      * 
      * @return
      *     possible object is
@@ -785,7 +785,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietemail.
+     * Imposta il valore della propriet� email.
      * 
      * @param value
      *     allowed object is
@@ -797,7 +797,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietpec.
+     * Recupera il valore della propriet� pec.
      * 
      * @return
      *     possible object is
@@ -809,7 +809,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietpec.
+     * Imposta il valore della propriet� pec.
      * 
      * @param value
      *     allowed object is
@@ -821,7 +821,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietidTipoIndirizzo.
+     * Recupera il valore della propriet� idTipoIndirizzo.
      * 
      * @return
      *     possible object is
@@ -833,7 +833,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietidTipoIndirizzo.
+     * Imposta il valore della propriet� idTipoIndirizzo.
      * 
      * @param value
      *     allowed object is
@@ -845,7 +845,7 @@ public class Recapito {
     }
 
     /**
-     * Recupera il valore della proprietdesTipoIndirizzo.
+     * Recupera il valore della propriet� desTipoIndirizzo.
      * 
      * @return
      *     possible object is
@@ -857,7 +857,7 @@ public class Recapito {
     }
 
     /**
-     * Imposta il valore della proprietdesTipoIndirizzo.
+     * Imposta il valore della propriet� desTipoIndirizzo.
      * 
      * @param value
      *     allowed object is

@@ -39,9 +39,10 @@ public class SessionConstants {
     public static final String CDS_ENABLED = "cross.menu.cds.enabled";
 
     public static final String ABILITAZIONE_REGISTRO_IMPRESE = "ricerca.registroImprese.abilitato";
-    //Aggiunto 13/01/2016
+    public static final String ABILITAZIONE_CONSULTAZIONE = "abilitazioneConsultazione";
+
     public static final String ABILITA_ASSEGNAZIONE_PRATICHE = "abititaAssegnazionePratiche";
-    
+
     public static final String DOCUMENTI_PLUGIN_ID = "documenti.plugin.id";
     public static final String PROTOCOLLO_PLUGIN_ID = "protocollo.plugin.id";
     public static final String PRATICA_PLUGIN_ID = "pratica.plugin.id";
@@ -102,11 +103,31 @@ public class SessionConstants {
 	public static final String MAIL_SMTP_SOCKET_FACTORY_CLASS = "mail.smtp.socketFactory.class";
 	public static final String ESTRAZIONI_CILA__COLUMN_MODEL = "estrazioni.cila";
 	
+	public static final String ATTACHMENTS_PLACEHOLDER = "attachments.placeholder";
 	public static final String ATTACHMENTS_FOLDER = "attachment.tmp.folder";
+	public static final String TEMP_FOLDER = "tmp.folder";
 	public static final String DOCUMENTS_FOLDER = "documenti.fs.folder";
 
 	public static final String KEYSTORE_PATH = "keystore.path";
 	public static final String KEYSTORE_PASSWORD = "keystore.password";
 	public static final String SUAP_ENDPOINT = "suap.endpoint";
 	public static final String KEYSTORE_ALIAS = "keystore.alias";
+	
+	public static final String CODICE_EVENTO_CARICA_DOC_PROT = "CARICA_DOC_PROT";
+	public static final String CODICE_EVENTO_FIRMA_ALLEGATO = "FIRMA_ALLEGATO";
+	
+	public static final String ENDPOINT_FIRMA_URL_AUTH = "ws.firma.url.auth";
+	public static final String ENDPOINT_FIRMA_USERNAME = "ws.firma.usr";
+	public static final String ENDPOINT_FIRMA_PASSWORD = "ws.firma.psw";
+	public static final String ENDPOINT_FIRMA_CLIENTID = "ws.firma.clientid";
+	public static final String ENDPOINT_FIRMA_URL = "ws.firma.url";
+	public static final String ENDPOINT_FIRMA_ACCESSTOKEN = "ws.firma.accesstoken";
+	
+	
+    public static final String FROM_LOGIN = "from_login";
+    public static final String IS_PRODUCTION = "cross.prod";
+    public static final String TIMEOUT_WS_AURIGA = "ruvo.wsauriga.timeout";
+    
+    public static final String BUILDING_EXPORT_TYPE = "building.export.type";
+	
 }

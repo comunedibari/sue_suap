@@ -4,29 +4,40 @@
  */
 package it.wego.cross.serializer;
 
-import it.wego.cross.actions.UtentiAction;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import it.wego.cross.beans.layout.JqgridPaginator;
-import it.wego.cross.dto.filters.ComunicazioneFilter;
+import it.wego.cross.dto.enums.LogicalOperator;
+import it.wego.cross.dto.filters.CadastralAddress;
+import it.wego.cross.dto.filters.CadastralAddresses;
+import it.wego.cross.dto.filters.CadastralData;
+import it.wego.cross.dto.filters.CadastralDataList;
 import it.wego.cross.dto.filters.Filter;
-import it.wego.cross.dto.filters.GestioneDatiEstesiFilter;
+import it.wego.cross.dto.filters.Identification;
+import it.wego.cross.dto.filters.Identifications;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkClassificazioneProcedimento;
 import it.wego.cross.entity.LkStatiScadenze;
 import it.wego.cross.entity.LkStatoPratica;
 import it.wego.cross.entity.LkTipoInterventoSuap;
+import it.wego.cross.entity.LkTipoPratica;
 import it.wego.cross.entity.LkTipoProcedimentoSuap;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.service.EntiService;
 import it.wego.cross.service.PraticheService;
 import it.wego.cross.service.UtentiService;
 import it.wego.cross.utils.Utils;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -49,10 +60,11 @@ public class FilterSerializer {
         if (!Utils.e(request.getParameter("search_protocollo_pratica"))) {
             protocollo = request.getParameter("search_protocollo_pratica");
         }
+        String registerNumberByEvent = request.getParameter("search_protocollo_evento");
         String statoProcedimentoUtente = request.getParameter("search_stato_procedimento_utente");
         String indirizzo = request.getParameter("search_indirizzo");
         String civico = request.getParameter("search_civico");
-        String idTipoUnita = request.getParameter("search_tipoCatasto");
+        String idTipoUnita = request.getParameter("search_tipoUnita");
         String annoRiferimento = request.getParameter("search_annoRiferimento");
         String dataInizioString = request.getParameter("search_data_from");
         String dataFineString = request.getParameter("search_data_to");
@@ -75,7 +87,7 @@ public class FilterSerializer {
         String partitaIva = request.getParameter("search_partita_iva");
         String codiceFiscale = request.getParameter("search_codice_fiscale");
         String tipoAnagrafica = request.getParameter("search_tipo_anagrafica");
-        String ricercaAnagraficaCF = request.getParameter("ricercaAnagraficaCF");
+        String ricercaAnagraficaCF = request.getParameter("ricercaAnagraficaCF");       
         String ricercaAnagraficaNome = request.getParameter("ricercaAnagraficaNome");
         String ricercaProcedimento = request.getParameter("procedimento");
         String tipoProcedimento = request.getParameter("tipoProcedimento");
@@ -97,6 +109,14 @@ public class FilterSerializer {
         String dataInizioProtSuapString = request.getParameter("search_data_inizio_prot_suap");
         String dataFineProtSuapString = request.getParameter("search_data_fine_prot_suap");
         String classificazioneProcedimentoString = request.getParameter("search_tipoClassificazioneProcedimento");
+        String idTipoPratica = request.getParameter("search_tipo_pratica");
+        String annoPratica = request.getParameter("search_anno_pratica");
+        String numeroPratica = request.getParameter("search_numero_pratica");
+        String interventionDescription = request.getParameter("search_descrizione_intervento");
+        
+        String tree = request.getParameter("search_tree");
+        
+        
         Filter filter = new Filter();
         filter.setConnectedUser(utenteConnesso);
         Date dataInizio = null;
@@ -133,6 +153,9 @@ public class FilterSerializer {
         filter.setIdStatoPratica(statoPratica);
         if (!Utils.e(protocollo)) {
             filter.setNumeroProtocollo(protocollo);
+        }
+        if (!Utils.e(registerNumberByEvent)) {
+        	filter.setRegisterNumberByEvent(registerNumberByEvent);
         }
         boolean filtraUtenteConnesso = true;
         if (ricercaTutti != null && "OK".equalsIgnoreCase(ricercaTutti)) {
@@ -292,6 +315,48 @@ public class FilterSerializer {
             }
         }
         filter.setIdClassificazioneProcedimento(classificazioneProcedimento);
+        
+        String[] arrayTree = null;
+        if(tree!=null && !tree.isEmpty()) {
+        	arrayTree = tree.split(",");
+        }
+        
+        if(arrayTree!=null && arrayTree.length > 0) {
+        	filter.setListTree(Arrays.asList(arrayTree));
+        }
+        
+        Identifications identifications = extractAnagrafiche(request);
+        if(identifications != null) {
+        	filter.setIdentifications(identifications);
+        }
+        
+        CadastralDataList cadastralDataList = extractCadastralDataList(request);
+        if(cadastralDataList != null) {
+        	filter.setCadastralDataList(cadastralDataList);
+        }
+        
+        CadastralAddresses cadastralAddresses = extractCadastralAddresses(request);
+        if(cadastralAddresses != null) {
+        	filter.setCadastralAddresses(cadastralAddresses);
+        }
+        
+        if (!Utils.e(idTipoPratica) && Utils.isInteger(idTipoPratica)) {
+        	LkTipoPratica tipoPratica = praticheService.findLookupTipoPratica(Integer.valueOf(idTipoPratica));
+        	filter.setIdTipoPratica(tipoPratica);
+        }
+
+        if (!Utils.e(annoPratica) && Utils.isInteger(annoPratica)) {
+        	filter.setAnnoPratica(Integer.parseInt(annoPratica));
+        }
+
+        if (!Utils.e(numeroPratica) && Utils.isInteger(numeroPratica)) {
+        	filter.setNumeroPratica(Integer.parseInt(numeroPratica));
+        }
+
+        if (!Utils.e(interventionDescription)) {
+        	filter.setInterventionDescription(interventionDescription);
+        }
+
         return filter;
     }
 
@@ -308,5 +373,102 @@ public class FilterSerializer {
         filter.setOrderDirection(order);
         return filter;
     }
+    
+    private Identifications extractAnagrafiche(HttpServletRequest request) {
+    	List<Identification> identifications = new ArrayList<>();
 
+    	String logicalOperator = request.getParameter("search_flag_anagrafica");
+    	String[] ricercaAnagraficaCFs = request.getParameterValues("search_ricercaAnagraficaCF");
+        String[] ricercaAnagraficaNames = request.getParameterValues("search_ricercaAnagraficaNome");
+        String[] ricercaAnagraficaSurnames = request.getParameterValues("search_ricercaAnagraficaCognome");
+        String[] ricercaAnagraficaCompanyNames = request.getParameterValues("search_ricercaAnagraficaRagioneSociale");
+        
+        int length = getMaxLength(ricercaAnagraficaCFs, ricercaAnagraficaNames, ricercaAnagraficaSurnames, ricercaAnagraficaCompanyNames);
+        
+        for(int i=0; i < length; i++) {
+        	String ricercaAnagraficaCF = getValue(ricercaAnagraficaCFs, i);
+            String ricercaAnagraficaName = getValue(ricercaAnagraficaNames, i);
+            String ricercaAnagraficaSurname = getValue(ricercaAnagraficaSurnames ,i);
+            String ricercaAnagraficaCompanyName = getValue(ricercaAnagraficaCompanyNames ,i);
+            if(checkAtLeastOneNotNull(ricercaAnagraficaCF, ricercaAnagraficaName, ricercaAnagraficaSurname, ricercaAnagraficaCompanyName))
+            	identifications.add(new Identification(ricercaAnagraficaCF, ricercaAnagraficaSurname, ricercaAnagraficaName, ricercaAnagraficaCompanyName));
+        }
+        return identifications.isEmpty()? null : new Identifications(LogicalOperator.fromString(logicalOperator == null? LogicalOperator.AND.getValue(): logicalOperator), identifications);
+    }
+    
+    private CadastralDataList extractCadastralDataList(HttpServletRequest request){
+    	List<CadastralData> cadastralDataList = new ArrayList<>();
+
+    	String logicalOperator = request.getParameter("search_flag_catasto");
+    	String[] unitTypeIds= request.getParameterValues("search_tipoUnita");
+    	String[] maps = request.getParameterValues("search_mappale");
+        String[] subordinates = request.getParameterValues("search_subalterno");
+        String[] sections = request.getParameterValues("search_sezione");
+        String[] papers = request.getParameterValues("search_foglio");
+        
+        int length = getMaxLength(unitTypeIds, maps, subordinates, sections, papers);
+        
+        for(int i=0; i < length; i++) {
+
+        	String unitTypeId = getValue(unitTypeIds, i);
+        	String map = getValue(maps, i);
+            String subordinate = getValue(subordinates, i);
+            String section = getValue(sections, i);
+            String sheet = getValue(papers, i);
+            
+            if(checkAtLeastOneNotNull(unitTypeId, map, subordinate, section, sheet))	
+            	cadastralDataList.add(new CadastralData()
+            			.setUnitTypeId(unitTypeId)
+            			.setMap(map)
+            			.setSubordinate(subordinate)
+            			.setSection(section)
+            			.setSheet(sheet));
+        }
+        return cadastralDataList.isEmpty()? null : new CadastralDataList(LogicalOperator.fromString(logicalOperator == null? LogicalOperator.AND.getValue(): logicalOperator), cadastralDataList);
+    }
+    
+    private CadastralAddresses extractCadastralAddresses(HttpServletRequest request) {
+    	List<CadastralAddress> cadastralAdresses = new ArrayList<>();
+
+    	String logicalOperator = request.getParameter("search_flag_indirizzi");
+    	String[] addresses = request.getParameterValues("search_indirizzo");
+        String[] streetNumbers = request.getParameterValues("search_civico");
+        String[] townIds = request.getParameterValues("search_id_comune");
+        String[] townNames = request.getParameterValues("search_des_comune");
+        
+    	
+        int length = getMaxLength(addresses, streetNumbers, townIds, townNames);
+        
+        for(int i=0; i < length; i++) {
+        	String address = getValue(addresses, i);
+            String streetNumber = getValue(streetNumbers, i);
+            String townId = getValue(townIds ,i);
+            String townName = getValue(townNames ,i);
+            if(checkAtLeastOneNotNull(address, streetNumber, townId, townName))
+            	cadastralAdresses.add(new CadastralAddress().setStreetNumber(streetNumber).setStreetName(address).setTownId(townId).setTownName(townName));
+        }
+        return cadastralAdresses.isEmpty()? null : new CadastralAddresses(LogicalOperator.fromString(logicalOperator == null? LogicalOperator.AND.getValue(): logicalOperator), cadastralAdresses);
+    }
+   
+    private String getValue(String[] array, Integer i) {
+    	return (array != null && i < array.length && !Utils.e(array[i])) ? array[i] : null;
+    }
+    
+    private int getMaxLength(String[]...arrays) {
+    	int length = 0;
+    	if(arrays != null)
+	    	for(int i = 0; i < arrays.length; i++) 
+	    		length = (arrays[i] != null && arrays[i].length > length) ? arrays[i].length: length;
+    	return length;
+    }
+    
+    private boolean checkAtLeastOneNotNull(Object...values) {
+    	boolean check = false;
+    	int i = 0;
+    	if(values != null)
+	    	while(!check && i <values.length) 
+	    		check |= values[i++] != null;  	
+    	return check;
+    }
 }
+

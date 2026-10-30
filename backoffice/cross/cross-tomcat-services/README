@@ -1,0 +1,12 @@
+Compilazione/creazione jar:
+	il progetto è stato inserito nel master pom del progetto "cross";
+	compilare il progetto "cross" con maven, a seconda del profilo verrà creata
+	nel progetto cross-tomcat-services una cartella "artefatto" con il jar compilato dentro;
+
+esecuzione in ambienti condivisi:
+	spostare il jar nella cartella lib di tomcat;
+	le credenziali di connessione al db dobrebbero essere lette dal file "server.xml"
+
+esecuzione locale:
+	per testare in locale bisogna creare la cartella "conf" nella directory 
+	che contiene eclipse e copiare il file "server.xml" dentro la suddetta cartella

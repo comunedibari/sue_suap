@@ -3,10 +3,15 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <c:set var="riassegnaPraticaUrl" value="${path}/pratica/riassegna.htm"/>
-<script type="text/javascript">
 
+<%@ page import="it.wego.cross.constants.Constants" %>
+
+<c:set var="notTargetSuap" value='${utenteConnesso.utenteRuoloEnte.stream().filter(ruolo->ruolo.idEnte == Constants.SUAP_BARI || ruolo.idEnte == Constants.SUAP_GIOIA_DEL_COLLE).count() == 0}' />
+
+<script type="text/javascript">
+	
     function displayConfirmDialog(idPratica, isAdmin) {
-        var urlToRedirect = '${riassegnaPraticaUrl}?from=gestisci&idPratica=' + idPratica;
+        var urlToRedirect = '${riassegnaPraticaUrl}?from=gestisci&idPratica=' + idPratica + "&s_code="+window.name;
         if (isAdmin) {
             window.open(urlToRedirect, "_self");
         } else {
@@ -30,125 +35,95 @@
             });
         }
     }
-
-    function gestionePraticheStatoMailFormatter(cellvalue, options, rowObject) {
-        var codiceEmail = rowObject['codStatoEmail'];
-        if (codiceEmail === "E") {
-            return '<div style="text-align: center; width: 100%; height: 100%;"><img title="Errore" alt="Errori" src="${path}/themes/default/images/icons/exclamation.png" width="18" /></div>';
-        } else if (codiceEmail === "X") {
-            return '<div style="text-align: center; width: 100%; height: 100%;"><img title="Stato indefinito" alt="Stato indefinito" src="${path}/themes/default/images/icons/icon_alert.gif" width="18" /></div>';
-        } else {
-            return '<div style="text-align: center; width: 100%; height: 100%;"><img title="Ok" alt="Ok" src="${path}/themes/default/images/icons/accept.png" width="18" /></div>';
-        }
-    }
-
-    function gestionePraticheActionsFormatter(cellvalue, options, rowObject) {
-        var isAdmin = rowObject["adminOnProcEnte"];
-        var isSameUser = rowObject["isSameUser"];
-        var displayDialog = ' onclick="displayConfirmDialog(\'' + rowObject["idPratica"] + '\', ' + isAdmin + ')"';
-        var riassegnaButton = '<a title="<spring:message code="gestione.button.riassegna"/>" ' + displayDialog + '><img src="${path}/themes/default/css/images/assegnare_verde.png" style="cursor: pointer"></a>';
-        if (isSameUser && !isAdmin) {
-            riassegnaButton = '';
-        }
-        var link = '<div class="gridActionContainer">' +
-                '<a title="<spring:message code="gestione.button.gestisci"/>" href="${path}/pratiche/dettaglio.htm?id_pratica=' + rowObject["idPratica"] + '" ><img src="${path}/themes/default/css/images/seleziona_verde.png"></a>' +
-                riassegnaButton +
-                '</div>';
-        return link;
-    }
-
-    function gestionePraticheIdentificativoPraticaOrProtocolloFormatter(cellvalue, options, rowObject) {
-        var identificativoPratica = rowObject["identificativoPratica"];
-        var protocollo = rowObject["protocollo"];
-        return protocollo ? protocollo : identificativoPratica;
-    }
-    
-    function gestionePraticheIntegrazione(cellvalue, options, rowObject) {
-//         var integra = rowObject['integrazione'];
-//         if (integra === "S") {
-//             return '<div style="text-align: center; width: 100%; height: 100%; background-color:lightgreen">Si</div>';
-//         } else {
-//         	return '<div style="text-align: center; width: 100%; height: 100%;">No</div>';
-//         }
-        if (cellvalue === "S"){
-            rowsToColor[rowsToColor.length] = options.rowId;
-            cellvalue = "SI";
-        }
-        else
-        	cellvalue = "NO";
-        return cellvalue;
-    }
-
-    var rowsToColor = [];
-    var url = getUrl();
-    $(document).ready(function() {
-
-        $("#list").jqGrid
-                ({
-                    url: url,
-                    datatype: "json",
-                    colModel:${gestionePraticheColumnModel},
-                    /*
-                     <c:set var="page" value="1"/>
-                     <c:if test="${filtroRicerca!=null && filtroRicerca.page!=null }">
-                     <c:set var="page" value="${filtroRicerca.page}"/>
-                     </c:if>
-                     */
-                    page: '${page}',
-                    /*
-                     <c:set var="orderColumn" value="idPratica"/>
-                     <c:if test="${filtroRicerca!=null && filtroRicerca.orderColumn!=null}">
-                     <c:set var="orderColumn" value="${filtroRicerca.orderColumn}"/>
-                     </c:if>
-                     */
-                    sortname: '${orderColumn}',
-                    /*
-                     <c:set var="orderDirection" value="desc"/>
-                     <c:if test="${filtroRicerca!=null && filtroRicerca.orderDirection!=null}">
-                     <c:set var="orderDirection" value="${filtroRicerca.orderDirection}"/>
-                     </c:if>
-                     */
-                    sortorder: "${orderDirection}",
-                    /*
-                     <c:set var="rowNum" value="10"/>
-                     <c:if test="${filtroRicerca!=null && filtroRicerca.limit!=null}">
-                     <c:set var="rowNum" value="${filtroRicerca.limit}"/>
-                     </c:if>
-                     */
-                    rowNum: "${rowNum}",
-                    rowList: [10, 20, 30, 100],
-                    pager: '#pager',
-                    viewrecords: true,
-                    hidegrid: false,
-                    jsonReader:
-                            {
-                                repeatitems: false,
-                                id: "0"
-                            }
-                    ,
-                    caption: '',
-                    height: 'auto',
-                    gridComplete: function () {
-                        for (var i = 0; i < rowsToColor.length; i++) {
-                        	debugger;
-                            var status = $("#" + rowsToColor[i]).find("td").eq(12).html();
-                            if (status === "SI") {
-                                $("#" + rowsToColor[i]).find("td").css("background-color", "#82d676");
-                                $("#" + rowsToColor[i]).find("td").css("color", "black");
-                            }
-                        }
-                     },
-                    width: $('.tableContainer').width()
-                }).navGrid('#pager', {edit: false, add: false, del: false, search: false});
-    });
-
-
-
 </script>
+
+
 <div id="apertura_pratiche">
     <tiles:insertAttribute name="ricerca" />
-    <div class="tableContainer">
-        <table id="list"><tr><td/></tr></table> 
-        <div id="pager"></div> 
-    </div>
+    
+    <c:set var="showIntegrations" value="true" scope="request" />
+    <c:set var="columnForSorting" value="dataUltimoEventoEsterno" scope="request" />
+    <c:set var="researchTableDetailUrl" value="${path}/pratiche/dettaglio.htm" scope="request" />
+    <tiles:insertAttribute name="research_table" />
+    <script type="text/javascript">
+	    function gestionePraticheActionsFormatter(cellvalue, options, rowObject) {
+	    	var isAdmin = rowObject["adminOnProcEnte"];
+	    	var lastExternalEventId = '-1';
+	        if(!!rowObject["lastExternalEvent"] && ${notTargetSuap}){
+	        	lastExternalEventId = rowObject["lastExternalEvent"]["id"];
+	        }                                              
+	        var isSameUser = rowObject["isSameUser"];
+	        var displayDialog = ' onclick="displayConfirmDialog(\'' + rowObject["idPratica"] + '\', ' + isAdmin + ')"';
+	        var technicialButton = '<a title="<spring:message code="ricerca.tecnico.operatore"/>" href="javascript:showTechnicianAgent(\''+rowObject["identificativoPratica"]+'\',\''+rowObject["idPratica"]+'\',\''+lastExternalEventId+'\');" class="tecnico_procuratore" ></a>&nbsp';
+	        var scaricaButton = '<a title="<spring:message code="ricerca.scarica"/>" href="${path}/download/pratica.htm?id_pratica='+rowObject["idPratica"]+'" class="scarica4" target="_blank"></a>&nbsp';
+	        var riassegnaButton = '';
+	        <c:if test="${!abilitazioneConsultazione}">
+	        	riassegnaButton='<a href="javascript:void(0)" title="<spring:message code="gestione.button.riassegna"/>" ' + displayDialog + ' class="riassegna2"></a>&nbsp';
+	        </c:if>
+	        if (isSameUser && !isAdmin) {
+	            riassegnaButton = '';
+	        }
+	        var link = '<div class="gridActionContainerNoWidth">' +
+                riassegnaButton +
+		        scaricaButton +
+		        technicialButton +
+            '</div>';
+	        return link;
+	    }
+	    
+	    function showTechnicianAgent(identificativoPratica, idPratica, idPraticaEvento) {
+	    	var parameters = {};
+	    	var templateHtml = $("#template-technicians-agent").html();
+	        var procuratoreTemplate = Handlebars.compile(templateHtml);
+	    	parameters.identificativoPratica = identificativoPratica;
+
+			$.ajax({
+	            type: 'POST',
+	            url: '${path}/pratica/tecnico_procuratore.htm',
+	            data: parameters,
+	            dataType: 'json',
+	            success: function(agentData) {
+	            	if (!agentData) 
+	            		agentData = {}
+	           		var templateHtmlTechnicalAgent = procuratoreTemplate(agentData);
+	            	
+	            	var parameters = {};
+	    	    	var templateHtml = $("#template-external-operator-agent").html();
+	    	        var procuratoreEsternoTemplate = Handlebars.compile(templateHtml);
+	    	    	parameters.idPratica = idPratica;
+	    	    	parameters.idPraticaEvento = idPraticaEvento;
+	    	        $.ajax({
+	    	            type: 'POST',
+	    	            url: '${path}/pratica/procuratore_per_evento_esterno.htm',
+	    	            data: parameters,
+	    	            dataType: 'json',
+	    	            success: function(externalAgentData) {
+	    	            	if (!externalAgentData) 
+	    	            		externalAgentData = {}
+	    	            	var templateHtml = procuratoreEsternoTemplate(externalAgentData);
+	    		            	
+	    		                
+	    	            	var dialog = $('<div />').appendTo('body').dialog({
+	    	                    modal: true,
+	    	                    title: 'Tecnico procuratore',
+	    	                    buttons: [{
+	    	                            text: "Chiudi",
+	    	                            click: function() {
+	    	                                $(this).dialog("close");
+	    	                            }
+	    	                        }],
+	    	                    width: 800,
+	    	                    position: { my: 'top', at: 'top+20' },
+	    	                    close: function() {
+	    	                        dialog.remove();
+	    	                    }
+	    	                }).html(templateHtmlTechnicalAgent + templateHtml);
+	    	            	
+	    	            }
+	    	        });
+	            }
+	        });
+	    }
+	    
+	</script>
 </div>

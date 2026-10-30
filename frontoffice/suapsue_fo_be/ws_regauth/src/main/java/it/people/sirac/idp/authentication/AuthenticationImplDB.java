@@ -95,9 +95,7 @@ public class AuthenticationImplDB implements AuthenticationInterface {
   private final String APPLICATION4200 = "APPLICATION.4200"; // Codice Fiscale sconosciuto
                                                              // e/o PIN non corretto
 
-  //private String connectionString = "jdbc:mysql://localhost:3306/people?user=people_demo&password=people_demo";
-  //private String driverClassName = "oracle.jdbc.OracleDriver";
-  //private String driverClassName = "org.gjt.mm.mysql.Driver";
+
   
   private static DataSource dataSources = null;
   
@@ -110,11 +108,7 @@ public class AuthenticationImplDB implements AuthenticationInterface {
   	}
   	
   	return dataSources.getConnection();
-  	/*
-  	   Class.forName(driverClassName);
-  	   return DriverManager.getConnection("jdbc:mysql://localhost:3306/people?user=people_demo&password=people_demo");
-	  */  	
-  }
+
   
   public it.people.sirac.idp.beans.ResAuthBean executeBasicAuthentication(String userID, String password) {
     it.people.sirac.idp.beans.ResAuthBean response = new it.people.sirac.idp.beans.ResAuthBean();

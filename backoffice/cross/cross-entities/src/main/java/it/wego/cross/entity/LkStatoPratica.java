@@ -31,7 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "LkStatoPratica.findByIdStatoPratica", query = "SELECT l FROM LkStatoPratica l WHERE l.idStatoPratica = :idStatoPratica"),
     @NamedQuery(name = "LkStatoPratica.findByDescrizione", query = "SELECT l FROM LkStatoPratica l WHERE l.descrizione = :descrizione"),
     @NamedQuery(name = "LkStatoPratica.findByCodice", query = "SELECT l FROM LkStatoPratica l WHERE l.codice = :codice"),
-    @NamedQuery(name = "LkStatoPratica.findByGrpStatoPratica", query = "SELECT l FROM LkStatoPratica l WHERE l.grpStatoPratica = :grpStatoPratica")})
+    @NamedQuery(name = "LkStatoPratica.findByGrpStatoPratica", query = "SELECT l FROM LkStatoPratica l WHERE l.grpStatoPratica = :grpStatoPratica"),
+    @NamedQuery(name = "LkStatoPratica.findByIdPratica", query = "SELECT l FROM LkStatoPratica as l inner join l.praticaList p WHERE p.idPratica = :idPratica")
+})
 public class LkStatoPratica implements Serializable {
 
     private static final long serialVersionUID = 1L;

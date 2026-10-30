@@ -1,0 +1,10 @@
+CREATE TABLE organi_collegiali_sedute (  id_seduta int NOT NULL AUTO_INCREMENT,
+id_organo_collegiale int NOT NULL,
+data_prevista date NOT NULL,
+data_convocazione date DEFAULT NULL,
+ora_convocazione varchar(20) DEFAULT NULL,
+data_inizio date DEFAULT NULL,
+ora_inizio varchar(20) DEFAULT NULL,
+data_conclusione date DEFAULT NULL,
+ora_conclusione varchar(20) DEFAULT NULL,
+id_stato_seduta int DEFAULT NULL)

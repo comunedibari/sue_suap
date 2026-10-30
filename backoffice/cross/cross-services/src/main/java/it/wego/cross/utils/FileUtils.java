@@ -113,6 +113,7 @@ public class FileUtils {
             file.setTempPath(allegatiservice.putFile(temppath));
             file.setName(mpf.getOriginalFilename());
             file.setType(mpf.getContentType());
+            file.setSize(Long.toString(mpf.getSize()));
             files.add(file);
             // copy file to local disk (make sure the path "e.g. D:/temp/files" exists)            
             FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(temppath));

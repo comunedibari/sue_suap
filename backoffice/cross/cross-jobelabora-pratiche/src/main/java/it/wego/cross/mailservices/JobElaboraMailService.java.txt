@@ -1,0 +1,15 @@
+/**
+ * 
+ */
+package it.wego.cross.mailservices;
+
+import org.springframework.stereotype.Service;
+
+/**
+ * 
+ */
+@Service
+public interface JobElaboraMailService {
+
+	public void execute();
+}

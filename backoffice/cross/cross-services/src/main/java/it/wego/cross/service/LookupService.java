@@ -4,6 +4,11 @@
  */
 package it.wego.cross.service;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
 import it.wego.cross.dto.AttoreDTO;
 import it.wego.cross.dto.CittadinanzaDTO;
 import it.wego.cross.dto.ComuneDTO;
@@ -17,6 +22,7 @@ import it.wego.cross.dto.TipologiaScadenzeDTO;
 import it.wego.cross.dto.dozer.LkTipoParticellaDTO;
 import it.wego.cross.dto.dozer.LkTipoSistemaCatastaleDTO;
 import it.wego.cross.dto.dozer.LkTipoUnitaDTO;
+import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.LkDug;
 import it.wego.cross.entity.LkFormeGiuridiche;
@@ -26,13 +32,11 @@ import it.wego.cross.entity.LkStatoPratica;
 import it.wego.cross.entity.LkTipoCollegio;
 import it.wego.cross.entity.LkTipoIndirizzo;
 import it.wego.cross.entity.LkTipoParticella;
+import it.wego.cross.entity.LkTipoPratica;
 import it.wego.cross.entity.LkTipoQualifica;
 import it.wego.cross.entity.LkTipoRuolo;
 import it.wego.cross.entity.LkTipoSistemaCatastale;
 import it.wego.cross.entity.LkTipoUnita;
-import java.util.List;
-import java.util.Map;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -135,5 +139,10 @@ public interface LookupService {
     public LkTipoCollegio findLkTipoCollegioByCodCollegio(String alboProfessionale);
     
     public LkTipoParticella findTipoParticellaByCodice(String codice);
-    
+
+    Integer findByIdTipoPraticaProcessiByIdCustom(Integer idProcesso);
+
+    LkTipoPratica findLkTipoPraticaByType(String code);
+
+	Enti findFirstInstitutionSUEInTown(LkComuni comune);
 }

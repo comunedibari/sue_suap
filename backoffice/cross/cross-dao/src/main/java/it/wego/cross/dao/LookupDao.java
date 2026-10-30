@@ -1,11 +1,10 @@
 package it.wego.cross.dao;
 
-import it.wego.cross.entity.*;
-import it.wego.cross.utils.Log;
-import it.wego.cross.utils.Utils;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -18,8 +17,49 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
 import org.eclipse.persistence.jpa.JpaQuery;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import it.wego.cross.entity.Anagrafica;
+import it.wego.cross.entity.DizionarioErrori;
+import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.IndirizziIntervento;
+import it.wego.cross.entity.LkAssociazioneProcedimentoEnteUtenteSuap;
+import it.wego.cross.entity.LkCittadinanza;
+import it.wego.cross.entity.LkClassificazioneProcedimento;
+import it.wego.cross.entity.LkComuni;
+import it.wego.cross.entity.LkDug;
+import it.wego.cross.entity.LkFormeGiuridiche;
+import it.wego.cross.entity.LkNazionalita;
+import it.wego.cross.entity.LkProvincie;
+import it.wego.cross.entity.LkRuoliCommissione;
+import it.wego.cross.entity.LkScadenze;
+import it.wego.cross.entity.LkStatiMail;
+import it.wego.cross.entity.LkStatiPraticaOrganiCollegiali;
+import it.wego.cross.entity.LkStatiScadenze;
+import it.wego.cross.entity.LkStatiSedute;
+import it.wego.cross.entity.LkStatoPratica;
+import it.wego.cross.entity.LkTipiAttore;
+import it.wego.cross.entity.LkTipoCollegio;
+import it.wego.cross.entity.LkTipoEndoProcedimentoSuap;
+import it.wego.cross.entity.LkTipoIndirizzo;
+import it.wego.cross.entity.LkTipoInterventoSuap;
+import it.wego.cross.entity.LkTipoOggetto;
+import it.wego.cross.entity.LkTipoParticella;
+import it.wego.cross.entity.LkTipoPratica;
+import it.wego.cross.entity.LkTipoPraticaProcessi;
+import it.wego.cross.entity.LkTipoProcedimentoSuap;
+import it.wego.cross.entity.LkTipoQualifica;
+import it.wego.cross.entity.LkTipoRuolo;
+import it.wego.cross.entity.LkTipoSistemaCatastale;
+import it.wego.cross.entity.LkTipoUnita;
+import it.wego.cross.entity.PraticaAnagrafica;
+import it.wego.cross.entity.Recapiti;
+import it.wego.cross.utils.DaoUtils;
+import it.wego.cross.utils.Log;
+import it.wego.cross.utils.Utils;
 
 //@Configurable
 @Repository
@@ -28,6 +68,12 @@ public class LookupDao {
     @PersistenceContext
     private EntityManager em;
 
+    public LookupDao(EntityManager em) {
+    	this.em = em;
+    }
+    
+    public LookupDao() {}
+    
     @Nullable
     public LkComuni findComuneByCodCatastale(String codCatastale) {
         LkComuni comune = null;
@@ -77,6 +123,15 @@ public class LookupDao {
         query.setParameter("descrizione", "%" + descrizione.toUpperCase() + "%");
         query.setParameter("date", date);
         return (List<LkComuni>) query.getResultList();
+    }
+    
+    public String findRuoloCiviliaByIdEtichetta(int id_etichetta) {
+	String sqlString = "SELECT ruolo_etichetta_civilia_cross FROM opencross.ruoli_etichetta_civilia_cross WHERE id = ?";
+    	
+		Query query = em.createNativeQuery(sqlString);
+        query.setParameter(1, id_etichetta);
+        String ruolo_civilia = (String) query.getSingleResult(); 
+        return ruolo_civilia;
     }
 
     @Nullable
@@ -266,7 +321,7 @@ public class LookupDao {
 
     public List<LkTipoRuolo> findAllTipoRuolo() {
         Query query = em.createQuery("SELECT l "
-                + "FROM LkTipoRuolo l "
+                + "FROM LkTipoRuolo l WHERE l.hidden = 0 "
                 + "ORDER BY l.descrizione ASC");
 
         return query.getResultList();
@@ -329,6 +384,38 @@ public class LookupDao {
         query.setParameter("idStatoPratica", idStatoPratica);
 
         LkStatoPratica lookup = (LkStatoPratica) Utils.getSingleResult(query);
+        return lookup;
+    }
+    
+    public LkTipoPratica findLkTipoPraticaById(Integer idTipoPratica) {
+        Query query = em.createNamedQuery("LkTipoPratica.findByIdTipoPratica");
+        query.setParameter("idTipoPratica", idTipoPratica);
+
+        LkTipoPratica lookup = (LkTipoPratica) Utils.getSingleResult(query);
+        return lookup;
+    }
+
+    public LkTipoPratica findLkTipoPraticaByType(String tipoPratica) {
+    	Query query = em.createNamedQuery("LkTipoPratica.findByType");
+    	query.setParameter("tipoPratica", tipoPratica);
+    	LkTipoPratica lookup = (LkTipoPratica) Utils.getSingleResult(query);
+    	return lookup;
+    }
+    
+    public LkTipoPraticaProcessi findByIdTipoPraticaProcessiById(Integer idProcesso) {
+        Query query = em.createNamedQuery("LkTipoPraticaProcessi.findByIdTipoPraticaProcessiById");
+        query.setParameter("idProcesso", idProcesso);
+
+        LkTipoPraticaProcessi lookup = (LkTipoPraticaProcessi) Utils.getSingleResult(query);
+        return lookup;
+    }
+
+    public Integer findByIdTipoPraticaProcessiByIdCustom(Integer idProcesso) {
+    	String sqlString = "SELECT id_tipo_pratica FROM opencross.lk_tipo_pratica_processi WHERE id_processo = ?";
+    	
+		Query query = em.createNativeQuery(sqlString);
+        query.setParameter(1, idProcesso);
+        Integer lookup = (int) query.getSingleResult(); 
         return lookup;
     }
 
@@ -601,6 +688,12 @@ public class LookupDao {
         return stati;
     }
 
+    public LkStatoPratica findStatusPraticaFromPratica(Integer idPratica) {
+    	Query query = em.createNamedQuery("LkStatoPratica.findByIdPratica");
+    	query.setParameter("idPratica", idPratica);
+    	return (LkStatoPratica) query.getSingleResult();
+    }
+
     public List<LkTipiAttore> findAllTipiAttore() {
         Query query = em.createNamedQuery("LkTipiAttore.findAll");
         List<LkTipiAttore> attori = query.getResultList();
@@ -818,7 +911,7 @@ public class LookupDao {
         return tipoEndoProcedimentoSuap;
     }
     
-   
+    
     public List<LkTipoInterventoSuap> findAllTipoInterventoSuap() {
         Query query = em.createQuery("SELECT l FROM LkTipoInterventoSuap l order by l.descrizioneTipoInterventoSuap ASC");
         List<LkTipoInterventoSuap> result = query.getResultList();
@@ -859,11 +952,182 @@ public class LookupDao {
         return  lookup;
 	}
 	
-	 public List<LkTipoEndoProcedimentoSuap> findTipoEndoProcedimentoSuapByTipolgia(String tipologia){
-	    	Query query = em.createNamedQuery("LkTipoEndoProcedimentoSuap.findByTipologiaClassificazione");
-	        query.setParameter("tipologia", tipologia);
-	        return (List<LkTipoEndoProcedimentoSuap>)  query.getResultList();
+	public List<LkTipoEndoProcedimentoSuap> findTipoEndoProcedimentoSuapByTipolgia(String tipologia){
+    	Query query = em.createNamedQuery("LkTipoEndoProcedimentoSuap.findByTipologiaClassificazione");
+        query.setParameter("tipologia", tipologia);
+        return (List<LkTipoEndoProcedimentoSuap>)  query.getResultList();
 
-	    }
-	    
+    }
+	 
+	public LkAssociazioneProcedimentoEnteUtenteSuap findAssociazioneProcedimentoEnteUtenteSuap(String codProcedimentoSuap,Integer idEnte) {
+		Query query = em.createNamedQuery("LkAssociazioneProcedimentoEnteUtenteSuap.findByCodProcedimentoSuapAndIdEnte");
+        query.setParameter("codProcedimentoSuap", codProcedimentoSuap);
+        query.setParameter("idEnte", idEnte);
+        LkAssociazioneProcedimentoEnteUtenteSuap lookup = (LkAssociazioneProcedimentoEnteUtenteSuap) Utils.getSingleResult(query);
+        return  lookup;
+	}
+ 
+    public List<LkTipoPratica> findAllTipoPratica() {
+    	Query query = em.createNamedQuery("LkTipoPratica.findAll");
+    	return query.getResultList();
+    }
+
+    public List<LkTipoPratica> findAllSortedTipoPratica() {
+    	Query query = em.createNamedQuery("LkTipoPratica.findAllSorted");
+    	return query.getResultList();
+    }
+
+    public List<LkTipoPratica> findSortedTipoPraticaByFlags(boolean searchAll) {
+    	Query query = em.createNamedQuery("LkTipoPratica.findSortedByFlags");
+    	query.setParameter("search_all", searchAll);
+        return query.getResultList();
+    }
+
+    public List<String> findPersonalDataBySurname(String surname) {
+    	Query query = em.createNamedQuery("Anagrafica.findCognomiByCognomeLike");
+    	query.setParameter("cognome", surname+"%");
+    	return query.getResultList();
+    }
+
+    public List<String> findPersonalDataByName(String name) {
+    	Query query = em.createNamedQuery("Anagrafica.findNomiByNomeLike");
+    	query.setParameter("nome", name+"%");
+    	return query.getResultList();
+    }
+
+    public List<String> findPersonalDataWithDistinctSurnamesBySurnameAndName(String surname, String name) {
+    	Query query = em.createNamedQuery("Anagrafica.findCognomiByNomeCognomeLike");
+    	query.setParameter("cognome", surname+"%");
+    	query.setParameter("nome", name+"%");
+    	return query.getResultList();
+    }
+
+    public List<String> findPersonalDataWithDistinctNamesBySurnameAndName(String surname, String name) {
+    	Query query = em.createNamedQuery("Anagrafica.findNomiByNomeCognomeLike");
+    	query.setParameter("cognome", surname+"%");
+    	query.setParameter("nome", name+"%");
+    	return query.getResultList();
+    }
+    
+    public List<Anagrafica> findPersonalDataByCompanyName(String companyName) {
+    	Query query = em.createNamedQuery("Anagrafica.findByDenominazioneLike");
+    	query.setParameter("denominazione", "%"+companyName+"%");
+    	return query.getResultList();
+    }
+    
+    public List<Anagrafica> findPersonalDataByTaxCode(String taxCode) {
+    	Query query = em.createNamedQuery("Anagrafica.findByCodiceFiscaleLike");
+    	query.setParameter("codiceFiscale", taxCode+"%");
+    	return query.getResultList();
+    }
+    
+    public List<Anagrafica> findPersonalDataByVatNumber(String vatNumber) {
+    	Query query = em.createNamedQuery("Anagrafica.findByPartitaIvaLike");
+    	query.setParameter("partitaIva", vatNumber+"%");
+    	return query.getResultList();
+    }
+    
+    public List<Anagrafica> findPersonalDataByTaxCodeOrVatNumber(String taxCode) {
+    	Query query = em.createNamedQuery("Anagrafica.findByCodiceFiscalePartitaIvaLike");
+    	query.setParameter("codiceFiscale", taxCode+"%");
+    	query.setParameter("partitaIva", taxCode+"%");
+    	return query.getResultList();
+    }
+    
+    public LkTipoSistemaCatastale findByIdTipoSistemaCatastale(BigInteger idTipoSistemaCatastale) {
+    	Query query = em.createNamedQuery("LkTipoSistemaCatastale.findByIdTipoSistemaCatastale");
+    	query.setParameter("idTipoSistemaCatastale", idTipoSistemaCatastale);
+    	return (LkTipoSistemaCatastale) query.getSingleResult();
+    }
+    
+    public List<IndirizziIntervento> findCadastralAddressesByStreetName(String streetName, boolean isStartFrom) {
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<IndirizziIntervento> criteriaQuery = criteriaBuilder.createQuery(IndirizziIntervento.class);
+		Root<IndirizziIntervento> root = criteriaQuery.from(IndirizziIntervento.class);
+		criteriaQuery.select(root);
+		criteriaQuery.distinct(true);
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		predicates.add(criteriaBuilder.like(root.get("indirizzo"), (isStartFrom?"":"%") + DaoUtils.setWildStringParameter(streetName)));
+		criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()])));
+
+		TypedQuery<IndirizziIntervento> query =em.createQuery(criteriaQuery);
+		query.setMaxResults(15);
+		query.setFirstResult(0);
+		
+    	return query.getResultList();
+    }
+    
+    public List<it.wego.cross.entity.Email> findEmailRecenti() {
+    	  
+        String sqlString = "SELECT "
+        		+ "`id_email`, "
+        		+ "`id_pratica_evento`,"
+        		+ "`data_inserimento`,"
+        		+ "`data_aggiornamento`,"
+        		+ "`path_eml`,"
+        		+ "`id_messaggio`, "
+        		+ "`id_messaggio_pec`, "
+        		+ "`email_destinatario`,"
+        		+ "`corpo_email`,"
+        		+ "`oggetto_email`, "
+        		+ "`oggetto_risposta`,"
+        		+ "`corpo_risposta`,"
+        		+ "`stato`,"
+        		+ "`gruppo`,"
+        		+ "`tipo_destinazione`"
+        		+ " FROM opencross.email"
+        		+ " WHERE stato = 2"
+        		+ " AND id_email = 1698"
+        		+ " AND oggetto_risposta IS NULL"
+        		+ " AND corpo_risposta IS NULL"
+        		+ " ORDER BY data_inserimento DESC"
+        		+ " LIMIT 0, 10000";
+    	
+		Query query = em.createNativeQuery(sqlString, it.wego.cross.entity.Email.class);
+		
+		return (List<it.wego.cross.entity.Email>) query.getResultList();
+    }
+    public int findEmail(String idMessaggio) {
+    	int id_email = 0;
+    	idMessaggio = "<126929010.1761707303697113.JavaMail.root@mail.pec.rupar.puglia.it>";
+        String sqlString = "SELECT id_email"
+        		+ " FROM email"
+        		+ " WHERE stato = 2"
+        		+ " AND id_messaggio = ?" 
+        		+ " AND oggetto_risposta IS NULL"
+        		+ " AND corpo_risposta IS NULL"
+        		+ " LIMIT 1";
+        
+		Query query = em.createNativeQuery(sqlString);
+        query.setParameter(1, idMessaggio);
+        try {
+        	id_email = (int) query.getSingleResult();
+        } catch(Exception e) {
+        	id_email = 0;
+        }
+        return id_email;		
+    }
+    
+    @Transactional
+    public void insertEmailConsegnate(String idMessaggio, String oggetto_risposta, String corpo_risposta) {
+    
+        String query = "INSERT INTO `opencross`.`email_consegnate`"
+				+ "(`id_messaggio`,"
+				+ "`oggetto_risposta`,"
+				+ "`corpo_risposta`)"
+				+ "VALUES "
+				+ "(:f1, :f2, :f3)";
+            
+		em.createNativeQuery(query)
+		   .setParameter("f1", idMessaggio)
+		   .setParameter("f2", oggetto_risposta)
+		   .setParameter("f3", corpo_risposta)
+		   .executeUpdate();
+    }
+
+	public List<Enti> findSueInstitutionInTown(LkComuni town) {
+		Query query = em.createNamedQuery("Enti.findBySueInstitutionInTown");
+    	query.setParameter("town", town.getDescrizione());
+    	return (List<Enti>) query.getResultList();
+	}
 }

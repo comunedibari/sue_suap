@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- This file was auto-generated from WSDL --><!-- by the Apache Axis2 version: 1.8.2  Built on : Jul 13, 2022 (06:38:03 EDT) --><serviceGroup>
+    <service name="WSAddUdService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="it.eng.auriga.repository2.webservices.addunitadoc.WSAddUdServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">it.eng.auriga.repository2.webservices.addunitadoc.WSAddUdServiceSkeleton</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="serviceOperation" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://addunitadoc.webservices.repository2.auriga.eng.it">
+            <actionMapping>http://addunitadoc.webservices.repository2.auriga.eng.it/WSIAddUd/serviceOperationRequest</actionMapping>
+            <outputActionMapping>http://addunitadoc.webservices.repository2.auriga.eng.it/WSIAddUd/serviceOperationResponse</outputActionMapping>
+        </operation>
+    </service>
+</serviceGroup>

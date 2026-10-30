@@ -17,7 +17,16 @@ public class ProcedimentoDTO {
     private String classifica;
     private Integer peso;
     private String descrizione;
+    private String provenienza;
 
+    public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+	
     public Integer getIdProc() {
         return idProc;
     }

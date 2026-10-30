@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +53,7 @@ import it.wego.cross.actions.PraticheAction;
 import it.wego.cross.constants.AnaTipiEvento;
 import it.wego.cross.constants.Constants;
 import it.wego.cross.constants.SessionConstants;
+import it.wego.cross.cross_tomcat_services.PaperworkNumberManager;
 import it.wego.cross.dao.LookupDao;
 import it.wego.cross.dao.ProcedimentiDao;
 import it.wego.cross.dao.ProcessiDao;
@@ -62,11 +64,14 @@ import it.wego.cross.dto.registroimprese.DatiIdentificativiRIDTO;
 import it.wego.cross.dto.registroimprese.ErroreRIDTO;
 import it.wego.cross.entity.Configuration;
 import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.LkAssociazioneProcedimentoEnteUtenteSuap;
 import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.LkProvincie;
 import it.wego.cross.entity.LkTipoEndoProcedimentoSuap;
 import it.wego.cross.entity.LkTipoInterventoSuap;
+import it.wego.cross.entity.LkTipoPratica;
 import it.wego.cross.entity.LkTipoProcedimentoSuap;
+import it.wego.cross.entity.PraticaProcedimenti;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.ProcedimentiEnti;
 import it.wego.cross.entity.Processi;
@@ -84,7 +89,9 @@ import it.wego.cross.service.PluginService;
 import it.wego.cross.service.PraticheService;
 import it.wego.cross.service.ProcedimentiService;
 import it.wego.cross.service.RegistroImpreseService;
+import it.wego.cross.service.UtentiService;
 import it.wego.cross.service.WorkFlowService;
+import it.wego.cross.utils.ComponentUtils;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.PraticaUtils;
 import it.wego.cross.utils.Utils;
@@ -138,6 +145,11 @@ public class PddServiceEnteWS {
     private ComuniService comuniService;
 	@Autowired
     private RegistroImpreseService registroImpreseService;
+	@Autowired
+    private UtentiService utentiService;
+	@Autowired
+	private ComponentUtils componentUtils;
+
 	// @XmlAttachmentRef
 	public java.lang.String inviaSUAPEnte(it.gov.impresainungiorno.schema.suap.ente.CooperazioneSUAPEnte cooperazioneSUAPEnte) throws Exception {
 
@@ -146,25 +158,29 @@ public class PddServiceEnteWS {
 		List<AllegatoCooperazione> listAllegatoReq = cooperazioneSUAPEnte.getAllegato();
 		String esito = "";
 		it.wego.cross.xml.Pratica praticaCross = new Pratica();
-		praticaCross = creazionePraticaCross(cooperazioneSUAPEnte, intestazione, identificativoPratica,listAllegatoReq);
+		List<String> codInterventoList = new ArrayList<>();
+		//Outuput Pratica with return; List<String> with output parameter
+		praticaCross = creazionePraticaCross(cooperazioneSUAPEnte, intestazione, identificativoPratica,listAllegatoReq, codInterventoList);
 
 		it.wego.cross.entity.Pratica praticaEsistente = praticheService.getPraticaByIdentificativo(identificativoPratica);
 		if (praticaEsistente != null) {
 			inserimentoEventoCooperazione(praticaEsistente, praticaCross,cooperazioneSUAPEnte);
-			esito = "Pratica aggiornata";
+			esito = "OK: L'integrazione è stata creata correttamente.";
 		} else {
-			inserimentoPratica(cooperazioneSUAPEnte, intestazione, identificativoPratica, praticaCross);
-			
-			esito = "Ok";
+			inserimentoPratica(cooperazioneSUAPEnte, intestazione, identificativoPratica, praticaCross, codInterventoList);
+			esito = "OK";
 		}
-		//if(esito.equals("Ok"))
+		if(!esito.contains("OK")) {
+			esito = "KO";
+		}
 
 		return esito;
 
 	}
 
 	private Pratica creazionePraticaCross(CooperazioneSUAPEnte cooperazioneSUAPEnte, Intestazione intestazione,
-			String identificativoPratica,List<AllegatoCooperazione> listAllegatoReq) throws Exception {
+			String identificativoPratica, List<AllegatoCooperazione> listAllegatoReq, List<String> codInterventoList) throws Exception {
+		Log.WS.info("Inizio creazione pratica Cross!");
 		EstremiSuap suapCompetente = intestazione.getSuapCompetente();
 
 		Enti enteSuap = entiService.findByIdentificativoSuap(String.valueOf(suapCompetente.getIdentificativoSuap()));
@@ -177,15 +193,18 @@ public class PddServiceEnteWS {
 		it.wego.cross.xml.Pratica praticaCross = new Pratica();
 		praticaCross.setIdentificativoPratica(identificativoPratica);
 		praticaCross.setDataRicezione(Utils.dateToXmlGregorianCalendar(new Date()));
-		String tipoInterventoSuap = oggettoPratica.getTipoIntervento().value();
+		String tipoInterventoSuap ="";
+		if(oggettoPratica.getTipoIntervento()!=null) {
+			tipoInterventoSuap = oggettoPratica.getTipoIntervento().value();	
+		}
 		praticaCross.setDesProcedimentoSuap(oggettoPratica.getTipoProcedimento()+"|"+tipoInterventoSuap);
-		
+		Log.WS.info("Inizio Gestione Allegati!");
 		/*inizio gestione allegati*/
 		List<Configuration> attachmentsFolderConfig = configurationService
 				.findByName(SessionConstants.ATTACHMENTS_FOLDER);
 		Configuration config = attachmentsFolderConfig.get(0);
 		String attachmentsFolder = config.getValue();
-		
+		attachmentsFolder = componentUtils.generateFilePath(attachmentsFolder, enteSuap.getLkComuniList().get(0));
 		it.wego.cross.xml.Allegati allegatiXml = new it.wego.cross.xml.Allegati();
 		List<Allegato> list = allegatiXml.getAllegato();
 		EstremiDichiarante ed = null;
@@ -195,12 +214,13 @@ public class PddServiceEnteWS {
 			Allegato allegato = new Allegato();
 			allegato.setDescrizione(allegatoReq.getDescrizione());
 			//allegato.setNomeFile(allegatoReq.getNomeFileOriginale());
-			String nomeFile = !(allegatoReq.getNomeFile().isEmpty()) ?  allegatoReq.getNomeFile() : allegatoReq.getNomeFileOriginale() ;
+			
+			String nomeFile = (allegatoReq.getNomeFileOriginale()==null) ?  allegatoReq.getNomeFile() : allegatoReq.getNomeFileOriginale() ;
             allegato.setNomeFile(nomeFile);
 			allegato.setTipoFile(allegatoReq.getMime());
 			String directory = attachmentsFolder+ File.separator +identificativoPratica;
 			DataHandler dataHandler = allegatoReq.getEmbeddedFileRef();
-			File f =  Utils.getFilefromDataHandler(directory, dataHandler,identificativoPratica,allegatoReq.getNomeFileOriginale());
+			File f =  Utils.getFilefromDataHandler(directory, dataHandler,identificativoPratica,nomeFile);
 			String pathFile = f.getPath();
 			 if(allegatoReq.getDescrizione().equals("Riepilogo Pratica SUAP")) {
 				 allegato.setRiepilogoPratica("S");
@@ -217,22 +237,44 @@ public class PddServiceEnteWS {
 			
 			Indirizzo indirizzoImpianto = null;
 			if(nomeFileXML.equals(".SUAP.XML")) {
-				riepilogoPraticaSUAP = getRiepilogoPraticaSUAP(f);
-				ed = getEstremiDichiaranteFromFileXml(riepilogoPraticaSUAP);
-				//listaDatiCatastali = riepilogoPraticaSUAP.getIntestazione().getImpiantoProduttivo().getDatiCatastali();
-				indirizzoImpianto = riepilogoPraticaSUAP.getIntestazione().getImpiantoProduttivo().getIndirizzo();
-				indirizziIntervento = gestioneIndirizziIntervento(indirizzoImpianto);
+				try {
+					riepilogoPraticaSUAP = getRiepilogoPraticaSUAP(f);
+					ed = getEstremiDichiaranteFromFileXml(riepilogoPraticaSUAP);
+					//listaDatiCatastali = riepilogoPraticaSUAP.getIntestazione().getImpiantoProduttivo().getDatiCatastali();
+					if(riepilogoPraticaSUAP.getIntestazione().getImpiantoProduttivo()!=null) {
+						Log.WS.info("Trovato impianto produttivo");
+						indirizzoImpianto = riepilogoPraticaSUAP.getIntestazione().getImpiantoProduttivo().getIndirizzo();
+						indirizziIntervento = gestioneIndirizziIntervento(indirizzoImpianto);
+						Log.WS.info("Aggiunto impianto produttivo");
+					}
+				} catch (Exception e) {
+					System.out.println("Eccezione nel file .SUAP.XML in  creazionePraticaCross: " +e);
+				}
+
 			}
 			if(nomeFileXML.contains(".001.MDA.XML")) {
-				praticaCross = gestioneFileMDA(f,praticaCross);
+				
+				Log.WS.info("chiamata gestione File MDA");
+				try {
+					praticaCross = gestioneFileMDA(f,praticaCross);
+				} catch (Exception e) {
+					System.out.println("Eccezione nel file .001.MDA.XML in  creazionePraticaCross: " +e);
+				}
+				
+				Log.WS.info("Fine chiamta gestione File MDA");
 			}
 			
-		}	
-		praticaCross.setIndirizziIntervento(indirizziIntervento);
-		/*fine gestione allegati*/
-		allegatiXml.setAllegato(list);
-		praticaCross.setAllegati(allegatiXml);
+		}
+		if (indirizziIntervento!=null) {
+			Log.WS.info("set indirizzo intervento");
+			praticaCross.setIndirizziIntervento(indirizziIntervento);	
+		}
 		
+		/*fine gestione allegati*/
+//		allegatiXml.setAllegato(list);
+		praticaCross.setAllegati(allegatiXml);
+		Log.WS.info("Fine Gestione Allegati!");
+		Log.WS.info("Inizio Gestione Endoprocedimenti!");
 		/*inizio gestione endoprocedimenti*/
 		String codProcedimento = "";
 		Procedimenti procedimentoXml = null;
@@ -263,17 +305,20 @@ public class PddServiceEnteWS {
 				codProcedimento = lkTipoEndoProcedimentoSuap.getCodProcedimento();
 				if(codProcedimento!=null) {
 					it.wego.cross.entity.Procedimenti procedimento = procedimentiService.getProcedimento(codProcedimento);
-					ProcedimentiEnti pe = procedimentiDao.findProcedimentiEntiByProcedimentoEnte(enteSuap.getIdEnte(), procedimento.getIdProc());
-					if(pe!=null) {
-						procedimentoXml = new Procedimenti();
-						
-						Procedimento proc = new Procedimento();
-						proc = ProcedimentiSerializer.serializeXML(pe);
-						proc.setIdEnteDestinatario(BigInteger.valueOf(enteSuap.getIdEnte()));
-						proc.setCodEnteDestinatario(enteSuap.getCodEnte());
-						proc.setCodProcedimento(procedimento.getCodProc());
-						proc.setIdProcedimento(procedimento.getIdProc());
-						procedimentiList.add(proc); 
+					if(procedimento!=null) {
+						ProcedimentiEnti pe = procedimentiDao.findProcedimentiEntiByProcedimentoEnte(enteSuap.getIdEnte(), procedimento.getIdProc());
+						if(pe!=null) {
+							procedimentoXml = new Procedimenti();
+							
+							Procedimento proc = new Procedimento();
+							proc = ProcedimentiSerializer.serializeXML(pe);
+							proc.setIdEnteDestinatario(BigInteger.valueOf(enteSuap.getIdEnte()));
+							proc.setCodEnteDestinatario(enteSuap.getCodEnte());
+							proc.setCodProcedimento(procedimento.getCodProc());
+							proc.setIdProcedimento(procedimento.getIdProc());
+							codInterventoList.add(codIntervento);
+							procedimentiList.add(proc); 
+						}
 					}
 				}
 			}
@@ -282,8 +327,10 @@ public class PddServiceEnteWS {
 		if(procedimentiList.size()>0)		
 			procedimentoXml.setProcedimento(procedimentiList );
 		praticaCross.setProcedimenti(procedimentoXml);
+		Log.WS.info("Numero endoprocedimenti : " +procedimentiList.size());
 		/*fine gestione endoprocedimenti*/
-		
+		Log.WS.info("Fine Gestione Endoprocedimenti!");
+		Log.WS.info("Inizio Gestione Anagrafiche!");
 		List<Anagrafiche> anagraficheList = new ArrayList<Anagrafiche>();
 		Anagrafiche anagrafica = new Anagrafiche();
 		anagrafica = recuperoAnagrafica(impresa);
@@ -292,7 +339,8 @@ public class PddServiceEnteWS {
 		anagrafica = recuperaAnagraficaDichiarante(ed);
 		anagraficheList.add(anagrafica);
 		praticaCross.setAnagrafiche(anagraficheList);
-		
+		Log.WS.info("Fine Gestione Anagrafiche!");
+		Log.WS.info("Fine creazione pratica Cross!");
 		return praticaCross;
 	}
 
@@ -331,7 +379,12 @@ public class PddServiceEnteWS {
 		return allegati;
 	}
 
-	private void inserimentoPratica(it.gov.impresainungiorno.schema.suap.ente.CooperazioneSUAPEnte cooperazioneSUAPEnte, Intestazione intestazione, String identificativoPratica, Pratica praticaCross)
+	private void inserimentoPratica(
+			it.gov.impresainungiorno.schema.suap.ente.CooperazioneSUAPEnte cooperazioneSUAPEnte, 
+			Intestazione intestazione, 
+			String identificativoPratica, 
+			Pratica praticaCross,
+			List<String> codInterventoList)
 			throws DatatypeConfigurationException, PropertyException, JAXBException, Exception {
 		EstremiSuap suapCompetente = intestazione.getSuapCompetente();
 		Enti enteSuap = entiService.findByIdentificativoSuap(String.valueOf(suapCompetente.getIdentificativoSuap()));
@@ -411,11 +464,33 @@ public class PddServiceEnteWS {
 		LkTipoProcedimentoSuap lkTipoProcedimentoSuap = lookupDao.findTipoProcedimentoSuapByDescSuap(procedimentoSuap);
 		pratica.setIdTipoProcedimentoSuap(lkTipoProcedimentoSuap);
 		pratica.setIdTipoInterventoSuap(lkTipoInterventoSuap);
+		
+		Integer idTipoPratica = lookupDao.findByIdTipoPraticaProcessiByIdCustom(pratica.getIdProcesso().getIdProcesso());
+		LkTipoPratica lkTipoPratica = new LkTipoPratica();
+		lkTipoPratica.setIdTipoPratica(idTipoPratica);	
+		Log.WS.info("Tipo pratica: " + lkTipoPratica);
+		pratica.setTipoPratica(lkTipoPratica);
+		Integer numeroPratica = -1;
+        try {
+        	numeroPratica = PaperworkNumberManager.getInstance().getNewNumber(pe.getIdEnte().getIdEnte(), lkTipoPratica.getIdTipoPratica());
+        } catch(Exception e) {
+        	Log.WS.error("Error generating paperwork progressive number", e);
+        }
+        Log.WS.info("Numero pratica: " + numeroPratica);
+        pratica.setNumeroPratica(numeroPratica);
+        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(pratica.getDataRicezione());
+        pratica.setAnno(cal.get(Calendar.YEAR));
+        Log.WS.info("Anno: " + pratica.getAnno());
+        
 		Log.WS.info("Salvo la pratica");
 		praticheAction.salvaPratica(pratica);
 		Log.WS.info("Popolo i procedimenti");
 		//praticheAction.popolaProcedimenti(pratica, praticaCross);
-		praticheAction.popolaProcedimentiSUAP(pratica, praticaCross);
+		if(praticaCross.getProcedimenti()!=null) {
+			praticheAction.popolaProcedimentiSUAP(pratica, praticaCross, codInterventoList);
+		}
 		// Dati catastali
 		Log.WS.info("Popolo i dati catastali");
 		praticheAction.popolaDatiCatastali(pratica, praticaCross);
@@ -447,6 +522,10 @@ public class PddServiceEnteWS {
 		List<AllegatoRicezioneDTO> allegati = new ArrayList<AllegatoRicezioneDTO>(); 
 		allegati = getAllegati(praticaCross);
 		
+		//TODO:IMPLEMENTARE ASSEGNAZIONE COME PREVISTO DA SPECIFICHE ANCORA DA CAPIRE
+		Log.WS.info("Inserisco assegnazione utente");
+		assegnaPraticaUtente( pratica, codInterventoList);
+		
 		ComunicazioneBean cb = praticheAction.inserisciEventoRicezione(praticaCross, pratica, eventoProcesso,destinatari, allegati);
 		PraticheEventi praticaEvento = praticheService.getPraticaEvento(cb.getIdEventoPratica());
 		Log.WS.info("Operazione terminata correttamente");
@@ -459,37 +538,279 @@ public class PddServiceEnteWS {
 
 		
 		//TODO:IMPLEMENTARE ASSEGNAZIONE COME PREVISTO DA SPECIFICHE ANCORA DA CAPIRE
-		Log.WS.info("Inserisco assegnazione utente");
-		assegnaPraticaUtente( pratica,interventoSuap);
+		//Log.WS.info("Inserisco assegnazione utente");
+		//assegnaPraticaUtente( pratica, codInterventoList);
+		//assegnaPraticaUtenteArchivio(pratica);
+		//assegnaPraticaUtente(pratica);
 		
 				
 //	        gp.notifica(pratica, "Descrizione evento: ricezione pratica");
 		Log.WS.info("Operazione terminata correttamente");
 	}
-
-	/*Da rivedere*/
-	private void assegnaPraticaUtente(it.wego.cross.entity.Pratica pratica, String interventoSuap) throws Exception {
+	
+	private void assegnaPraticaUtenteArchivio(it.wego.cross.entity.Pratica pratica) throws Exception {
+		
 		Utente idUtente = null;
-		//Utente utenteArchivio = utentiService.findUtenteDaUsername("archivio.suapbari");
-/*		if(utenteArchivio != null)
-			pratica.setIdUtente(utenteArchivio);*/
-		if(interventoSuap.equals("apertura")) {
-			idUtente = new Utente(307);
-		}else if(interventoSuap.equals("subentro")) {
-			idUtente = new Utente(307);
-		}else if(interventoSuap.equals("trasformazione")) {
-			idUtente = new Utente(307);
-		}else if(interventoSuap.equals("modifiche")) {
-			idUtente = new Utente(307);
-		}else if(interventoSuap.equals("cessazione")) {
-			idUtente = new Utente(307);
-		}else if(interventoSuap.equals("altro")) {
-			idUtente = new Utente(307);
+		//idUtente = utentiService.findUtenteDaUsername("archivio.suapbari");
+		idUtente = new Utente(307);
+		pratica.setIdUtente(idUtente);
+		
+		praticheAction.aggiornaPratica(pratica);
+	}
+	
+	/* patch produzione da rimuovere e da sostituire con il metodo assegnaPraticaUtente(it.wego.cross.entity.Pratica pratica, String procedimentoSuap) */
+	private void assegnaPraticaUtente(it.wego.cross.entity.Pratica pratica) throws Exception {
+		
+		List<PraticaProcedimenti>  list = pratica.getPraticaProcedimentiList();
+		for(PraticaProcedimenti pp : list) {
+			it.wego.cross.entity.Procedimenti procedimenti = pp.getProcedimenti();
+			String codProc = procedimenti.getCodProc();
+			
+			if (codProc.equalsIgnoreCase("P120")
+					|| codProc.equalsIgnoreCase("P121")
+					|| codProc.equalsIgnoreCase("P123")
+					|| codProc.equalsIgnoreCase("P1313")
+					|| codProc.equalsIgnoreCase("P1314")
+					|| codProc.equalsIgnoreCase("P1369")
+					|| codProc.equalsIgnoreCase("P1382")
+					|| codProc.equalsIgnoreCase("P1384")
+					|| codProc.equalsIgnoreCase("P1387")
+					|| codProc.equalsIgnoreCase("P1388")
+					|| codProc.equalsIgnoreCase("P1392")	
+					|| codProc.equalsIgnoreCase("P1395")
+					|| codProc.equalsIgnoreCase("P1397")
+					|| codProc.equalsIgnoreCase("P1418")
+					|| codProc.equalsIgnoreCase("P1482")
+					|| codProc.equalsIgnoreCase("P1483")	
+					|| codProc.equalsIgnoreCase("P1484")
+					|| codProc.equalsIgnoreCase("P1485")
+					|| codProc.equalsIgnoreCase("P1838")
+					|| codProc.equalsIgnoreCase("P1839")
+					|| codProc.equalsIgnoreCase("P1866")	
+					|| codProc.equalsIgnoreCase("P1867")
+					|| codProc.equalsIgnoreCase("P1985")
+					|| codProc.equalsIgnoreCase("P258")
+					|| codProc.equalsIgnoreCase("P360")
+					|| codProc.equalsIgnoreCase("P361")
+					|| codProc.equalsIgnoreCase("P495")
+					|| codProc.equalsIgnoreCase("P496")
+					|| codProc.equalsIgnoreCase("P498")
+					|| codProc.equalsIgnoreCase("P529")
+					|| codProc.equalsIgnoreCase("P583")
+					|| codProc.equalsIgnoreCase("P590")
+					|| codProc.equalsIgnoreCase("P592")
+					|| codProc.equalsIgnoreCase("P593")
+					|| codProc.equalsIgnoreCase("P594")
+					|| codProc.equalsIgnoreCase("P629")	
+					|| codProc.equalsIgnoreCase("P_16120014")
+					|| codProc.equalsIgnoreCase("P_16120020")
+					|| codProc.equalsIgnoreCase("P_16120021")
+					|| codProc.equalsIgnoreCase("P_16120022")
+					|| codProc.equalsIgnoreCase("P_16120023")	
+					|| codProc.equalsIgnoreCase("P_16120024")
+					|| codProc.equalsIgnoreCase("P_16120025")
+					|| codProc.equalsIgnoreCase("P_16120027")
+					|| codProc.equalsIgnoreCase("P_16120028")
+					|| codProc.equalsIgnoreCase("P_16120029")	
+					|| codProc.equalsIgnoreCase("P_16120030")
+					|| codProc.equalsIgnoreCase("P_16120041")
+					|| codProc.equalsIgnoreCase("P_16120048")
+					|| codProc.equalsIgnoreCase("P_16120049")
+					|| codProc.equalsIgnoreCase("P_16120050")	
+					|| codProc.equalsIgnoreCase("P_16120051")
+					|| codProc.equalsIgnoreCase("P_16120052")
+					|| codProc.equalsIgnoreCase("P_16120054")
+					|| codProc.equalsIgnoreCase("P_16120055")
+					|| codProc.equalsIgnoreCase("P_16120056")
+					|| codProc.equalsIgnoreCase("P_16120074")
+					|| codProc.equalsIgnoreCase("P_16120075")
+					|| codProc.equalsIgnoreCase("P_16120076")
+					|| codProc.equalsIgnoreCase("P_16120077")
+					|| codProc.equalsIgnoreCase("P_16120078")	
+					|| codProc.equalsIgnoreCase("P_16120079")
+					|| codProc.equalsIgnoreCase("P_16120081")
+					|| codProc.equalsIgnoreCase("P_16120090")
+					|| codProc.equalsIgnoreCase("P_16120094")
+					|| codProc.equalsIgnoreCase("P_16120112")	
+					|| codProc.equalsIgnoreCase("P_16120113")
+					|| codProc.equalsIgnoreCase("P_16120114")
+					|| codProc.equalsIgnoreCase("P_16120116")
+					|| codProc.equalsIgnoreCase("P_16120119")
+					|| codProc.equalsIgnoreCase("P_16120120")	
+					|| codProc.equalsIgnoreCase("P_16120121")
+					|| codProc.equalsIgnoreCase("P_16120122")
+					|| codProc.equalsIgnoreCase("P_16120123")
+					|| codProc.equalsIgnoreCase("P_16120124")
+					|| codProc.equalsIgnoreCase("P_16120125")	
+					|| codProc.equalsIgnoreCase("P_16120126")
+					|| codProc.equalsIgnoreCase("P_16120127")
+					|| codProc.equalsIgnoreCase("P_16120135")
+					|| codProc.equalsIgnoreCase("P_16120139")
+					|| codProc.equalsIgnoreCase("P_16120148")
+					|| codProc.equalsIgnoreCase("P_16120153")
+					|| codProc.equalsIgnoreCase("P_16120154")
+					|| codProc.equalsIgnoreCase("P_16120155")
+					|| codProc.equalsIgnoreCase("P_16120156")
+					|| codProc.equalsIgnoreCase("P_16120157")	
+					|| codProc.equalsIgnoreCase("P_16120158")
+					|| codProc.equalsIgnoreCase("P_16120159")
+					|| codProc.equalsIgnoreCase("P_16120160")
+					|| codProc.equalsIgnoreCase("P_16120161")
+					|| codProc.equalsIgnoreCase("P_16120169")	
+					|| codProc.equalsIgnoreCase("P_16120178")
+					|| codProc.equalsIgnoreCase("P_16120428")
+					|| codProc.equalsIgnoreCase("P_16120430")
+					|| codProc.equalsIgnoreCase("P_16120431")
+					|| codProc.equalsIgnoreCase("P_16120481")	
+					|| codProc.equalsIgnoreCase("P_16120489")
+					|| codProc.equalsIgnoreCase("P_16120490")
+					|| codProc.equalsIgnoreCase("P_16120491")
+					|| codProc.equalsIgnoreCase("P_16120492")
+					|| codProc.equalsIgnoreCase("P_16120493")	
+					|| codProc.equalsIgnoreCase("P_16120617")
+					|| codProc.equalsIgnoreCase("P_16120647")
+					|| codProc.equalsIgnoreCase("P_16120648")
+					|| codProc.equalsIgnoreCase("P_16120649")
+					|| codProc.equalsIgnoreCase("P_16120652")
+					|| codProc.equalsIgnoreCase("P_16120653")
+					|| codProc.equalsIgnoreCase("P_16120874")
+					|| codProc.equalsIgnoreCase("P_16120875")
+					|| codProc.equalsIgnoreCase("P_16120876")
+					|| codProc.equalsIgnoreCase("P_16120877")	
+					|| codProc.equalsIgnoreCase("P_16120878")
+					|| codProc.equalsIgnoreCase("P_16120924")
+					|| codProc.equalsIgnoreCase("P_16120926")
+					|| codProc.equalsIgnoreCase("P_16120927")
+					|| codProc.equalsIgnoreCase("P_16123507")) {
+				
+				Utente idUtente = null;
+				//idUtente = utentiService.findUtenteDaUsername("archivio.suapbari");
+				idUtente = new Utente(323);
+				pratica.setIdUtente(idUtente);
+				pratica.setResponsabileProcedimento("Silvia Salamina");
+				
+			} else if (codProc.equalsIgnoreCase("P101") 
+					|| codProc.equalsIgnoreCase("P103")
+					|| codProc.equalsIgnoreCase("P105")
+					|| codProc.equalsIgnoreCase("P106")
+					|| codProc.equalsIgnoreCase("P109")
+					|| codProc.equalsIgnoreCase("P110")
+					|| codProc.equalsIgnoreCase("P115")
+					|| codProc.equalsIgnoreCase("P117")
+					|| codProc.equalsIgnoreCase("P118")
+					|| codProc.equalsIgnoreCase("P1430")
+					|| codProc.equalsIgnoreCase("P1440")
+					|| codProc.equalsIgnoreCase("P199")
+					|| codProc.equalsIgnoreCase("P237")
+					|| codProc.equalsIgnoreCase("P260")
+					|| codProc.equalsIgnoreCase("P264")
+					|| codProc.equalsIgnoreCase("P267")
+					|| codProc.equalsIgnoreCase("P271")
+					|| codProc.equalsIgnoreCase("P280")
+					|| codProc.equalsIgnoreCase("P282")
+					|| codProc.equalsIgnoreCase("P287")
+					|| codProc.equalsIgnoreCase("P378")
+					|| codProc.equalsIgnoreCase("P379")
+					|| codProc.equalsIgnoreCase("P390")
+					|| codProc.equalsIgnoreCase("P477")
+					|| codProc.equalsIgnoreCase("P489")
+					|| codProc.equalsIgnoreCase("P499")
+					|| codProc.equalsIgnoreCase("P500")
+					|| codProc.equalsIgnoreCase("P501")
+					|| codProc.equalsIgnoreCase("P502")
+					|| codProc.equalsIgnoreCase("P503")
+					|| codProc.equalsIgnoreCase("P504")
+					|| codProc.equalsIgnoreCase("P505")
+					|| codProc.equalsIgnoreCase("P506")
+					|| codProc.equalsIgnoreCase("P518")
+					|| codProc.equalsIgnoreCase("P519")
+					|| codProc.equalsIgnoreCase("P520")
+					|| codProc.equalsIgnoreCase("P81")
+					|| codProc.equalsIgnoreCase("P84")
+					|| codProc.equalsIgnoreCase("P85")
+					|| codProc.equalsIgnoreCase("P86")
+					|| codProc.equalsIgnoreCase("P91")
+					|| codProc.equalsIgnoreCase("P99")
+					|| codProc.equalsIgnoreCase("P_16120002")
+					|| codProc.equalsIgnoreCase("P_16120042")
+					|| codProc.equalsIgnoreCase("P_16120061")
+					|| codProc.equalsIgnoreCase("P_16120069")
+					|| codProc.equalsIgnoreCase("P_16120095")
+					|| codProc.equalsIgnoreCase("P_16120101")
+					|| codProc.equalsIgnoreCase("P_16120102")
+					|| codProc.equalsIgnoreCase("P_16120103")
+					|| codProc.equalsIgnoreCase("P_16120106")
+					|| codProc.equalsIgnoreCase("P_16120109")
+					|| codProc.equalsIgnoreCase("P_16120110")
+					|| codProc.equalsIgnoreCase("P_16120111")
+					|| codProc.equalsIgnoreCase("P_16120133")
+					|| codProc.equalsIgnoreCase("P_16120140")
+					|| codProc.equalsIgnoreCase("P_16120143")
+					|| codProc.equalsIgnoreCase("P_16120144")
+					|| codProc.equalsIgnoreCase("P_16120145")
+					|| codProc.equalsIgnoreCase("P_16120149")
+					|| codProc.equalsIgnoreCase("P_16120167")
+					|| codProc.equalsIgnoreCase("P_16120176")
+					|| codProc.equalsIgnoreCase("P_16120180")
+					|| codProc.equalsIgnoreCase("P_16120186")
+					|| codProc.equalsIgnoreCase("P_16120187")
+					|| codProc.equalsIgnoreCase("P_16120472")
+					|| codProc.equalsIgnoreCase("P_16120473")
+					|| codProc.equalsIgnoreCase("P_16120474")
+					|| codProc.equalsIgnoreCase("P_16120483")
+					|| codProc.equalsIgnoreCase("P_16120870")
+					|| codProc.equalsIgnoreCase("P_16120871")
+					|| codProc.equalsIgnoreCase("P_16120872")) {
+				Utente idUtente = null;
+				//idUtente = utentiService.findUtenteDaUsername("archivio.suapbari");
+				idUtente = new Utente(322);
+				pratica.setIdUtente(idUtente);
+				pratica.setResponsabileProcedimento("Avv. Roberta Del Core");
+			}  else {
+				
+				Utente idUtente = null;
+				//idUtente = utentiService.findUtenteDaUsername("archivio.suapbari");
+				idUtente = new Utente(307);
+				pratica.setIdUtente(idUtente);
+			}
+
 		}
 		
-		pratica.setIdUtente(idUtente);
 		praticheAction.aggiornaPratica(pratica);
+	}
+	
+	private void assegnaPraticaUtente(it.wego.cross.entity.Pratica pratica, List<String> codInterventoList) throws Exception {
+
+		List<LkAssociazioneProcedimentoEnteUtenteSuap> list = new ArrayList<>();
 		
+		if(pratica.getIdProcEnte()!=null && pratica.getIdProcEnte().getIdEnte()!=null)
+			for(String codOperazione: codInterventoList)
+				list.add(lookupDao.findAssociazioneProcedimentoEnteUtenteSuap(
+						codOperazione, pratica.getIdProcEnte().getIdEnte().getIdEnte()));	
+		
+
+		if(!list.isEmpty()) {
+			LkAssociazioneProcedimentoEnteUtenteSuap currentAssociationPerUser = null;
+			LkAssociazioneProcedimentoEnteUtenteSuap currentAssociationPerSupervisor = null;
+			if( list.size() == 1) {
+				currentAssociationPerUser = list.get(0);
+				currentAssociationPerSupervisor = list.get(0);
+			}
+			else {
+				for(LkAssociazioneProcedimentoEnteUtenteSuap association: list) {
+					if(currentAssociationPerUser == null || (currentAssociationPerUser.getPrioritaUtente() < association.getPrioritaResponsabile()))
+						currentAssociationPerUser = association;
+					if(currentAssociationPerSupervisor == null || (currentAssociationPerSupervisor.getPrioritaUtente() < association.getPrioritaResponsabile()))
+						currentAssociationPerSupervisor = association;
+				}
+			}
+			pratica.setIdUtente(currentAssociationPerUser.getIdUtente());
+			Utente supervisor = currentAssociationPerSupervisor.getIdResponsabileProcedimento();
+			if(supervisor!=null) {
+				pratica.setResponsabileProcedimento(supervisor.getCognome() + " " + supervisor.getNome());
+			}
+			praticheAction.aggiornaPratica(pratica);
+		}
 	}
 
 	private Anagrafiche recuperoAnagrafica(AnagraficaImpresa impresa) throws DatatypeConfigurationException {
@@ -605,6 +926,7 @@ public class PddServiceEnteWS {
 	}
 	
 	private RiepilogoPraticaSUAP getRiepilogoPraticaSUAP(File fileXml) throws IOException, JAXBException {
+		Log.WS.info("Unmarshal suap.xml - start");
 		byte[] bytesArray = Utils.readByteArrayFromFile(fileXml);
 		String xmlPratica = new String(bytesArray);
 		xmlPratica = Utils.encodingXml(xmlPratica);
@@ -613,8 +935,8 @@ public class PddServiceEnteWS {
 		StringReader reader = new StringReader(xmlPratica);
 		RiepilogoPraticaSUAP riepilogoPraticaSUAP = null;
 		riepilogoPraticaSUAP = (RiepilogoPraticaSUAP) unmarshaller.unmarshal(reader);
+		Log.WS.info("Unmarshal suap.xml - end");
 		return riepilogoPraticaSUAP; 
-		
 	}
 	
 	private List<String> getCodIntervento(RiepilogoPraticaSUAP riepilogoPraticaSUAP) {
@@ -637,10 +959,17 @@ public class PddServiceEnteWS {
 		
 		String data = Utils.convertFileToString(mdaFile);
 		String fileString = Utils.convertXmlCharset(data, "ISO-8859-1", "UTF-8");
+		System.out.println("FileMDA: "+fileString);
+		/*patch prod*/
+		fileString = fileString.replace("é", "e");
+		fileString = fileString.replace("è", "e");
+		fileString = fileString.replace("à", "a");
+		fileString = fileString.replace("°", " ");
+		fileString = fileString.replace("B&amp;B","B and B");
+		System.out.println("FileMDA pulito: "+fileString);
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		InputSource src = new InputSource(new StringReader(fileString));
 		Document doc = builder.parse(src);
-		System.out.println(fileString);
 		doc.getDocumentElement().normalize();
 		Element element = doc.getDocumentElement();
 		NodeList nodes = element.getChildNodes();
@@ -651,11 +980,11 @@ public class PddServiceEnteWS {
 	    Immobile immobile = null;
 	    immobile = new Immobile();
 	    
+	    
 //	    IndirizzoIntervento indirizzoIntervento = new IndirizzoIntervento();
        // if(element.getTagName().equalsIgnoreCase("scia:ModuloSCIA")) {
         	for(int i = 0; i < nodes.getLength(); i++) {
                 node = nodes.item(i);
-               
                
                 	immobile = riempiDatiCatastali(node,3,immobile);
                 	
@@ -664,46 +993,81 @@ public class PddServiceEnteWS {
            // }
      //   }
         
-        if(immobile!=null) {
+        Log.WS.info("riempiDatiCatastali - Start");
+        
+        if(immobile!=null && immobile.getEstensioneParticella()!=null) {
+        	System.out.println("riempiDatiCatastali set sistema catastale");
         	immobile.setIdTipoSistemaCatastale(new BigInteger("1"));
         	if(immobile.getDesTipoUnita()!=null) {
         		if(immobile.getDesTipoUnita().equals("FABBRICATI")) {
    				 	immobile.setIdTipoUnita(new BigInteger("1"));
+   				 System.out.println("riempiDatiCatastali set fabbricati");
    			 	}else if(immobile.getDesTipoUnita().equals("TERRENI")) {
    			 		immobile.setIdTipoUnita(new BigInteger("2"));
+      				 System.out.println("riempiDatiCatastali set terreni");
+   			 	} else {
+   			 		immobile.setIdTipoUnita(null);
+      				 System.out.println("riempiDatiCatastali set tipo unita null");
    			 	}
         	}
+			
+            listaImmobili.add(immobile);
+    		datiCatastaliList.setImmobile(listaImmobili);
+            praticaCross.setDatiCatastali(datiCatastaliList);
+            
+		 } else if (immobile!=null){
 			 
+			 System.out.println("riempiDatiCatastali set sistema catastale null");
+			 
+/*			Immobile i = new Immobile();
+			immobile.setIdTipoSistemaCatastale(new BigInteger("1"));
+			listaImmobili.add(i);
+			datiCatastaliList.setImmobile(listaImmobili);*/
+	    	
+			datiCatastaliList.setImmobile(listaImmobili);
+	        praticaCross.setDatiCatastali(datiCatastaliList);
+			
 		 }
-        listaImmobili.add(immobile);
-		datiCatastaliList.setImmobile(listaImmobili);
-        praticaCross.setDatiCatastali(datiCatastaliList);
+
         /*
         listXmlIndirizziIntervento.add(indirizzoIntervento);
         indirizziIntervento.setIndirizzoIntervento(listXmlIndirizziIntervento);
         praticaCross.setIndirizziIntervento(indirizziIntervento);
         */
+
+        Log.WS.info("riempiDatiCatastali - End");
+
         return praticaCross;
 
 	}
 	 public static Immobile riempiDatiCatastali(Node node, int level,Immobile immobile) {
-		 if(node.getNodeName().toLowerCase().contains("particella"))
-			 immobile.setEstensioneParticella(node.getTextContent());
-		 if(node.getNodeName().toLowerCase().contains("subalterno"))
-			 immobile.setSubalterno(node.getTextContent());
-		 if(node.getNodeName().toLowerCase().contains("foglio"))
-			immobile.setFoglio( node.getTextContent());
-		 if(node.getNodeName().toLowerCase().contains("tipo"))
-			immobile.setDesTipoUnita(node.getTextContent());
 		 
-		 	
-		    NodeList list = node.getChildNodes();
-		    for (int i = 0; i < list.getLength(); i++) {
-		      Node childNode = list.item(i);
-		      riempiDatiCatastali(childNode, level + 1,immobile);
-		    }
-		    
-		    return immobile;
+		 
+		 if(node.getNodeName().toLowerCase().contains("particella")) {
+			 immobile.setEstensioneParticella(node.getTextContent());
+		 }
+		
+		 if(node.getNodeName().toLowerCase().contains("subalterno")) {
+			 immobile.setSubalterno(node.getTextContent());
+		 }
+			 
+		 if(node.getNodeName().toLowerCase().contains("foglio")) {
+			 immobile.setFoglio( node.getTextContent());
+		 }
+			
+		 if(node.getNodeName().toLowerCase().contains("tipo")) {
+			 immobile.setDesTipoUnita(node.getTextContent());			 
+
+		 }
+			  NodeList list = node.getChildNodes();
+			  for (int i = 0; i < list.getLength(); i++) {
+			  Node childNode = list.item(i);
+			      riempiDatiCatastali(childNode, level + 1,immobile);
+			  }
+		 
+
+		 
+		 return immobile;
 	}
 	 
 	 public static IndirizzoIntervento riempiIndirizzoIntervento(Node node, int level,IndirizzoIntervento indirizzo) {
@@ -750,6 +1114,7 @@ public class PddServiceEnteWS {
 	    
 	}*/
 	public it.wego.cross.xml.IndirizziIntervento gestioneIndirizziIntervento(Indirizzo indirizzoInfocamere) {
+		System.out.println("gestioneIndirizziIntervento - start");
 		List<it.wego.cross.xml.IndirizzoIntervento> listXmlIndirizziIntervento = new ArrayList<IndirizzoIntervento>();
 	    it.wego.cross.xml.IndirizziIntervento indirizziIntervento = new it.wego.cross.xml.IndirizziIntervento();
 	    IndirizzoIntervento indirizzoIntervento = new IndirizzoIntervento();
@@ -760,6 +1125,7 @@ public class PddServiceEnteWS {
 	    indirizzoIntervento.setAltreInformazioniIndirizzo(indirizzoInfocamere.getProvincia().getValue());
 	    listXmlIndirizziIntervento.add(indirizzoIntervento);
 	    indirizziIntervento.setIndirizzoIntervento(listXmlIndirizziIntervento);
+	    System.out.println("gestioneIndirizziIntervento - end");
 	    return indirizziIntervento;
 	}
 	

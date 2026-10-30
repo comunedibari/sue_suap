@@ -4,22 +4,25 @@
  */
 package it.wego.cross.serializer;
 
-import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
+import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import it.wego.cross.dto.ProcedimentoDTO;
+import it.wego.cross.dto.RecapitoDTO;
 import it.wego.cross.dto.comunicazione.AnagraficaMinifiedDTO;
 import it.wego.cross.dto.dozer.DatiCatastaliDTO;
+import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
 import it.wego.cross.entity.Anagrafica;
+import it.wego.cross.entity.AnagraficaRecapiti;
 import it.wego.cross.entity.DatiCatastali;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.IndirizziIntervento;
+import it.wego.cross.entity.PraticaAnagrafica;
 import it.wego.cross.entity.Procedimenti;
 import it.wego.cross.entity.ProcedimentiTesti;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
-import java.math.BigInteger;
-import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -30,6 +33,12 @@ public class DettaglioComunicazioneSerializer {
 
     @Autowired
     private Mapper mapper;
+
+    public AnagraficaMinifiedDTO serializeAnagrafica(PraticaAnagrafica pa) {
+    	AnagraficaMinifiedDTO anagraficaDTO = this.serializeAnagrafica(pa.getAnagrafica());
+    	anagraficaDTO.setDataInizioValidita(pa.getDataInizioValidita());
+    	return anagraficaDTO;
+    }
 
     public AnagraficaMinifiedDTO serializeAnagrafica(Anagrafica anagrafica) {
         AnagraficaMinifiedDTO a = new AnagraficaMinifiedDTO();
@@ -51,9 +60,22 @@ public class DettaglioComunicazioneSerializer {
         a.setTipoAnagrafica(Utils.Char(anagrafica.getTipoAnagrafica()));
         a.setVarianteAnagrafica(anagrafica.getVarianteAnagrafica());
         a.setIdAnagrafica(anagrafica.getIdAnagrafica());
+        a.setProvenienza(anagrafica.getProvenienza());
+        a.setProvenienza(anagrafica.getProvenienza());
+        for(AnagraficaRecapiti recapito: anagrafica.getAnagraficaRecapitiList()) {
+        	RecapitoDTO recapitoDTO = new RecapitoDTO();
+        	recapitoDTO.setIdTipoIndirizzo(recapito.getIdTipoIndirizzo().getIdTipoIndirizzo());
+        	String civico = recapito.getIdRecapito().getNCivico();
+        	recapitoDTO.setIndirizzo(recapito.getIdRecapito().getIndirizzo() + (civico != null && civico.length() > 0 ? civico : ""));
+        	recapitoDTO.setTelefono(recapito.getIdRecapito().getTelefono());
+        	recapitoDTO.setCellulare(recapito.getIdRecapito().getCellulare());
+        	recapitoDTO.setEmail(recapito.getIdRecapito().getEmail());
+        	recapitoDTO.setPec(recapito.getIdRecapito().getPec());
+        	a.getRecapiti().add(recapitoDTO);
+        }
         return a;
     }
-
+       
     public ProcedimentoDTO serializeProcedimento(Procedimenti procedimento, Enti ente) {
         ProcedimentoDTO p = new ProcedimentoDTO();
         p.setCodProcedimento(procedimento.getCodProc());
@@ -93,6 +115,7 @@ public class DettaglioComunicazioneSerializer {
 //            Log.APP.info("Id Pratica " + c.getIdPratica().getIdPratica());
             d.setIdPratica(c.getIdPratica().getIdPratica());
         }
+        d.setProvenienza(c.getProvenienza());
         return d;
     }
 

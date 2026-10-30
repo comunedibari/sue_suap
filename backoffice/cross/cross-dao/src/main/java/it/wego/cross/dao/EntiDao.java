@@ -7,6 +7,7 @@ import it.wego.cross.entity.ProcedimentiEnti;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,6 +30,12 @@ public class EntiDao extends Paginator {
     @PersistenceContext
     private EntityManager em;
 
+    public EntiDao(){}
+
+    public EntiDao(EntityManager em){
+    	this.em = em;
+    }
+    
     public void insert(Enti ente) throws Exception {
         em.persist(ente);
     }

@@ -1,13 +1,9 @@
 package it.wego.cross.dao;
 
-import it.wego.cross.constants.StatiEmail;
-import it.wego.cross.dto.filters.Filter;
-import it.wego.cross.entity.*;
-import it.wego.cross.utils.Log;
-import it.wego.cross.utils.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -18,7 +14,16 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Repository;
+
+import it.wego.cross.constants.StatiEmail;
+import it.wego.cross.dto.filters.Filter;
+import it.wego.cross.entity.Email;
+import it.wego.cross.entity.LkStatiMail;
+import it.wego.cross.utils.Log;
+import it.wego.cross.utils.Utils;
 
 /**
  *
@@ -55,6 +60,34 @@ public class MailDao {
         return (Email) Utils.getSingleResult(query);
     }
 
+
+    public Email findByIdEmailRispostaPec(Integer id) {
+    	String mailQuery = 
+   			 " SELECT "
+    			+ "	e.`id_email`, "
+    			+ "	e.`id_pratica_evento`,"
+    			+ "	e.`data_inserimento`,"
+    			+ "	e.`data_aggiornamento`,"
+    			+ "	e.`path_eml`,"
+    			+ "	e.`id_messaggio`,"
+    			+ "	e.`id_messaggio_pec`,"
+    			+ "	e.`email_destinatario`,"
+    			+ "	e.`corpo_email`,"
+    			+ "	e.`oggetto_email`,"
+    			+ "	c.`oggetto_risposta`,"
+    			+ "	c.`corpo_risposta`,"
+    			+ "	e.`stato`,"
+    			+ "	e.`gruppo`,"
+    			+ "	e.`tipo_destinazione`"
+    			+ " FROM `opencross`.`email` e "
+    			+ " LEFT OUTER JOIN email_consegnate c ON (e.id_messaggio = c.msgid)"
+    			+ " WHERE e.`id_email` = " + id.intValue();
+    	               
+		Query query = em.createNativeQuery(mailQuery, Email.class);
+		Log.APP.info("\n findByIdEmailRispostaPec:" + mailQuery);
+        return (Email) Utils.getSingleResult(query);
+    }
+	
     public List<Email> findByIdMessaggio(String idMessaggio) {
         Query query = em.createQuery("SELECT e "
                 + "FROM Email e "
@@ -160,6 +193,13 @@ public class MailDao {
         return query.getResultList();
     }
 
+    public List<Email> findMailByPaperworkEventId(Integer paperworkEventId) {
+        Log.APP.info("call Email.findByIdPraticaEvento");
+    	Query query = em.createNamedQuery("Email.findByIdPraticaEvento");
+    	query.setParameter("idPraticaEvento", paperworkEventId);
+    	return query.getResultList();
+    }
+
     public List<Email> findEmailDaSpedire() {
         List<String> mailStatus = Arrays.asList("S");
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -240,4 +280,43 @@ public class MailDao {
         Long count = query.getSingleResult();
         return count;
     }
+    public List<Object> findEmailConfigurationAllComuni(String idMessaggio) {
+    	int id_email = 0;
+    	String mailQuery = "SELECT 	 "
+    			+ "	c.`id_ente`,  "
+    			+ "	ec.`id_comune`,  "
+    			+ "	e.descrizione AS descrizione_ente, "
+    			+ "	lkc.descrizione AS descrizione_comune, "
+    			+ "	c.`value`,  "
+    			+ "	c.`note`"
+    			+ " FROM ((((`opencross`.`configuration` c ) "
+    			+ " JOIN `opencross`.`enti` e) "
+    			+ " JOIN opencross.enti_comuni ec) "
+    			+ " JOIN opencross.lk_comuni lkc) "
+    			+ " WHERE ((e.id_ente = c.id_ente) "
+    			+ " AND (ec.id_ente = e.id_ente) "
+    			+ " AND (lkc.id_comune = ec.id_comune)) "
+    			+ " AND c.name IN ('mail.host',  "
+    			+ "'mail.imap.host', "
+    			+ "'mail.username', "
+    			+ "'mail.password', "
+    			+ "'mail.imap.port', "
+    			+ "'abilita.lettura.email', "
+    			+ "'mail.config.cartellaCross', "
+    			+ "'mail.config.cartellaLette')  "
+    			+ " AND c.value IS NOT NULL "
+    			+ " AND c.value <> '' "
+    			+ " AND e.descrizione LIKE 'SUE%' "
+    			+ "ORDER BY ec.id_comune ";
+    	               
+		Query query = em.createNativeQuery(mailQuery);
+		List<Object> mailConfiguration = null;
+        try {
+        	mailConfiguration = (List<Object>) query.getSingleResult();
+        } catch(Exception e) {
+        	id_email = 0;
+        }
+        return mailConfiguration;		
+    }
+
 }

@@ -30,7 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Configuration.findById", query = "SELECT c FROM Configuration c WHERE c.id = :id"),
     @NamedQuery(name = "Configuration.findByName", query = "SELECT c FROM Configuration c WHERE c.name = :name"),
     @NamedQuery(name = "Configuration.findByValue", query = "SELECT c FROM Configuration c WHERE c.value = :value"),
-    @NamedQuery(name = "Configuration.findByNote", query = "SELECT c FROM Configuration c WHERE c.note = :note")})
+    @NamedQuery(name = "Configuration.findByNote", query = "SELECT c FROM Configuration c WHERE c.note = :note"),
+	@NamedQuery(name = "Configuration.findByTownAndInstitution", query = "SELECT c FROM Configuration c WHERE c.name = :name and c.idEnte.idEnte=:idEnte and c.idComune.idComune=:idComune")}
+)
 public class Configuration implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

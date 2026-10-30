@@ -4,6 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page import="it.wego.cross.constants.Constants" %>
 
 <tiles:insertAttribute name="body_error" />
 
@@ -110,10 +111,13 @@
                         <div>
                             <div class="ctrlHolder">
                                 <label for="procedimentoSelezionato"><spring:message code="pratica.caricamento.manuale.procedimento"/></label>
+                                
                                 <select id="procedimentoSelezionato" name="procedimentoSelezionato" maxlength="255" data-placeholder="<spring:message code="pratica.caricamento.manuale.procedimento.placeholder"/>" class="textInput required chosen-select" >
                                     <option value=""></option>
                                     <c:forEach items="${entePerCuiOpero.procedimentiAttivi}" var="procedimento" begin="0">
-                                        <option value="${procedimento.idProc}" <c:if test="${fn:length(entePerCuiOpero.procedimentiAttivi)==1 or praticaCaricamentoManuale.procedimentoSelezionato == procedimento.idProc}">selected="selected"</c:if>>${procedimento.descrizione}</option>
+                                		<c:if test="${entePerCuiOpero.idEnte != Constants.SUE_BARI || (procedimento.idProc != 1003 && procedimento.idProc != 1004)}" >    
+                                        	<option value="${procedimento.idProc}" <c:if test="${fn:length(entePerCuiOpero.procedimentiAttivi)==1 or praticaCaricamentoManuale.procedimentoSelezionato == procedimento.idProc}">selected="selected"</c:if>>${procedimento.descrizione}</option>
+                                        </c:if>
                                     </c:forEach>
                                 </select>
                                 <p class="formHint procedimentoSelezionato"><spring:message code="ente.campo.obbligatorio"/></p>

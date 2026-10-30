@@ -93,7 +93,6 @@ public class UGController extends AbstractController {
                     break;
                 }
             }
-            
             return new ModelAndView("redirect:" + Utils.decodeB64(previousUrl));
         } catch (Exception ex) {
             erroriAction.saveError(erroriAction.getError(it.wego.cross.constants.Error.ERRORE_UG_SELECT, "Errore nell'esecuzione del controller /ug/select_current_submit", ex, null, utente));

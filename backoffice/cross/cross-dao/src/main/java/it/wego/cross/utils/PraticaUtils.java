@@ -1,25 +1,27 @@
 package it.wego.cross.utils;
 
-import it.wego.cross.constants.TipoRuolo;
-import it.wego.cross.dao.LookupDao;
-import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
-import it.wego.cross.entity.LkComuni;
-import it.wego.cross.xml.Anagrafiche;
-import it.wego.cross.xml.Pratica;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
+
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import it.wego.cross.constants.TipoRuolo;
+import it.wego.cross.dao.LookupDao;
+import it.wego.cross.xml.Anagrafiche;
+import it.wego.cross.xml.Pratica;
 
 @Component
 public class PraticaUtils {
@@ -105,5 +107,16 @@ public class PraticaUtils {
             }
         }
         return anagrafiche;
-}
+
+    } 
+     
+    /**
+     * split a full name in two string: the surname with a single word and a name with even more than one word
+     * @return
+     */
+    public static Identification splitFullName(String fullName) {
+    	String trimFullName = fullName != null ? fullName.trim().replaceAll("\\s+", " "): "";
+    	Matcher matcher = Pattern.compile("^(.+?)\\s+(.+)$").matcher(trimFullName);
+    	return matcher.find() ? new Identification(trimFullName, matcher.group(1), matcher.group(2)) : new Identification(trimFullName);
+    }
 }

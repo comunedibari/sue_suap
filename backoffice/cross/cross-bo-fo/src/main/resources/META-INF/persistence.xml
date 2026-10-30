@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="it.wego.cross-bo-fo-g" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>it.wego.cross.entity.people.PendingProcess</class>
+    <class>it.wego.cross.entity.people.SubmittedProcess</class>
+    
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="${suap.sue.crossBoFo.persistence.people_g.url}"/>
+      <property name="javax.persistence.jdbc.user" value="${suap.sue.crossBoFo.persistence.people_g.user}"/>
+      <property name="javax.persistence.jdbc.password" value="${suap.sue.crossBoFo.persistence.people_g.pwd}"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="eclipselink.logging.level" value="FINE" />
+    </properties>
+  </persistence-unit>
+  
+  <persistence-unit name="it.wego.cross-bo-fo-m" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>it.wego.cross.entity.people.PendingProcess</class>
+    <class>it.wego.cross.entity.people.SubmittedProcess</class>
+    
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="${suap.sue.crossBoFo.persistence.people_m.url}"/>
+      <property name="javax.persistence.jdbc.user" value="${suap.sue.crossBoFo.persistence.people_m.user}"/>
+      <property name="javax.persistence.jdbc.password" value="${suap.sue.crossBoFo.persistence.people_m.pwd}"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="eclipselink.logging.level" value="FINE" />
+    </properties>
+  </persistence-unit>
+  
+    
+  <persistence-unit name="it.wego.cross-bo-fo-bari" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>it.wego.cross.entity.people.PendingProcess</class>
+    <class>it.wego.cross.entity.people.SubmittedProcess</class>
+    
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="${suap.sue.crossBoFo.persistence.people_bari.url}"/>
+      <property name="javax.persistence.jdbc.user" value="${suap.sue.crossBoFo.persistence.people_bari.user}"/>
+      <property name="javax.persistence.jdbc.password" value="${suap.sue.crossBoFo.persistence.people_bari.pwd}"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="eclipselink.logging.level" value="FINE" />
+    </properties>
+  </persistence-unit>
+</persistence>

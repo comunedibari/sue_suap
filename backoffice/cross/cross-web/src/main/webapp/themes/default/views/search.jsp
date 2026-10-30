@@ -243,11 +243,16 @@
                     yearRange:"-120:+0"
                 });
                 $(document).ajaxSend(function() {
-                    $("#loading").show();
+                    $("#loading, #loading_errors").show();
                 });
                   
                 $(document).ajaxComplete(function() {
-                    $("#loading").hide();
+                    $("#loading, #loading_errors").hide();
+                });
+                
+                $(document).ajaxError(function() {
+                	$("#loading").hide();
+                    $("#loading_errors").show();
                 });
                   
 				
@@ -378,3 +383,4 @@
         </div>
     </body>
 </html>
+

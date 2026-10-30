@@ -4,7 +4,26 @@
  */
 package it.wego.cross.serializer;
 
+import java.math.BigInteger;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.google.common.base.Strings;
+
+import it.wego.cross.constants.AnaTipiEvento;
 import it.wego.cross.constants.Constants;
 import it.wego.cross.constants.StatoPraticaProtocollo;
 import it.wego.cross.constants.TipoRuolo;
@@ -16,18 +35,29 @@ import it.wego.cross.dto.PraticaNuova;
 import it.wego.cross.dto.PraticaProtocolloDTO;
 import it.wego.cross.dto.ProcedimentoDTO;
 import it.wego.cross.dto.ProtocolloDTO;
+import it.wego.cross.dto.UtenteDTO;
 import it.wego.cross.dto.comunica.DichiaranteDTO;
 import it.wego.cross.dto.comunica.ImpresaDTO;
 import it.wego.cross.dto.comunica.InterventoDTO;
 import it.wego.cross.dto.comunica.LegaleRappresentanteDTO;
 import it.wego.cross.dto.comunica.PraticaComunicaDTO;
+import it.wego.cross.dto.dozer.PraticaCollegataDTO;
+import it.wego.cross.dto.research.table.Address;
+import it.wego.cross.dto.research.table.CadastralData;
+import it.wego.cross.dto.research.table.ComplexId;
+import it.wego.cross.dto.research.table.Event;
+import it.wego.cross.dto.research.table.Note;
+import it.wego.cross.dto.research.table.Receiving;
+import it.wego.cross.entity.DatiCatastali;
 import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.IndirizziIntervento;
 import it.wego.cross.entity.LkNazionalita;
 import it.wego.cross.entity.LkTipoQualifica;
 import it.wego.cross.entity.LkTipoRuolo;
 import it.wego.cross.entity.NotePratica;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticaAnagrafica;
+import it.wego.cross.entity.PraticaOperazione;
 import it.wego.cross.entity.PraticaProcedimenti;
 import it.wego.cross.entity.PraticheDirittiSegreteria;
 import it.wego.cross.entity.PraticheEventi;
@@ -35,6 +65,7 @@ import it.wego.cross.entity.PraticheProtocollo;
 import it.wego.cross.entity.ProcessiEventi;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.plugins.protocollo.beans.DocumentoProtocolloResponse;
+import it.wego.cross.service.CiviliaService;
 import it.wego.cross.service.ConfigurationService;
 import it.wego.cross.service.EntiService;
 import it.wego.cross.service.IndirizziInterventoService;
@@ -52,22 +83,14 @@ import it.wego.cross.xml.DirittiSegreteriaGaranzie;
 import it.wego.cross.xml.DirittiSegreteriaGenerali;
 import it.wego.cross.xml.DirittiSegreteriaRata;
 import it.wego.cross.xml.DirittiSegreteriaRate;
+import it.wego.cross.xml.Immobile;
+import it.wego.cross.xml.IndirizzoIntervento;
 import it.wego.cross.xml.OneriUrbanizzazione;
 import it.wego.cross.xml.Procedimenti;
 import it.wego.cross.xml.Procedimento;
 import it.wego.cross.xml.Recapiti;
 import it.wego.cross.xml.Recapito;
 import it.wego.cross.xml.ServiziTariffaIndividuale;
-import java.math.BigInteger;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.xml.datatype.DatatypeConfigurationException;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -76,6 +99,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class PraticheSerializer {
 
+	private static final String INTERNAL_USER_TAX_CODE = "integrazione";
+	private static final String RECEIVING_CODE = AnaTipiEvento.RICEZIONE_PRATICA;
+	private static final String REASSIGN_CODE = "REASPRAT";
+	private static final String INTEGRATION_CODE = AnaTipiEvento.INTEGRATION_CODE;
+	private static final String FORWARDING_CODE = "OINOLTRO2";
+
+	private static final Set<String> externalEvents = new HashSet<>(Arrays.asList(FORWARDING_CODE, INTEGRATION_CODE));
     @Autowired
     private ConfigurationService configuration;
     @Autowired
@@ -92,7 +122,9 @@ public class PraticheSerializer {
     private IndirizziInterventoService indirizziInterventoService;
     @Autowired
     private EntiService entiService;
-
+    @Autowired
+    private CiviliaService civiliaService;
+    
     public it.wego.cross.xml.Pratica serialize(Pratica pratica, PraticheEventi ultimoEvento, Utente user) throws Exception {
         it.wego.cross.xml.Pratica xml = new it.wego.cross.xml.Pratica();
         xml.setIdPratica(Utils.bi(pratica.getIdPratica()));
@@ -377,12 +409,23 @@ public class PraticheSerializer {
             }
             xml.setDirittiSegreteria(dsx);
         }
+        xml.setAnno(pratica.getAnno().toString());
+        xml.setTipo(pratica.getTipoPratica().getTipoPratica());
+        xml.setNumeroPratica(BigInteger.valueOf(pratica.getNumeroPratica()));
 
         return xml;
     }
 
     public PraticaNuova serializePraticaNuova(Pratica pratica, Utente utenteConnesso) throws Exception {
+    	return serializePraticaNuova(pratica, utenteConnesso, false);
+    }
+
+    public PraticaNuova serializePraticaNuova(Pratica pratica, Utente utenteConnesso, boolean fromXml) throws Exception {
         PraticaNuova nuova = new PraticaNuova();
+        it.wego.cross.xml.Pratica praticaCross = null;
+        if(fromXml) {
+        	praticaCross = PraticaUtils.getPraticaFromXML(new String(pratica.getIdStaging().getXmlPratica()));
+        }
         nuova.setDataRicezione(pratica.getDataRicezione());
         nuova.setDescPratica(pratica.getOggettoPratica());
         nuova.setEnte(pratica.getIdProcEnte().getIdEnte().getDescrizione());
@@ -427,8 +470,8 @@ public class PraticheSerializer {
             nuova.setComune(pratica.getIdComune().getDescrizione());
         }
 
-        nuova.setRichiedente(getRichiedentiFromPratica(pratica));
-        nuova.setRichiedenteDaXml(getRichiedentiFromPraticaDaXml(pratica));
+        nuova.setRichiedente(getRichiedentiFromPratica(pratica, praticaCross));
+        nuova.setRichiedenteDaXml(getRichiedentiFromPraticaDaXml(pratica, praticaCross));
         if (pratica.getStatoEmail() != null) {
             nuova.setIdStatoEmail(pratica.getStatoEmail().getIdStatiMail());
             nuova.setStatoEmail(pratica.getStatoEmail().getDescrizione());
@@ -444,6 +487,144 @@ public class PraticheSerializer {
         }
         if(pratica.getIntegrazione() != null)
         	nuova.setIntegrazione(pratica.getIntegrazione());
+        //----
+        ComplexId complexId = new ComplexId();
+        if (pratica.getProtocollo() != null && pratica.getAnnoRiferimento() != null) 
+        	complexId.setFascicolo(pratica.getProtocollo() + "/" + pratica.getAnnoRiferimento());
+        else 
+        	complexId.setFascicolo(pratica.getIdentificativoPratica());
+        
+        complexId.setIdentificativoPratica(pratica.getIdentificativoPratica());
+        complexId.setIdPratica(pratica.getIdPratica());
+        nuova.setComplexId(complexId);
+        if(pratica.getTipoPratica() != null)
+        	nuova.setType(pratica.getTipoPratica().getTipoPratica());
+        nuova.setNumber(pratica.getNumeroPratica());
+        nuova.setYear(pratica.getAnno());
+        Receiving receving = new Receiving();
+        if(pratica.getDataRicezione() != null)
+        	receving.setReceivingDate(pratica.getDataRicezione());
+        nuova.setReceiving(receving);
+        
+        boolean isCivilia = civiliaService.isCivilia(pratica);
+        if(!isCivilia) {
+        	List<String> praticaOperazioni = new ArrayList<>();
+    		for(PraticaOperazione praticaOperazione: pratica.getPraticaOperazioni()) {
+    			String code = praticaOperazione.getOperazione().getCodice();
+    			if(code != null && code.trim().length() > 0)
+    				praticaOperazioni.add(praticaOperazione.getOperazione().getDescrizione());
+    		}
+    		nuova.setOperations(praticaOperazioni);
+        }
+        if (pratica.getProt_suap() !=null && !(pratica.getProt_suap()).isEmpty()) {
+        	if(pratica.getIdTipoInterventoSuap()!=null) {
+        		
+        		nuova.setOggettoPratica(pratica.getOggettoPratica() + "-"+ pratica.getIdTipoInterventoSuap().getDescrizioneTipoInterventoSuap());
+        	}else {
+        		nuova.setOggettoPratica(pratica.getOggettoPratica());
+        	}
+        	
+        }else {
+        	nuova.setOggettoPratica(pratica.getOggettoPratica());
+        }
+        
+        List<Address> addressedDTO = new ArrayList<>();
+        List<CadastralData> cadastralDataListDTO = new ArrayList<>();
+        if(fromXml) {
+        	cadastralDataListDTO = new ArrayList<>();
+        	if(praticaCross.getDatiCatastali() != null) {
+		    	for(Immobile datiCatastali: praticaCross.getDatiCatastali().getImmobile()) {
+		    		CadastralData cadastralDataDTO = new CadastralData();
+		    		cadastralDataDTO.setSection(datiCatastali.getSezione());
+		    		cadastralDataDTO.setSheet(datiCatastali.getFoglio());
+		    		cadastralDataDTO.setMap(datiCatastali.getMappale());
+		    		cadastralDataDTO.setSubordinate(datiCatastali.getSubalterno());
+		    		cadastralDataListDTO.add(cadastralDataDTO);
+		    	}
+		    	nuova.setCadastralDataList(cadastralDataListDTO);
+        	}
+	    	addressedDTO = new ArrayList<>();
+	    	if(praticaCross.getIndirizziIntervento() != null) {
+		    	for(IndirizzoIntervento address: praticaCross.getIndirizziIntervento().getIndirizzoIntervento()) {
+		    		Address addressDto = new Address();
+		    		addressDto.setStreetName(address.getIndirizzo());
+		    		addressDto.setStreetNumber(address.getCivico());
+		    		addressedDTO.add(addressDto);
+		    	}
+		    	nuova.setAddresses(addressedDTO);
+	    	}
+        } else {
+	        for(IndirizziIntervento address: pratica.getIndirizziInterventoList()) {
+	        	Address addressDto = new Address();
+	        	addressDto.setStreetName(address.getIndirizzo());
+	        	addressDto.setStreetNumber(address.getCivico());
+	        	addressedDTO.add(addressDto);
+	        }
+	        nuova.setAddresses(addressedDTO);
+	        
+	        for(DatiCatastali datiCatastali: pratica.getDatiCatastaliList()) {
+	        	CadastralData cadastralDataDTO = new CadastralData();
+	        	cadastralDataDTO.setSection(datiCatastali.getSezione());
+	        	cadastralDataDTO.setSheet(datiCatastali.getFoglio());
+	        	cadastralDataDTO.setMap(datiCatastali.getMappale());
+	        	cadastralDataDTO.setSubordinate(datiCatastali.getSubalterno());
+	        	cadastralDataListDTO.add(cadastralDataDTO);
+	        }
+	        nuova.setCadastralDataList(cadastralDataListDTO);
+        }
+        Event lastInternalEvent = null;
+        Event lastExternalEvent = null;
+        for(PraticheEventi pe: pratica.getPraticheEventiList()) {
+        	if(pe.getIdUtente() != null && !INTERNAL_USER_TAX_CODE.equalsIgnoreCase(pe.getIdUtente().getCodiceFiscale())
+        		&& pe.getVerso() != null && !RECEIVING_CODE.equals(pe.getIdEvento().getCodEvento())
+        	    && pe.getIdEvento() != null && !REASSIGN_CODE.equals(pe.getIdEvento().getCodEvento())
+        		&& (lastInternalEvent == null || lastInternalEvent.getDate().compareTo(pe.getDataEvento())<0)){
+        			if(lastInternalEvent == null)
+        				lastInternalEvent = new Event();
+        			lastInternalEvent.setType(pe.getIdEvento().getDesEvento());
+        			lastInternalEvent.setDate(pe.getDataEvento());
+        			lastInternalEvent.setProtocolNumber(pe.getProtocollo());
+        			lastInternalEvent.setProtocolDate(pe.getDataProtocollo());
+        			lastInternalEvent.setOperator(pe.getIdUtente().getCognome() + " " + pe.getIdUtente().getNome());
+        		}
+        	if(pe.getIdEvento() != null && externalEvents.contains(pe.getIdEvento().getCodEvento())
+        			&& (lastExternalEvent == null || lastExternalEvent.getDate().compareTo(pe.getDataEvento())<0)){
+        		if(lastExternalEvent == null)
+        			lastExternalEvent = new Event();
+        		lastExternalEvent.setId(pe.getIdPraticaEvento());
+        		lastExternalEvent.setType(pe.getIdEvento().getDesEvento());
+        		lastExternalEvent.setDate(pe.getDataEvento());
+        		lastExternalEvent.setProtocolNumber(pe.getProtocollo());
+        		lastExternalEvent.setProtocolDate(pe.getDataProtocollo());
+        		nuova.setDays(TimeUnit.DAYS.convert((new Date()).getTime()-pe.getDataEvento().getTime(), TimeUnit.MILLISECONDS));
+        	}
+        	if(pe.getIdEvento() != null && RECEIVING_CODE.equals(pe.getIdEvento().getCodEvento()) && pe.getProtocollo() != null && pe.getProtocollo().length() > 0) {
+                receving.setProtocolDate(pe.getDataProtocollo());
+                receving.setProtocolNumber(pe.getProtocollo());
+    		}
+        }
+
+        nuova.setLastInternalEvent(lastInternalEvent);
+        nuova.setLastExternalEvent(lastExternalEvent);
+        
+        Note lastNote = null;
+        for(NotePratica note : pratica.getNotePraticaList()) {
+        	if(lastNote == null || lastNote.getDate().compareTo(note.getDataInserimento())<0) {
+        		if(lastNote == null)
+        			lastNote = new Note();
+        		lastNote.setDate(note.getDataInserimento());
+        		lastNote.setUser(note.getIdUtente().getCognome() + " " + note.getIdUtente().getNome());
+        		lastNote.setContent(note.getTesto());
+        	}
+        }
+        nuova.setLastNote(lastNote);
+        nuova.setDataUltimoEventoEsterno(pratica.getDataUltimoEventoEsterno());
+        if(pratica.getIdUtente() != null) {
+	        UtenteDTO utente = new UtenteDTO();
+	        utente.setCognome(pratica.getIdUtente().getCognome());
+	        utente.setNome(pratica.getIdUtente().getNome());
+	        nuova.setUtente(utente);
+        }
         return nuova;
     }
 
@@ -741,8 +922,10 @@ public class PraticheSerializer {
             }
             a.setIdProvinciaCciaa(BigInteger.valueOf(Integer.valueOf(i.getProvinciaRea())));
             a.setNIscrizioneRea(i.getNumeroRea());
-            Date dataIscrizione = Utils.italianFormatToDate(i.getDataIscrizione());
-            a.setDataIscrizioneRea(Utils.dateToXmlGregorianCalendar(dataIscrizione));
+            if (!Utils.e(i.getDataIscrizione())) {
+            	Date dataIscrizione = Utils.italianFormatToDate(i.getDataIscrizione());
+            	 a.setDataIscrizioneRea(Utils.dateToXmlGregorianCalendar(dataIscrizione));
+            }
             a.setIdFormaGiuridica(Utils.bi(Integer.valueOf(i.getCodFormaGiuridica())));
             a.setDesFormaGiuridica(i.getDesFormaGiuridica());
             Recapiti recapiti = new Recapiti();
@@ -820,12 +1003,24 @@ public class PraticheSerializer {
     }
 
     public static String getRichiedentiFromPratica(Pratica pratica) throws Exception {
+    	return getRichiedentiFromPratica(pratica, null);
+    }
+    public static String getRichiedentiFromPratica(Pratica pratica, it.wego.cross.xml.Pratica praticaCross) throws Exception {
         List<String> beneficiari = new ArrayList<String>();
         List<String> richiedenti = new ArrayList<String>();
         if (pratica.getPraticaAnagraficaList() != null && pratica.getPraticaAnagraficaList().size() > 0) {
             for (PraticaAnagrafica pa : pratica.getPraticaAnagraficaList()) {
                 if (pa.getLkTipoRuolo().getCodRuolo().equals(TipoRuolo.RICHIEDENTE)) {
-                    richiedenti.add(pa.getAnagrafica().getCognome() + " " + pa.getAnagrafica().getNome());
+                	 if (String.valueOf(pa.getAnagrafica().getTipoAnagrafica()).equalsIgnoreCase("F")) {
+                         //Visualizzo la denominazione solo se partecipo alla pratica come ditta individuale
+                         if ("S".equals(pa.getFlgDittaIndividuale()) && !Strings.isNullOrEmpty(pa.getAnagrafica().getDenominazione())) {
+                             richiedenti.add(pa.getAnagrafica().getDenominazione());
+                         } else {
+                             richiedenti.add(pa.getAnagrafica().getCognome() + " " + pa.getAnagrafica().getNome());
+                         }
+                     } else {
+                         richiedenti.add(pa.getAnagrafica().getDenominazione());
+                     }
                 } else if (pa.getLkTipoRuolo().getCodRuolo().equals(TipoRuolo.BENEFICIARIO)) {
                     if (String.valueOf(pa.getAnagrafica().getTipoAnagrafica()).equalsIgnoreCase("F")) {
                         //Visualizzo la denominazione solo se partecipo alla pratica come ditta individuale
@@ -840,7 +1035,8 @@ public class PraticheSerializer {
                 }
             }
         } else {
-            it.wego.cross.xml.Pratica praticaCross = PraticaUtils.getPraticaFromXML(new String(pratica.getIdStaging().getXmlPratica()));
+        	if(praticaCross == null)
+        		praticaCross = PraticaUtils.getPraticaFromXML(new String(pratica.getIdStaging().getXmlPratica()));
             List<Anagrafiche> anagrafiche = PraticaUtils.getRichiedenteBeneficiari(praticaCross);
             if (anagrafiche != null && !anagrafiche.isEmpty()) {
                 for (Anagrafiche anagrafica : anagrafiche) {
@@ -893,9 +1089,13 @@ public class PraticheSerializer {
     }
 
     public static String getRichiedentiFromPraticaDaXml(Pratica pratica) throws Exception {
+    	return getRichiedentiFromPraticaDaXml(pratica, null);
+    }
+    public static String getRichiedentiFromPraticaDaXml(Pratica pratica, it.wego.cross.xml.Pratica praticaCross ) throws Exception {
         List<String> beneficiari = new ArrayList<String>();
         List<String> richiedenti = new ArrayList<String>();
-        it.wego.cross.xml.Pratica praticaCross = PraticaUtils.getPraticaFromXML(new String(pratica.getIdStaging().getXmlPratica()));
+        if(praticaCross == null)
+        	praticaCross = PraticaUtils.getPraticaFromXML(new String(pratica.getIdStaging().getXmlPratica()));
         List<Anagrafiche> anagrafiche = PraticaUtils.getRichiedenteBeneficiari(praticaCross);
         if (anagrafiche != null && !anagrafiche.isEmpty()) {
             for (Anagrafiche anagrafica : anagrafiche) {
@@ -946,4 +1146,27 @@ public class PraticheSerializer {
         return sb.toString();
     }
 
+    public static PraticaCollegataDTO map(Pratica praticaCollegata) {
+    	PraticaCollegataDTO praticaCollegataDTO = new PraticaCollegataDTO();
+        
+        praticaCollegataDTO.setIdentificativoPratica(praticaCollegata.getIdentificativoPratica());
+        praticaCollegataDTO.setIdPratica(praticaCollegata.getIdPratica());
+        praticaCollegataDTO.setOggettoPratica(praticaCollegata.getOggettoPratica());
+        if (praticaCollegata.getProtocollo() != null && praticaCollegata.getAnnoRiferimento() != null) {
+        	praticaCollegataDTO.setNumeroProtocollo(praticaCollegata.getProtocollo() + "/" + praticaCollegata.getAnnoRiferimento());
+        } else {
+        	praticaCollegataDTO.setNumeroProtocollo(praticaCollegata.getIdentificativoPratica());
+        }
+        praticaCollegataDTO.setAnno(praticaCollegata.getAnno() != null ? Integer.toString(praticaCollegata.getAnno()) : "" );
+        praticaCollegataDTO.setDescrizioneStato(praticaCollegata.getIdStatoPratica().getDescrizione());
+        
+        praticaCollegataDTO.setTipoPratica(praticaCollegata.getTipoPratica() != null ? praticaCollegata.getTipoPratica().getTipoPratica() : "");
+        praticaCollegataDTO.setNumeroPratica(praticaCollegata.getNumeroPratica() != null ? Integer.toString(praticaCollegata.getNumeroPratica()) : "");
+        if (praticaCollegata.getIdUtente() != null) {
+            String cognome = praticaCollegata.getIdUtente().getCognome() != null ? praticaCollegata.getIdUtente().getCognome() : "";
+            String nome = praticaCollegata.getIdUtente().getNome() != null ? praticaCollegata.getIdUtente().getNome() : "";
+            praticaCollegataDTO.setInCarico(cognome + " " + nome);
+        }
+        return praticaCollegataDTO;
+    }
 }

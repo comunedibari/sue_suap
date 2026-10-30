@@ -1,0 +1,653 @@
+/*
+SCIA Agibilità
+*/
+
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBkZWxsYSBwcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+, corpo_email=
+'U2kgYXR0ZXN0YSBjaGUgbGEgcHJhdGljYSBpbiBvZ2dldHRvIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBnbGkgw6ggc3RhdG8KYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99IGRhIHV0aWxpenphcmUgcGVyIG9nbmkgc3VjY2Vzc2l2YSBjb211bmljYXppb25lLgo=' 
+where id_processo=16 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=16 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=16 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='UGFyZXJlIGNvbnRyYXJpbyBhbGzigJl1dGlsaXp6byBkZWxs4oCZaW1tb2JpbGU=' 
+where id_processo=16 and cod_evento='COMPARCONAMM';
+
+/*
+CILA
+*/
+
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBkZWxsYSBwcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'U2kgYXR0ZXN0YSBjaGUgbGEgcHJhdGljYSBpbiBvZ2dldHRvIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBnbGkgw6ggc3RhdG8KYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99IGRhIHV0aWxpenphcmUgcGVyIG9nbmkgc3VjY2Vzc2l2YSBjb211bmljYXppb25lLgo=' 
+where id_processo=21 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=21 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=21 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='UGFyZXJlIGNvbnRyYXJpbyBhbGzigJl1dGlsaXp6byBkZWxs4oCZaW1tb2JpbGU=' 
+where id_processo=21 and cod_evento='COMPARCONAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=21 and cod_evento='COMPARFAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=21 and cod_evento='SOSLAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=21 and cod_evento=' COMAEISTR';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=21 and cod_evento='COMAEPOS';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=21 and cod_evento='COMAEDIR';
+
+/*
+CILA Super Bonus
+*/
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBkZWxsYSBwcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'U2kgYXR0ZXN0YSBjaGUgbGEgcHJhdGljYSBpbiBvZ2dldHRvIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBnbGkgw6ggc3RhdG8KYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99IGRhIHV0aWxpenphcmUgcGVyIG9nbmkgc3VjY2Vzc2l2YSBjb211bmljYXppb25lLgo=' 
+where id_processo=40 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=40 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=40 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='UGFyZXJlIGNvbnRyYXJpbyBhbGzigJl1dGlsaXp6byBkZWxs4oCZaW1tb2JpbGU=' 
+where id_processo=40 and cod_evento='COMPARCONAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=40 and cod_evento='COMPARFAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=40 and cod_evento='SOSLAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=40 and cod_evento=' COMAEISTR';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=40 and cod_evento='COMAEPOS';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=40 and cod_evento='COMAEDIR';
+
+
+/*
+EN_IMP_BARI
+*/
+
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBkZWxsYSBwcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'U2kgYXR0ZXN0YSBjaGUgbGEgcHJhdGljYSBpbiBvZ2dldHRvIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBnbGkgw6ggc3RhdG8KYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99IGRhIHV0aWxpenphcmUgcGVyIG9nbmkgc3VjY2Vzc2l2YSBjb211bmljYXppb25lLgo=' 
+where id_processo=42 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=42 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=42 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='UGFyZXJlIGNvbnRyYXJpbyBhbGzigJl1dGlsaXp6byBkZWxs4oCZaW1tb2JpbGU=' 
+where id_processo=42 and cod_evento='COMPARCONAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=42 and cod_evento='COMPARFAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=42 and cod_evento='SOSLAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=42 and cod_evento=' COMAEISTR';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=42 and cod_evento='COMAEPOS';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=42 and cod_evento='COMAEDIR';
+
+
+
+/*
+EN_IMP_SCA_BARI
+*/
+
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBkZWxsYSBwcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'U2kgYXR0ZXN0YSBjaGUgbGEgcHJhdGljYSBpbiBvZ2dldHRvIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBnbGkgw6ggc3RhdG8KYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99IGRhIHV0aWxpenphcmUgcGVyIG9nbmkgc3VjY2Vzc2l2YSBjb211bmljYXppb25lLgo=' 
+where id_processo=43 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=43 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=43 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='UGFyZXJlIGNvbnRyYXJpbyBhbGzigJl1dGlsaXp6byBkZWxs4oCZaW1tb2JpbGU=' 
+where id_processo=43 and cod_evento='COMPARCONAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=43 and cod_evento='COMPARFAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=43 and cod_evento='SOSLAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=43 and cod_evento=' COMAEISTR';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=43 and cod_evento='COMAEPOS';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=43 and cod_evento='COMAEDIR';
+
+
+/*
+SCIA
+*/
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBkZWxsYSBwcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'U2kgYXR0ZXN0YSBjaGUgbGEgcHJhdGljYSBpbiBvZ2dldHRvIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBnbGkgw6ggc3RhdG8KYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99IGRhIHV0aWxpenphcmUgcGVyIG9nbmkgc3VjY2Vzc2l2YSBjb211bmljYXppb25lLgo=' 
+where id_processo=22 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=22 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=22 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='UGFyZXJlIGNvbnRyYXJpbyBhbGzigJl1dGlsaXp6byBkZWxs4oCZaW1tb2JpbGU=' 
+where id_processo=22 and cod_evento='COMPARCONAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=22 and cod_evento='COMPARFAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=22 and cod_evento='SOSLAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=22 and cod_evento=' COMAEISTR';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=22 and cod_evento='COMAEPOS';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=22 and cod_evento='COMAEDIR';
+
+
+
+
+/*
+SCIA Alternativa al PDC
+*/
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBkZWxsYSBwcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'U2kgYXR0ZXN0YSBjaGUgbGEgcHJhdGljYSBpbiBvZ2dldHRvIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBnbGkgw6ggc3RhdG8KYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99IGRhIHV0aWxpenphcmUgcGVyIG9nbmkgc3VjY2Vzc2l2YSBjb211bmljYXppb25lLgo=' 
+where id_processo=23 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=23 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=23 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='UGFyZXJlIGNvbnRyYXJpbyBhbGzigJl1dGlsaXp6byBkZWxs4oCZaW1tb2JpbGU=' 
+where id_processo=23 and cod_evento='COMPARCONAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=23 and cod_evento='COMPARFAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=23 and cod_evento='SOSLAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=23 and cod_evento=' COMAEISTR';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=23 and cod_evento='COMAEPOS';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=23 and cod_evento='COMAEDIR';
+
+
+
+
+/*
+SCIA Pubblicità
+*/
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBkZWxsYSBwcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'U2kgYXR0ZXN0YSBjaGUgbGEgcHJhdGljYSBpbiBvZ2dldHRvIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBnbGkgw6ggc3RhdG8KYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99IGRhIHV0aWxpenphcmUgcGVyIG9nbmkgc3VjY2Vzc2l2YSBjb211bmljYXppb25lLgo=' 
+where id_processo=24 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=24 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=24 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='UGFyZXJlIGNvbnRyYXJpbyBhbGzigJl1dGlsaXp6byBkZWxs4oCZaW1tb2JpbGU=' 
+where id_processo=24 and cod_evento='COMPARCONAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=24 and cod_evento='COMPARFAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=24 and cod_evento='SOSLAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=24 and cod_evento=' COMAEISTR';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=24 and cod_evento='COMAEPOS';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=24 and cod_evento='COMAEDIR';
+
+
+
+/*
+Procedimento Gestionale Generico 
+*/
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBkZWxsYSBwcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'U2kgYXR0ZXN0YSBjaGUgbGEgcHJhdGljYSBpbiBvZ2dldHRvIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBnbGkgw6ggc3RhdG8KYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99IGRhIHV0aWxpenphcmUgcGVyIG9nbmkgc3VjY2Vzc2l2YSBjb211bmljYXppb25lLgo=' 
+where id_processo=25 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=25 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=25 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='UGFyZXJlIGNvbnRyYXJpbyBhbGzigJl1dGlsaXp6byBkZWxs4oCZaW1tb2JpbGU=' 
+where id_processo=25 and cod_evento='COMPARCONAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=25 and cod_evento='COMPARFAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=25 and cod_evento='SOSLAVAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=25 and cod_evento=' COMAEISTR';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=25 and cod_evento='COMAEPOS';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=25 and cod_evento='COMAEDIR';
+
+
+
+
+/*
+Permesso di costruire 
+*/
+
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBlIENvbXVuaWNhemlvbmUgYXZ2aW8gZGVsIFByb2NlZGltZW50byBQcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'QSBpIHNlbnNpIGRlbGwnYXJ0LiAxOC1iaXMgZGVsbGEgTC4gbi4gMjQxLzkwIGUgcy5tLmkuIHNpIEFUVEVTVEEgbCdhdnZlbnV0YSBwcmVzZW50YXppb25lIGRlbGwnaXN0YW56YS9wcmF0aWNhIGRpIFBlcm1lc3NvIGRpIENvc3RydWlyZSBpbiBlcGlncmFmZSBkYSBwYXJ0ZSBkZWwgUmljaGllZGVudGUgYWxsbyBzY3JpdmVudGUgU1VFLCBjaGUgbGEgc3Rlc3NhIMOoIHN0YXRhIGFjcXVpc2l0YSBhZ2xpIGF0dGkgaW4gZGF0YSAke3ByYXRpY2EuZGF0YV9wcm90b2NvbGxvfSBjb24gcHJvdG9jb2xsbyBudW1lcm8gJHtldi5udW1lcm9fcHJvdG9jb2xsb30gZSBjaGUgZ2xpIMOoIHN0YXRvIGF0dHJpYnVpdG8gY29kaWNlICR7cHJhdGljYS50aXBvfS0ke3ByYXRpY2EubnVtZXJvX3ByYXRpY2F9LSR7cHJhdGljYS5hbm5vfSBkYSB1dGlsaXp6YXJlIHBlciBvZ25pIHN1Y2Nlc3NpdmEgY29tdW5pY2F6aW9uZS4KSW5vbHRyZSBzaSByZW5kZSBub3RvIGNoZSBlbnRybyBpIHRlcm1pbmksIGRpIGN1aSBhbCBEUFIgMzgwLzAxIGUgcy5tLmkuLCBhcnQuIDIwLCBxdWVzdG8gdWZmaWNpbyDDqCB0ZW51dG8gYWQgYWRvdHRhcmUgaWwgcHJvdnZlZGltZW50byBmaW5hbGUgZmF0dGEgc2FsdmEgbGEgZm9ybWF6aW9uZSBkZWwgc2lsZW56aW8tYXNzZW5zbyBpbiBjYXNvIGRpIHNjYWRlbnphIGRlaSB0ZXJtaW5pIGluIGFzc2VuemEgZGkgdmluY29saSBwcmV2aXN0aSBwZXIgbGVnZ2UuCgpTaSBDT01VTklDQSwgYWx0cmVzw6wsIGwnYXZ2aW8gZGVsIHByb2NlZGltZW50byBhaSBzZW5zaSBlIHBlciBnbGkgZWZmZXR0aSBkaSBjdWkgYWxsJ2FydC4gNyAtIDEwIGRlbGxhIEwuIDI0MS85MCBlIHMubS5pLiBwcmVjaXNhbmRvIGNoZSBsJ29nZ2V0dG8gZGVsIHByb2NlZGltZW50byDDqCBpbCBQZXJtZXNzbyBkaSBDb3N0cnVpcmUgY29udHJhZGRpc3RpbnRvIGRhbCBuwrAgZGkgUHJhdGljYSBpbiBlcGlncmFmZSwgY2hlIElsIFJlc3BvbnNhYmlsZSBkZWwgUHJvY2VkaW1lbnRvIMOoIGwnaW5nLiBHaWFubHVjYSBE4oCZT1NUVU5JIGVkIGlsIFJlc3BvbnNhYmlsZSBkZWwgUHJvdnZlZGltZW50byBsJ2luZy4gUGFvbG8gQkFWQVJPIGZhdHRvIHNhbHZvIGV2ZW50dWFsZSBzdWNjZXNzaXZhIGNvbXVuaWNhemlvbmUgZGkgY3VpIGFsbCdhcnQuNSBMLjI0MS85MCBlIHMubS5pLgpF4oCZIHBvc3NpYmlsZSBwcmVuZGVyZSB2aXNpb25lIGRlbGxhIGRvY3VtZW50YXppb25lIGRlbCBwcmVzZW50ZSBwcm9jZWRpbWVudG8gcHJlc3NvIGxhIHNjcml2ZW50ZSBSaXBhcnRpemlvbmUgR292ZXJubyBlIFN2aWx1cHBvIFN0cmF0ZWdpY28gZGVsIFRlcnJpdG9yaW8gLSBTZXR0b3JlIFNlcnZpemkgcGVyIEVkaWxpemlhIFByaXZhdGEtIHZpYSBGLlMuIEFiYnJlc2NpYSBuLjg2LiBMYSBwYXJ0ZWNpcGF6aW9uZSBhbCBwcm9jZWRpbWVudG8gZGkgY3VpIGFsbCdhcnQuIDEwIGRlbGxhIEwuMjQxLzkwIGUgcy5tLmkuIHBvdHLDoCBhdnZlbmlyZSB0cmFtaXRlIHJpY2hpZXN0YSBhbGwnaW5kaXJpenpvIHBlYzogc3BvcnRlbGxvc3VlLmNvbXVuZWJhcmlAcGVjLnJ1cGFyLnB1Z2xpYS5pdC4KClAuTy5FLlEuIEF1dG9yaXp6YXppb25pIGUgUGRDIGluZy4gR2lhbmx1Y2EgROKAmU9TVFVOSQo=' 
+where id_processo=17 and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, 
+corpo_email ='' 
+where id_processo=17 and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,
+corpo_email ='' 
+where id_processo=17 and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,  corpo_email=
+'QXZ2aW8gUHJvY2VkaW1lbnRv' 
+where id_processo=17 and cod_evento='AVPROCAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,  corpo_email=
+'QXJjaGl2aWF6aW9uZQ==' 
+where id_processo=17 and cod_evento='ARCAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, corpo_email=
+'UmljaGllc3RhIEludGVncmF6aW9uZQ==' 
+where id_processo=17 and cod_evento='RICHINTA20AMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, corpo_email=
+'UmljaGllc3RhIEFkZW1waW1lbnRpIFJpbGFzY2lvIFByb3Z2ZWRpbWVudG8g' 
+where id_processo=17 and cod_evento='RICHARPAMM ';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,  corpo_email=
+'UHJlYXZ2aXNvIERpbmllZ28gMTAgYmlz' 
+where id_processo=17 and cod_evento='COMDINAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+,  corpo_email=
+'UmlsYXNjaW8gUHJvdnZlZGltZW50bw==' 
+where id_processo=17 and cod_evento='RILPDCAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, corpo_email=
+'RGluaWVnbyBEZWZpbml0aXZv' 
+where id_processo=17 and cod_evento='DINDEFAMM';
+
+
+
+/*
+Autorizzazione Paesaggistica (Semplificata, Ordinaria e Sanatoria) 
+*/
+
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgYXZ2ZW51dGEgcHJlc2VudGF6aW9uZSBlIENvbXVuaWNhemlvbmUgYXZ2aW8gZGVsIFByb2NlZGltZW50byBQcmF0aWNhICR7cHJhdGljYS5pZGVudGlmaWNhdGl2b19wcmF0aWNhfQ==' 
+,  corpo_email=
+'QSBpIHNlbnNpIGRlbGwnYXJ0LiAxOC1iaXMgZGVsbGEgTC4gbi4gMjQxLzkwIGUgcy5tLmkuIHNpIEFUVEVTVEEgbCdhdnZlbnV0YSBwcmVzZW50YXppb25lIGRlbGwnaXN0YW56YS9wcmF0aWNhIGluIGVwaWdyYWZlIGRhIHBhcnRlIGRlbCBSaWNoaWVkZW50ZSBhbGxhIHNjcml2ZW50ZSBSaXBhcnRpemlvbmUsIGNoZSBsYSBzdGVzc2Egw6ggc3RhdGEgYWNxdWlzaXRhIGFnbGkgYXR0aSBpbiBkYXRhICR7cHJhdGljYS5kYXRhX3Byb3RvY29sbG99IGNvbiBwcm90b2NvbGxvIG51bWVybyAke2V2Lm51bWVyb19wcm90b2NvbGxvfSBlIGNoZSBnbGkgw6ggc3RhdG8gYXR0cmlidWl0byBjb2RpY2UgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99ICBkYSB1dGlsaXp6YXJlIHBlciBvZ25pIHN1Y2Nlc3NpdmEgY29tdW5pY2F6aW9uZS4KSW5vbHRyZSBzaSByZW5kZSBub3RvIGNoZSBlbnRybyBpIHRlcm1pbmksIGRpIGN1aSBhbCBELkxncy4gbi4gNDIvMjAwNCBlIHNzLm1tLmlpLiBlIGFsbGUKTi5ULkEuIGRlbCBQLlAuVC5SLiwgcXVlc3RvIHVmZmljaW8gw6ggdGVudXRvIGFkIGFkb3R0YXJlIGlsIHByb3Z2ZWRpbWVudG8gZmluYWxlLgoKU2kgQ09NVU5JQ0EsIGFsdHJlc8OsLCBsJ2F2dmlvIGRlbCBwcm9jZWRpbWVudG8gYWkgc2Vuc2kgZSBwZXIgZ2xpIGVmZmV0dGkgZGkgY3VpIGFsbCdhcnQuIDcgLSAxMCBkZWxsYSBMLiAyNDEvOTAgZSBzLm0uaS4gcHJlY2lzYW5kbyBjaGUgbCdvZ2dldHRvIGRlbCBwcm9jZWRpbWVudG8gw6ggbGEgUHJhdGljYSBpbiBlcGlncmFmZSwgY2hlIElsIFJlc3BvbnNhYmlsZSBkZWwgUHJvY2VkaW1lbnRvIMOoIGwnaW5nLiBBbnRvbmlhIExBQklBTkNBIGVkIGlsIFJlc3BvbnNhYmlsZSBkZWwgUHJvdnZlZGltZW50byBsJ2FyY2guIEFubmEgVkVMTEEgZmF0dGEgc2FsdmEgZXZlbnR1YWxlIHN1Y2Nlc3NpdmEgY29tdW5pY2F6aW9uZSBkaSBjdWkgYWxsJ2FydC4gNSBMLiAyNDEvOTAgZSBzLm0uaS4KReKAmXBvc3NpYmlsZSBwcmVuZGVyZSB2aXNpb25lIGRlbGxhIGRvY3VtZW50YXppb25lIGRlbCBwcmVzZW50ZSBwcm9jZWRpbWVudG8gcHJlc3NvIGxhIHNjcml2ZW50ZSBSaXBhcnRpemlvbmUgR292ZXJubyBlIFN2aWx1cHBvIFN0cmF0ZWdpY28gZGVsIFRlcnJpdG9yaW8gLSBTZXR0b3JlIFNlcnZpemkgcGVyIEVkaWxpemlhIFByaXZhdGEtIHZpYSBGLlMuIEFiYnJlc2NpYSBuLiA4Ni4gTGEgcGFydGVjaXBhemlvbmUgYWwgcHJvY2VkaW1lbnRvIGRpIGN1aSBhbGwnYXJ0LiAxMCBkZWxsYSBMLiAyNDEvOTAgZSBzLm0uaS4gcG90csOgIGF2dmVuaXJlIHRyYW1pdGUgcmljaGllc3RhIGFsbCdpbmRpcml6em8gcGVjOiB1cmJhbmlzdGljYS5jb211bmViYXJpQHBlYy5ydXBhci5wdWdsaWEuaXQuCgpQby5FLlEuIFBhZXNhZ2dpbywgQW1iaWVudGUgZSBEZWNvcm8gVXJiYW5vIGluZy4gQW50b25pYSBMQUJJQU5DQQo=' 
+where id_processo in (18,19,20) and cod_evento='RIC';
+
+update opencross.processi_eventi set 
+oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99'
+, 
+corpo_email ='' 
+where id_processo in (18,19,20) and cod_evento='COALRIAMM';
+
+update opencross.processi_eventi set 
+oggetto_email= 'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99'
+, 
+corpo_email ='' 
+where id_processo in (18,19,20) and cod_evento='COMAEAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99'
+, corpo_email=
+'QXZ2aW8gUHJvY2VkaW1lbnRv' 
+where id_processo in (18,19,20) and cod_evento='AVPROCAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99'
+, corpo_email=
+'QXJjaGl2aWF6aW9uZQ==' 
+where id_processo in (18,19,20) and cod_evento='ARCAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99'
+, corpo_email=
+'UmljaGllc3RhIEludGVncmF6aW9uZQ==' 
+where id_processo in (18,19,20) and cod_evento='RICHINTA20AMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99'
+, corpo_email=
+'UmljaGllc3RhIEFkZW1waW1lbnRpIFJpbGFzY2lvIFByb3Z2ZWRpbWVudG8g' 
+where id_processo in (18,19,20) and cod_evento='RICHARPAMM ';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99'
+,  corpo_email=
+'UHJlYXZ2aXNvIERpbmllZ28gMTAgYmlz' 
+where id_processo in (18,19,20) and cod_evento='COMDINAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99' 
+, corpo_email=
+'UmlsYXNjaW8gUHJvdnZlZGltZW50bw==' 
+where id_processo in (18,19,20) and cod_evento='RILPDCAMM';
+
+update opencross.processi_eventi set oggetto_email=
+'Q29tdW5pY2F6aW9uZSByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99'
+, corpo_email=
+'RGluaWVnbyBEZWZpbml0aXZv' 
+where id_processo in (18,19,20) and cod_evento='DINDEFAMM';
+
+/*
+Evento integrazione (Tutti i processi)
+*/
+
+update opencross.processi_eventi set oggetto_email=
+'UmljZXZ1dGEgZGkgYXZ2ZW51dGEgYWNxdWlzaXppb25lIGRlbGxhIGRvY3VtZW50YXppb25lIGludGVncmF0aXZhIDwjaWYgcHJhdGljYS5ldmVudG9fY29ycmVudGUubm90ZT9oYXNfY29udGVudD4ke3ByYXRpY2EuZXZlbnRvX2NvcnJlbnRlLm5vdGUgfTwvI2lmPiByZWxhdGl2YSBhbGxhIHByYXRpY2EgJHtwcmF0aWNhLnRpcG99LSR7cHJhdGljYS5udW1lcm9fcHJhdGljYX0tJHtwcmF0aWNhLmFubm99'
+, corpo_email=
+'U2kgYXR0ZXN0YSBsYSByaWNlemlvbmUgZGVsbGEgZG9jdW1lbnRhemlvbmUgaW4gb2dnZXR0byBjaGUgw6ggc3RhdGEgcHJvdG9jb2xsYXRhIGluIGRhdGEgJHtwcmF0aWNhLmV2ZW50b19jb3JyZW50ZS5kYXRhX3Byb3RvY29sbG99IGNvbiBudW1lcm8gJHtwcmF0aWNhLmV2ZW50b19jb3JyZW50ZS5udW1lcm9fcHJvdG9jb2xsb30=' 
+where id_processo in (16,17,18,19,20,21,22,23,24,25,40,42,43) and cod_evento='PROCINT';

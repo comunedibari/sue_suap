@@ -175,7 +175,7 @@
             </c:if>
             <c:if test="${enablePraticheComunica }">
                 <li>
-                    <a class="split-button-href" title="<spring:message code="menu.gestionepratichecomunica"/>" href="${path}/comunica/index.htm"><spring:message code="menu.gestionepratichecomunica"/></a>
+                    <a class="split-button-href" title="<spring:message code="menu.gestionepratichecomunica"/>" href="${path}/comunica/index.htm?id_ente=${idEnte}"><spring:message code="menu.gestionepratichecomunica"/></a>
                 </li>
             </c:if>
             <c:if test="${enablePraticheSuapFvg }">

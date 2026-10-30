@@ -4,7 +4,31 @@
  */
 package it.wego.cross.controller;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.google.gson.Gson;
+
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.beans.grid.GridEntiBean;
 import it.wego.cross.beans.grid.GridEventoTemplateBean;
@@ -17,6 +41,7 @@ import it.wego.cross.beans.lookup.LookupTipoCollegio;
 import it.wego.cross.beans.search.SearchProcedimenti;
 import it.wego.cross.beans.search.SearchProcedimentiComuni;
 import it.wego.cross.constants.SessionConstants;
+import it.wego.cross.dto.AnagraficaDTO;
 import it.wego.cross.dto.CittadinanzaDTO;
 import it.wego.cross.dto.ComuneDTO;
 import it.wego.cross.dto.EnteDTO;
@@ -26,6 +51,7 @@ import it.wego.cross.dto.NazionalitaDTO;
 import it.wego.cross.dto.ProcedimentoDTO;
 import it.wego.cross.dto.ProvinciaDTO;
 import it.wego.cross.dto.UtenteMinifiedDTO;
+import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
 import it.wego.cross.dto.search.DestinatariDTO;
 import it.wego.cross.dto.search.FormaGiuridicaDTO;
 import it.wego.cross.dto.search.TipoCollegioDTO;
@@ -37,27 +63,9 @@ import it.wego.cross.service.EntiService;
 import it.wego.cross.service.PraticheService;
 import it.wego.cross.service.ProcedimentiService;
 import it.wego.cross.service.SearchService;
+import it.wego.cross.session.MultiSubSessionManager;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -90,11 +98,11 @@ public class SearchController extends AbstractController {
         Pratica pratica = null;
         try {
             if (idPratica == null) {
-                idPratica = (Integer) request.getSession().getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+                idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
             }
 
             if (idEvento == null) {
-                idEvento = (Integer) request.getSession().getAttribute(SessionConstants.EVENTO_SELEZIONATO);
+                idEvento = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.EVENTO_SELEZIONATO);
             }
             EventoDTO evento = praticheService.getDettaglioProcessoEvento(idEvento);
             pratica = praticheService.getPratica(idPratica);
@@ -220,10 +228,10 @@ public class SearchController extends AbstractController {
             json.setRows(nazionalita);
             model.addAttribute("json", new Gson().toJson(nazionalita));
         } catch (Exception e) {
-            String msg = "Impossibile effettuare la ricerca della cittadinanza.";
+            String msg = "Impossibile effettuare la ricerca della nazionalita.";
             GridEventoTemplateBean json = new GridEventoTemplateBean();
             json.setErrors(Arrays.asList(msg));
-            ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_SEARCH_CITTADINANZA, "Errore nell'esecuzione del controller /search/cittadinanza", e, null, utente);
+            ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_SEARCH_NAZIONALITA, "Errore nell'esecuzione del controller /search/nazionalita", e, null, utente);
             erroriAction.saveError(errore);
             model.addAttribute("json", json.toString());
             Log.APP.error(msg, e);
@@ -286,6 +294,160 @@ public class SearchController extends AbstractController {
         }
         return AJAX;
     }
+    
+    @RequestMapping(value = "/search/nome")
+    public String searchByName(Model model,
+    		HttpServletRequest request,
+    		@RequestParam("name") String name,
+    		@RequestParam(value="surname", required=false) String surname 
+    		) throws ParseException {
+    	Utente utente = utentiService.getUtenteConnesso(request);
+    	try {
+    		List<AnagraficaDTO> people = new ArrayList();
+    		if (!Utils.e(name)) {
+    			if(Utils.e(surname))
+    				people = searchService.findPersonalDataByName(name);
+    			else
+    				people = searchService.findPersonalDataWithDistinctNamesBySurnameAndName(surname, name);
+    		}
+    		
+    		Gson gson = new Gson();
+    		model.addAttribute("json", gson.toJson(people));
+    	} catch (Exception e) {
+    		String msg = "Impossibile effettuare la ricerca del nome.";
+    		GridEventoTemplateBean json = new GridEventoTemplateBean();
+    		json.setErrors(Arrays.asList(msg));
+    		ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_SEARCH_COGNOME, "Errore nell'esecuzione del controller /search/nome", e, null, utente);
+    		erroriAction.saveError(errore);
+    		model.addAttribute("json", json.toString());
+    		Log.APP.error(msg, e);
+    	}
+    	return AJAX;
+    }
+    @RequestMapping(value = "/search/cognome")
+    public String searchBySurname(Model model,
+            HttpServletRequest request,
+            @RequestParam("surname") String surname, 
+            @RequestParam(value="name", required=false) String name) throws ParseException {
+        Utente utente = utentiService.getUtenteConnesso(request);
+        try {
+            List<AnagraficaDTO> people = new ArrayList();
+            if (!Utils.e(surname)) {
+            	if(Utils.e(name))
+            		people = searchService.findPersonalDataBySurname(surname);
+            	else
+            		people = searchService.findPersonalDataWithDistinctSurnamesBySurnameAndName(surname, name);
+            }
+            
+            Gson gson = new Gson();
+            model.addAttribute("json", gson.toJson(people));
+        } catch (Exception e) {
+            String msg = "Impossibile effettuare la ricerca del cognome.";
+            GridEventoTemplateBean json = new GridEventoTemplateBean();
+            json.setErrors(Arrays.asList(msg));
+            ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_SEARCH_COGNOME, "Errore nell'esecuzione del controller /search/cognome", e, null, utente);
+            erroriAction.saveError(errore);
+            model.addAttribute("json", json.toString());
+            Log.APP.error(msg, e);
+        }
+        return AJAX;
+    }
+    
+    @RequestMapping(value = "/search/ragione_sociale")
+    public String searchByCompanyName(Model model,
+            HttpServletRequest request,
+            @RequestParam("company_name") String companyName) throws ParseException {
+        Utente utente = utentiService.getUtenteConnesso(request);
+        try {
+            List<AnagraficaDTO> people = new ArrayList();
+            if (!Utils.e(companyName)) 
+            	people = searchService.findPersonalDataByCompanyName(companyName);
+            
+            Gson gson = new Gson();
+            model.addAttribute("json", gson.toJson(people));
+        } catch (Exception e) {
+            String msg = "Impossibile effettuare la ricerca della ragione sociale.";
+            GridEventoTemplateBean json = new GridEventoTemplateBean();
+            json.setErrors(Arrays.asList(msg));
+            ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_SEARCH_RAGIONE_SOCIALE, "Errore nell'esecuzione del controller /search/ragione_sociale", e, null, utente);
+            erroriAction.saveError(errore);
+            model.addAttribute("json", json.toString());
+            Log.APP.error(msg, e);
+        }
+        return AJAX;
+    }
+    
+    @RequestMapping(value = "/search/codice_fiscale")
+    public String searchByTaxCodeOrVatNumber(Model model,
+            HttpServletRequest request,
+            @RequestParam("tax_code") String taxCode) throws ParseException {
+        Utente utente = utentiService.getUtenteConnesso(request);
+        try {
+            List<AnagraficaDTO> people = new ArrayList();
+            if (!Utils.e(taxCode)) 
+            	people = searchService.findPersonalDataByTaxCodeOrVatNumber(taxCode);
+            
+            Gson gson = new Gson();
+            model.addAttribute("json", gson.toJson(people));
+        } catch (Exception e) {
+            String msg = "Impossibile effettuare la ricerca del codice fiscale.";
+            GridEventoTemplateBean json = new GridEventoTemplateBean();
+            json.setErrors(Arrays.asList(msg));
+            ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_SEARCH_CODICE_FISCALE, "Errore nell'esecuzione del controller /search/codice_fiscale", e, null, utente);
+            erroriAction.saveError(errore);
+            model.addAttribute("json", json.toString());
+            Log.APP.error(msg, e);
+        }
+        return AJAX;
+    }
+    
+    @RequestMapping(value = "/search/rubrica/codice_fiscale")
+    public String searchByContactsTaxCode(Model model,
+            HttpServletRequest request,
+            @RequestParam("tax_code") String taxCode) throws ParseException {
+        Utente utente = utentiService.getUtenteConnesso(request);
+        try {
+            List<AnagraficaDTO> people = new ArrayList();
+            if (!Utils.e(taxCode)) 
+            	people = searchService.findPersonalDataByTaxCode(taxCode);
+            
+            Gson gson = new Gson();
+            model.addAttribute("json", gson.toJson(people));
+        } catch (Exception e) {
+            String msg = "Impossibile effettuare la ricerca del codice fiscale.";
+            GridEventoTemplateBean json = new GridEventoTemplateBean();
+            json.setErrors(Arrays.asList(msg));
+            ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_SEARCH_COMUNE, "Errore nell'esecuzione del controller /search/rubrica/codice_fiscale", e, null, utente);
+            erroriAction.saveError(errore);
+            model.addAttribute("json", json.toString());
+            Log.APP.error(msg, e);
+        }
+        return AJAX;
+    }
+    
+    @RequestMapping(value = "/search/rubrica/partita_iva")
+    public String searchByContactsVaxNumber(Model model,
+    		HttpServletRequest request,
+    		@RequestParam("vat_number") String vatNumber) throws ParseException {
+    	Utente utente = utentiService.getUtenteConnesso(request);
+    	try {
+    		List<AnagraficaDTO> people = new ArrayList();
+    		if (!Utils.e(vatNumber)) 
+    			people = searchService.findPersonalDataByVatNumber(vatNumber);
+    		
+    		Gson gson = new Gson();
+    		model.addAttribute("json", gson.toJson(people));
+    	} catch (Exception e) {
+    		String msg = "Impossibile effettuare la ricerca della partita iva.";
+    		GridEventoTemplateBean json = new GridEventoTemplateBean();
+    		json.setErrors(Arrays.asList(msg));
+    		ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_SEARCH_COMUNE, "Errore nell'esecuzione del controller /search/rubrica/partita_iva", e, null, utente);
+    		erroriAction.saveError(errore);
+    		model.addAttribute("json", json.toString());
+    		Log.APP.error(msg, e);
+    	}
+    	return AJAX;
+    }
 
     @RequestMapping(value = "/search/procedimentiComuni")
     public String searchProcedimentiComuni(Model model,
@@ -336,6 +498,31 @@ public class SearchController extends AbstractController {
         return AJAX;
     }
 
+    @RequestMapping(value = "/search/addressesByStreetName")
+    public String searchByStreetName(Model model,
+            HttpServletRequest request,
+            @RequestParam("steet_name") String StreetName, 
+            @RequestParam("is_start_from") Boolean isStartFrom) throws ParseException {
+        Utente utente = utentiService.getUtenteConnesso(request);
+        try {
+            List<IndirizzoInterventoDTO> research = new ArrayList();
+            if (!Utils.e(StreetName)) 
+            	research = searchService.findCadastralAddressesByStreetName(StreetName, isStartFrom);
+            
+            Gson gson = new Gson();
+            model.addAttribute("json", gson.toJson(research));
+        } catch (Exception e) {
+            String msg = "Impossibile effettuare la ricerca dell'indirizzo.";
+            GridEventoTemplateBean json = new GridEventoTemplateBean();
+            json.setErrors(Arrays.asList(msg));
+            ErroreDTO errore = erroriAction.getError(it.wego.cross.constants.Error.ERRORE_SEARCH_ADDRESS, "Errore nell'esecuzione del controller /search/addresses", e, null, utente);
+            erroriAction.saveError(errore);
+            model.addAttribute("json", json.toString());
+            Log.APP.error(msg, e);
+        }
+        return AJAX;
+    }
+    
     @RequestMapping(value = "/search/ente", method = RequestMethod.GET, headers = "Accept=*/*")
     public ResponseEntity<String> searchEnti(HttpServletRequest request,
             @ModelAttribute("comune") ComuneDTO comune,
@@ -385,7 +572,7 @@ public class SearchController extends AbstractController {
         return new ResponseEntity<String>(gson.toJson(json), responseHeaders, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/search/entiProcedimenti", method = RequestMethod.GET, headers = "Accept=*/*")
+    @RequestMapping(value = "/search/entiProcedimenti", method = RequestMethod.POST, headers = "Accept=*/*")
     public ResponseEntity<String> searchEntiProcedimenti(HttpServletRequest request,
             @ModelAttribute("comune") ProcedimentoDTO proc,
             BindingResult result) throws ParseException {

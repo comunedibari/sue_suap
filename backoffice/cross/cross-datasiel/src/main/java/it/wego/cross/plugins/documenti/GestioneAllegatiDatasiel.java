@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.rpc.ServiceException;
@@ -35,13 +36,13 @@ public class GestioneAllegatiDatasiel implements GestioneAllegati {
 
     @Override
     public void add(Allegati allegato, Enti ente, LkComuni comune) throws Exception {
-        //DO NOTHING
-//        if (allegato.getIdFileEsterno() == null || allegato.getIdFileEsterno().trim().equals("")) {
-////            String id = protocolloAction.salvaAllegato(allegato);
-//            allegato.setIdFileEsterno(allegato.getId().toString());
-//        }
     }
 
+
+	@Override
+	public void add(Allegati allegato, Enti ente, LkComuni comune, Date date) throws Exception {
+	}
+	
     @Override
     public byte[] getFileContent(Allegati allegato, Enti ente, LkComuni comune) throws Exception {
         if (!Utils.e(allegato.getIdFileEsterno())) {

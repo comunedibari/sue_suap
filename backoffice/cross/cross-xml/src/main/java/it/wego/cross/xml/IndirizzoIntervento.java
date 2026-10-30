@@ -1,8 +1,8 @@
 //
-// Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2014.02.25 alle 05:44:42 PM CET 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2024.04.16 alle 09:52:47 AM CEST 
 //
 
 
@@ -27,7 +27,11 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="counter" type="{http://www.w3.org/2001/XMLSchema}integer"/>
  *         &lt;element name="id_indirizzo_intervento" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
+ *         &lt;element name="id_comune" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
+ *         &lt;element name="des_comune" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="localita" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="id_provincia" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
+ *         &lt;element name="des_provincia" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="id_dug" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
  *         &lt;element name="indirizzo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="civico" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -58,7 +62,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "indirizzo_intervento", propOrder = {
     "counter",
     "idIndirizzoIntervento",
+    "idComune",
+    "desComune",
     "localita",
+    "idProvincia",
+    "desProvincia",
     "idDug",
     "indirizzo",
     "civico",
@@ -84,7 +92,15 @@ public class IndirizzoIntervento {
     protected BigInteger counter;
     @XmlElement(name = "id_indirizzo_intervento")
     protected BigInteger idIndirizzoIntervento;
+    @XmlElement(name = "id_comune")
+    protected BigInteger idComune;
+    @XmlElement(name = "des_comune")
+    protected String desComune;
     protected String localita;
+    @XmlElement(name = "id_provincia")
+    protected BigInteger idProvincia;
+    @XmlElement(name = "des_provincia")
+    protected String desProvincia;
     @XmlElement(name = "id_dug")
     protected BigInteger idDug;
     protected String indirizzo;
@@ -114,7 +130,7 @@ public class IndirizzoIntervento {
     protected String confermato;
 
     /**
-     * Recupera il valore della proprietà counter.
+     * Recupera il valore della propriet� counter.
      * 
      * @return
      *     possible object is
@@ -126,7 +142,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà counter.
+     * Imposta il valore della propriet� counter.
      * 
      * @param value
      *     allowed object is
@@ -138,7 +154,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà idIndirizzoIntervento.
+     * Recupera il valore della propriet� idIndirizzoIntervento.
      * 
      * @return
      *     possible object is
@@ -150,7 +166,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà idIndirizzoIntervento.
+     * Imposta il valore della propriet� idIndirizzoIntervento.
      * 
      * @param value
      *     allowed object is
@@ -162,7 +178,55 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà localita.
+     * Recupera il valore della propriet� idComune.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getIdComune() {
+        return idComune;
+    }
+
+    /**
+     * Imposta il valore della propriet� idComune.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setIdComune(BigInteger value) {
+        this.idComune = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� desComune.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDesComune() {
+        return desComune;
+    }
+
+    /**
+     * Imposta il valore della propriet� desComune.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDesComune(String value) {
+        this.desComune = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� localita.
      * 
      * @return
      *     possible object is
@@ -174,7 +238,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà localita.
+     * Imposta il valore della propriet� localita.
      * 
      * @param value
      *     allowed object is
@@ -186,7 +250,55 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà idDug.
+     * Recupera il valore della propriet� idProvincia.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getIdProvincia() {
+        return idProvincia;
+    }
+
+    /**
+     * Imposta il valore della propriet� idProvincia.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setIdProvincia(BigInteger value) {
+        this.idProvincia = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� desProvincia.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDesProvincia() {
+        return desProvincia;
+    }
+
+    /**
+     * Imposta il valore della propriet� desProvincia.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDesProvincia(String value) {
+        this.desProvincia = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� idDug.
      * 
      * @return
      *     possible object is
@@ -198,7 +310,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà idDug.
+     * Imposta il valore della propriet� idDug.
      * 
      * @param value
      *     allowed object is
@@ -210,7 +322,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà indirizzo.
+     * Recupera il valore della propriet� indirizzo.
      * 
      * @return
      *     possible object is
@@ -222,7 +334,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà indirizzo.
+     * Imposta il valore della propriet� indirizzo.
      * 
      * @param value
      *     allowed object is
@@ -234,7 +346,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà civico.
+     * Recupera il valore della propriet� civico.
      * 
      * @return
      *     possible object is
@@ -246,7 +358,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà civico.
+     * Imposta il valore della propriet� civico.
      * 
      * @param value
      *     allowed object is
@@ -258,7 +370,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà altreInformazioniIndirizzo.
+     * Recupera il valore della propriet� altreInformazioniIndirizzo.
      * 
      * @return
      *     possible object is
@@ -270,7 +382,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà altreInformazioniIndirizzo.
+     * Imposta il valore della propriet� altreInformazioniIndirizzo.
      * 
      * @param value
      *     allowed object is
@@ -282,7 +394,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà cap.
+     * Recupera il valore della propriet� cap.
      * 
      * @return
      *     possible object is
@@ -294,7 +406,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà cap.
+     * Imposta il valore della propriet� cap.
      * 
      * @param value
      *     allowed object is
@@ -306,7 +418,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà codiceVia.
+     * Recupera il valore della propriet� codiceVia.
      * 
      * @return
      *     possible object is
@@ -318,7 +430,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà codiceVia.
+     * Imposta il valore della propriet� codiceVia.
      * 
      * @param value
      *     allowed object is
@@ -330,7 +442,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà codiceCivico.
+     * Recupera il valore della propriet� codiceCivico.
      * 
      * @return
      *     possible object is
@@ -342,7 +454,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà codiceCivico.
+     * Imposta il valore della propriet� codiceCivico.
      * 
      * @param value
      *     allowed object is
@@ -354,7 +466,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà internoNumero.
+     * Recupera il valore della propriet� internoNumero.
      * 
      * @return
      *     possible object is
@@ -366,7 +478,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà internoNumero.
+     * Imposta il valore della propriet� internoNumero.
      * 
      * @param value
      *     allowed object is
@@ -378,7 +490,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà internoLettera.
+     * Recupera il valore della propriet� internoLettera.
      * 
      * @return
      *     possible object is
@@ -390,7 +502,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà internoLettera.
+     * Imposta il valore della propriet� internoLettera.
      * 
      * @param value
      *     allowed object is
@@ -402,7 +514,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà internoScala.
+     * Recupera il valore della propriet� internoScala.
      * 
      * @return
      *     possible object is
@@ -414,7 +526,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà internoScala.
+     * Imposta il valore della propriet� internoScala.
      * 
      * @param value
      *     allowed object is
@@ -426,7 +538,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà lettera.
+     * Recupera il valore della propriet� lettera.
      * 
      * @return
      *     possible object is
@@ -438,7 +550,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà lettera.
+     * Imposta il valore della propriet� lettera.
      * 
      * @param value
      *     allowed object is
@@ -450,7 +562,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Recupera il valore della proprietà colore.
+     * Recupera il valore della propriet� colore.
      * 
      * @return
      *     possible object is
@@ -462,7 +574,7 @@ public class IndirizzoIntervento {
     }
 
     /**
-     * Imposta il valore della proprietà colore.
+     * Imposta il valore della propriet� colore.
      * 
      * @param value
      *     allowed object is
@@ -473,51 +585,148 @@ public class IndirizzoIntervento {
         this.colore = value;
     }
 
+    /**
+     * Recupera il valore della propriet� latitudine.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
     public String getLatitudine() {
         return latitudine;
     }
 
+    /**
+     * Imposta il valore della propriet� latitudine.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
     public void setLatitudine(String value) {
         this.latitudine = value;
     }
 
+    /**
+     * Recupera il valore della propriet� longitudine.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
     public String getLongitudine() {
         return longitudine;
     }
 
+    /**
+     * Imposta il valore della propriet� longitudine.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
     public void setLongitudine(String value) {
         this.longitudine = value;
     }
 
+    /**
+     * Recupera il valore della propriet� datoEsteso1.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
     public String getDatoEsteso1() {
         return datoEsteso1;
     }
 
+    /**
+     * Imposta il valore della propriet� datoEsteso1.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
     public void setDatoEsteso1(String value) {
         this.datoEsteso1 = value;
     }
 
+    /**
+     * Recupera il valore della propriet� datoEsteso2.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
     public String getDatoEsteso2() {
         return datoEsteso2;
     }
 
+    /**
+     * Imposta il valore della propriet� datoEsteso2.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
     public void setDatoEsteso2(String value) {
         this.datoEsteso2 = value;
     }
 
-    public String getConfermato() {
-        return confermato;
-    }
-
-    public void setConfermato(String confermato) {
-        this.confermato = confermato;
-    }
+    /**
+     * Recupera il valore della propriet� piano.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
     public String getPiano() {
         return piano;
     }
 
-    public void setPiano(String piano) {
-        this.piano = piano;
-    }    
+    /**
+     * Imposta il valore della propriet� piano.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPiano(String value) {
+        this.piano = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� confermato.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getConfermato() {
+        return confermato;
+    }
+
+    /**
+     * Imposta il valore della propriet� confermato.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setConfermato(String value) {
+        this.confermato = value;
+    }
 
 }

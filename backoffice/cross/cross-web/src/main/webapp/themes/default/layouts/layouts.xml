@@ -16,6 +16,7 @@
         <put-attribute name="body_error"    cascade="true" value="/themes/default/views/main/body/error.jsp"  />
         <put-attribute name="body_footer"   cascade="true" type="string"  value=""/>
         <put-attribute name="footer"        cascade="true" value="/themes/default/views/main/footer.jsp"/>
+        <put-attribute name="customization"	cascade="true" value="" type="string"/>
     </definition>
     
     <definition name="ajax" template="/themes/default/views/ajax.jsp">

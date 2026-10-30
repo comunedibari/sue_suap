@@ -1,8 +1,8 @@
 //
-// Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2014.02.25 alle 01:11:35 PM CET 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2024.04.16 alle 09:52:47 AM CEST 
 //
 
 
@@ -17,7 +17,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the it.wego.cross.xml package. 
+ * generated in the it.wego.cross package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -32,10 +32,9 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _Pratica_QNAME = new QName("http://www.wego.it/cross", "pratica");
-    private final static QName _PraticaCodEnte_QNAME = new QName("http://www.wego.it/cross", "cod_ente");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: it.wego.cross.xml
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: it.wego.cross
      * 
      */
     public ObjectFactory() {
@@ -50,67 +49,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Immobile }
+     * Create an instance of {@link DirittiSegreteriaGaranzie }
      * 
      */
-    public Immobile createImmobile() {
-        return new Immobile();
-    }
-
-    /**
-     * Create an instance of {@link Recapito }
-     * 
-     */
-    public Recapito createRecapito() {
-        return new Recapito();
-    }
-
-    /**
-     * Create an instance of {@link Evento }
-     * 
-     */
-    public Evento createEvento() {
-        return new Evento();
-    }
-
-    /**
-     * Create an instance of {@link Scadenze }
-     * 
-     */
-    public Scadenze createScadenze() {
-        return new Scadenze();
-    }
-
-    /**
-     * Create an instance of {@link Scadenza }
-     * 
-     */
-    public Scadenza createScadenza() {
-        return new Scadenza();
-    }
-
-    /**
-     * Create an instance of {@link Eventi }
-     * 
-     */
-    public Eventi createEventi() {
-        return new Eventi();
-    }
-
-    /**
-     * Create an instance of {@link IndirizziIntervento }
-     * 
-     */
-    public IndirizziIntervento createIndirizziIntervento() {
-        return new IndirizziIntervento();
-    }
-
-    /**
-     * Create an instance of {@link IndirizzoIntervento }
-     * 
-     */
-    public IndirizzoIntervento createIndirizzoIntervento() {
-        return new IndirizzoIntervento();
+    public DirittiSegreteriaGaranzie createDirittiSegreteriaGaranzie() {
+        return new DirittiSegreteriaGaranzie();
     }
 
     /**
@@ -122,51 +65,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Procedimenti }
+     * Create an instance of {@link Eventi }
      * 
      */
-    public Procedimenti createProcedimenti() {
-        return new Procedimenti();
-    }
-
-    /**
-     * Create an instance of {@link Anagrafiche }
-     * 
-     */
-    public Anagrafiche createAnagrafiche() {
-        return new Anagrafiche();
-    }
-
-    /**
-     * Create an instance of {@link Anagrafica }
-     * 
-     */
-    public Anagrafica createAnagrafica() {
-        return new Anagrafica();
-    }
-
-    /**
-     * Create an instance of {@link Recapiti }
-     * 
-     */
-    public Recapiti createRecapiti() {
-        return new Recapiti();
-    }
-
-    /**
-     * Create an instance of {@link Procedimento }
-     * 
-     */
-    public Procedimento createProcedimento() {
-        return new Procedimento();
-    }
-
-    /**
-     * Create an instance of {@link DatiCatastali }
-     * 
-     */
-    public DatiCatastali createDatiCatastali() {
-        return new DatiCatastali();
+    public Eventi createEventi() {
+        return new Eventi();
     }
 
     /**
@@ -178,21 +81,220 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Evento }
+     * 
+     */
+    public Evento createEvento() {
+        return new Evento();
+    }
+
+    /**
+     * Create an instance of {@link Recapito }
+     * 
+     */
+    public Recapito createRecapito() {
+        return new Recapito();
+    }
+
+    /**
+     * Create an instance of {@link DirittiSegreteriaGenerali }
+     * 
+     */
+    public DirittiSegreteriaGenerali createDirittiSegreteriaGenerali() {
+        return new DirittiSegreteriaGenerali();
+    }
+
+    /**
+     * Create an instance of {@link ContributiCosto }
+     * 
+     */
+    public ContributiCosto createContributiCosto() {
+        return new ContributiCosto();
+    }
+
+    /**
+     * Create an instance of {@link EntiEvento }
+     * 
+     */
+    public EntiEvento createEntiEvento() {
+        return new EntiEvento();
+    }
+
+    /**
+     * Create an instance of {@link IndirizziIntervento }
+     * 
+     */
+    public IndirizziIntervento createIndirizziIntervento() {
+        return new IndirizziIntervento();
+    }
+
+    /**
+     * Create an instance of {@link Anagrafica }
+     * 
+     */
+    public Anagrafica createAnagrafica() {
+        return new Anagrafica();
+    }
+
+    /**
+     * Create an instance of {@link DirittiSegreteria }
+     * 
+     */
+    public DirittiSegreteria createDirittiSegreteria() {
+        return new DirittiSegreteria();
+    }
+
+    /**
+     * Create an instance of {@link Scadenze }
+     * 
+     */
+    public Scadenze createScadenze() {
+        return new Scadenze();
+    }
+
+    /**
+     * Create an instance of {@link Anagrafiche }
+     * 
+     */
+    public Anagrafiche createAnagrafiche() {
+        return new Anagrafiche();
+    }
+
+    /**
+     * Create an instance of {@link EnteEvento }
+     * 
+     */
+    public EnteEvento createEnteEvento() {
+        return new EnteEvento();
+    }
+
+    /**
+     * Create an instance of {@link Scadenza }
+     * 
+     */
+    public Scadenza createScadenza() {
+        return new Scadenza();
+    }
+
+    /**
+     * Create an instance of {@link DatiCatastali }
+     * 
+     */
+    public DatiCatastali createDatiCatastali() {
+        return new DatiCatastali();
+    }
+
+    /**
+     * Create an instance of {@link Recapiti }
+     * 
+     */
+    public Recapiti createRecapiti() {
+        return new Recapiti();
+    }
+
+    /**
+     * Create an instance of {@link OneriUrbanizzazione }
+     * 
+     */
+    public OneriUrbanizzazione createOneriUrbanizzazione() {
+        return new OneriUrbanizzazione();
+    }
+
+    /**
+     * Create an instance of {@link DirittiSegreteriaRate }
+     * 
+     */
+    public DirittiSegreteriaRate createDirittiSegreteriaRate() {
+        return new DirittiSegreteriaRate();
+    }
+
+    /**
+     * Create an instance of {@link Immobile }
+     * 
+     */
+    public Immobile createImmobile() {
+        return new Immobile();
+    }
+
+    /**
+     * Create an instance of {@link ServiziTariffaIndividuale }
+     * 
+     */
+    public ServiziTariffaIndividuale createServiziTariffaIndividuale() {
+        return new ServiziTariffaIndividuale();
+    }
+
+    /**
+     * Create an instance of {@link DirittiSegreteriaRata }
+     * 
+     */
+    public DirittiSegreteriaRata createDirittiSegreteriaRata() {
+        return new DirittiSegreteriaRata();
+    }
+
+    /**
+     * Create an instance of {@link Enti }
+     * 
+     */
+    public Enti createEnti() {
+        return new Enti();
+    }
+
+    /**
+     * Create an instance of {@link AnagraficheEvento }
+     * 
+     */
+    public AnagraficheEvento createAnagraficheEvento() {
+        return new AnagraficheEvento();
+    }
+
+    /**
+     * Create an instance of {@link Ente }
+     * 
+     */
+    public Ente createEnte() {
+        return new Ente();
+    }
+
+    /**
+     * Create an instance of {@link Procedimenti }
+     * 
+     */
+    public Procedimenti createProcedimenti() {
+        return new Procedimenti();
+    }
+
+    /**
+     * Create an instance of {@link IndirizzoIntervento }
+     * 
+     */
+    public IndirizzoIntervento createIndirizzoIntervento() {
+        return new IndirizzoIntervento();
+    }
+
+    /**
+     * Create an instance of {@link AnagraficaEvento }
+     * 
+     */
+    public AnagraficaEvento createAnagraficaEvento() {
+        return new AnagraficaEvento();
+    }
+
+    /**
+     * Create an instance of {@link Procedimento }
+     * 
+     */
+    public Procedimento createProcedimento() {
+        return new Procedimento();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Pratica }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.wego.it/cross", name = "pratica")
     public JAXBElement<Pratica> createPratica(Pratica value) {
         return new JAXBElement<Pratica>(_Pratica_QNAME, Pratica.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.wego.it/cross", name = "cod_ente", scope = Pratica.class)
-    public JAXBElement<String> createPraticaCodEnte(String value) {
-        return new JAXBElement<String>(_PraticaCodEnte_QNAME, String.class, Pratica.class, value);
     }
 
 }

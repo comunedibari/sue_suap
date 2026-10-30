@@ -33,7 +33,7 @@
                                 <label style="cursor:default" class="required"><spring:message code="comunica.upload.label"/></label> 
                                 </span>
                                 <input id="filePratica" type="file" name="filePratica" accept="application/xml, text/xml"/>  <br>
-                                
+                                <input type="hidden" id="id_ente" name="id_ente" value="${idEnte}" />
                                 </div>
                             <div class="buttonHolder">
                                 <button value="Carica" class="primaryAction" name="submit" type="submit"><spring:message code="comunica.upload.button"/></button>
@@ -52,8 +52,8 @@
                                 <span>
                                 <label style="cursor:default" class="required"><spring:message code="comunica.uploadSue.label"/></label> 
                                 </span>
-                                <input id="filePratica" type="file" name="filePratica" accept="application/xml, text/xml"/>  <br>
-                                
+                                <input id="filePratica" type="file" name="filePratica" accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"/>  <br>
+                                <input type="hidden" id="id_ente" name="id_ente" value="${idEnte}" />                                
                                 </div>
                             <div class="buttonHolder">
                                 <button value="Carica" class="primaryAction" name="submit" type="submit"><spring:message code="comunica.upload.button"/></button>

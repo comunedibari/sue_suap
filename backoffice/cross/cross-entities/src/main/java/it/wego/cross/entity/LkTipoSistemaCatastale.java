@@ -40,8 +40,8 @@ public class LkTipoSistemaCatastale implements Serializable {
     private Integer idTipoSistemaCatastale;
     @Column(name = "descrizione")
     private String descrizione;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoSistemaCatastale")
-    private List<DatiCatastali> datiCatastaliList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoSistemaCatastale")
+//    private List<DatiCatastali> datiCatastaliList;
 
     public LkTipoSistemaCatastale() {
     }
@@ -66,14 +66,14 @@ public class LkTipoSistemaCatastale implements Serializable {
         this.descrizione = descrizione;
     }
 
-    @XmlTransient
-    public List<DatiCatastali> getDatiCatastaliList() {
-        return datiCatastaliList;
-    }
-
-    public void setDatiCatastaliList(List<DatiCatastali> datiCatastaliList) {
-        this.datiCatastaliList = datiCatastaliList;
-    }
+//    @XmlTransient
+//    public List<DatiCatastali> getDatiCatastaliList() {
+//        return datiCatastaliList;
+//    }
+//
+//    public void setDatiCatastaliList(List<DatiCatastali> datiCatastaliList) {
+//        this.datiCatastaliList = datiCatastaliList;
+//    }
 
     @Override
     public int hashCode() {

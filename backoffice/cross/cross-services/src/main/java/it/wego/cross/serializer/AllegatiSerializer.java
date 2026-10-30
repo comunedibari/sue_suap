@@ -134,11 +134,13 @@ public class AllegatiSerializer {
         Allegato allegato = new Allegato();
         allegato.setDescrizione(a.getDescrizione());
         byte[] fileSuDisco;
+        
         if (!Strings.isNullOrEmpty(a.getPathFile())) {
             fileSuDisco = FileUtils.getFileContent(new File(a.getPathFile()));
         } else {
             fileSuDisco = a.getFile();
         }
+        
         allegato.setId(a.getId());
         allegato.setIdEsterno(a.getIdFileEsterno());
         allegato.setFile(fileSuDisco);

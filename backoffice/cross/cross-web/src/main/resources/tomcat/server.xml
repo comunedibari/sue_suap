@@ -45,85 +45,28 @@
                   factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
                   pathname="conf/tomcat-users.xml" />
 			  
-        <!--        <Resource name="jdbc/CrossDS" auth="Container"
-        type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://opendesk-eco:3306/opencross?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-        username="cross" password="cr0zzD$" maxActive="20" maxIdle="10"
-        validationQuery="SELECT 1" validationQueryTimeout="-1"
-        testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
-        maxWait="-1"/>-->
+      
           
                 <Resource name="jdbc/CrossDS" auth="Container"
         type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
         url="jdbc:mysql://genova.ud.wego.it:3306/cross?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-        username="people_demo" password="people_demo" maxActive="20" maxIdle="10"
+        username="" password="" maxActive="20" maxIdle="10"
         validationQuery="SELECT 1" validationQueryTimeout="-1"
         testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
         maxWait="-1"/>
                             
-<!--        <Resource name="jdbc/CrossDS" auth="Container"
-                                              type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
-                                              url="jdbc:mysql://192.168.152.47:3306/cross?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-                                              username="people_demo" password="people_demo" maxActive="20" maxIdle="10"
-                                              validationQuery="SELECT 1" validationQueryTimeout="-1"
-                                              testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
-                                              maxWait="-1"/>-->
-          
-        <!--                <Resource name="jdbc/CrossDS" auth="Container"
-        type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/cross_genova?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-        username="root" password="548470" maxActive="20" maxIdle="10"
-        validationQuery="SELECT 1" validationQueryTimeout="-1"
-        testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
-        maxWait="-1"/>-->
-        
-<!--                        <Resource name="jdbc/CrossDS" auth="Container"
-        type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://aosta.ud.wego.it:3306/opencross?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-        username="people_demo" password="people_demo" maxActive="20" maxIdle="10"
-        validationQuery="SELECT 1" validationQueryTimeout="-1"
-        testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
-        maxWait="-1"/>-->
+
         
         <Resource name="jdbc/ActivitiDS" auth="Container"
                   type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
                   url="jdbc:mysql://localhost:3306/activiti"
-                  username="root" password="548470" maxActive="20" maxIdle="10"
+                  username="" password="" maxActive="20" maxIdle="10"
                   maxWait="-1"/>
         
         
-        <!--        <Resource       driverClassName="oracle.jdbc.driver.OracleDriver"
-        factory="org.apache.commons.dbcp.BasicDataSourceFactory"
-        logAbandoned="true"
-        maxActive="200"
-        maxIdle="100"
-        maxWait="-1"
-        name="jdbc/edilgo"
-        password="insiel_psw"
-        removeAbandoned="false"
-        removeAbandonedTimeout="600"
-        type="javax.sql.DataSource"
-        url="jdbc:oracle:thin:@10.101.1.30:1521:TEST"
-        username="insiel"
-        SetBigStringTryClob="true"
-        validationQuery="select count(*) from DUAL"/>-->
+      
 
-                  
-        <!--        <Resource name="jdbc/CrossDS" auth="Container"
-        type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://aosta.ud.wego.it:3306/opencross?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-        username="people_demo" password="people_demo" maxActive="20" maxIdle="10"
-        validationQuery="SELECT 1" validationQueryTimeout="-1"
-        testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
-        maxWait="-1"/>-->
-                                 
-        <!--        <Resource name="jdbc/CrossDS" auth="Container"
-        type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://liguria.ud.wego.it:3314/cross?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-        username="people_demo" password="people_demo" maxActive="20" maxIdle="10"
-        validationQuery="SELECT 1" validationQueryTimeout="-1"
-        testOnBorrow="true" testOnReturn="false" removeAbandoned="true"
-        maxWait="-1"/>-->
+      
 
     </GlobalNamingResources>
 

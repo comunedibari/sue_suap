@@ -71,7 +71,7 @@ public class ExportData {
    */
   private static final Logger logger = LoggerFactory.getLogger(ExportData.class);
 
-   private String connectionString = "jdbc:mysql://localhost:3306/capeople?user=people_demo&password=people_demo";
+   private String connectionString = "jdbc:mysql://localhost:3306/capeople?user=&password=";
   //private String driverClassName = "oracle.jdbc.OracleDriver";
 
   private String driverClassName = "org.gjt.mm.mysql.Driver";

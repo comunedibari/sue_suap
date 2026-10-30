@@ -1,0 +1,5 @@
+CREATE TABLE qrtz_cron_triggers ( id int,
+TRIGGER_NAME varchar(200) NOT NULL,
+TRIGGER_GROUP varchar(200) NOT NULL,
+CRON_EXPRESSION varchar(120) NOT NULL,
+TIME_ZONE_ID varchar(80) DEFAULT NULL)

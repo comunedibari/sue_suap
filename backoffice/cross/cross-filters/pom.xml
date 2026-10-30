@@ -8,15 +8,21 @@
 	<version>1.0</version>
 	<packaging>jar</packaging>
 	<name>cross-filters</name>
-	<!-- <distributionManagement> <repository> <id>ygg.repo</id> <url>http://maven.ud.wego.it:8081/nexus/content/repositories/releases</url> 
-		</repository> <snapshotRepository> <id>ygg.snapshots</id> <url>http://maven.ud.wego.it:8081/nexus/content/repositories/snapshots</url> 
-		</snapshotRepository> </distributionManagement> -->
+
 	<properties>
 		<cas.client.core.version>3.3.3</cas.client.core.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+    	<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>	
 		
 		
 	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -28,43 +34,42 @@
 			<artifactId>feframework</artifactId>
 			<version>2.5</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.jasig.cas</groupId> -->
-<!-- 			<artifactId>cas-client-core</artifactId> -->
-<!-- 			<version>3.1.2</version> -->
-<!-- 		</dependency>  -->
 		<dependency>
 			<groupId>org.jasig.cas.client</groupId>
 			<artifactId>cas-client-core</artifactId>
 			<version>${cas.client.core.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.hamcrest</groupId>
+		    <artifactId>hamcrest-core</artifactId>
+		    <version>2.2</version>
+		    <scope>test</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.hamcrest</groupId>
+		    <artifactId>hamcrest-all</artifactId>
+		    <version>1.3</version>
+		    <scope>test</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-module-junit4</artifactId>
+		    <version>2.0.9</version>
+		    <scope>test</scope>
+         	 <exclusions>
+		        <exclusion>
+		          <groupId>junit</groupId>
+		    			<artifactId>junit</artifactId>
+		        </exclusion>
+	      </exclusions> 
+		</dependency>
+		<dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-api-mockito2</artifactId>
+		    <version>2.0.9</version>
+		    <scope>test</scope>
+		</dependency>
 	</dependencies>
-	<build>
-		<plugins>
-<!-- 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-					<source>1.6</source>
-					<target>1.6</target>
-					<debug>true</debug>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.3</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> -->
-		</plugins>
-	</build>
 </project>

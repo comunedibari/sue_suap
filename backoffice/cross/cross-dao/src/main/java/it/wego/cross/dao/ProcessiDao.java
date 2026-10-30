@@ -47,6 +47,13 @@ public class ProcessiDao {
     @PersistenceContext
     private EntityManager em;
 
+    
+    public ProcessiDao(){}
+    
+    public ProcessiDao(EntityManager em) {
+    	this.em = em;
+    }
+
     public void insert(Processi processo) throws Exception {
         em.persist(processo);
     }

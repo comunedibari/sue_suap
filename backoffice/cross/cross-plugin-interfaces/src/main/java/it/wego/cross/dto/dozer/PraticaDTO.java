@@ -5,8 +5,13 @@
 package it.wego.cross.dto.dozer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
+import it.wego.cross.dto.Cartiglio;
+
 
 /**
  *
@@ -52,7 +57,14 @@ public class PraticaDTO implements Serializable {
     private String tipoInterventoSuap;
     private String tipoProcedimentoSuap;
     private Date data_prot_suap;
-
+    private String descrizioneIntervento;
+    private String tipoPratica;
+    private Integer numeroPratica;
+    private Integer anno;
+    private Cartiglio cartiglio;
+    private Date dataUltimoEventoEsterno;
+    private List<PraticaDTO> linkedToList;
+    
 	public String getProt_suap() {
 		return prot_suap;
 	}
@@ -359,4 +371,79 @@ public class PraticaDTO implements Serializable {
 		this.data_prot_suap = data_prot_suap;
 	}
 
+	public String getDescrizioneIntervento() {
+		return descrizioneIntervento;
+	}
+
+	public void setDescrizioneIntervento(String descrizioneIntervento) {
+		this.descrizioneIntervento = descrizioneIntervento;
+	}
+
+	public String getTipoPratica() {
+		return tipoPratica;
+	}
+
+	public void setTipoPratica(String tipoPratica) {
+		this.tipoPratica = tipoPratica;
+	}
+	
+
+	public Integer getNumeroPratica() {
+		return numeroPratica;
+	}
+
+	public void setNumeroPratica(Integer numeroPratica) {
+		this.numeroPratica = numeroPratica;
+	}
+
+	public Integer getAnno() {
+		return anno;
+	}
+
+	public void setAnno(Integer anno) {
+		this.anno = anno;
+	}
+
+	public Cartiglio getCartiglio() {
+		return cartiglio;
+	}
+
+	public void setCartiglio(Cartiglio cartiglio) {
+		this.cartiglio = cartiglio;
+	}
+
+	public Date getDataUltimoEventoEsterno() {
+		return dataUltimoEventoEsterno;
+	}
+
+	public void setDataUltimoEventoEsterno(Date dataUltimoEventoEsterno) {
+		this.dataUltimoEventoEsterno = dataUltimoEventoEsterno;
+	}
+
+	public List<PraticaDTO> getLinkedToList() {
+		if(linkedToList == null)
+			linkedToList = new ArrayList<>();
+		return linkedToList;
+	}
+
+	public void setLinkedToList(List<PraticaDTO> linkedToList) {
+		this.linkedToList = linkedToList;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PraticaDTO other = (PraticaDTO) obj;
+		return Objects.equals(idPratica, other.idPratica);
+	}
+
+	@Override
+	public String toString() {
+		return "PraticaDTO [idPratica=" + idPratica +"]";
+	}
 }

@@ -11,6 +11,7 @@ package it.wego.cross.xml.anagrafetributaria.edilizia;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -55,8 +56,14 @@ public class Soggetto {
     protected String codiceFiscale;
     protected SoggettoFisico soggettoFisico;
     protected SoggettoGiuridico soggettoGiuridico;
+    @XmlTransient
+    private boolean isChosen = false;
 
-    /**
+    public boolean isChosen() {
+		return isChosen;
+	}
+
+	/**
      * Recupera il valore della proprieta' codiceFiscale.
      * 
      * @return
@@ -101,6 +108,7 @@ public class Soggetto {
      *     
      */
     public void setSoggettoFisico(SoggettoFisico value) {
+    	isChosen = true;
         this.soggettoFisico = value;
     }
 
@@ -125,6 +133,7 @@ public class Soggetto {
      *     
      */
     public void setSoggettoGiuridico(SoggettoGiuridico value) {
+    	isChosen = true;
         this.soggettoGiuridico = value;
     }
 

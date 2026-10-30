@@ -1,0 +1,11 @@
+target/
+
+artefatto/
+
+**/\.classpath
+**/target/
+**\.project
+
+artefatto_collaudo/
+
+artefatto_produzione_bari/

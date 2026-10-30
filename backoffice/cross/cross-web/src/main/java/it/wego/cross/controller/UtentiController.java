@@ -3,6 +3,7 @@ package it.wego.cross.controller;
 import com.google.common.base.Strings;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.UtentiAction;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.JsonResponse;
 import it.wego.cross.beans.ProcedimentoPermessiBean;
 import it.wego.cross.beans.grid.GridProcedimentiEnte;
@@ -152,6 +153,7 @@ public class UtentiController extends AbstractController {
         return HOMEPAGE_UTENTI;
     }
 
+    @RequiresGrant
     @RequestMapping("/utenti/aggiungi")
     public String add(Model model,
             HttpServletRequest request,
@@ -210,6 +212,7 @@ public class UtentiController extends AbstractController {
         }
     }
 
+    @RequiresGrant
     @RequestMapping("/utenti/modifica")
     public String modify(Model model,
             HttpServletRequest request,
@@ -287,6 +290,7 @@ public class UtentiController extends AbstractController {
         return AJAX;
     }
 
+    @RequiresGrant
     @RequestMapping("/utenti/elimina")
     public String delete(Model model,
             HttpServletRequest request,
@@ -308,6 +312,7 @@ public class UtentiController extends AbstractController {
         return REDIRECT_HOMEPAGE;
     }
 
+    @RequiresGrant
     @RequestMapping("/utenti/attiva")
     public String resume(Model model,
             HttpServletRequest request,
@@ -375,6 +380,7 @@ public class UtentiController extends AbstractController {
         return AJAX;
     }
 
+    @RequiresGrant
     @RequestMapping("/utenti/procedimenti/cambiostato/ajax")
     public String selezionaProcedimento(Model model,
             HttpServletRequest request,

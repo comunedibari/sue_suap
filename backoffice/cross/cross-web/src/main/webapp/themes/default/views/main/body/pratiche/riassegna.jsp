@@ -43,6 +43,7 @@
                                                 '<input type="hidden" id="id_utente" name="idUtenteAssegnatario" value="' + rowObject["codiceUtente"] + '">' +
                                                 '<input type="hidden" id="adminOnProcEnte" name="adminOnProcEnte" value="' + rowObject["adminOnProcEnte"] + '">' +
                                                 '<input type="hidden" name="idPratica" value="${idPratica}">' +
+                                                '<input type="hidden" name="idPraticaEvento" value="${idPraticaEvento}">' +
                                                 '<input type="hidden" name="from" value="${from}">' +
                                                 '<button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" title="<spring:message code="pratica.button.assegna"/>">' +
                                                 '<div class="bottone_assegna_utente">' +

@@ -19,4 +19,5 @@ public class StatoPratica {
     public static final String INTERROTTA = "I";
     public static final String CHIUSA = "C";
     public static final String NON_MODIFICABILE = "IN";
+    public static final String ARCHIVIATA = "AR";
 }

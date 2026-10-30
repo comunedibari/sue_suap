@@ -249,7 +249,7 @@ public class ModelloUnicoStep extends BaseStep {
                     pg.setRagioneSociale(pt.getDenominazione() == null ? "" : pt.getDenominazione());
                     PersonaFisica rappresentanteLegale = new PersonaFisica();
                     ProfiloPersonaFisica profiloRappresentante = pt.getRappresentanteLegale();
-                    // TODO copiare le propriet� comuni da profiloRappresentante
+                    // TODO copiare le propriet comuni da profiloRappresentante
                     // a
                     // rappresentanteLegale
                     pg.setRappresentanteLegale(rappresentanteLegale);

@@ -21,6 +21,7 @@
         <class>it.wego.cross.entity.IndirizziIntervento</class>
         <class>it.wego.cross.entity.Lingue</class>
         <class>it.wego.cross.entity.LingueTesti</class>
+        <class>it.wego.cross.entity.LkAssociazioneProcedimentoEnteUtenteSuap</class>
         <class>it.wego.cross.entity.LkCittadinanza</class>
         <class>it.wego.cross.entity.LkComuni</class>
         <class>it.wego.cross.entity.LkDug</class>
@@ -46,6 +47,7 @@
         <class>it.wego.cross.entity.LkTipoRuolo</class>
         <class>it.wego.cross.entity.LkTipoSistemaCatastale</class>
         <class>it.wego.cross.entity.LkTipoUnita</class>
+        <class>it.wego.cross.entity.LkTipoPratica</class>
         <class>it.wego.cross.entity.Messaggio</class>
         <class>it.wego.cross.entity.NotePratica</class>
         <class>it.wego.cross.entity.Permessi</class>
@@ -54,6 +56,7 @@
         <class>it.wego.cross.entity.PraticaAnagrafica</class>
         <class>it.wego.cross.entity.PraticaEventiProcedimenti</class>
         <class>it.wego.cross.entity.PraticaProcedimenti</class>
+        <class>it.wego.cross.entity.PraticaProcuratore</class>
         <class>it.wego.cross.entity.PraticheAssociate</class>
         <class>it.wego.cross.entity.PraticheEventi</class>
         <class>it.wego.cross.entity.PraticheEventiAllegati</class>
@@ -98,6 +101,9 @@
         <class>it.wego.cross.entity.LkStatiSedute</class>
         <class>it.wego.cross.entity.Avviso</class>  
         <class>it.wego.cross.entity.RisultatoCaricamentoPratiche</class>
+        <class>it.wego.cross.entity.Operazione</class>
+   	    <class>it.wego.cross.entity.PraticaOperazione</class>
+   	    <class>it.wego.cross.entity.PraticaOperazionePK</class>
         <properties>
             <!-- <property name="eclipselink.session.customizer" value="it.wego.cross.utils.JPAEclipseLinkSessionCustomizer"/> -->
             <!-- <property name="eclipselink.logging.logger" value="it.wego.cross.utils.JPALogger"/> -->

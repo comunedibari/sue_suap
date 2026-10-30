@@ -7,12 +7,15 @@ package it.wego.cross.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.RisultatoCaricamentoPratiche;
+import it.wego.cross.utils.Log;
 
 /**
  *
@@ -50,19 +53,13 @@ public class RisultatoCaricamentoPraticheDao {
         return RisultatoCaricamentoPratiche;
     }
 
-    
- 
-
-    
     public Long countAllRisultatoCaricamentoPratiche() {
         Query query = em.createQuery("SELECT COUNT(e) "
                 + "FROM RisultatoCaricamentoPratiche e ");
         Long count = (Long) query.getSingleResult();
         return count;
     }
-
     
-
     public RisultatoCaricamentoPratiche findByIdRisultatoCaricamentoPratiche(Integer id) {
         Query query = em.createNamedQuery("RisultatoCaricamentoPratiche.findByIdRisultatoCaricamento");
         query.setParameter("idRisultatoCaricamento", id);
@@ -85,7 +82,11 @@ public class RisultatoCaricamentoPraticheDao {
         }
     }
 
-
-	
-
+    public RisultatoCaricamentoPratiche findRisultatoByPratica(Pratica pratica) {
+        Query query = em.createNamedQuery("RisultatoCaricamentoPratiche.findByPratica");
+        query.setParameter("idPratica", pratica);
+        RisultatoCaricamentoPratiche ret; 
+        List<RisultatoCaricamentoPratiche> risultato = query.getResultList();
+        return risultato.size() > 0 ? risultato.get(0) : null;
+    }
 }

@@ -195,7 +195,7 @@
   <format name="new_aruba">
     <codiceFiscale attribute="subject.SERIALNUMBER" matcher="^(TINIT)-(.+)$" group="2"/>
     <cognome attribute="subject.SURNAME"/>
-    <nome attribute="subject.GIVENNAME"/>
+    <nome attribute="subject.GIVENNAME" matcher="[^/]/"/>
     <certificato.stato attribute="subject.C"/>
     <certificato.unitaOrganizzativa attribute="subject.UO"/>
     <certificato.organizzazione attribute="subject.O"/>

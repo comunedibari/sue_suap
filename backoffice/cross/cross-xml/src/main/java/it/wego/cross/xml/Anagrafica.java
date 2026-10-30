@@ -1,9 +1,11 @@
 //
-// Questo file stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andrpersa durante la ricompilazione dello schema di origine. 
-// Generato il: 2013.05.27 alle 07:27:17 PM CEST 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2024.04.16 alle 09:52:47 AM CEST 
 //
+
+
 package it.wego.cross.xml;
 
 import it.wego.cross.xml.adapter.DateAdapter;
@@ -16,14 +18,12 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+
 /**
- * <p>
- * Classe Java per anagrafica complex type.
- *
- * <p>
- * Il seguente frammento di schema specifica il contenuto previsto contenuto in
- * questa classe.
- *
+ * <p>Classe Java per anagrafica complex type.
+ * 
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * 
  * <pre>
  * &lt;complexType name="anagrafica">
  *   &lt;complexContent>
@@ -31,6 +31,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;sequence>
  *         &lt;element name="counter" type="{http://www.w3.org/2001/XMLSchema}integer"/>
  *         &lt;element name="confermata" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="da_rubrica" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="id_anagrafica" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
  *         &lt;element name="tipo_anagrafica" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="variante_anagrafica" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -60,6 +61,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="numero_iscrizione" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="data_iscrizione" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *         &lt;element name="id_provincia_iscrizione" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
+ *         &lt;element name="cod_provincia_iscrizione" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="des_provincia_iscrizione" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="id_provincia_cciaa" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
  *         &lt;element name="cod_provincia_cciaa" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -79,8 +81,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "anagrafica", propOrder = {
@@ -232,906 +234,1131 @@ public class Anagrafica {
     protected Recapiti recapiti;
 
     /**
-     * Recupera il valore della proprietcounter.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� counter.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getCounter() {
         return counter;
     }
 
     /**
-     * Imposta il valore della proprietcounter.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� counter.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setCounter(BigInteger value) {
         this.counter = value;
     }
 
     /**
-     * Recupera il valore della proprietconfermata.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� confermata.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getConfermata() {
         return confermata;
     }
 
     /**
-     * Imposta il valore della proprietconfermata.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� confermata.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setConfermata(String value) {
         this.confermata = value;
     }
 
+    /**
+     * Recupera il valore della propriet� daRubrica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
     public String getDaRubrica() {
         return daRubrica;
     }
 
-    public void setDaRubrica(String daRubrica) {
-        this.daRubrica = daRubrica;
+    /**
+     * Imposta il valore della propriet� daRubrica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDaRubrica(String value) {
+        this.daRubrica = value;
     }
 
     /**
-     * Recupera il valore della proprietidAnagrafica.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idAnagrafica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdAnagrafica() {
         return idAnagrafica;
     }
 
     /**
-     * Imposta il valore della proprietidAnagrafica.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idAnagrafica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdAnagrafica(BigInteger value) {
         this.idAnagrafica = value;
     }
 
     /**
-     * Recupera il valore della propriettipoAnagrafica.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� tipoAnagrafica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getTipoAnagrafica() {
         return tipoAnagrafica;
     }
 
     /**
-     * Imposta il valore della propriettipoAnagrafica.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� tipoAnagrafica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setTipoAnagrafica(String value) {
         this.tipoAnagrafica = value;
     }
 
     /**
-     * Recupera il valore della proprietvarianteAnagrafica.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� varianteAnagrafica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getVarianteAnagrafica() {
         return varianteAnagrafica;
     }
 
     /**
-     * Imposta il valore della proprietvarianteAnagrafica.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� varianteAnagrafica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setVarianteAnagrafica(String value) {
         this.varianteAnagrafica = value;
     }
 
     /**
-     * Recupera il valore della proprietcognome.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� cognome.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getCognome() {
         return cognome;
     }
 
     /**
-     * Imposta il valore della proprietcognome.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� cognome.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setCognome(String value) {
         this.cognome = value;
     }
 
     /**
-     * Recupera il valore della proprietdenominazione.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� denominazione.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDenominazione() {
         return denominazione;
     }
 
     /**
-     * Imposta il valore della proprietdenominazione.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� denominazione.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDenominazione(String value) {
         this.denominazione = value;
     }
 
     /**
-     * Recupera il valore della proprietnome.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� nome.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getNome() {
         return nome;
     }
 
     /**
-     * Imposta il valore della proprietnome.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� nome.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setNome(String value) {
         this.nome = value;
     }
 
     /**
-     * Recupera il valore della proprietcodiceFiscale.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� codiceFiscale.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getCodiceFiscale() {
         return codiceFiscale;
     }
 
     /**
-     * Imposta il valore della proprietcodiceFiscale.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� codiceFiscale.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setCodiceFiscale(String value) {
         this.codiceFiscale = value;
     }
 
     /**
-     * Recupera il valore della proprietpartitaIva.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� partitaIva.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getPartitaIva() {
         return partitaIva;
     }
 
     /**
-     * Imposta il valore della proprietpartitaIva.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� partitaIva.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setPartitaIva(String value) {
         this.partitaIva = value;
     }
 
     /**
-     * Recupera il valore della proprietflgIndividuale.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� flgIndividuale.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getFlgIndividuale() {
         return flgIndividuale;
     }
 
     /**
-     * Imposta il valore della proprietflgIndividuale.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� flgIndividuale.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setFlgIndividuale(String value) {
         this.flgIndividuale = value;
     }
 
     /**
-     * Recupera il valore della proprietdataNascita.
-     *
-     * @return possible object is {@link XMLGregorianCalendar }
-     *
+     * Recupera il valore della propriet� dataNascita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public XMLGregorianCalendar getDataNascita() {
         return dataNascita;
     }
 
     /**
-     * Imposta il valore della proprietdataNascita.
-     *
-     * @param value allowed object is {@link XMLGregorianCalendar }
-     *
+     * Imposta il valore della propriet� dataNascita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public void setDataNascita(XMLGregorianCalendar value) {
         this.dataNascita = value;
     }
 
     /**
-     * Recupera il valore della proprietidCittadinanza.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idCittadinanza.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdCittadinanza() {
         return idCittadinanza;
     }
 
     /**
-     * Imposta il valore della proprietidCittadinanza.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idCittadinanza.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdCittadinanza(BigInteger value) {
         this.idCittadinanza = value;
     }
 
     /**
-     * Recupera il valore della proprietcodCittadinanza.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� codCittadinanza.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getCodCittadinanza() {
         return codCittadinanza;
     }
 
     /**
-     * Imposta il valore della proprietcodCittadinanza.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� codCittadinanza.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setCodCittadinanza(String value) {
         this.codCittadinanza = value;
     }
 
     /**
-     * Recupera il valore della proprietdesCittadinanza.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� desCittadinanza.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesCittadinanza() {
         return desCittadinanza;
     }
 
     /**
-     * Imposta il valore della proprietdesCittadinanza.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desCittadinanza.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesCittadinanza(String value) {
         this.desCittadinanza = value;
     }
 
     /**
-     * Recupera il valore della proprietidNazionalita.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idNazionalita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdNazionalita() {
         return idNazionalita;
     }
 
     /**
-     * Imposta il valore della proprietidNazionalita.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idNazionalita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdNazionalita(BigInteger value) {
         this.idNazionalita = value;
     }
 
     /**
-     * Recupera il valore della proprietcodNazionalita.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� codNazionalita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getCodNazionalita() {
         return codNazionalita;
     }
 
     /**
-     * Imposta il valore della proprietcodNazionalita.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� codNazionalita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setCodNazionalita(String value) {
         this.codNazionalita = value;
     }
 
     /**
-     * Recupera il valore della proprietdesNazionalita.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� desNazionalita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesNazionalita() {
         return desNazionalita;
     }
 
     /**
-     * Imposta il valore della proprietdesNazionalita.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desNazionalita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesNazionalita(String value) {
         this.desNazionalita = value;
     }
 
     /**
-     * Recupera il valore della proprietidComuneNascita.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idComuneNascita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdComuneNascita() {
         return idComuneNascita;
     }
 
     /**
-     * Imposta il valore della proprietidComuneNascita.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idComuneNascita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdComuneNascita(BigInteger value) {
         this.idComuneNascita = value;
     }
 
     /**
-     * Recupera il valore della proprietdesComuneNascita.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� desComuneNascita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesComuneNascita() {
         return desComuneNascita;
     }
 
     /**
-     * Imposta il valore della proprietdesComuneNascita.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desComuneNascita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesComuneNascita(String value) {
         this.desComuneNascita = value;
     }
 
     /**
-     * Recupera il valore della proprietidProvinciaNascita.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idProvinciaNascita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdProvinciaNascita() {
         return idProvinciaNascita;
     }
 
     /**
-     * Imposta il valore della proprietidProvinciaNascita.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idProvinciaNascita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdProvinciaNascita(BigInteger value) {
         this.idProvinciaNascita = value;
     }
 
     /**
-     * Recupera il valore della proprietdesProvinciaNascita.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� desProvinciaNascita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesProvinciaNascita() {
         return desProvinciaNascita;
     }
 
     /**
-     * Imposta il valore della proprietdesProvinciaNascita.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desProvinciaNascita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesProvinciaNascita(String value) {
         this.desProvinciaNascita = value;
     }
 
     /**
-     * Recupera il valore della proprietidStatoNascita.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idStatoNascita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdStatoNascita() {
         return idStatoNascita;
     }
 
     /**
-     * Imposta il valore della proprietidStatoNascita.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idStatoNascita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdStatoNascita(BigInteger value) {
         this.idStatoNascita = value;
     }
 
     /**
-     * Recupera il valore della proprietdesStatoNascita.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� desStatoNascita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesStatoNascita() {
         return desStatoNascita;
     }
 
     /**
-     * Imposta il valore della proprietdesStatoNascita.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desStatoNascita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesStatoNascita(String value) {
         this.desStatoNascita = value;
     }
 
     /**
-     * Recupera il valore della proprietlocalitaNascita.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� localitaNascita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getLocalitaNascita() {
         return localitaNascita;
     }
 
     /**
-     * Imposta il valore della proprietlocalitaNascita.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� localitaNascita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setLocalitaNascita(String value) {
         this.localitaNascita = value;
     }
 
     /**
-     * Recupera il valore della proprietsesso.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� sesso.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getSesso() {
         return sesso;
     }
 
     /**
-     * Imposta il valore della proprietsesso.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� sesso.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setSesso(String value) {
         this.sesso = value;
     }
 
     /**
-     * Recupera il valore della proprietidTipoCollegio.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idTipoCollegio.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdTipoCollegio() {
         return idTipoCollegio;
     }
 
     /**
-     * Imposta il valore della proprietidTipoCollegio.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idTipoCollegio.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdTipoCollegio(BigInteger value) {
         this.idTipoCollegio = value;
     }
 
     /**
-     * Recupera il valore della proprietdesTipoCollegio.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� desTipoCollegio.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesTipoCollegio() {
         return desTipoCollegio;
     }
 
     /**
-     * Imposta il valore della proprietdesTipoCollegio.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desTipoCollegio.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesTipoCollegio(String value) {
         this.desTipoCollegio = value;
     }
 
     /**
-     * Recupera il valore della proprietnumeroIscrizione.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� numeroIscrizione.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getNumeroIscrizione() {
         return numeroIscrizione;
     }
 
     /**
-     * Imposta il valore della proprietnumeroIscrizione.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� numeroIscrizione.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setNumeroIscrizione(String value) {
         this.numeroIscrizione = value;
     }
 
     /**
-     * Recupera il valore della proprietdataIscrizione.
-     *
-     * @return possible object is {@link XMLGregorianCalendar }
-     *
+     * Recupera il valore della propriet� dataIscrizione.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public XMLGregorianCalendar getDataIscrizione() {
         return dataIscrizione;
     }
 
     /**
-     * Imposta il valore della proprietdataIscrizione.
-     *
-     * @param value allowed object is {@link XMLGregorianCalendar }
-     *
+     * Imposta il valore della propriet� dataIscrizione.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public void setDataIscrizione(XMLGregorianCalendar value) {
         this.dataIscrizione = value;
     }
 
     /**
-     * Recupera il valore della proprietidProvinciaIscrizione.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idProvinciaIscrizione.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdProvinciaIscrizione() {
         return idProvinciaIscrizione;
     }
 
     /**
-     * Imposta il valore della proprietidProvinciaIscrizione.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idProvinciaIscrizione.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdProvinciaIscrizione(BigInteger value) {
         this.idProvinciaIscrizione = value;
     }
 
     /**
-     * Recupera il valore della proprietdesProvinciaIscrizione.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� codProvinciaIscrizione.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCodProvinciaIscrizione() {
+        return codProvinciaIscrizione;
+    }
+
+    /**
+     * Imposta il valore della propriet� codProvinciaIscrizione.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCodProvinciaIscrizione(String value) {
+        this.codProvinciaIscrizione = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� desProvinciaIscrizione.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesProvinciaIscrizione() {
         return desProvinciaIscrizione;
     }
 
     /**
-     * Imposta il valore della proprietdesProvinciaIscrizione.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desProvinciaIscrizione.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesProvinciaIscrizione(String value) {
         this.desProvinciaIscrizione = value;
     }
 
-    public String getCodProvinciaIscrizione() {
-        return codProvinciaIscrizione;
-    }
-
-    public void setCodProvinciaIscrizione(String codProvinciaIscrizione) {
-        this.codProvinciaIscrizione = codProvinciaIscrizione;
-    }
-
     /**
-     * Recupera il valore della proprietidProvinciaCciaa.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idProvinciaCciaa.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdProvinciaCciaa() {
         return idProvinciaCciaa;
     }
 
     /**
-     * Imposta il valore della proprietidProvinciaCciaa.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idProvinciaCciaa.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdProvinciaCciaa(BigInteger value) {
         this.idProvinciaCciaa = value;
     }
 
     /**
-     * Recupera il valore della proprietdesProvinciaCciaa.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� codProvinciaCciaa.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCodProvinciaCciaa() {
+        return codProvinciaCciaa;
+    }
+
+    /**
+     * Imposta il valore della propriet� codProvinciaCciaa.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCodProvinciaCciaa(String value) {
+        this.codProvinciaCciaa = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� desProvinciaCciaa.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesProvinciaCciaa() {
         return desProvinciaCciaa;
     }
 
     /**
-     * Imposta il valore della proprietdesProvinciaCciaa.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desProvinciaCciaa.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesProvinciaCciaa(String value) {
         this.desProvinciaCciaa = value;
     }
 
-    public String getCodProvinciaCciaa() {
-        return codProvinciaCciaa;
-    }
-
-    public void setCodProvinciaCciaa(String codProvinciaCciaa) {
-        this.codProvinciaCciaa = codProvinciaCciaa;
-    }
-
     /**
-     * Recupera il valore della proprietflgAttesaIscrizioneRi.
-     *
-     * @return possible object is {@link Boolean }
-     *
+     * Recupera il valore della propriet� flgAttesaIscrizioneRi.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
      */
     public Boolean isFlgAttesaIscrizioneRi() {
         return flgAttesaIscrizioneRi;
     }
 
     /**
-     * Imposta il valore della proprietflgAttesaIscrizioneRi.
-     *
-     * @param value allowed object is {@link Boolean }
-     *
+     * Imposta il valore della propriet� flgAttesaIscrizioneRi.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
      */
     public void setFlgAttesaIscrizioneRi(Boolean value) {
         this.flgAttesaIscrizioneRi = value;
     }
 
     /**
-     * Recupera il valore della proprietflgObbligoIscrizioneRi.
-     *
-     * @return possible object is {@link Boolean }
-     *
+     * Recupera il valore della propriet� flgObbligoIscrizioneRi.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
      */
     public Boolean isFlgObbligoIscrizioneRi() {
         return flgObbligoIscrizioneRi;
     }
 
     /**
-     * Imposta il valore della proprietflgObbligoIscrizioneRi.
-     *
-     * @param value allowed object is {@link Boolean }
-     *
+     * Imposta il valore della propriet� flgObbligoIscrizioneRi.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
      */
     public void setFlgObbligoIscrizioneRi(Boolean value) {
         this.flgObbligoIscrizioneRi = value;
     }
 
     /**
-     * Recupera il valore della proprietdataIscrizioneRi.
-     *
-     * @return possible object is {@link XMLGregorianCalendar }
-     *
+     * Recupera il valore della propriet� dataIscrizioneRi.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public XMLGregorianCalendar getDataIscrizioneRi() {
         return dataIscrizioneRi;
     }
 
     /**
-     * Imposta il valore della proprietdataIscrizioneRi.
-     *
-     * @param value allowed object is {@link XMLGregorianCalendar }
-     *
+     * Imposta il valore della propriet� dataIscrizioneRi.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public void setDataIscrizioneRi(XMLGregorianCalendar value) {
         this.dataIscrizioneRi = value;
     }
 
     /**
-     * Recupera il valore della proprietnIscrizioneRi.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� nIscrizioneRi.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getNIscrizioneRi() {
         return nIscrizioneRi;
     }
 
     /**
-     * Imposta il valore della proprietnIscrizioneRi.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� nIscrizioneRi.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setNIscrizioneRi(String value) {
         this.nIscrizioneRi = value;
     }
 
     /**
-     * Recupera il valore della proprietflgAttesaIscrizioneRea.
-     *
-     * @return possible object is {@link Boolean }
-     *
+     * Recupera il valore della propriet� flgAttesaIscrizioneRea.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
      */
     public Boolean isFlgAttesaIscrizioneRea() {
         return flgAttesaIscrizioneRea;
     }
 
     /**
-     * Imposta il valore della proprietflgAttesaIscrizioneRea.
-     *
-     * @param value allowed object is {@link Boolean }
-     *
+     * Imposta il valore della propriet� flgAttesaIscrizioneRea.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
      */
     public void setFlgAttesaIscrizioneRea(Boolean value) {
         this.flgAttesaIscrizioneRea = value;
     }
 
     /**
-     * Recupera il valore della proprietdataIscrizioneRea.
-     *
-     * @return possible object is {@link XMLGregorianCalendar }
-     *
+     * Recupera il valore della propriet� dataIscrizioneRea.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public XMLGregorianCalendar getDataIscrizioneRea() {
         return dataIscrizioneRea;
     }
 
     /**
-     * Imposta il valore della proprietdataIscrizioneRea.
-     *
-     * @param value allowed object is {@link XMLGregorianCalendar }
-     *
+     * Imposta il valore della propriet� dataIscrizioneRea.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public void setDataIscrizioneRea(XMLGregorianCalendar value) {
         this.dataIscrizioneRea = value;
     }
 
     /**
-     * Recupera il valore della proprietnIscrizioneRea.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� nIscrizioneRea.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getNIscrizioneRea() {
         return nIscrizioneRea;
     }
 
     /**
-     * Imposta il valore della proprietnIscrizioneRea.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� nIscrizioneRea.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setNIscrizioneRea(String value) {
         this.nIscrizioneRea = value;
     }
 
     /**
-     * Recupera il valore della proprietidFormaGiuridica.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idFormaGiuridica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdFormaGiuridica() {
         return idFormaGiuridica;
     }
 
     /**
-     * Imposta il valore della proprietidFormaGiuridica.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idFormaGiuridica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdFormaGiuridica(BigInteger value) {
         this.idFormaGiuridica = value;
     }
 
     /**
-     * Recupera il valore della proprietdesFormaGiuridica.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� desFormaGiuridica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesFormaGiuridica() {
         return desFormaGiuridica;
     }
 
     /**
-     * Imposta il valore della proprietdesFormaGiuridica.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desFormaGiuridica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesFormaGiuridica(String value) {
         this.desFormaGiuridica = value;
     }
 
     /**
-     * Recupera il valore della proprietrecapiti.
-     *
-     * @return possible object is {@link Recapiti }
-     *
+     * Recupera il valore della propriet� recapiti.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Recapiti }
+     *     
      */
     public Recapiti getRecapiti() {
         return recapiti;
     }
 
     /**
-     * Imposta il valore della proprietrecapiti.
-     *
-     * @param value allowed object is {@link Recapiti }
-     *
+     * Imposta il valore della propriet� recapiti.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Recapiti }
+     *     
      */
     public void setRecapiti(Recapiti value) {
         this.recapiti = value;
     }
+
 }

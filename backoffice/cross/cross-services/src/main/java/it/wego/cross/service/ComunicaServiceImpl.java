@@ -7,6 +7,7 @@ package it.wego.cross.service;
 import it.wego.cross.dto.ComboDTO;
 import it.wego.cross.dto.comunica.ComuneRiferimentoDTO;
 import it.wego.cross.dto.comunica.SportelloDTO;
+import it.wego.cross.dto.filters.Filter;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.LkFormeGiuridiche;
@@ -14,6 +15,8 @@ import it.wego.cross.entity.LkNazionalita;
 import it.wego.cross.entity.LkProvincie;
 import it.wego.cross.entity.view.ProcedimentiLocalizzatiView;
 import it.wego.cross.utils.Utils;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +114,24 @@ public class ComunicaServiceImpl implements ComunicaService {
             Exception e = new Exception("Non e' stato trovato un comune con il codice catastale " + codiceCatastaleComune);
             throw e;
         }
+    }
+    
+    public ComuneRiferimentoDTO getComuneRiferimentoDaEnte(it.gov.impresainungiorno.schema.suap.pratica.RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception {
+    	   Integer identificativoSuap = Utils.ib(riepilogoPraticaSuap.getIntestazione().getUfficioDestinatario().getIdentificativoSuap());
+           Enti ente = entiService.findByIdentificativoSuap(String.valueOf(identificativoSuap));
+           if (ente != null) {
+        	   ComuneRiferimentoDTO dto = new ComuneRiferimentoDTO();
+        	   Filter filter = new Filter();
+        	   filter.setOrderDirection("desc");
+        	   filter.setOrderColumn("idComune");
+        	   List<LkComuni> comuni = entiService.getComuniCollegati(ente.getIdEnte(), filter);
+               dto.setDescription(comuni.get(0).getDescrizione());
+               dto.setId(comuni.get(0).getIdComune());
+               return dto;
+           } else {
+               throw new Exception("Non e' stato trovato nessun ente con codice il identificativio suap " + identificativoSuap);
+           }
+           
     }
     
     public SportelloDTO getSportelloDestinazione(it.gov.impresainungiorno.schema.suap.pratica.RiepilogoPraticaSUAP riepilogoPraticaSuap) throws Exception {

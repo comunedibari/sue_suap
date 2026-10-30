@@ -1,19 +1,13 @@
 package it.wego.cross.plugins.documenti;
 
-import it.wego.cross.entity.Allegati;
-import it.wego.cross.entity.Enti;
-import it.wego.cross.entity.LkComuni;
-import it.wego.cross.entity.Pratica;
-import it.wego.cross.plugins.commons.beans.Allegato;
-import it.wego.cross.service.ConfigurationService;
-import it.wego.cross.utils.Log;
-import it.wego.cross.utils.Utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -21,20 +15,39 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import it.wego.cross.constants.SessionConstants;
+import it.wego.cross.entity.Allegati;
+import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.LkComuni;
+import it.wego.cross.entity.Pratica;
+import it.wego.cross.plugins.commons.beans.Allegato;
+import it.wego.cross.service.ConfigurationService;
+import it.wego.cross.utils.ComponentUtils;
+import it.wego.cross.utils.Utils;
+
 @Repository
 public class GestioneAllegatiFS implements it.wego.cross.plugins.documenti.GestioneAllegati {
 
-    private static final String FOLDER_KEY = "documenti.fs.folder";
     private static String folder;
     @Autowired
     private ConfigurationService configurationService;
+    @Autowired
+    private ComponentUtils componentUtils;
     private static final Logger logger = LoggerFactory.getLogger(GestioneAllegatiFS.class.getName());
+    
+    
     @Override
     public void add(Allegati allegato, Enti ente, LkComuni comune) throws Exception {
+    	this.add(allegato, ente, comune, null);
+    }
+    
+    @Override
+    public void add(Allegati allegato, Enti ente, LkComuni comune, Date date) throws Exception {
         if (StringUtils.isEmpty(allegato.getPathFile())) {
-            folder = configurationService.getCachedConfiguration(GestioneAllegatiFS.FOLDER_KEY, ente.getIdEnte(), comune.getIdComune());
+            folder = configurationService.getCachedConfiguration(SessionConstants.DOCUMENTS_FOLDER, ente.getIdEnte(), comune.getIdComune());
+            folder = componentUtils.generateFilePath(folder, comune, date);
             if (Utils.e(folder)) {
-                throw new Exception("Sulla tabella di configurazione non è stata valorizzata la chiave '" + FOLDER_KEY + "'");
+                throw new Exception("Sulla tabella di configurazione non è stata valorizzata la chiave '" + SessionConstants.DOCUMENTS_FOLDER + "'");
             }
             File folderPath = new File(folder);
             if( !folderPath.exists() )
@@ -90,10 +103,11 @@ public class GestioneAllegatiFS implements it.wego.cross.plugins.documenti.Gesti
         Integer idEnte = ente != null ? ente.getIdEnte() : null;
         Integer idComune = comune != null ? comune.getIdComune() : null;
 
-        folder = configurationService.getCachedConfiguration(GestioneAllegatiFS.FOLDER_KEY, idEnte, idComune);
+        folder = configurationService.getCachedConfiguration(SessionConstants.DOCUMENTS_FOLDER, idEnte, idComune);
         if (Utils.e(folder)) {
-            throw new Exception("Sulla tabella di configurazione non è stata valorizzata la chiave '" + FOLDER_KEY + "'");
+            throw new Exception("Sulla tabella di configurazione non è stata valorizzata la chiave '" + SessionConstants.DOCUMENTS_FOLDER + "'");
         }
+        folder = componentUtils.generateFilePath(folder, comune);
 
         String pathFile = folder + File.separator + UUID.randomUUID() + "_" + fileName;
 

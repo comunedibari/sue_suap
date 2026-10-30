@@ -1,5 +1,5 @@
 <%
-    String url = request.getContextPath() + "/anagrafe_tributaria/export/genera.htm";
+    String url = request.getContextPath() + "/anagrafe_tributaria_edilizia/export/genera.htm";
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,7 +9,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script type="text/javascript">
     $(function() {
-        $('#codFornitura').change(function() {
+        /*$('#codFornitura').change(function() {
             var value = $('#codFornitura').val();
             if (value === 'CC') {
                 $('.anagrafeTributariaCommercio').show();
@@ -17,15 +17,14 @@
                 $('.anagrafeTributariaCommercio').hide();
             }
         });
-
+*/
         $('form').submit(function(event) {
             var codFornitura = $('#codFornitura').val();
             var soggettoObbligato = $('#idSoggettoObbligato').val();
             var naturaUfficio = $('#idNaturaUfficio').val();
-            var idEnte = $('#idEnte').val();
             var codiceFiscale = $('#codiceFiscaleSoggettoObbligato').val();
             var anno = $('#annoRiferimento').val();
-            var url = '${path}/anagrafe_tributaria/export/genera.htm?codFornitura=' + codFornitura + '&idNaturaUfficio=' + naturaUfficio + '&idEnte=' + idEnte + '&idSoggettoObbligato=' + soggettoObbligato + '&codiceFiscaleSoggettoObbligato=' + codiceFiscale + '&annoRiferimento=' + anno;
+            var url = '${path}/anagrafe_tributaria_edilizia/export/genera.htm?codFornitura=' + codFornitura + '&idNaturaUfficio=' + naturaUfficio + '&idEnte=' + idEnte + '&idSoggettoObbligato=' + soggettoObbligato + '&codiceFiscaleSoggettoObbligato=' + codiceFiscale + '&annoRiferimento=' + anno + "&s_code="+window.name;
             var win = window.open(url, '_blank');
             win.focus();
             return false;
@@ -53,7 +52,6 @@
                                 <div class="ctrlHolder dettaglio_liv_0">
                                     <label class="required" for="codFornitura">Tipologia di anagrafe</label>
                                     <form:select id="codFornitura"  path="codFornitura">
-                                        <form:option value="" label="-" />
                                         <form:options items="${codiceFornitura}" itemLabel="itemLabel" itemValue="itemValue"/>
                                     </form:select>
                                 </div>
@@ -65,12 +63,12 @@
                                     </form:select>
                                 </div>
 
-                                <div class="ctrlHolder dettaglio_liv_0 anagrafeTributariaCommercio" style="display: none">
+                                <!-- div class="ctrlHolder dettaglio_liv_0 anagrafeTributariaCommercio" style="display: none">
                                     <label class="required" for="idEnte">Ente</label>
                                     <form:select id="idEnte" path="idEnte" >
                                         <form:options items="${enti}" itemLabel="itemLabel" itemValue="itemValue"/>
                                     </form:select>
-                                </div>
+                                </div-->
 
                                 <div class="ctrlHolder dettaglio_liv_0">
                                     <label class="required" for="idSoggettoObbligato">Soggetto obbligato</label>
@@ -79,11 +77,11 @@
                                     </form:select>
                                 </div>
 
-                                <div class="ctrlHolder dettaglio_liv_0">
+                                <!--  div class="ctrlHolder dettaglio_liv_0">
                                     <label class="required" for="codiceFiscaleSoggettoObbligato">Codice fiscale ente</label>
                                     <form:input path="codiceFiscaleSoggettoObbligato" id="codiceFiscaleSoggettoObbligato" maxlength="16" cssClass="textInput required"/>
                                     <p class="formHint"></p>
-                                </div>
+                                </div-->
 
                                 <div class="ctrlHolder dettaglio_liv_0">
                                     <label class="required" for="annoRiferimento">Anno riferimento</label>

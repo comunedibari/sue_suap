@@ -5,8 +5,12 @@
 package it.wego.cross.dto;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
+
+import it.wego.cross.entity.Utente;
 
 /**
  *
@@ -33,10 +37,22 @@ public class AllegatoDTO implements Serializable {
     @NotNull(message = "{error.allegato.file}")
     private MultipartFile file;
     private boolean principale;
+    private String provenienza;
+    private Integer idPraticaEvento;
+    private String protocollo;
+    private Date dataProtocollo;
+    private Utente operatore;
+    private Long dimensione;
     
-    
+    public String getProvenienza() {
+		return provenienza;
+	}
 
-    public boolean isPrincipale() {
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+
+	public boolean isPrincipale() {
 		return principale;
 	}
 
@@ -182,7 +198,50 @@ public class AllegatoDTO implements Serializable {
         this.riepilogoPratica = riepilogoPratica;
     }
 
-    @Override
+    
+
+
+	public Integer getIdPraticaEvento() {
+		return idPraticaEvento;
+	}
+
+	public void setIdPraticaEvento(Integer idPraticaEvento) {
+		this.idPraticaEvento = idPraticaEvento;
+	}
+
+	public String getProtocollo() {
+		return protocollo;
+	}
+
+	public void setProtocollo(String protocollo) {
+		this.protocollo = protocollo;
+	}
+
+	public Date getDataProtocollo() {
+		return dataProtocollo;
+	}
+
+	public void setDataProtocollo(Date dataProtocollo) {
+		this.dataProtocollo = dataProtocollo;
+	}
+
+	public Utente getOperatore() {
+		return operatore;
+	}
+
+	public void setOperatore(Utente operatore) {
+		this.operatore = operatore;
+	}
+
+	public Long getDimensione() {
+		return dimensione;
+	}
+
+	public void setDimensione(Long dimensione) {
+		this.dimensione = dimensione;
+	}
+
+	@Override
     public boolean equals(Object object) {
         if (!(object instanceof AllegatoDTO)) {
             return false;

@@ -1,6 +1,31 @@
 package it.wego.cross.service;
 
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.Set;
+
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.internet.MimeMessage;
+
+import org.activiti.engine.RuntimeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.sun.mail.imap.IMAPFolder;
@@ -15,6 +40,8 @@ import it.wego.cross.dto.EmailDTO;
 import it.wego.cross.dto.filters.Filter;
 import it.wego.cross.entity.Configuration;
 import it.wego.cross.entity.Email;
+import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.LkStatiMail;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticheEventi;
@@ -22,30 +49,9 @@ import it.wego.cross.events.notification.NotificationEngine;
 import it.wego.cross.mail.EmailConfig;
 import it.wego.cross.mail.GestoreMail;
 import it.wego.cross.serializer.EmailSerializer;
+import it.wego.cross.utils.ComponentUtils;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.Utils;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.Set;
-
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Store;
-import javax.mail.internet.MimeMessage;
-
-import org.activiti.engine.RuntimeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -74,8 +80,11 @@ public class MailServiceImpl implements MailService {
     private NotificationEngine notificationEngine;
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    private ComponentUtils componentUtils;
     private static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class.getName());
 
+ 
     @Override
     public void salvaMailInDb(PraticheEventi evento, List<String> to, String subject, String content) throws Exception {
         Preconditions.checkNotNull(to, "mancano i destinatari per l'invio della mail");
@@ -126,14 +135,25 @@ public class MailServiceImpl implements MailService {
                       Session session = Session.getDefaultInstance(emailConfig.getProperties(), null);
                       Store store = gestoreMail.apriConnessione(session, emailConfig.getProperties());
 
+                      Log.SCHEDULER.debug("EMAIL: apro cartella INBOX in modalità READ ONLY");
+//                      IMAPFolder inbox = gestoreMail.openFolder(store, "INBOX", Folder.READ_WRITE);
+                      IMAPFolder inbox = gestoreMail.openFolder(store, "INBOX", Folder.READ_ONLY);
+                     
+                      gestoreMail.setInbox(inbox);
+                      
                       //Recupera tutte le email in arrivo
-                      Message[] messaggi = gestoreMail.getNuoveEmail(store, emailConfig);
+                      // OK Message[] messaggi = gestoreMail.getNuoveEmail_from_db(inbox, store, emailConfig);
+                      Message[] messaggi = gestoreMail.getNuoveEmail_from_all_inbox(inbox, store, emailConfig);
+                                            
+                      /* 16/02/2024 
                       if (messaggi.length > 0) {
                           for (Message email : messaggi) {
                               gestioneEmail(email, emailConfig, session);
                           }
                       }
-
+					  */
+                      gestoreMail.closeInbox();
+                      
                       gestoreMail.chiudiConnessione(store, emailConfig);
                   }
 				
@@ -181,7 +201,8 @@ public class MailServiceImpl implements MailService {
                                         emailDB.setStato(stato);
                                     }
                                     mailAction.aggiornaMail(emailDB, email, emailConfig);
-                                    spostaMail = true;
+                                    
+                                    //R18 13/02/2024 spostaMail = true;
                                 }
                             } else if (emailDB.getStato().getCodice().equals(StatiEmail.PRESO_IN_CARICO_DA_SERVER_PEC)) {
                                 if (stato.getCodice().equals(StatiEmail.CONFERMATA)) {
@@ -190,7 +211,7 @@ public class MailServiceImpl implements MailService {
                                     emailDB.setOggettoRisposta(email.getSubject());
                                     emailDB.setDataAggiornamento(email.getReceivedDate());
                                     mailAction.aggiornaMail(emailDB, email, emailConfig);
-                                    spostaMail = true;
+                                  //R18 13/02/2024 spostaMail = true;
                                 } else if (stato.getCodice().equals(StatiEmail.ERRORE_SERVER)) {
                                     emailDB.setStato(stato);
                                     emailDB.setCorpoRisposta(gestoreMail.getCorpoEmail(email));
@@ -198,7 +219,7 @@ public class MailServiceImpl implements MailService {
                                     emailDB.setDataAggiornamento(email.getReceivedDate());
                                     mailAction.aggiornaMail(emailDB, email, emailConfig);
 //                                    createNotificationTask(emailDB);
-                                    spostaMail = true;
+                                  //R18 13/02/2024 spostaMail = true;
                                 }
                             } else if (emailDB.getStato().getCodice().equals(StatiEmail.ERRORE_SERVER)
                                     || emailDB.getStato().getCodice().equals(StatiEmail.ERRORE_GENERICO)) {
@@ -209,7 +230,7 @@ public class MailServiceImpl implements MailService {
                                     emailDB.setDataAggiornamento(email.getReceivedDate());
                                     mailAction.aggiornaMail(emailDB, email, emailConfig);
 //                                    createNotificationTask(emailDB);
-                                    spostaMail = true;
+                                  //R18 13/02/2024 spostaMail = true;
                                 }
                             }
                         }
@@ -229,7 +250,7 @@ public class MailServiceImpl implements MailService {
                         emailDB.setStato(emailDao.findstatoByCodStato(StatiEmail.ERRORE_GENERICO));
                         mailAction.aggiornaMail(emailDB, email, emailConfig);
 //                        createNotificationTask(emailDB);
-                        spostaMail = true;
+                      //R18 13/02/2024 spostaMail = true;
                     }
                 }
             }
@@ -246,6 +267,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void aggiornaStato(Email emailDB) throws Exception {
         Log.EMAIL.info("EMAIL: Aggiorno lo stato della email sia sul singolo evento che a livello di pratica");
         boolean tuttoOk = false;
@@ -324,17 +346,20 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void invioSingolaEmail(Email email) throws Exception {
-        EmailConfig emailConfig = getSmtpProprieties(email.getIdPraticaEvento().getIdPratica().getIdProcEnte().getIdEnte().getIdEnte(), email.getIdPraticaEvento().getIdPratica().getIdComune().getIdComune());
+        EmailConfig emailConfig = getSmtpProprieties(email.getIdPraticaEvento().getIdPratica().getIdProcEnte().getIdEnte(), email.getIdPraticaEvento().getIdPratica().getIdComune());
         MimeMessage msg = gestoreMail.sendMail(email.getPathEml(), emailConfig);
         email.setIdMessaggio(msg.getMessageID());
+        //LOR email.setIdMessaggioPec(msg.get);
         email.setStato(emailDao.findstatoByCodStato(StatiEmail.INVIATA));
         updateEmail(email);
     }
 
     @Override
-    public EmailConfig getSmtpProprieties(Integer idEnte, Integer idComune) throws Exception {
+    public EmailConfig getSmtpProprieties(Enti ente, LkComuni comune) throws Exception {
         EmailConfig emailConfig = new EmailConfig();
         Properties props = new Properties();
+        Integer idComune = comune.getIdComune();
+        Integer idEnte = ente.getIdEnte();
         setProperty(props, SessionConstants.MAIL_HOST, idEnte, idComune);
         setProperty(props, SessionConstants.MAIL_SMTP_PORT, idEnte, idComune);
         setProperty(props, SessionConstants.MAIL_SMTP_AUTH, idEnte, idComune);
@@ -356,7 +381,7 @@ public class MailServiceImpl implements MailService {
         setProperty(props, SessionConstants.MAIL_SMTP_TIMEOUT, idEnte, idComune);
         setProperty(props, SessionConstants.MAIL_SMTP_SSL_TRUST, idEnte, idComune);
         String mailFolder = configuration.getCachedConfiguration(SessionConstants.MAIL_FOLDER, idEnte, idComune);
-        //String mailFolder ="C:\\SUESUAP\\cfg\\apache-tomcat-8.0.48_8081_bo\\cross_files\\email";
+        mailFolder = componentUtils.generateFilePath(mailFolder, comune);
         File mailFolderPath = new File(mailFolder);
         if( !mailFolderPath.exists() )
         {
@@ -505,6 +530,12 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
+    public Email findByIdEmailRispostaPec(Integer idEmail) {
+        Email email = emailDao.findByIdEmailRispostaPec(idEmail);
+        return email;
+    }
+
+    @Override
     public void updateEmail(Email email) throws Exception {
         emailDao.update(email);
         aggiornaStato(email);
@@ -530,4 +561,67 @@ public class MailServiceImpl implements MailService {
         String notifica = messageSource.getMessage("pratica.email.notifica", Arrays.asList(email.getOggettoEmail(), email.getEmailDestinatario()).toArray(), Locale.getDefault());
         notificationEngine.createNotification(email.getIdPraticaEvento(), candidateUsers, notifica);
     }
+
+	@Override
+	public void salvaRicevuteEmailPec() throws Exception {
+
+        List<Configuration> mailConfig = configuration.findByName("mail.imap.host");
+        for (Configuration config : mailConfig) {
+        	try {
+        		  Log.APP.info("Connessione all server mail " + config.getValue());
+                  EmailConfig emailConfig = null;
+                  Integer idEnte = null;
+                  Integer idComune = null;
+                  if (config.getIdEnte() != null) {
+                      idEnte = config.getIdEnte().getIdEnte();
+                  }
+                  if (config.getIdComune() != null) {
+                      idComune = config.getIdComune().getIdComune();
+                  }
+                  String leggiEmail = configuration.getCachedConfiguration(ConfigurationConstants.LEGGI_EMAIL, idEnte, idComune);
+                  if (leggiEmail != null && leggiEmail.equalsIgnoreCase("S")) {
+                      emailConfig = getImapProprieties(idEnte, idComune);
+                      Session session = Session.getDefaultInstance(emailConfig.getProperties(), null);
+                      Store store = gestoreMail.apriConnessione(session, emailConfig.getProperties());
+
+                      Log.SCHEDULER.debug("EMAIL: apro cartella INBOX in modalità READ ONLY");
+//                      IMAPFolder inbox = gestoreMail.openFolder(store, "INBOX", Folder.READ_WRITE);
+                      IMAPFolder inbox = gestoreMail.openFolder(store, "INBOX", Folder.READ_ONLY);
+                     
+                      gestoreMail.setInbox(inbox);
+                      
+                      //Recupera tutte le email in arrivo
+                      // OK Message[] messaggi = gestoreMail.getNuoveEmail_from_db(inbox, store, emailConfig);
+                      Message[] messaggi = gestoreMail.getNuoveEmail_from_all_inbox(inbox, store, emailConfig);
+                                            
+                      /* 16/02/2024 
+                      if (messaggi.length > 0) {
+                          for (Message email : messaggi) {
+                              gestioneEmail(email, emailConfig, session);
+                          }
+                      }
+					  */
+                      gestoreMail.closeInbox();
+                      
+                      gestoreMail.chiudiConnessione(store, emailConfig);
+                  }
+				
+			} catch (Exception e) {
+				Log.APP.error(String.format("Errore nella connessione al server mail: %s", config.getValue()), e);
+			}
+          
+        }
+    		
+	}
+
+	@Override
+	public List<Email> findEmailWithRispostaPec(Integer paperworkEventId) {
+		 List<Email> pecs = new ArrayList<>();
+		 List<Email> emails = this.emailDao.findMailByPaperworkEventId(paperworkEventId);
+		 for(Email email: emails)
+			 pecs.add(this.findByIdEmailRispostaPec(email.getIdEmail()));
+		 return pecs;
+	}
+	
+	
 }

@@ -1547,6 +1547,36 @@ public class MyPageDAO {
 		
 	}
 	
+	public void deleteAllegatoInterop(AbstractPplProcess process, IRequestWrapper request) {
+		ProcessData dataForm = (ProcessData) process.getData();
+		PreparedStatement ps = null;
+		try {
+			open();
+			String sqlSave = "DELETE from people_bari.allegati_interop " + 
+					"WHERE people_bari.allegati_interop.identificativo_pratica= ?;";
+			ps = getLegacyDbConnection().prepareStatement(sqlSave);
+			if(dataForm.getDettaglioPratica() != null && dataForm.getDettaglioPratica().getProcessDataID() != null 
+					&& dataForm.getDettaglioPratica().getProcessDataID().trim().length() != 0)
+				ps.setString(1, dataForm.getDettaglioPratica().getProcessDataID());
+			
+						
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			logger.error("", e);
+		} finally {
+			try {
+				ps.close();
+			} catch (Exception e) {
+			}
+			try {
+				closeConnections();
+			} catch (Exception e) {
+			}
+		}
+		
+	}
+	
 	public String getCodiceEnteByIdentificativoPratica(AbstractPplProcess process, IRequestWrapper request) {
 		ResultSet rs = null;
 		ProcessData dataForm = (ProcessData) process.getData();
@@ -1593,4 +1623,96 @@ public class MyPageDAO {
 
 		return codiceEnte;
 	}
+	
+	public String getTecnicoIstruttore(final AbstractPplProcess process, final IRequestWrapper request) {
+        String tecnicoIstruttore = null;
+        ResultSet rs = null;
+        final ProcessData dataForm = (ProcessData)process.getData();
+        PreparedStatement ps = null;
+        try {
+            this.open();
+            final String sql = "SELECT (SELECT CONCAT(ut.cognome, ' ', ut.nome) FROM opencross.pratiche_eventi pe, opencross.utente ut WHERE id_pratica_evento = (SELECT MIN(id_pratica_evento) FROM opencross.pratiche_eventi prt_ev, opencross.processi_eventi prc_ev WHERE prt_ev.id_pratica = prt.id_pratica AND prt.id_processo = prc_ev.id_processo AND  prt_ev.id_evento = prc_ev.id_evento AND (prc_ev.des_evento like '%(pos)%' OR prc_ev.des_evento like '%(istr)%')) AND id_pratica = prt.id_pratica AND  pe.id_utente = ut.id_utente) AS tecnico_istruttore FROM opencross.pratica prt, opencross.utente u WHERE prt.id_utente = u.id_utente AND prt.identificativo_pratica= ?";
+            ps = this.getLegacyDbConnection().prepareStatement(sql);
+            if (dataForm.getDettaglioPratica() != null && !dataForm.getDettaglioPratica().getProcessDataID().equalsIgnoreCase("")) {
+                ps.setString(1, dataForm.getDettaglioPratica().getProcessDataID());
+            }
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                tecnicoIstruttore = rs.getString("tecnico_istruttore");
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                rs.close();
+            }
+            catch (Exception ex) {}
+            try {
+                ps.close();
+            }
+            catch (Exception ex2) {}
+            try {
+                this.closeConnections();
+            }
+            catch (Exception ex3) {}
+        }
+        try {
+            rs.close();
+        }
+        catch (Exception ex4) {}
+        try {
+            ps.close();
+        }
+        catch (Exception ex5) {}
+        try {
+            this.closeConnections();
+        }
+        catch (Exception ex6) {}
+        if (tecnicoIstruttore == null) {
+            try {
+                this.open();
+                final String sql = "SELECT CONCAT(ut.cognome, ' ', ut.nome) AS tecnico_istruttore FROM opencross.pratica prt, opencross.utente ut where prt.id_utente = ut.id_utente AND prt.identificativo_pratica= ?";
+                ps = this.getLegacyDbConnection().prepareStatement(sql);
+                if (dataForm.getDettaglioPratica() != null && !dataForm.getDettaglioPratica().getProcessDataID().equalsIgnoreCase("")) {
+                    ps.setString(1, dataForm.getDettaglioPratica().getProcessDataID());
+                }
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    tecnicoIstruttore = rs.getString("tecnico_istruttore");
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    rs.close();
+                }
+                catch (Exception ex7) {}
+                try {
+                    ps.close();
+                }
+                catch (Exception ex8) {}
+                try {
+                    this.closeConnections();
+                }
+                catch (Exception ex9) {}
+            }
+            try {
+                rs.close();
+            }
+            catch (Exception ex10) {}
+            try {
+                ps.close();
+            }
+            catch (Exception ex11) {}
+            try {
+                this.closeConnections();
+            }
+            catch (Exception ex12) {}
+        }
+        return tecnicoIstruttore;
+    }
 }

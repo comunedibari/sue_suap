@@ -8,7 +8,7 @@
         <xs:sequence>
             <xs:element minOccurs="1" name="counter" type="xs:integer"/>
             <xs:element minOccurs="0" name="confermata" type="xs:string"/>
-            <xs:element minOccurs="0" name="da_rubrica" type="xs:string"/>
+            <xs:element minOccurs="0" name="da_rubrica" type="xs:string" default="N"/>
             <xs:element minOccurs="0" name="id_anagrafica" type="xs:integer"/>
             <xs:element minOccurs="1" name="tipo_anagrafica" type="xs:string"/>
             <xs:element minOccurs="0" name="variante_anagrafica" type="xs:string"/>
@@ -38,8 +38,10 @@
             <xs:element minOccurs="0" name="numero_iscrizione" type="xs:string"/>
             <xs:element minOccurs="0" name="data_iscrizione" type="xs:date"/>
             <xs:element minOccurs="0" name="id_provincia_iscrizione" type="xs:integer"/>
+            <xs:element minOccurs="0" name="cod_provincia_iscrizione" type="xs:string"/>
             <xs:element minOccurs="0" name="des_provincia_iscrizione" type="xs:string"/>
             <xs:element minOccurs="0" name="id_provincia_cciaa" type="xs:integer"/>
+            <xs:element minOccurs="0" name="cod_provincia_cciaa" type="xs:string"/>
             <xs:element minOccurs="0" name="des_provincia_cciaa" type="xs:string"/>
             <xs:element minOccurs="0" name="flg_attesa_iscrizione_ri" type="xs:boolean"/>
             <xs:element minOccurs="0" name="flg_obbligo_iscrizione_ri" type="xs:boolean"/>
@@ -117,6 +119,9 @@
             <xs:element minOccurs="0" name="des_tipo_particella" type="xs:string"/>
             <xs:element minOccurs="0" name="estensione_particella" type="xs:string"/>
             <xs:element minOccurs="0" name="subalterno" type="xs:string"/>
+            <xs:element minOccurs="0" name="categoria" type="xs:string" />
+			<xs:element minOccurs="0" name="comune_censuario" type="xs:string" />
+			<xs:element minOccurs="0" name="confermato" type="xs:string" />
             <xs:element minOccurs="0" name="latitudine" type="xs:string"/>
             <xs:element minOccurs="0" name="longitudine" type="xs:string"/>
             <xs:element minOccurs="0" name="id_comune" type="xs:integer"/>
@@ -158,11 +163,13 @@
             <xs:element minOccurs="0" name="dato_esteso_1" type="xs:string"/>
             <xs:element minOccurs="0" name="dato_esteso_2" type="xs:string"/>
             <xs:element minOccurs="0" name="piano" type="xs:string"/>
+            <xs:element minOccurs="0" name="confermato" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
     
     <xs:complexType name="anagrafiche">
         <xs:sequence>
+            <xs:element minOccurs="0" name="id_anagrafica" type="xs:integer"/>
             <xs:element minOccurs="1" name="anagrafica" type="anagrafica"/>
             <xs:element minOccurs="0" name="notifica" type="recapito"/>
             <xs:element minOccurs="0" name="id_tipo_ruolo" type="xs:integer"/>
@@ -222,11 +229,15 @@
             <xs:element minOccurs="0" name="allegati" type="allegati"/>
             <xs:element minOccurs="0" name="eventi" type="eventi"/>
             <xs:element minOccurs="0" maxOccurs="1" name="evento_corrente" type="evento"/>
+            <xs:element minOccurs="0" name="enti" type="enti" />
             <xs:element minOccurs="0" name="id_stato_pratica" type="xs:integer"/>
             <xs:element minOccurs="0" name="cod_stato_pratica" type="xs:string"/>
             <xs:element minOccurs="0" name="des_stato_pratica" type="xs:string"/>
             <xs:element minOccurs="0" name="data_chiusura" type="xs:date"/>
+            <xs:element minOccurs="0" name="dirittiSegreteria" type="dirittiSegreteria"/>
             <xs:element minOccurs="0" name="dati_da_front" type="xs:string"/>
+           	<xs:element minOccurs="0" name="tipo" type="xs:string"/>
+            <xs:element minOccurs="0" name="numero_pratica" type="xs:integer"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -272,6 +283,10 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element minOccurs="0" name="allegati" type="allegati"/>
+            <xs:element name="anagraficheEvento" type="anagraficheEvento" minOccurs="0"/>
+			<xs:element name="entiEvento" type="entiEvento" minOccurs="0"/>
+			<xs:element name="data_protocollo" type="xs:date" minOccurs="0"/>
+            
         </xs:sequence>
     </xs:complexType>
 
@@ -325,6 +340,7 @@
             <xs:element minOccurs="1" maxOccurs="unbounded" name="scadenza" type="scadenza"/>
         </xs:sequence>
     </xs:complexType>
+    
     <xs:complexType name="scadenza">
         <xs:sequence>
             <xs:element minOccurs="0" name="id_scadenza" type="xs:integer"/>
@@ -343,4 +359,117 @@
             <xs:element minOccurs="0" name="descrizione" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
+
+	<xs:complexType name="anagraficheEvento">
+
+		<xs:sequence>
+			<xs:element name="anagraficaEvento" type="anagraficaEvento"	maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="anagraficaEvento">
+		<xs:sequence>
+			<xs:element name="id_anagrafica" type="xs:integer" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="entiEvento">
+		<xs:sequence>
+			<xs:element name="enteEvento" type="enteEvento" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="enteEvento">
+		<xs:sequence>
+			<xs:element name="id_ente" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="enti">
+		<xs:sequence>
+			<xs:element name="ente" type="ente" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+ 	</xs:complexType>
+ 	
+	<xs:complexType name="ente">
+		<xs:sequence>
+			<xs:element name="id_ente" type="xs:integer" minOccurs="0"/>
+			<xs:element name="cod_ente" type="xs:string" minOccurs="0"/>
+			<xs:element name="des_ente" type="xs:string" minOccurs="0"/>
+			<xs:element name="codice_fiscale" type="xs:string" minOccurs="0"/>
+			<xs:element name="partita_iva" type="xs:string" minOccurs="0"/>
+			<xs:element name="indirizzo" type="xs:string" minOccurs="0"/>
+			<xs:element name="cap" type="xs:string" minOccurs="0"/>
+			<xs:element name="citta" type="xs:string" minOccurs="0"/>
+			<xs:element name="provincia" type="xs:string" minOccurs="0"/>
+			<xs:element name="telefono" type="xs:string" minOccurs="0"/>
+			<xs:element name="fax" type="xs:string" minOccurs="0"/>
+			<xs:element name="email" type="xs:string" minOccurs="0"/>
+			<xs:element name="pec" type="xs:string" minOccurs="0"/>
+			<xs:element name="codice_istat" type="xs:string" minOccurs="0"/>
+			<xs:element name="codice_catastale" type="xs:string" minOccurs="0"/>
+			<xs:element name="codice_aoo" type="xs:string" minOccurs="0"/>
+			<xs:element name="tipo_ente" type="xs:string" minOccurs="0"/>
+			<xs:element name="cod_ente_esterno" type="xs:string" minOccurs="0"/>
+			<xs:element name="unita_organizzativa" type="xs:string" minOccurs="0"/>
+			<xs:element name="codice_amministrazione" type="xs:string" minOccurs="0"/>
+			<xs:element name="identificativo_suap" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="dirittiSegreteria">
+		<xs:sequence>
+			<xs:element name="oneriUrbanizzazione" type="oneriUrbanizzazione" minOccurs="0"/>
+			<xs:element name="contributiCosto" type="contributiCosto" minOccurs="0"/>
+			<xs:element name="serviziTariffaIndividuale" type="serviziTariffaIndividuale" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="oneriUrbanizzazione">
+		<xs:sequence>
+			<xs:element name="dirittiSegreteriaGenerali" type="dirittiSegreteriaGenerali" minOccurs="0"/>
+			<xs:element name="dirittiSegreteriaGaranzie" type="dirittiSegreteriaGaranzie" minOccurs="0"/>
+			<xs:element name="dirittiSegreteriaRate" type="dirittiSegreteriaRate" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dirittiSegreteriaGenerali">
+		<xs:sequence>
+			<xs:element name="unicaSoluzione" type="xs:string" minOccurs="0"/>
+			<xs:element name="totale" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+
+	</xs:complexType>
+	<xs:complexType name="dirittiSegreteriaGaranzie">
+		<xs:sequence>
+			<xs:element name="banca" type="xs:string" minOccurs="0"/>
+			<xs:element name="data" type="xs:string" minOccurs="0"/>
+			<xs:element name="importo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dirittiSegreteriaRate">
+		<xs:sequence>
+			<xs:element name="dirittiSegreteriaRata" type="dirittiSegreteriaRata" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dirittiSegreteriaRata">
+		<xs:sequence>
+			<xs:element name="importo" type="xs:string" minOccurs="0"/>
+			<xs:element name="dataPrevista" type="xs:string" minOccurs="0"/>
+			<xs:element name="dataPagamento" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="contributiCosto">
+		<xs:sequence>
+			<xs:element name="dirittiSegreteriaGenerali" type="dirittiSegreteriaGenerali" minOccurs="0"/>
+			<xs:element name="dirittiSegreteriaGaranzie" type="dirittiSegreteriaGaranzie" minOccurs="0"/>
+			<xs:element name="dirittiSegreteriaRate" type="dirittiSegreteriaRate" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	 <xs:complexType name="serviziTariffaIndividuale">
+		<xs:sequence>
+			<xs:element name="importoDovuto" type="xs:string" minOccurs="0"/>
+			<xs:element name="importoPagato" type="xs:string" minOccurs="0"/>
+			<xs:element name="importoConguaglio" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>

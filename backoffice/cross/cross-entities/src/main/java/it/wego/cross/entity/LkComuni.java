@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "LkComuni.findByIdComune", query = "SELECT l FROM LkComuni l WHERE l.idComune = :idComune"),
     @NamedQuery(name = "LkComuni.findByDescrizione", query = "SELECT l FROM LkComuni l WHERE l.descrizione = :descrizione"),
     @NamedQuery(name = "LkComuni.findByCodCatastale", query = "SELECT l FROM LkComuni l WHERE l.codCatastale = :codCatastale"),
-    @NamedQuery(name = "LkComuni.findByDataFineValidita", query = "SELECT l FROM LkComuni l WHERE l.dataFineValidita = :dataFineValidita")})
+    @NamedQuery(name = "LkComuni.findByDataFineValidita", query = "SELECT l FROM LkComuni l WHERE l.dataFineValidita = :dataFineValidita")
+})
 public class LkComuni implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

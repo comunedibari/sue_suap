@@ -66,7 +66,7 @@ function markAsRead(taskId) {
             } else {
                 mostraMessaggioAjax(messaggio, "error");
             }
-            aggiornaNotifiche();
+//            aggiornaNotifiche();
             $("#notificheTable").trigger("reloadGrid");
         },
         dataType: 'json'
@@ -188,5 +188,5 @@ $(function() {
         width: $('.notificheTableContainer').width()
     }).navGrid('#notifichePager', {edit: false, add: false, del: false, search: false});
 
-    aggiornaNotifiche();
+    //aggiornaNotifiche();
 });

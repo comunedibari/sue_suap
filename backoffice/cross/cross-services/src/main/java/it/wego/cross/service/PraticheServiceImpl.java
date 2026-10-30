@@ -4,64 +4,111 @@
  */
 package it.wego.cross.service;
 
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.xml.xpath.XPath;
+
+import org.activiti.engine.RuntimeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
+import org.xml.sax.InputSource;
+
 import com.google.common.base.Function;
-import it.wego.cross.dto.ProcedimentoDTO;
-import it.wego.cross.dto.NotaDTO;
-import it.wego.cross.dto.PraticaDTO;
-import it.wego.cross.dto.ScadenzaDTO;
-import it.wego.cross.dto.ComuneDTO;
-import it.wego.cross.dto.EstrazioniAgibDTO;
-import it.wego.cross.dto.EstrazioniCilaDTO;
-import it.wego.cross.dto.EstrazioniPdcDTO;
-import it.wego.cross.dto.EstrazioniSciaDTO;
-import it.wego.cross.dto.PraticaNuova;
-import it.wego.cross.dto.AllegatoDTO;
-import it.wego.cross.dto.RecapitoDTO;
-import it.wego.cross.dto.AnagraficaDTO;
-import it.wego.cross.dto.PraticaBarDTO;
-import it.wego.cross.dto.EventoDTO;
-import it.wego.cross.dto.dozer.DatiCatastaliDTO;
-import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
-import it.wego.cross.serializer.AllegatiSerializer;
-import it.wego.cross.serializer.ScadenzeSerializer;
-import it.wego.cross.serializer.RecapitiSerializer;
-import it.wego.cross.serializer.PraticheSerializer;
-import it.wego.cross.serializer.EventiSerializer;
-import it.wego.cross.serializer.DettaglioComunicazioneSerializer;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
+
+import it.wego.cross.actions.ErroriAction;
+import it.wego.cross.actions.PraticheAction;
+import it.wego.cross.actions.SystemEventAction;
 import it.wego.cross.actions.WorkflowAction;
 import it.wego.cross.beans.EventoBean;
 import it.wego.cross.constants.Constants;
 import it.wego.cross.constants.TipoRuolo;
 import it.wego.cross.constants.Workflow;
-import it.wego.cross.dao.*;
+import it.wego.cross.dao.AnagraficheDao;
+import it.wego.cross.dao.LookupDao;
+import it.wego.cross.dao.PraticaDao;
 import it.wego.cross.dao.PraticaDao.IntervalloScadenzeMultiple;
+import it.wego.cross.dao.PraticaProcuratoreDao;
+import it.wego.cross.dao.ProcessiDao;
+import it.wego.cross.dto.AllegatoDTO;
+import it.wego.cross.dto.AnagraficaDTO;
+import it.wego.cross.dto.ComuneDTO;
+import it.wego.cross.dto.EstrazioniAgibDTO;
+import it.wego.cross.dto.EstrazioniCilaDTO;
+import it.wego.cross.dto.EstrazioniPdcDTO;
+import it.wego.cross.dto.EstrazioniSciaDTO;
+import it.wego.cross.dto.EventoDTO;
+import it.wego.cross.dto.NotaDTO;
+import it.wego.cross.dto.PraticaBarDTO;
+import it.wego.cross.dto.PraticaDTO;
+import it.wego.cross.dto.PraticaNuova;
+import it.wego.cross.dto.ProcedimentoDTO;
+import it.wego.cross.dto.RecapitoDTO;
+import it.wego.cross.dto.ScadenzaDTO;
 import it.wego.cross.dto.comunicazione.AnagraficaMinifiedDTO;
 import it.wego.cross.dto.comunicazione.DettaglioPraticaDTO;
+import it.wego.cross.dto.dozer.DatiCatastaliDTO;
+import it.wego.cross.dto.dozer.IndirizzoInterventoDTO;
 import it.wego.cross.dto.filters.Filter;
-import it.wego.cross.entity.*;
+import it.wego.cross.entity.Allegati;
+import it.wego.cross.entity.Anagrafica;
+import it.wego.cross.entity.DatiCatastali;
+import it.wego.cross.entity.Email;
+import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.IndirizziIntervento;
+import it.wego.cross.entity.LkClassificazioneProcedimento;
+import it.wego.cross.entity.LkComuni;
+import it.wego.cross.entity.LkStatiScadenze;
+import it.wego.cross.entity.LkStatoPratica;
+import it.wego.cross.entity.LkTipoIndirizzo;
+import it.wego.cross.entity.LkTipoInterventoSuap;
+import it.wego.cross.entity.LkTipoPratica;
+import it.wego.cross.entity.LkTipoPraticaProcessi;
+import it.wego.cross.entity.LkTipoProcedimentoSuap;
+import it.wego.cross.entity.NotePratica;
+import it.wego.cross.entity.Pratica;
+import it.wego.cross.entity.PraticaAnagrafica;
+import it.wego.cross.entity.PraticaProcedimenti;
+import it.wego.cross.entity.PraticaProcuratore;
+import it.wego.cross.entity.PraticheEventi;
+import it.wego.cross.entity.PraticheEventiAllegati;
+import it.wego.cross.entity.PraticheEventiAnagrafiche;
+import it.wego.cross.entity.PraticheProtocollo;
+import it.wego.cross.entity.Procedimenti;
+import it.wego.cross.entity.ProcedimentiEnti;
+import it.wego.cross.entity.Processi;
+import it.wego.cross.entity.ProcessiEventi;
+import it.wego.cross.entity.Scadenze;
+import it.wego.cross.entity.Staging;
+import it.wego.cross.entity.Utente;
 import it.wego.cross.entity.view.ScadenzeDaChiudereView;
+import it.wego.cross.events.notification.NotificationEngine;
+import it.wego.cross.people.CrossBoFo;
 import it.wego.cross.plugins.pratica.GestionePratica;
+import it.wego.cross.serializer.AllegatiSerializer;
 import it.wego.cross.serializer.DatiCatastaliSerializer;
+import it.wego.cross.serializer.DettaglioComunicazioneSerializer;
+import it.wego.cross.serializer.EventiSerializer;
+import it.wego.cross.serializer.PraticheSerializer;
+import it.wego.cross.serializer.RecapitiSerializer;
+import it.wego.cross.serializer.ScadenzeSerializer;
 import it.wego.cross.utils.AnagraficaUtils;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.PraticaUtils;
 import it.wego.cross.utils.RecapitoUtils;
 import it.wego.cross.utils.Utils;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import org.activiti.engine.RuntimeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import it.wego.cross.utils.XmlUtils;
 
 /**
  *
@@ -108,7 +155,40 @@ public class PraticheServiceImpl implements PraticheService {
     private UsefulService usefulService;
     @Autowired
     private RecapitoUtils recapitoUtils;
+    @Autowired
+    public UtentiService utentiService;
+    @Autowired
+    private SystemEventAction systemEventAction;
+    @Autowired
+    private NotificationEngine notificationEngine;
+    @Autowired
+    private MessageSource messageSource;
+    @Autowired
+    private ConfigurationService configurationService;
+    @Autowired
+    private ErroriAction erroriAction;
+//	@Autowired
+//    private CiviliaMapperDao civiliaMapper;
+//    @Autowired
+//    private DMSClientDao dmsClient;
+//    @Autowired
+//    private PraticaCiviliaDao praticaCiviliaDao;
 
+//    @Autowired
+//    private CiviliaService civiliaService;
+    
+    @Autowired
+    private PraticheAction praticheAction;
+    
+    @Autowired
+    private AnagraficheDao anagraficheDao;
+    
+    @Autowired
+    private PraticaProcuratoreDao praticaProcuratoreDao;
+    @Autowired
+    private CrossBoFo crossBoFo; 
+
+    
     /*
      * trova tutte le pratiche assegnate ad un utente ma ancora in staging
      * @author CS
@@ -308,18 +388,26 @@ public class PraticheServiceImpl implements PraticheService {
         List<AllegatoDTO> allegati = new ArrayList<AllegatoDTO>();
         pratica.getPraticheEventiList();
         for (PraticheEventi praticaEvento : pratica.getPraticheEventiList()) {
-            for (PraticheEventiAllegati pea : praticaEvento.getPraticheEventiAllegatiList()) {
-                Allegati allegato = pea.getAllegati();
-                AllegatoDTO a = new AllegatoDTO();
-                a.setDescrizione(allegato.getDescrizione());
-                a.setIdAllegato(allegato.getId());
-                a.setNomeFile(allegato.getNomeFile());
-                a.setTipoFile(allegato.getTipoFile());
-                a.setIdFileEsterno(allegato.getIdFileEsterno());
-                if (!allegati.contains(a)) {
-                    allegati.add(a);
-                }
-            }
+        	if("S".equals(praticaEvento.getVisibilitaCross())) {
+	            for (PraticheEventiAllegati pea : praticaEvento.getPraticheEventiAllegatiList()) {
+	                Allegati allegato = pea.getAllegati();
+	                AllegatoDTO a = new AllegatoDTO();
+	                a.setDescrizione(allegato.getDescrizione());
+	                a.setIdAllegato(allegato.getId());
+	                a.setNomeFile(allegato.getNomeFile());
+	                a.setTipoFile(allegato.getTipoFile());
+	                a.setIdFileEsterno(allegato.getIdFileEsterno());
+	                a.setProtocollo(praticaEvento.getProtocollo());
+	                a.setIdPraticaEvento(praticaEvento.getIdPraticaEvento());
+	                a.setDataProtocollo(praticaEvento.getDataProtocollo());
+	                a.setOperatore(praticaEvento.getIdUtente());
+	                a.setPrincipale(Constants.IS_MAIN.equals(pea.getFlgIsPrincipale()));
+	                a.setDimensione(allegato.getDimensione());
+	                if (!allegati.contains(a)) {
+	                    allegati.add(a);
+	                }
+	            }
+        	}
         }
         return allegati;
     }
@@ -331,9 +419,14 @@ public class PraticheServiceImpl implements PraticheService {
     }
 
     @Override
+    public List<Pratica> findPerBuildingOperation(Filter filter) throws Exception {
+    	return praticaDao.findPerBuildingOperation(filter);
+    }
+
+    @Override
     public List<PraticaNuova> findFiltrate(Filter filter) throws Exception {
         List<Pratica> praticheAperte = praticaDao.findFiltrate(filter);
-        List<PraticaNuova> pratiche = new ArrayList<PraticaNuova>();
+        List<PraticaNuova> pratiche = new ArrayList<>();
         for (Pratica pratica : praticheAperte) {
             PraticaNuova praticaNuova = praticheSerializer.serializePraticaNuova(pratica, filter.getConnectedUser());
             pratiche.add(praticaNuova);
@@ -375,7 +468,7 @@ public class PraticheServiceImpl implements PraticheService {
         List<Pratica> praticheAperte = praticaDao.findDaAprireFiltrate(filter);
         List<PraticaNuova> pratiche = new ArrayList<PraticaNuova>();
         for (Pratica pratica : praticheAperte) {
-            PraticaNuova praticaNuova = praticheSerializer.serializePraticaNuova(pratica, filter.getConnectedUser());
+            PraticaNuova praticaNuova = praticheSerializer.serializePraticaNuova(pratica, filter.getConnectedUser(), true);
             pratiche.add(praticaNuova);
         }
         return pratiche;
@@ -415,7 +508,7 @@ public class PraticheServiceImpl implements PraticheService {
         List<Pratica> praticheAperte = praticaDao.findDaAssegnare(filter);
         List<PraticaNuova> pratiche = new ArrayList<PraticaNuova>();
         for (Pratica pratica : praticheAperte) {
-            PraticaNuova praticaNuova = praticheSerializer.serializePraticaNuova(pratica, filter.getConnectedUser());
+            PraticaNuova praticaNuova = praticheSerializer.serializePraticaNuova(pratica, filter.getConnectedUser(), true);
             pratiche.add(praticaNuova);
         }
         return pratiche;
@@ -426,6 +519,7 @@ public class PraticheServiceImpl implements PraticheService {
         Long count = praticaDao.countDaAssegnare(filter);
         return count;
     }
+    
 
     @Override
     public PraticaProcedimenti findPraticaProcedimento(Integer idPratica, Integer idProcedimento, Integer idEnte) throws Exception {
@@ -496,9 +590,15 @@ public class PraticheServiceImpl implements PraticheService {
     public List<Pratica> findPraticheDaRiprotocollare(String protocollo) {
         return praticaDao.findPraticheDaRiprotocollare(protocollo);
     }
+    
+    @Override
+   public PraticheEventi findEventoAssegnazioneArchivio(Pratica pratica){
+    	return praticaDao.findEventoAssegnazioneArchvio(pratica);
+    }
 
     @Override
     public Pratica findByAnnoProtocollo(Integer anno, String numeroProtocollo) {
+
         return praticaDao.findByAnnoProtocollo(anno, numeroProtocollo);
     }
 
@@ -567,17 +667,52 @@ public class PraticheServiceImpl implements PraticheService {
         dettaglio.setCodiceStatoPratica(pratica.getIdStatoPratica().getGrpStatoPratica());
         List<AnagraficaMinifiedDTO> anagrafiche = new LinkedList<AnagraficaMinifiedDTO>();
         Log.APP.info("Trovate " + pratica.getPraticaAnagraficaList().size() + " anagrafiche");
+
         List<AnagraficaMinifiedDTO> richiedenti = new ArrayList<AnagraficaMinifiedDTO>();
         List<AnagraficaMinifiedDTO> beneficiari = new ArrayList<AnagraficaMinifiedDTO>();
         List<AnagraficaMinifiedDTO> altro = new ArrayList<AnagraficaMinifiedDTO>();
-        for (PraticaAnagrafica pa : pratica.getPraticaAnagraficaList()) {
+
+        List<PraticaAnagrafica> praticaAnagraficaList = new ArrayList<PraticaAnagrafica>();
+        List<PraticaAnagrafica> praticaAnagraficaCross = pratica.getPraticaAnagraficaList();
+//        List<PraticaAnagrafica> praticaAnagraficaCivilia = civiliaMapper.getListAnagraficheById(pratica.getIdentificativoPratica());
+        
+//        DettaglioPratica dettPraticaDms = dmsClient.getDettaglioPraticheById(pratica.getIdentificativoPratica());
+//        List<PraticaAnagrafica> praticaAnagraficaDms = dmsClient.getListAnagraficheById(pratica.getIdentificativoPratica());
+//        List<PraticaAnagrafica> praticaAnagraficaDms = dettPraticaDms.getPratica();
+//        Log.APP.info("Trovate " + praticaAnagraficaDms.size() + " praticaAnagraficaDms");
+        
+		praticaAnagraficaList.addAll(praticaAnagraficaCross);
+//        praticaAnagraficaList.addAll(praticaAnagraficaCivilia);
+//        praticaAnagraficaList.addAll(praticaAnagraficaDms);
+//        
+        Log.APP.info("Trovate " + praticaAnagraficaList.size() + " anagrafiche");
+
+
+        for (PraticaAnagrafica pa : praticaAnagraficaList) {
             Anagrafica a = pa.getAnagrafica();
             Log.APP.info("Preparo il dettaglio per l'anagrafica " + a.getIdAnagrafica());
-            AnagraficaMinifiedDTO anagrafica = dettaglioComunicazioneSerializer.serializeAnagrafica(a);
+            AnagraficaMinifiedDTO anagrafica = dettaglioComunicazioneSerializer.serializeAnagrafica(pa);
             if (pa.getLkTipoRuolo() != null) {
                 anagrafica.setRuolo(pa.getLkTipoRuolo().getDescrizione());
                 anagrafica.setIdRuolo(pa.getLkTipoRuolo().getIdTipoRuolo());
             }
+            if (pa.getLkTipoRuolo() != null) {
+                anagrafica.setRuolo(pa.getLkTipoRuolo().getDescrizione());
+                anagrafica.setIdRuolo(pa.getLkTipoRuolo().getIdTipoRuolo());
+            }
+            Log.APP.info("Verifico esistenza etichetta per le anagrafiche civilia " + pa.getIdEtichetta());
+
+            int etichetta = 0;
+            if(pa.getIdEtichetta() != null) { etichetta = pa.getIdEtichetta().intValue();}
+            if (etichetta != 0) {              
+            	String ruolo_civilia = lookupDao.findRuoloCiviliaByIdEtichetta(etichetta);
+                Log.APP.info("Set ruolo etichetta anagrafica civilia " + ruolo_civilia + " Cognome " + anagrafica.getCognome() + " Nome " + anagrafica.getNome());
+                anagrafica.setRuolo_civilia(ruolo_civilia);
+            } else {
+            	anagrafica.setRuolo_civilia("");
+            }
+            
+            
             if (pa.getLkTipoRuolo().getCodRuolo().equals(TipoRuolo.RICHIEDENTE)) {
                 //Il richiedente e' sempre persona fisica
                 anagrafica.setIsDittaIndividuale(Boolean.FALSE);
@@ -589,6 +724,10 @@ public class PraticheServiceImpl implements PraticheService {
                 }
             }
             Log.APP.info("Aggiungo l'anagrafica di " + anagrafica.getCodiceFiscale() + " " + anagrafica.getPartitaIVA());
+            Log.APP.info("Aanagrafica ruolo " + pa.getLkTipoRuolo().getIdTipoRuolo() 
+            		+ " " + pa.getLkTipoRuolo().getCodRuolo()
+            		+ " " + pa.getLkTipoRuolo().getDescrizione()
+            		);
             if (pa.getLkTipoRuolo().getCodRuolo().equals(TipoRuolo.RICHIEDENTE)) {
                 richiedenti.add(anagrafica);
             } else if (pa.getLkTipoRuolo().getCodRuolo().equals(TipoRuolo.BENEFICIARIO)) {
@@ -597,16 +736,37 @@ public class PraticheServiceImpl implements PraticheService {
                 altro.add(anagrafica);
             }
         }
+
         anagrafiche.addAll(richiedenti);
         anagrafiche.addAll(beneficiari);
         anagrafiche.addAll(altro);
         dettaglio.setAnagrafiche(anagrafiche);
+
         List<DatiCatastaliDTO> datiCatastali = new ArrayList<DatiCatastaliDTO>();
         Log.APP.info("Ci sono dati catastali? " + (pratica.getDatiCatastaliList() != null));
+
         GestionePratica gp = pluginService.getGestionePratica(pratica.getIdProcEnte().getIdEnte().getIdEnte());
-        if (pratica.getDatiCatastaliList() != null && !pratica.getDatiCatastaliList().isEmpty()) {
+
+          List<DatiCatastali> listDatiCatastali = new ArrayList<DatiCatastali>();
+        List<DatiCatastali> listDatiCatastaliCross = pratica.getDatiCatastaliList();
+        //LOR 17/05/2023 List<DatiCatastali> listDatiCatastaliDms = dmsClient.getListDatiCatastaliById(pratica.getIdentificativoPratica());
+//        List<DatiCatastali> listDatiCatastaliDms = dettPraticaDms.getDaticatastali();
+//        Log.APP.info("Trovate " + listDatiCatastaliDms.size() + " listDatiCatastaliDms");
+        List<DatiCatastali> listDatiCatastaliDms = new ArrayList<DatiCatastali>();
+//        List<DatiCatastali> listDatiCatastaliCivilia = civiliaService.filterCadastralData(civiliaMapper.getListDatiCatastaliById(pratica.getIdentificativoPratica()),listDatiCatastaliCross,listDatiCatastaliDms);
+        
+        listDatiCatastali.addAll(listDatiCatastaliCross);
+//        listDatiCatastali.addAll(listDatiCatastaliCivilia);
+//        listDatiCatastali.addAll(listDatiCatastaliDms);
+        
+        Log.APP.info("Ci sono dati catastali? " + (listDatiCatastali != null));
+		
+		if (listDatiCatastali != null && !listDatiCatastali.isEmpty()) {
+
+
             Log.APP.info("Trovati " + pratica.getDatiCatastaliList().size() + " immobili");
-            for (DatiCatastali dato : pratica.getDatiCatastaliList()) {
+            for (DatiCatastali dato : listDatiCatastali) {
+
                 DatiCatastaliDTO d = dettaglioComunicazioneSerializer.serializeDatoCatastale(dato);
                 d.setUrlCatasto(gp.getUrlCatasto(dato, pratica));
                 datiCatastali.add(d);
@@ -615,6 +775,34 @@ public class PraticheServiceImpl implements PraticheService {
         dettaglio.setDatiCatastali(datiCatastali);
 
         List<IndirizzoInterventoDTO> indirizziIntervento = new ArrayList<IndirizzoInterventoDTO>();
+
+
+
+   //IndirizzoInterventoDTO DMS        
+        List<IndirizziIntervento> lstIndirizzi = pratica.getIndirizziInterventoList();
+//        List<IndirizzoInterventoDTO> indirizziInterventoDms = dmsClient.getListIndirizziIntervento(pratica.getIdentificativoPratica());
+//        List<IndirizzoInterventoDTO> indirizziInterventoDms = dettPraticaDms.getIndIntervento();
+//        Log.APP.info("Trovate " + indirizziInterventoDms.size() + " indirizziInterventoDms");
+//        List<IndirizzoInterventoDTO> indirizziInterventoDms = new ArrayList<IndirizzoInterventoDTO>();
+/*        for(IndirizzoInterventoDTO indDTO : indirizziInterventoDms)
+        {
+        	IndirizziIntervento it = new IndirizziIntervento();
+        	
+        	it.setProvenienza(Costants.DMS);				
+			it.setLatitudine(indDTO.getLatitudine());				
+			it.setLongitudine(indDTO.getLongitudine());
+			it.setCivico(indDTO.getCivico());
+			it.setLocalita(indDTO.getLocalita());
+			it.setIndirizzo(indDTO.getIndirizzo());
+			it.setPiano(indDTO.getPiano());
+			it.setInternoNumero(indDTO.getInternoNumero());
+			it.setInternoLettera(indDTO.getInternoLettera());
+        
+			lstIndirizzi.add(it);
+        }
+        indirizziIntervento.addAll(indirizziInterventoDms);
+*/
+
         Log.APP.info("Ci sono indirizzi Intervento? " + (pratica.getIndirizziInterventoList() != null));
         if (pratica.getIndirizziInterventoList() != null) {
             Log.APP.info("Trovati " + pratica.getIndirizziInterventoList().size() + " indirizzi ");
@@ -624,12 +812,20 @@ public class PraticheServiceImpl implements PraticheService {
                 indirizziIntervento.add(d);
             }
         }
+
         dettaglio.setIndirizziIntervento(indirizziIntervento);
         List<ProcedimentoDTO> procedimenti = new ArrayList<ProcedimentoDTO>();
         Log.APP.info("Ci sono procedimenti collegati alla pratica? " + (pratica.getPraticaProcedimentiList() != null));
-        if (pratica.getPraticaProcedimentiList() != null) {
+
+        List<PraticaProcedimenti> datipraticaprocedimentiList = new ArrayList<PraticaProcedimenti>();
+        List<PraticaProcedimenti> datipraticaprocedimentiListCross = pratica.getPraticaProcedimentiList();
+//        List<PraticaProcedimenti> datipraticaprocedimentiListCivilia = civiliaMapper.getListEndoprocedimentiById(pratica.getIdentificativoPratica());
+        datipraticaprocedimentiList.addAll(datipraticaprocedimentiListCross);
+//        datipraticaprocedimentiList.addAll(datipraticaprocedimentiListCivilia);
+        
+        if (datipraticaprocedimentiList != null) {
             Log.APP.info("Trovati " + pratica.getPraticaProcedimentiList().size() + " procedimenti collegati");
-            for (PraticaProcedimenti pp : pratica.getPraticaProcedimentiList()) {
+            for (PraticaProcedimenti pp : datipraticaprocedimentiList) {
                 Log.APP.info("La coppia pratica-procedimento è valorizzata? " + (pp != null));
                 if (pp != null) {
                     Log.APP.info("C'è un procedimento collegato? " + (pp.getProcedimenti() != null));
@@ -637,9 +833,28 @@ public class PraticheServiceImpl implements PraticheService {
                     if (pp.getProcedimenti() != null && pp.getEnti() != null) {
                         Log.APP.info("Serializzo il procedimento " + pp.getProcedimenti().getIdProc());
                         Log.APP.info("L'ente individuato è " + pp.getEnti().getDescrizione());
-                        ProcedimentoDTO procedimento = dettaglioComunicazioneSerializer.serializeProcedimento(pp.getProcedimenti(), pp.getEnti());
-                        dettaglioPraticaFiglia(procedimento, pp);
-                        procedimenti.add(procedimento);
+                        Log.APP.info("PROVENIENZA e':" + pp.getProvenienza());
+                        
+                        if(pp.getProvenienza() != null) {
+                        	
+                        	if(pp.getProvenienza().equals(it.wego.cross.civilia.Costants.CIVILIA)) {
+	                        	ProcedimentoDTO procedimento = new ProcedimentoDTO();
+	                        	procedimento.setDesProcedimento(pp.getProcedimenti().getTipoProc());
+	                        	procedimento.setGiorniScadenza(pp.getProcedimenti().getTermini().toString());
+	                        	
+	                        	procedimento.setIdProcedimento(pp.getProcedimenti().getTermini());
+	                        	procedimento.setTermini(pp.getProcedimenti().getTermini());
+	                            
+	                        	procedimento.setDesEnteDestinatario(pp.getEnti().getDescrizione());
+	                        	procedimento.setProvenienza(it.wego.cross.civilia.Costants.CIVILIA);
+	                        	procedimenti.add(procedimento);
+                        	}
+                        } else {
+
+	                        ProcedimentoDTO procedimento = dettaglioComunicazioneSerializer.serializeProcedimento(pp.getProcedimenti(), pp.getEnti());
+	                        dettaglioPraticaFiglia(procedimento, pp);
+	                        procedimenti.add(procedimento);
+                        }
                     }
                 }
             }
@@ -651,10 +866,33 @@ public class PraticheServiceImpl implements PraticheService {
                 notepratica.add(notaDTO);
             }
         }
+
+ //Annotazioni DMS
+//        for(NotaDTO notaDMS : dettPraticaDms.getAnnotazioni()) {
+//        	notepratica.add(notaDMS);
+//        }
+//        Log.APP.info("Trovate " + dettPraticaDms.getAnnotazioni().size() + "NoteDms");
+
+
+
+
+
         dettaglio.setNotePratica(notepratica);
         dettaglio.setProcedimenti(procedimenti);
+
         List<AllegatoDTO> allegati = new ArrayList<AllegatoDTO>(); // getAllegatiPratica(pratica);
+        List<AllegatoDTO> allegatiCross = getAllegatiPratica(pratica);
+//        List<AllegatoDTO> allegatiDMS = dmsClient.getListAllegatiPratica(pratica.getIdentificativoPratica());
+//        List<AllegatoDTO> allegatiDMS = dettPraticaDms.getAllegati();
+//        Log.APP.info("Trovate " + allegatiDMS.size() + "allegatiDMS");
+//        List<AllegatoDTO> allegatiDMS = new ArrayList<AllegatoDTO>();
+//        List<AllegatoDTO> allegatiCivilia = civiliaService.filterAttachmentsByDescription(civiliaMapper.getListAllegatiPratica(pratica.getIdentificativoPratica()),allegatiCross, allegatiDMS);
+        allegati.addAll(allegatiCross);
+//        allegati.addAll(allegatiCivilia);
+//        allegati.addAll(allegatiDMS);
+
         dettaglio.setAllegati(allegati);
+
         List<ScadenzaDTO> scadenze = new ArrayList<ScadenzaDTO>();
         Log.APP.info("Ci sono scadenze? " + (pratica.getScadenzeList() != null));
         if (pratica.getScadenzeList() != null) {
@@ -669,8 +907,10 @@ public class PraticheServiceImpl implements PraticheService {
         dettaglio.setEventi(eventi);
         dettaglio.setEsistenzaStradario(gp.getEsistenzaStradario(pratica));
         dettaglio.setEsistenzaRicercaCatasto(gp.getEsistenzaRicercaCatasto(pratica));
+        
         return dettaglio;
     }
+
 
     private void dettaglioPraticaFiglia(ProcedimentoDTO procedimento, PraticaProcedimenti pp) {
         Pratica praticaFiglia = praticaDao.getPraticaFiglia(pp.getPratica(), pp.getProcedimenti());
@@ -788,6 +1028,10 @@ public class PraticheServiceImpl implements PraticheService {
         Log.WS.info("Data ricezione: " + Utils.dateTimeItalianFormat(praticaProtocollo.getDataRicezione()));
 //        praticaDaSalvare.setDataRicezione(praticaProtocollo.getDataProtocollazione());
         praticaDaSalvare.setDataRicezione(praticaProtocollo.getDataRicezione());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(praticaDaSalvare.getDataRicezione());
+        praticaDaSalvare.setAnno(cal.get(Calendar.YEAR));
+        Log.WS.info("Anno: " + praticaDaSalvare.getAnno());
         Log.WS.info("Id staging: " + staging.getIdStaging());
         praticaDaSalvare.setIdStaging(staging);
         //Comune
@@ -898,6 +1142,11 @@ public class PraticheServiceImpl implements PraticheService {
     public void saveProcessoEvento(PraticheEventi evento) throws Exception {
         praticaDao.insert(evento);
     }
+    
+    @Override
+    public void deletePraticaEvento(PraticheEventi praticaEvento) throws Exception {
+    	praticaDao.delete(praticaEvento);
+    }
 
     @Override
     public void saveAnagraficaEvento(PraticheEventiAnagrafiche pea) throws Exception {
@@ -976,6 +1225,11 @@ public class PraticheServiceImpl implements PraticheService {
     @Override
     public void updatePraticaEvento(PraticheEventi evento) throws Exception {
         praticaDao.update(evento);
+    }
+
+    @Override
+    public void updatePraticaEventoTransactional(PraticheEventi evento) throws Exception {
+    	praticheAction.update(evento);
     }
 
     @Override
@@ -1113,6 +1367,40 @@ public class PraticheServiceImpl implements PraticheService {
     }
 	
 	@Override
+	public List<EstrazioniAgibDTO> listPraticheAGIBToDo(Filter filter) throws Exception {
+//		Date data = filter.getDataInizio();
+//		filter.setDataFine(data);
+		List<EstrazioniAgibDTO> pratiche = new ArrayList<EstrazioniAgibDTO>();
+		List<EstrazioniAgibDTO> praticheRicevute = new ArrayList<EstrazioniAgibDTO>();
+		List<EstrazioniAgibDTO> praticheResult = new ArrayList<EstrazioniAgibDTO>();
+		int lavorate = 0;
+		if(filter.getEnteSelezionato() != null)
+			pratiche = praticaDao.listPraticheAGIB(filter);
+		if(!pratiche.isEmpty() && pratiche !=null) {
+			int totali = pratiche.size();
+			int venti = (int) Math.ceil((double) totali * 0.2);
+			
+			for (EstrazioniAgibDTO temp : pratiche) {
+				if(!temp.getStato().equalsIgnoreCase("Ricevuta")) {
+					lavorate++;
+				}
+				else {
+					praticheRicevute.add(temp);
+				}
+			}
+			
+			if(lavorate < venti) {
+				int countpraticheResult =  venti-lavorate;
+				Collections.shuffle(praticheRicevute);
+				for(int i=0; i<countpraticheResult; i++) {
+					praticheResult.add(praticheRicevute.get(i));
+				}
+			}
+		}
+		return praticheResult ;
+	}
+
+	@Override
 	public List<EstrazioniCilaDTO> listPraticheCILAToDo(Filter filter) throws Exception {
 //		Date data = filter.getDataInizio();
 //		filter.setDataFine(data);
@@ -1147,8 +1435,14 @@ public class PraticheServiceImpl implements PraticheService {
 	}
 
 	@Override
+	public List<PraticheEventi> findSortedPraticheEventi(Integer idPratica) {
+		List<PraticheEventi> result = praticaDao.descSortedPraticheEventi(idPratica);
+		return result;
+	}
+	
+	@Override
 	public List<PraticheEventi> findPraticheEventiDaRiprotocollare() {
-		// TODO Auto-generated method stub
+
 		List<PraticheEventi> result = new ArrayList<PraticheEventi>();
 		result = praticaDao.listPraticheEventi();
 		
@@ -1166,11 +1460,113 @@ public class PraticheServiceImpl implements PraticheService {
 		LkTipoInterventoSuap lookup = lookupDao.findLkTipoInterventoSUAPbyIdIntervento(idInterventoSuap);
 	        return lookup;
 	}
+	
+	@Override
 	public LkClassificazioneProcedimento findLookupClassificazioneProcedimento(Integer idClassificazioneProcedimento) {
 		LkClassificazioneProcedimento lookup = lookupDao.findClassificazioneProcedimentobyId(idClassificazioneProcedimento);
 		return lookup;
 	}
+
+	@Override
+	public LkTipoPratica findLookupTipoPratica(Integer idLookup) {
+		return lookupDao.findLkTipoPraticaById(idLookup);
+	}
 	
+	@Override
+	public LkTipoPraticaProcessi findByIdTipoPraticaProcessiById(Integer idProcesso) {
+		return lookupDao.findByIdTipoPraticaProcessiById(idProcesso);
+	}
+
+	@Override
+	public void changeAssociatedTechnicianAgent(String idPratica, String idTechnician) throws Exception {
+		crossBoFo.changeAssociatedTechnicianAgent(idPratica, idTechnician);	
+	}
+	@Override
+	public void changeAssociatedTechnicianAgentBackOffice(Integer paperworkId, Integer personalDataId) throws Exception {
+		praticheAction.changeAssociatedTechnicianAgent(paperworkId, personalDataId);
+	}
 	
+	@Override
+	public String readAssociatedTechnicianAgentTaxCode(Integer idPratica) throws Exception {
+		PraticaProcuratore technicianAgent = praticaProcuratoreDao.getActiveTechnicianAgent(idPratica);
+		return(technicianAgent != null) ? technicianAgent.getAnagrafica().getCodiceFiscale().toUpperCase() : null;
+	}
+
+	public void reassignPaperworkFromAdmin(Integer idUtenteAssegnatario, Integer idPratica, Utente utenteConnesso) throws Exception {
+		reassignPaperworkFromAdmin(idUtenteAssegnatario, idPratica, utenteConnesso, false );
+	}
 	
+	public void reassignPaperworkFromAdmin(Integer idUtenteAssegnatario, Integer idPratica, Utente utenteConnesso, boolean isAutomated) throws Exception {
+        Pratica pratica = getPratica(idPratica);
+        Utente precedenteAssegnatario = pratica.getIdUtente();
+        Utente utenteAssegnatario = utentiService.findUtenteByIdUtente(idUtenteAssegnatario);
+        
+        PraticheEventi evento = null;
+        if(isAutomated)
+        	evento = systemEventAction.riassegnaPraticaAutomatico(pratica, precedenteAssegnatario, utenteAssegnatario, utenteConnesso);
+        else
+        	evento = systemEventAction.riassegnaPratica(pratica, precedenteAssegnatario, utenteAssegnatario, utenteConnesso);
+
+        String notifica = messageSource.getMessage("pratica.riassegna.notifica", new Object[]{
+            pratica.getIdentificativoPratica(),
+            utenteAssegnatario.getNome(),
+            utenteAssegnatario.getCognome()
+        }, Locale.getDefault());
+        workflowAction.riassegnaTaskAssociatiAllaPratica(idPratica, utenteAssegnatario);
+        List<String> notificationUserList = new ArrayList<>();
+        notificationUserList.add(utenteAssegnatario.getUsername());
+        notificationUserList.add(precedenteAssegnatario.getUsername());
+        notificationEngine.createNotification(evento, notificationUserList, notifica);
+	}
+
+	@Override
+	public void register(PraticheEventi praticaEvento) throws Exception {
+		praticheAction.register(praticaEvento);
+    }
+	
+	@Override
+	public Anagrafica readTechnicianAgentFromPaperwork(Pratica pratica) throws Exception {
+		PraticaProcuratore praticaProcuratore = praticaProcuratoreDao.getActiveTechnicianAgent(pratica.getIdPratica());
+		return praticaProcuratore != null? praticaProcuratore.getAnagrafica() : null;
+	}
+    
+	@Override
+	public Anagrafica readTechnicianAgentFromXml(Pratica pratica) throws Exception {
+		Allegati mda = null;
+		Anagrafica anagrafica = null;
+    	for(PraticheEventi pe : pratica.getPraticheEventiList()) {
+    		for(PraticheEventiAllegati pea : pe.getPraticheEventiAllegatiList()) {
+    			if(pea.getAllegati().getPathFile().toLowerCase().endsWith("mda.xml")) {
+    				mda = pea.getAllegati();
+    			}
+    		}
+    	}
+    	if(mda != null) {
+    		String data = it.wego.cross.utils.XmlUtils.getDataFromPath(mda.getPathFile());
+    		XPath xpath = XmlUtils.createXpath();
+    		InputSource source = new InputSource(new StringReader(data));
+    		String surname = xpath.evaluate(it.wego.cross.utils.XmlUtils.XPATH_TECHNICIAN_SURNAME, source);
+    		source = new InputSource(new StringReader(data));
+    		String name = xpath.evaluate(it.wego.cross.utils.XmlUtils.XPATH_TECHNICIAN_NAME, source);
+    		source = new InputSource(new StringReader(data));
+    		String taxCode = xpath.evaluate(it.wego.cross.utils.XmlUtils.XPATH_TECHNICIAN_TAX_CODE, source);
+    		if((name != null && name.length() > 0) || 
+				(surname != null && surname.length() > 0) ||
+				(taxCode != null && taxCode.length() > 0)) 
+    		{
+    			anagrafica = new Anagrafica();
+    			anagrafica.setNome(name);
+    			anagrafica.setCognome(surname);
+    			anagrafica.setCodiceFiscale(taxCode);
+    			
+    		}
+    			
+    	}
+    	return anagrafica;
+    }	
+
+	@Override
+	public void returnToApproval(Integer idPratica) throws Exception {
+		praticheAction.returnToApproval(idPratica);
+	}
 }

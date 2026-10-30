@@ -44,22 +44,7 @@
 			jdbc-level="3.0"
 			jndi-datasource-name="java:/comp/env/jdbc/PeopleDB" 
 			useAutoCommit="1">
-	<!--jdbc-connection-descriptor  
-			jcd-alias="PEOPLE_DB" 
-			default-connection="true" 
-			platform="MySQL"
-			jdbc-level="3.0" 
-			driver="org.gjt.mm.mysql.Driver" 
-			protocol="jdbc" 
-			subprotocol="mysql"
-			dbalias="//localhost:3307/peopledb?autoReconnect=true"
-			username="people_demo" 
-			password="people_demo" 
-			useAutoCommit="1">
-	   <connection-pool maxActive="1000" maxIdle="10" maxWait="2000" minEvictableIdleTimeMillis="900000" 
-	   		numTestsPerEvictionRun="21" testWhileIdle="true" testOnBorrow="true" testOnReturn="true" 
-	   		validationQuery="SELECT 1" timeBetweenEvictionRunsMillis="900000" removeAbandoned="true" 
-	   		removeAbandonedTimeout="900000" whenExhaustedAction="2" /-->
+
 	   <sequence-manager 
 			className="it.people.console.persistence.utils.sequences.SequenceManagerMySQLImpl" />
 	</jdbc-connection-descriptor>

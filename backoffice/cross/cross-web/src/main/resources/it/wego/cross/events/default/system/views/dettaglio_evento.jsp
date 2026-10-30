@@ -6,31 +6,17 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="it.wego.cross.constants.CartiglioConstants" %>
 <tiles:insertAttribute name="body_error" />
 
 <div class="content_sidebar">
     <c:url value="/download/pratica.htm" var="downloadPraticaUrl">
         <c:param name="id_pratica" value="${pratica.idPratica}"/>
     </c:url>
-    <div class="sidebar_left">
-        <h3><spring:message code="pratica.comunicazione.dettaglio.identificativo"/> <strong>${pratica.identificativoPratica}</strong></h3>
-        <div class="sidebar_elemento">
-            ${pratica.oggettoPratica}
-            <p><strong><spring:message code="pratica.comunicazione.evento.pratica.dataricezione"/>:</strong> <fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.dataRicezione}" /></p>
-            <p><strong><spring:message code="pratica.comunicazione.evento.pratica.stato"/>:</strong> ${pratica.idStatoPratica.descrizione}</p>
-            <c:choose>
-                <c:when test="${not empty pratica.idModello}">
-                    <p style="margin-top:20px;">
-                        <a href="${downloadPraticaUrl}" class="scarica" target="_blank">
-                            <spring:message code="pratica.comunicazione.evento.pratica.download"/>
-                        </a>
-                    </p>
-                </c:when>
-                <c:otherwise>
-                    <span class="value"><spring:message code="pratica.comunicazione.evento.pratica.nofile"/></span>
-                </c:otherwise>
-            </c:choose>
-        </div>
+    <div class="sidebar_left"> 
+    	<c:set var="cartiglio" value="${evento.cartiglio}" scope="request"/>
+    	<c:set var="from" value="${CartiglioConstants.FROM_EVENT }" scope="request"/>
+		<c:import url="/themes/default/views/main/body/pratiche/cartiglio.jsp"/>
     </div>
     <div class="sidebar_center">
         <div class="page-control" data-role="page-control">

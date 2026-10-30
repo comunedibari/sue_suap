@@ -21,22 +21,24 @@ import org.springframework.stereotype.Component;
 public class UtenteDTO extends AbstractDTO implements Serializable {
 
     private String nominativo;
+    
     @NotNull(message = "{error.UtenteDTO.codiceFiscale}")
     @NotEmpty(message = "{error.UtenteDTO.codiceFiscale}")
     private String codiceFiscale;
+    
     @NotNull(message = "{error.UtenteDTO.username}")
     @NotEmpty(message = "{error.UtenteDTO.username}")
     private String username;
-//    @NotNull(message = "{error.UtenteDTO.password}")
-//    @NotEmpty(message = "{error.UtenteDTO.password}")
     private String password;
     private Date dataAttivazione;
     private String permessi;
     private Integer codiceUtente;
     private Integer idUtente;
+    
     @NotNull(message = "{error.UtenteDTO.nome}")
     @NotEmpty(message = "{error.UtenteDTO.nome}")
     private String nome;
+    
     @NotNull(message = "{error.UtenteDTO.cognome}")
     @NotEmpty(message = "{error.UtenteDTO.cognome}")
     private String cognome;
@@ -178,15 +180,6 @@ public class UtenteDTO extends AbstractDTO implements Serializable {
     public void setSuperuser(String superuser) {
         this.superuser = superuser;
     }
-
-//    public List<RuoloDTO> getRuoli() {
-//        return ruoli;
-//    }
-//
-//    public void setRuoli(List<RuoloDTO> ruoli) {
-//        this.ruoli = ruoli;
-//    }
-    
     
     public List<UtenteRuoloEnteDTO> getUtenteRuoloEnte() {
         return utenteRuoloEnte;

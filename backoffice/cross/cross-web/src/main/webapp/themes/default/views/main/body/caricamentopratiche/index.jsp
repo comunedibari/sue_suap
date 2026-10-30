@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
 function displayConfirmDialog(idPratica, isAdmin) {
-    var urlToRedirect = '${riassegnaPraticaUrl}?from=gestisci&idPratica=' + idPratica;
+    var urlToRedirect = '${riassegnaPraticaUrl}?from=gestisci&idPratica=' + idPratica + "&s_code="+window.name;
     if (isAdmin) {
         window.open(urlToRedirect, "_self");
     } else {
@@ -68,7 +68,7 @@ function gestionePraticheIdentificativoPraticaOrProtocolloFormatter(cellvalue, o
 
 
 var url = getUrl();
-debugger;
+
 
 function setLastUpdate() {
     var now = getTodayDateString();

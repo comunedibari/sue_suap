@@ -4,12 +4,14 @@
  */
 package it.wego.cross.plugins.documenti;
 
+import java.util.Date;
+import java.util.List;
+
 import it.wego.cross.entity.Allegati;
 import it.wego.cross.entity.Enti;
 import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.plugins.commons.beans.Allegato;
-import java.util.List;
 
 /**
  *
@@ -27,6 +29,17 @@ public interface GestioneAllegati {
      */
     public abstract void add(Allegati allegato, Enti ente, LkComuni comune) throws Exception;
 
+    /**
+     * Carica l'allegato all'interno del sistema di gestione documentale
+     * la nuova gestione degli allegati richiedere l'anno
+     * @param allegato
+     * @param ente
+     * @param comune
+     * @param year
+     * @throws Exception
+     */
+    public void add(Allegati allegato, Enti ente, LkComuni comune, Date date) throws Exception;
+    
     /**
      * Ritorna il file fisico relativo all'allegato passato
      *

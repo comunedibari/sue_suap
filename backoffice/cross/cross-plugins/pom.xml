@@ -32,6 +32,7 @@
         <module>../cross-xml-visura</module>
         <module>../cross-fvg</module>
         <module>../cross-avbari</module>
+        <module>../cross-protocollo-ruvo</module>
     </modules> 
        
 
@@ -101,6 +102,11 @@
             <artifactId>cross-avbari</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>        
+        <dependency>
+            <groupId>it.wego.cross.plugins</groupId>
+            <artifactId>cross-protocollo-ruvo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>                
         <dependency>
             <groupId>it.wego.cross.plugins</groupId>
             <artifactId>cross-xml</artifactId>

@@ -10,10 +10,11 @@
     <div style="float:left;" class="header_logo_cross_container">
         <a href="${path}" title="${applicationName} ${version}" class="header_logo_cross_link"></a>
     </div>
+
     <div class="nav-bar">
         <div class="nav-bar-inner">
             <ul class="menu">
-                <c:if test="${isSuperuser || enableGestionePratiche}">
+                <c:if test="${(isSuperuser || enableGestionePratiche) && !abilitazioneConsultazione}">
                     <li data-role="dropdown">
                         <a class="accettazione" href="#">Accettazione</a>
                         <ul class="dropdown-menu">
@@ -38,37 +39,44 @@
                 <li data-role="dropdown">
                     <a class="gestione" href="#">Gestione</a>
                     <ul class="dropdown-menu">
-                        <c:if test="${isSuperuser || enableGestionePratiche}">                        
-                            <li>
-                                <a title="<spring:message code="menu.nuovaGrafica.aperturanuovepratiche"/>" href="${path}/pratiche/nuove/apertura.htm"><spring:message code="menu.nuovaGrafica.aperturanuovepratiche"/></a>
-                            </li>
-                            <li>
+   	                    <c:if test="${!abilitazioneConsultazione}">
+	   	                    <c:if test="${isSuperuser || enableGestionePratiche}">                        
+	                            <li>
+	                                <a title="<spring:message code="menu.nuovaGrafica.aperturanuovepratiche"/>" href="${path}/pratiche/nuove/apertura.htm"><spring:message code="menu.nuovaGrafica.aperturanuovepratiche"/></a>
+	                            </li>
+	                            <li>
+	                                <a title="<spring:message code="menu.nuovaGrafica.gestionepratiche"/>" href="${path}/pratiche/gestisci.htm"><spring:message code="menu.nuovaGrafica.gestionepratiche"/></a>
+	                            </li>
+	                            <li>
+	                                <a title="<spring:message code="menu.nuovaGrafica.scadenziario"/>" href="${path}/pratiche/scadenzario.htm"><spring:message code="menu.nuovaGrafica.scadenziario"/></a>
+	                            </li>
+	                            <%-- <li><a title="<spring:message code="menu.area.alert.comunicazioni"/>" href="${path}/comunicazioni.htm"><spring:message code="menu.area.alert.comunicazioni"/></a></li> --%>
+	                        </c:if>
+	                        <li>
+	                            <a title="<spring:message code="menu.nuovaGrafica.gestioneanagrafiche"/>" href="${path}/gestione/anagrafiche/list.htm"><spring:message code="menu.nuovaGrafica.gestioneanagrafiche"/></a>
+	                        </li>
+	                        <c:if test="${isSuperuser || enableGestionePratiche}">
+	                            <li>
+	                                <a title="<spring:message code="menu.nuovaGrafica.gestionemail"/>" href="${path}/console/mail.htm"><spring:message code="menu.nuovaGrafica.gestionemail"/></a></li>
+	                            </c:if>
+	                            <c:if test="${enableCds}">
+	                            <li>
+	                                <a title="<spring:message code="menu.nuovaGrafica.cds"/>" href="${path}/form/view.htm?idForm=it.wego.cross.forms.common.GestioneOrganiCollegialiGrid"><spring:message code="menu.nuovaGrafica.cds"/></a>
+	                            </li>
+	                            <li>
+	                                <a title="<spring:message code="menu.nuovaGrafica.cds.sedute"/>" href="${path}/form/view.htm?idForm=it.wego.cross.forms.common.GestioneOrganiCollegialiSeduteGrid"><spring:message code="menu.nuovaGrafica.cds.sedute"/></a>
+	                            </li>
+	
+	                        </c:if>
+                        </c:if>
+                        <c:if test="${abilitazioneConsultazione}">
+                        	<li>
                                 <a title="<spring:message code="menu.nuovaGrafica.gestionepratiche"/>" href="${path}/pratiche/gestisci.htm"><spring:message code="menu.nuovaGrafica.gestionepratiche"/></a>
                             </li>
-                            <li>
-                                <a title="<spring:message code="menu.nuovaGrafica.scadenziario"/>" href="${path}/pratiche/scadenzario.htm"><spring:message code="menu.nuovaGrafica.scadenziario"/></a>
-                            </li>
-                            <%-- <li><a title="<spring:message code="menu.area.alert.comunicazioni"/>" href="${path}/comunicazioni.htm"><spring:message code="menu.area.alert.comunicazioni"/></a></li> --%>
-                        </c:if>
-                        <li>
-                            <a title="<spring:message code="menu.nuovaGrafica.gestioneanagrafiche"/>" href="${path}/gestione/anagrafiche/list.htm"><spring:message code="menu.nuovaGrafica.gestioneanagrafiche"/></a>
-                        </li>
-                        <c:if test="${isSuperuser || enableGestionePratiche}">
-                            <li>
-                                <a title="<spring:message code="menu.nuovaGrafica.gestionemail"/>" href="${path}/console/mail.htm"><spring:message code="menu.nuovaGrafica.gestionemail"/></a></li>
-                            </c:if>
-                            <c:if test="${enableCds}">
-                            <li>
-                                <a title="<spring:message code="menu.nuovaGrafica.cds"/>" href="${path}/form/view.htm?idForm=it.wego.cross.forms.common.GestioneOrganiCollegialiGrid"><spring:message code="menu.nuovaGrafica.cds"/></a>
-                            </li>
-                            <li>
-                                <a title="<spring:message code="menu.nuovaGrafica.cds.sedute"/>" href="${path}/form/view.htm?idForm=it.wego.cross.forms.common.GestioneOrganiCollegialiSeduteGrid"><spring:message code="menu.nuovaGrafica.cds.sedute"/></a>
-                            </li>
-
                         </c:if>
                     </ul>
                 </li>
-                <c:if test="${isSuperuser}">
+                <c:if test="${isSuperuser && !abilitazioneConsultazione}">
                     <li data-role="dropdown">
                         <a class="admin" href="#">Impostazioni</a>
                         <ul class="dropdown-menu">
@@ -88,7 +96,7 @@
                         </ul>
                     </li> 
                </c:if>
-               <c:if test="${isEstrazioniUser || isEstrazioniCilaTodoUser}">
+               <c:if test="${(isEstrazioniUser || isEstrazioniCilaTodoUser) && !abilitazioneConsultazione}">
                     <li data-role="dropdown">
                         <a class="estrazioni" href="#">Estrazioni</a>
                          <ul class="dropdown-menu"> 
@@ -100,6 +108,9 @@
                             </c:if>
                             <c:if test="${isEstrazioniCilaTodoUser}">
 			                    <li><a href="${path}/estrazioni/cilaToDo.htm">Pratiche Cila 20%</a></li>
+			                </c:if>
+			                 <c:if test="${isEstrazioniCilaTodoUser}">
+			                    <li><a href="${path}/estrazioni/agibToDo.htm">Pratiche AGIB 20%</a></li>
 			                </c:if>
                         </ul>
                     </li>
@@ -125,7 +136,7 @@
 
 
             <span class="divider"></span>
-			<span class="element"><a class="exit" href="${path}/utenti/modificaPassword.htm">Cambia Password</a></span> 
+			<span class="element"><a class="exit" href="${path}/utenti/modificaPassword.htm">Cambia Password</a></span>
             <span class="element"><a class="exit" href="${path}/esci.htm">Esci</a></span>
         </div>
     </div>

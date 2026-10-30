@@ -1,0 +1,15 @@
+#####################################################################################
+# la chiave verrà sostituita a tutte le possibilità indicate nei valori associati
+# è possibile associare regex
+# cercare di introdurre meno spazi possibili
+#####################################################################################
+
+vicinale=vic\.\s*le
+strada provinciale=s\.\s*p\.,strada\s+prov.le
+corso=c\.so
+traversa=trav\.
+strada statale=ss,S\.\s*statale,s\.\s*s\.,s\.statale n\.,s\.s\.n\.
+zona industriale=z\.i\.
+Primo=\bI\b
+contrada=c/da
+via=^v\.

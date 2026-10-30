@@ -4,11 +4,30 @@
  */
 package it.wego.cross.actions;
 
+import java.io.ByteArrayInputStream;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.xml.xpath.XPathExpression;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+
 import it.wego.cross.constants.Constants;
 import it.wego.cross.dao.PraticaDao;
 import it.wego.cross.dao.StagingDao;
+import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.PraticheProtocollo;
 import it.wego.cross.entity.Staging;
 import it.wego.cross.entity.Utente;
@@ -22,23 +41,6 @@ import it.wego.cross.utils.PraticaUtils;
 import it.wego.cross.utils.Utils;
 import it.wego.cross.xml.Allegato;
 import it.wego.cross.xml.Anagrafiche;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.xpath.XPathConstants;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.xml.xpath.XPathExpression;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -104,7 +106,10 @@ public class SuapFvgAction {
 
         attachmentMap.put(file.getOriginalFilename(), file.getBytes());
         for (Map.Entry<String, byte[]> attachment : attachmentMap.entrySet()) {
-            String createTempFile = gestioneAllegatiFS.createTempFile(attachment.getKey(), attachment.getValue(), entiService.getEnte(entePerCuiOpero.getIdEnte()), null);
+        	Enti ente = entiService.getEnte(entePerCuiOpero.getIdEnte());
+        	LkComuni comune = null;
+            String createTempFile = gestioneAllegatiFS.createTempFile(attachment.getKey(), 
+            		attachment.getValue(), entiService.getEnte(entePerCuiOpero.getIdEnte()), ente.getLkComuniList().get(0));
             it.wego.cross.xml.Allegato allegatoXml = new Allegato();
             allegatoXml.setNomeFile(attachment.getKey());
             allegatoXml.setDescrizione(attachment.getKey());

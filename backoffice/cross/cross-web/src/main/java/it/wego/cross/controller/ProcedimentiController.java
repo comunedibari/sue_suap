@@ -12,6 +12,7 @@ import it.wego.cross.dto.ProcedimentoDTO;
 import it.wego.cross.dto.ErroreDTO;
 import it.wego.cross.dto.TipoProcedimentoDTO;
 import it.wego.cross.service.ProcedimentiService;
+import it.wego.cross.session.MultiSubSessionManager;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.ProcedimentoAction;
 import it.wego.cross.dto.filters.Filter;
@@ -164,6 +165,7 @@ public class ProcedimentiController extends AbstractController {
             String error = "gestione/procedimenti/elimina";
             Log.APP.error(error, ex);
         }
+        redirectAttributes.addAttribute(MultiSubSessionManager.SESSION_PARAMETER, MultiSubSessionManager.getSessionId(request));
         return "redirect:/gestione/procedimenti/lista.htm";
     }
 
@@ -224,6 +226,7 @@ public class ProcedimentiController extends AbstractController {
             model.addAttribute("procedimento", procedimento);
             return "procedimenti_lista_modifica";
         }
+        redirectAttributes.addAttribute(MultiSubSessionManager.SESSION_PARAMETER, MultiSubSessionManager.getSessionId(request));
         return "redirect:/gestione/procedimenti/lista.htm";
 
     }
@@ -252,3 +255,4 @@ public class ProcedimentiController extends AbstractController {
         }
     }
 }
+

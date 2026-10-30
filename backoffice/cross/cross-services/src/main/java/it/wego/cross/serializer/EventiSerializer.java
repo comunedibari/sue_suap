@@ -105,6 +105,7 @@ public class EventiSerializer {
             }
         }
         eventoXml.setAllegati(allegatiXml);
+        eventoXml.setDataProtocollo(Utils.dateToXmlGregorianCalendar(praticaEvento.getDataProtocollo()));
 
         return eventoXml;
     }
@@ -113,6 +114,7 @@ public class EventiSerializer {
         PraticheEventiRidDTO result = new PraticheEventiRidDTO();
         result.setDataEvento(pe.getDataEvento());
         result.setDataProtocollo(pe.getDataProtocollo());
+        result.setCodEvento(pe.getCodEvento());
         if (pe.getIdUtente() != null) {
             result.setDenominazioneUtente(pe.getIdUtente().getCognome() + " " + pe.getIdUtente().getNome());
         }
@@ -146,6 +148,9 @@ public class EventiSerializer {
             }
         }
         result.setSoggetti(Joiner.on("<br />").join(soggetti));
+        result.setAllegati(pe.getAllegati());
+        result.setNote(pe.getNote());
+        result.setFlgProtocollazione(pe.getFlgProtocollazione());
         return result;
     }
 
@@ -243,7 +248,7 @@ public class EventiSerializer {
         }
 
         if (praticaEvento.getPraticheEventiAllegatiList() != null) {
-            List<AllegatoDTO> allegati = new ArrayList<AllegatoDTO>();
+            List<AllegatoDTO> allegati = new ArrayList<>();
             for (PraticheEventiAllegati pea : praticaEvento.getPraticheEventiAllegatiList()) {
                 Allegati allegato = pea.getAllegati();
                 AllegatoDTO al = new AllegatoDTO();
@@ -251,7 +256,10 @@ public class EventiSerializer {
                 al.setIdAllegato(allegato.getId());
                 al.setNomeFile(allegato.getNomeFile());
                 al.setTipoFile(allegato.getTipoFile());
+                al.setPrincipale(Constants.IS_MAIN.equals(pea.getFlgIsPrincipale()));
+                al.setDimensione(allegato.getDimensione());
                 allegati.add(al);
+                
             }
             e.setAllegati(allegati);
         }

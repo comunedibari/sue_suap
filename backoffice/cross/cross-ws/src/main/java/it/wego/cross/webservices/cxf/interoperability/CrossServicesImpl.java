@@ -68,14 +68,14 @@ public class CrossServicesImpl implements CrossServices {
 
     @Override
     public Evento inserisciEvento(Evento evento) throws CrossServicesException {
-        try {
-            Evento e = new Evento();
+    	Evento e = new Evento();
+    	try {
             e = inserisci(evento);
-            return e;
         } catch (Exception ex) {
             Log.WS.error("Si è verificato un errore durante l'inserimento dell'evento", ex);
-            throw new CrossServicesException(ex.getMessage());
+//            throw new CrossServicesException(ex.getMessage());
         }
+    	return e;
     }
 
     @Override
@@ -105,6 +105,8 @@ public class CrossServicesImpl implements CrossServices {
         Integer idEventoPratica = cb.getIdEventoPratica();
         PraticheEventi evt = praticheService.getPraticaEvento(idEventoPratica);
         pratica = praticheService.getPratica(idPratica);
+        pratica.setDataUltimoEventoEsterno(evt.getDataEvento());
+        praticaDao.update(pratica);
         praticheService.startCommunicationProcess(pratica, evt, cb);
         
         evento.setNumeroProtocollo(evt.getProtocollo());
@@ -197,7 +199,7 @@ public class CrossServicesImpl implements CrossServices {
 
     private ComunicazioneDTO getComunicazione(ProcessiEventi pe, Evento evento, Pratica pratica) throws CrossServicesException {
         ComunicazioneDTO comunicazione = new ComunicazioneDTO();
-        comunicazione.setVisualizzaEventoSuCross("S");
+        comunicazione.setVisualizzaEventoSuCross("OK");
         comunicazione.setVisualizzaEventoPortale(pe.getFlgPortale());
         List<String> soggetti = getSoggettiComunicazione(evento, pratica);
         if (Utils.flagString(pe.getFlgMail()).equals("S")) {

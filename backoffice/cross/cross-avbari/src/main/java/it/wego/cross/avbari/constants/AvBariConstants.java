@@ -25,6 +25,11 @@ public class AvBariConstants {
 
     public static final String CATASTO_ENDPOINT = "avbari.catasto.endpoint";
 
+    public static final String AVB_AUTH_VALUE = "Authentication";
+    public static final String AVB_PARAMETER_KEY = "avbari.sit.parameter";
+    public static final String AVB_USER_KEY= "avbari.sit.username";
+    public static final String AVB_PASSWORD_KEY= "avbari.sit.password";
+
     public static final String TIPO_OGGETTO = "DATI_ESTESI";
 
     public static final String INTERVENTO_IN_DEROGA = "SUBA_DEROGA";
@@ -49,5 +54,6 @@ public class AvBariConstants {
     public static final String AUTORE_FASCICOLO = "avbari.fascicolo.autore";
     public static final String SOGGETTO_MITTENTE = "MITTENTE";
     public static final String SOGGETTO_DESTINATARIO = "DESTINATARIO";
+    public static final String WS_PROTOCOLLO_CLIENT_TIMEOUT = "avbari.protocollo.client.timeout";
 
 }

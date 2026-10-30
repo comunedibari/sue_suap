@@ -19,6 +19,12 @@ public class UsefulDao {
     @PersistenceContext
     private EntityManager em;
 
+    public UsefulDao(){}
+
+    public UsefulDao(EntityManager em){
+    	this.em = em;
+    }
+
     public void flush() throws Exception {
         em.flush();
     }

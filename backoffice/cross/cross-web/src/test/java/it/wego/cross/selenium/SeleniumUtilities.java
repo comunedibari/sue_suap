@@ -34,8 +34,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class SeleniumUtilities {
     
 
-    private static final String username = "CTTTCN57P51F205W";
-    private static final String password = "wego2011";
+    private static final String username = "";
+    private static final String password = "";
 
     public static void Login(Selenium selenium) {
         selenium.open("/cross/");
@@ -47,8 +47,8 @@ public class SeleniumUtilities {
     public static void Login(WebDriver driver, TMess tmess) {
         driver.get("http://localhost:8080/" + "/cross");
         WebElement password = safeFind(driver, By.id("password"), tmess);
-        safeFind(driver, By.id("username"), tmess).sendKeys("CTTTCN57P51F205W");
-        password.sendKeys("wego2013");
+        safeFind(driver, By.id("username"), tmess).sendKeys("");
+        password.sendKeys("");
         WebElement submit = safeFind(driver, By.name("submit"), tmess);
         submit.click();
     }

@@ -169,3 +169,19 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 .ui-jqgrid .ui-jqgrid-view button {
     font-size: 11px
 }
+.jqtable .ui-jqgrid .ui-jqgrid-htable th div {overflow: hidden; position:relative; height:120px;}
+.jqtable_eventi .ui-jqgrid .ui-jqgrid-htable th div {overflow: hidden; position:relative; height:35px;}
+
+
+.mini_table span:nth-of-type(even){
+ 	font-weight: bold;
+}
+.jqtable th div {
+    word-wrap: break-word; /* IE 5.5+ and CSS3 */
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    overflow: hidden;
+    height: auto;
+}

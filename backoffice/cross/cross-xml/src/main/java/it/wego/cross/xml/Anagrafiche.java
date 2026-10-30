@@ -1,9 +1,11 @@
 //
-// Questo file stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andrpersa durante la ricompilazione dello schema di origine. 
-// Generato il: 2013.05.27 alle 07:27:17 PM CEST 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2024.04.16 alle 09:52:47 AM CEST 
 //
+
+
 package it.wego.cross.xml;
 
 import it.wego.cross.xml.adapter.DateAdapter;
@@ -16,14 +18,12 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+
 /**
- * <p>
- * Classe Java per anagrafiche complex type.
- *
- * <p>
- * Il seguente frammento di schema specifica il contenuto previsto contenuto in
- * questa classe.
- *
+ * <p>Classe Java per anagrafiche complex type.
+ * 
+ * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+ * 
  * <pre>
  * &lt;complexType name="anagrafiche">
  *   &lt;complexContent>
@@ -46,8 +46,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "anagrafiche", propOrder = {
@@ -92,242 +92,291 @@ public class Anagrafiche {
     protected String pec;
 
     /**
-     * Recupera il valore della propriet idAnagrafica.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idAnagrafica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdAnagrafica() {
         return idAnagrafica;
     }
 
     /**
-     * Imposta il valore della propriet idAnagrafica.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idAnagrafica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdAnagrafica(BigInteger value) {
         this.idAnagrafica = value;
     }
 
     /**
-     * Recupera il valore della proprietanagrafica.
-     *
-     * @return possible object is {@link Anagrafica }
-     *
+     * Recupera il valore della propriet� anagrafica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Anagrafica }
+     *     
      */
     public Anagrafica getAnagrafica() {
         return anagrafica;
     }
 
     /**
-     * Imposta il valore della proprietanagrafica.
-     *
-     * @param value allowed object is {@link Anagrafica }
-     *
+     * Imposta il valore della propriet� anagrafica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Anagrafica }
+     *     
      */
     public void setAnagrafica(Anagrafica value) {
         this.anagrafica = value;
     }
 
     /**
-     * Recupera il valore della proprietnotifica.
-     *
-     * @return possible object is {@link Recapito }
-     *
+     * Recupera il valore della propriet� notifica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Recapito }
+     *     
      */
     public Recapito getNotifica() {
         return notifica;
     }
 
     /**
-     * Imposta il valore della proprietnotifica.
-     *
-     * @param value allowed object is {@link Recapito }
-     *
+     * Imposta il valore della propriet� notifica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Recapito }
+     *     
      */
     public void setNotifica(Recapito value) {
         this.notifica = value;
     }
 
     /**
-     * Recupera il valore della proprietidTipoRuolo.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idTipoRuolo.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdTipoRuolo() {
         return idTipoRuolo;
     }
 
     /**
-     * Imposta il valore della proprietidTipoRuolo.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idTipoRuolo.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdTipoRuolo(BigInteger value) {
         this.idTipoRuolo = value;
     }
 
     /**
-     * Recupera il valore della proprietcodTipoRuolo.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� codTipoRuolo.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getCodTipoRuolo() {
         return codTipoRuolo;
     }
 
     /**
-     * Imposta il valore della proprietcodTipoRuolo.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� codTipoRuolo.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setCodTipoRuolo(String value) {
         this.codTipoRuolo = value;
     }
 
     /**
-     * Recupera il valore della proprietdesTipoRuolo.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� desTipoRuolo.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesTipoRuolo() {
         return desTipoRuolo;
     }
 
     /**
-     * Imposta il valore della proprietdesTipoRuolo.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desTipoRuolo.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesTipoRuolo(String value) {
         this.desTipoRuolo = value;
     }
 
     /**
-     * Recupera il valore della proprietdataInizioValidita.
-     *
-     * @return possible object is {@link XMLGregorianCalendar }
-     *
+     * Recupera il valore della propriet� dataInizioValidita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public XMLGregorianCalendar getDataInizioValidita() {
         return dataInizioValidita;
     }
 
     /**
-     * Imposta il valore della proprietdataInizioValidita.
-     *
-     * @param value allowed object is {@link XMLGregorianCalendar }
-     *
+     * Imposta il valore della propriet� dataInizioValidita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public void setDataInizioValidita(XMLGregorianCalendar value) {
         this.dataInizioValidita = value;
     }
 
     /**
-     * Recupera il valore della proprietidTipoQualifica.
-     *
-     * @return possible object is {@link BigInteger }
-     *
+     * Recupera il valore della propriet� idTipoQualifica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
      */
     public BigInteger getIdTipoQualifica() {
         return idTipoQualifica;
     }
 
     /**
-     * Imposta il valore della proprietidTipoQualifica.
-     *
-     * @param value allowed object is {@link BigInteger }
-     *
+     * Imposta il valore della propriet� idTipoQualifica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
      */
     public void setIdTipoQualifica(BigInteger value) {
         this.idTipoQualifica = value;
     }
 
     /**
-     * Recupera il valore della proprietdesTipoQualifica.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� desTipoQualifica.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDesTipoQualifica() {
         return desTipoQualifica;
     }
 
     /**
-     * Imposta il valore della proprietdesTipoQualifica.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� desTipoQualifica.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDesTipoQualifica(String value) {
         this.desTipoQualifica = value;
     }
 
     /**
-     * Recupera il valore della proprietdescrizioneTitolarita.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� descrizioneTitolarita.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDescrizioneTitolarita() {
         return descrizioneTitolarita;
     }
 
     /**
-     * Imposta il valore della proprietdescrizioneTitolarita.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� descrizioneTitolarita.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDescrizioneTitolarita(String value) {
         this.descrizioneTitolarita = value;
     }
 
     /**
-     * Recupera il valore della proprietassensoUsoPec.
-     *
-     * @return possible object is {@link Boolean }
-     *
+     * Recupera il valore della propriet� assensoUsoPec.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
      */
     public Boolean isAssensoUsoPec() {
         return assensoUsoPec;
     }
 
     /**
-     * Imposta il valore della proprietassensoUsoPec.
-     *
-     * @param value allowed object is {@link Boolean }
-     *
+     * Imposta il valore della propriet� assensoUsoPec.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
      */
     public void setAssensoUsoPec(Boolean value) {
         this.assensoUsoPec = value;
     }
 
     /**
-     * Recupera il valore della proprietpec.
-     *
-     * @return possible object is {@link String }
-     *
+     * Recupera il valore della propriet� pec.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getPec() {
         return pec;
     }
 
     /**
-     * Imposta il valore della proprietpec.
-     *
-     * @param value allowed object is {@link String }
-     *
+     * Imposta il valore della propriet� pec.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setPec(String value) {
         this.pec = value;
     }
+
 }

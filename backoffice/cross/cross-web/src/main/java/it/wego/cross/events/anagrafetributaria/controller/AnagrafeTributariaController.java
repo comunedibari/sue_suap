@@ -4,34 +4,6 @@
  */
 package it.wego.cross.events.anagrafetributaria.controller;
 
-import com.google.common.base.Strings;
-import it.wego.cross.actions.AnagrafeTributariaAction;
-import it.wego.cross.beans.layout.Message;
-import it.wego.cross.beans.layout.Select;
-import it.wego.cross.controller.AbstractController;
-import it.wego.cross.controller.EventoController;
-import it.wego.cross.dto.UtenteDTO;
-import it.wego.cross.entity.Enti;
-import it.wego.cross.entity.LkComuni;
-import it.wego.cross.entity.Pratica;
-import it.wego.cross.entity.Utente;
-import it.wego.cross.events.anagrafetributaria.bean.AnagrafeTributariaCommercioDTO;
-import it.wego.cross.events.anagrafetributaria.bean.AnagrafeTributariaCommercioListDTO;
-import it.wego.cross.events.anagrafetributaria.bean.AnagrafeTributariaDTO;
-import it.wego.cross.events.anagrafetributaria.bean.DatiCatastaliDTO;
-import it.wego.cross.events.anagrafetributaria.bean.AnagraficaDTO;
-import it.wego.cross.events.anagrafetributaria.bean.ImpresaDTO;
-import it.wego.cross.events.anagrafetributaria.bean.IndirizzoRichiestaDTO;
-import it.wego.cross.events.anagrafetributaria.bean.QualificaLookupDTO;
-import it.wego.cross.events.anagrafetributaria.entity.AtRecordDettaglio;
-import it.wego.cross.events.anagrafetributaria.serializer.AnagraficaTributariaSerializer;
-import it.wego.cross.events.anagrafetributaria.service.AnagrafeTributariaService;
-import it.wego.cross.service.LookupService;
-import it.wego.cross.service.PraticheService;
-import it.wego.cross.utils.Log;
-import it.wego.cross.utils.Utils;
-import it.wego.cross.xml.anagrafetributaria.commercio.AnagrafeTributariaCommercio;
-import it.wego.cross.xml.anagrafetributaria.edilizia.AnagrafeTributariaEdilizia;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
@@ -44,21 +16,58 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXB;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+
+import it.wego.cross.actions.AnagrafeTributariaAction;
+import it.wego.cross.beans.layout.Message;
+import it.wego.cross.beans.layout.Select;
+import it.wego.cross.constants.SessionConstants;
+import it.wego.cross.controller.AbstractController;
+import it.wego.cross.controller.EventoController;
+import it.wego.cross.dao.LookupDao;
+import it.wego.cross.dto.UtenteDTO;
+import it.wego.cross.dto.filters.Filter;
+import it.wego.cross.entity.Configuration;
+import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.LkComuni;
+import it.wego.cross.entity.LkTipoPratica;
+import it.wego.cross.entity.Pratica;
+import it.wego.cross.entity.Utente;
+import it.wego.cross.events.anagrafetributaria.bean.AnagrafeTributariaCommercioDTO;
+import it.wego.cross.events.anagrafetributaria.bean.AnagrafeTributariaCommercioListDTO;
+import it.wego.cross.events.anagrafetributaria.bean.AnagrafeTributariaDTO;
+import it.wego.cross.events.anagrafetributaria.bean.AnagraficaDTO;
+import it.wego.cross.events.anagrafetributaria.bean.DatiCatastaliDTO;
+import it.wego.cross.events.anagrafetributaria.bean.ImpresaDTO;
+import it.wego.cross.events.anagrafetributaria.bean.IndirizzoRichiestaDTO;
+import it.wego.cross.events.anagrafetributaria.bean.QualificaLookupDTO;
+import it.wego.cross.events.anagrafetributaria.entity.AtRecordDettaglio;
+import it.wego.cross.events.anagrafetributaria.serializer.AnagraficaTributariaSerializer;
+import it.wego.cross.events.anagrafetributaria.service.AnagrafeTributariaService;
+import it.wego.cross.service.ConfigurationService;
+import it.wego.cross.service.EntiService;
+import it.wego.cross.service.LookupService;
+import it.wego.cross.service.PraticheService;
+import it.wego.cross.utils.Log;
+import it.wego.cross.utils.Utils;
+import it.wego.cross.xml.anagrafetributaria.commercio.AnagrafeTributariaCommercio;
+import it.wego.cross.xml.anagrafetributaria.edilizia.AnagrafeTributariaEdilizia;
 
 /**
  *
@@ -84,6 +93,10 @@ public class AnagrafeTributariaController extends AbstractController {
     private AnagraficaTributariaSerializer serializer;
     @Autowired
     private LookupService lookupService;
+    @Autowired
+    private EntiService entiService;
+    @Autowired
+    private ConfigurationService configurationService;
 
     @RequestMapping("/pratica/anagrafe_tributaria_edilizia/index")
     public String index(
@@ -438,6 +451,39 @@ public class AnagrafeTributariaController extends AbstractController {
         return ANAGRAFE_TRIBUTARIA_EXPORT;
     }
 
+    @RequestMapping(value = "/anagrafe_tributaria_edilizia/export/genera")
+    public void generaAnagrafeTributariaEdilizia(
+    		Model model,
+    		AnagrafeTributariaDTO anagrafeTributaria,
+    		HttpServletRequest request,
+    		HttpServletResponse response,
+    		BindingResult result) throws Exception {
+    	try {
+    		checkFilter(anagrafeTributaria);
+    		String exportAnagrafeTributaria = "";
+    		String filename = "anagrafe_tributaria_edilizia_"+anagrafeTributaria.getIdSoggettoObbligato()+"_";
+    		Filter filter = buildFilter(anagrafeTributaria);
+    		anagrafeTributaria.setCodFornitura(COD_FORNITURA_TRIBUTARIA_EDILIZIA);
+    		List<Pratica> paperworks = praticheService.findPerBuildingOperation(filter);
+    		exportAnagrafeTributaria = anagrafeTributariaAction.buildAndSerializeRecordDettaglioEdilizia(anagrafeTributaria, paperworks);
+    		byte[] documentBody = exportAnagrafeTributaria.getBytes("UTF-8");
+    		response.setContentType("plain/text");
+    		response.addHeader("Content-Disposition", "attachment; filename=" + filename + anagrafeTributaria.getAnnoRiferimento() + ".txt");
+    		OutputStream out = response.getOutputStream();
+    		out.write(documentBody);
+    		out.flush();
+    		out.close();
+    	} catch (Exception ex) {
+    		String error = "Non è stato possibile generare il file di anagrafe tributaria";
+    		Log.APP.error(error, ex);
+    		response.setContentType("text/plain");
+    		OutputStream out = response.getOutputStream();
+    		out.write(error.getBytes());
+    		out.flush();
+    		out.close();
+    	}
+    }
+    
     @RequestMapping(value = "/anagrafe_tributaria/export/genera")
     public void generaAnagrafeTributaria(
             Model model,
@@ -614,4 +660,22 @@ public class AnagrafeTributariaController extends AbstractController {
         String exportAnagrafeTributaria = anagrafeTributariaService.getDocumentoAnagrafeTributariaCommercio(anagrafeTributariaCommercio);
         return exportAnagrafeTributaria;
     }
+    
+    private void checkFilter(AnagrafeTributariaDTO anagrafeTributaria) {
+    	Preconditions.checkArgument(!Utils.e(anagrafeTributaria.getAnnoRiferimento()), "AnagrafeTributariaController: Year not found");
+    	Preconditions.checkArgument(!Utils.e(anagrafeTributaria.getIdSoggettoObbligato()), "AnagrafeTributariaController: town not found");
+    }
+    
+    private Filter buildFilter(AnagrafeTributariaDTO anagrafeTributaria) {
+    	Filter filter = new Filter();
+		List<Configuration> attachmentsFolderConfigs = configurationService.findByName(SessionConstants.BUILDING_EXPORT_TYPE);
+		List<LkTipoPratica> types = new ArrayList<>();
+		for(Configuration attachmentsFolderConfig: attachmentsFolderConfigs) {
+			types.add(lookupService.findLkTipoPraticaByType(attachmentsFolderConfig.getValue()));
+		}
+		filter.setIdTipoPratiche(types);
+		filter.setAnnoPratica(anagrafeTributaria.getAnnoRiferimento());
+		filter.setIdComune(anagrafeTributaria.getIdSoggettoObbligato());
+		return filter;
+	}
 }

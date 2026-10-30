@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -770,5 +771,11 @@ public class GestioneAllegatiGenova implements GestioneAllegati {
         String xml = Utils.marshall(root, it.wego.cross.client.xml.extractmulti.EstremiXIdentificazioneUDType.class);
         return xml;
     }
+
+	@Override
+	public void add(Allegati allegato, Enti ente, LkComuni comune, Date date) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

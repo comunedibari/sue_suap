@@ -16,6 +16,7 @@
     String pathAggiornaAnagrafica = request.getContextPath() + "/gestione/anagrafiche/aggiornaAnagrafica.htm";
 %>
 <link rel="stylesheet" type="text/css" href="<c:url value="/themes/default/css/core.css"/>"  media="all"/>
+<%@ page import="it.wego.cross.constants.CartiglioConstants" %>
 <script>
     var messaggioClick = "<spring:message code="messaggio.click"/>";
     var messaggioConferma = "<spring:message code="messaggio.conferma"/>";
@@ -75,8 +76,17 @@
     <c:forEach items="${statiPratica}" var="statoPratica" varStatus="status">
     statiPraticaList.push({value: ${statoPratica.idStatoPratica}, text: '${statoPratica.descrizione}'});
     </c:forEach>
+    $(document).ready(function(){
+	    $("li a").click(function(){
+			if($(this).attr("href") === "#frame1"){
+	    		var newLength = $('#anagraficaContainer').width() - 2
+	    		$("#jqTablePersonalData").jqGrid('setGridWidth',newLength);
+			}
+		})
+    })
 </script>
 <script  type="text/javascript" src="<c:url value="/javascript/cross/pratica.apertura.js"/>"></script>
+<script  type="text/javascript" src="<c:url value="/javascript/cross/confronta.anagrafica.ready.js"/>"></script>
 <script  type="text/javascript" src="<c:url value="/javascript/cross/confronta.anagrafica.js"/>"></script>
 <script  type="text/javascript" src="<c:url value="/javascript/cross/confronta.anagrafica.functions.js"/>"></script>
 
@@ -85,22 +95,9 @@
 <div class="uniForm ">
     <div class="content_sidebar">	
         <div class="sidebar_left">
-            <h3><spring:message code="pratica.comunicazione.dettaglio.identificativo"/> <strong>${pratica.identificativoPratica}</strong></h3>
-            <p><strong>In carico a </strong> ${pratica.idUtente.cognome} ${pratica.idUtente.nome}</p>
-            <div class="sidebar_elemento">
-                <c:choose>
-                    <c:when test="${not empty praticaDettaglio.riepilogoPratica && not empty praticaDettaglio.riepilogoPratica.idAllegato}">
-                        <p>
-                            <a href="${path}/download.htm?id_file=${praticaDettaglio.riepilogoPratica.idAllegato}" class="scarica" target="_blank">
-                                <spring:message code="pratica.comunicazione.scaricaIstanza"/>
-                            </a>
-                        </p>
-                    </c:when>
-                    <c:otherwise>
-                        <span class="value"><spring:message code="pratica.comunicazione.evento.pratica.nofile"/></span>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+            <c:set var="cartiglio" value="${pratica.cartiglio}" scope="request"/>
+            <c:set var="from" value="${CartiglioConstants.FROM_OPENING }" scope="request"/>
+			<c:import url="/themes/default/views/main/body/pratiche/cartiglio.jsp"/>
         </div>
 
         <div class="sidebar_center">
@@ -110,8 +107,7 @@
                 <div class="menu-pull-bar"></div>
                 <!-- Etichette cartelle -->
                 <ul>
-                    <li class="<c:if test="${empty currentTab || currentTab == 'frame0'}">active</c:if>"><a href="#frame0">Copertina</a></li>
-                    <li class="<c:if test="${currentTab=='frame1'}">active</c:if>"><a href="#frame1">Anagrafiche</a></li>
+                    <li class="<c:if test="${empty currentTab || currentTab=='frame1'}">active</c:if>"><a href="#frame1">Anagrafiche</a></li>
                         <c:if test="${ente_pratica.tipoEnte=='SUAP'}">
                         <li class="<c:if test="${currentTab=='frame2'}">active</c:if>"><a href="#frame2"><spring:message code="pratica.titolo.endoprocedimenti"/></a></li>
                         </c:if>
@@ -126,238 +122,9 @@
                     <!-- Contenuto cartelle -->
                     <div class="frames">
                         <input id="abilitazione" value="${abilitato}" style="display:none;">
-                    <div class="frame copertina <c:if test="${empty currentTab || currentTab == 'frame0'}">active</c:if>" id="frame0">         
-                            <div class="ctrlHolder">
-                                <label for="pratica_identificativo" class="required"><spring:message code="pratica.copertina.identificativo.label"/></label>
-                            <a href="#" id="pratica_identificativo" class="x-editable-text" name="pratica_identificativo">${pratica.identificativoPratica}</a>
-                        </div>
-                        <div class="ctrlHolder">
-                            <label for="pratica_oggetto" class="required"><spring:message code="pratica.copertina.oggetto.label"/></label>
-                            <a href="#" id="pratica_oggetto" class="x-editable-text" name="pratica_oggetto">${pratica.oggettoPratica}</a>
-                        </div>
-                        <div class="ctrlHolder">
-                            <label for="pratica_procedimento" class="required"><spring:message code="pratica.copertina.procedimento.label"/></label>
-                            <a href="#" id="pratica_procedimento" class="" name="pratica_procedimento">${pratica.procedimento.descrizione}</a>
-                        </div>
-                        <div class="ctrlHolder">
-        					<label for="pratica_processo" class="required">Processo</label>
-        					<a href="#" id="pratica_processo" class="" name="pratica_processo">${pratica.idProcesso.desProcesso}</a>
-    					</div>
-                        <div class="ctrlHolder">
-                            <label for="pratica_ricezione_data" class="required"><spring:message code="pratica.copertina.ricezione.data.label"/></label>
-                            <a href="#" id="pratica_ricezione_data" class="x-editable-text" data-type="date" data-format="dd/mm/yyyy" name="pratica_ricezione_data"><fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.dataRicezione}" /></a>
-                        </div>
-<!--                         <div class="ctrlHolder pratica_protocollo_segnatura_container"> -->
-						 <div class="ctrlHolder">
-                            <label for="pratica_protocollo_segnatura" class="required"><spring:message code="pratica.copertina.protocollo.segnatura.label"/></label>
-                            <a href="#" id="pratica_protocollo_segnatura" class="x-editable-text" name="pratica_protocollo_segnatura">${pratica.protocollo.segnatura}</a>
-                        </div>
-                        <div class="ctrlHolder">
-                            <label for="pratica_protocollo_data" class="required"><spring:message code="pratica.copertina.protocollo.data.label"/></label>
-                            <a href="#" id="pratica_protocollo_data" class="x-editable-text" data-type="date" data-format="dd/mm/yyyy" name="pratica_protocollo_data"><fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.protocollo.dataProtocollazione}" /></a>
-                        </div>
-                        <div class="ctrlHolder">
-                            <label for="pratica_stato" class="required"><spring:message code="pratica.copertina.stato.label"/></label>
-                            <a href="#" id="pratica_stato" class="" name="pratica_stato" data-type="select">${pratica.idStatoPratica.descrizione}</a>
-                        </div>
-                        <div class="ctrlHolder <c:if test="${pratica.idStatoPratica.grpStatoPratica != 'C'}">hidden</c:if>" id="pratica_chiusura_data_container">
-                            <label for="pratica_chiusura_data" class="required"><spring:message code="pratica.copertina.chiusura.data.label"/></label>
-                            <a href="#" id="pratica_chiusura_data" class="x-editable-text" data-type="date" data-format="dd/mm/yyyy" name="pratica_chiusura_data"><fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.dataChiusura}" /></a>
-                        </div>
-                        <%--
-                                                <div class="ctrlHolder">
-                                                    <label for="pratica_responsabile_istruttoria" class="required"><spring:message code="pratica.copertina.responsabile.istruttoria.label"/></label>
-                                                    <a href="#" id="pratica_responsabile_istruttoria" class="x-editable-text" name="pratica_responsabile_istruttoria">${praticaDettaglio.responsabileProcedimento}</a>
-                                                </div>
-                        --%>
-                        <div class="ctrlHolder">
-                            <label for="pratica_responsabile_procedimento" class="required"><spring:message code="pratica.copertina.responsabile.procedimento.label"/></label>
-                            <a href="#" id="pratica_responsabile_procedimento" class="x-editable-text" name="pratica_responsabile_procedimento">${pratica.responsabileProcedimento}</a>
-                        </div>
-                        <div class="ctrlHolder">
-                            <label for="pratica_comune" class="required"><spring:message code="pratica.copertina.comune.label"/></label>
-                            <a href="#" id="pratica_comune" name="pratica_comune">${pratica.idComune.descrizione}</a>
-                        </div>
-                    </div>
-                    <div class="frame <c:if test="${currentTab=='frame1'}">active</c:if>" id="frame1">
-                            <div class="nascondiutente anagrafiche_header">
-                                <a href="${path}/pratica/dettaglio/collegaAnagrafica.htm?daPraticaNuova=si">
-                                <spring:message code="pratica.comunicazione.collega.anagrafica"/>
-                                <img src="${path}/themes/default/images/icons/add.png" alt="<spring:message code="pratica.comunicazione.collega.anagrafica"/>" title="<spring:message code="pratica.comunicazione.collega.anagrafica"/>">
-                            </a>
-                        </div>
-                        <!--<button  id="ricercaPraticaOrigine" class="cerca_lente ui-button">Ricerca pratica origine</button>-->
-                        <div id="anagraficaContainer">
-                            <!-- Cont div -->
-                            <c:set var="anagraficheSize" value="${fn:length(praticaDettaglio.anagraficaList)}" scope="page" />
-                            <!-- fine cont div --> 
-                            <div class="imbox_frame <c:if test="${anagraficheSize > 1}">margine_imbox_frame</c:if>">
-                                <c:if test="${anagraficheSize > 1}">
-                                    <div class="controllo_sinistra">
-                                        <div class="controller_box">
-                                            <div class="box_left" onclick="item_animate('<c:out value="${anagraficheSize}"></c:out>', '#anagrafica_box', '-=277px')"></div>
-                                            </div>
-                                        </div>
-                                </c:if>
-                                <div id="anagrafica_box">   
-                                    <table cellpadding="0" cellspacing="0">
-                                        <tr>
-                                            <c:forEach  items="${praticaDettaglio.anagraficaList}" var="anagrafica" >
-                                                <td>
-                                                    <c:set var="classDiv" value="" />
-                                                    <c:set var="confermata" value="" />
-                                                    <c:if test="${anagrafica.confermata != null && anagrafica.confermata!=''}">
-                                                        <c:set var="classDiv" value="${classDiv} confermataBG" />
-                                                        <c:set var="confermata" value="1" />    
-                                                    </c:if>
-                                                    <div class="circle ${classDiv}" id="anagrafica${anagrafica.counter}" title="${classDiv}">
-                                                        <c:set var="classDiv" value="" />
-                                                        <div class="ctrlHolder">
-                                                            <label class="required">
-                                                                <spring:message code="utenti.tipoRuolo"/>
-                                                            </label>                                                     
-                                                            <c:if test="${!(((anagrafica.desTipoRuolo eq 'Richiedente') && (fn:length(richiedenti) lt 2) ) ||  ( (anagrafica.desTipoRuolo eq 'Beneficiario') && (fn:length(beneficiari) lt 2)))}"> 
-                                                                <a style="padding: 10px; width: 75%;" class='nascondiutente scollegalink showdetail' id="scollega${anagrafica.counter}" count="${anagrafica.counter}">
-                                                                    <img src="${path}/themes/default/images/icons/link_break.png" alt="<spring:message code="pratica.comunicazione.anagrafica.scollega.click"/>" title="<spring:message code="pratica.comunicazione.anagrafica.scollega.click"/>">
-                                                                    &nbsp;&nbsp;<spring:message code="pratica.comunicazione.anagrafica.scollega.click"/>
-                                                                </a>
-                                                            </c:if>
-                                                            <input class="input_anagrafica_disable" type="text" disabled="" value="${anagrafica.desTipoRuolo}">
-                                                        </div>
-                                                        <c:if test="${anagrafica.tipoAnagrafica == 'F'}">
-                                                            <div class="ctrlHolder">
-                                                                <label class="required">
-                                                                    <spring:message code="utenti.nome"/>
-                                                                </label>
-                                                                <input class="input_anagrafica_disable" type="text" disabled="" value="${anagrafica.nome}">
-                                                            </div>
-                                                            <div class="ctrlHolder">
-                                                                <label class="required">
-                                                                    <spring:message code="utenti.cognome"/>
-                                                                </label>
-                                                                <input class="input_anagrafica_disable" type="text" disabled="" value="${anagrafica.cognome}">
-                                                            </div>
-                                                            <div class="ctrlHolder">
-                                                                <label class="required">
-                                                                    <spring:message code="utenti.codicefiscale"/>
-                                                                </label>
-                                                                <input class="input_anagrafica_disable" type="text" disabled="" value="${anagrafica.codiceFiscale}">
-                                                            </div>
-                                                            <c:if test="${anagrafica.flgIndividuale == 'S'}">
-                                                                <div class="ctrlHolder">
-                                                                    <label class="required">
-                                                                        <spring:message code="utenti.denominazione"/>
-                                                                    </label>
-                                                                    <textarea class="textarea_anagrafica_disable" disabled="disabled">${anagrafica.denominazione}</textarea>
-                                                                </div>
-                                                                <div class="ctrlHolder">
-                                                                    <label class="required">
-                                                                        <spring:message code="utenti.piva"/>
-                                                                    </label>
-                                                                    <input class="input_anagrafica_disable" type="text" disabled="" value="${anagrafica.partitaIva}">
-                                                                </div>
-                                                            </c:if>
-                                                        </c:if>
-                                                        <c:if test="${anagrafica.tipoAnagrafica == 'G'}">
-                                                            <div class="ctrlHolder">
-                                                                <label class="required">
-                                                                    <spring:message code="utenti.denominazione"/>
-                                                                </label>
-                                                                <textarea class="textarea_anagrafica_disable" disabled="disabled">${anagrafica.denominazione}</textarea>
-                                                            </div>
-                                                            <div class="ctrlHolder">
-                                                                <label class="required">
-                                                                    <spring:message code="utenti.piva"/>
-                                                                </label>
-                                                                <input class="input_anagrafica_disable" type="text" disabled="" value="${anagrafica.partitaIva}">
-                                                            </div>
-                                                        </c:if>
-                                                        <div class="showdettaglio">
-                                                            <c:if test='${anagrafica.daRubrica != "S"}'>
-                                                                <div class="anagrafica_confronta confronta ui-button">
-                                                                    &nbsp;&nbsp;<spring:message code="pratica.anagrafica.conferma"/>
-                                                                    <input type="hidden" class="confermata" value="${confermata}" name="confermata"/>
-                                                                    <input type="hidden" class="counter" value="${anagrafica.counter}" name="counter"/>
-                                                                    <input type="hidden" name="idTipoRuolo" value="${anagrafica.idTipoRuolo}"/>
-                                                                    <input type="hidden" name="idAnagrafica" value="${anagrafica.idAnagrafica}"/>
-                                                                    <input type="hidden" name="desTipoRuolo" value="${anagrafica.desTipoRuolo}"/>
-                                                                    <input type="hidden" name="idPratica" value="${pratica.idPratica}"/>
-                                                                    <input type="hidden" name="partitaIva" value="${anagrafica.partitaIva}"/>
-                                                                    <input type="hidden" name="codiceFiscale" value="${anagrafica.codiceFiscale}"/>
-                                                                    <input type="hidden" name="tipoAnagrafica" value="${anagrafica.tipoAnagrafica}"/>
-                                                                    <input type="hidden" name="varianteAnagrafica" value="${anagrafica.varianteAnagrafica}"/>  
-                                                                </div>                                        
-                                                                <div style='display:none' id="scollega${anagrafica.counter}button"  class="cancella elimina ui-button" title="<spring:message code="pratica.anagrafica.elimina"/>">
-                                                                    &nbsp;&nbsp;<spring:message code="pratica.anagrafica.scollega"/>
-                                                                    <input type="hidden" class="counter" value="${anagrafica.counter}" name="counter"/>
-                                                                    <input type="hidden" value="${anagrafica.idAnagrafica}" name="id"/>
-                                                                    <input type="hidden" value="${anagrafica.idTipoRuolo}" name="ruolo"/>
-                                                                    <input type="hidden" value="${anagrafica.collegata }" name="collegata"/>
-                                                                </div>
-                                                            </c:if>
-                                                            <c:if test='${anagrafica.daRubrica == "S"}'>
-                                                                <script>
-                                                                    $(function () {
-                                                                        $('#dettaglio_${anagrafica.counter}').click(function (e) {
-                                                                            $.ajax({
-                                                                                type: 'POST',
-                                                                                url: '${path}/pratica/comunicazione/dettaglio/anagrafica.htm',
-                                                                                data: {id_anagrafica: '${anagrafica.idAnagrafica}'}
-                                                                            }).done(function (data) {
-                                                                                var wHeight = $(window).height() * 0.8;
-                                                                                $('.dettaglioAnagraficaContainer').empty();
-                                                                                $('#anagrafica_detail_${anagrafica.counter}').html(data);
-                                                                                $('#anagrafica_detail_${anagrafica.counter}').dialog({
-                                                                                    title: 'Dettaglio anagrafica',
-                                                                                    modal: true,
-                                                                                    height: wHeight,
-                                                                                    width: '50%',
-                                                                                    dialogClass: 'cross_modal',
-                                                                                    buttons: {
-                                                                                        OK: function () {
-                                                                                            $(this).dialog("close");
-                                                                                        }
-                                                                                    }
-                                                                                });
-                                                                                return false;
-                                                                            });
-                                                                        });
-                                                                    });
-                                                                </script>
-                                                                <div id="<c:out value="anagrafica_detail_${anagrafica.counter}" />" class="modal-content">
-                                                                </div>    
-                                                                <div class="anagrafica_dettaglio_apertura ui-button"   id="dettaglio_${anagrafica.counter}">
-                                                                    <spring:message code="pratica.comunicazione.anagrafica.apridettaglio.click"/>
-                                                                </div>
-                                                                <div style='display:none' id="scollega${anagrafica.counter}button"  class="cancella elimina ui-button" title="<spring:message code="pratica.anagrafica.elimina"/>">
-                                                                    &nbsp;&nbsp;<spring:message code="pratica.anagrafica.scollega"/>
-                                                                    <input type="hidden" class="counter" value="${anagrafica.counter}" name="counter"/>
-                                                                    <input type="hidden" value="${anagrafica.idTipoRuolo}" name="ruolo"/>
-                                                                    <input type="hidden" value="${anagrafica.idAnagrafica}" name="id"/>
-                                                                    <input type="hidden" value="${anagrafica.idTipoRuolo}" name="ruolo"/>
-                                                                    <input type="hidden" name="idTipoRuolo" value="${anagrafica.idTipoRuolo}"/>
-                                                                    <input type="hidden" name="desTipoRuolo" value="${anagrafica.desTipoRuolo}"/>
-                                                                    <input type="hidden" name="codiceFiscale" value="${anagrafica.codiceFiscale}"/>
-                                                                    <input type="hidden" value="${anagrafica.collegata }" name="collegata"/>
-                                                                </div>
-                                                            </c:if>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </c:forEach>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <c:if test="${anagraficheSize > 1}">
-                                    <div class="controllo_destra">
-                                        <div class="controller_box">
-                                            <div class="box_right" onclick="item_animate('<c:out value="${anagraficheSize}"></c:out>', '#anagrafica_box', '+=277px')"></div>
-                                            </div>
-                                        </div>
-                                </c:if>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
+                    
+                    <div class="frame <c:if test="${empty currentTab || currentTab=='frame1'}">active</c:if>" id="frame1">
+                        <tiles:insertAttribute name="anagrafica" />
                     </div>
                     <c:if test="${ente_pratica.tipoEnte=='SUAP'}">
                         <%-- Procedimenti --%>
@@ -453,7 +220,7 @@
                     <div style="float:left;">
                     	 <c:choose>
 							 <c:when test = "${fromGestioneEventi}">
-								 <a class="secondaryAction" href="${path}/pratiche/gestisci.htm">&larr; Indietro</a>
+								 <a class="secondaryAction" href="${path}/pratiche/gestisci.htm?back=true">&larr; Indietro</a>
 							 </c:when>
 							 <c:otherwise>
 								 <a class="secondaryAction" href="${path}/pratiche/nuove/apertura.htm">&larr; Indietro</a>
@@ -510,16 +277,7 @@
         </select>
     </div>
 </div>
-<script>
-    $(function addButton() {
-        $('.scollegalink').each(function () {
-            var count = $(this).attr("count");
-            $(this).click(function () {
-                $('#scollega' + count + 'button').click();
-            });
-        });
-    })
-</script>
+
 
 <script id="template-procedimento" type="text/x-handlebars-template">
     <td id="endoprocedimento_{{idProcedimentoEnte}}">

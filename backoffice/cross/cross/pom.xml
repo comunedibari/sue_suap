@@ -47,7 +47,7 @@
 
 
 		<!--<module>cross-genova-auriga-sync</module> -->
-
+		<module>../cross-tomcat-services</module>
 		<module>../cross-entities</module>
 		<module>../cross-dao</module>
 		<module>../cross-plugins</module>
@@ -56,7 +56,11 @@
 		<module>../cross-ws</module>
 		<module>../cross-filters</module>
 		<module>../cross-web</module>
+		<module>../cross-firma-online</module>
 		<module>../wego-cas-filter</module>
+		<module>../cross-civilia</module>
+		<module>../cross-dms</module>
+		<module>../cross-bo-fo</module>
 	</modules>
 
 	<properties>
@@ -881,18 +885,19 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>2.5.1</version> 
 				<configuration>
 					<encoding>UTF-8</encoding>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<debug>true</debug>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.7</version>
+				<version>2.7</version>  
+				<!--  LOR  <version>3.1.1</version> --> 
 				<executions>
 					<execution>
 						<id>default-deploy</id>

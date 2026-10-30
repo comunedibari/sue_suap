@@ -4,20 +4,27 @@
  */
 package it.wego.cross.service;
 
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import it.wego.cross.beans.EventoBean;
-import it.wego.cross.dto.PraticaDTO;
-import it.wego.cross.dto.PraticaNuova;
+import it.wego.cross.dao.PraticaDao.IntervalloScadenzeMultiple;
 import it.wego.cross.dto.AllegatoDTO;
 import it.wego.cross.dto.EstrazioniAgibDTO;
 import it.wego.cross.dto.EstrazioniCilaDTO;
 import it.wego.cross.dto.EstrazioniPdcDTO;
 import it.wego.cross.dto.EstrazioniSciaDTO;
-import it.wego.cross.dto.PraticaBarDTO;
-import it.wego.cross.dto.ScadenzaDTO;
 import it.wego.cross.dto.EventoDTO;
-import it.wego.cross.dao.PraticaDao.IntervalloScadenzeMultiple;
+import it.wego.cross.dto.PraticaBarDTO;
+import it.wego.cross.dto.PraticaDTO;
+import it.wego.cross.dto.PraticaNuova;
+import it.wego.cross.dto.ScadenzaDTO;
 import it.wego.cross.dto.comunicazione.DettaglioPraticaDTO;
 import it.wego.cross.dto.filters.Filter;
+import it.wego.cross.entity.Anagrafica;
 import it.wego.cross.entity.DatiCatastali;
 import it.wego.cross.entity.Email;
 import it.wego.cross.entity.Enti;
@@ -26,6 +33,8 @@ import it.wego.cross.entity.LkClassificazioneProcedimento;
 import it.wego.cross.entity.LkStatiScadenze;
 import it.wego.cross.entity.LkStatoPratica;
 import it.wego.cross.entity.LkTipoInterventoSuap;
+import it.wego.cross.entity.LkTipoPratica;
+import it.wego.cross.entity.LkTipoPraticaProcessi;
 import it.wego.cross.entity.LkTipoProcedimentoSuap;
 import it.wego.cross.entity.Pratica;
 import it.wego.cross.entity.PraticaAnagrafica;
@@ -41,8 +50,6 @@ import it.wego.cross.entity.Scadenze;
 import it.wego.cross.entity.Staging;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.entity.view.ScadenzeDaChiudereView;
-import java.util.List;
-import org.springframework.stereotype.Service;
 
 /**
  * Service per la gestione della pratiche
@@ -67,7 +74,7 @@ public interface PraticheService {
     public PraticaDTO dettaglioXmlPratica(Integer idPratica) throws Exception;
 
     public Pratica getPratica(Integer idPratica) throws Exception;
-
+    
     public List<EventoDTO> getEventiPratica(Pratica pratica) throws Exception;
 
     public EventoDTO getDettaglioPraticaEvento(Integer idEventoPratica) throws Exception;
@@ -89,6 +96,8 @@ public interface PraticheService {
     public Pratica getPraticaByIdentificativo(String identificativoPratica);
 
     public LkStatoPratica findLookupStatoPratica(Integer idLookup);
+    
+    public LkTipoPratica findLookupTipoPratica(Integer idLookup);
 
     public LkStatoPratica findLookupStatoPratica(String codiceStatoPratica);
 
@@ -170,6 +179,8 @@ public interface PraticheService {
     public void deletePraticaAnagrafica(PraticaAnagrafica pa) throws Exception;
 
     public void saveProcessoEvento(PraticheEventi evento) throws Exception;
+    
+    public void deletePraticaEvento(PraticheEventi praticaEvento) throws Exception;
 
     public void saveAnagraficaEvento(PraticheEventiAnagrafiche pea) throws Exception;
 
@@ -200,6 +211,8 @@ public interface PraticheService {
     public PraticheEventi getPraticaEvento(Integer idPraticaEvento);
 
     public void updatePraticaEvento(PraticheEventi evento) throws Exception;
+
+    public void updatePraticaEventoTransactional(PraticheEventi evento) throws Exception;
 
     public void startSendMailProcess(Email email) throws Exception;
 
@@ -235,7 +248,12 @@ public interface PraticheService {
 
 	public List<EstrazioniCilaDTO> listPraticheCILAToDo(Filter filter) throws Exception;
 
+	public List<EstrazioniAgibDTO> listPraticheAGIBToDo(Filter filter) throws Exception;
+
+	
 	public List<PraticheEventi> findPraticheEventiDaRiprotocollare();
+
+	public List<PraticheEventi> findSortedPraticheEventi(Integer idPratic);
 
 	public LkTipoProcedimentoSuap findLookupProcedimentoSUAP(Integer idProcedimentoSuap);
 
@@ -243,4 +261,27 @@ public interface PraticheService {
 
 	public LkClassificazioneProcedimento findLookupClassificazioneProcedimento(Integer idClassificazioneProcedimento);
 
+	public  PraticheEventi findEventoAssegnazioneArchivio(Pratica pratica);
+
+	public void changeAssociatedTechnicianAgent(String idPratica, String idTechnician) throws Exception;
+	
+	public void changeAssociatedTechnicianAgentBackOffice(Integer paperworkId, Integer personalDataId) throws Exception ;
+
+    public String readAssociatedTechnicianAgentTaxCode(Integer idPratica) throws Exception;
+
+	public LkTipoPraticaProcessi findByIdTipoPraticaProcessiById(Integer idProcesso);
+	
+	public void reassignPaperworkFromAdmin(Integer idUtenteAssegnatario, Integer idPratica, Utente utenteConnesso, boolean isAutomated) throws Exception;
+
+	public void reassignPaperworkFromAdmin(Integer idUtenteAssegnatario, Integer idPratica, Utente utenteConnesso) throws Exception;
+
+	public void register(PraticheEventi praticaEvento) throws Exception;
+	
+	Anagrafica readTechnicianAgentFromPaperwork(Pratica pratica) throws Exception;
+
+	Anagrafica readTechnicianAgentFromXml(Pratica pratica) throws Exception;
+	
+	void returnToApproval(Integer idPratica) throws Exception;
+
+	List<Pratica> findPerBuildingOperation(Filter filter) throws Exception;
 }

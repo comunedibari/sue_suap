@@ -1,8 +1,8 @@
 //
-// Questo file stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andrpersa durante la ricompilazione dello schema di origine. 
-// Generato il: 2013.05.27 alle 07:27:17 PM CEST 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2024.04.16 alle 09:52:47 AM CEST 
 //
 
 
@@ -71,7 +71,7 @@ public class Procedimento {
     protected String desEnteDestinatario;
 
     /**
-     * Recupera il valore della proprietidProcedimento.
+     * Recupera il valore della propriet� idProcedimento.
      * 
      * @return
      *     possible object is
@@ -83,7 +83,7 @@ public class Procedimento {
     }
 
     /**
-     * Imposta il valore della proprietidProcedimento.
+     * Imposta il valore della propriet� idProcedimento.
      * 
      * @param value
      *     allowed object is
@@ -95,7 +95,7 @@ public class Procedimento {
     }
 
     /**
-     * Recupera il valore della proprietcodProcedimento.
+     * Recupera il valore della propriet� codProcedimento.
      * 
      * @return
      *     possible object is
@@ -107,7 +107,7 @@ public class Procedimento {
     }
 
     /**
-     * Imposta il valore della proprietcodProcedimento.
+     * Imposta il valore della propriet� codProcedimento.
      * 
      * @param value
      *     allowed object is
@@ -119,7 +119,7 @@ public class Procedimento {
     }
 
     /**
-     * Recupera il valore della propriettermini.
+     * Recupera il valore della propriet� termini.
      * 
      * @return
      *     possible object is
@@ -131,7 +131,7 @@ public class Procedimento {
     }
 
     /**
-     * Imposta il valore della propriettermini.
+     * Imposta il valore della propriet� termini.
      * 
      * @param value
      *     allowed object is
@@ -143,7 +143,7 @@ public class Procedimento {
     }
 
     /**
-     * Recupera il valore della proprietdesProcedimento.
+     * Recupera il valore della propriet� desProcedimento.
      * 
      * @return
      *     possible object is
@@ -155,7 +155,7 @@ public class Procedimento {
     }
 
     /**
-     * Imposta il valore della proprietdesProcedimento.
+     * Imposta il valore della propriet� desProcedimento.
      * 
      * @param value
      *     allowed object is
@@ -167,7 +167,7 @@ public class Procedimento {
     }
 
     /**
-     * Recupera il valore della proprietcodLang.
+     * Recupera il valore della propriet� codLang.
      * 
      * @return
      *     possible object is
@@ -179,7 +179,7 @@ public class Procedimento {
     }
 
     /**
-     * Imposta il valore della proprietcodLang.
+     * Imposta il valore della propriet� codLang.
      * 
      * @param value
      *     allowed object is
@@ -191,7 +191,7 @@ public class Procedimento {
     }
 
     /**
-     * Recupera il valore della proprietidEnteDestinatario.
+     * Recupera il valore della propriet� idEnteDestinatario.
      * 
      * @return
      *     possible object is
@@ -203,7 +203,7 @@ public class Procedimento {
     }
 
     /**
-     * Imposta il valore della proprietidEnteDestinatario.
+     * Imposta il valore della propriet� idEnteDestinatario.
      * 
      * @param value
      *     allowed object is
@@ -215,7 +215,7 @@ public class Procedimento {
     }
 
     /**
-     * Recupera il valore della proprietcodEnteDestinatario.
+     * Recupera il valore della propriet� codEnteDestinatario.
      * 
      * @return
      *     possible object is
@@ -227,7 +227,7 @@ public class Procedimento {
     }
 
     /**
-     * Imposta il valore della proprietcodEnteDestinatario.
+     * Imposta il valore della propriet� codEnteDestinatario.
      * 
      * @param value
      *     allowed object is
@@ -239,7 +239,7 @@ public class Procedimento {
     }
 
     /**
-     * Recupera il valore della proprietdesEnteDestinatario.
+     * Recupera il valore della propriet� desEnteDestinatario.
      * 
      * @return
      *     possible object is
@@ -251,7 +251,7 @@ public class Procedimento {
     }
 
     /**
-     * Imposta il valore della proprietdesEnteDestinatario.
+     * Imposta il valore della propriet� desEnteDestinatario.
      * 
      * @param value
      *     allowed object is

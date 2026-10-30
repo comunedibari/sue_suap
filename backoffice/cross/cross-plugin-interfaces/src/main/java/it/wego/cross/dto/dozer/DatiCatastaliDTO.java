@@ -25,6 +25,7 @@ public class DatiCatastaliDTO {
     private String urlCatasto;
     private String confermato;
     private String codImmobile;
+    private String provenienza;
     
     //Aggiunto il 22/06/2016
     private String categoria;
@@ -188,6 +189,14 @@ public class DatiCatastaliDTO {
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+
+	public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
 	}
     
   

@@ -714,8 +714,8 @@ public class PddServiceSUAPBindingStub extends org.apache.axis.client.Stub imple
                 _call.setPortName(super.cachedPortName);
             }
             
-            _call.setUsername("suap");
-            _call.setPassword("suap2011");
+            _call.setUsername("");
+            _call.setPassword("");
             java.util.Enumeration keys = super.cachedProperties.keys();
             while (keys.hasMoreElements()) {
                 java.lang.String key = (java.lang.String) keys.nextElement();

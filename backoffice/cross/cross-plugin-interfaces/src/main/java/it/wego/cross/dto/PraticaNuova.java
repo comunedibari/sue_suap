@@ -6,6 +6,15 @@ package it.wego.cross.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import it.wego.cross.dto.research.table.Address;
+import it.wego.cross.dto.research.table.CadastralData;
+import it.wego.cross.dto.research.table.ComplexId;
+import it.wego.cross.dto.research.table.Event;
+import it.wego.cross.dto.research.table.Note;
+import it.wego.cross.dto.research.table.Receiving;
+import it.wego.cross.dto.research.table.Subject;
 
 /**
  *
@@ -36,7 +45,22 @@ public class PraticaNuova extends AbstractDTO implements Serializable {
     private Boolean adminOnProcEnte;
     private Boolean isSameUser;
     private String integrazione;
-
+    
+    private ComplexId complexId;
+    private String type;
+    private Integer number;
+    private Integer year;
+    private Receiving receiving;
+    private List<String> operations;
+    private List<Address> addresses;
+    private List<CadastralData> cadastralDataList;
+    private Event lastInternalEvent;
+    private Event lastExternalEvent;
+    private Note lastNote;
+    private Long days;
+    private Date dataUltimoEventoEsterno;
+    private UtenteDTO utente;
+    
     public Date getDataRicezione() {
         return dataRicezione;
     }
@@ -222,7 +246,116 @@ public class PraticaNuova extends AbstractDTO implements Serializable {
 	public void setIntegrazione(String integrazione) {
 		this.integrazione = integrazione;
 	}
-    
-    
 
+	public ComplexId getComplexId() {
+		return complexId;
+	}
+
+	public void setComplexId(ComplexId complexId) {
+		this.complexId = complexId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	public Receiving getReceiving() {
+		return receiving;
+	}
+
+	public void setReceiving(Receiving receiving) {
+		this.receiving = receiving;
+	}
+
+	public List<String> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(List<String> operations) {
+		this.operations = operations;
+	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public List<CadastralData> getCadastralDataList() {
+		return cadastralDataList;
+	}
+
+	public void setCadastralDataList(List<CadastralData> cadastralDataList) {
+		this.cadastralDataList = cadastralDataList;
+	}
+
+	public Event getLastInternalEvent() {
+		return lastInternalEvent;
+	}
+
+	public void setLastInternalEvent(Event lastInternalEvent) {
+		this.lastInternalEvent = lastInternalEvent;
+	}
+
+	public Event getLastExternalEvent() {
+		return lastExternalEvent;
+	}
+
+	public void setLastExternalEvent(Event lastExternalEvent) {
+		this.lastExternalEvent = lastExternalEvent;
+	}
+
+	public Note getLastNote() {
+		return lastNote;
+	}
+
+	public void setLastNote(Note lastNote) {
+		this.lastNote = lastNote;
+	}
+
+	public Long getDays() {
+		return days;
+	}
+
+	public void setDays(Long days) {
+		this.days = days;
+	}
+
+	public Date getDataUltimoEventoEsterno() {
+		return dataUltimoEventoEsterno;
+	}
+
+	public void setDataUltimoEventoEsterno(Date dataUltimoEventoEsterno) {
+		this.dataUltimoEventoEsterno = dataUltimoEventoEsterno;
+	}
+
+	public UtenteDTO getUtente() {
+		return utente;
+	}
+
+	public void setUtente(UtenteDTO utente) {
+		this.utente = utente;
+	}
 }

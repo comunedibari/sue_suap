@@ -29,14 +29,23 @@ def execute(Binding binding) {
     List<String> anniRiferimento = praticheService.popolaListaAnni();
     formEngine.putInstanceDataValue("anniRiferimento", anniRiferimento);
     List<Enti> enti = entiService.getListaEntiPerRicerca(utente);
+    boolean isFromGrantedTown = false;
+    int i = 0;
+    while(!isFromGrantedTown && i < enti.size()) {
+        isFromGrantedTown = "bari".equalsIgnoreCase(enti.get(i++).getCitta());
+    }
     formEngine.putInstanceDataValue("enti", enti);
     List<LkTipoSistemaCatastale> lkTipoSistemaCatastale = lookupDao.findAllTipoCatastale();
     formEngine.putInstanceDataValue("lkTipiCatasto", lkTipoSistemaCatastale);
     List<LkTipoUnita> lkTipoUnita = lookupDao.findAllLkTipoUnita();
     formEngine.putInstanceDataValue("lkTipiUnita", lkTipoUnita);
+    List<LkTipoPratica> lkTipoPratica = lookupDao.findSortedTipoPraticaByFlags(isFromGrantedTown);
+    formEngine.putInstanceDataValue("lkTipoPratica", lkTipoPratica);
     List<LkTipoParticella> lkTipoParticella = lookupDao.findAllLkTipoParticella();
     formEngine.putInstanceDataValue("lkTipiParticella", lkTipoParticella);
     List<LkStatoPratica> lookup = praticheService.getLookupsStatoPratica(StatoPratica.RICEVUTA);
     formEngine.putInstanceDataValue("statiPratica", lookup);
+    List<Utente> operatori = utentiService.findUtentiByEnte(enti);
+    formEngine.putInstanceDataValue("operatori", operatori);
 
 }

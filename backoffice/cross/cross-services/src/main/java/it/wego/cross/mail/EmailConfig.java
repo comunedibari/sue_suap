@@ -1,10 +1,13 @@
 package it.wego.cross.mail;
 
-import com.sun.mail.imap.IMAPFolder;
-import it.wego.cross.entity.Allegati;
 import java.util.List;
 import java.util.Properties;
+
 import javax.mail.Store;
+
+import com.sun.mail.imap.IMAPFolder;
+
+import it.wego.cross.entity.Allegati;
 
 /**
  *
@@ -29,7 +32,7 @@ public class EmailConfig {
     private Integer idComune;
     private List<Allegati> allegati;
 
-    public Store getStore() {
+	public Store getStore() {
         return store;
     }
 
@@ -117,6 +120,7 @@ public class EmailConfig {
         this.mailPathFS = mailPathFS;
     }
 
+/**/
     public IMAPFolder getCross() {
         return cross;
     }
@@ -136,10 +140,7 @@ public class EmailConfig {
     public IMAPFolder getInbox() {
         return inbox;
     }
-
-    public void setInbox(IMAPFolder inbox) {
-        this.inbox = inbox;
-    }
+/* */
 
     public Integer getIdEnte() {
         return idEnte;

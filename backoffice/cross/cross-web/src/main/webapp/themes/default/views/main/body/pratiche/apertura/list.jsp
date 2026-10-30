@@ -3,13 +3,12 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<c:set var="listGridUrl" value="${path}/pratiche/nuove/apertura/ajax.htm"/>
 <c:set var="dettaglioAperturaPraticaUrl" value="${path}/pratiche/nuove/apertura/dettaglio.htm"/>
 <c:set var="riassegnaPraticaUrl" value="${path}/pratica/riassegna.htm"/>
 
 <script type="text/javascript">
     function displayConfirmDialog(idPratica, isAdmin) {
-        var urlToRedirect = '${riassegnaPraticaUrl}?from=nuove/apertura&idPratica=' + idPratica;
+        var urlToRedirect = '${riassegnaPraticaUrl}?from=nuove/apertura&idPratica=' + idPratica + "&s_code="+window.name;
         if (isAdmin) {
             window.open(urlToRedirect, "_self");
         } else {
@@ -32,147 +31,70 @@
                 }
             });
         }
-    }
+    } 
 
-    $(document).ready(function ()
-    {
-
-        $("#list").jqGrid
-                ({
-                    url: "${listGridUrl}",
-                    datatype: "json",
-                    colNames: ['<spring:message code="pratica.id"/>',
-                    	'<spring:message code="pratica.identificativo.pratica"/>',
-                        '<spring:message code="pratica.data.ricezione"/>',
-                        '<spring:message code="pratica.descrizione"/>',
-                        '<spring:message code="pratiche.elenco.protocollo"/>',
-                        '<spring:message code="pratiche.elenco.ente"/>',
-                        '<spring:message code="pratiche.elenco.comune"/>',
-                        '<spring:message code="pratiche.elenco.richiedente"/>',
-                        '<spring:message code="pratiche.elenco.incarico"/>',
-                        '<spring:message code="pratica.azione"/>'],
-                    colModel:
-                            [
-                                {
-                                    name: 'idPratica',
-                                    index: 'idPratica',
-                                    "width" : 55,
-                                    sortable: true
-                                    //hidden: true
-                                },
-                                {
-                                    name: 'identificativoPratica',
-                                    index: 'identificativoPratica',
-                                    "width" : 160,
-                                    sortable: true
-                                },
-                                {
-                                    name: 'dataRicezione',
-                                    index: 'dataRicezione',
-                                    srcformat: "NNN dd, y H:mm:ss a",
-                                    datefmt: 'dd/mm/y'
-
-                                },
-                                {
-                                    name: 'oggettoPratica',
-                                    index: 'oggettoPratica'
-                                },
-                                {
-                                    name: 'protocollo',
-                                    index: 'protocollo',
-                                    sortable: true
-                                },
-                                {
-                                    name: 'ente',
-                                    index: 'ente',
-                                    sortable: true
-                                },
-                                {
-                                    name: 'comune',
-                                    index: 'comune',
-                                    sortable: true
-                                },
-                                {
-                                    name: 'richiedenteDaXml',
-                                    index: 'richiedenteDaXml',
-                                    sortable: false
-                                },
-                                {
-                                    name: 'inCarico',
-                                    index: 'inCarico',
-                                    sortable: false
-                                },
-                                {
-                                    name: 'azione',
-                                    index: 'idPratica',
-                                    classes: "list_azioni",
-                                    sortable: false,
-                                    formatter: function (cellvalue, options, rowObject) {
-                                        var isAdmin = rowObject["adminOnProcEnte"];
-                                        var isSameUser = rowObject["isSameUser"];
-                                        var displayDialog = ' onclick="displayConfirmDialog(\'' + rowObject["idPratica"] + '\', ' + isAdmin + ')"';
-                                        var riassegnaButton = '<a title="<spring:message code="gestione.button.riassegna"/>" ' + displayDialog + '><img src="${path}/themes/default/css/images/assegnare_verde.png" style="cursor: pointer"></a>';
-                                        if (isSameUser && !isAdmin) {
-                                            riassegnaButton = '';
-                                        }
-                                        var link = '<div class="gridActionContainer">' +
-                                                '<a href="${dettaglioAperturaPraticaUrl}?idPratica=' + rowObject["idPratica"] + '" ><img src="${path}/themes/default/css/images/seleziona_verde.png"></a>' +
-                                                riassegnaButton +
-                                                '</div>';
-                                        return link;
-                                    }
-                                }
-                            ],
-                    /*
-                     <c:set var="page" value="1"/>
-                     <c:if test="${filtroRicerca!=null && filtroRicerca.page!=null }">
-                     <c:set var="page" value="${filtroRicerca.page}"/>
-                     </c:if>
-                     */
-                    page: '${page}',
-                    /*
-                     <c:set var="orderColumn" value="idPratica"/>
-                     <c:if test="${filtroRicerca!=null && filtroRicerca.orderColumn!=null}">
-                     <c:set var="orderColumn" value="${filtroRicerca.orderColumn}"/>
-                     </c:if>
-                     */
-                    sortname: '${orderColumn}',
-                    /*
-                     <c:set var="orderDirection" value="desc"/>
-                     <c:if test="${filtroRicerca!=null && filtroRicerca.orderDirection!=null}">
-                     <c:set var="orderDirection" value="${filtroRicerca.orderDirection}"/>
-                     </c:if>
-                     */
-                    sortorder: "${orderDirection}",
-                    /*
-                     <c:set var="rowNum" value="10"/>
-                     <c:if test="${filtroRicerca!=null && filtroRicerca.limit!=null}">
-                     <c:set var="rowNum" value="${filtroRicerca.limit}"/>
-                     </c:if>
-                     */
-                    rowNum: "${rowNum}",
-                    rowList: [10, 20, 30, 100],
-                    pager: '#pager',
-                    viewrecords: true,
-                    jsonReader:
-                            {
-                                repeatitems: false,
-                                id: "0"
-                            },
-                    height: 'auto',
-                    width: $('.tableContainer').width(),
-                    gridComplete: function () {
-                    }
-                }).navGrid('#pager', {edit: false, add: false, del: false, search: false});
-    });
+    
 </script>
 <div id="apertura_pratiche">
 
     <tiles:insertAttribute name="ricerca" />
-    <div class="tableContainer">
-        <table id="list"><tr><td/></tr></table> 
-        <div id="pager"></div> 
-    </div>
+    <c:set var="researchTableDetailUrl" value="${dettaglioAperturaPraticaUrl}" scope="request" />
+    <c:set var="columnForSorting" value="idPratica" scope="request" />
+    <tiles:insertAttribute name="research_table" />
+	<script type="text/javascript">
+	function gestionePraticheActionsFormatter(cellvalue, options, rowObject) {
+        var isAdmin = rowObject["adminOnProcEnte"];
+        var technicialButton = '<a title="<spring:message code="ricerca.tecnico.operatore"/>" href="javascript:showTechnicianAgent(\''+rowObject["identificativoPratica"]+'\');" class="tecnico_procuratore" ></a>&nbsp';
+        var isSameUser = rowObject["isSameUser"];
+        var scaricaButton = '<a title="<spring:message code="ricerca.scarica"/>" href="${path}/download/pratica.htm?id_pratica='+rowObject["idPratica"]+'" class="scarica4" target="_blank"></a>&nbsp';
+        
+        var displayDialog = ' onclick="displayConfirmDialog(\'' + rowObject["idPratica"] + '\', ' + isAdmin + ')"';
+        var riassegnaButton = '<a title="<spring:message code="gestione.button.riassegna"/>" ' + displayDialog + ' class="riassegna2"></a>';
+        if (isSameUser && !isAdmin) {
+            riassegnaButton = '';
+        }
+        return '<div class="gridActionContainerNoWidth">' +
+	        riassegnaButton +
+	        scaricaButton +
+	        technicialButton + 
+        '</div>';
+    }
+	function showTechnicianAgent(identificativoPratica) {
+    	var parameters = {};
+    	var templateHtml = $("#template-technicians-agent").html();
+        var procuratoreTemplate = Handlebars.compile(templateHtml);
+    	parameters.identificativoPratica = identificativoPratica;
+        $.ajax({
+            type: 'POST',
+            url: '${path}/pratica/tecnico_procuratore.htm',
+            data: parameters,
+            dataType: 'json',
+            success: function(data) {
+            	if (!data) 
+            		data = {}
+           		var templateHtml = procuratoreTemplate(data);
+            	
+                
+                var dialog = $('<div />').appendTo('body').dialog({
+                    modal: true,
+                    title: 'Tecnico procuratore',
+                    buttons: [{
+                            text: "Chiudi",
+                            click: function() {
+                                $(this).dialog("close");
+                            }
+                        }],
+                    width: 800,
+                    position: { my: 'top', at: 'top+20' },
+                    close: function() {
+                        dialog.remove();
+                    }
+                }).html(templateHtml || '');
+            	
+            }
+        });
+    }
+	</script>
 </div>
 
 

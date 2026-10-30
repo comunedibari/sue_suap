@@ -13,6 +13,7 @@ import it.wego.cross.actions.CaricamentoManualeAction;
 import it.wego.cross.actions.ComunicazioneAction;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.PraticheProtocolloAction;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.AttoriComunicazione;
 import it.wego.cross.beans.grid.GridAnagraficaBean;
 import it.wego.cross.beans.grid.GridEventiBean;
@@ -65,6 +66,7 @@ import it.wego.cross.service.PluginService;
 import it.wego.cross.service.PraticheProtocolloService;
 import it.wego.cross.service.PraticheService;
 import it.wego.cross.service.SearchService;
+import it.wego.cross.session.MultiSubSessionManager;
 import it.wego.cross.utils.Log;
 import it.wego.cross.utils.PraticaUtils;
 import it.wego.cross.utils.Utils;
@@ -173,7 +175,7 @@ public class CaricamentoManualeController extends AbstractController {
         it.wego.cross.dto.dozer.UtenteRuoloEnteDTO ruoloSelezionato = (it.wego.cross.dto.dozer.UtenteRuoloEnteDTO) session.getAttribute(SelectUGInterceptor.CURRENT_SELECTED_UG);
         it.wego.cross.dto.dozer.EnteDTO entePerCuiOpero = ruoloSelezionato.getIdEnte();
 
-        clearSession(request.getSession());
+        clearSession(request);
 
         //TODO e chi lo mette in sessione ?
         Filter filter = (Filter) request.getSession().getAttribute("praticheNuoveProtocollo");
@@ -184,6 +186,7 @@ public class CaricamentoManualeController extends AbstractController {
         model.addAttribute("enteSelezionato", entePerCuiOpero);
         model.addAttribute("filtroRicerca", filter);
         model.addAttribute("anniRiferimento", anniRiferimento);
+        model.addAttribute("idEnte", ruoloSelezionato.getIdEnte().getIdEnte());
         String config = configuration.getCachedConfiguration(SessionConstants.PROTOCOLLO_MODALITA_CARICAMENTO, entePerCuiOpero.getIdEnte(), null);
         String caricamentoManuale = null;
         if (Utils.e(config)) {
@@ -383,7 +386,7 @@ public class CaricamentoManualeController extends AbstractController {
 
             Boolean riepilogoPraticaSettato = Boolean.FALSE;
             for (AllegatoDTO allegato : praticaCaricamentoManuale.getAllegatiList()) {
-                if (allegato.getModelloPratica()) {
+                if (allegato.getModelloPratica() != null && allegato.getModelloPratica()) {
                     riepilogoPraticaSettato = Boolean.TRUE;
                     break;
                 }
@@ -523,6 +526,7 @@ public class CaricamentoManualeController extends AbstractController {
         }
     }
 
+    @RequiresGrant
     @RequestMapping("/documenti/nuovi/protocollo/cancella_documento")
     public String listaDocumentiDaProtocolloCancella(Model model, HttpServletRequest request, HttpServletResponse response) {
         return AJAX;
@@ -532,10 +536,10 @@ public class CaricamentoManualeController extends AbstractController {
     public String listaDocumentiDaProtocollo(Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         Utente utenteAutenticato = utentiService.getUtenteConnesso(request);
-        clearSession(request.getSession());
+        clearSession(request);
         it.wego.cross.dto.dozer.UtenteRuoloEnteDTO ruoloSelezionato = (it.wego.cross.dto.dozer.UtenteRuoloEnteDTO) session.getAttribute(SelectUGInterceptor.CURRENT_SELECTED_UG);
         it.wego.cross.dto.dozer.EnteDTO entePerCuiOpero = ruoloSelezionato.getIdEnte();
-        clearSession(request.getSession());
+        clearSession(request);
 
         //String idEnte = request.getParameter("idEnte");
 //        if (idEnte != null) {
@@ -728,13 +732,13 @@ public class CaricamentoManualeController extends AbstractController {
         Utente utente = utentiService.getUtenteConnesso(request);
         Pratica pratica = praticheService.getPratica(idPratica);
         try {
-            session.setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
+            MultiSubSessionManager.setAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
             Integer idProtocollo = (Integer) request.getSession().getAttribute(IDENTIFICATIVO_PRATICA_PROTOCOLLO_DOCUMENTO);
             PraticheProtocollo praticaProtocollo = praticheProtocolloService.findPraticaProtocolloById(idProtocollo);
             Integer idEvento = Integer.valueOf(request.getParameter("idEvento"));
             Enti ente = (Enti) session.getAttribute(SessionConstants.ENTE);
             EventoDTO evento = eventiService.getDettaglioEvento(idEvento, pratica);
-            session.setAttribute(SessionConstants.EVENTO_SELEZIONATO, evento);
+            MultiSubSessionManager.setAttribute(request, SessionConstants.EVENTO_SELEZIONATO, evento);
             UtenteDTO user = utentiService.getUtenteConnessoDTO(request);
 
             GestioneProtocollo gp = pluginService.getGestioneProtocollo(pratica.getIdProcEnte().getIdEnte().getIdEnte(), null);
@@ -788,7 +792,7 @@ public class CaricamentoManualeController extends AbstractController {
     @RequestMapping("/documenti/protocollo/pratica/eventi/salva")
     public String salvaEvento(Model model, @ModelAttribute("comunicazione") ComunicazioneDTO comunicazione,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Integer idPratica = (Integer) request.getSession().getAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+        Integer idPratica = (Integer) MultiSubSessionManager.getAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
         Utente utente = utentiService.getUtenteConnesso(request);
         List<String> errors = new ArrayList<String>();
         Pratica pratica = praticheService.getPratica(idPratica);
@@ -864,16 +868,17 @@ public class CaricamentoManualeController extends AbstractController {
         }
     }
 
-    private void clearSession(HttpSession session) {
+    private void clearSession(HttpServletRequest request) {
+    	HttpSession session = request.getSession();
         session.removeAttribute(IDENTIFICATIVO_PRATICA_PROTOCOLLO_DOCUMENTO);
         session.removeAttribute(IDENTIFICATIVO_PRATICA_SELEZIONATA_PROTOCOLLO);
         session.removeAttribute(IDENTIFICATIVO_PRATICA_PROTOCOLLO);
         session.removeAttribute(ANAGRAFICHE_PRATICA);
         session.removeAttribute(PRATICA_VALORIZZATA);
         session.removeAttribute(SessionConstants.ENTE_SELEZIONATO);
-        session.removeAttribute(SessionConstants.EVENTO_SELEZIONATO);
+        MultiSubSessionManager.removeAttribute(request, SessionConstants.EVENTO_SELEZIONATO);
         session.removeAttribute(SessionConstants.ENTE);
-        session.removeAttribute(SessionConstants.ID_PRATICA_SELEZIONATA);
+        MultiSubSessionManager.removeAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA);
         session.removeAttribute("praticheNuoveProtocollo");
         session.removeAttribute("documentiNuoviProtocollo");
     }

@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,9 +40,23 @@ public class PraticaProcedimenti implements Serializable {
     @JoinColumn(name = "id_ente", referencedColumnName = "id_ente", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Enti enti;
+    @JoinColumn(name = "id_endoprocedimento_suap", referencedColumnName = "id_tipo_endoprocedimento", insertable = false, updatable = false)
+    @ManyToOne
+    private LkTipoEndoProcedimentoSuap lkTipoEndoProcedimentoSuap; 
 
-    public PraticaProcedimenti() {
+    @Transient
+    private String provenienza;
+    
+	public PraticaProcedimenti() {
     }
+
+    public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
 
     public PraticaProcedimenti(PraticaProcedimentiPK praticaProcedimentiPK) {
         this.praticaProcedimentiPK = praticaProcedimentiPK;
@@ -75,7 +90,15 @@ public class PraticaProcedimenti implements Serializable {
         this.pratica = pratica;
     }
 
-    public Enti getEnti() {
+    public LkTipoEndoProcedimentoSuap getLkTipoEndoProcedimentoSuap() {
+		return lkTipoEndoProcedimentoSuap;
+	}
+
+	public void setLkTipoEndoProcedimentoSuap(LkTipoEndoProcedimentoSuap lkTipoEndoProcedimentoSuap) {
+		this.lkTipoEndoProcedimentoSuap = lkTipoEndoProcedimentoSuap;
+	}
+
+	public Enti getEnti() {
         return enti;
     }
 

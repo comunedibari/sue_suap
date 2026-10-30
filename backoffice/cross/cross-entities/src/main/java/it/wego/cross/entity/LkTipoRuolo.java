@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "lk_tipo_ruolo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LkTipoRuolo.findAll", query = "SELECT l FROM LkTipoRuolo l"),
+    @NamedQuery(name = "LkTipoRuolo.findAll", query = "SELECT l FROM LkTipoRuolo l WHERE l.hidden = 0"),
     @NamedQuery(name = "LkTipoRuolo.findByIdTipoRuolo", query = "SELECT l FROM LkTipoRuolo l WHERE l.idTipoRuolo = :idTipoRuolo"),
     @NamedQuery(name = "LkTipoRuolo.findByDescrizione", query = "SELECT l FROM LkTipoRuolo l WHERE l.descrizione = :descrizione"),
     @NamedQuery(name = "LkTipoRuolo.findByCodRuolo", query = "SELECT l FROM LkTipoRuolo l WHERE l.codRuolo = :codRuolo")})
@@ -43,6 +43,9 @@ public class LkTipoRuolo implements Serializable {
     private String descrizione;
     @Column(name = "cod_ruolo")
     private String codRuolo;
+    @Column(name = "hidden")
+    private int hidden;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lkTipoRuolo")
     private List<PraticaAnagrafica> praticaAnagraficaList;
 
@@ -77,6 +80,14 @@ public class LkTipoRuolo implements Serializable {
         this.codRuolo = codRuolo;
     }
 
+	public int getHidden() {
+		return this.hidden;
+	}
+
+	public void setHidden(int hidden) {
+		this.hidden = hidden;
+	}
+	
     @XmlTransient
     public List<PraticaAnagrafica> getPraticaAnagraficaList() {
         return praticaAnagraficaList;

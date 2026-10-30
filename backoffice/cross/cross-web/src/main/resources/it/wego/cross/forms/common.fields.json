@@ -265,6 +265,12 @@
                         "templateDataValue": "oggettoPraticaCollegata"
                     },
                     {
+                        "value": "identificativoPratica",
+                        "type": "text",
+                        "description": "Identificativo Pratica",
+                        "templateDataValue": "identificativoPraticaCollegata"
+                    },
+                    {
                         "value": "protocollo.segnatura",
                         "type": "string",
                         "description": "Protocollo",

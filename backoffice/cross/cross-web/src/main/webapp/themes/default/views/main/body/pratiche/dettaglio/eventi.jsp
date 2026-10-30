@@ -8,7 +8,71 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script type="text/javascript">
-    $(function () {
+	var rowsAutoToColor = [];
+	function eventDescriptionFormatterHander(cellvalue, options, rowObject) {
+        var descrizioneEvento = rowObject["descrizioneEvento"] || ""
+        var dataEvento = rowObject["dataEvento"]|| ""
+		var cell= "<span>";
+        cell+=descrizioneEvento+"<br/>";
+        cell+=dataEvento;
+        cell+="</span>";
+		return cell;
+    }
+
+	function protocolFormatterHander(cellvalue, options, rowObject) {
+    	if (rowObject["codEvento"] === "RIASPRATAUTO"){
+            rowsAutoToColor[rowsAutoToColor.length] = options.rowId;
+    	}
+		var protocollo = rowObject["protocollo"] || '<spring:message code="evento.missing.user" />';
+		if (rowObject["flgProtocollazione"] == 'N')
+			protocollo = '<spring:message code="evento.user.not.provided" />';
+		
+			var dataProtocollo = rowObject["dataProtocollo"] || "";
+        var cell= "<span>";
+        cell+=protocollo + "<br/>";
+        cell+=dataProtocollo;
+        cell+="</span>";
+		return cell;
+    }
+
+	function userFormatterHander(cellvalue, options, rowObject) {
+		var denominazioneUtente = rowObject["denominazioneUtente"];
+        if(!denominazioneUtente)
+        	denominazioneUtente = '<spring:message code="evento.automatico" />'
+		return denominazioneUtente;
+    }
+	
+	function attachmentFormatterHander(cellvalue, options, rowObject) {
+		var found = false;
+		var mainAttachment = null;
+		var cell ="";
+		if(rowObject["allegati"].length > 0){
+			mainAttachment = rowObject["allegati"].find((element) => element.principale ==="S");;
+			found = !!mainAttachment;
+		}
+		if(found){
+			cell = '<a href="/cross/preview.htm?id_file='+mainAttachment["id"]+'" target="_blank">'+mainAttachment["nomeFile"]+'</a>'
+		} else{
+			cell = rowObject["note"] || "";
+		}
+		return cell;
+    }
+	
+    function register_papework_event(idPraticaEvento){
+    	$.ajax({
+             type: 'POST',
+             url: '<%=path%>/pratica/comunicazione/register/ajax.htm',
+             data: {"idPraticaEvento": idPraticaEvento}
+        }).done(function(data) {
+        	if(!!data.errors)
+            	alert(data.errors[0])
+           	else
+	            location.reload();
+        });
+    	return false;
+    }
+	$(document).ready(function() {
+
         $(".grid-btn").on("click", function () {
             $("#timeLineEventiDiv").addClass("hidden");
             $("#tableEventiDiv").removeClass("hidden");
@@ -20,59 +84,67 @@
             $("#timeLineEventiDiv").removeClass("hidden");
             return false;
         });
-
-
-        $("#tableEventi").jqGrid({
-            url: "${path}/pratiche/dettaglio/eventi/ajax.htm?idPratica=" + $("#idPratica").attr("value"),
+    	function personalDataSorting3(a,b,o){
+    		return o*(a==b? 0 : (a>b?1:-1));
+    	}
+    	$("#tableEventi").jqGrid({
+            url: "${path}/pratiche/dettaglio/eventi/ajax.htm?idPratica=" + $("#idPratica").attr("value"), 
             datatype: "json",
             colNames: [
                 'idPraticaEvento',
-                'dataEvento',
-                'descrizione',
-                'protocollo',
-                'data protocollo',
+                '<spring:message code="pratica.comunicazione.evento.tipoEvento" /><br/><spring:message code="pratica.comunicazione.evento.dataevento" />',
+                '<spring:message code="pratica.comunicazione.dettaglio.protocollo" /><br/><spring:message code="pratica.comunicazione.dettaglio.protocollo.data" />',
                 'verso',
                 'operatore',
                 'soggetti',
+                'contenuto',
                 'statoMail',
-                'azione'],
+                <c:if test="${utenteConnesso.idUtente == 1 && isProd}">
+                'Operazioni',
+                </c:if>
+                ],
             colModel:
                     [{
                             name: 'idPraticaEvento',
                             index: 'idPraticaEvento',
-                            hidden: true
+                            hidden: true,
                         },
                         {
-                            name: 'dataEvento',
-                            index: 'dataEvento',
-                            srcformat: "NNN dd, y H:mm:ss a",
-                            datefmt: 'dd/mm/y'
+                        	sortable : false,
+                        	hidden : false,
+                        	width : 180,
+                        	autowidth: true,
+                        	formatter: eventDescriptionFormatterHander
+
                         },
                         {
-                            name: 'descrizioneEvento',
-                            index: 'descrizioneEvento'
+                        	sortable : false,
+                        	hidden : false,
+                        	width : 180,
+                        	autowidth: true,
+                        	formatter: protocolFormatterHander
                         },
-                        {
-                            name: 'protocollo',
-                            index: 'protocollo'
-                        },
-                        {
-                            name: 'dataProtocollo',
-                            index: 'dataProtocollo'
-                        }
-                        ,
                         {
                             name: 'verso',
                             index: 'verso'
                         },
                         {
                             name: 'denominazioneUtente',
-                            index: 'denominazioneUtente'
+                           	formatter: userFormatterHander,
+                           	sorttype : "String",
+               	        	sortfunc : personalDataSorting3
                         },
                         {
                             name: 'soggetti',
                             width: 250,
                             index: 'soggetti'
+                        },
+                        {
+                        	sortable : false,
+                        	hidden : false,
+                        	width : 180,
+                        	autowidth: true,
+                        	formatter: attachmentFormatterHander
                         },
                         {
                             name: 'statoMail',
@@ -88,17 +160,19 @@
                                     return '<div style="text-align: center; width: 100%; height: 100%;"><img title="Ok" alt="Ok" src="<%=path%>/themes/default/images/icons/accept.png" width="18" /></div>'
                                 }
                             }
-                        },
-                        {
-                            name: 'azione',
-                            index: 'idPraticaEvento',
-                            classes: "list_azioni",
-                            sortable: false,
+                        }
+                        <c:if test="${utenteConnesso.idUtente == 1 && isProd}">
+                        ,{
                             formatter: function (cellvalue, options, rowObject) {
-                                var link = '<div class="gridActionContainer"><a href="${path}/pratica/comunicazione/dettaglio_evento.htm?id_pratica_evento=' + rowObject["idPraticaEvento"] + '&submit=Dettaglio" ><img src="${path}/themes/default/css/images/seleziona_verde.png"></a></div>';
-                                return link;
+                            	var button = "";
+                            	var protocollo = rowObject["protocollo"] || "";
+                      	       	if(rowObject["codEvento"] == "PROCINT" && protocollo.length == 0)
+                            		button = '<a href="javascript:void(0)" title="Protocolla" onclick="javascript:register_papework_event('+rowObject["idPraticaEvento"]+')" class="riassegna2"></a>&nbsp';
+                      	       	
+								return button
                             }
                         }
+                        </c:if>
                     ],
             rowList: [10, 20, 30, 100],
             pager: '#pager',
@@ -120,11 +194,26 @@
              <c:set var="rowNum" value="10"/>
              */
             rowNum: "${rowNum}",
+            ondblClickRow : function(rowid, status, e){ 
+            	var myGrid = $('#tableEventi'),
+            	selRowId = myGrid.jqGrid ('getGridParam', 'selrow'),
+            	idPraticaEvento = myGrid.jqGrid ('getCell', selRowId, 'idPraticaEvento');
+            	$("#dettaglio_evento_form #idPraticaEvento").val(idPraticaEvento);
+                $("#dettaglio_evento_form").trigger('submit');
+            	
+            },
+            gridComplete: function () {
+                for (var i = 0; i < rowsAutoToColor.length; i++) {
+                	$("#tableEventi").find("tr#" + rowsAutoToColor[i]).find("td").css("background-color", "#C5DBEC");
+                	$("#tableEventi").find("tr#" + rowsAutoToColor[i]).find("td").css("color", "black");
+                }
+                rowsAutoToColor = []
+            },
             jsonReader:
-                    {
-                        repeatitems: false,
-                        id: "0"
-                    },
+	        {
+	            repeatitems: false,
+	            id: "0"
+	        },
             height: 'auto',
             width: $('.frames').width() - 2
         });
@@ -136,7 +225,7 @@
 
 <form action="${path}/pratica/evento/index.htm" class="uniForm inlineLabels page" method="post">
     <div class="buttonHolder">
-        <%-- ^^CS AGGIUNTA dopo aver premuto vai a pratica origine, do il permesso di rtornare indietro --%>
+
         <c:if test="${ritornaAidPratica!=null}">
             <input type="hidden" id="ritornaAidPratica" name="id_pratica" class="primaryAction" value="${ritornaAidPratica}"/>
             <input type="submit" id="indietroAidPratica" name="submit" class="primaryAction" value="Indietro" style="margin-right:73%"/>
@@ -144,22 +233,28 @@
         <button class="grid-tab-btn grid-btn"></button>|
         <button class="grid-tab-btn time-line-btn"></button>        
         <%-- Visualizzo il pulsante solo se non sono in ricezione --%>
-        <c:if test="${pratica.idStatoPratica.codice != 'R'}">
+        <c:if test="${!abilitazioneConsultazione && pratica.idStatoPratica.codice != 'R'}">
         	 <c:if test="${visualizzaAssegnazione eq true}"> 
 	        	<a title="<spring:message code="gestione.button.riassegna"/>" href="<%=path %>/pratica/riassegna.htm?from=gestisci&idPratica=${pratica.idPratica}"><img src="${path}/themes/default/css/images/assegnare_verde.png" style="cursor: pointer"></a>
  	     	</c:if> 	        
             <input type="submit" name="submit" class="nascondiutente primaryAction crea_nuovo_evento" value="<spring:message code="pratica.button.evento"/>"/>
         </c:if>
     </div>
+    <input type="hidden" name="id_pratica"  value="${pratica.idPratica}"/>
 </form>
+
 <!---->
 <div id="tableEventiDiv">
-    <div id="apertura_pratiche">
+    <div id="apertura_pratiche" class="jqtable_eventi">
         <table id="tableEventi"></table> 
         <div id="pager"></div> 
     </div>
 </div>
-<!--</div>--> 
+
+<form id="dettaglio_evento_form" class="hide" action="${path}/pratica/comunicazione/dettaglio_evento.htm" >
+	<input type="hidden" id="idPraticaEvento" name="id_pratica_evento" />
+</form>
+
 
 <div  id="timeLineEventiDiv" class="hidden">
     <div class="timelineCard tl" >
@@ -246,4 +341,3 @@
         </c:if>
     </div>
 </div>
-

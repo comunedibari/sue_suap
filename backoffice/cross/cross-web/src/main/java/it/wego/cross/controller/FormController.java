@@ -5,11 +5,11 @@
  */
 package it.wego.cross.controller;
 
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.service.FormService;
 import it.wego.utils.json.JsonResponse;
 import it.wego.utils.wegoforms.FormContext;
 import it.wego.utils.wegoforms.FormEngine;
-import java.util.UUID;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,6 +70,7 @@ public class FormController extends AbstractController {
         response.getOutputStream().flush();
     }
 
+    @RequiresGrant
     @RequestMapping("/form/ajax/submit")
     public @ResponseBody
     Object formAjaxSubmit(
@@ -82,6 +83,7 @@ public class FormController extends AbstractController {
         return jsonResponse;
     }
 
+    @RequiresGrant
     @RequestMapping("/form/ajax/fileUpload")
     public void handleComponentAction(
             HttpServletRequest request,

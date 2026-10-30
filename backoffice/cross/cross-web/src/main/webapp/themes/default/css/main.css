@@ -32,7 +32,7 @@
     width:20px;
 }
 
-.scarica4  {
+.scarica5  {
     background: url(images/download2.png) no-repeat;
     height:20px;
     width:20px;
@@ -782,6 +782,10 @@ tr.odd .view_pratica_btn{
     white-space: normal;
 }
 
+.gridActionContainerNoWidth{
+    margin:auto;
+    white-space: normal;
+}
 
 .list_azioni form, .list_azioni button{
     /*width: auto;*/
@@ -2318,12 +2322,29 @@ button,
     box-shadow: 3px 3px!important;
 }
 
+.anagrafica_confronta_2 {
+    background: url(images/confronta.png) no-repeat;
+    padding-left: 40px !important;
+    width: 40;
+    background-color: #999;
+    box-shadow: 3px 3px!important;
+    padding-bottom: 14px;
+}
+
 .anagrafica_dettaglio_apertura  {
     background: url(images/lentina.png) no-repeat;
     padding-left:40px !important;
     width: 100px;
     background-color: #999;
     box-shadow: 3px 3px!important;
+}
+
+.anagrafica_dettaglio_apertura_2 {
+    background: url(images/lentina.png) no-repeat;
+    padding-left:40px !important;
+    background-color: #999;
+    box-shadow: 3px 3px!important;
+    padding-bottom: 14px;
 }
 
 .cancella  {
@@ -2349,6 +2370,27 @@ button,
     box-shadow: 3px 3px #eee;
 }
 
+.riassegna  {
+    background: url(images/assegnare_verde.png) no-repeat #CCC !important;
+    padding-left:40px !important;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-right:10px;
+    color:#000 !important;
+    border-radius: 2px;
+    box-shadow: 3px 3px #eee;
+}
+
+.riassegna2 {
+    background: url(images/assegnare_verde_mini.png) no-repeat #CCC !important;
+    padding-left: 15px !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    color: #000 !important;
+    border-radius: 2px;
+    box-shadow: 3px 3px #eee;
+}
 .scarica2  {
     background: url(images/download2.png) no-repeat #CCC !important;
     padding-left:17px !important;
@@ -2372,6 +2414,51 @@ button,
     box-shadow: 2px 2px #eee;
 }
 
+.scarica4  {
+    background: url(images/download.png) no-repeat #CCC !important;
+    padding-left: 15px !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 11px;
+    color: #000 !important;
+    border-radius: 2px;
+    box-shadow: 3px 3px #eee;
+}
+
+.tecnico_procuratore  {
+    background: url(images/bottone_assegna.png) no-repeat #CCC !important;
+    padding-left:13px !important;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-right:10px;
+    color:#000 !important;
+    border-radius: 2px;
+    box-shadow: 3px 3px #eee;
+}
+
+
+.tecnico_procuratore_2  {
+    background: url(images/procultimoevento.jpg) no-repeat #CCC !important;
+    padding-left:13px !important;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-right:10px;
+    color:#000 !important;
+    border-radius: 2px;
+    box-shadow: 3px 3px #eee;
+}
+
+.tecnico_procuratore_dettaglio {
+    color:#000;
+    background: url(images/bottone_assegna.png) #ccc  no-repeat;
+    padding-left:15px !important;
+    padding-top:2px;
+    padding-bottom:2px;
+    padding-right:5px;
+    border-radius: 2px;
+    box-shadow: 3px 3px #aaa;
+}
+
 .operazione  {
     background: url(images/operazione.png) no-repeat #cccccc !important;
     width:25px !important;
@@ -2382,6 +2469,16 @@ button,
 
 .icona_modifica  {
     background: url(images/pencil_20.png) no-repeat #CCC !important;
+    padding-left:17px !important;
+    padding-top:2px;
+    padding-bottom:3px;
+    padding-right:2px;
+    border-radius: 2px;
+    box-shadow: 2px 2px #eee;
+}
+
+.icona_firma  {
+    background: url(images/editCursor.png) no-repeat #CCC !important;
     padding-left:17px !important;
     padding-top:2px;
     padding-bottom:3px;
@@ -2485,31 +2582,105 @@ button,
     box-shadow: 3px 3px #aaa;
 }
 
+.cerca_lente_dettaglio {
+    color:#000;
+    background: url(images/bottone_dettaglio.png) #ccc  no-repeat;
+    padding-left:15px !important;
+    padding-top:2px;
+    padding-bottom:2px;
+    padding-right:5px;
+    border-radius: 2px;
+    box-shadow: 3px 3px #aaa;
+}
+
+.cerca_lente_dettaglio_2 {
+    color:#000;
+    background: url(images/ricollega_grey_mini.png) #ccc  no-repeat;
+    padding-left:15px !important;
+    padding-top:2px;
+    padding-bottom:2px;
+    padding-right:5px;
+    border-radius: 2px;
+    box-shadow: 3px 3px #aaa;
+}
+
+.cerca_lente_rosso_mini {
+    color:#000;
+    background: url(images/cerca.png) #ccc  no-repeat;
+    padding-left:17px !important;
+    padding-top:2px;
+    padding-bottom:3px;
+    padding-right:2px;
+    border-radius: 2px;
+    box-shadow: 2px 2px #aaa;
+}
+
+.cerca_button {
+    color:#000;
+    background: #ccc no-repeat;
+    padding: 5px 5px 5px 5px;
+    border-radius: 2px;
+    box-shadow: 3px 3px #aaa;
+}
+
 .showdetail {
     cursor:pointer;
     text-align: center;
     position: absolute;
     bottom: 20px;
     left: 60px;
-    /* width: 50%; */
+}
+
+.showdetailchange {
+    cursor:pointer;
+    text-align: center;
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+}
+
+.showlabel {
+    cursor:pointer;
+    text-align: center;
+    position: absolute;
+    bottom: 90px;
+    left: 60px;
+    font-weight: bold;
+}
+
+.showdetailchange {
+    cursor:pointer;
+    text-align: center;
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+}
+
+.showlabel {
+    cursor:pointer;
+    text-align: center;
+    position: absolute;
+    bottom: 90px;
+    left: 60px;
+    font-weight: bold;
 }
 
 .showdetail-indirizzoIntervento {
-    cursor:pointer;
+    /*cursor:pointer;
     width:140px;
     bottom:15px;
     float:left;
     position:absolute;
-    margin-left:45px;
+    margin-left:45px;*/
 }
 
 .showdetail-datoCatastale {
-    cursor:pointer;
+    /*cursor:pointer;
     width:140px;
     bottom:15px;
     float:left;
     position:absolute;
-    margin-left:45px;
+    margin-left:45px;*/
 }
 
 .showdettaglio {
@@ -3470,7 +3641,7 @@ color:#cc0000
 }
 
 .anagraficabox {
-    height: 500px !important;
+    min-height: 500px !important;
 } 
 
 .anagraficacircle {
@@ -4236,16 +4407,9 @@ button.grid-btn{
     right: 0px;
 }
 
-.box-unlink-indirizzoIntervento{
-    cursor: pointer;
-    position: absolute;
-    right: 0px;
-}
+.box-unlink-indirizzoIntervento{}
 
 .box-unlink-datoCatastale{
-    cursor: pointer;
-    position: absolute;
-    right: 0px;
 }
 
 h6.confirm-body-content{
@@ -4461,14 +4625,12 @@ h6.confirm-body-content{
 #richiedentiBeneficiariField > #divRicercaAnagraficaCF{
     width: 30%;
 }
-
 #praticaField >  #divSearch_data_from {
     width: 10%;     
 }
 #praticaField >  #divSearch_data_to {
     width: 10%;     
 }
-
 
 #praticaField >  #divSearch_ente {
     width: 50%;     
@@ -4657,7 +4819,11 @@ h6.confirm-body-content{
     float: left;
     clear:none;
     padding:12px;
+
 }
+
+
+
 #divNome { width: 40% ;  }
 #divNome input { width: 100% ;  }
 #divCognome { width: 40% ;  }
@@ -4704,6 +4870,50 @@ h6.confirm-body-content{
 #nIscrizioneReaIDiv input { width: 100% ;  }
 #dataIscrizioneReaIDiv { width: 30% ; }
 #dataIscrizioneReaIDiv input { width: 100% ;  }
+
+#suapField div{
+    float: left;
+    width:21%;
+    clear:none;
+    padding:12px;
+}
+
+#suapField div input{
+    width: 100%;
+}
+/* #suapField >  #divSearch_protocollo_suap { */
+/*     width: 80%;      */
+/* } */
+
+#suapField >  #search_protocollo_suap {
+    width: 50%;     
+}
+
+#suapField >  #divSearch_data_inizio_prot_suap {
+    width: 20%;     
+}
+#suapField >  #divSearch_data_fine_prot_suap {
+    width: 20%;     
+}
+
+
+#suapField >  #divSearch_tipo_intervento_suap {
+    width: 50%;     
+}
+#suapField > #divSearch_tipo_procedimento_suap {
+    width: 50%;
+}
+#suapField > #divSearch_tipo_classificazione_suap {
+    width: 50%;
+}
+
+#suapField > #search_tipoClassificazioneProcedimento {
+    width: 30%;
+}
+
+#suapField > #divSearch_all > label{
+    padding-top: 20px;
+}
 
 /*INDIRIZZI*/
 #recapitiSection div{
@@ -4752,4 +4962,102 @@ h6.confirm-body-content{
     cursor: pointer;
     position: absolute;
     right: 0px;
+}
+.button_operation{
+	margin-left: 10px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    float: left;
+}
+.width5 {
+    width: 5% !important
+}
+.width1 {
+    width: 1% !important
+}
+.width10 {
+    width: 10% !important
+}
+.width15 {
+    width: 15% !important
+}
+.width20 {
+    width: 20% !important
+}
+.width25 {
+    width: 25% !important
+}
+.width30 {
+    width: 30% !important
+}
+.width45 {
+    width: 45% !important
+}
+.width50 {
+    width: 50% !important
+}
+.width60 {
+    width: 60% !important
+}
+.row {
+    width: 100% !important;
+    padding: 0px !important;
+}
+.right{
+	right:0;
+}
+.uniForm .inlineLabels select.select {
+	min-height: 25px !important;
+	width: 100% !important;
+}
+
+#ricerca .operations{
+	position:absolute;
+	right: 0px !important;
+	
+}
+
+#ricerca .operation > button{
+	background-color: #ccc;
+}
+
+.no-margin{
+	margin: 0px 0px 0px 0px !important;
+}
+
+.research-fieldset{
+	margin-bottom: 1.5em;
+}
+
+.research-fieldset > div, .research-fieldset > div > div, .research-fieldset > span > div, .research-fieldset > span > div> div{
+    float: left;
+    width:21%;
+    clear:none;
+    padding:5px;
+}
+
+.research-fieldset input.textInput, 
+.research-fieldset select{
+    width: 90% !important;
+}
+
+.research-fieldset > .row {
+    width: 100% !important;
+    padding: 0px !important;
+}
+
+.research-fieldset .row > div {
+	float:left;
+    width: 100%;
+}
+
+.research-fieldset > legend.legend{ 
+	font-weight: bold; 
+	font-size: 100%; 
+	margin: 0; 
+	padding: 0em 0;
+}
+.td_attachments_options{
+  overflow: hidden;
+  white-space: nowrap;
 }

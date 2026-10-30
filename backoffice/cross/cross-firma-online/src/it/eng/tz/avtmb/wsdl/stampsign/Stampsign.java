@@ -15,7 +15,7 @@ import javax.xml.ws.Service;
  * 
  */
 @WebServiceClient(name = "stampsign", 
-                  wsdlLocation = "file:/C:/Users/pierluigi.anaclerio/Desktop/firma remota/firma remota/stampsignwsdl.wsdl",
+                  wsdlLocation = "file:/firma remota/firma remota/stampsignwsdl.wsdl",
                   targetNamespace = "http://stampsign.wsdl.avtmb.tz.eng.it") 
 public class Stampsign extends Service {
 
@@ -27,11 +27,11 @@ public class Stampsign extends Service {
     static {
         URL url = null;
         try {
-            url = new URL("file:/C:/Users/pierluigi.anaclerio/Desktop/firma remota/firma remota/stampsignwsdl.wsdl");
+            url = new URL("file:/firma remota/firma remota/stampsignwsdl.wsdl");
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(Stampsign.class.getName())
                 .log(java.util.logging.Level.INFO, 
-                     "Can not initialize the default wsdl from {0}", "file:/C:/Users/pierluigi.anaclerio/Desktop/firma remota/firma remota/stampsignwsdl.wsdl");
+                     "Can not initialize the default wsdl from {0}", "file:/firma remota/firma remota/stampsignwsdl.wsdl");
         }
         WSDL_LOCATION = url;
     }

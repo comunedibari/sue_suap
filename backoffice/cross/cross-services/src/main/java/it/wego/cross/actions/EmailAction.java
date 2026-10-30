@@ -51,10 +51,6 @@ public class EmailAction {
         mailService.cambiaStato(email.getIdEmail(), email.getStato());
     }
 
-//    @Transactional(rollbackFor = Exception.class)
-//    public void gestioneEmail() throws Exception {
-//        mailService.gestioneEmail();
-//    }
     @Transactional(rollbackFor = Exception.class)
     public void updateEmail(Email email) throws Exception {
         mailService.updateEmail(email);
@@ -64,7 +60,7 @@ public class EmailAction {
     public void aggiornaMail(Email emailDB, Message email, EmailConfig emailConfig) throws Exception {
         emailDao.update(emailDB);
         emailDao.flush();
-        email.setFlag(Flags.Flag.SEEN, true);
+        // email.setFlag(Flags.Flag.SEEN, true);
         mailService.aggiornaStato(emailDB);
     }
 

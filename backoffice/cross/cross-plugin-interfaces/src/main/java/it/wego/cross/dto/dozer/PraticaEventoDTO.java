@@ -15,8 +15,9 @@ import java.util.List;
 public class PraticaEventoDTO implements Serializable {
 
     private Integer idPraticaEvento;
-    private Date dataEvento;
+    private String codEvento;
     private String oggetto;
+    private Date dataEvento;
     private String comunicazione;
     private String note;
     private String protocollo;
@@ -34,6 +35,8 @@ public class PraticaEventoDTO implements Serializable {
     private ProcessoEventoDTO idEvento;
     private String descrizioneEvento;
     private StatoMailDTO statoMail;
+    private List<AllegatoDTO> allegati;
+    private String flgProtocollazione;
 
     public StatoMailDTO getStatoMail() {
         return statoMail;
@@ -43,7 +46,15 @@ public class PraticaEventoDTO implements Serializable {
         this.statoMail = statoMail;
     }
 
-    public Integer getIdPraticaEvento() {
+    public String getCodEvento() {
+		return codEvento;
+	}
+
+	public void setCodEvento(String codEvento) {
+		this.codEvento = codEvento;
+	}
+
+	public Integer getIdPraticaEvento() {
         return idPraticaEvento;
     }
 
@@ -163,4 +174,19 @@ public class PraticaEventoDTO implements Serializable {
         this.recapitoAnagraficaList = recapitoAnagraficaList;
     }
 
+	public List<AllegatoDTO> getAllegati() {
+		return allegati;
+	}
+
+	public void setAllegati(List<AllegatoDTO> allegati) {
+		this.allegati = allegati;
+	}
+
+	public String getFlgProtocollazione() {
+		return flgProtocollazione;
+	}
+
+	public void setFlgProtocollazione(String flgProtocollazione) {
+		this.flgProtocollazione = flgProtocollazione;
+	}
 }

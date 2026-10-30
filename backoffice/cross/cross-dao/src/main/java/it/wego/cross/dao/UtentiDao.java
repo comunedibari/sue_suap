@@ -32,7 +32,14 @@ public class UtentiDao extends Paginator {
     @PersistenceContext
     private EntityManager em;
 
-    public void update(Utente utente) throws Exception {
+    
+    public UtentiDao() {}
+    
+    public UtentiDao(EntityManager em) {
+		this.em = em;
+	}
+
+	public void update(Utente utente) throws Exception {
         em.merge(utente);
     }
 
@@ -59,6 +66,13 @@ public class UtentiDao extends Paginator {
         query.setParameter("username", username);
         Utente utente = (Utente) Utils.getSingleResult(query);
         return utente;
+    }
+
+    public Utente findUtenteByIdPratica(Integer idPratica) {
+    	Query query = em.createNamedQuery("Utente.findByIdPratica");
+    	query.setParameter("idPratica", idPratica);
+    	Utente utente = (Utente) Utils.getSingleResult(query);
+    	return utente;
     }
 
     public List<Utente> findAll(Filter filter) {
@@ -282,4 +296,6 @@ public class UtentiDao extends Paginator {
     	List<Utente> utenti = query.getResultList();
 		return utenti;
     }
+    
+    
 }

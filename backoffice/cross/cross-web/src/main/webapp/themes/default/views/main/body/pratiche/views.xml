@@ -8,9 +8,11 @@
         <put-attribute name="title"         value="Pratiche Nuove" type="string"/>
         <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
         <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/assegnamento/nuova.jsp"/>
+        <put-attribute name="research_table"   cascade="true"  value="/themes/default/views/main/body/pratiche/research_table.jsp"/>
         <put-attribute name="infopath"      cascade="true"  value="Lista pratiche nuove" type="string" />
-        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/assegnamento/ricerca.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ricerca.jsp"/>
         <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="research_footer"   cascade="true"  value="/themes/default/views/main/body/pratiche/assegnamento/footer.jsp"/>
     </definition>
     
     <definition name="pratica_assegna_utente" extends=".main">
@@ -25,14 +27,16 @@
         <put-attribute name="title"         value=" - Apertura Pratiche Nuove" type="string"/>
         <put-attribute name="body_header"   cascade="true"  value=" " type="string"/>
         <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/list.jsp"/>
+        <put-attribute name="research_table"   cascade="true"  value="/themes/default/views/main/body/pratiche/research_table.jsp"/>
         <put-attribute name="infopath"      cascade="true"  value="Apertura pratiche nuove" type="string" />
-        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/ricerca.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ricerca.jsp"/>
         <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
     </definition>
     
     <definition name="pratiche_apertura_nuove_dettaglio" extends="pratiche_apertura_nuove">
         <put-attribute name="body_title"    cascade="true"  value=" "  type="string"/>
         <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/dettaglio.jsp"/>
+        <put-attribute name="anagrafica"   cascade="true"  value="/themes/default/views/main/body/pratiche/apertura/anagrafica.jsp"/>
         <put-attribute name="dati_catastali"   cascade="true"  expression="${dati_catastali_custom}"/>
         <put-attribute name="indirizzi_intervento"   cascade="true"  expression="${indirizzi_intervento}"/>
         <put-attribute name="allegati"   cascade="true"  expression="/themes/default/views/main/body/pratiche/apertura/allegati.jsp"/>
@@ -48,7 +52,9 @@
         <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
         <put-attribute name="infopath"      cascade="true"  value="Gestione pratiche" type="string" />
         <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/gestione.jsp"/>
+        <put-attribute name="research_table"   cascade="true"   value="/themes/default/views/main/body/pratiche/research_table.jsp"/>
         <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/ricerca.jsp"/>
+        <put-attribute name="ricerca_albero"   cascade="true"  value="/themes/default/views/main/body/search_tree.html"/>
         <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
     </definition>
     
@@ -74,11 +80,13 @@
         <put-attribute name="scadenze"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/scadenze.jsp"/>
         <put-attribute name="eventi"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/eventi.jsp"/>
         <put-attribute name="note"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/note.jsp"/>
+        <put-attribute name="pre_filter"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/linked_paperworks_pre_filter.jsp"/>
         <put-attribute name="pratiche_collegate"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/pratiche_collegate.jsp"/>
         <put-attribute name="messaggi"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/messaggi.jsp"/>
-        <put-attribute name="copertina"  cascade="true"  value="/themes/default/views/main/body/pratiche/dettaglio/copertina.jsp"/>
         <put-attribute name="operazioneRiuscitaAjax"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscitaAjax.jsp"/>
-        <put-attribute name="operazioneRiuscita"      cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+        <put-attribute name="operazioneRiuscita"  cascade="true"  value="/themes/default/views/main/body/OperazioneRiuscita.jsp"/>
+        <put-attribute name="operazioneNonRiuscita"  cascade="true"  value="/themes/default/views/main/body/errorPageWithTimeout.jsp"/>
+        <put-attribute name="footer"     cascade="true"  value="/themes/default/views/main/body/pratiche/footer.jsp"/>
     </definition>
     
     <definition name="pratica_collega_procedimento" extends=".main">
@@ -100,12 +108,13 @@
     </definition>  
                         
     <definition name="pratica_collega_anagrafica" extends=".main">
-        <put-attribute name="title"         value="Collega anagrafica alla pratica" type="string"/>
-        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
-        <put-attribute name="infopath"      cascade="true"  value="Collega anagrafica alla pratica" type="string" />
-        <put-attribute name="body_center"   cascade="true"  value="/themes/default/views/main/body/pratiche/collega_anagrafica/lista.jsp"/>
-        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
-        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/ricerca.jsp"/>
+        <put-attribute name="title"             value="Collega anagrafica alla pratica" type="string"/>
+        <put-attribute name="body_title"        cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"          cascade="true"  value="Collega anagrafica alla pratica" type="string" />
+        <put-attribute name="body_center"       cascade="true"  value="/themes/default/views/main/body/pratiche/collega_anagrafica/lista.jsp"/>
+        <put-attribute name="body_error"        cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+        <put-attribute name="ricerca"           cascade="true"  value="/themes/default/views/main/body/pratiche/anagrafica/ricerca.jsp"/>
+        <put-attribute name="customization"     cascade="true"  value="/themes/default/views/main/body/pratiche/collega_anagrafica/customization.jsp"/>
     </definition>
     
     <definition name="pratica_collega_anagrafica_ruolo" extends=".main">
@@ -158,6 +167,14 @@
         <put-attribute name="infopath"      cascade="true"  value="Estrazione CILA 20%" type="string" />
         <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/estrazioni/gestioneCILAToDo.jsp"/>
         <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/estrazioni/ricercaCILAToDo.jsp"/>
+        <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
+    </definition>
+     <definition name="estrazione_agib_to_do" extends=".main">
+        <put-attribute name="title"         value="Estrazione AGIB 20%" type="string"/>
+        <put-attribute name="body_title"    cascade="true"  value=""  type="string"/>
+        <put-attribute name="infopath"      cascade="true"  value="Estrazione AGIB 20%" type="string" />
+        <put-attribute name="body_center"   cascade="true"   value="/themes/default/views/main/body/pratiche/estrazioni/gestioneAGIBToDo.jsp"/>
+        <put-attribute name="ricerca"   cascade="true"  value="/themes/default/views/main/body/pratiche/estrazioni/ricercaAGIBToDo.jsp"/>
         <put-attribute name="body_error"   cascade="true"  value="/themes/default/views/main/body/error.jsp"  />
     </definition>
         

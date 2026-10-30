@@ -1,0 +1,10 @@
+To create class from xsd use command:
+...area-vasta\backoffice\cross\cross-xml\src\main>xjc ..\resources\cross.xsd
+
+this way doesn't generate correctly classes
+because the script to custom convertion (XmlJavaTypeAdapter) is missing
+
+after each compilation check modified classes to restore 
+pieces of code that shouldn't change
+
+this mode is currently useful for approaching the standard mode

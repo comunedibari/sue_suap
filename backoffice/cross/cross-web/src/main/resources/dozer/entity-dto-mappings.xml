@@ -114,6 +114,18 @@
             <b>idStaging</b>
         </field>
         <field>
+            <a>tipoPratica.tipoPratica</a> 
+            <b>tipoPratica</b>
+        </field>
+        <field>
+            <a>numeroPratica</a> 
+            <b>numeroPratica</b>
+        </field>
+        <field>
+            <a>anno</a> 
+            <b>anno</b>
+        </field>
+        <field>
             <a>idModello.id</a> 
             <b>idModello</b>
         </field>
@@ -149,6 +161,18 @@
         <field custom-converter="it.wego.cross.dto.dozer.converters.PraticaEventoAnagraficheCustomConverter">
             <a>praticheEventiAnagraficheList</a> 
             <b>recapitoAnagraficaList</b>
+        </field>
+        <field custom-converter="it.wego.cross.dto.dozer.converters.PraticaEventoAllegatiCustomConverter">
+            <a>praticheEventiAllegatiList</a> 
+            <b>allegati</b>
+        </field>
+        <field>
+            <a>idEvento.codEvento</a> 
+            <b>codEvento</b>
+        </field>
+        <field>
+            <a>idEvento.flgProtocollazione</a> 
+            <b>flgProtocollazione</b>
         </field>
     </mapping>
     

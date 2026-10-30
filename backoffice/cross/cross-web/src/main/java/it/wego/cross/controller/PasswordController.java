@@ -1,14 +1,5 @@
 package it.wego.cross.controller;
 
-import it.wego.cross.actions.UtentiAction;
-import it.wego.cross.beans.layout.Message;
-import it.wego.cross.dao.AuthorizationDao;
-import it.wego.cross.dto.UtenteDTO;
-import it.wego.cross.entity.Utente;
-import it.wego.cross.serializer.UtentiSerializer;
-import it.wego.cross.service.UtentiService;
-import it.wego.cross.validator.IsValid;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import it.wego.cross.actions.UtentiAction;
+import it.wego.cross.beans.layout.Message;
+import it.wego.cross.dao.AuthorizationDao;
+import it.wego.cross.dto.UtenteDTO;
+import it.wego.cross.entity.Utente;
+import it.wego.cross.serializer.UtentiSerializer;
+import it.wego.cross.service.UtentiService;
+import it.wego.cross.validator.IsValid;
 
 @Controller
 public class PasswordController extends AbstractController{
@@ -68,7 +68,6 @@ public class PasswordController extends AbstractController{
 	private UtentiSerializer utentiSerializer;
 	@Autowired
 	private AuthorizationDao authorizationDao;
-
 
 	@RequestMapping("/utenti/modificaPassword")
 	public String modifyPassword(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("utente") UtenteDTO utente,BindingResult result,  RedirectAttributes redirectAttributes) {

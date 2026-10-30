@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Allegati.findByTipoFile", query = "SELECT a FROM Allegati a WHERE a.tipoFile = :tipoFile"),
     @NamedQuery(name = "Allegati.findByPathFile", query = "SELECT a FROM Allegati a WHERE a.pathFile = :pathFile"),
     @NamedQuery(name = "Allegati.findByIdFileEsterno", query = "SELECT a FROM Allegati a WHERE a.idFileEsterno = :idFileEsterno")})
-public class Allegati implements Serializable {
+public class Allegati implements Serializable  {
 
     @Lob
     @Column(name = "file")
@@ -59,11 +59,8 @@ public class Allegati implements Serializable {
     private String pathFile;
     @Column(name = "id_file_esterno")
     private String idFileEsterno;
-//    @JoinTable(name = "pratiche_eventi_allegati", joinColumns = {
-//        @JoinColumn(name = "id_allegato", referencedColumnName = "id")}, inverseJoinColumns = {
-//        @JoinColumn(name = "id_pratica_evento", referencedColumnName = "id_pratica_evento")})
-//    @ManyToMany
-//    private List<PraticheEventi> praticheEventiList;
+    @Column(name = "dimensione")
+    private Long dimensione;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "allegati")
     private List<PraticheEventiAllegati> praticheEventiAllegatiList;
@@ -132,14 +129,6 @@ public class Allegati implements Serializable {
         this.idFileEsterno = idFileEsterno;
     }
 
-//    @XmlTransient
-//    public List<PraticheEventi> getPraticheEventiList() {
-//        return praticheEventiList;
-//    }
-//
-//    public void setPraticheEventiList(List<PraticheEventi> praticheEventiList) {
-//        this.praticheEventiList = praticheEventiList;
-//    }
     @XmlTransient
     public List<Pratica> getPraticaList() {
         return praticaList;
@@ -149,7 +138,35 @@ public class Allegati implements Serializable {
         this.praticaList = praticaList;
     }
 
-    @Override
+    public List<PraticheEventiAllegati> getPraticheEventiAllegatiList() {
+        return praticheEventiAllegatiList;
+    }
+
+    public void setPraticheEventiAllegatiList(List<PraticheEventiAllegati> praticheEventiAllegatiList) {
+        this.praticheEventiAllegatiList = praticheEventiAllegatiList;
+    }
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+        if(this.file != null && this.dimensione == null)
+        	this.dimensione = (long) this.file.length;
+    }
+
+    public Long getDimensione() {
+    	if(this.file != null && this.dimensione == null)
+        	this.dimensione = (long) this.file.length;
+		return dimensione;
+	}
+
+	public void setDimensione(Long dimensione) {
+		this.dimensione = dimensione;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
@@ -173,22 +190,4 @@ public class Allegati implements Serializable {
     public String toString() {
         return "it.wego.cross.entity.Allegati[ id=" + id + " ]";
     }
-
-
-    public List<PraticheEventiAllegati> getPraticheEventiAllegatiList() {
-        return praticheEventiAllegatiList;
-    }
-
-    public void setPraticheEventiAllegatiList(List<PraticheEventiAllegati> praticheEventiAllegatiList) {
-        this.praticheEventiAllegatiList = praticheEventiAllegatiList;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
-
 }

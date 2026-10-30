@@ -60,6 +60,7 @@ import it.gruppoinit.b110.concessioniEAutorizzazioni.procedimentoUnico.Procedime
 import it.gruppoinit.b110.concessioniEAutorizzazioni.procedimentoUnico.RichiestaDocument;
 import it.gruppoinit.b110.concessioniEAutorizzazioni.procedimentoUnico.RichiestadiConcessioniEAutorizzazioniType;
 import it.wego.cross.actions.ErroriAction;
+import it.wego.cross.constants.SessionConstants;
 import it.wego.cross.dao.LookupDao;
 import it.wego.cross.dto.ErroreDTO;
 import it.wego.cross.entity.Enti;
@@ -73,6 +74,7 @@ import it.wego.cross.service.ConfigurationService;
 import it.wego.cross.service.EntiService;
 import it.wego.cross.service.LookupService;
 import it.wego.cross.service.PluginService;
+import it.wego.cross.utils.ComponentUtils;
 import it.wego.cross.utils.PraticaUtils;
 import it.wego.cross.utils.Utils;
 import it.wego.cross.webservices.mypage.fileclient.FileClient;
@@ -97,6 +99,8 @@ public abstract class AeCGestionePratica implements it.wego.cross.plugins.pratic
     static final String XPATH_OGGETTO_PRATICA = "//cea:DichiarazioneDinamica[cea:href='h00097']/cea:campiHref/cea:campoHref/cea:valoreUtente";
     private static final String XPATH_IDENTIFICATIVO_PRATICA = "//ogg:IdentificatorediRichiesta/ogg:IdentificatoreUnivoco/ogg:CodiceIdentificativoOperazione";
     public static final String XPATH_IDENTIFICATIVO_NODO = "//ogg:IdentificatorediRichiesta/ogg:IdentificatoreUnivoco/ogg:CodiceSistema/ogg:CodiceAmministrazione";
+    public static final String XPATH_LH00026_INTERVENTION_DESCRIPTION = "//:DichiarazioniDinamiche/:DichiarazioneDinamica/:href[text()='LH00026']/../:campiHref/:campoHref/:valoreUtente";
+    public static final String PHISICAL_PERSON_TAX_CODE = "//:Titolare/ogg:PersonaFisica/ogg:CodiceFiscale";
     private static final String VISURA_URL = "attachment.url.visura";
     private static final String MYPAGE_URL = "attachment.url.mypage";
     private static final String AEC_XSLT = "plugin.aec.xslt";
@@ -114,6 +118,8 @@ public abstract class AeCGestionePratica implements it.wego.cross.plugins.pratic
     private LookupDao lookupDao;
     @Autowired
     private ErroriAction erroriAction;
+    @Autowired
+    private ComponentUtils componentsUtils;
 
     @Override
     public Pratica execute(Object pratica) throws Exception {
@@ -551,8 +557,10 @@ public abstract class AeCGestionePratica implements it.wego.cross.plugins.pratic
         RichiestadiConcessioniEAutorizzazioniType cea = richiesta.getRichiesta();
         String idPratica = getIdPratica(richiesta);
         StringBuilder path = new StringBuilder();
-        path.append(getProperty("attachment.tmp.folder", idEnte)).append(System.getProperty("file.separator")).append(idPratica).append(System.getProperty("file.separator"));
+//        path.append(getProperty("attachment.tmp.folder", idEnte)).append(System.getProperty("file.separator")).append(idPratica).append(System.getProperty("file.separator"));
+        path.append(getProperty(SessionConstants.ATTACHMENTS_FOLDER, idEnte)).append(System.getProperty("file.separator")).append(idPratica).append(System.getProperty("file.separator"));
         String tmpFolder = path.toString();
+        tmpFolder = componentsUtils.generateFilePath(tmpFolder, ente.getLkComuniList().get(0));
         //Creo la directory per salvare i file
         (new File(path.toString())).mkdirs();
         AllegatononFirmato[] allegatiNonFirmati = cea.getAllegatononFirmatoArray();

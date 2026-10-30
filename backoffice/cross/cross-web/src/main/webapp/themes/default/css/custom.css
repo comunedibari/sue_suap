@@ -597,7 +597,7 @@ h4 {
     margin-left: 34% !important; 
 }
 
-#loading{
+.loading_messages{
     position: fixed;
     top: 0;
     left: 0;
@@ -607,6 +607,39 @@ h4 {
     color: white;
     padding: 2px;
     display:none;
+}
+.loading_messages_2{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5001;
+    background-color: red;
+    font-size: 150%;
+    color: white;
+    padding: 2px;
+    display:none;
+}
+
+.error_div{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5000;
+    background-color: red;
+    font-size: 150%;
+    color: white;
+    padding: 2px;
+}
+
+.warning_div{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5000;
+    background-color: goldenrod;
+    font-size: 150%;
+    color: white;
+    padding: 2px;
 }
 
 input[readonly="readonly"], input[readonly]{
@@ -648,6 +681,18 @@ input[readonly="readonly"], input[readonly]{
     color: #478fca;
 }
 
+.sfondorosso{
+    background-color: #FFF1EF;
+}
+
+.sfondoverde{
+    background-color: #E3F8E5;
+}
+
+.sfondobianco{
+    background-color: white; 
+}
+
 .messageText {
     padding: 5px;
 }
@@ -682,7 +727,9 @@ input[readonly="readonly"], input[readonly]{
 .allegatiMessage{
     font-weight: bold;
 }
-
+.page-control > ul li a.bold {
+	font-weight: bold !important;
+}
 @media screen and (max-width: 960px){
     .menu-home {
         width: 100%!important;
@@ -810,4 +857,17 @@ input[readonly="readonly"], input[readonly]{
     display:block;
     height:70px;    
     width:270px;
+}
+
+.hide {
+  display: none !important;
+}
+
+tr.ui-tr-error td{
+    background-color: red;
+    color: black !important;
+}
+
+table.master tr td.confermataBG {
+    background-color: #C5DBEC;
 }

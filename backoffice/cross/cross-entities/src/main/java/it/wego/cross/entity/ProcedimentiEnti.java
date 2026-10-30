@@ -22,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -73,8 +74,18 @@ public class ProcedimentiEnti implements Serializable {
     @JoinColumn(name = "id_ufficio", referencedColumnName = "id_ente")
     @ManyToOne(optional = false)
     private Enti idUfficio;
+    @Transient
+    private String provenienza;
     
-    public ProcedimentiEnti() {
+    public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+
+	public ProcedimentiEnti() {
     }
 
     public ProcedimentiEnti(Integer idProcEnte) {

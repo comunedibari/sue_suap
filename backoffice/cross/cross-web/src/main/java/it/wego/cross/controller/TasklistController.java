@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import it.wego.cross.actions.EmailAction;
 import it.wego.cross.actions.ErroriAction;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.beans.BaseResponseBean;
 import it.wego.cross.beans.grid.GridNotificheBean;
 import it.wego.cross.beans.grid.GridTasklistBean;
@@ -20,6 +21,7 @@ import it.wego.cross.entity.Email;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.entity.Utente;
 import it.wego.cross.service.MailService;
+import it.wego.cross.session.MultiSubSessionManager;
 import it.wego.cross.utils.Log;
 
 import java.util.ArrayList;
@@ -167,6 +169,7 @@ public class TasklistController extends AbstractController {
         return AJAX_PAGE;
     }
 
+    @RequiresGrant
     @RequestMapping("/workflow/task/completeProtocol")
     public ModelAndView processoTaskCompleteProtocol(Model model,
             @RequestParam(value = "taskId", required = true) String taskId,
@@ -196,6 +199,7 @@ public class TasklistController extends AbstractController {
         return new ModelAndView(AJAX_PAGE);
     }
 
+    @RequiresGrant
     @RequestMapping("/workflow/instance/delete")
     public ModelAndView processoInstanceDelete(Model model,
             HttpServletRequest request,
@@ -223,6 +227,7 @@ public class TasklistController extends AbstractController {
         return new ModelAndView(AJAX_PAGE);
     }
 
+    @RequiresGrant
     @RequestMapping("/workflow/task/getBrokenEmail")
     public String processoTaskGetBrokenEmail(Model model,
             @RequestParam(value = "taskId", required = true) String taskId) {
@@ -249,6 +254,7 @@ public class TasklistController extends AbstractController {
         return AJAX_PAGE;
     }
 
+    @RequiresGrant
     @RequestMapping("/workflow/task/completeMail")
     public ModelAndView processoTaskCompleteMail(Model model,
             @RequestParam(value = "taskId", required = true) String taskId,
@@ -343,6 +349,7 @@ public class TasklistController extends AbstractController {
         return new ModelAndView(AJAX_PAGE);
     }
 
+    @RequiresGrant
     @RequestMapping("/workflow/notifiche/markRead")
     public ModelAndView markAsRead(Model model,
             @RequestParam(value = "taskId", required = true) String taskId) {
@@ -382,7 +389,7 @@ public class TasklistController extends AbstractController {
             taskService.complete(taskId);
             Integer idPratica = (Integer) variables.get(Workflow.ID_PRATICA);
             Integer idPraticaEvento = (Integer) variables.get(Workflow.ID_PRATICA_EVENTO);
-            request.getSession().setAttribute(SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
+            MultiSubSessionManager.setAttribute(request, SessionConstants.ID_PRATICA_SELEZIONATA, idPratica);
             String urlToRedirect = "/pratica/comunicazione/dettaglio_evento.htm?id_pratica_evento=" + String.valueOf(idPraticaEvento) + "&submit=Dettaglio";
             return "redirect:" + urlToRedirect;
         } catch (Exception ex) {

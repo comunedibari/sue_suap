@@ -1,28 +1,38 @@
 package it.wego.cross.validator;
 
-import com.google.common.base.Strings;
-import it.wego.cross.utils.Utils;
-import it.wego.cross.validator.impl.PartitaIvaValidatorImpl;
-import it.wego.cross.dto.UtenteDTO;
-import it.wego.cross.dto.RecapitoDTO;
-import it.wego.cross.dto.PraticaDTO;
-import it.wego.cross.dto.EnteDTO;
-import it.wego.cross.dto.ProtocolloDTO;
-import it.wego.cross.dto.AllegatoDTO;
-import it.wego.cross.dto.AnagraficaDTO;
-import it.wego.cross.dto.ProcedimentoDTO;
-import it.wego.cross.utils.AnagraficaUtils;
-import it.wego.cross.constants.Constants;
-import it.wego.cross.entity.LkTipoIndirizzo;
-import it.wego.cross.service.LookupService;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
+
+import com.google.common.base.Strings;
+
+import it.wego.cross.constants.Constants;
+import it.wego.cross.dto.AllegatoDTO;
+import it.wego.cross.dto.AnagraficaDTO;
+import it.wego.cross.dto.EnteDTO;
+import it.wego.cross.dto.PraticaDTO;
+import it.wego.cross.dto.ProcedimentoDTO;
+import it.wego.cross.dto.ProtocolloDTO;
+import it.wego.cross.dto.RecapitoDTO;
+import it.wego.cross.dto.UtenteDTO;
+import it.wego.cross.entity.LkTipoIndirizzo;
+import it.wego.cross.service.LookupService;
+import it.wego.cross.utils.AnagraficaUtils;
+import it.wego.cross.utils.Utils;
+import it.wego.cross.validator.impl.PartitaIvaValidatorImpl;
 
 /**
  *
@@ -475,6 +485,11 @@ public class IsValid {
 
     public List<String> Evento(BindingResult result) {
         List<String> errors = new ArrayList();
+        List<ObjectError> list = result.getGlobalErrors();
+        for(ObjectError objError: list) {
+        	errors.add(objError.getDefaultMessage());
+        }
+        
         if (result.hasFieldErrors("numeroDiProtocollo")) {
             errors.add(result.getFieldErrors("numeroDiProtocollo").get(0).getDefaultMessage());
         }

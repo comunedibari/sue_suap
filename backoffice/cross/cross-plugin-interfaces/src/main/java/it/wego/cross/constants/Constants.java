@@ -4,6 +4,9 @@
  */
 package it.wego.cross.constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *
  * @author giuseppe
@@ -16,6 +19,7 @@ public class Constants {
     public static final String UTENTE_ATTIVO = "ATTIVO";
     public static final String UTENTE_NON_ATTIVO = "NON_ATTIVO";
     public static final String VISIBILE = "S";
+    public static final String IS_MAIN = "S";
     public static final String NON_VISIBILE = "N";
     public static final String PERSISTENCE_UNIT = "crossPU";
     public static final String PERSONA_FISICA = "F";
@@ -67,5 +71,21 @@ public class Constants {
     public static final Integer IDENTIFICATIVO_TAVOLARE = 2;
     public static final String SISTEMA_CATASTALE_ORDINARIO = "ORDINARIO";
     public static final String SISTEMA_CATASTALE_TAVOLARE = "TAVOLARE";
+    public static final String ESITO_POSITIVO_SUAP = "OK: L'integrazione è stata creata correttamente. Codice attività:4630";
+    public static final String ESITO_NEGATIVO_SUAP = "KO";
+    
 
+    public static final Integer SUE_BARI = Integer.valueOf(2001);
+    public static final Integer SUE_RUVO = Integer.valueOf(2243);
+    public static final Integer SUE_RUVO_INVIO_PDC = Integer.valueOf(2201);
+    public static final Integer SUE_COMUNE_RUVO_DI_PUGLIA = Integer.valueOf(10233);
+    public static final Integer SUAP_BARI = Integer.valueOf(1001);
+    public static final Integer SUAP_GIOIA_DEL_COLLE = Integer.valueOf(2294);
+    
+    public static final String CHANGE_TECHNICIAN_AGENT_1 = "Cambio tecnico procuratore associato da ";
+    public static final String CHANGE_TECHNICIAN_AGENT_2 = " a ";
+    
+    public static final String UNZIP_FOLDER = "unzip";
+
+    public static final List<String> SUAP_CODES = Arrays.asList("SUAP_SCIA","SUAP_ORDINARIO","SUAP_COMUNICAZIONE","SUAP_SILENZIO_ASSENSO");
 }

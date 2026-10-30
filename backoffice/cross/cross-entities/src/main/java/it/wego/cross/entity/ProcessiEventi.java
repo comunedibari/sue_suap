@@ -144,6 +144,14 @@ public class ProcessiEventi implements Serializable {
     @Column(name = "forza_chiusura_scadenze")
     private String forzaChiusuraScadenze;
 
+    @Column(name = "giorni_default")
+    private Integer giorniDefault;
+
+    @Column(name = "nascondi_tab_documenti")
+    private String nascondiTabDocumenti;
+    @Column(name = "nascondi_tab_template")
+    private String nascondiTabTemplate;
+
     public ProcessiEventi() {
     }
 
@@ -413,7 +421,15 @@ public class ProcessiEventi implements Serializable {
         this.statoPost = statoPost;
     }
 
-    @XmlTransient
+    public Integer getGiorniDefault() {
+		return giorniDefault;
+	}
+
+	public void setGiorniDefault(Integer giorniDefault) {
+		this.giorniDefault = giorniDefault;
+	}
+
+	@XmlTransient
     public List<PraticheEventi> getPraticheEventiList() {
         return praticheEventiList;
     }
@@ -474,5 +490,20 @@ public class ProcessiEventi implements Serializable {
     public void setForzaChiusuraScadenze(String forzaChiusuraScadenze) {
         this.forzaChiusuraScadenze = forzaChiusuraScadenze;
     }
-    
+
+	public String getNascondiTabDocumenti() {
+		return nascondiTabDocumenti;
+	}
+
+	public void setNascondiTabDocumenti(String nascondiTabDocumenti) {
+		this.nascondiTabDocumenti = nascondiTabDocumenti;
+	}
+
+	public String getNascondiTabTemplate() {
+		return nascondiTabTemplate;
+	}
+
+	public void setNascondiTabTemplate(String nascondiTabTemplate) {
+		this.nascondiTabTemplate = nascondiTabTemplate;
+	}
 }

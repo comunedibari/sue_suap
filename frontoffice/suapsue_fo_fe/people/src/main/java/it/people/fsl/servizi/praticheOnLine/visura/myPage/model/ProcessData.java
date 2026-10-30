@@ -96,6 +96,8 @@ public class ProcessData  extends AbstractData {
     private String tipologiaEventoIntegrazioneSelez;
     private String messaggioErrore;
     
+    private String tecnicoIstruttore;
+    
 	public ProcessData(){
 		this.codicePratica="";
 		this.dataCreazioneDa="";
@@ -460,9 +462,16 @@ public class ProcessData  extends AbstractData {
 	public void setMessaggioErrore(String messaggioErrore) {
 		this.messaggioErrore = messaggioErrore;
 	}
-	
-	
-	
+
+
+	public String getTecnicoIstruttore() {
+		return tecnicoIstruttore;
+	}
+
+
+	public void setTecnicoIstruttore(String tecnicoIstruttore) {
+		this.tecnicoIstruttore = tecnicoIstruttore;
+	}
 	
 	
 }

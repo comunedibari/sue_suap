@@ -10,10 +10,12 @@ package it.wego.cross.xml.anagrafetributaria.edilizia;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -93,6 +95,8 @@ public class RecordDettaglio {
 
     @XmlElement(required = true)
     protected IdentificazioneRichiesta identificazioneRichiesta;
+    @XmlTransient
+    protected RecordDettaglio.IdentificazioneRichieste identificazioneRichieste;
     @XmlElement(required = true)
     protected RecordDettaglio.Beneficiari beneficiari;
     @XmlElement(required = true)
@@ -126,7 +130,16 @@ public class RecordDettaglio {
         this.identificazioneRichiesta = value;
     }
 
-    /**
+    
+    public RecordDettaglio.IdentificazioneRichieste getIdentificazioneRichieste() {
+		return identificazioneRichieste;
+	}
+
+	public void setIdentificazioneRichieste(RecordDettaglio.IdentificazioneRichieste identificazioneRichieste) {
+		this.identificazioneRichieste = identificazioneRichieste;
+	}
+
+	/**
      * Recupera il valore della proprieta' beneficiari.
      * 
      * @return
@@ -282,7 +295,46 @@ public class RecordDettaglio {
 
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "identificazioneRichiesta"
+    })
+    public static class IdentificazioneRichieste {
 
+        @XmlElement(required = true)
+        protected List<IdentificazioneRichiesta> identificazioneRichiesta;
+
+        /**
+         * Gets the value of the beneficiario property.
+         * 
+         * <p>
+         * This accessor method returns a reference to the live list,
+         * not a snapshot. Therefore any modification you make to the
+         * returned list will be present inside the JAXB object.
+         * This is why there is not a <CODE>set</CODE> method for the beneficiario property.
+         * 
+         * <p>
+         * For example, to add a new item, do as follows:
+         * <pre>
+         *    getBeneficiario().add(newItem);
+         * </pre>
+         * 
+         * 
+         * <p>
+         * Objects of the following type(s) are allowed in the list
+         * {@link Beneficiario }
+         * 
+         * 
+         */
+        public List<IdentificazioneRichiesta> getIdentificazioneRichieste() {
+            if (identificazioneRichiesta == null) {
+            	identificazioneRichiesta = new ArrayList<IdentificazioneRichiesta>();
+            }
+            return this.identificazioneRichiesta;
+        }
+
+    }
+    
     /**
      * <p>Classe Java per anonymous complex type.
      * 

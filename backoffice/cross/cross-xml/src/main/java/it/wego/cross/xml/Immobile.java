@@ -1,8 +1,8 @@
 //
-// Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.5-2 
+// Questo file � stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2014.02.25 alle 05:44:42 PM CET 
+// Qualsiasi modifica a questo file andr� persa durante la ricompilazione dello schema di origine. 
+// Generato il: 2024.04.16 alle 09:52:47 AM CEST 
 //
 
 
@@ -41,6 +41,13 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="subalterno" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="categoria" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="comune_censuario" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="confermato" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="latitudine" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="longitudine" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="id_comune" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
+ *         &lt;element name="des_comune" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="id_provincia" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/>
+ *         &lt;element name="des_provincia" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -67,7 +74,13 @@ import javax.xml.bind.annotation.XmlType;
     "subalterno",
     "categoria",
     "comuneCensuario",
-    "confermato"
+    "confermato",
+    "latitudine",
+    "longitudine",
+    "idComune",
+    "desComune",
+    "idProvincia",
+    "desProvincia"
 })
 public class Immobile {
 
@@ -99,9 +112,19 @@ public class Immobile {
     @XmlElement(name = "comune_censuario")
     protected String comuneCensuario;
     protected String confermato;
+    protected String latitudine;
+    protected String longitudine;
+    @XmlElement(name = "id_comune")
+    protected BigInteger idComune;
+    @XmlElement(name = "des_comune")
+    protected String desComune;
+    @XmlElement(name = "id_provincia")
+    protected BigInteger idProvincia;
+    @XmlElement(name = "des_provincia")
+    protected String desProvincia;
 
     /**
-     * Recupera il valore della proprietà counter.
+     * Recupera il valore della propriet� counter.
      * 
      * @return
      *     possible object is
@@ -113,7 +136,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà counter.
+     * Imposta il valore della propriet� counter.
      * 
      * @param value
      *     allowed object is
@@ -125,7 +148,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà idImmobile.
+     * Recupera il valore della propriet� idImmobile.
      * 
      * @return
      *     possible object is
@@ -137,7 +160,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà idImmobile.
+     * Imposta il valore della propriet� idImmobile.
      * 
      * @param value
      *     allowed object is
@@ -148,8 +171,8 @@ public class Immobile {
         this.idImmobile = value;
     }
 
-        /**
-     * Recupera il valore della proprietà codImmobile.
+    /**
+     * Recupera il valore della propriet� codImmobile.
      * 
      * @return
      *     possible object is
@@ -161,7 +184,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà codImmobile.
+     * Imposta il valore della propriet� codImmobile.
      * 
      * @param value
      *     allowed object is
@@ -171,8 +194,9 @@ public class Immobile {
     public void setCodImmobile(String value) {
         this.codImmobile = value;
     }
+
     /**
-     * Recupera il valore della proprietà idTipoSistemaCatastale.
+     * Recupera il valore della propriet� idTipoSistemaCatastale.
      * 
      * @return
      *     possible object is
@@ -184,7 +208,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà idTipoSistemaCatastale.
+     * Imposta il valore della propriet� idTipoSistemaCatastale.
      * 
      * @param value
      *     allowed object is
@@ -196,7 +220,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà desTipoSistemaCatastale.
+     * Recupera il valore della propriet� desTipoSistemaCatastale.
      * 
      * @return
      *     possible object is
@@ -208,7 +232,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà desTipoSistemaCatastale.
+     * Imposta il valore della propriet� desTipoSistemaCatastale.
      * 
      * @param value
      *     allowed object is
@@ -220,7 +244,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà sezione.
+     * Recupera il valore della propriet� sezione.
      * 
      * @return
      *     possible object is
@@ -232,7 +256,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà sezione.
+     * Imposta il valore della propriet� sezione.
      * 
      * @param value
      *     allowed object is
@@ -244,7 +268,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà idTipoUnita.
+     * Recupera il valore della propriet� idTipoUnita.
      * 
      * @return
      *     possible object is
@@ -256,7 +280,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà idTipoUnita.
+     * Imposta il valore della propriet� idTipoUnita.
      * 
      * @param value
      *     allowed object is
@@ -268,7 +292,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà desTipoUnita.
+     * Recupera il valore della propriet� desTipoUnita.
      * 
      * @return
      *     possible object is
@@ -280,7 +304,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà desTipoUnita.
+     * Imposta il valore della propriet� desTipoUnita.
      * 
      * @param value
      *     allowed object is
@@ -292,7 +316,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà foglio.
+     * Recupera il valore della propriet� foglio.
      * 
      * @return
      *     possible object is
@@ -304,7 +328,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà foglio.
+     * Imposta il valore della propriet� foglio.
      * 
      * @param value
      *     allowed object is
@@ -316,7 +340,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà mappale.
+     * Recupera il valore della propriet� mappale.
      * 
      * @return
      *     possible object is
@@ -328,7 +352,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà mappale.
+     * Imposta il valore della propriet� mappale.
      * 
      * @param value
      *     allowed object is
@@ -340,7 +364,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà idTipoParticella.
+     * Recupera il valore della propriet� idTipoParticella.
      * 
      * @return
      *     possible object is
@@ -352,7 +376,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà idTipoParticella.
+     * Imposta il valore della propriet� idTipoParticella.
      * 
      * @param value
      *     allowed object is
@@ -364,7 +388,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà desTipoParticella.
+     * Recupera il valore della propriet� desTipoParticella.
      * 
      * @return
      *     possible object is
@@ -376,7 +400,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà desTipoParticella.
+     * Imposta il valore della propriet� desTipoParticella.
      * 
      * @param value
      *     allowed object is
@@ -388,7 +412,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà estensioneParticella.
+     * Recupera il valore della propriet� estensioneParticella.
      * 
      * @return
      *     possible object is
@@ -400,7 +424,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà estensioneParticella.
+     * Imposta il valore della propriet� estensioneParticella.
      * 
      * @param value
      *     allowed object is
@@ -412,7 +436,7 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà subalterno.
+     * Recupera il valore della propriet� subalterno.
      * 
      * @return
      *     possible object is
@@ -424,7 +448,7 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà subalterno.
+     * Imposta il valore della propriet� subalterno.
      * 
      * @param value
      *     allowed object is
@@ -436,11 +460,35 @@ public class Immobile {
     }
 
     /**
-     * Recupera il valore della proprietà idComune.
+     * Recupera il valore della propriet� categoria.
      * 
      * @return
      *     possible object is
-     *     {@link BigInteger }
+     *     {@link String }
+     *     
+     */
+    public String getCategoria() {
+        return categoria;
+    }
+
+    /**
+     * Imposta il valore della propriet� categoria.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCategoria(String value) {
+        this.categoria = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� comuneCensuario.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
      *     
      */
     public String getComuneCensuario() {
@@ -448,32 +496,183 @@ public class Immobile {
     }
 
     /**
-     * Imposta il valore della proprietà idComune.
+     * Imposta il valore della propriet� comuneCensuario.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigInteger }
+     *     {@link String }
      *     
      */
     public void setComuneCensuario(String value) {
         this.comuneCensuario = value;
     }
 
+    /**
+     * Recupera il valore della propriet� confermato.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
     public String getConfermato() {
         return confermato;
     }
 
-    public void setConfermato(String confermato) {
-        this.confermato = confermato;
+    /**
+     * Imposta il valore della propriet� confermato.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setConfermato(String value) {
+        this.confermato = value;
     }
 
-	public String getCategoria() {
-		return categoria;
-	}
+    /**
+     * Recupera il valore della propriet� latitudine.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLatitudine() {
+        return latitudine;
+    }
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
-    
-    
+    /**
+     * Imposta il valore della propriet� latitudine.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLatitudine(String value) {
+        this.latitudine = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� longitudine.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLongitudine() {
+        return longitudine;
+    }
+
+    /**
+     * Imposta il valore della propriet� longitudine.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLongitudine(String value) {
+        this.longitudine = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� idComune.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getIdComune() {
+        return idComune;
+    }
+
+    /**
+     * Imposta il valore della propriet� idComune.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setIdComune(BigInteger value) {
+        this.idComune = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� desComune.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDesComune() {
+        return desComune;
+    }
+
+    /**
+     * Imposta il valore della propriet� desComune.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDesComune(String value) {
+        this.desComune = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� idProvincia.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getIdProvincia() {
+        return idProvincia;
+    }
+
+    /**
+     * Imposta il valore della propriet� idProvincia.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setIdProvincia(BigInteger value) {
+        this.idProvincia = value;
+    }
+
+    /**
+     * Recupera il valore della propriet� desProvincia.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDesProvincia() {
+        return desProvincia;
+    }
+
+    /**
+     * Imposta il valore della propriet� desProvincia.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDesProvincia(String value) {
+        this.desProvincia = value;
+    }
+
 }

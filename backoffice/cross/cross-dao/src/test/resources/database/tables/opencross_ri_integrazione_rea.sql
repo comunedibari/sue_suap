@@ -1,0 +1,12 @@
+CREATE TABLE ri_integrazione_rea ( id int,
+id_ri_integrazione_rea int NOT NULL AUTO_INCREMENT,
+id_pratica int NOT NULL,
+tipo_procedimento varchar(255) NOT NULL,
+tipo_intervento varchar(255) NOT NULL,
+id_anagrafica_dichiarante int NOT NULL,
+id_azienda_riferimento int NOT NULL,
+forma_giuridica_impresa varchar(255) NOT NULL,
+id_anagrafica_legale_rapp int NOT NULL,
+qualifica_dichiarante_pratica varchar(255) NOT NULL,
+carica_legale_rapp varchar(255) NOT NULL,
+id_allegato_procura_speciale int DEFAULT NULL)

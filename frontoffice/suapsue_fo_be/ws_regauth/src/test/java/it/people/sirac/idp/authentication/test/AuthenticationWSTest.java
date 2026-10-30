@@ -116,7 +116,7 @@ public class AuthenticationWSTest extends TestCase {
       System.out.println(authResult);
       
       System.out.println("Terzo test autenticazione");
-      authResult = authWS.executeBasicAuthentication("CTTTCN57P51F205W", "wego2013");
+      authResult = authWS.executeBasicAuthentication("", "");
       System.out.println(authResult);
     } catch (RemoteException e) {
       // TODO Auto-generated catch block

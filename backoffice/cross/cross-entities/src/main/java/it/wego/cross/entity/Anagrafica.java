@@ -23,7 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull; 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -57,7 +57,16 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Anagrafica.findByFlgAttesaIscrizioneRea", query = "SELECT a FROM Anagrafica a WHERE a.flgAttesaIscrizioneRea = :flgAttesaIscrizioneRea"),
     @NamedQuery(name = "Anagrafica.findByDataIscrizioneRea", query = "SELECT a FROM Anagrafica a WHERE a.dataIscrizioneRea = :dataIscrizioneRea"),
     @NamedQuery(name = "Anagrafica.findByNIscrizioneRea", query = "SELECT a FROM Anagrafica a WHERE a.nIscrizioneRea = :nIscrizioneRea"),
-    @NamedQuery(name = "Anagrafica.findByVarianteAnagrafica", query = "SELECT a FROM Anagrafica a WHERE a.varianteAnagrafica = :varianteAnagrafica")})
+    @NamedQuery(name = "Anagrafica.findByVarianteAnagrafica", query = "SELECT a FROM Anagrafica a WHERE a.varianteAnagrafica = :varianteAnagrafica"),
+    @NamedQuery(name = "Anagrafica.findCognomiByCognomeLike", query = "SELECT DISTINCT a.cognome FROM Anagrafica a WHERE a.cognome like :cognome"),
+    @NamedQuery(name = "Anagrafica.findNomiByNomeLike", query = "SELECT DISTINCT a.nome FROM Anagrafica a WHERE a.nome like :nome"),
+    @NamedQuery(name = "Anagrafica.findCognomiByNomeCognomeLike", query = "SELECT DISTINCT a.cognome FROM Anagrafica a WHERE a.nome like :nome and a.cognome like :cognome"),
+    @NamedQuery(name = "Anagrafica.findNomiByNomeCognomeLike", query = "SELECT DISTINCT a.nome FROM Anagrafica a WHERE a.nome like :nome and a.cognome like :cognome"),
+    @NamedQuery(name = "Anagrafica.findByDenominazioneLike", query = "SELECT a FROM Anagrafica a WHERE a.denominazione like :denominazione"),
+    @NamedQuery(name = "Anagrafica.findByCodiceFiscaleLike", query = "SELECT a FROM Anagrafica a WHERE a.codiceFiscale like :codiceFiscale"),
+    @NamedQuery(name = "Anagrafica.findByPartitaIvaLike", query = "SELECT a FROM Anagrafica a WHERE a.partitaIva like :partitaIva"),
+    @NamedQuery(name = "Anagrafica.findByCodiceFiscalePartitaIvaLike", query = "SELECT a FROM Anagrafica a WHERE (a.codiceFiscale like :codiceFiscale or a.partitaIva like :partitaIva)"),
+})
 public class Anagrafica implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anagrafica")
     private List<OcPraticaCommissione> ocPraticaCommissioneList;
@@ -151,13 +160,26 @@ public class Anagrafica implements Serializable {
     private List<PraticheEventiAnagrafiche> praticheEventiAnagraficheList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anagrafica")
     private List<ProcessiEventiAnagrafica> processiEventiAnagraficaList;    
+    @Transient
+    private String provenienza;
 
     @Transient
     private boolean anagraficaDaEnte = false;
-    
+    @Transient
+    private String ruolo_civilia;
+
     public Anagrafica() {
     }
 
+    public String getRuolo_civilia() {
+		return ruolo_civilia;
+	}
+
+	public void setRuolo_civilia(String ruolo_civilia) {
+		this.ruolo_civilia = ruolo_civilia;
+	}
+
+	
     public Anagrafica(Integer idAnagrafica) {
         this.idAnagrafica = idAnagrafica;
     }
@@ -524,5 +546,13 @@ public class Anagrafica implements Serializable {
     public void setOcPraticaCommissioneList(List<OcPraticaCommissione> ocPraticaCommissioneList) {
         this.ocPraticaCommissioneList = ocPraticaCommissioneList;
     }
+
+	public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
     
 }

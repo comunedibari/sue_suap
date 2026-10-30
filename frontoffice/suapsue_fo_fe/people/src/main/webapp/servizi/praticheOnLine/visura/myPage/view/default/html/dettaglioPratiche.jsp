@@ -410,6 +410,8 @@ String inviateValue = TipologiaPraticheSelezionabili.inviate.getCodice();
 			%>
 
 			</table>
+			<br>
+			<p class="dimensione85"><b>Tecnico Istruttore:&nbsp;  <%=(dataForm.getTecnicoIstruttore()!= null ) ? dataForm.getTecnicoIstruttore() : ""%> </b></p>
 			<%-- <a class="btn" href='<%=base+htmlPath+"/allega_interop.jsp"%>'  style="text-decoration: none;">&nbsp;&nbsp;<b>Carica Allegato</b>&nbsp;&nbsp;</a> --%>
 			<%String link = "allega_interop.jsp";%> 
 			<br />

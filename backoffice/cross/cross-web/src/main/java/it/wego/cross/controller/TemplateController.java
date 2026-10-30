@@ -13,6 +13,7 @@ import it.wego.cross.dto.EnteDTO;
 import it.wego.cross.dto.EventoDTO;
 import it.wego.cross.actions.ErroriAction;
 import it.wego.cross.actions.TemplateAction;
+import it.wego.cross.annotations.RequiresGrant;
 import it.wego.cross.dto.filters.Filter;
 import it.wego.cross.beans.grid.*;
 import it.wego.cross.beans.layout.JqgridPaginator;
@@ -300,6 +301,7 @@ public class TemplateController extends AbstractController {
         return AJAX_PAGE;
     }
 
+    @RequiresGrant
     @RequestMapping("/gestione/template/modifica")
     public String modificaTemplate(Model model,
             @ModelAttribute TemplateDTO template,
@@ -320,6 +322,7 @@ public class TemplateController extends AbstractController {
         return MODIFICA;
     }
 
+    @RequiresGrant
     @RequestMapping("/gestione/template/salva")
     public String salvaTemplate(Model model,
             @ModelAttribute TemplateDTO template,

@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient; 
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "DatiCatastali.findByMappale", query = "SELECT d FROM DatiCatastali d WHERE d.mappale = :mappale"),
     @NamedQuery(name = "DatiCatastali.findByEstensioneParticella", query = "SELECT d FROM DatiCatastali d WHERE d.estensioneParticella = :estensioneParticella"),
     @NamedQuery(name = "DatiCatastali.findBySubalterno", query = "SELECT d FROM DatiCatastali d WHERE d.subalterno = :subalterno"),
-    @NamedQuery(name = "DatiCatastali.findByCodImmobile", query = "SELECT d FROM DatiCatastali d WHERE d.codImmobile = :codImmobile")})
+    @NamedQuery(name = "DatiCatastali.findByCodImmobile", query = "SELECT d FROM DatiCatastali d WHERE d.codImmobile = :codImmobile"),
+})
 public class DatiCatastali implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -67,11 +69,27 @@ public class DatiCatastali implements Serializable {
     @JoinColumn(name = "id_pratica", referencedColumnName = "id_pratica")
     @ManyToOne(optional = false)
     private Pratica idPratica;
-    
+    @Column(name = "id_pratica", insertable = false, updatable = false)
+    private Integer idPraticaValue;
     //Aggiunto il 22/06/2016
+    @Transient
+    private String provenienza;
+    
+    public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+
+	//Aggiunto il 22/06/2016
     @Column(name = "categoria")
     private String categoria;
 
+    @Column(name = "id_tipo_unita", insertable=false, updatable=false)
+    private Integer idTipoUnitaInt;
+    
     public DatiCatastali() {
     }
 
@@ -183,6 +201,22 @@ public class DatiCatastali implements Serializable {
 		this.categoria = categoria;
 	}
 
+	public Integer getIdPraticaValue() {
+		return idPraticaValue;
+	}
+
+	public void setIdPraticaValue(Integer idPraticaValue) {
+		this.idPraticaValue = idPraticaValue;
+	}
+
+	public Integer getIdTipoUnitaInt() {
+		return idTipoUnitaInt;
+	}
+
+	public void setIdTipoUnitaInt(Integer idTipoUnitaInt) {
+		this.idTipoUnitaInt = idTipoUnitaInt;
+	}
+
 	@Override
     public int hashCode() {
         int hash = 0;
@@ -207,4 +241,12 @@ public class DatiCatastali implements Serializable {
     public String toString() {
         return "it.wego.cross.entity.DatiCatastali[ idImmobile=" + idImmobile + " ]";
     }
+
+	public Integer getIdTupoUnitaInt() {
+		return idTipoUnitaInt;
+	}
+
+	public void setIdTupoUnitaInt(Integer idTipoUnitaInt) {
+		this.idTipoUnitaInt = idTipoUnitaInt;
+	}
 }

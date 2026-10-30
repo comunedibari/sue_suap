@@ -1,15 +1,20 @@
 package it.wego.cross.service;
 
+import java.util.List;
+
+import javax.mail.Message;
+import javax.mail.Session;
+
+import org.springframework.stereotype.Service;
+
 import it.wego.cross.dto.EmailDTO;
 import it.wego.cross.dto.filters.Filter;
 import it.wego.cross.entity.Email;
+import it.wego.cross.entity.Enti;
+import it.wego.cross.entity.LkComuni;
 import it.wego.cross.entity.LkStatiMail;
 import it.wego.cross.entity.PraticheEventi;
 import it.wego.cross.mail.EmailConfig;
-import java.util.List;
-import javax.mail.Message;
-import javax.mail.Session;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -23,6 +28,8 @@ public interface MailService {
     public void gestioneEmail(Message message, EmailConfig emailConfig, Session session) throws Exception;
 
     public void gestioneEmail() throws Exception;
+    
+    public void salvaRicevuteEmailPec() throws Exception;
 
 ////////    public void rispedisciEmail(EmailDTO idEmail) throws Exception;
 
@@ -38,7 +45,7 @@ public interface MailService {
     
     public void invioSingolaEmail(Email eml) throws Exception;
     
-    public EmailConfig getSmtpProprieties(Integer idEnte, Integer idComune) throws Exception;
+    public EmailConfig getSmtpProprieties(Enti idEnte, LkComuni idComune) throws Exception;
     
     public LkStatiMail findStatoMailByCodice(String codiceStatoEmail);
     
@@ -49,4 +56,8 @@ public interface MailService {
     public void aggiornaStato(Email emailDB) throws Exception;
     
     public EmailConfig getSmtpProprietiesNoEnte() throws Exception;
+	
+	public Email findByIdEmailRispostaPec(Integer valueOf);
+
+	public List<Email> findEmailWithRispostaPec(Integer idPraticaEvento);
 }

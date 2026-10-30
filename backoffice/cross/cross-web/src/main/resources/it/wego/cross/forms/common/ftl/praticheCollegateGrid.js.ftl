@@ -8,10 +8,12 @@ $(function () {
     loadInto.on('wgf-afterSubmitSuccess', function () {
         grid.trigger("reloadGrid");
     });
-
+    var url = "";
+	if(validateLinkedPaperworks())
+		url =  "${data.path}/pratiche/gestisci/ajax.htm?"+$('#form_ricerca').serialize()
     grid.jqGrid({
 //        url: "${api.buildActionUrl('getFlowDefinitionGridData')}",
-        url: "${data.path}/pratiche/gestisci/ajax.htm?search_all=OK",
+        url: url,
         datatype: 'json',
         autowidth: true,
         height: "100%",
@@ -41,7 +43,7 @@ $(function () {
                 width: 250
             }, {
                 name: 'protocollo',
-                label: 'Protocollo',
+                label: 'Fascicolo',
                 width: 60
             }, {
                 name: 'richiedente',

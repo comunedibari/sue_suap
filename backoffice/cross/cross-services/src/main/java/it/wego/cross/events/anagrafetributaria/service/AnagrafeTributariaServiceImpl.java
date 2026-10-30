@@ -4,7 +4,17 @@
  */
 package it.wego.cross.events.anagrafetributaria.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.cxf.common.util.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.google.common.base.Strings;
+
 import it.wego.cross.beans.layout.Select;
 import it.wego.cross.dao.EntiDao;
 import it.wego.cross.dao.LookupDao;
@@ -38,6 +48,7 @@ import it.wego.cross.utils.Utils;
 import it.wego.cross.xml.anagrafetributaria.commercio.AnagrafeTributariaCommercio;
 import it.wego.cross.xml.anagrafetributaria.edilizia.AnagrafeTributariaEdilizia;
 import it.wego.cross.xml.anagrafetributaria.edilizia.Beneficiario;
+import it.wego.cross.xml.anagrafetributaria.edilizia.Concatenazione;
 import it.wego.cross.xml.anagrafetributaria.edilizia.DatoCatastale;
 import it.wego.cross.xml.anagrafetributaria.edilizia.IdentificazioneRichiesta;
 import it.wego.cross.xml.anagrafetributaria.edilizia.IdentificazioneRichiesta.Richiesta;
@@ -46,13 +57,6 @@ import it.wego.cross.xml.anagrafetributaria.edilizia.Professionista;
 import it.wego.cross.xml.anagrafetributaria.edilizia.RecordControllo;
 import it.wego.cross.xml.anagrafetributaria.edilizia.RecordDettaglio;
 import it.wego.cross.xml.anagrafetributaria.edilizia.Soggetto;
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.cxf.common.util.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -144,7 +148,13 @@ public class AnagrafeTributariaServiceImpl implements AnagrafeTributariaService 
     private String componiRecordDettaglioEdilizia(RecordDettaglio recordDettaglio) throws Exception {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(componiIdentificazioneRichiesta(recordDettaglio.getIdentificazioneRichiesta()));
+        if(recordDettaglio.getIdentificazioneRichieste() != null) {
+        	for(IdentificazioneRichiesta richiesta: recordDettaglio.getIdentificazioneRichieste().getIdentificazioneRichieste())	
+        		sb.append(componiIdentificazioneRichiesta(richiesta));
+        }
+        else
+        	sb.append(componiIdentificazioneRichiesta(recordDettaglio.getIdentificazioneRichiesta()));
+        
         if (recordDettaglio.getBeneficiari() != null && recordDettaglio.getBeneficiari().getBeneficiario() != null && !recordDettaglio.getBeneficiari().getBeneficiario().isEmpty()) {
             for (Beneficiario beneficiario : recordDettaglio.getBeneficiari().getBeneficiario()) {
                 sb.append(componiBeneficiario(beneficiario));
@@ -223,13 +233,7 @@ public class AnagrafeTributariaServiceImpl implements AnagrafeTributariaService 
         }
         StringBuilder sb = new StringBuilder();
         sb.append(b.getTipoRecord() != null ? b.getTipoRecord() : 2);
-        if (b.getConcatenazione() == null) {
-            sb.append(ess("", 16));
-            sb.append(ess("", 20));
-        } else {
-            sb.append(b.getConcatenazione().getCodiceFiscaleRichiedente() != null ? ess(b.getConcatenazione().getCodiceFiscaleRichiedente(), 16) : ess("", 16));
-            sb.append(b.getConcatenazione().getNumeroProtocollo() != null ? ess(b.getConcatenazione().getNumeroProtocollo(), 20) : ess("", 20));
-        }
+        sb.append(setConcatenazione(b.getConcatenazione()));
         sb.append(getSoggetto(b.getSoggettoBeneficiario()));
         sb.append(b.getQualificaBeneficiario() != null ? ess(b.getQualificaBeneficiario(), 1) : ess("", 1));
 
@@ -246,13 +250,7 @@ public class AnagrafeTributariaServiceImpl implements AnagrafeTributariaService 
         }
         StringBuilder sb = new StringBuilder();
         sb.append(d.getTipoRecord() != null ? d.getTipoRecord() : 3);
-        if (d.getConcatenazione() == null) {
-            sb.append(ess("", 16));
-            sb.append(ess("", 20));
-        } else {
-            sb.append(d.getConcatenazione().getCodiceFiscaleRichiedente() != null ? ess(d.getConcatenazione().getCodiceFiscaleRichiedente(), 16) : ess("", 16));
-            sb.append(d.getConcatenazione().getNumeroProtocollo() != null ? ess(d.getConcatenazione().getNumeroProtocollo(), 20) : ess("", 20));
-        }
+        sb.append(setConcatenazione(d.getConcatenazione()));
         sb.append(d.getTipoUnita() != null ? ess(d.getTipoUnita(), 1) : ess("", 1));
         sb.append(d.getSezione() != null ? ess(d.getSezione(), 3) : ess("", 3));
         sb.append(d.getFoglio() != null ? ess(d.getFoglio(), 5) : ess("", 5));
@@ -274,13 +272,8 @@ public class AnagrafeTributariaServiceImpl implements AnagrafeTributariaService 
         }
         StringBuilder sb = new StringBuilder();
         sb.append(p.getTipoRecord() != null ? p.getTipoRecord() : 4);
-        if (p.getConcatenazione() == null) {
-            sb.append(ess("", 16));
-            sb.append(ess("", 20));
-        } else {
-            sb.append(p.getConcatenazione().getCodiceFiscaleRichiedente() != null ? ess(p.getConcatenazione().getCodiceFiscaleRichiedente(), 16) : ess("", 16));
-            sb.append(p.getConcatenazione().getNumeroProtocollo() != null ? ess(p.getConcatenazione().getNumeroProtocollo(), 20) : ess("", 20));
-        }
+        sb.append(setConcatenazione(p.getConcatenazione()));
+
         if (p.getDettaglioProfessionista() == null) {
             sb.append(ess("", 16));
             sb.append(ess("", 1));
@@ -308,13 +301,7 @@ public class AnagrafeTributariaServiceImpl implements AnagrafeTributariaService 
         }
         StringBuilder sb = new StringBuilder();
         sb.append(i.getTipoRecord() != null ? i.getTipoRecord() : 5);
-        if (i.getConcatenazione() == null) {
-            sb.append(ess("", 16));
-            sb.append(ess("", 20));
-        } else {
-            sb.append(i.getConcatenazione().getCodiceFiscaleRichiedente() != null ? ess(i.getConcatenazione().getCodiceFiscaleRichiedente(), 16) : ess("", 16));
-            sb.append(i.getConcatenazione().getNumeroProtocollo() != null ? ess(i.getConcatenazione().getNumeroProtocollo(), 20) : ess("", 20));
-        }
+        sb.append(setConcatenazione(i.getConcatenazione()));
         sb.append(i.getPartitaIvaImpresa() != null ? ess(i.getPartitaIvaImpresa(), 11) : ess("", 11));
         sb.append(i.getDenominazione() != null ? ess(i.getDenominazione(), 50) : ess("", 50));
         sb.append(i.getCodiceCatastaleComuneSedeLegale() != null ? ess(i.getCodiceCatastaleComuneSedeLegale(), 4) : ess("", 4));
@@ -416,19 +403,19 @@ public class AnagrafeTributariaServiceImpl implements AnagrafeTributariaService 
         return sb.toString();
     }
 
-    private String ess(String originalString, Integer resultLenght) {
-        return ess(originalString, resultLenght, Boolean.TRUE);
+    private String ess(String originalString, Integer resultLength) {
+        return ess(originalString, resultLength, Boolean.TRUE);
     }
 
-    private String ess(String originalString, Integer resultLenght, Boolean rightAlignament) {
+    private String ess(String originalString, Integer resultLength, Boolean rightAlignament) {
         if (originalString == null) {
             originalString = "";
         }
-        //Prima facciamo l'extend per essere sicuri di avere la stringa lunga al minimo come resultLenght
-        String tmpString = Utils.extendString(originalString, resultLenght, " ", rightAlignament);
+        //Prima facciamo l'extend per essere sicuri di avere la stringa lunga al minimo come resultLength
+        String tmpString = Utils.extendString(originalString, resultLength, " ", rightAlignament);
         //potrebbe però essere più lunga....quindi la tranciamo.
-        if (tmpString.length() > resultLenght) {
-            return tmpString.substring(0, resultLenght);
+        if (tmpString.length() > resultLength) {
+            return tmpString.substring(0, resultLength);
         } else {
             return tmpString;
         }
@@ -796,5 +783,17 @@ public class AnagrafeTributariaServiceImpl implements AnagrafeTributariaService 
             }
         }
         return result;
+    }
+    
+    private StringBuilder setConcatenazione(Concatenazione c) {
+    	StringBuilder sb = new StringBuilder();
+    	if (c == null) {
+            sb.append(ess("", 16));
+            sb.append(ess("", 20));
+        } else {
+        	sb.append(ess(c.getCodiceFiscaleRichiedente(), 16, !StringUtils.isNumeric(c.getCodiceFiscaleRichiedente())));
+            sb.append(c.getNumeroProtocollo() != null ? ess(c.getNumeroProtocollo(), 20) : ess("", 20));
+        }
+    	return sb;
     }
 }

@@ -55,7 +55,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Enti.findByCodEnteEsterno", query = "SELECT e FROM Enti e WHERE e.codEnteEsterno = :codEnteEsterno"),
     @NamedQuery(name = "Enti.findByUnitaOrganizzativa", query = "SELECT e FROM Enti e WHERE e.unitaOrganizzativa = :unitaOrganizzativa"),
     @NamedQuery(name = "Enti.findByCodiceAmministrazione", query = "SELECT e FROM Enti e WHERE e.codiceAmministrazione = :codiceAmministrazione"),
-    @NamedQuery(name = "Enti.findByIdentificativoSuap", query = "SELECT e FROM Enti e WHERE e.identificativoSuap = :identificativoSuap")})
+    @NamedQuery(name = "Enti.findByIdentificativoSuap", query = "SELECT e FROM Enti e WHERE e.identificativoSuap = :identificativoSuap"),
+    @NamedQuery(name = "Enti.findBySueInstitutionInTown", query = "SELECT e FROM Enti e WHERE e.citta = :town and e.descrizione like '%SUE%'")})
 public class Enti implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEnte")
     private List<OrganiCollegiali> organiCollegialiList;

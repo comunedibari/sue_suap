@@ -3,51 +3,21 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="it.wego.cross.constants.CartiglioConstants" %>
+
 <tiles:insertAttribute name="body_error" />
-<form action="${path}/pratica/evento/crea.htm" class="uniForm inlineLabels comunicazione" method="post">
+<div class="uniForm inlineLabels comunicazione">
 
     <div class="uniForm uniform2">
 
         <div class="content_sidebar">	
-            <div class="sidebar_left">
-
-                <h3><spring:message code="pratica.comunicazione.dettaglio.identificativo"/> <strong>${pratica.identificativoPratica}</strong></h3>
-
-                <div class="sidebar_elemento">
-
-                    ${pratica.oggettoPratica}
-                    <p><strong><spring:message code="pratica.comunicazione.evento.pratica.numero"/>:</strong>
-                        <c:choose>
-                            <c:when test="${not empty pratica.protocollo and not empty pratica.annoRiferimento}">
-                                ${pratica.protocollo}/${pratica.annoRiferimento}
-                            </c:when>
-                            <c:otherwise>
-                                <spring:message code="evento.protocollo.empty"/>
-                            </c:otherwise>
-                        </c:choose>
-                    </p>
-                    <p><strong><spring:message code="pratica.comunicazione.evento.pratica.dataricezione"/>:</strong> <fmt:formatDate pattern="dd/MM/yyyy" value="${pratica.dataRicezione}" /></p>
-                    <p><strong><spring:message code="pratica.comunicazione.evento.pratica.stato"/>:</strong> ${pratica.idStatoPratica.descrizione}</p>
-
-
-                    <c:choose>
-                        <c:when test="${not empty pratica.idModello}">
-                            <p style="margin-top:20px;">
-                                <a href="${path}/download/pratica.htm" class="scarica" target="_blank">
-                                    <spring:message code="pratica.comunicazione.scaricaIstanza"/>
-                                </a>
-                            </p>
-                        </c:when>
-                        <c:otherwise>
-                            <span class="value"><spring:message code="pratica.comunicazione.evento.pratica.nofile"/></span>
-                        </c:otherwise>
-                    </c:choose>
-
-
-                </div>
-
-            </div>
-
+		    <div class="sidebar_left">
+		       	<c:set var="cartiglio" value="${pratica.cartiglio}" scope="request"/>
+		    	<c:set var="from" value="${CartiglioConstants.FROM_DETAIL }" scope="request"/>
+				<c:import url="/themes/default/views/main/body/pratiche/cartiglio.jsp"/>
+		    </div>
+		    <form form action="${path}/pratica/evento/crea.htm" method="post">
+		    
             <div class="sidebar_auto">
 
 
@@ -97,7 +67,7 @@
                 <div class="clear"></div>
             </div>
 
-
+			</form>
 
 
         </div>

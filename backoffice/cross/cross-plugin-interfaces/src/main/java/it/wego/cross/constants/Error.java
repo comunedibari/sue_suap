@@ -43,8 +43,16 @@ public class Error {
     public static final String ERRORE_SEARCH_PROVINCE = "SEARCH_PROV";
     public static final String ERRORE_SEARCH_FORMAGIURIDICA = "SEARCH_FORM_GIUR";
     public static final String ERRORE_SEARCH_CITTADINANZA = "SEARCH_CITTAD";
+    public static final String ERRORE_SEARCH_NAZIONALITA = "SEARCH_NAZIONALITA";
     public static final String ERRORE_SEARCH_TIPOCOLLEGIO = "SEARCH_TIPO_COLLEG";
     public static final String ERRORE_SEARCH_COMUNE = "SEARCH_COMUNE";
+    public static final String ERRORE_SEARCH_RAGIONE_SOCIALE = "SEARCH_RAGIONE_SOCIALE";
+    public static final String ERRORE_SEARCH_ADDRESS = "SEARCH_ADDRESS";
+    public static final String ERRORE_SEARCH_COGNOME = "SEARCH_COGNOME";
+    public static final String ERRORE_EXTRA_PROTOCOL = "EXTRA_PROTOCOL";
+    public static final String ERRORE_RETURN_TO_APPROVAL = "RETURN_TO_APPROVAL";
+    public static final String ERRORE_SEARCH_CODICE_FISCALE = "SEARCH_CODICE_FISCALE";
+   
     public static final String ERRORE_SEARCH_PROCEDIMENTICOMUNI = "SEARCH_PROC_COM";
     public static final String ERRORE_SEARCH_PROCEDIMENTICOLLEGATI = "SEARCH_PROC_COLL";
     public static final String ERRORE_SEARCH_COMUNIENTI = "SEARCH_COMUNIENTI";
@@ -142,6 +150,7 @@ public class Error {
     public static final String ERRORE_DOWNLOAD_PROTOCOLLO_POST = "DLOAD_PROT_POST";
     public static final String ERRORE_DOWNLOAD_GET = "DLOAD_GET";
     public static final String ERRORE_PROTOCOLLO_DOWNLOAD_GET = "PROT_DLOAD_GET";
+    public static final String ERRORE_PROTOCOLLO_SERVICE_DOWNLOAD_GET = "PROT_SRV_DLOAD_GET";
     public static final String ERRORE_DOWNLOAD_PRATICA = "DLOAD_PRAT";
     public static final String ERRORE_DOWNLOAD_GENERETED = "DLOAD_GEN";
     public static final String ERRORE_DOWNLOAD_TEMPLATE_GET = "DLOAD_TEM_GET";
@@ -170,6 +179,7 @@ public class Error {
     public static final String ERRORE_PRATICHE_GESTISCI = "PRAT_GEST";
     public static final String ERRORE_PRATICHE_GESTISCI_AJAX = "PRAT_GEST_AJ";
     public static final String ERRORE_PRATICHE_DETTAGLIO = "PRAT_DETT";
+    public static final String ERRORE_PRATICHE_PROTOCOLLA = "PRAT_PROT";
     public static final String ERRORE_PRATICHE_DETTAGLIO_AGGIUNGIPROCEDIMENTO_INSERISCI = "PRAT_DETT_AGGIUNGIPROC_INS";
     public static final String ERRORE_PRATICHE_DETTAGLIO_AGGIUNGIPROCEDIMENTO = "PRAT_DET_AGGIUNGIPROC";
     public static final String ERRORE_PRATICHE_DETTAGLIO_AGGIUNGIPROCEDIMENTO_AJAX = "PRAT_DETT_AGGIUNGIPROC_AJ";

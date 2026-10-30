@@ -14,4 +14,6 @@ public class PermissionConstans {
     public static final String OPERATORE = "OPE";
     public static final String UTENTE = "USR";
     public static final String SEGRETERIA = "SEG";
+    public static final String CONSULTAZIONE = "CNS";
+
 }

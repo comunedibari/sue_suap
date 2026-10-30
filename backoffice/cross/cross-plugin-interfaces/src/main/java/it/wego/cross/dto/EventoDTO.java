@@ -4,12 +4,14 @@
  */
 package it.wego.cross.dto;
 
-import it.wego.cross.entity.LkStatoPratica;
-import it.wego.cross.entity.Procedimenti;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import org.apache.commons.lang.ObjectUtils;
+
+import it.wego.cross.entity.LkStatoPratica;
+import it.wego.cross.entity.Procedimenti;
 
 /**
  *
@@ -63,7 +65,10 @@ public class EventoDTO implements Serializable, Comparable<EventoDTO> {
     private Integer idProcesso;
     private String desProcesso;
     private String funzioneApplicativa;
-
+    private AllegatoDTO allegatoPrincipale;
+    
+    private Cartiglio cartiglio;
+    
     public Integer getIdPraticaEvento() {
         return idPraticaEvento;
     }
@@ -408,8 +413,25 @@ public class EventoDTO implements Serializable, Comparable<EventoDTO> {
         this.visualizzaGiorniScadenzaCustom = visualizzaGiorniScadenzaCustom;
     }
 
-    @Override
+	public Cartiglio getCartiglio() {
+		return cartiglio;
+	}
+
+	public void setCartiglio(Cartiglio cartiglio) {
+		this.cartiglio = cartiglio;
+	}
+
+    public AllegatoDTO getAllegatoPrincipale() {
+		return allegatoPrincipale;
+	}
+
+	public void setAllegatoPrincipale(AllegatoDTO allegatoPrincipale) {
+		this.allegatoPrincipale = allegatoPrincipale;
+	}
+
+	@Override
     public int compareTo(EventoDTO compareObject) {
         return ObjectUtils.compare(this.getDescrizione(), compareObject.getDescrizione());
     }
+
 }

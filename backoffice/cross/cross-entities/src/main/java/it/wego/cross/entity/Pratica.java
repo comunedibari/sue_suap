@@ -4,11 +4,10 @@
  */
 package it.wego.cross.entity;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -30,7 +29,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 
 /**
  *
@@ -53,7 +56,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Pratica.findByResponsabileProcedimento", query = "SELECT p FROM Pratica p WHERE p.responsabileProcedimento = :responsabileProcedimento"),
     @NamedQuery(name = "Pratica.findByDataProtocollazione", query = "SELECT p FROM Pratica p WHERE p.dataProtocollazione = :dataProtocollazione"),
     @NamedQuery(name = "Pratica.findByGiorniSospensione", query = "SELECT p FROM Pratica p WHERE p.giorniSospensione = :giorniSospensione"),
-    @NamedQuery(name = "Pratica.findByIdentificativoEsterno", query = "SELECT p FROM Pratica p WHERE p.identificativoEsterno = :identificativoEsterno")})
+    @NamedQuery(name = "Pratica.findByIdentificativoEsterno", query = "SELECT p FROM Pratica p WHERE p.identificativoEsterno = :identificativoEsterno"),
+    @NamedQuery(name = "Pratica.findDataPerMaxPaperworkNumberByYear", query = "SELECT p.idProcEnte.idEnte, p.tipoPratica, max(p.numeroPratica) FROM Pratica p WHERE p.tipoPratica is not null and p.anno = :targetYear GROUP BY p.idProcEnte.idEnte, p.tipoPratica")
+})
 public class Pratica implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPratica")
@@ -73,6 +78,8 @@ public class Pratica implements Serializable {
     private String oggettoPratica;
     @Column(name = "protocollo")
     private String protocollo;
+    @Column(name = "vecchio_protocollo")
+    private String vecchioProtocollo;
     @Column(name = "cod_registro")
     private String codRegistro;
     @Column(name = "anno_riferimento")
@@ -168,13 +175,28 @@ public class Pratica implements Serializable {
     @JoinColumn(name = "id_tipo_intervento_suap", referencedColumnName = "id_tipo_intervento_suap")
     @ManyToOne
     private LkTipoInterventoSuap idTipoInterventoSuap;
-
     @JoinTable(name = "pratica_pratica", joinColumns = {
         @JoinColumn(name = "id_pratica_a", referencedColumnName = "id_pratica", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "id_pratica_b", referencedColumnName = "id_pratica", nullable = false)})
     @ManyToMany
     private List<Pratica> praticheAssociate;
-
+    @JoinColumn(name = "id_tipo_pratica", referencedColumnName = "id_tipo_pratica")
+    @ManyToOne
+    private LkTipoPratica tipoPratica;
+    @Column(name = "numero_pratica")
+    private Integer numeroPratica;
+    @Column(name = "anno")
+    private Integer anno;
+    @Column(name = "descrizione_intervento")
+    private String descrizioneIntervento;
+	@Column(name = "data_ultimo_evento_esterno")
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltimoEventoEsterno;
+    	
+	//bi-directional many-to-one association to PraticaOperazione
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPratica")
+	private List<PraticaOperazione> praticaOperazioni;
+    
     public Pratica() {
     }
 
@@ -226,6 +248,14 @@ public class Pratica implements Serializable {
 
     public void setProtocollo(String protocollo) {
         this.protocollo = protocollo;
+    }
+    
+    public String getVecchioProtocollo() {
+        return vecchioProtocollo;
+    }
+
+    public void setVecchioProtocollo(String vecchioProtocollo) {
+        this.vecchioProtocollo = vecchioProtocollo;
     }
 
     public String getCodRegistro() {
@@ -543,7 +573,7 @@ public class Pratica implements Serializable {
 
             @Override
             public boolean apply(PraticheEventi evento) {
-                return evento.getIdEvento().getCodEvento().equalsIgnoreCase(RICEZIONE_PRATICA);
+                return evento.getIdEvento().getCodEvento().equalsIgnoreCase(RICEZIONE_PRATICA) && evento.getProtocollo() != "";
             }
         }), null);
     }
@@ -609,7 +639,52 @@ public class Pratica implements Serializable {
 	public void setIdTipoInterventoSuap(LkTipoInterventoSuap idTipoInterventoSuap) {
 		this.idTipoInterventoSuap = idTipoInterventoSuap;
 	}
-    
-    
 
+	public LkTipoPratica getTipoPratica() {
+		return tipoPratica;
+	}
+
+	public void setTipoPratica(LkTipoPratica tipoPratica) {
+		this.tipoPratica = tipoPratica;
+	}
+
+	public Integer getAnno() {
+		return anno;
+	}
+
+	public void setAnno(Integer anno) {
+		this.anno = anno;
+	}
+
+	public String getDescrizioneIntervento() {
+		return descrizioneIntervento;
+	}
+
+	public void setDescrizioneIntervento(String descrizioneIntervento) {
+		this.descrizioneIntervento = descrizioneIntervento;
+	}
+
+	public Integer getNumeroPratica() {
+		return numeroPratica;
+	}
+
+	public void setNumeroPratica(Integer numeroPratica) {
+		this.numeroPratica = numeroPratica;
+	}
+
+	public List<PraticaOperazione> getPraticaOperazioni() {
+		return praticaOperazioni;
+	}
+
+	public void setPraticaOperazioni(List<PraticaOperazione> praticaOperazioni) {
+		this.praticaOperazioni = praticaOperazioni;
+	}
+	
+    public Date getDataUltimoEventoEsterno() {
+		return dataUltimoEventoEsterno;
+	}
+
+	public void setDataUltimoEventoEsterno(Date dataUltimoEventoEsterno) {
+		this.dataUltimoEventoEsterno = dataUltimoEventoEsterno;
+	}
 }

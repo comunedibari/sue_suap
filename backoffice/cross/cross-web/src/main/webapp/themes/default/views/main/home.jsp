@@ -5,7 +5,7 @@
 <!-- Inizio Menu home -->
 <tiles:insertAttribute name="body_error" />
 <div class="menu-home">
-    <c:if test="${isSuperuser || enableGestionePratiche}">
+    <c:if test="${(isSuperuser || enableGestionePratiche) && !abilitazioneConsultazione}">
         <div class="pratiche-assegnare">    
             <div class="icona"></div>
 
@@ -52,34 +52,42 @@
             <div id="menu_apertura">
 
                 <ul class="menu_sotto">
-                    <c:if test="${isSuperuser || enableGestionePratiche}">
-                        <li>
-                            <a title="<spring:message code="menu.nuovaGrafica.aperturanuovepratiche"/>" href="${path}/pratiche/nuove/apertura.htm"><spring:message code="menu.nuovaGrafica.aperturanuovepratiche"/></a>
-                        </li>
-                        <li>
-                            <a title="<spring:message code="menu.nuovaGrafica.gestionepratiche"/>" href="${path}/pratiche/gestisci.htm"><spring:message code="menu.nuovaGrafica.gestionepratiche"/></a>
-                        </li>
-                        <li>
-                            <a title="<spring:message code="menu.nuovaGrafica.scadenziario"/>" href="${path}/pratiche/scadenzario.htm"><spring:message code="menu.nuovaGrafica.scadenziario"/></a>
-                        </li>
+                   	<c:if test="${!abilitazioneConsultazione}">
+	                    <c:if test="${isSuperuser || enableGestionePratiche}">
+	                        <li>
+	                            <a title="<spring:message code="menu.nuovaGrafica.aperturanuovepratiche"/>" href="${path}/pratiche/nuove/apertura.htm"><spring:message code="menu.nuovaGrafica.aperturanuovepratiche"/></a>
+	                        </li>
+	                        <li>
+	                            <a title="<spring:message code="menu.nuovaGrafica.gestionepratiche"/>" href="${path}/pratiche/gestisci.htm"><spring:message code="menu.nuovaGrafica.gestionepratiche"/></a>
+	                        </li>
+	                        <li>
+	                            <a title="<spring:message code="menu.nuovaGrafica.scadenziario"/>" href="${path}/pratiche/scadenzario.htm"><spring:message code="menu.nuovaGrafica.scadenziario"/></a>
+	                        </li>
+	                    </c:if>
+	                    <li>
+	                        <a title="<spring:message code="menu.nuovaGrafica.gestioneanagrafiche"/>" href="${path}/gestione/anagrafiche/list.htm"><spring:message code="menu.nuovaGrafica.gestioneanagrafiche"/></a>
+	                    </li>
+	                    <%-- <li><a title="<spring:message code="menu.nuovaGrafica.tasklist"/>" href="${path}/workflow/mytask.htm"><spring:message code="menu.nuovaGrafica.tasklist"/></a></li> --%>
+	                    <c:if test="${isSuperuser || enableGestionePratiche}">
+	                        <li>
+	                            <a title="<spring:message code="menu.nuovaGrafica.gestionemail"/>" href="${path}/console/mail.htm"><spring:message code="menu.nuovaGrafica.gestionemail"/></a>
+	                        </li>
+	                    </c:if>
+	                    <c:if test="${enableCds}">
+	                        <li>
+	                            <a title="<spring:message code="menu.nuovaGrafica.cds"/>" href="${path}/form/view.htm?idForm=it.wego.cross.forms.common.GestioneOrganiCollegialiGrid"><spring:message code="menu.nuovaGrafica.cds"/></a>
+	                        </li>
+	                        <li>
+	                            <a title="<spring:message code="menu.nuovaGrafica.cds.sedute"/>" href="${path}/form/view.htm?idForm=it.wego.cross.forms.common.GestioneOrganiCollegialiSeduteGrid"><spring:message code="menu.nuovaGrafica.cds.sedute"/></a>
+	                        </li>
+	                    </c:if>
                     </c:if>
-                    <li>
-                        <a title="<spring:message code="menu.nuovaGrafica.gestioneanagrafiche"/>" href="${path}/gestione/anagrafiche/list.htm"><spring:message code="menu.nuovaGrafica.gestioneanagrafiche"/></a>
-                    </li>
-                    <%-- <li><a title="<spring:message code="menu.nuovaGrafica.tasklist"/>" href="${path}/workflow/mytask.htm"><spring:message code="menu.nuovaGrafica.tasklist"/></a></li> --%>
-                    <c:if test="${isSuperuser || enableGestionePratiche}">
-                        <li>
-                            <a title="<spring:message code="menu.nuovaGrafica.gestionemail"/>" href="${path}/console/mail.htm"><spring:message code="menu.nuovaGrafica.gestionemail"/></a>
+                    <c:if test="${abilitazioneConsultazione}">
+                   		<li>
+                        	<a title="<spring:message code="menu.nuovaGrafica.gestionepratiche"/>" href="${path}/pratiche/gestisci.htm"><spring:message code="menu.nuovaGrafica.gestionepratiche"/></a>
                         </li>
-                    </c:if>
-                    <c:if test="${enableCds}">
-                        <li>
-                            <a title="<spring:message code="menu.nuovaGrafica.cds"/>" href="${path}/form/view.htm?idForm=it.wego.cross.forms.common.GestioneOrganiCollegialiGrid"><spring:message code="menu.nuovaGrafica.cds"/></a>
-                        </li>
-                        <li>
-                            <a title="<spring:message code="menu.nuovaGrafica.cds.sedute"/>" href="${path}/form/view.htm?idForm=it.wego.cross.forms.common.GestioneOrganiCollegialiSeduteGrid"><spring:message code="menu.nuovaGrafica.cds.sedute"/></a>
-                        </li>
-                    </c:if>
+                   </c:if>
+                    
                 </ul>
 
             </div>
@@ -87,7 +95,7 @@
         </div>
     </div>
 
-    <c:if test="${isSuperuser}">
+    <c:if test="${isSuperuser && !abilitazioneConsultazione}">
         <div class="impostazioni_home">    
             <div class="icona"></div>
 
@@ -117,7 +125,7 @@
             </div>
         </div>
     </c:if>
-    <c:if test="${isSuperuser || enableGestionePratiche}">
+    <c:if test="${(isSuperuser || enableGestionePratiche) && !abilitazioneConsultazione}">
         <div class="scadenziario">
             <div class="icona"></div>
 
@@ -155,5 +163,8 @@
   		</ul>  		
 	</div> -->
 </div>
-
+<script type="text/javascript">
+	var newSessionCode = '${s_code}'
+	window.name = newSessionCode;
+</script>
 <!-- Fine Menu home -->

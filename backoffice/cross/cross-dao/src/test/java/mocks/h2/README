@@ -1,0 +1,7 @@
+CREAZIONE DATABASE
+le tabelle sono state pulite di KEY, CONSTRAINT, PRIMARY KEY
+è stato aggiunto il campo "id int" perchè c'era un problema di identifier
+
+quando si copia le insert dal db bisgna togliere tutti i >`< e tutti i >\'<
+se vengono specificate le colonne non c'è bisogno di considerare il campo id 
+aggiunto
